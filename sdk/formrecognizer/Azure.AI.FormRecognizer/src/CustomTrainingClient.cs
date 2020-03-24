@@ -18,7 +18,8 @@ namespace Azure.AI.FormRecognizer.Training
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly ServiceClient _operations;
+
+        internal readonly ServiceClient ServiceClient;
 
         internal const string CustomModelsRoute = "/custom/models";
 
@@ -46,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Training
         {
             _diagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
-            _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
+            ServiceClient = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
         #region Training
@@ -73,8 +74,8 @@ namespace Azure.AI.FormRecognizer.Training
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
-            return new TrainingOperation(_operations, response.Headers.Location);
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            return new TrainingOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>
@@ -96,8 +97,8 @@ namespace Azure.AI.FormRecognizer.Training
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-            return new TrainingOperation(_operations, response.Headers.Location);
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            return new TrainingOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>
@@ -119,8 +120,8 @@ namespace Azure.AI.FormRecognizer.Training
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
-            return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>
@@ -142,8 +143,8 @@ namespace Azure.AI.FormRecognizer.Training
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-            return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
+            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>
@@ -199,7 +200,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns></returns>
         public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
-            return _operations.DeleteCustomModel(new Guid(modelId), cancellationToken);
+            return ServiceClient.DeleteCustomModel(new Guid(modelId), cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +211,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns></returns>
         public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            return await _operations.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
+            return await ServiceClient.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -221,7 +222,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns></returns>
         public virtual Pageable<CustomModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
         {
-            return _operations.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
+            return ServiceClient.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
         }
 
         /// <summary>
@@ -232,7 +233,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns></returns>
         public virtual AsyncPageable<CustomModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
         {
-            return _operations.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
+            return ServiceClient.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +243,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns></returns>
         public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = _operations.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
+            Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
@@ -253,7 +254,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <returns></returns>
         public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = await _operations.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
+            Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 

@@ -19,7 +19,10 @@ namespace Azure.AI.FormRecognizer.Training
         private Response _response;
         private CustomModel _value;
         private bool _hasCompleted;
-        private readonly ServiceClient _operations;
+
+        // TODO: use this.
+        private CancellationToken _cancellationToken;
+        private readonly ServiceClient _serviceClient;
 
         /// <summary>
         /// Get the ID of the training operation. This value can be used to poll for the status of the training outcome.
@@ -64,11 +67,24 @@ namespace Azure.AI.FormRecognizer.Training
 
         internal TrainingOperation(ServiceClient allOperations, string location)
         {
-            _operations = allOperations;
+            _serviceClient = allOperations;
 
             // TODO: validate this
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = location.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="TrainingOperation"/> instance.
+        /// </summary>
+        /// <param name="id">The ID of this operation.</param>
+        /// <param name="client">The client used to check for completion.</param>
+        /// <param name="cancellationToken"></param>
+        public TrainingOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        {
+            Id = id;
+            _serviceClient = client.ServiceClient;
+            _cancellationToken = cancellationToken;
         }
 
         /// <inheritdoc/>
@@ -85,8 +101,8 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
                 Response<Model_internal> update = async
-                    ? await _operations.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
-                    : _operations.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
+                    ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
+                    : _serviceClient.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386

@@ -31,8 +31,8 @@ namespace Azure.AI.FormRecognizer.Samples
             //string supervisedModelId = "436a33e3-9c49-448e-94f8-3cf50dfca85f";
             //string supervisedMultipageModelId = "90cf67f6-4bbe-434e-b8e1-8982f392ecd0";
 
-            string ccauth1 = "https://uxstudystorage.blob.core.windows.net/mixeddata/CCAuth-1.pdf?sp=rl&st=2020-03-23T16:30:33Z&se=2020-03-24T16:30:33Z&sv=2019-02-02&sr=b&sig=6e53cC2i4qoVNq5qC2laUJZLrECAE8H4YUg1YbhOxxI%3D";
-            string uxstudymodelId = "1c511fa3-8ca9-40b5-8c0f-e3b371bccfde";
+            //string ccauth1 = "https://uxstudystorage.blob.core.windows.net/mixeddata/CCAuth-1.pdf?sp=rl&st=2020-03-23T16:30:33Z&se=2020-03-24T16:30:33Z&sv=2019-02-02&sr=b&sig=6e53cC2i4qoVNq5qC2laUJZLrECAE8H4YUg1YbhOxxI%3D";
+            //string uxstudymodelId = "1c511fa3-8ca9-40b5-8c0f-e3b371bccfde";
 
             //await TrainCustomModel(sasMultiPage);
             //await ExtractCustomModelStream(multiPageUnsupervisedModelId);
@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             //await TrainCustomLabeledModel(kristasMultipageContainer);
             //await ExtractCustomLabeledModel(supervisedMultipageModelId);
-            await ExtractCustomLabeledModelUri(uxstudymodelId, ccauth1);
+            //await ExtractCustomLabeledModelUri(uxstudymodelId, ccauth1);
             //await ExtractCustomLabeledModelPlusOcrData(supervisedModelId);
 
             //await ExtractReceipts();
@@ -52,6 +52,8 @@ namespace Azure.AI.FormRecognizer.Samples
 
             //GetCustomModelsSummary();
             //GetCustomModels();
+
+            await TestResumeOperation();
 
             Console.ReadLine();
         }
@@ -445,6 +447,37 @@ namespace Azure.AI.FormRecognizer.Samples
             foreach (var model in models)
             {
                 Console.WriteLine($"Model, Id={model.ModelId}, Status={model.Status.ToString()}");
+            }
+        }
+
+        private static async Task TestResumeOperation()
+        {
+            string contosoReceipt = @"C:\src\samples\cognitive\formrecognizer\receipt_data\contoso-allinone.jpg";
+
+            string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
+            string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+
+            var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+
+            string operationId = default;
+
+            using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
+            {
+                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, contentType: ContentType.Jpeg, includeTextElements: false);
+                operationId = extractReceiptOperation.Id;
+
+                await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
+                if (extractReceiptOperation.HasValue)
+                {
+                    IReadOnlyList<UnitedStatesReceipt> result = extractReceiptOperation.Value;
+                }
+            }
+
+            RecognizeUSReceiptOperation operation = new RecognizeUSReceiptOperation(operationId, client);
+            var value = await operation.WaitForCompletionAsync();
+            if (operation.HasValue)
+            {
+                IReadOnlyList<UnitedStatesReceipt> result = operation.Value;
             }
         }
     }

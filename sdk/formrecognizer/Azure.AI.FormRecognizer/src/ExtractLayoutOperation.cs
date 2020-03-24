@@ -20,7 +20,10 @@ namespace Azure.AI.FormRecognizer.Models
         private IReadOnlyList<FormPageContent> _value;
         private bool _hasCompleted;
 
-        private readonly ServiceClient _operations;
+        // TODO: use this.
+        private CancellationToken _cancellationToken;
+
+        private readonly ServiceClient _serviceClient;
 
         /// <inheritdoc/>
         public override string Id { get; }
@@ -47,12 +50,26 @@ namespace Azure.AI.FormRecognizer.Models
 
         internal RecognizeContentOperation(ServiceClient operations, string operationLocation)
         {
-            _operations = operations;
+            _serviceClient = operations;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
         }
+
+        /// <summary>
+        /// Initializes a new <see cref="RecognizeContentOperation"/> instance.
+        /// </summary>
+        /// <param name="id">The ID of this operation.</param>
+        /// <param name="client">The client used to check for completion.</param>
+        /// <param name="cancellationToken"></param>
+        public RecognizeContentOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        {
+            Id = id;
+            _serviceClient = client.ServiceClient;
+            _cancellationToken = cancellationToken;
+        }
+
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
@@ -67,8 +84,8 @@ namespace Azure.AI.FormRecognizer.Models
             if (!_hasCompleted)
             {
                 Response<AnalyzeOperationResult_internal> update = async
-                    ? await _operations.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
-                    : _operations.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
+                    ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                    : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386

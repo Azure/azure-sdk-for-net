@@ -18,7 +18,8 @@ namespace Azure.AI.FormRecognizer
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;
-        private readonly ServiceClient _operations;
+
+        internal readonly ServiceClient ServiceClient;
 
         internal const string ReceiptsRoute = "/prebuilt/receipt";
         internal const string LayoutRoute = "/layout";
@@ -45,7 +46,7 @@ namespace Azure.AI.FormRecognizer
         {
             _diagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
-            _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
+            ServiceClient = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
         #region Content
@@ -62,8 +63,8 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.AnalyzeLayoutAsync(formFileStream, contentType, cancellationToken);
-            return new RecognizeContentOperation(_operations, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = ServiceClient.AnalyzeLayoutAsync(formFileStream, contentType, cancellationToken);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -78,8 +79,8 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.AnalyzeLayoutAsyncAsync(formFileStream, contentType, cancellationToken).ConfigureAwait(false);
-            return new RecognizeContentOperation(_operations, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(formFileStream, contentType, cancellationToken).ConfigureAwait(false);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -92,8 +93,8 @@ namespace Azure.AI.FormRecognizer
         public virtual RecognizeContentOperation StartRecognizeContent(Uri formFileUri, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
-            return new RecognizeContentOperation(_operations, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -106,8 +107,8 @@ namespace Azure.AI.FormRecognizer
         public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Uri formFileUri, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeContentOperation(_operations, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         #endregion
@@ -128,8 +129,8 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
-            return new RecognizeFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
+            return new RecognizeFormOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -144,8 +145,8 @@ namespace Azure.AI.FormRecognizer
         public virtual RecognizeFormOperation StartRecognizeForms(string modelId, Uri formFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken);
-            return new RecognizeFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken);
+            return new RecognizeFormOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -162,8 +163,8 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
-            return new RecognizeFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
+            return new RecognizeFormOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -178,8 +179,8 @@ namespace Azure.AI.FormRecognizer
         public virtual async Task<RecognizeFormOperation> StartRecognizeFormsAsync(string modelId, Uri formFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new RecognizeFormOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         #endregion
@@ -200,8 +201,8 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
-            return new RecognizeLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
+            return new RecognizeLabeledFormOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -216,8 +217,8 @@ namespace Azure.AI.FormRecognizer
         public virtual RecognizeLabeledFormOperation StartRecognizeLabeledForms(string modelId, Uri formFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken);
-            return new RecognizeLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken);
+            return new RecognizeLabeledFormOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -234,8 +235,8 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
-            return new RecognizeLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
+            return new RecognizeLabeledFormOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -250,8 +251,8 @@ namespace Azure.AI.FormRecognizer
         public virtual async Task<RecognizeLabeledFormOperation> StartRecognizeLabeledFormsAsync(string modelId, Uri formFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new RecognizeLabeledFormOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         #endregion
@@ -270,8 +271,8 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken);
-            return new RecognizeUSReceiptOperation(_operations, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken);
+            return new RecognizeUSReceiptOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -285,8 +286,8 @@ namespace Azure.AI.FormRecognizer
         public virtual RecognizeUSReceiptOperation StartRecognizeUSReceipts(Uri receiptFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = _operations.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken);
-            return new RecognizeUSReceiptOperation(_operations, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken);
+            return new RecognizeUSReceiptOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -302,8 +303,8 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, contentType, receiptFileStream, cancellationToken).ConfigureAwait(false);
-            return new RecognizeUSReceiptOperation(_operations, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, contentType, receiptFileStream, cancellationToken).ConfigureAwait(false);
+            return new RecognizeUSReceiptOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -317,8 +318,8 @@ namespace Azure.AI.FormRecognizer
         public virtual async Task<RecognizeUSReceiptOperation> StartRecognizeUSReceiptsAsync(Uri receiptFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await _operations.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeUSReceiptOperation(_operations, response.Headers.OperationLocation);
+            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
+            return new RecognizeUSReceiptOperation(ServiceClient, response.Headers.OperationLocation);
         }
         #endregion
 

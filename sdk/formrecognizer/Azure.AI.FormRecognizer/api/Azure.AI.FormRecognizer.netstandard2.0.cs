@@ -5,26 +5,26 @@ namespace Azure.AI.FormRecognizer
         protected FormRecognizerClient() { }
         public FormRecognizerClient(System.Uri endpoint, Azure.AI.FormRecognizer.Models.FormRecognizerApiKeyCredential credential) { }
         public FormRecognizerClient(System.Uri endpoint, Azure.AI.FormRecognizer.Models.FormRecognizerApiKeyCredential credential, Azure.AI.FormRecognizer.FormRecognizerClientOptions options) { }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.BusinessCard>> StartRecognizeBusinessCards(System.IO.Stream businessCardFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.BusinessCard>> StartRecognizeBusinessCards(System.Uri businessCardFileStream, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.BusinessCard>>> StartRecognizeBusinessCardsAsync(System.IO.Stream businessCardFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.BusinessCard>>> StartRecognizeBusinessCardsAsync(System.Uri businessCardFileStream, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPageContent>> StartRecognizeContent(System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPageContent>> StartRecognizeContent(System.Uri formFileUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPageContent>>> StartRecognizeContentAsync(System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPageContent>>> StartRecognizeContentAsync(System.Uri formFileUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomFormPage>> StartRecognizeForms(string modelId, System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomFormPage>> StartRecognizeForms(string modelId, System.Uri formFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomFormPage>>> StartRecognizeFormsAsync(string modelId, System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomFormPage>>> StartRecognizeFormsAsync(string modelId, System.Uri formFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomLabeledForm>> StartRecognizeLabeledForms(string modelId, System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomLabeledForm>> StartRecognizeLabeledForms(string modelId, System.Uri formFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomLabeledForm>>> StartRecognizeLabeledFormsAsync(string modelId, System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomLabeledForm>>> StartRecognizeLabeledFormsAsync(string modelId, System.Uri formFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.UnitedStatesReceipt>> StartRecognizeUSReceipts(System.IO.Stream receiptFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.UnitedStatesReceipt>> StartRecognizeUSReceipts(System.Uri receiptFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.UnitedStatesReceipt>>> StartRecognizeUSReceiptsAsync(System.IO.Stream receiptFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.UnitedStatesReceipt>>> StartRecognizeUSReceiptsAsync(System.Uri receiptFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Models.RecognizeBusinessCardOperation StartRecognizeBusinessCards(System.IO.Stream businessCardFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Models.RecognizeBusinessCardOperation StartRecognizeBusinessCards(System.Uri businessCardFileStream, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeBusinessCardOperation> StartRecognizeBusinessCardsAsync(System.IO.Stream businessCardFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeBusinessCardOperation> StartRecognizeBusinessCardsAsync(System.Uri businessCardFileStream, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Models.RecognizeContentOperation StartRecognizeContent(System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Models.RecognizeContentOperation StartRecognizeContent(System.Uri formFileUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeContentOperation> StartRecognizeContentAsync(System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeContentOperation> StartRecognizeContentAsync(System.Uri formFileUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.RecognizeFormOperation StartRecognizeForms(string modelId, System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.RecognizeFormOperation StartRecognizeForms(string modelId, System.Uri formFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.RecognizeFormOperation> StartRecognizeFormsAsync(string modelId, System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.RecognizeFormOperation> StartRecognizeFormsAsync(string modelId, System.Uri formFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.RecognizeLabeledFormOperation StartRecognizeLabeledForms(string modelId, System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.RecognizeLabeledFormOperation StartRecognizeLabeledForms(string modelId, System.Uri formFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.RecognizeLabeledFormOperation> StartRecognizeLabeledFormsAsync(string modelId, System.IO.Stream formFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.RecognizeLabeledFormOperation> StartRecognizeLabeledFormsAsync(string modelId, System.Uri formFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Models.RecognizeUSReceiptOperation StartRecognizeUSReceipts(System.IO.Stream receiptFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Models.RecognizeUSReceiptOperation StartRecognizeUSReceipts(System.Uri receiptFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeUSReceiptOperation> StartRecognizeUSReceiptsAsync(System.IO.Stream receiptFileStream, Azure.AI.FormRecognizer.Models.ContentType contentType, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Models.RecognizeUSReceiptOperation> StartRecognizeUSReceiptsAsync(System.Uri receiptFileUri, bool includeTextElements = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FormRecognizerClientOptions : Azure.Core.ClientOptions
     {
@@ -34,6 +34,32 @@ namespace Azure.AI.FormRecognizer
         {
             V2_0_Preview = 1,
         }
+    }
+    public partial class RecognizeFormOperation : Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomFormPage>>
+    {
+        public RecognizeFormOperation(string id, Azure.AI.FormRecognizer.FormRecognizerClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomFormPage> Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomFormPage>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomFormPage>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RecognizeLabeledFormOperation : Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomLabeledForm>>
+    {
+        public RecognizeLabeledFormOperation(string id, Azure.AI.FormRecognizer.FormRecognizerClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomLabeledForm> Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomLabeledForm>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.CustomLabeledForm>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.AI.FormRecognizer.Models
@@ -208,6 +234,45 @@ namespace Azure.AI.FormRecognizer.Models
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.WordTextElement> Words { get { throw null; } }
         public static implicit operator string (Azure.AI.FormRecognizer.Models.LineTextElement line) { throw null; }
     }
+    public partial class RecognizeBusinessCardOperation : Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.BusinessCard>>
+    {
+        public RecognizeBusinessCardOperation(string id, Azure.AI.FormRecognizer.FormRecognizerClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.BusinessCard> Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.BusinessCard>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.BusinessCard>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RecognizeContentOperation : Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPageContent>>
+    {
+        public RecognizeContentOperation(string id, Azure.AI.FormRecognizer.FormRecognizerClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPageContent> Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPageContent>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPageContent>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class RecognizeUSReceiptOperation : Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.UnitedStatesReceipt>>
+    {
+        public RecognizeUSReceiptOperation(string id, Azure.AI.FormRecognizer.FormRecognizerClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.UnitedStatesReceipt> Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.UnitedStatesReceipt>>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.UnitedStatesReceipt>>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class UnitedStatesReceipt
     {
         internal UnitedStatesReceipt() { }
@@ -321,10 +386,10 @@ namespace Azure.AI.FormRecognizer.Training
         public virtual Azure.AsyncPageable<Azure.AI.FormRecognizer.Training.CustomModelInfo> GetModelInfosAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<Azure.AI.FormRecognizer.Training.CustomComposedModel> StartComposeModel(System.Collections.Generic.IEnumerable<string> modelIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.FormRecognizer.Training.CustomComposedModel>> StartComposeModelAsync(System.Collections.Generic.IEnumerable<string> modelIds, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<Azure.AI.FormRecognizer.Training.CustomModel> StartTraining(System.Uri trainingFiles, Azure.AI.FormRecognizer.Training.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.FormRecognizer.Training.CustomModel>> StartTrainingAsync(System.Uri trainingFiles, Azure.AI.FormRecognizer.Training.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation<Azure.AI.FormRecognizer.Training.CustomLabeledModel> StartTrainingWithLabels(System.Uri trainingFiles, Azure.AI.FormRecognizer.Training.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.FormRecognizer.Training.CustomLabeledModel>> StartTrainingWithLabelsAsync(System.Uri trainingFiles, Azure.AI.FormRecognizer.Training.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Training.TrainingOperation StartTraining(System.Uri trainingFiles, Azure.AI.FormRecognizer.Training.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Training.TrainingOperation> StartTrainingAsync(System.Uri trainingFiles, Azure.AI.FormRecognizer.Training.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.Training.TrainingWithLabelsOperation StartTrainingWithLabels(System.Uri trainingFiles, Azure.AI.FormRecognizer.Training.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.Training.TrainingWithLabelsOperation> StartTrainingWithLabelsAsync(System.Uri trainingFiles, Azure.AI.FormRecognizer.Training.TrainingFileFilter filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FieldPredictionAccuracy
     {
@@ -352,10 +417,38 @@ namespace Azure.AI.FormRecognizer.Training
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Training.TrainingDocumentInfo> DocumentInfo { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } }
     }
+    public partial class TrainingOperation : Azure.Operation<Azure.AI.FormRecognizer.Training.CustomModel>
+    {
+        protected TrainingOperation() { }
+        public TrainingOperation(string id, Azure.AI.FormRecognizer.FormRecognizerClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.AI.FormRecognizer.Training.CustomModel Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.FormRecognizer.Training.CustomModel>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.FormRecognizer.Training.CustomModel>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public enum TrainingStatus
     {
         Succeeded = 0,
         PartiallySucceeded = 1,
         Failed = 2,
+    }
+    public partial class TrainingWithLabelsOperation : Azure.Operation<Azure.AI.FormRecognizer.Training.CustomLabeledModel>
+    {
+        protected TrainingWithLabelsOperation() { }
+        public TrainingWithLabelsOperation(string id, Azure.AI.FormRecognizer.FormRecognizerClient client, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override Azure.AI.FormRecognizer.Training.CustomLabeledModel Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.FormRecognizer.Training.CustomLabeledModel>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.FormRecognizer.Training.CustomLabeledModel>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

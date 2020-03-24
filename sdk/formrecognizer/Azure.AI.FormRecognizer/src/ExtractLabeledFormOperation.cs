@@ -21,7 +21,10 @@ namespace Azure.AI.FormRecognizer
         private bool _hasCompleted;
 
         private readonly string _modelId;
-        private readonly ServiceClient _operations;
+        private readonly ServiceClient _serviceClient;
+
+        // TODO: use this.
+        private CancellationToken _cancellationToken;
 
         /// <inheritdoc/>
         public override string Id { get; }
@@ -53,12 +56,25 @@ namespace Azure.AI.FormRecognizer
         /// <param name="operationLocation"></param>
         internal RecognizeLabeledFormOperation(ServiceClient operations, string modelId, string operationLocation)
         {
-            _operations = operations;
+            _serviceClient = operations;
             _modelId = modelId;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="RecognizeLabeledFormOperation"/> instance.
+        /// </summary>
+        /// <param name="id">The ID of this operation.</param>
+        /// <param name="client">The client used to check for completion.</param>
+        /// <param name="cancellationToken"></param>
+        public RecognizeLabeledFormOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        {
+            Id = id;
+            _serviceClient = client.ServiceClient;
+            _cancellationToken = cancellationToken;
         }
 
         /// <inheritdoc/>
@@ -74,8 +90,8 @@ namespace Azure.AI.FormRecognizer
             if (!_hasCompleted)
             {
                 Response<AnalyzeOperationResult_internal> update = async
-                    ? await _operations.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(Id), cancellationToken).ConfigureAwait(false)
-                    : _operations.GetAnalyzeFormResult(new Guid(_modelId), new Guid(Id), cancellationToken);
+                    ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(Id), cancellationToken).ConfigureAwait(false)
+                    : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(Id), cancellationToken);
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
