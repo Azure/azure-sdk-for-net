@@ -176,32 +176,21 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public bool IsDirectory
         {
-            get
-            {
-                Metadata.TryGetValue(Constants.DataLake.IsDirectoryKey, out string isDirectory);
-                if (isDirectory != null && isDirectory == bool.TrueString.ToLowerInvariant())
-                {
-                    return true;
-                }
-                return false;
-            }
+            get => Metadata.TryGetValue(Constants.DataLake.IsDirectoryKey, out string isDirectoryValue)
+                && bool.TryParse(isDirectoryValue, out bool isDirectory)
+                && isDirectory;
+
             internal set
             {
                 // True
                 if (value)
                 {
-                    if (!Metadata.ContainsKey(Constants.DataLake.IsDirectoryKey))
-                    {
-                        Metadata.Add(Constants.DataLake.IsDirectoryKey, bool.TrueString.ToLowerInvariant());
-                    }
+                    Metadata[Constants.DataLake.IsDirectoryKey] = bool.TrueString.ToLowerInvariant();
                 }
                 // False
                 else
                 {
-                    if (Metadata.ContainsKey(Constants.DataLake.IsDirectoryKey))
-                    {
-                        Metadata.Remove(Constants.DataLake.IsDirectoryKey);
-                    }
+                    Metadata.Remove(Constants.DataLake.IsDirectoryKey);
                 }
             }
         }
