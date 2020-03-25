@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal CustomModel(Model_internal model)
         {
-            LearnedPages = ConvertLearnedForms(model.Keys);
+            LearnedForms = ConvertLearnedForms(model.Keys);
             ModelInfo = new CustomModelInfo(model.ModelInfo);
             TrainingInfo = new TrainingInfo(model.TrainResult);
         }
@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// List of forms the model learned to recognize, including form fields found in each form.
         /// </summary>
-        public IReadOnlyList<CustomModelLearnedForm> LearnedPages { get; internal set; }
+        public IReadOnlyList<CustomModelLearnedForm> LearnedForms { get; internal set; }
 
         /// <summary>
         /// Information about the trained model, including model ID and training completion status.

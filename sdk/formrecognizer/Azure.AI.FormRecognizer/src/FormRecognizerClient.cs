@@ -55,32 +55,35 @@ namespace Azure.AI.FormRecognizer
         /// Extracts layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, /* ContentType contentType, */ CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = ServiceClient.AnalyzeLayoutAsync(formFileStream, contentType, cancellationToken);
-            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
+            throw new NotImplementedException();
+
+            //// TODO: automate content-type detection
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
+            //ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = ServiceClient.AnalyzeLayoutAsync(formFileStream, contentType, cancellationToken);
+            //return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Extracts layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, /* ContentType contentType, */ CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(formFileStream, contentType, cancellationToken).ConfigureAwait(false);
-            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //// TODO: automate content-type detection
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
+            //ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await ServiceClient.AnalyzeLayoutAsyncAsync(formFileStream, contentType, cancellationToken).ConfigureAwait(false);
+            //return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -120,17 +123,18 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
         /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual RecognizeFormsOperation StartRecognizeForms(string modelId, Stream formFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeFormsOperation StartRecognizeForms(string modelId, Stream formFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
-            return new RecognizeFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            throw new NotImplementedException();
+
+            //// TODO: automate content-type detection
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
+            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
+            //return new RecognizeFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -154,17 +158,19 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
         /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual async Task<RecognizeFormsOperation> StartRecognizeFormsAsync(string modelId, Stream formFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeFormsOperation> StartRecognizeFormsAsync(string modelId, Stream formFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
-            return new RecognizeFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //// TODO: automate content-type detection
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
+            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
+            //return new RecognizeFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -190,17 +196,18 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeUSReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeUSReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual RecognizeUSReceiptsOperation StartRecognizeUSReceipts(Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeUSReceiptsOperation StartRecognizeUSReceipts(Stream receiptFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken);
-            return new RecognizeUSReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            throw new NotImplementedException();
+
+            //// TODO: automate content-type detection
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
+            //ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = ServiceClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, receiptFileStream, contentType, cancellationToken);
+            //return new RecognizeUSReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -222,17 +229,19 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeUSReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeUSReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual async Task<RecognizeUSReceiptsOperation> StartRecognizeUSReceiptsAsync(Stream receiptFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeUSReceiptsOperation> StartRecognizeUSReceiptsAsync(Stream receiptFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, contentType, receiptFileStream, cancellationToken).ConfigureAwait(false);
-            return new RecognizeUSReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //// TODO: automate content-type detection
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
+            //ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, contentType, receiptFileStream, cancellationToken).ConfigureAwait(false);
+            //return new RecognizeUSReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -256,12 +265,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="businessCardFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
         /// completion will contain the extracted business card.</returns>
-        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Stream businessCardFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Stream businessCardFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -269,12 +277,12 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Extracts values from one or more receipts.
         /// </summary>
-        /// <param name="businessCardFileStream">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="businessCardFileUri">The absolute URI of the remote file to extract values from.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
         /// completion will contain the extracted business card.</returns>
-        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Uri businessCardFileStream, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Uri businessCardFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -283,12 +291,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="businessCardFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
         /// completion will contain the extracted business card.</returns>
-        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Stream businessCardFileStream, ContentType contentType, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Stream businessCardFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -297,12 +304,12 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Extracts values from one or more receipts.
         /// </summary>
-        /// <param name="businessCardFileStream">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="businessCardFileUri">The absolute URI of the remote file to extract values from.</param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
         /// completion will contain the extracted business card.</returns>
-        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Uri businessCardFileStream, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Uri businessCardFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();

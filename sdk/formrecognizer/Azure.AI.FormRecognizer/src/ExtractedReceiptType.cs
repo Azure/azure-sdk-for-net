@@ -9,10 +9,26 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary>
         /// </summary>
-        Unrecognized = 0,
+        Unrecognized,
 
         /// <summary>
         /// </summary>
-        Itemized = 1,
+        Itemized,
+
+        /// <summary>
+        /// </summary>
+        CreditCard,
+
+        /// <summary>
+        /// </summary>
+        Gas,
+
+        /// <summary>
+        /// </summary>
+        Parking,
+
+        /// <summary>
+        /// </summary>
+        Other,
     }
 }

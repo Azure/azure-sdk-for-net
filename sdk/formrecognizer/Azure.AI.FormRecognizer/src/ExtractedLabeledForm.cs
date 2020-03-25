@@ -31,6 +31,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
+        // Convert clusterId to a string (ex. "FormType1").
         public string FormType { get; }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        internal FormCheckBoxState CheckedState { get; }
+        public FormCheckBoxState CheckedState { get; }
 
         /// <summary>
         /// </summary>

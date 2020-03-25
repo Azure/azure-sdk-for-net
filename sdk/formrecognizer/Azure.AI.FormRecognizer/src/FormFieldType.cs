@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// </summary>
     [CodeGenSchema("FieldValueType")]
-    public enum FormValueType
+    public enum FieldValueType
     {
         /// <summary> string. </summary>
         [CodeGenSchemaMember("String")]

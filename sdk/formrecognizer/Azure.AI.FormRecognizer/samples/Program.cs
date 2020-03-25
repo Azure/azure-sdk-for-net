@@ -262,7 +262,7 @@ namespace Azure.AI.FormRecognizer.Samples
                         FormField field;
                         if (form.TryGetFieldValue("Charges", out field))
                         {
-                            Console.WriteLine($"Name: {field.Name.Text}, Value: {field.ValueText.Text}");
+                            Console.WriteLine($"Name: {field.Name.Text}, ValueText: {field.ValueText.Text}, Value: {field.Value.AsFloat()}");
                         }
                     }
                 }

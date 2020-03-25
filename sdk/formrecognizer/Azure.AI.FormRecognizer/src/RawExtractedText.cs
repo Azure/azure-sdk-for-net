@@ -7,9 +7,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormText : FormTextElement
+    public class FieldText : FormTextElement
     {
-        internal FormText(string text, BoundingBox boundingBox, float? confidence)
+        internal FieldText(string text, BoundingBox boundingBox, float? confidence)
             : base(text, boundingBox, confidence)
         {
             //Confidence = confidence;

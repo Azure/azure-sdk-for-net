@@ -27,10 +27,10 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
         /// </summary>
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
     }
 }

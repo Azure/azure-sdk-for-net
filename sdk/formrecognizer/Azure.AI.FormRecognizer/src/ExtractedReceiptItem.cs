@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public int? Quantity { get; }
+        public float? Quantity { get; }
 
         /// <summary>
         /// </summary>

@@ -8,14 +8,14 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public struct FormValue
+    public struct FieldValue
     {
 #pragma warning disable CS0649 // Add readonly modifier
         private FieldValue_internal _fieldValue;
 #pragma warning restore CS0649 // Add readonly modifier
 
         /// <summary> Type of field value. </summary>
-        public FormValueType Type { get; internal set; }
+        public FieldValueType Type { get; internal set; }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="string"/>.
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public string AsString()
         {
-            if (Type != FormValueType.StringType)
+            if (Type != FieldValueType.StringType)
             {
                 throw new InvalidOperationException($"Cannot get field as String.  Field value's type is {Type}.");
             }
@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public int AsInt32()
         {
-            if (Type != FormValueType.IntegerType)
+            if (Type != FieldValueType.IntegerType)
             {
                 throw new InvalidOperationException($"Cannot get field as Integer.  Field value's type is {Type}.");
             }
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public float AsFloat()
         {
-            if (Type != FormValueType.FloatType)
+            if (Type != FieldValueType.FloatType)
             {
                 throw new InvalidOperationException($"Cannot get field as Float.  Field value's type is {Type}.");
             }
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public DateTimeOffset AsDateTimeOffset()
         {
-            if (Type != FormValueType.DateType && Type != FormValueType.TimeType)
+            if (Type != FieldValueType.DateType && Type != FieldValueType.TimeType)
             {
                 throw new InvalidOperationException($"Cannot get field as DateTimeOffset.  Field value's type is {Type}.");
             }
@@ -109,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public string AsPhoneNumber()
         {
-            if (Type != FormValueType.PhoneNumberType)
+            if (Type != FieldValueType.PhoneNumberType)
             {
                 throw new InvalidOperationException($"Cannot get field as PhoneNumber.  Field value's type is {Type}.");
             }

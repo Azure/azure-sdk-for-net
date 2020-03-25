@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
             }
 
-            set
+            internal set
             {
                 throw new NotImplementedException();
             }

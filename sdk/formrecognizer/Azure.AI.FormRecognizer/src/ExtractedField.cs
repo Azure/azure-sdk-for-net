@@ -40,15 +40,15 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public FormText Name { get; internal set; }
+        public FieldText Name { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public FormText ValueText { get; internal set; }
+        public FieldText ValueText { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public FormValue Value { get; internal set; }
+        public FieldValue Value { get; internal set; }
 
         /// <summary>
         /// </summary>
