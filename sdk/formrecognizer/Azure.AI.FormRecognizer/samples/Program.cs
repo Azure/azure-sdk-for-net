@@ -116,36 +116,40 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<CustomFormPage> pages = extractFormOperation.Value;
-                    foreach (var page in pages)
+                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
+                    foreach (var form in forms)
                     {
-                        foreach (var table in page.Tables)
+                        foreach (var table in form.Tables)
                         {
                             table.WriteAscii(Console.Out);
 
                         }
 
-                        Console.WriteLine(page.GetFieldValue("Invoice Number:"));
-
-                        if (page.TextElements != null)
+                        FormField invoiceField;
+                        if (form.TryGetFieldValue("Invoice Number:", out invoiceField))
                         {
-                            //foreach (var field in page.Fields)
-                            //{
-                            //    Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
+                            Console.WriteLine($"Name: {invoiceField.Name.Text}, Value: {invoiceField.ValueText.Text}");
+                        }
 
-                            //    if (field.LabelRawWordReferences != null)
-                            //    {
-                            //        foreach (var wordReference in field.LabelRawWordReferences)
-                            //        {
-                            //            Console.WriteLine($"{wordReference}: {page.RawExtractedPage.GetRawExtractedWord(wordReference).Text}");
-                            //        }
-                            //    }
+                        if (form.TextElements != null)
+                        {
+                            foreach (var field in form.Fields)
+                            {
+                                Console.WriteLine($"Field \"{field.Name.Text}\" is made of the following Raw Extracted Words:");
 
-                            //    foreach (var wordReference in field.ValueRawWordReferences)
-                            //    {
-                            //        Console.WriteLine($"{wordReference}: {page.RawExtractedPage.GetRawExtractedWord(wordReference).Text}");
-                            //    }
-                            //}
+                                if (field.Name.TextElements != null)
+                                {
+                                    foreach (var word in field.Name.TextElements)
+                                    {
+                                        Console.WriteLine($"Word is: {word.Text}");
+                                    }
+                                }
+
+                                foreach (var word in field.ValueText.TextElements)
+                                {
+                                    Console.WriteLine($"Word is: {word.Text}");
+                                }
+                            }
                         }
                     }
                 }
@@ -168,7 +172,7 @@ namespace Azure.AI.FormRecognizer.Samples
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
             {
-                IReadOnlyList<CustomFormPage> pages = extractFormOperation.Value;
+                IReadOnlyList<RecognizedForm> pages = extractFormOperation.Value;
                 foreach (var page in pages)
                 {
                     foreach (var table in page.Tables)
@@ -195,33 +199,29 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<CustomFormPage> pages = extractFormOperation.Value;
-                    foreach (var page in pages)
+                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
+                    foreach (var form in forms)
                     {
-                        foreach (var table in page.Tables)
+                        foreach (var table in form.Tables)
                         {
                             table.WriteAscii(Console.Out);
                         }
 
-                        if (page.TextElements != null)
+                        if (form.TextElements != null)
                         {
-                            foreach (var field in page.Fields)
+                            foreach (var field in form.Fields)
                             {
-                                Console.WriteLine($"Field \"{field.Name}\" is made of the following Raw Extracted Words:");
+                                Console.WriteLine($"Field \"{field.Name}\" is made of the following Text Elements:");
 
-                                if (field.NameTextElements != null)
+                                if (field.Name.TextElements != null)
                                 {
-                                    foreach (var extractedItem in field.NameTextElements)
+                                    foreach (var extractedItem in field.Name.TextElements)
                                     {
                                         Console.WriteLine(extractedItem.Text);
                                     }
                                 }
-                                else
-                                {
-                                    Console.WriteLine("<Unlabeled>");
-                                }
 
-                                foreach (var extractedItem in field.ValueTextElements)
+                                foreach (var extractedItem in field.ValueText.TextElements)
                                 {
                                     Console.WriteLine(extractedItem.Text);
                                 }
@@ -246,7 +246,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeLabeledForms(modelId, stream, contentType: ContentType.Pdf);
+                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -259,7 +259,11 @@ namespace Azure.AI.FormRecognizer.Samples
                             table.WriteAscii(Console.Out);
                         }
 
-                        Console.WriteLine(form.GetFieldValue("Charges"));
+                        FormField field;
+                        if (form.TryGetFieldValue("Charges", out field))
+                        {
+                            Console.WriteLine($"Name: {field.Name.Text}, Value: {field.ValueText.Text}");
+                        }
                     }
                 }
             }
@@ -278,7 +282,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var extractFormOperation = client.StartRecognizeLabeledForms(modelId, new Uri(formPath));
+            var extractFormOperation = client.StartRecognizeForms(modelId, new Uri(formPath));
 
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
@@ -308,7 +312,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeLabeledForms(modelId, stream, contentType: ContentType.Pdf, includeTextElements: true);
+                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf, includeTextElements: true);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -325,9 +329,9 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
 
-                            if (field.TextElements != null)
+                            if (field.ValueText.TextElements != null)
                             {
-                                foreach (var extractedItem in field.TextElements)
+                                foreach (var extractedItem in field.ValueText.TextElements)
                                 {
                                     Console.WriteLine(extractedItem.Text);
                                 }
@@ -388,7 +392,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractLayoutOperation.HasValue)
                 {
-                    IReadOnlyList<FormPageContent> result = extractLayoutOperation.Value;
+                    IReadOnlyList<RecognizedPageContent> result = extractLayoutOperation.Value;
                     foreach (var page in result)
                     {
                         foreach (var table in page.Tables)
@@ -414,7 +418,7 @@ namespace Azure.AI.FormRecognizer.Samples
             await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractLayoutOperation.HasValue)
             {
-                IReadOnlyList<FormPageContent> result = extractLayoutOperation.Value;
+                IReadOnlyList<RecognizedPageContent> result = extractLayoutOperation.Value;
                 foreach (var page in result)
                 {
                     foreach (var table in page.Tables)
