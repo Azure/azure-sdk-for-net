@@ -1,0 +1,190 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+
+namespace Azure.Messaging.ServiceBus
+{
+    /// <summary>
+    ///
+    /// </summary>
+    public class ServiceBusSessionProcessor
+    {
+        private readonly ServiceBusProcessor _innerProcessor;
+
+        /// <summary>
+        /// The path of the Service Bus entity that the processor is connected to, specific to the
+        /// Service Bus namespace that contains it.
+        /// </summary>
+        public string EntityPath => _innerProcessor.EntityPath;
+
+        /// <summary>
+        /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
+        /// </summary>
+        /// <remarks>Every new client has a unique ID.</remarks>
+        internal string Identifier => _innerProcessor.Identifier;
+
+        /// <summary>
+        /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// </summary>
+        public ReceiveMode ReceiveMode => _innerProcessor.ReceiveMode;
+
+        /// <summary>
+        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
+        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
+        /// from a local cache rather than waiting on a service request.
+        /// </summary>
+        public int PrefetchCount => _innerProcessor.PrefetchCount;
+
+        /// <summary>
+        /// Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public bool IsProcessing => _innerProcessor.IsProcessing;
+
+        /// <summary>Gets or sets a value that indicates whether the message-pump should call
+        /// Receiver.CompleteAsync() on messages after the callback has completed processing.</summary>
+        /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
+        public bool AutoComplete => _innerProcessor.AutoComplete;
+
+        /// <summary>
+        /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
+        /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
+        /// </summary>
+        ///
+        /// <value>The maximum duration during which locks are automatically renewed.</value>
+        ///
+        /// <remarks>The message renew can continue for sometime in the background
+        /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
+        public TimeSpan MaxAutoLockRenewalDuration => _innerProcessor.MaxAutoLockRenewalDuration;
+
+        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
+        /// <value>The maximum number of concurrent calls to the callback.</value>
+        public int MaxConcurrentCalls => _innerProcessor.MaxConcurrentCalls;
+
+        /// <summary>
+        /// The fully qualified Service Bus namespace that the receiver is associated with.  This is likely
+        /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        public string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
+
+        internal ServiceBusSessionProcessor(
+            ServiceBusConnection connection,
+            string entityPath,
+            ServiceBusProcessorOptions options,
+            string sessionId = default)
+        {
+            _innerProcessor = new ServiceBusProcessor(
+                connection,
+                entityPath,
+                true,
+                options,
+                sessionId);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusSessionProcessor"/> class for mocking.
+        /// </summary>
+        protected ServiceBusSessionProcessor()
+        {
+        }
+
+        /// <summary>
+        /// The event responsible for processing messages received from the Queue or Subscription. Implementation
+        /// is mandatory.
+        /// </summary>
+        ///
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessSessionMessageEventArgs, Task> ProcessMessageAsync
+        {
+            add
+            {
+                _innerProcessor.ProcessSessionMessageAsync += value;
+
+            }
+
+            remove
+            {
+                _innerProcessor.ProcessSessionMessageAsync -= value;
+            }
+        }
+
+        /// <summary>
+        /// The event responsible for processing unhandled exceptions thrown while this processor is running.
+        /// Implementation is mandatory.
+        /// </summary>
+        ///
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
+        {
+            add
+            {
+                _innerProcessor.ProcessErrorAsync += value;
+            }
+
+            remove
+            {
+                _innerProcessor.ProcessErrorAsync -= value;
+            }
+        }
+
+        /// <summary>
+        /// Signals the <see cref="ServiceBusSessionProcessor" /> to begin processing messages. Should this method be called while the processor
+        /// is running, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="ServiceBusSessionProcessor" /> once it starts running.</param>
+        public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default) =>
+            await _innerProcessor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Signals the <see cref="ServiceBusSessionProcessor" /> to stop processing events. Should this method be called while the processor
+        /// is not running, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="ServiceBusSessionProcessor" /> will keep running.</param>
+        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default) =>
+            await _innerProcessor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        ///
+        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        /// Converts the instance to string representation.
+        /// </summary>
+        ///
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+    }
+}

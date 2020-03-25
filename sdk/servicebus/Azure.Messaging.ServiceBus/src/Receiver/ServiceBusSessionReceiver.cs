@@ -4,62 +4,73 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Describes a Session object. <see cref="ServiceBusSessionManager"/> can be used to perform operations on sessions.
+    /// The <see cref="ServiceBusSessionReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
+    ///  and settling messages from session-enabled Queues and Subscriptions. It is constructed by calling
+    ///  <see cref="ServiceBusClient.GetSessionReceiverAsync(string, ServiceBusReceiverOptions, string, CancellationToken)"/>.
     /// </summary>
-    ///
-    /// <remarks>
-    /// <para>
-    /// Service Bus Sessions, also called 'Groups' in the AMQP 1.0 protocol, are unbounded sequences of related messages. ServiceBus guarantees ordering of messages in a session.
-    /// </para>
-    /// <para>
-    /// Any sender can create a session when submitting messages into a Topic or Queue by setting the <see cref="ServiceBusMessage.SessionId"/> property on Message to some
-    /// application defined unique identifier. At the AMQP 1.0 protocol level, this value maps to the group-id property.
-    /// </para>
-    /// <para>
-    /// Sessions come into existence when there is at least one message with the session's SessionId in the Queue or Topic subscription.
-    /// Once a Session exists, there is no defined moment or gesture for when the session expires or disappears.
-    /// </para>
-    /// </remarks>
-    public class ServiceBusSessionManager
+    public class ServiceBusSessionReceiver : ServiceBusReceiver
     {
-        /// <summary>
-        /// An abstracted Service Bus transport-specific receiver that is associated with the
-        /// Service Bus gateway; intended to perform delegated operations.
-        /// </summary>
-        private readonly TransportReceiver _receiver;
-        private readonly string _identifier;
-
         /// <summary>
         /// The Session Id associated with the receiver.
         /// </summary>
-        public string SessionId => _receiver.SessionId;
+        public string SessionId => InnerReceiver.SessionId;
 
         /// <summary>
-        /// Gets the DateTime that the current receiver is locked until.
+        /// Gets the <see cref="DateTimeOffset"/> that the receiver's session is locked until.
         /// </summary>
-        public DateTimeOffset LockedUntil => _receiver.SessionLockedUntil;
+        public DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceBusSessionManager"/> class.
+        /// Creates a session receiver which can be used to interact with all messages with the same sessionId.
         /// </summary>
         ///
-        /// <param name="receiver">
-        /// An abstracted Service Bus transport-specific receiver that is associated with the
-        /// Service Bus gateway; intended to perform delegated operations.
-        /// </param>
-        /// <param name="identifier"></param>
-        internal ServiceBusSessionManager(
-            TransportReceiver receiver,
-            string identifier)
+        /// <param name="entityPath">The name of the specific queue to associate the receiver with.</param>
+        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
+        /// <param name="sessionId">The sessionId for this receiver</param>
+        /// <param name="options">A set of options to apply when configuring the receiver.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        ///<returns>Returns a new instance of the <see cref="ServiceBusSessionReceiver"/> class.</returns>
+        internal static async Task<ServiceBusSessionReceiver> CreateSessionReceiverAsync(
+            string entityPath,
+            ServiceBusConnection connection,
+            string sessionId = default,
+            ServiceBusReceiverOptions options = default,
+            CancellationToken cancellationToken = default)
         {
-            _receiver = receiver;
-            _identifier = identifier;
+
+            var receiver = new ServiceBusSessionReceiver(
+                connection: connection,
+                entityPath: entityPath,
+                options: options,
+                sessionId: sessionId);
+
+            await receiver.OpenLinkAsync(cancellationToken).ConfigureAwait(false);
+            return receiver;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        /// </summary>
+        ///
+        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
+        /// <param name="entityPath"></param>
+        /// <param name="options">A set of options to apply when configuring the consumer.</param>
+        /// <param name="sessionId"></param>
+        ///
+        internal ServiceBusSessionReceiver(
+            ServiceBusConnection connection,
+            string entityPath,
+            ServiceBusReceiverOptions options,
+            string sessionId = default) :
+            base(connection, entityPath, true, options, sessionId)
+        {
         }
 
         /// <summary>
@@ -112,18 +123,18 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RenewSessionLockStart(_identifier, SessionId);
+            ServiceBusEventSource.Log.RenewSessionLockStart(Identifier, SessionId);
             try
             {
-                await _receiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+                await InnerReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RenewSessionLockException(_identifier, exception);
+                ServiceBusEventSource.Log.RenewSessionLockException(Identifier, exception);
                 throw;
             }
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RenewSessionLockComplete(_identifier);
+            ServiceBusEventSource.Log.RenewSessionLockComplete(Identifier);
         }
     }
 }
