@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
-    public class SessionProcessorLiveTests : ServiceBusTestBase
+    public class SessionProcessorLiveTests : ServiceBusLiveTestBase
     {
         [Test]
         public async Task CannotAddHandlerWhileProcessorIsRunning()
