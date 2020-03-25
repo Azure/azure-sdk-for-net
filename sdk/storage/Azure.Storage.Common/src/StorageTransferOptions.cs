@@ -12,9 +12,22 @@ namespace Azure.Storage
     public struct StorageTransferOptions : IEquatable<StorageTransferOptions>
     {
         /// <summary>
+        /// The maximum length of an transfer in bytes. This value is capped at
+        /// <see cref="int.MaxValue"/>, which is not the largest value supported
+        /// by Azure Storage. Use <see cref="MaximumTransferSize"/> for full
+        /// access of supported values.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public int? MaximumTransferLength
+        {
+            get => (int?)MaximumTransferSize;
+            set => MaximumTransferSize = value;
+        }
+
+        /// <summary>
         /// The maximum length of an transfer in bytes.
         /// </summary>
-        public int? MaximumTransferLength { get; set; }
+        public long? MaximumTransferSize { get; set; }
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.
@@ -24,9 +37,23 @@ namespace Azure.Storage
         /// <summary>
         /// The size of the first range request in bytes. Blobs smaller than this limit will
         /// be downloaded in a single request. Blobs larger than this limit will continue being
-        /// downloaded in chunks of size MaximumTransferLength.
+        /// downloaded in chunks of size <see cref="MaximumTransferSize"/>. This value is capped
+        /// at <see cref="int.MaxValue"/>, which is not the largest value supported by Azure
+        /// Storage. Use <see cref="InitialTransferSize"/> for full access of supported values.
         /// </summary>
-        public int? InitialTransferLength { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public int? InitialTransferLength
+        {
+            get => (int?)InitialTransferSize;
+            set => InitialTransferSize = value;
+        }
+
+        /// <summary>
+        /// The size of the first range request in bytes. Blobs smaller than this limit will
+        /// be downloaded in a single request. Blobs larger than this limit will continue being
+        /// downloaded in chunks of size <see cref="MaximumTransferSize"/>.
+        /// </summary>
+        public long? InitialTransferSize { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -75,9 +102,9 @@ namespace Azure.Storage
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(StorageTransferOptions obj)
-            => MaximumTransferLength == obj.MaximumTransferLength
+            => MaximumTransferSize == obj.MaximumTransferSize
             && MaximumConcurrency == obj.MaximumConcurrency
-            && InitialTransferLength == obj.InitialTransferLength
+            && InitialTransferSize == obj.InitialTransferSize
             ;
     }
 }
