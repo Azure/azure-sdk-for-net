@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
 
         internal static MappingCharFilter DeserializeMappingCharFilter(JsonElement element)
         {
-            IList<string> mappings = new List<string>();
+            IList<string> mappings = default;
             string odatatype = default;
             string name = default;
             foreach (var property in element.EnumerateObject())

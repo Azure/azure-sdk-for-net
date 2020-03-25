@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Credentials of a registered application created for your search service, used for authenticated access to the encryption keys stored in Azure Key Vault. </summary>
@@ -14,6 +16,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="applicationId"> An AAD Application ID that was granted the required access permissions to the Azure Key Vault that is to be used when encrypting your data at rest. The Application ID should not be confused with the Object ID for your AAD Application. </param>
         public AzureActiveDirectoryApplicationCredentials(string applicationId)
         {
+            if (applicationId == null)
+            {
+                throw new ArgumentNullException(nameof(applicationId));
+            }
+
             ApplicationId = applicationId;
         }
 

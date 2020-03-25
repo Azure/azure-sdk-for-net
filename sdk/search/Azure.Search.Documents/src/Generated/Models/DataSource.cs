@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Represents a datasource definition, which can be used to configure an indexer. </summary>
@@ -17,6 +19,19 @@ namespace Azure.Search.Documents.Models
         /// <param name="container"> The data container for the datasource. </param>
         public DataSource(string name, DataSourceType type, DataSourceCredentials credentials, DataContainer container)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (credentials == null)
+            {
+                throw new ArgumentNullException(nameof(credentials));
+            }
+            if (container == null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
             Name = name;
             Type = type;
             Credentials = credentials;

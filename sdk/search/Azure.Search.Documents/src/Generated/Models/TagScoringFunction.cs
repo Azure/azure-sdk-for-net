@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Defines a function that boosts scores of documents with string values matching a given list of tags. </summary>
@@ -16,6 +18,15 @@ namespace Azure.Search.Documents.Models
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         public TagScoringFunction(TagScoringParameters parameters, string fieldName, double boost) : base(fieldName, boost)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+            if (fieldName == null)
+            {
+                throw new ArgumentNullException(nameof(fieldName));
+            }
+
             Parameters = parameters;
             Type = "tag";
         }

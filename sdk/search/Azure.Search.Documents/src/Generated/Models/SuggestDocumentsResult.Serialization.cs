@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     {
         internal static SuggestDocumentsResult DeserializeSuggestDocumentsResult(JsonElement element)
         {
-            IReadOnlyList<SuggestResult> value = new List<SuggestResult>();
+            IReadOnlyList<SuggestResult> value = default;
             double? searchcoverage = default;
             foreach (var property in element.EnumerateObject())
             {

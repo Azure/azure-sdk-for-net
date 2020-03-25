@@ -18,9 +18,9 @@ namespace Azure.Search.Documents.Models
         {
             long? odatacount = default;
             double? searchcoverage = default;
-            IReadOnlyDictionary<string, IReadOnlyList<FacetResult>> searchfacets = default;
+            IReadOnlyDictionary<string, IList<FacetResult>> searchfacets = default;
             SearchOptions searchnextPageParameters = default;
-            IReadOnlyList<SearchResult> value = new List<SearchResult>();
+            IReadOnlyList<SearchResult> value = default;
             string odatanextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    Dictionary<string, IReadOnlyList<FacetResult>> dictionary = new Dictionary<string, IReadOnlyList<FacetResult>>();
+                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         List<FacetResult> array = new List<FacetResult>();

@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
 
         internal static DictionaryDecompounderTokenFilter DeserializeDictionaryDecompounderTokenFilter(JsonElement element)
         {
-            IList<string> wordList = new List<string>();
+            IList<string> wordList = default;
             int? minWordSize = default;
             int? minSubwordSize = default;
             int? maxSubwordSize = default;

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,12 +16,24 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
+        internal IndexDocumentsResult(IEnumerable<IndexingResult> results)
+        {
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
+            Results = results.ToArray();
+        }
+
+        /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
+        /// <param name="results"> The list of status information for each document in the indexing request. </param>
         internal IndexDocumentsResult(IReadOnlyList<IndexingResult> results)
         {
             Results = results;
         }
 
         /// <summary> The list of status information for each document in the indexing request. </summary>
-        public IReadOnlyList<IndexingResult> Results { get; } = new List<IndexingResult>();
+        public IReadOnlyList<IndexingResult> Results { get; }
     }
 }

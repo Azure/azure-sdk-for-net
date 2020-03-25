@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,9 +16,14 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of CorsOptions. </summary>
         /// <param name="allowedOrigins"> The list of origins from which JavaScript code will be granted access to your index. Can contain a list of hosts of the form {protocol}://{fully-qualified-domain-name}[:{port#}], or a single &apos;*&apos; to allow all origins (not recommended). </param>
-        public CorsOptions(IList<string> allowedOrigins)
+        public CorsOptions(IEnumerable<string> allowedOrigins)
         {
-            AllowedOrigins = allowedOrigins;
+            if (allowedOrigins == null)
+            {
+                throw new ArgumentNullException(nameof(allowedOrigins));
+            }
+
+            AllowedOrigins = allowedOrigins.ToArray();
         }
 
         /// <summary> Initializes a new instance of CorsOptions. </summary>
@@ -29,7 +36,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The list of origins from which JavaScript code will be granted access to your index. Can contain a list of hosts of the form {protocol}://{fully-qualified-domain-name}[:{port#}], or a single &apos;*&apos; to allow all origins (not recommended). </summary>
-        public IList<string> AllowedOrigins { get; } = new List<string>();
+        public IList<string> AllowedOrigins { get; }
         /// <summary> The duration for which browsers should cache CORS preflight responses. Defaults to 5 minutes. </summary>
         public long? MaxAgeInSeconds { get; set; }
     }

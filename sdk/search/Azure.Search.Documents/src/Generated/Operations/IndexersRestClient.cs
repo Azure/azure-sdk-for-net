@@ -144,7 +144,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Runs an indexer on-demand. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to run. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response> RunAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -176,7 +176,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Runs an indexer on-demand. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to run. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response Run(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -240,7 +240,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to create or update. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -284,7 +284,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to create or update. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -355,7 +355,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -389,7 +389,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -442,7 +442,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves an indexer definition. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<SearchIndexer>> GetAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -479,7 +479,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves an indexer definition. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SearchIndexer> Get(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -537,12 +537,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ListIndexersResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("IndexersClient.List");
             scope.Start();
             try
@@ -570,12 +569,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListIndexersResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("IndexersClient.List");
             scope.Start();
             try
@@ -625,7 +623,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new indexer. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="indexer"> The definition of the indexer to create or update. </param>
+        /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<SearchIndexer>> CreateAsync(Guid? xMsClientRequestId, SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
@@ -662,7 +660,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new indexer. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="indexer"> The definition of the indexer to create or update. </param>
+        /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SearchIndexer> Create(Guid? xMsClientRequestId, SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
@@ -717,7 +715,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<IndexerExecutionInfo>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -754,7 +752,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<IndexerExecutionInfo> GetStatus(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)

@@ -15,12 +15,12 @@ namespace Azure.AI.FormRecognizer
     {
         internal static KeysResult_internal DeserializeKeysResult_internal(JsonElement element)
         {
-            IReadOnlyDictionary<string, IReadOnlyList<string>> clusters = new Dictionary<string, IReadOnlyList<string>>();
+            IReadOnlyDictionary<string, IList<string>> clusters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusters"))
                 {
-                    Dictionary<string, IReadOnlyList<string>> dictionary = new Dictionary<string, IReadOnlyList<string>>();
+                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         List<string> array = new List<string>();

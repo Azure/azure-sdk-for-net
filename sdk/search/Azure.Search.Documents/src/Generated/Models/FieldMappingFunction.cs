@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -16,6 +17,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the field mapping function. </param>
         public FieldMappingFunction(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             Name = name;
         }
 

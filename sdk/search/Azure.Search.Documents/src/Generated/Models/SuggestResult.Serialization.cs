@@ -16,7 +16,8 @@ namespace Azure.Search.Documents.Models
         internal static SuggestResult DeserializeSuggestResult(JsonElement element)
         {
             string searchtext = default;
-            IDictionary<string, object> additionalProperties = new Dictionary<string, object>();
+            IReadOnlyDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@search.text"))
@@ -24,8 +25,9 @@ namespace Azure.Search.Documents.Models
                     searchtext = property.Value.GetString();
                     continue;
                 }
-                additionalProperties.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
+            additionalProperties = additionalPropertiesDictionary;
             return new SuggestResult(searchtext, additionalProperties);
         }
     }

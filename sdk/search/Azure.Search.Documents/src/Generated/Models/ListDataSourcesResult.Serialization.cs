@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     {
         internal static ListDataSourcesResult DeserializeListDataSourcesResult(JsonElement element)
         {
-            IReadOnlyList<DataSource> value = new List<DataSource>();
+            IReadOnlyList<DataSource> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))

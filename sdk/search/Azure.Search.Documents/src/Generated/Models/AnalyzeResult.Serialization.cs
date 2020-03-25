@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     {
         internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {
-            IReadOnlyList<TokenInfo> tokens = new List<TokenInfo>();
+            IReadOnlyList<TokenInfo> tokens = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tokens"))

@@ -55,7 +55,6 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Model>> OperationAsync(Model body, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
@@ -86,7 +85,6 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Model> Operation(Model body, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try

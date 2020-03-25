@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> The ErrorInformation. </summary>
@@ -15,6 +17,15 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="message"> . </param>
         internal FormRecognizerError(string code, string message)
         {
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             Code = code;
             Message = message;
         }

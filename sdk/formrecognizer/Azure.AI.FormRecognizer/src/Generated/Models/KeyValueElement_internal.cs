@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -16,6 +17,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text"> The text content of the key or value. </param>
         internal KeyValueElement_internal(string text)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
             Text = text;
         }
 

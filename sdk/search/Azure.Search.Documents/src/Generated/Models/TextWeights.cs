@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -16,10 +17,15 @@ namespace Azure.Search.Documents.Models
         /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
         public TextWeights(IDictionary<string, double> weights)
         {
+            if (weights == null)
+            {
+                throw new ArgumentNullException(nameof(weights));
+            }
+
             Weights = weights;
         }
 
         /// <summary> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </summary>
-        public IDictionary<string, double> Weights { get; } = new Dictionary<string, double>();
+        public IDictionary<string, double> Weights { get; }
     }
 }
