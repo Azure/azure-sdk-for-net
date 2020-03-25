@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Text;
@@ -21,9 +22,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     public class ChallengeBasedAuthenticationPolicyTests
     {
         private const string TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
-        private const string AccessToken = "NzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3"; // base64(TenantId)
         private const string VaultHost = "test.vault.azure.net";
-        private static readonly Uri s_vaultUri = new Uri("https://" + VaultHost);
+
+        private static Uri VaultUri => new Uri("https://" + VaultHost);
 
         [Test]
         public async Task SingleRequest()
@@ -40,14 +41,16 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             };
 
             using AzureEventSourceListener logger = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
-            SecretClient client = new SecretClient(s_vaultUri, new MockCredential(transport), options);
+            SecretClient client = new SecretClient(VaultUri, new MockCredential(transport), options);
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
             Assert.AreEqual("secret-value", secret.Value);
         }
 
+        // Test concurrent authentication requests with immediate, fast, and slow network simulations.
         [TestCase(10, 0, 0)]
-        [TestCase(10, 0, 500)]
+        [TestCase(10, 20, 200)]
+        [TestCase(10, 200, 2000)]
         public async Task MultipleRequests(int numberOfRequests, int minDelay, int maxDelay)
         {
             Random rand = new Random();
@@ -61,6 +64,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     delay = rand.Next(minDelay, maxDelay);
                 }
 
+                Trace.WriteLine($"[{Thread.CurrentThread.ManagedThreadId:x4}] Delaying request [{args.Request.ClientRequestId}] by {delay}ms: {args.Request.Method} {args.Request.Uri}");
                 Thread.Sleep(delay);
             };
 
@@ -76,20 +80,56 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             };
 
             using AzureEventSourceListener logger = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
-            SecretClient client = new SecretClient(s_vaultUri, new MockCredential(transport), options);
+            SecretClient client = new SecretClient(VaultUri, new MockCredential(transport), options);
 
             Task<Response<KeyVaultSecret>>[] tasks = new Task<Response<KeyVaultSecret>>[numberOfRequests];
             for (int i = 0; i < tasks.Length; ++i)
             {
-                tasks[i] = client.GetSecretAsync("test-secret");
+                tasks[i] = Task.Run(async () => await client.GetSecretAsync("test-secret").ConfigureAwait(false));
             }
 
-            await Task.WhenAll(tasks).ConfigureAwait(false);
-
-            for (int i = 0; i < tasks.Length; ++i)
+            foreach (KeyVaultSecret secret in await Task.WhenAll(tasks))
             {
-                KeyVaultSecret secret = await tasks[i].ConfigureAwait(false);
                 Assert.AreEqual("secret-value", secret.Value);
+            }
+        }
+
+        [Test]
+        public async Task TenantChangedRequest()
+        {
+            MockTransportBuilder builder = new MockTransportBuilder
+            {
+                AccessTokenLifetime = TimeSpan.Zero,
+            };
+            MockTransport transport = builder.Build();
+
+            SecretClientOptions options = new SecretClientOptions
+            {
+                Transport = transport,
+                Diagnostics =
+                {
+                    LoggedHeaderNames = { "*" },
+                    IsLoggingContentEnabled = true,
+                },
+            };
+
+            MockCredential credential = new MockCredential(transport);
+
+            using AzureEventSourceListener logger = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
+            SecretClient client = new SecretClient(VaultUri, credential, options);
+
+            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+            Assert.AreEqual("secret-value", secret.Value);
+
+            builder.TenantId = "de763a21-49f7-4b08-a8e1-52c8fbc103b4";
+
+            try
+            {
+                await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+                Assert.Fail("Expected a 401 Unauthorized response");
+            }
+            catch (RequestFailedException ex) when (ex.Status == 401)
+            {
             }
         }
 
@@ -101,40 +141,43 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             public event EventHandler<MockRequestEventArgs> Request;
 
+            public string AccessToken => Base64(TenantId);
+
+            public TimeSpan AccessTokenLifetime { get; set; } = TimeSpan.FromMinutes(5);
+
+            public string TenantId { get; set; } = ChallengeBasedAuthenticationPolicyTests.TenantId;
+
             public MockTransport Build() => new MockTransport(request =>
             {
                 OnRequest(request);
 
                 switch (request.Uri.Host)
                 {
-                    case VaultHost when !request.Headers.TryGetValue(AuthorizationHeader, out _):
+                    case VaultHost when request.Headers.TryGetValue(AuthorizationHeader, out string headerValue) && headerValue == $"Bearer {AccessToken}":
+                        return new MockResponse(200, "OK")
+                        {
+                            ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                        };
+
+                    // Key Vault returns 401 with a challenge for an unauthorized access token.
+                    case VaultHost:
                         MockResponse response = new MockResponse(401, "Unauthorized");
                         response.AddHeader(new HttpHeader(ChallengeHeader, @$"Bearer authorization=""https://login.windows.net/{TenantId}"", resource=""https://vault.azure.net"""));
 
                         return response;
 
-                    case VaultHost when request.Headers.TryGetValue(AuthorizationHeader, out string headerValue):
-                        if (headerValue == $"Bearer {AccessToken}")
-                        {
-                            return new MockResponse(200, "OK")
-                            {
-                                ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
-                            };
-                        }
-
-                        return new MockResponse(403, "Forbidden");
-
                     case "login.windows.net" when s_loginPath.IsMatch(request.Uri.Path):
                         string tenantId = s_loginPath.Match(request.Uri.Path).Groups["tenantId"].Value;
                         string accessToken = Base64(tenantId);
 
+                        AccessToken token = new AccessToken(accessToken, DateTimeOffset.UtcNow + AccessTokenLifetime);
                         return new MockResponse(200, "OK")
                         {
-                            ContentStream = new AccessToken(accessToken, DateTimeOffset.UtcNow.AddMinutes(5)).ToStream(),
+                            ContentStream = token.ToStream(),
                         };
 
                     default:
-                        throw new AssertionException("Unexpected request");
+                        throw new AssertionException($"Unexpected request: {request}");
                 }
             });
 
