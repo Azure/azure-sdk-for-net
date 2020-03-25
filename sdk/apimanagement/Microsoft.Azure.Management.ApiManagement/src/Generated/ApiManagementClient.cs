@@ -247,6 +247,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual ILoggerOperations Logger { get; private set; }
 
         /// <summary>
+        /// Gets the INamedValueOperations.
+        /// </summary>
+        public virtual INamedValueOperations NamedValue { get; private set; }
+
+        /// <summary>
         /// Gets the INetworkStatusOperations.
         /// </summary>
         public virtual INetworkStatusOperations NetworkStatus { get; private set; }
@@ -320,11 +325,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IProductPolicyOperations.
         /// </summary>
         public virtual IProductPolicyOperations ProductPolicy { get; private set; }
-
-        /// <summary>
-        /// Gets the INamedValueOperations.
-        /// </summary>
-        public virtual INamedValueOperations NamedValue { get; private set; }
 
         /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
@@ -671,6 +671,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             IdentityProvider = new IdentityProviderOperations(this);
             Issue = new IssueOperations(this);
             Logger = new LoggerOperations(this);
+            NamedValue = new NamedValueOperations(this);
             NetworkStatus = new NetworkStatusOperations(this);
             Notification = new NotificationOperations(this);
             NotificationRecipientUser = new NotificationRecipientUserOperations(this);
@@ -686,7 +687,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             ProductGroup = new ProductGroupOperations(this);
             ProductSubscriptions = new ProductSubscriptionsOperations(this);
             ProductPolicy = new ProductPolicyOperations(this);
-            NamedValue = new NamedValueOperations(this);
             QuotaByCounterKeys = new QuotaByCounterKeysOperations(this);
             QuotaByPeriodKeys = new QuotaByPeriodKeysOperations(this);
             Region = new RegionOperations(this);
@@ -702,7 +702,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             UserIdentities = new UserIdentitiesOperations(this);
             UserConfirmationPassword = new UserConfirmationPasswordOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-12-01-preview";
+            ApiVersion = "2019-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

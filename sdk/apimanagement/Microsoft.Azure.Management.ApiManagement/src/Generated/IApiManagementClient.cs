@@ -242,6 +242,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         ILoggerOperations Logger { get; }
 
         /// <summary>
+        /// Gets the INamedValueOperations.
+        /// </summary>
+        INamedValueOperations NamedValue { get; }
+
+        /// <summary>
         /// Gets the INetworkStatusOperations.
         /// </summary>
         INetworkStatusOperations NetworkStatus { get; }
@@ -315,11 +320,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IProductPolicyOperations.
         /// </summary>
         IProductPolicyOperations ProductPolicy { get; }
-
-        /// <summary>
-        /// Gets the INamedValueOperations.
-        /// </summary>
-        INamedValueOperations NamedValue { get; }
 
         /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
