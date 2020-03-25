@@ -93,21 +93,18 @@ namespace Azure.Messaging.ServiceBus
         internal bool IsSessionProcessor { get; }
 
         /// <summary>
-        /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
-        /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
-        /// from a local cache rather than waiting on a service request.
+        /// The number of messages that will be eagerly requested from Queues or Subscriptions
+        /// during processing. This is intended to help maximize throughput by allowing the
+        /// processor to receive from a local cache rather than waiting on a service request.
         /// </summary>
         public int PrefetchCount { get; }
 
-        /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
-        private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
-
         /// <summary>
-        /// Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
+        /// Indicates whether or not this <see cref="ServiceBusProcessor"/> is currently processing messages.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the client is processing messages; otherwise, <c>false</c>.
         /// </value>
         ///
         public bool IsProcessing => ActiveReceiveTask != null;
@@ -136,8 +133,10 @@ namespace Azure.Messaging.ServiceBus
         private const int DefaultMaxConcurrentCalls = 1;
         private const int DefaultMaxConcurrentSessions = 8;
 
-        /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// Receiver.CompleteAsync() on messages after the callback has completed processing.</summary>
+        /// <summary>Gets or sets a value that indicates whether the Processor should automatically
+        /// complete messages after the event handler has completed processing. If the event handler
+        /// triggers an exception, the message will not be automatically completed.</summary>
+        ///
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete { get; }
 
@@ -183,7 +182,6 @@ namespace Azure.Messaging.ServiceBus
             EntityPath = entityPath;
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
 
-            _retryOptions = _connection.RetryOptions;
             ReceiveMode = options.ReceiveMode;
             PrefetchCount = options.PrefetchCount;
             MaxAutoLockRenewalDuration = options.MaxAutoLockRenewalDuration;
@@ -552,11 +550,21 @@ namespace Azure.Messaging.ServiceBus
                     await MaxConcurrentAcceptSessionsSemaphore.WaitAsync().ConfigureAwait(false);
                     try
                     {
-                        receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
-                            entityPath: EntityPath,
-                            connection: _connection,
-                            options: receiverOptions,
-                            cancellationToken: cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+                                entityPath: EntityPath,
+                                connection: _connection,
+                                options: receiverOptions,
+                                cancellationToken: cancellationToken).ConfigureAwait(false);
+                        }
+                        catch (ServiceBusException ex)
+                        when (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
+                        {
+                            // these exceptions are expected when no messages are available
+                            // so simply return and allow this to be tried again on next thread
+                            return;
+                        }
                         renewSessionLockCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                         renewSessionLock = RenewSessionLock(
                             receiver: (ServiceBusSessionReceiver) receiver,

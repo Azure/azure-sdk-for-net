@@ -285,6 +285,7 @@ namespace Azure.Messaging.ServiceBus
                 return null;
             }
         }
+
         /// <summary>
         /// Creates a new message from the specified payload.
         /// </summary>

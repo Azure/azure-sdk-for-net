@@ -136,25 +136,5 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RenewSessionLockComplete(Identifier);
         }
-
-        /// <summary>
-        /// Renews the lock on the message. The lock will be renewed based on the setting specified on the queue.
-        /// </summary>
-        ///
-        /// <remarks>
-        /// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
-        /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
-        /// If processing of the message requires longer than this duration, the lock needs to be renewed.
-        /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
-        /// </remarks>
-        ///
-        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to renew the lock for.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public override Task<DateTimeOffset> RenewMessageLockAsync(
-            string lockToken,
-            CancellationToken cancellationToken = default)
-        {
-            throw new InvalidOperationException(Resources.CannotLockMessageOnSessionEntity);
-        }
     }
 }

@@ -483,7 +483,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         var message = args.Message;
                         var lockedUntil = args.SessionLockedUntil;
-                        await Task.Delay(lockDuration);
+                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(1)));
                         if (!args.CancellationToken.IsCancellationRequested)
                         {
                             // only do the assertion if cancellation wasn't requested as otherwise
@@ -507,6 +507,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await Task.WhenAll(completionSources.Select(source => source.Task));
                 await processor.StopProcessingAsync();
                 Assert.AreEqual(numThreads, messageCt);
+            }
+        }
+
+        [Test]
+        public async Task StopProcessingDoesNotCancelAutoCompletion()
+        {
+            var lockDuration = TimeSpan.FromSeconds(5);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true,
+                lockDuration: lockDuration))
+            {
+                await using var client = GetClient();
+                var sender = client.GetSender(scope.QueueName);
+                await sender.SendAsync(GetMessage("sessionId"));
+                var processor = client.GetSessionProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    AutoComplete = true
+                });
+                var tcs = new TaskCompletionSource<bool>();
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    tcs.SetResult(true);
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+                Assert.That(
+                    async() => await GetNoRetryClient().GetSessionReceiverAsync(scope.QueueName),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
             }
         }
 

@@ -15,6 +15,18 @@ namespace Azure.Messaging.ServiceBus
     {
 
         /// <summary>
+        /// The received message to be processed.
+        /// </summary>
+        public ServiceBusReceivedMessage Message { get; }
+
+        /// <summary>
+        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
+        /// </summary>
+        public CancellationToken CancellationToken { get; }
+
+        private readonly ServiceBusReceiver _receiver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
         /// </summary>
         ///
@@ -27,18 +39,6 @@ namespace Azure.Messaging.ServiceBus
             _receiver = receiver;
             CancellationToken = cancellationToken;
         }
-
-        /// <summary>
-        /// The received message to be processed.
-        /// </summary>
-        public ServiceBusReceivedMessage Message { get; }
-
-        /// <summary>
-        /// A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
-        /// </summary>
-        public CancellationToken CancellationToken { get; }
-
-        private readonly ServiceBusReceiver _receiver;
 
         /// <summary>
         ///
@@ -128,7 +128,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="message"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task RenewMessageLock(
+        public async Task RenewMessageLockAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default) =>
             await _receiver.RenewMessageLockAsync(

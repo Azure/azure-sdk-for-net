@@ -263,7 +263,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>An <see cref="IList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
         public virtual async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
             long sequenceNumber,
-            int maxMessages = 1,
+            int maxMessages,
             CancellationToken cancellationToken = default) =>
             await PeekBatchAtInternalAsync(
                 sequenceNumber: sequenceNumber,
@@ -368,7 +368,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task CompleteAsync(
+        internal virtual async Task CompleteAsync(
             IEnumerable<ServiceBusReceivedMessage> messages,
             CancellationToken cancellationToken = default)
         {
@@ -391,7 +391,7 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task CompleteAsync(
+        internal virtual async Task CompleteAsync(
             IEnumerable<string> lockTokens,
             CancellationToken cancellationToken = default)
         {
@@ -834,6 +834,7 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(lockToken, nameof(lockToken));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
+            ThrowIfSessionReceiver();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RenewMessageLockStart(Identifier, 1, lockToken);
             DateTimeOffset lockedUntil;
@@ -852,6 +853,17 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RenewMessageLockComplete(Identifier);
             return lockedUntil;
+        }
+
+        /// <summary>
+        /// Throws an exception if the receiver instance is a session receiver.
+        /// </summary>
+        private void ThrowIfSessionReceiver()
+        {
+            if (IsSessionReceiver)
+            {
+                throw new InvalidOperationException(Resources.CannotLockMessageOnSessionEntity);
+            }
         }
 
         /// <summary>

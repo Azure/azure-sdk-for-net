@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         if (!autoComplete)
                         {
                             var lockedUntil = message.LockedUntil;
-                            await args.RenewMessageLock(message);
+                            await args.RenewMessageLockAsync(message);
                             Assert.That(message.LockedUntil > lockedUntil);
                             await args.CompleteAsync(message, args.CancellationToken);
                         }
@@ -198,7 +198,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         var message = args.Message;
                         var lockedUntil = message.LockedUntil;
-                        await Task.Delay(lockDuration);
+                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(1)));
                         if (!args.CancellationToken.IsCancellationRequested)
                         {
                             // only do the assertion if cancellation wasn't requested as otherwise

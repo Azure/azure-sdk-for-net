@@ -241,7 +241,7 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(queueName);
 
-            return await ServiceBusReceiver.CreateSessionReceiverAsync(
+            return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: queueName,
                 connection: Connection,
                 sessionId: sessionId,
@@ -262,7 +262,7 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(topicName);
 
-            return await ServiceBusReceiver.CreateSessionReceiverAsync(
+            return await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 sessionId: sessionId,
@@ -278,12 +278,16 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public ServiceBusReceiver GetDeadLetterReceiver(
             string queueName,
-            ServiceBusReceiverOptions options = default) =>
-            new ServiceBusReceiver(
+            ServiceBusReceiverOptions options = default)
+        {
+            ValidateEntityName(queueName);
+
+            return new ServiceBusReceiver(
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatDeadLetterPath(queueName),
                 isSessionEntity: false,
                 options: options);
+        }
 
         /// <summary>
         ///
@@ -295,8 +299,11 @@ namespace Azure.Messaging.ServiceBus
         public ServiceBusReceiver GetDeadLetterReceiver(
             string topicName,
             string subscriptionName,
-            ServiceBusReceiverOptions options = default) =>
-            new ServiceBusReceiver(
+            ServiceBusReceiverOptions options = default)
+        {
+            ValidateEntityName(topicName);
+
+            return new ServiceBusReceiver(
                 connection: Connection,
                 entityPath: EntityNameFormatter.FormatDeadLetterPath(
                     EntityNameFormatter.FormatSubscriptionPath(
@@ -304,14 +311,18 @@ namespace Azure.Messaging.ServiceBus
                         subscriptionName)),
                 isSessionEntity: false,
                 options: options);
+        }
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="queueName"></param>
         /// <returns></returns>
-        public ServiceBusProcessor GetProcessor(string queueName) =>
-            new ServiceBusProcessor(
+        public ServiceBusProcessor GetProcessor(string queueName)
+        {
+            ValidateEntityName(queueName);
+
+            return new ServiceBusProcessor(
                 entityPath: queueName,
                 connection: Connection,
                 isSessionEntity: false,
@@ -389,7 +400,7 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(queueName);
 
-            return new ServiceBusProcessor(
+            return new ServiceBusSessionProcessor(
                 entityPath: queueName,
                 connection: Connection,
                 sessionId: sessionId,
@@ -409,7 +420,7 @@ namespace Azure.Messaging.ServiceBus
         {
             ValidateEntityName(topicName);
 
-            return new ServiceBusProcessor(
+            return new ServiceBusSessionProcessor(
                 entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName),
                 connection: Connection,
                 sessionId: sessionId,
@@ -429,9 +440,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Subscription manager is used for all basic interactions with a Service Bus Subscription.
+        /// The <see cref="ServiceBusRuleManager"/> is used to manage the rules for a subscription.
         /// </summary>
-        internal ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName) =>
-            new ServiceBusRuleManager(topicName, subscriptionName);
+        internal ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName)
+        {
+            ValidateEntityName(topicName);
+
+            return new ServiceBusRuleManager(topicName, subscriptionName);
+        }
     }
 }

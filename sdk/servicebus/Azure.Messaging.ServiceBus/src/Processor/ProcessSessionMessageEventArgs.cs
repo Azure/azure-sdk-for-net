@@ -24,7 +24,20 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public CancellationToken CancellationToken { get; }
 
+        /// <summary>
+        /// The session receiver that will be used for all settlement methods for the args.
+        /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
+
+        /// <summary>
+        /// The Session Id associated with the receiver.
+        /// </summary>
+        public string SessionId => _sessionReceiver.SessionId;
+
+        /// <summary>
+        /// Gets the DateTime that the current receiver is locked until.
+        /// </summary>
+        public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
@@ -42,16 +55,6 @@ namespace Azure.Messaging.ServiceBus
             _sessionReceiver = receiver;
             CancellationToken = cancellationToken;
         }
-
-        /// <summary>
-        /// The Session Id associated with the receiver.
-        /// </summary>
-        public string SessionId => _sessionReceiver.SessionId;
-
-        /// <summary>
-        /// Gets the DateTime that the current receiver is locked until.
-        /// </summary>
-        public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
         /// Gets the session state.
