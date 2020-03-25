@@ -559,6 +559,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
+        [Ignore("Once get correct provider name will remove ignore attribute.")]
         public async Task VerifyGetIssuer()
         {
             string issuerName = WellKnownIssuerNames.Self;
@@ -571,9 +572,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await Client.CreateIssuerAsync(issuer);
 
-            Response<CertificateIssuer> getIssuerResponse = await Client.GetIssuerAsync(WellKnownIssuerNames.Self);
-
-            CertificateIssuer getIssuer = getIssuerResponse.Value;
+            CertificateIssuer getIssuer = await Client.GetIssuerAsync(WellKnownIssuerNames.Self);
 
             Assert.NotNull(getIssuer);
             Assert.NotNull(getIssuer.Id);
@@ -581,6 +580,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
+        [Ignore("Once get correct provider name will remove ignore attribute.")]
         public async Task VerifyUpdateIssuer()
         {
             string issuerName = WellKnownIssuerNames.Self;
@@ -599,9 +599,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             issuer = new CertificateIssuer(issuerProperties);
 
-            Response<CertificateIssuer> updateIssuerResponse = await Client.UpdateIssuerAsync(issuer);
-
-            CertificateIssuer updateIssuer = updateIssuerResponse.Value;
+            CertificateIssuer updateIssuer = await Client.UpdateIssuerAsync(issuer);
 
             Assert.NotNull(updateIssuer);
             Assert.NotNull(updateIssuer.UpdatedOn);
@@ -609,10 +607,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
-        [Ignore("It's a bug afer investigation")]
         public async Task VerifyGetContacts()
         {
-            List<CertificateContact> contacts = new List<CertificateContact>();
+            IList<CertificateContact> contacts = new List<CertificateContact>();
             contacts.Add(new CertificateContact
             {
                 Email = "admin@contoso.com",
@@ -629,6 +626,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             RegisterForCleanUpContacts(contacts);
 
             await Client.SetContactsAsync(contacts);
+
             Response<IList<CertificateContact>> getContactsResponse = await Client.GetContactsAsync();
 
             IList<CertificateContact> getContacts = getContactsResponse.Value;
@@ -652,13 +650,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificatePolicy certificatePolicy = DefaultPolicy;
 
-            await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+
+            Assert.NotNull(original);
 
             RegisterForCleanup(certName);
 
-            Response<CertificatePolicy> policyResponse = await Client.GetCertificatePolicyAsync(certName);
-
-            CertificatePolicy policy = policyResponse.Value;
+            CertificatePolicy policy = await Client.GetCertificatePolicyAsync(certName);
 
             Assert.NotNull(policy);
             Assert.AreEqual(DefaultPolicy.KeyType, policy.KeyType);
@@ -690,9 +690,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 KeySize = 3072
             };
 
-            Response<CertificatePolicy> updatePolicyResponse = await Client.UpdateCertificatePolicyAsync(certName, certificatePolicy);
-
-            CertificatePolicy updatePolicy = updatePolicyResponse.Value;
+            CertificatePolicy updatePolicy = await Client.UpdateCertificatePolicyAsync(certName, certificatePolicy);
 
             Assert.NotNull(updatePolicy);
             Assert.NotNull(updatePolicy.UpdatedOn);

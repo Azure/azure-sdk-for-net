@@ -13,6 +13,7 @@
 
 ### Fixed
 
+- Correct ContactsPath from "/contacts/" to "/certificates/contacts/".
 - Reset challenge cache so tests can be run individually and in any order. ([#9356](https://github.com/Azure/azure-sdk-for-net/issues/9356))
 - Properly import PKCS12 or PEM-encoded certificate. ([#9963](https://github.com/Azure/azure-sdk-for-net/issues/9963))
 - Serialize the `MergeCertificateOptions` in `CertificateClient.MergeCertificate`. ([#9986](https://github.com/Azure/azure-sdk-for-net/issues/9986))

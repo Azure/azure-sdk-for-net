@@ -565,7 +565,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(keyName);
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
-            DeletedKey deletedKey = operation.Value;
+
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
@@ -585,7 +586,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(keyName);
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
-            DeletedKey deletedKey = operation.Value;
+
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
 
             Assert.NotNull(deletedKey.DeletedOn);
             Assert.NotNull(deletedKey.RecoveryId);
@@ -611,7 +613,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(key.Name);
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
-            DeletedKey deletedKey = operation.Value;
+
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
 
             await WaitForDeletedKey(keyName);
 
@@ -635,7 +638,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(keyName);
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
-            DeletedKey deletedKey = operation.Value;
+
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
 
             await WaitForDeletedKey(keyName);
 
@@ -659,7 +663,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(keyName);
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
-            DeletedKey deletedKey = operation.Value;
+
+            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
 
             await WaitForDeletedKey(keyName);
 
@@ -716,14 +721,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey ecHsmKey = await Client.CreateEcKeyAsync(options);
 
             DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
-            DeletedKey deletedKey = deleteOperation.Value;
+
+            DeletedKey deletedKey = await deleteOperation.WaitForCompletionAsync();
 
             await WaitForDeletedKey(keyName);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
 
             RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(keyName);
-            KeyVaultKey recoverKeyResult = recoverOperation.Value;
+
+            KeyVaultKey recoverKeyResult = await recoverOperation.WaitForCompletionAsync();
 
             await WaitForKey(keyName);
 
@@ -745,14 +752,16 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey rsaHsmKey = await Client.CreateRsaKeyAsync(options);
 
             DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
-            DeletedKey deletedKey = deleteOperation.Value;
+
+            DeletedKey deletedKey = await deleteOperation.WaitForCompletionAsync();
 
             await WaitForDeletedKey(keyName);
 
             Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAsync(keyName));
 
             RecoverDeletedKeyOperation recoverOperation = await Client.StartRecoverDeletedKeyAsync(keyName);
-            KeyVaultKey recoverKeyResult = recoverOperation.Value;
+
+            KeyVaultKey recoverKeyResult = await recoverOperation.WaitForCompletionAsync();
 
             await WaitForKey(keyName);
 

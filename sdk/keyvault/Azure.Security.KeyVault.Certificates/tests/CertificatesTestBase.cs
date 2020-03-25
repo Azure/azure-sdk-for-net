@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private readonly ConcurrentQueue<string> _issuerToDelete = new ConcurrentQueue<string>();
 
-        private readonly ConcurrentQueue<List<CertificateContact>> _contactsToDelete = new ConcurrentQueue<List<CertificateContact>>();
+        private readonly ConcurrentQueue<IEnumerable<CertificateContact>> _contactsToDelete = new ConcurrentQueue<IEnumerable<CertificateContact>>();
 
         public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 await DeleteIssuer(name);
             }
 
-            while (_contactsToDelete.TryDequeue(out List<CertificateContact> contacts))
+            while (_contactsToDelete.TryDequeue(out IEnumerable<CertificateContact> contacts))
             {
                 await DeleteContacts();
             }
@@ -275,7 +275,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             _issuerToDelete.Enqueue(issuerName);
         }
 
-        protected void RegisterForCleanUpContacts(List<CertificateContact> contacts)
+        protected void RegisterForCleanUpContacts(IEnumerable<CertificateContact> contacts)
         {
             _contactsToDelete.Enqueue(contacts);
         }
