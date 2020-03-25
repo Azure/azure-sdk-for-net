@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeBusinessCardOperation : Operation<IReadOnlyList<BusinessCard>>
+    public class RecognizeBusinessCardsOperation : Operation<IReadOnlyList<BusinessCard>>
     {
         private Response _response;
         private IReadOnlyList<BusinessCard> _value;
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override ValueTask<Response<IReadOnlyList<BusinessCard>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal RecognizeBusinessCardOperation(ServiceClient operations, string operationLocation)
+        internal RecognizeBusinessCardsOperation(ServiceClient operations, string operationLocation)
         {
             _serviceClient = operations;
 
@@ -57,12 +57,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RecognizeBusinessCardOperation"/> instance.
+        /// Initializes a new <see cref="RecognizeBusinessCardsOperation"/> instance.
         /// </summary>
         /// <param name="id">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="cancellationToken"></param>
-        public RecognizeBusinessCardOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public RecognizeBusinessCardsOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
         {
             Id = id;
             _serviceClient = client.ServiceClient;

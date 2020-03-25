@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeUSReceiptOperation : Operation<IReadOnlyList<UnitedStatesReceipt>>
+    public class RecognizeUSReceiptsOperation : Operation<IReadOnlyList<UnitedStatesReceipt>>
     {
         private Response _response;
         private IReadOnlyList<UnitedStatesReceipt> _value;
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override ValueTask<Response<IReadOnlyList<UnitedStatesReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal RecognizeUSReceiptOperation(ServiceClient operations, string operationLocation)
+        internal RecognizeUSReceiptsOperation(ServiceClient operations, string operationLocation)
         {
             _serviceClient = operations;
 
@@ -57,12 +57,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RecognizeUSReceiptOperation"/> instance.
+        /// Initializes a new <see cref="RecognizeUSReceiptsOperation"/> instance.
         /// </summary>
         /// <param name="id">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="cancellationToken"></param>
-        public RecognizeUSReceiptOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public RecognizeUSReceiptsOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
         {
             Id = id;
             _serviceClient = client.ServiceClient;

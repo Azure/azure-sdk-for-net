@@ -10,11 +10,11 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeFormOperation : Operation<IReadOnlyList<CustomFormPage>>
+    public class RecognizeFormsOperation : Operation<IReadOnlyList<CustomFormPage>>
     {
         private Response _response;
         private IReadOnlyList<CustomFormPage> _value;
@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="operations"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal RecognizeFormOperation(ServiceClient operations, string modelId, string operationLocation)
+        internal RecognizeFormsOperation(ServiceClient operations, string modelId, string operationLocation)
         {
             _serviceClient = operations;
             _modelId = modelId;
@@ -65,12 +65,12 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RecognizeFormOperation"/> instance.
+        /// Initializes a new <see cref="RecognizeFormsOperation"/> instance.
         /// </summary>
         /// <param name="id">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="cancellationToken"></param>
-        public RecognizeFormOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public RecognizeFormsOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
         {
             Id = id;
             _serviceClient = client.ServiceClient;

@@ -6,15 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeLabeledFormOperation : Operation<IReadOnlyList<CustomLabeledForm>>
+    public class RecognizeLabeledFormsOperation : Operation<IReadOnlyList<CustomLabeledForm>>
     {
         private Response _response;
         private IReadOnlyList<CustomLabeledForm> _value;
@@ -54,7 +53,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="operations"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal RecognizeLabeledFormOperation(ServiceClient operations, string modelId, string operationLocation)
+        internal RecognizeLabeledFormsOperation(ServiceClient operations, string modelId, string operationLocation)
         {
             _serviceClient = operations;
             _modelId = modelId;
@@ -65,12 +64,12 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RecognizeLabeledFormOperation"/> instance.
+        /// Initializes a new <see cref="RecognizeLabeledFormsOperation"/> instance.
         /// </summary>
         /// <param name="id">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="cancellationToken"></param>
-        public RecognizeLabeledFormOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public RecognizeLabeledFormsOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
         {
             Id = id;
             _serviceClient = client.ServiceClient;

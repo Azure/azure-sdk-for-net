@@ -473,7 +473,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
 
-            RecognizeUSReceiptOperation operation = new RecognizeUSReceiptOperation(operationId, client);
+            RecognizeUSReceiptsOperation operation = new RecognizeUSReceiptsOperation(operationId, client);
             var value = await operation.WaitForCompletionAsync();
             if (operation.HasValue)
             {
