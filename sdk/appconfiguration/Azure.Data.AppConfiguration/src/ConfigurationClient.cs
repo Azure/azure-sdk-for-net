@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
@@ -18,18 +16,19 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClient
     {
-        private readonly Uri _baseUri;
+        private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Protected constructor to allow mocking
+        /// Protected constructor to allow mocking.
         /// </summary>
         protected ConfigurationClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationClient"/>.
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
         /// </summary>
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         public ConfigurationClient(string connectionString)
@@ -38,10 +37,10 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Creates a <see cref="ConfigurationClient"/> that sends requests to the configuration store.
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
         /// </summary>
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
-        /// <param name="options">Options that allow to configure the management of the request sent to the configuration store.</param>
+        /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
         public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
         {
             if (connectionString == null)
@@ -49,49 +48,87 @@ namespace Azure.Data.AppConfiguration
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
 
-            ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
+            ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
 
-            _pipeline = HttpPipelineBuilder.Build(options,
-                    new AuthenticationPolicy(credential, secret),
-                    new SyncTokenPolicy());
+            _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret));
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
+        /// <param name="credential">The token credential used to sign requests.</param>
+        public ConfigurationClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, new ConfigurationClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
+        /// <param name="credential">The token credential used to sign requests.</param>
+        /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
+        public ConfigurationClient(Uri endpoint, TokenCredential credential, ConfigurationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            _endpoint = endpoint;
+            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)));
+
+            _clientDiagnostics = new ClientDiagnostics(options);
+        }
+
+        private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy)
+            => HttpPipelineBuilder.Build(options,
+                new HttpPipelinePolicy[] { new CustomHeadersPolicy(), new ApiVersionPolicy(options.GetVersionString()) },
+                new HttpPipelinePolicy[] { authenticationPolicy, new SyncTokenPolicy() },
+                new ResponseClassifier());
+
+        private static string GetDefaultScope(Uri uri)
+            => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return await AddConfigurationSettingAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
+        public virtual Response<ConfigurationSetting> AddConfigurationSetting(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return AddConfigurationSetting(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return await AddAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Add(string key, string value, string label = default, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return Add(new ConfigurationSetting(key, value, label), cancellationToken);
-        }
-
-        /// <summary>
-        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
-        /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Add");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
+            scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
@@ -104,8 +141,10 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                    case 412:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, "Setting was already present.").ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -118,11 +157,12 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
         /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
+        public virtual Response<ConfigurationSetting> AddConfigurationSetting(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Add");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -136,8 +176,10 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 201:
                         return CreateResponse(response);
+                    case 412:
+                        throw _clientDiagnostics.CreateRequestFailedException(response, "Setting was already present.");
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -149,76 +191,84 @@ namespace Azure.Data.AppConfiguration
 
         private Request CreateAddRequest(ConfigurationSetting setting)
         {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            Argument.AssertNotNull(setting, nameof(setting));
+            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
 
             Request request = _pipeline.CreateRequest();
 
-            ReadOnlyMemory<byte> content = Serialize(setting);
+            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
 
             request.Method = RequestMethod.Put;
 
-            BuildUriForKvRoute(request.UriBuilder, setting);
+            BuildUriForKvRoute(request.Uri, setting);
 
-            request.Headers.Add(IfNoneMatch, "*");
+            MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
+            ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
+
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = HttpPipelineRequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
 
             return request;
         }
 
         /// <summary>
-        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// Creates a <see cref="ConfigurationSetting"/>, uniquely identified by key and label, if it doesn't exist or overwrites the existing setting in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        /// <returns>A response containing the <see cref="ConfigurationSetting"/> written to the configuration store.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return await SetAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return await SetConfigurationSettingAsync(new ConfigurationSetting(key, value, label), false, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// Creates a <see cref="ConfigurationSetting"/>, uniquely identified by key and label, if it doesn't exist or overwrites the existing setting in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="value">The configuration setting's value.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Set(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        /// <returns>A response containing the <see cref="ConfigurationSetting"/> written to the configuration store.</returns>
+        public virtual Response<ConfigurationSetting> SetConfigurationSetting(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return Set(new ConfigurationSetting(key, value, label), cancellationToken);
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return SetConfigurationSetting(new ConfigurationSetting(key, value, label), false, cancellationToken);
         }
 
         /// <summary>
-        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overwrites the existing setting in the configuration store.
         /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration setting exists in the configuration store, overwrite the setting
+        /// if the passed-in <see cref="ConfigurationSetting"/> is the same version as the one in the configuration store.  The setting versions
+        /// are the same if their ETag fields match.  If the two settings are different versions, this method will throw an exception to indicate
+        /// that the setting in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        /// <returns>A response containing the <see cref="ConfigurationSetting"/> written to the configuration store.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
+            Argument.AssertNotNull(setting, nameof(setting));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
-                using Request request = CreateSetRequest(setting);
+                using Request request = CreateSetRequest(setting, onlyIfUnchanged);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw await response.CreateRequestFailedExceptionAsync("The setting is locked").ConfigureAwait(false),
-                    _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
+                    409 => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, "The setting is read only").ConfigureAwait(false),
+
+                    // Throws on 412 if resource was modified.
+                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
                 };
             }
             catch (Exception e)
@@ -229,27 +279,34 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overwrites the existing setting in the configuration store.
         /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration setting exists in the configuration store, overwrite the setting
+        /// if the passed-in <see cref="ConfigurationSetting"/> is the same version as the one in the configuration store.  The setting versions
+        /// are the same if their ETag fields match.  If the two settings are different versions, this method will throw an exception to indicate
+        /// that the setting in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        /// <returns>A response containing the <see cref="ConfigurationSetting"/> written to the configuration store.</returns>
+        public virtual Response<ConfigurationSetting> SetConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Set");
+            Argument.AssertNotNull(setting, nameof(setting));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
             try
             {
-                using Request request = CreateSetRequest(setting);
-
+                using Request request = CreateSetRequest(setting, onlyIfUnchanged);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    409 => throw response.CreateRequestFailedException("The setting is locked"),
-                    _ => throw response.CreateRequestFailedException(),
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only"),
+
+                    // Throws on 412 if resource was modified.
+                    _ => throw _clientDiagnostics.CreateRequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -259,172 +316,108 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateSetRequest(ConfigurationSetting setting)
+        private Request CreateSetRequest(ConfigurationSetting setting, bool onlyIfChanged)
         {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            Argument.AssertNotNull(setting, nameof(setting));
+            Argument.AssertNotNullOrEmpty(setting.Key, $"{nameof(setting)}.{nameof(setting.Key)}");
 
             Request request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = Serialize(setting);
+            ReadOnlyMemory<byte> content = ConfigurationServiceSerializer.SerializeRequestBody(setting);
 
             request.Method = RequestMethod.Put;
-            BuildUriForKvRoute(request.UriBuilder, setting);
+            BuildUriForKvRoute(request.Uri, setting);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
             request.Headers.Add(HttpHeader.Common.JsonContentType);
 
-            if (setting.ETag != default)
+            if (onlyIfChanged)
             {
-                request.Headers.Add(IfMatchName, $"\"{setting.ETag.ToString()}\"");
+                ConditionalRequestOptionsExtensions.ApplyHeaders(request, new MatchConditions { IfMatch = setting.ETag });
             }
 
-            request.Content = HttpPipelineRequestContent.Create(content);
+            request.Content = RequestContent.Create(content);
             return request;
         }
 
         /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Delete a <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        /// <returns>A response indicating the success of the operation.</returns>
+        public virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return await DeleteConfigurationSettingAsync(key, label, default, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Delete a <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Update(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        /// <returns>A response indicating the success of the operation.</returns>
+        public virtual Response DeleteConfigurationSetting(string key, string label = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return Update(new ConfigurationSetting(key, value, label), cancellationToken);
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return DeleteConfigurationSetting(key, label, default, cancellationToken);
         }
 
         /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Delete a <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to delete.</param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration setting exists in the configuration store, delete the setting
+        /// if the passed-in <see cref="ConfigurationSetting"/> is the same version as the one in the configuration store. The setting versions
+        /// are the same if their ETag fields match.  If the two settings are different versions, this method will throw an exception to indicate
+        /// that the setting in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        /// <returns>A response indicating the success of the operation.</returns>
+        public virtual async Task<Response> DeleteConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Update");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateUpdateRequest(setting);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                return response.Status switch
-                {
-                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNull(setting, nameof(setting));
+            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+            return await DeleteConfigurationSettingAsync(setting.Key, setting.Label, requestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Delete a <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to delete.</param>
+        /// <param name="onlyIfUnchanged">If set to true and the configuration setting exists in the configuration store, delete the setting
+        /// if the passed-in <see cref="ConfigurationSetting"/> is the same version as the one in the configuration store. The setting versions
+        /// are the same if their ETag fields match.  If the two settings are different versions, this method will throw an exception to indicate
+        /// that the setting in the configuration store was modified since it was last obtained by the client.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        /// <returns>A response indicating the success of the operation.</returns>
+        public virtual Response DeleteConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Update");
-            scope.AddAttribute("key", setting?.Key);
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateUpdateRequest(setting);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                return response.Status switch
-                {
-                    200 => CreateResponse(response),
-                    _ => throw response.CreateRequestFailedException(),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            Argument.AssertNotNull(setting, nameof(setting));
+            MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+            return DeleteConfigurationSetting(setting.Key, setting.Label, requestOptions, cancellationToken);
         }
 
-        private Request CreateUpdateRequest(ConfigurationSetting setting)
+        private async Task<Response> DeleteConfigurationSettingAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-
-            Request request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = Serialize(setting);
-
-            request.Method = RequestMethod.Put;
-            BuildUriForKvRoute(request.UriBuilder, setting);
-            request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-
-            if (setting.ETag != default)
-            {
-                request.Headers.Add(IfMatchName, $"\"{setting.ETag}\"");
-            }
-            else
-            {
-                request.Headers.Add(IfMatchName, "*");
-            }
-
-            request.Content = HttpPipelineRequestContent.Create(content);
-            return request;
-        }
-
-        /// <summary>
-        /// Deletes an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only deleted if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always deleted.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateDeleteRequest(key, label, etag);
+                using Request request = CreateDeleteRequest(key, label, requestOptions);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                    case 204:
-                        return response;
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
+                    200 => response,
+                    204 => response,
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only"),
+
+                    // Throws on 412 if resource was modified.
+                    _ => throw _clientDiagnostics.CreateRequestFailedException(response)
+                };
             }
             catch (Exception e)
             {
@@ -433,34 +426,26 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary>
-        /// Deletes an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only deleted if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always deleted.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response Delete(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        private Response DeleteConfigurationSetting(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Delete");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
             try
             {
-                using Request request = CreateDeleteRequest(key, label, etag);
+                using Request request = CreateDeleteRequest(key, label, requestOptions);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                    case 204:
-                        return response;
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
+                    200 => response,
+                    204 => response,
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only."),
+
+                    // Throws on 412 if resource was modified.
+                    _ => throw _clientDiagnostics.CreateRequestFailedException(response)
+                };
             }
             catch (Exception e)
             {
@@ -469,79 +454,148 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private Request CreateDeleteRequest(string key, string label, ETag etag)
+        private Request CreateDeleteRequest(string key, string label, MatchConditions requestOptions)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException(nameof(key));
-
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Delete;
-            BuildUriForKvRoute(request.UriBuilder, key, label);
+            BuildUriForKvRoute(request.Uri, key, label);
 
-            if (etag != default)
+            if (requestOptions != null)
             {
-                request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
+                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }
 
             return request;
         }
 
         /// <summary>
-        /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
+        /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
+        /// <param name="key">The primary identifier of the configuration setting to retrieve.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
-            scope.AddAttribute("key", key);
-            scope.Start();
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return await GetConfigurationSettingAsync(key, label, acceptDateTime: default, requestOptions: default, cancellationToken).ConfigureAwait(false);
+        }
 
-            try
-            {
-                using Request request = CreateGetRequest(key, label, acceptDateTime);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                return response.Status switch
-                {
-                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
-                };
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting to retrieve.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        public virtual Response<ConfigurationSetting> GetConfigurationSetting(string key, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+            return GetConfigurationSetting(key, label, acceptDateTime: default, requestOptions: default, cancellationToken);
         }
 
         /// <summary>
         /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to retrieve.</param>
+        /// <param name="onlyIfChanged">If set to true, only retrieve the setting from the configuration store if it has changed since the client last retrieved it.
+        /// It is determined to have changed if the ETag field on the passed-in <see cref="ConfigurationSetting"/> is different from the ETag of the setting in the
+        /// configuration store.  If it has not changed, the returned response will have have no value, and will throw if response.Value is accessed.  Callers may
+        /// check the status code on the response to avoid triggering the exception.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(setting, nameof(setting));
+            MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = setting.ETag } : default;
+            return await GetConfigurationSettingAsync(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to retrieve.</param>
+        /// <param name="onlyIfChanged">If set to true, only retrieve the setting from the configuration store if it has changed since the client last retrieved it.
+        /// It is determined to have changed if the ETag field on the passed-in <see cref="ConfigurationSetting"/> is different from the ETag of the setting in the
+        /// configuration store.  If it has not changed, the returned response will have have no value, and will throw if response.Value is accessed.  Callers may
+        /// check the status code on the response to avoid triggering the exception.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        public virtual Response<ConfigurationSetting> GetConfigurationSetting(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(setting, nameof(setting));
+            MatchConditions requestOptions = onlyIfChanged ? new MatchConditions { IfNoneMatch = setting.ETag } : default;
+            return GetConfigurationSetting(setting.Key, setting.Label, acceptDateTime: default, requestOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to retrieve.</param>
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Get(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, DateTimeOffset acceptDateTime, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.Get");
+            Argument.AssertNotNull(setting, nameof(setting));
+            return await GetConfigurationSettingAsync(setting.Key, setting.Label, acceptDateTime, requestOptions: default, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
+        /// <param name="setting">The <see cref="ConfigurationSetting"/> to retrieve.</param>
+        /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
+        public virtual Response<ConfigurationSetting> GetConfigurationSetting(ConfigurationSetting setting, DateTimeOffset acceptDateTime, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(setting, nameof(setting));
+            return GetConfigurationSetting(setting.Key, setting.Label, acceptDateTime, requestOptions: default, cancellationToken);
+        }
+
+        private async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
             scope.Start();
 
             try
             {
-                using (Request request = CreateGetRequest(key, label, acceptDateTime))
-                {
-                    Response response = _pipeline.SendRequest(request, cancellationToken);
+                using Request request = CreateGetRequest(key, label, acceptDateTime, requestOptions);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-                    return response.Status switch
-                    {
-                        200 => CreateResponse(response),
-                        _ => throw response.CreateRequestFailedException(),
-                    };
-                }
+                return response.Status switch
+                {
+                    200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    304 => CreateResourceModifiedResponse(response),
+                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
+            scope.AddAttribute(nameof(key), key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateGetRequest(key, label, acceptDateTime, requestOptions);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                return response.Status switch
+                {
+                    200 => CreateResponse(response),
+                    304 => CreateResourceModifiedResponse(response),
+                    _ => throw _clientDiagnostics.CreateRequestFailedException(response),
+                };
             }
             catch (Exception e)
             {
@@ -551,59 +605,92 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves one or more <see cref="ConfigurationSetting"/> that satisfies the options of the <see cref="SettingSelector"/>
+        /// Retrieves one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/>.
         /// </summary>
-        /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
+        /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/> entities from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncCollection<ConfigurationSetting> GetSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        /// <returns>An enumerable collection containing the retrieved <see cref="ConfigurationSetting"/> entities.</returns>
+        public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetSettingsPageAsync(selector, nextLink, cancellationToken));
+            Argument.AssertNotNull(selector, nameof(selector));
+            return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetConfigurationSettingsPageAsync(selector, nextLink, cancellationToken));
         }
 
         /// <summary>
-        /// Retrieves one or more <see cref="ConfigurationSetting"/> that satisfies the options of the <see cref="SettingSelector"/>
+        /// Retrieves one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual IEnumerable<Response<ConfigurationSetting>> GetSettings(SettingSelector selector, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConfigurationSetting> GetConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(nextLink => GetSettingsPage(selector, nextLink, cancellationToken));
+            Argument.AssertNotNull(selector, nameof(selector));
+            return PageResponseEnumerator.CreateEnumerable(nextLink => GetConfigurationSettingsPage(selector, nextLink, cancellationToken));
         }
 
         /// <summary>
-        /// Retrieves the different revisions of specific <see cref="ConfigurationSetting"/> that satisfies the options of the <see cref="SettingSelector"/>
+        /// Retrieves the revisions of one or more <see cref="ConfigurationSetting"/> entities that match the specified <paramref name="keyFilter"/> and <paramref name="labelFilter"/>.
+        /// </summary>
+        /// <param name="keyFilter">Key filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.</param>
+        /// <param name="labelFilter">Label filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual AsyncPageable<ConfigurationSetting> GetRevisionsAsync(string keyFilter, string labelFilter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(keyFilter, nameof(keyFilter));
+            return GetRevisionsAsync(new SettingSelector { KeyFilter = keyFilter, LabelFilter = labelFilter }, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the revisions of one or more <see cref="ConfigurationSetting"/> entities that match the specified <paramref name="keyFilter"/> and <paramref name="labelFilter"/>.
+        /// </summary>
+        /// <param name="keyFilter">Key filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.</param>
+        /// <param name="labelFilter">Label filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Pageable<ConfigurationSetting> GetRevisions(string keyFilter, string labelFilter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(keyFilter, nameof(keyFilter));
+            return GetRevisions(new SettingSelector { KeyFilter = keyFilter, LabelFilter = labelFilter }, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the revisions of one or more <see cref="ConfigurationSetting"/> entities that satisfy the options of the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncCollection<ConfigurationSetting> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConfigurationSetting> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(selector, nameof(selector));
             return PageResponseEnumerator.CreateAsyncEnumerable(nextLink => GetRevisionsPageAsync(selector, nextLink, cancellationToken));
         }
 
         /// <summary>
-        /// Retrieves the different revisions of specific <see cref="ConfigurationSetting"/> that satisfies the options of the <see cref="SettingSelector"/>
+        /// Retrieves the revisions of one or more <see cref="ConfigurationSetting"/> entities that satisfy the options of the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual IEnumerable<Response<ConfigurationSetting>> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
+        public virtual Pageable<ConfigurationSetting> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(selector, nameof(selector));
             return PageResponseEnumerator.CreateEnumerable(nextLink => GetRevisionsPage(selector, nextLink, cancellationToken));
         }
 
-        private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime)
+        private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForKvRoute(request.UriBuilder, key, label);
+            BuildUriForKvRoute(request.Uri, key, label);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
 
             if (acceptDateTime != default)
             {
                 var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.Add(AcceptDatetimeHeader, dateTime);
+                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
+            }
+
+            if (requestOptions != null)
+            {
+                ConditionalRequestOptionsExtensions.ApplyHeaders(request, requestOptions);
             }
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
@@ -616,9 +703,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="pageLink"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private async Task<Page<ConfigurationSetting>> GetSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
+        private async Task<Page<ConfigurationSetting>> GetConfigurationSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.GetSettingsPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettingsPage)}");
             scope.Start();
 
             try
@@ -631,9 +718,9 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -649,9 +736,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="pageLink"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        private Page<ConfigurationSetting> GetSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
+        private Page<ConfigurationSetting> GetConfigurationSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.GetSettingsPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettingsPage)}");
             scope.Start();
 
             try
@@ -664,9 +751,9 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -680,12 +767,12 @@ namespace Azure.Data.AppConfiguration
         {
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForGetBatch(request.UriBuilder, selector, pageLink);
+            BuildUriForGetBatch(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AsOf.HasValue)
+            if (selector.AcceptDateTime.HasValue)
             {
-                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.Add(AcceptDatetimeHeader, dateTime);
+                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
             }
 
             return request;
@@ -700,7 +787,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<Page<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.GetRevisionsPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisionsPage)}");
             scope.Start();
 
             try
@@ -712,9 +799,9 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -733,7 +820,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private Page<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _pipeline.Diagnostics.CreateScope("Azure.Data.AppConfiguration.ConfigurationClient.GetRevisionsPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisionsPage)}");
             scope.Start();
 
             try
@@ -745,9 +832,9 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                     case 206:
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
-                        return new Page<ConfigurationSetting>(settingBatch.Settings, settingBatch.NextBatchLink, response);
+                        return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -761,13 +848,110 @@ namespace Azure.Data.AppConfiguration
         {
             Request request = _pipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            BuildUriForRevisions(request.UriBuilder, selector, pageLink);
+            BuildUriForRevisions(request.Uri, selector, pageLink);
             request.Headers.Add(s_mediaTypeKeyValueApplicationHeader);
-            if (selector.AsOf.HasValue)
+            if (selector.AcceptDateTime.HasValue)
             {
-                var dateTime = selector.AsOf.Value.UtcDateTime.ToString("R", CultureInfo.InvariantCulture);
-                request.Headers.Add(AcceptDatetimeHeader, dateTime);
+                var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
             }
+
+            return request;
+        }
+
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, bool isReadOnly, CancellationToken cancellationToken = default)
+            => SetReadOnlyAsync(key, label: default, isReadOnly, cancellationToken);
+
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<ConfigurationSetting> SetReadOnly(string key, bool isReadOnly, CancellationToken cancellationToken = default)
+            => SetReadOnly(key, label: default, isReadOnly, cancellationToken);
+
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, bool isReadOnly, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateSetReadOnlyRequest(key, label, isReadOnly);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response);
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<ConfigurationSetting> SetReadOnly(string key, string label, bool isReadOnly, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
+            scope.AddAttribute("key", key);
+            scope.Start();
+
+            try
+            {
+                using Request request = CreateSetReadOnlyRequest(key, label, isReadOnly);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response);
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private Request CreateSetReadOnlyRequest(string key, string label, bool isReadOnly)
+        {
+            Request request = _pipeline.CreateRequest();
+            request.Method = isReadOnly ? RequestMethod.Put : RequestMethod.Delete;
+            BuildUriForLocksRoute(request.Uri, key, label);
 
             return request;
         }

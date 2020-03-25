@@ -8,10 +8,11 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.FrontDoor;
 using Microsoft.Azure.Management.FrontDoor.Models;
 using FrontDoor.Tests.Helpers;
-using Microsoft.Azure.Management.Resources.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
 using refID = Microsoft.Azure.Management.FrontDoor.Models.SubResource;
+
 namespace FrontDoor.Tests.ScenarioTests
 {
     public class FrontDoorTests
@@ -22,14 +23,16 @@ namespace FrontDoor.Tests.ScenarioTests
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            
-            string subid = ConnectionStringKeys.SubscriptionIdKey;
+
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var frontDoorMgmtClient = FrontDoorTestUtilities.GetFrontDoorManagementClient(context, handler1);
                 var resourcesClient = FrontDoorTestUtilities.GetResourceManagementClient(context, handler2);
-                
+
+                // Get subscription id
+                string subid = frontDoorMgmtClient.SubscriptionId;
+
                 // Create resource group
                 var resourceGroupName = FrontDoorTestUtilities.CreateResourceGroup(resourcesClient);
 
@@ -161,7 +164,7 @@ namespace FrontDoor.Tests.ScenarioTests
                 // Create resource group
                 var resourceGroupName = FrontDoorTestUtilities.CreateResourceGroup(resourcesClient);
 
-                // Create a frontDoor
+                // Create a frontDoor WAF policy
                 string policyName = TestUtilities.GenerateName("policy");
 
                 WebApplicationFirewallPolicy createParameters = new WebApplicationFirewallPolicy
@@ -213,18 +216,45 @@ namespace FrontDoor.Tests.ScenarioTests
                             {
                                 RuleSetType = "DefaultRuleSet",
                                 RuleSetVersion = "1.0",
+                                Exclusions = new List<ManagedRuleExclusion>
+                                {
+                                    new ManagedRuleExclusion
+                                    {
+                                        MatchVariable = ManagedRuleExclusionMatchVariable.RequestBodyPostArgNames,
+                                        SelectorMatchOperator = ManagedRuleExclusionSelectorMatchOperator.Contains,
+                                        Selector = "query"
+                                    }
+                                },
                                 RuleGroupOverrides = new List<ManagedRuleGroupOverride>
                                 {
                                     new ManagedRuleGroupOverride
                                     {
                                         RuleGroupName = "SQLI",
+                                        Exclusions = new List<ManagedRuleExclusion>
+                                        {
+                                                new ManagedRuleExclusion
+                                                {
+                                                    MatchVariable = ManagedRuleExclusionMatchVariable.RequestHeaderNames,
+                                                    SelectorMatchOperator = ManagedRuleExclusionSelectorMatchOperator.Equals,
+                                                    Selector = "User-Agent"
+                                                }
+                                        },
                                         Rules = new List<ManagedRuleOverride>
                                         {
                                             new ManagedRuleOverride
                                             {
                                                 RuleId = "942100",
                                                 Action = "Redirect",
-                                                EnabledState = "Disabled"
+                                                EnabledState = "Disabled",
+                                                Exclusions = new List<ManagedRuleExclusion>
+                                                {
+                                                    new ManagedRuleExclusion
+                                                    {
+                                                        MatchVariable = ManagedRuleExclusionMatchVariable.QueryStringArgNames,
+                                                        SelectorMatchOperator = ManagedRuleExclusionSelectorMatchOperator.Equals,
+                                                        Selector = "search"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -299,6 +329,9 @@ namespace FrontDoor.Tests.ScenarioTests
             Assert.Equal(policy.PolicySettings.RedirectUrl, parameters.PolicySettings.RedirectUrl);
             Assert.Equal(policy.CustomRules.Rules.Count, parameters.CustomRules.Rules.Count);
             Assert.Equal(policy.ManagedRules.ManagedRuleSets.Count, parameters.ManagedRules.ManagedRuleSets.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].Exclusions.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Exclusions.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Rules[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Rules[0].Exclusions.Count);
         }
 
         private static void VerifyFrontDoor(FrontDoorModel frontDoor, FrontDoorModel parameters)

@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// item.</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureIaaSVMProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string virtualMachineId = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), IList<AzureIaaSVMHealthDetails> healthDetails = default(IList<AzureIaaSVMHealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectedItemDataId = default(string), AzureIaaSVMProtectedItemExtendedInfo extendedInfo = default(AzureIaaSVMProtectedItemExtendedInfo))
+        public AzureIaaSVMProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string virtualMachineId = default(string), string protectionStatus = default(string), string protectionState = default(string), string healthStatus = default(string), IList<AzureIaaSVMHealthDetails> healthDetails = default(IList<AzureIaaSVMHealthDetails>), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectedItemDataId = default(string), AzureIaaSVMProtectedItemExtendedInfo extendedInfo = default(AzureIaaSVMProtectedItemExtendedInfo), ExtendedProperties extendedProperties = default(ExtendedProperties))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
         {
             FriendlyName = friendlyName;
@@ -97,6 +97,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
             LastBackupTime = lastBackupTime;
             ProtectedItemDataId = protectedItemDataId;
             ExtendedInfo = extendedInfo;
+            ExtendedProperties = extendedProperties;
             CustomInit();
         }
 
@@ -170,6 +171,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "extendedInfo")]
         public AzureIaaSVMProtectedItemExtendedInfo ExtendedInfo { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedProperties")]
+        public ExtendedProperties ExtendedProperties { get; set; }
 
     }
 }

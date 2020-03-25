@@ -1,93 +1,233 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Linq;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A policy which governs the lifecycle a properties of a certificate managed by Azure Key Vault
+    /// A policy which governs the lifecycle a properties of a certificate managed by Azure Key Vault.
     /// </summary>
     public class CertificatePolicy : IJsonSerializable, IJsonDeserializable
     {
-        /// <summary>
-        /// The properties of the key backing a certificate
-        /// </summary>
-        public KeyOptions KeyOptions { get; set; }
+        private const string DefaultSubject = "CN=DefaultPolicy";
+        private const string DefaultIssuerName = "Self";
 
-        /// <summary>
-        /// The subject name of a certificate
-        /// </summary>
-        public string Subject { get; set; }
-
-        /// <summary>
-        /// The subject alternative names (SAN) of a certificate
-        /// </summary>
-        public SubjectAlternativeNames SubjectAlternativeNames { get; set; }
-
-        /// <summary>
-        /// The name of an issuer for a certificate
-        /// </summary>
-        public string IssuerName { get; set; }
-
-        /// <summary>
-        /// Content type of the certificate when downloaded from getSecret.
-        /// </summary>
-        public CertificateContentType? ContentType { get; set; }
-
-        /// <summary>
-        /// The certificate type of a certificate
-        /// </summary>
-        public string CertificateType { get; set; }
-
-        /// <summary>
-        /// Specifies whether a certificate should be published to the certificate transparency list when created
-        /// </summary>
-        public bool? CertificateTransparency { get; set; }
-
-        /// <summary>
-        /// The validity period for a certificate in months
-        /// </summary>
-        public int? ValidityInMonths { get; set; }
-
-        /// <summary>
-        /// The last updated time in UTC.
-        /// </summary>
-        public DateTimeOffset Updated { get; set; }
-
-        /// <summary>
-        /// The creation time in UTC.
-        /// </summary>
-        public DateTimeOffset Created { get; set; }
-
-        /// <summary>
-        /// The allowed usages for the key of the certificate
-        /// </summary>
-        public IList<KeyUsage> KeyUsage { get; set; }
-
-        /// <summary>
-        /// The allowed enhanced key usages (EKUs) of the certificate
-        /// </summary>
-        public IList<string> EnhancedKeyUsage { get; set; }
-
-        /// <summary>
-        /// Actions to be executed at specified points in the certificates lifetime
-        /// </summary>
-        public IList<LifetimeAction> LifetimeActions { get; set; }
-
+        private const string KeyTypePropertyName = "kty";
+        private const string ReuseKeyPropertyName = "reuse_key";
+        private const string ExportablePropertyName = "exportable";
+        private const string CurveNamePropertyName = "crv";
+        private const string KeySizePropertyName = "key_size";
         private const string KeyPropsPropertyName = "key_props";
         private const string SecretPropsPropertyName = "secret_props";
         private const string X509PropsPropertyName = "x509_props";
         private const string LifetimeActionsPropertyName = "lifetime_actions";
-        private static readonly JsonEncodedText LifetimeActionsPropertyNameBytes = JsonEncodedText.Encode(LifetimeActionsPropertyName);
         private const string IssuerPropertyName = "issuer";
-        private static readonly JsonEncodedText IssuerPropertyNameBytes = JsonEncodedText.Encode(IssuerPropertyName);
         private const string AttributesPropertyName = "attributes";
+        private const string ContentTypePropertyName = "contentType";
+        private const string SubjectPropertyName = "subject";
+        private const string SansPropertyName = "sans";
+        private const string KeyUsagePropertyName = "key_usage";
+        private const string EkusPropertyName = "ekus";
+        private const string ValidityMonthsPropertyName = "validity_months";
+        private const string EnabledPropertyName = "enabled";
+        private const string CreatedPropertyName = "created";
+        private const string UpdatedPropertyName = "updated";
+
+        private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
+        private static readonly JsonEncodedText s_reuseKeyPropertyNameBytes = JsonEncodedText.Encode(ReuseKeyPropertyName);
+        private static readonly JsonEncodedText s_exportablePropertyNameBytes = JsonEncodedText.Encode(ExportablePropertyName);
+        private static readonly JsonEncodedText s_curveNamePropertyNameBytes = JsonEncodedText.Encode(CurveNamePropertyName);
+        private static readonly JsonEncodedText s_keySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
+        private static readonly JsonEncodedText s_lifetimeActionsPropertyNameBytes = JsonEncodedText.Encode(LifetimeActionsPropertyName);
+        private static readonly JsonEncodedText s_issuerPropertyNameBytes = JsonEncodedText.Encode(IssuerPropertyName);
+        private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_keyPropsPropertyNameBytes = JsonEncodedText.Encode(KeyPropsPropertyName);
+        private static readonly JsonEncodedText s_secretPropsPropertyNameBytes = JsonEncodedText.Encode(SecretPropsPropertyName);
+        private static readonly JsonEncodedText s_x509PropsPropertyNameBytes = JsonEncodedText.Encode(X509PropsPropertyName);
+        private static readonly JsonEncodedText s_contentTypePropertyNameBytes = JsonEncodedText.Encode(ContentTypePropertyName);
+        private static readonly JsonEncodedText s_subjectPropertyNameBytes = JsonEncodedText.Encode(SubjectPropertyName);
+        private static readonly JsonEncodedText s_sansPropertyNameBytes = JsonEncodedText.Encode(SansPropertyName);
+        private static readonly JsonEncodedText s_keyUsagePropertyNameBytes = JsonEncodedText.Encode(KeyUsagePropertyName);
+        private static readonly JsonEncodedText s_ekusPropertyNameBytes = JsonEncodedText.Encode(EkusPropertyName);
+        private static readonly JsonEncodedText s_validityMonthsPropertyNameBytes = JsonEncodedText.Encode(ValidityMonthsPropertyName);
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+
+        private IssuerParameters _issuer;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
+        /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subject"/> or <paramref name="issuerName"/> is null.</exception>
+        public CertificatePolicy(string issuerName, string subject)
+        {
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
+
+            IssuerName = issuerName;
+            Subject = subject;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate.</param>
+        /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty or <paramref name="subjectAlternativeNames"/> contains empty collection properties.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
+        public CertificatePolicy(string issuerName, SubjectAlternativeNames subjectAlternativeNames)
+        {
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            if (subjectAlternativeNames.IsEmpty)
+            {
+                throw new ArgumentException("Value cannot contain empty collection properties.", nameof(subjectAlternativeNames));
+            }
+
+            SubjectAlternativeNames = subjectAlternativeNames;
+            IssuerName = issuerName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
+        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate.</param>
+        /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty, or <paramref name="subjectAlternativeNames"/> contains empty collection properties.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subject"/>, <paramref name="issuerName"/>, or <paramref name="subjectAlternativeNames"/> is null.</exception>
+        public CertificatePolicy(string issuerName, string subject, SubjectAlternativeNames subjectAlternativeNames)
+        {
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
+            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            if (subjectAlternativeNames.IsEmpty)
+            {
+                throw new ArgumentException("Value cannot contain empty collection properties.", nameof(subjectAlternativeNames));
+            }
+
+            Subject = subject;
+            IssuerName = issuerName;
+            SubjectAlternativeNames = subjectAlternativeNames;
+        }
+
+        internal CertificatePolicy()
+        {
+        }
+
+        /// <summary>
+        /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests.
+        /// You should change the <see cref="Subject"/> before passing this policy to create a certificate.
+        /// </summary>
+        public static CertificatePolicy Default => new CertificatePolicy(DefaultIssuerName, DefaultSubject);
+
+        /// <summary>
+        /// Gets or sets the type of backing key to be generated when issuing new certificates.
+        /// </summary>
+        public CertificateKeyType? KeyType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the certificate key should be reused when rotating the certificate.
+        /// </summary>
+        public bool? ReuseKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the certificate key is exportable from the vault or secure certificate store.
+        /// </summary>
+        public bool? Exportable { get; set; }
+
+        /// <summary>
+        /// Gets or sets the curve which back an Elliptic Curve (EC) key.
+        /// </summary>
+        public CertificateKeyCurveName? KeyCurveName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the size of the RSA key. The value must be a valid RSA key length such as 2048 or 4092.
+        /// </summary>
+        public int? KeySize { get; set; }
+
+        /// <summary>
+        /// Gets the subject name of a certificate.
+        /// </summary>
+        public string Subject { get; internal set; }
+
+        /// <summary>
+        /// Gets the subject alternative names (SANs) of a certificate.
+        /// </summary>
+        public SubjectAlternativeNames SubjectAlternativeNames { get; internal set; }
+
+        /// <summary>
+        /// Gets the name of an issuer for a certificate.
+        /// </summary>
+        public string IssuerName
+        {
+            get => _issuer.IssuerName;
+            internal set => _issuer.IssuerName = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="CertificateContentType"/> of the certificate when downloaded from GetSecret.
+        /// </summary>
+        public CertificateContentType? ContentType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the certificate type of a certificate.
+        /// </summary>
+        public string CertificateType
+        {
+            get => _issuer.CertificateType;
+            set => _issuer.CertificateType = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a certificate should be published to the certificate transparency list when created.
+        /// </summary>
+        public bool? CertificateTransparency
+        {
+            get => _issuer.CertificateTransparency;
+            set => _issuer.CertificateTransparency = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the validity period for a certificate in months.
+        /// </summary>
+        public int? ValidityInMonths { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the certificate is currently enabled. If null, the server default will be used.
+        /// </summary>
+        public bool? Enabled { get; set; }
+
+        /// <summary>
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was updated.
+        /// </summary>
+        public DateTimeOffset? UpdatedOn { get; internal set; }
+
+        /// <summary>
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; internal set; }
+
+        /// <summary>
+        /// Gets the allowed usages for the key of the certificate.
+        /// </summary>
+        public IList<CertificateKeyUsage> KeyUsage { get; } = new List<CertificateKeyUsage>();
+
+        /// <summary>
+        /// Gets the allowed enhanced key usages (EKUs) of the certificate.
+        /// </summary>
+        public IList<string> EnhancedKeyUsage { get; } = new List<string>();
+
+        /// <summary>
+        /// Gets the actions to be executed at specified times in the certificates lifetime.
+        /// </summary>
+        public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
@@ -96,23 +236,27 @@ namespace Azure.Security.KeyVault.Certificates
                 switch (prop.Name)
                 {
                     case KeyPropsPropertyName:
-                        KeyOptions.FromJsonObject(prop.Value);
+                        ReadKeyProperties(prop.Value);
                         break;
+
                     case SecretPropsPropertyName:
                         ReadSecretProperties(prop.Value);
                         break;
+
                     case X509PropsPropertyName:
                         ReadX509CertificateProperties(prop.Value);
                         break;
+
                     case IssuerPropertyName:
-                        ReadIssuerProperties(prop.Value);
+                        _issuer.ReadProperties(prop.Value);
                         break;
+
                     case AttributesPropertyName:
                         ReadAttributesProperties(prop.Value);
                         break;
+
                     case LifetimeActionsPropertyName:
-                        LifetimeActions = new List<LifetimeAction>();
-                        foreach(JsonElement actionElem in prop.Value.EnumerateArray())
+                        foreach (JsonElement actionElem in prop.Value.EnumerateArray())
                         {
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
                         }
@@ -122,18 +266,14 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private static readonly JsonEncodedText KeyPropsPropertyNameBytes = JsonEncodedText.Encode(KeyPropsPropertyName);
-        private static readonly JsonEncodedText SecretPropsPropertyNameBytes = JsonEncodedText.Encode(SecretPropsPropertyName);
-        private static readonly JsonEncodedText X509PropsPropertyNameBytes = JsonEncodedText.Encode(X509PropsPropertyName);
-
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             // Key Props
-            if (KeyOptions != null)
+            if (KeyType.HasValue || KeyCurveName.HasValue || KeySize.HasValue)
             {
-                json.WriteStartObject(KeyPropsPropertyNameBytes);
+                json.WriteStartObject(s_keyPropsPropertyNameBytes);
 
-                KeyOptions.WriteProperties(json);
+                WriteKeyProperties(json);
 
                 json.WriteEndObject();
             }
@@ -141,7 +281,7 @@ namespace Azure.Security.KeyVault.Certificates
             // Secret Props
             if (ContentType.HasValue)
             {
-                json.WriteStartObject(SecretPropsPropertyNameBytes);
+                json.WriteStartObject(s_secretPropsPropertyNameBytes);
 
                 WriteSecretProperties(json);
 
@@ -149,9 +289,9 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             // X509 Props
-            if (Subject != null || SubjectAlternativeNames != null || KeyUsage != null || EnhancedKeyUsage != null || ValidityInMonths.HasValue)
+            if (Subject != null || (SubjectAlternativeNames != null && !SubjectAlternativeNames.IsEmpty) || !KeyUsage.IsNullOrEmpty() || !EnhancedKeyUsage.IsNullOrEmpty() || ValidityInMonths.HasValue)
             {
-                json.WriteStartObject(X509PropsPropertyNameBytes);
+                json.WriteStartObject(s_x509PropsPropertyNameBytes);
 
                 WriteX509CertificateProperties(json);
 
@@ -161,20 +301,29 @@ namespace Azure.Security.KeyVault.Certificates
             // Issuer Props
             if (IssuerName != null || CertificateType != null || CertificateTransparency.HasValue)
             {
-                json.WriteStartObject(IssuerPropertyNameBytes);
+                json.WriteStartObject(s_issuerPropertyNameBytes);
 
-                WriteIssuerProperties(json);
+                _issuer.WriteProperties(json);
 
                 json.WriteEndObject();
             }
 
-            if (LifetimeActions != null)
+            if (Enabled.HasValue)
             {
-                json.WriteStartArray(LifetimeActionsPropertyNameBytes);
+                json.WriteStartObject(s_attributesPropertyNameBytes);
 
-                foreach(var action in LifetimeActions)
+                WriteAttributesProperties(json);
+
+                json.WriteEndObject();
+            }
+
+            if (!LifetimeActions.IsNullOrEmpty())
+            {
+                json.WriteStartArray(s_lifetimeActionsPropertyNameBytes);
+
+                foreach (LifetimeAction action in LifetimeActions)
                 {
-                    if(action != null)
+                    if (action != null)
                     {
                         json.WriteStartObject();
 
@@ -188,12 +337,66 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-        private const string ContentTypePropertyName = "contentType";
-        private static readonly JsonEncodedText ContentTypePropertyNameBytes = JsonEncodedText.Encode(ContentTypePropertyName);
+        private void ReadKeyProperties(JsonElement json)
+        {
+            foreach (JsonProperty prop in json.EnumerateObject())
+            {
+                switch (prop.Name)
+                {
+                    case KeyTypePropertyName:
+                        KeyType = prop.Value.GetString();
+                        break;
+
+                    case ReuseKeyPropertyName:
+                        ReuseKey = prop.Value.GetBoolean();
+                        break;
+
+                    case ExportablePropertyName:
+                        Exportable = prop.Value.GetBoolean();
+                        break;
+
+                    case CurveNamePropertyName:
+                        KeyCurveName = prop.Value.GetString();
+                        break;
+
+                    case KeySizePropertyName:
+                        KeySize = prop.Value.GetInt32();
+                        break;
+                }
+            }
+        }
+
+        private void WriteKeyProperties(Utf8JsonWriter json)
+        {
+            if (KeyType.HasValue)
+            {
+                json.WriteString(s_keyTypePropertyNameBytes, KeyType.ToString());
+            }
+
+            if (ReuseKey.HasValue)
+            {
+                json.WriteBoolean(s_reuseKeyPropertyNameBytes, ReuseKey.Value);
+            }
+
+            if (Exportable.HasValue)
+            {
+                json.WriteBoolean(s_exportablePropertyNameBytes, Exportable.Value);
+            }
+
+            if (KeyCurveName.HasValue)
+            {
+                json.WriteString(s_curveNamePropertyNameBytes, KeyCurveName.ToString());
+            }
+
+            if (KeySize.HasValue)
+            {
+                json.WriteNumber(s_keySizePropertyNameBytes, KeySize.Value);
+            }
+        }
 
         private void ReadSecretProperties(JsonElement json)
         {
-            if(json.TryGetProperty(ContentTypePropertyName, out JsonElement contentTypeProp))
+            if (json.TryGetProperty(ContentTypePropertyName, out JsonElement contentTypeProp))
             {
                 ContentType = contentTypeProp.GetString();
             }
@@ -201,22 +404,11 @@ namespace Azure.Security.KeyVault.Certificates
 
         private void WriteSecretProperties(Utf8JsonWriter json)
         {
-            if (ContentType != null)
+            if (ContentType.HasValue)
             {
-                json.WriteString(ContentTypePropertyNameBytes, ContentType);
+                json.WriteString(s_contentTypePropertyNameBytes, ContentType.ToString());
             }
         }
-
-        private const string SubjectPropertyName = "subject";
-        private static readonly JsonEncodedText SubjectPropertyNameBytes = JsonEncodedText.Encode(SubjectPropertyName);
-        private const string SansPropertyName = "sans";
-        private static readonly JsonEncodedText SansPropertyNameBytes = JsonEncodedText.Encode(SansPropertyName);
-        private const string KeyUsagePropertyName = "key_usage";
-        private static readonly JsonEncodedText KeyUsagePropertyNameBytes = JsonEncodedText.Encode(KeyUsagePropertyName);
-        private const string EkusPropertyName = "ekus";
-        private static readonly JsonEncodedText EkusPropertyNameBytes = JsonEncodedText.Encode(EkusPropertyName);
-        private const string ValidityMonthsPropertyName = "validity_months";
-        private static readonly JsonEncodedText ValidityMonthsPropertyNameBytes = JsonEncodedText.Encode(ValidityMonthsPropertyName);
 
         private void ReadX509CertificateProperties(JsonElement json)
         {
@@ -227,24 +419,26 @@ namespace Azure.Security.KeyVault.Certificates
                     case SubjectPropertyName:
                         Subject = prop.Value.GetString();
                         break;
+
                     case SansPropertyName:
                         SubjectAlternativeNames = new SubjectAlternativeNames();
                         ((IJsonDeserializable)SubjectAlternativeNames).ReadProperties(prop.Value);
                         break;
+
                     case KeyUsagePropertyName:
-                        KeyUsage = new List<KeyUsage>();
-                        foreach (var usageElem in prop.Value.EnumerateArray())
+                        foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             KeyUsage.Add(usageElem.GetString());
                         }
                         break;
+
                     case EkusPropertyName:
-                        EnhancedKeyUsage = new List<string>();
-                        foreach (var usageElem in prop.Value.EnumerateArray())
+                        foreach (JsonElement usageElem in prop.Value.EnumerateArray())
                         {
                             EnhancedKeyUsage.Add(usageElem.GetString());
                         }
                         break;
+
                     case ValidityMonthsPropertyName:
                         ValidityInMonths = prop.Value.GetInt32();
                         break;
@@ -256,31 +450,31 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (Subject != null)
             {
-                json.WriteString(SubjectPropertyNameBytes, Subject);
+                json.WriteString(s_subjectPropertyNameBytes, Subject);
             }
 
-            if (SubjectAlternativeNames != null)
+            if (SubjectAlternativeNames != null && !SubjectAlternativeNames.IsEmpty)
             {
-                json.WriteStartObject(SansPropertyNameBytes);
+                json.WriteStartObject(s_sansPropertyNameBytes);
 
                 ((IJsonSerializable)SubjectAlternativeNames).WriteProperties(json);
 
                 json.WriteEndObject();
             }
 
-            if (KeyUsage != null)
+            if (!KeyUsage.IsNullOrEmpty())
             {
-                json.WriteStartArray(KeyUsagePropertyNameBytes);
-                foreach (var usage in KeyUsage)
+                json.WriteStartArray(s_keyUsagePropertyNameBytes);
+                foreach (CertificateKeyUsage usage in KeyUsage)
                 {
-                    json.WriteStringValue(usage);
+                    json.WriteStringValue(usage.ToString());
                 }
                 json.WriteEndArray();
             }
 
-            if (EnhancedKeyUsage != null)
+            if (!EnhancedKeyUsage.IsNullOrEmpty())
             {
-                json.WriteStartArray(EkusPropertyNameBytes);
+                json.WriteStartArray(s_ekusPropertyNameBytes);
                 foreach (var usage in EnhancedKeyUsage)
                 {
                     json.WriteStringValue(usage);
@@ -290,56 +484,9 @@ namespace Azure.Security.KeyVault.Certificates
 
             if (ValidityInMonths.HasValue)
             {
-                json.WriteNumber(ValidityMonthsPropertyNameBytes, ValidityInMonths.Value);
+                json.WriteNumber(s_validityMonthsPropertyNameBytes, ValidityInMonths.Value);
             }
         }
-
-        private const string IssuerNamePropertyName = "name";
-        private static readonly JsonEncodedText IssuerNamePropertyNameBytes = JsonEncodedText.Encode(IssuerNamePropertyName);
-        private const string CertificateTypePropertyName = "cty";
-        private static readonly JsonEncodedText CertificateTypePropertyNameBytes = JsonEncodedText.Encode(CertificateTypePropertyName);
-        private const string CertificateTransparencyPropertyName = "cert_transparency";
-        private static readonly JsonEncodedText CertificateTransparencyPropertyNameNameBytes = JsonEncodedText.Encode(CertificateTransparencyPropertyName);
-
-        private void ReadIssuerProperties(JsonElement json)
-        {
-            foreach (JsonProperty prop in json.EnumerateObject())
-            {
-                switch (prop.Name)
-                {
-                    case IssuerNamePropertyName:
-                        IssuerName = prop.Value.GetString();
-                        break;
-                    case CertificateTypePropertyName:
-                        CertificateType = prop.Value.GetString();
-                        break;
-                    case CertificateTransparencyPropertyName:
-                        CertificateTransparency = prop.Value.GetBoolean();
-                        break;
-                }
-            }
-        }
-
-        private void WriteIssuerProperties(Utf8JsonWriter json)
-        {
-            if (IssuerName != null)
-            {
-                json.WriteString(IssuerNamePropertyNameBytes, IssuerName);
-            }
-
-            if (CertificateType != null)
-            {
-                json.WriteString(CertificateTypePropertyNameBytes, CertificateType);
-            }
-
-            if(CertificateTransparency.HasValue)
-            {
-                json.WriteBoolean(CertificateTransparencyPropertyNameNameBytes, CertificateTransparency.Value);
-            }
-        }
-
-        private const string CreatedPropertyName = "created";
-        private const string UpdatedPropertyName = "updated";
 
         private void ReadAttributesProperties(JsonElement json)
         {
@@ -347,15 +494,27 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 switch (prop.Name)
                 {
-                    case CreatedPropertyName:
-                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    case EnabledPropertyName:
+                        Enabled = prop.Value.GetBoolean();
                         break;
+
+                    case CreatedPropertyName:
+                        CreatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        break;
+
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                        UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                 }
             }
         }
 
+        private void WriteAttributesProperties(Utf8JsonWriter json)
+        {
+            if (Enabled.HasValue)
+            {
+                json.WriteBoolean(s_enabledPropertyNameBytes, Enabled.Value);
+            }
+        }
     }
 }

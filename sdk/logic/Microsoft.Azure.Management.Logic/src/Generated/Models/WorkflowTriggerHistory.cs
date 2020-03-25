@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="inputsLink">Gets the link to input parameters.</param>
         /// <param name="outputsLink">Gets the link to output
         /// parameters.</param>
-        /// <param name="fired">Gets a value indicating whether trigger was
+        /// <param name="fired">The value indicating whether trigger was
         /// fired.</param>
         /// <param name="run">Gets the reference to workflow run.</param>
         /// <param name="name">Gets the workflow trigger history name.</param>
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         public ContentLink OutputsLink { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether trigger was fired.
+        /// Gets the value indicating whether trigger was fired.
         /// </summary>
         [JsonProperty(PropertyName = "properties.fired")]
         public bool? Fired { get; private set; }

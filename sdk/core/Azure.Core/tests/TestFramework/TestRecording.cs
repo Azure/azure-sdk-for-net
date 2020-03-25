@@ -3,10 +3,12 @@
 
 using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Tests.TestFramework;
 
 namespace Azure.Core.Testing
 {
@@ -55,15 +57,13 @@ namespace Azure.Core.Testing
 
         private readonly RecordMatcher _matcher;
 
-        private RecordSession _session;
+        private readonly RecordSession _session;
 
         private RecordSession _previousSession;
 
-        private readonly Random _nonReproducibleRandom = new Random();
+        private TestRandom _random;
 
-        private Random _random;
-
-        public Random Random
+        public TestRandom Random
         {
             get
             {
@@ -72,7 +72,10 @@ namespace Azure.Core.Testing
                     switch (Mode)
                     {
                         case RecordedTestMode.Live:
-                            _random = new Random();
+                            var csp = new RNGCryptoServiceProvider();
+                            var bytes = new byte[4];
+                            csp.GetBytes(bytes);
+                            _random = new TestRandom(Mode, BitConverter.ToInt32(bytes, 0));
                             break;
                         case RecordedTestMode.Record:
                             // Try get the seed from existing session
@@ -81,14 +84,14 @@ namespace Azure.Core.Testing
                                   int.TryParse(seedString, out int seed)
                                 ))
                             {
-                                _random = new Random();
+                                _random = new TestRandom(Mode);
                                 seed = _random.Next();
                             }
                             _session.Variables[RandomSeedVariableKey] = seed.ToString();
-                            _random = new Random(seed);
+                            _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
-                            _random = new Random(int.Parse(_session.Variables[RandomSeedVariableKey]));
+                            _random = new TestRandom(Mode, int.Parse(_session.Variables[RandomSeedVariableKey]));
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -185,41 +188,18 @@ namespace Azure.Core.Testing
 
         public HttpPipelineTransport CreateTransport(HttpPipelineTransport currentTransport)
         {
-            switch (Mode)
+            return Mode switch
             {
-                case RecordedTestMode.Live:
-                    return currentTransport;
-                case RecordedTestMode.Record:
-                    return new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random);
-                case RecordedTestMode.Playback:
-                    return new PlaybackTransport(_session, _matcher, Random);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null);
-            }
+                RecordedTestMode.Live => currentTransport,
+                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random),
+                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, Random),
+                _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
+            };
         }
 
         public string GenerateId()
         {
             return Random.Next().ToString();
-        }
-
-        public string GetConnectionStringFromEnvironment(string variableName)
-        {
-            var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
-            switch (Mode)
-            {
-                case RecordedTestMode.Record:
-                    ConnectionString s = ConnectionString.Parse(environmentVariableValue);
-                    _sanitizer.SanitizeConnectionString(s);
-                    _session.Variables[variableName] = s.ToString();
-                    return environmentVariableValue;
-                case RecordedTestMode.Live:
-                    return environmentVariableValue;
-                case RecordedTestMode.Playback:
-                    return _session.Variables[variableName];
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         public string GetVariableFromEnvironment(string variableName)
@@ -228,7 +208,7 @@ namespace Azure.Core.Testing
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    _session.Variables[variableName] = environmentVariableValue;
+                    _session.Variables[variableName] = _sanitizer.SanitizeVariable(variableName, environmentVariableValue);
                     return environmentVariableValue;
                 case RecordedTestMode.Live:
                     return environmentVariableValue;
@@ -255,6 +235,18 @@ namespace Azure.Core.Testing
             }
         }
 
+        public void SetVariable(string variableName, string value)
+        {
+            switch (Mode)
+            {
+                case RecordedTestMode.Record:
+                    _session.Variables[variableName] = value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public TokenCredential GetCredential(TokenCredential defaultCredential)
         {
             return Mode == RecordedTestMode.Playback ? new TestCredential() : defaultCredential;
@@ -267,14 +259,14 @@ namespace Azure.Core.Testing
 
         private class TestCredential : TokenCredential
         {
-            public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
-                return Task.FromResult(GetToken(scopes, cancellationToken));
+                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
             }
 
-            public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken)
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", scopes), DateTimeOffset.MaxValue);
+                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
             }
         }
 

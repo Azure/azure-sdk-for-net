@@ -1,0 +1,110 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-ixbgexof.search.windows.net/indexes(\u0027twpmmnga\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "66",
+        "Content-Type": "application/json",
+        "traceparent": "00-26c6cca511112645848446d9f1de05c5-8ba918ce51dad24e-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200311.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "41298b33ba87801183d4e63a5116f18c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": [
+          {
+            "@search.action": "upload",
+            "hotelId": "1",
+            "address": {}
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "234",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Thu, 12 Mar 2020 00:40:00 GMT",
+        "elapsed-time": "359",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "41298b33-ba87-8011-83d4-e63a5116f18c",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-ixbgexof.search.windows.net/indexes(\u0027twpmmnga\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
+        "value": [
+          {
+            "key": "1",
+            "status": true,
+            "errorMessage": null,
+            "statusCode": 201
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-ixbgexof.search.windows.net/indexes(\u0027twpmmnga\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "traceparent": "00-9da37d8534345141ac0895adc0229beb-c5c912b6f8488243-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200311.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "9d0cb48abffadd494c0801195f598b73",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "418",
+        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
+        "Date": "Thu, 12 Mar 2020 00:40:02 GMT",
+        "elapsed-time": "7",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "9d0cb48a-bffa-dd49-4c08-01195f598b73",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-ixbgexof.search.windows.net/indexes(\u0027twpmmnga\u0027)/$metadata#docs(*)/$entity",
+        "hotelId": "1",
+        "hotelName": null,
+        "description": null,
+        "descriptionFr": null,
+        "category": null,
+        "tags": [],
+        "parkingIncluded": null,
+        "smokingAllowed": null,
+        "lastRenovationDate": null,
+        "rating": null,
+        "location": null,
+        "address": {
+          "streetAddress": null,
+          "city": null,
+          "stateProvince": null,
+          "country": null,
+          "postalCode": null
+        },
+        "rooms": []
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1573078829",
+    "SearchIndexName": "twpmmnga",
+    "SearchServiceName": "azs-net-ixbgexof"
+  }
+}

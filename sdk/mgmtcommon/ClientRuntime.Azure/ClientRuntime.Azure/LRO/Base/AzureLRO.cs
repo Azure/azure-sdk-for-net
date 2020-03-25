@@ -85,8 +85,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
             IsLROTaskCompleted = false;
 
             InitializeAsyncHeadersToUse();
-            await StartPollingAsync();
-            await PostPollingAsync();
+            await StartPollingAsync().ConfigureAwait(false);
+            await PostPollingAsync().ConfigureAwait(false);
             CheckFinalErrors();
 
             IsLROTaskCompleted = true;
@@ -100,7 +100,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         {
             while (IsLROTaskCompleted == false)
             {
-                await Task.Delay(CurrentPollingState.DelayBetweenPolling, CancelToken);
+                await Task.Delay(CurrentPollingState.DelayBetweenPolling, CancelToken).ConfigureAwait(false);
             }
 
             return CurrentPollingState.AzureOperationResponse;
@@ -194,7 +194,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
         /// 1) Depending upon the initial response status (starts/exits polling)
         /// 2) Reson for making Poll function part of CurrentPollingState because there can be scenario we might have to enabled to serialize polling state (user can save and drive polling operation)
         /// 3) Update polling state after each polling iteration
-        /// 4) Check for errors on each reponse we recieve during LRO
+        /// 4) Check for errors on each reponse we receive during LRO
         /// 5) Initialize polling URL to use based on the headers received in each polling response
         /// </summary>
         /// <returns></returns>
@@ -205,11 +205,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.LRO
 #endif
             while (!AzureAsyncOperation.TerminalStatuses.Any(s => s.Equals(CurrentPollingState.Status, StringComparison.OrdinalIgnoreCase)))
             {
-                await Task.Delay(CurrentPollingState.DelayBetweenPolling, CancelToken);
+                await Task.Delay(CurrentPollingState.DelayBetweenPolling, CancelToken).ConfigureAwait(false);
 #if DEBUG
                 UpdatePollingSessionIds();
 #endif
-                await CurrentPollingState.Poll(CustomHeaders, CancelToken);
+                await CurrentPollingState.Poll(CustomHeaders, CancelToken).ConfigureAwait(false);
                 UpdatePollingState();
                 CheckForErrors();
                 InitializeAsyncHeadersToUse();

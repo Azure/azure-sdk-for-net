@@ -85,9 +85,24 @@ namespace Microsoft.Azure.Management.Kusto
         public virtual IClustersOperations Clusters { get; private set; }
 
         /// <summary>
+        /// Gets the IClusterPrincipalAssignmentsOperations.
+        /// </summary>
+        public virtual IClusterPrincipalAssignmentsOperations ClusterPrincipalAssignments { get; private set; }
+
+        /// <summary>
         /// Gets the IDatabasesOperations.
         /// </summary>
         public virtual IDatabasesOperations Databases { get; private set; }
+
+        /// <summary>
+        /// Gets the IDatabasePrincipalAssignmentsOperations.
+        /// </summary>
+        public virtual IDatabasePrincipalAssignmentsOperations DatabasePrincipalAssignments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAttachedDatabaseConfigurationsOperations.
+        /// </summary>
+        public virtual IAttachedDatabaseConfigurationsOperations AttachedDatabaseConfigurations { get; private set; }
 
         /// <summary>
         /// Gets the IDataConnectionsOperations.
@@ -341,11 +356,14 @@ namespace Microsoft.Azure.Management.Kusto
         private void Initialize()
         {
             Clusters = new ClustersOperations(this);
+            ClusterPrincipalAssignments = new ClusterPrincipalAssignmentsOperations(this);
             Databases = new DatabasesOperations(this);
+            DatabasePrincipalAssignments = new DatabasePrincipalAssignmentsOperations(this);
+            AttachedDatabaseConfigurations = new AttachedDatabaseConfigurationsOperations(this);
             DataConnections = new DataConnectionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-01-21";
+            ApiVersion = "2019-11-09";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -375,6 +393,8 @@ namespace Microsoft.Azure.Management.Kusto
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Database>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Database>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataConnection>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataConnection>("kind"));
             CustomInitialize();

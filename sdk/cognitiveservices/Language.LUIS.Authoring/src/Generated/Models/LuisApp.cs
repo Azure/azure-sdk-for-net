@@ -43,16 +43,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="entities">List of entities.</param>
         /// <param name="closedLists">List of list entities.</param>
         /// <param name="composites">List of composite entities.</param>
+        /// <param name="hierarchicals">List of hierarchical entities.</param>
         /// <param name="patternAnyEntities">List of Pattern.Any
         /// entities.</param>
         /// <param name="regexEntities">List of regular expression
         /// entities.</param>
         /// <param name="prebuiltEntities">List of prebuilt entities.</param>
         /// <param name="regexFeatures">List of pattern features.</param>
-        /// <param name="modelFeatures">List of model features.</param>
+        /// <param name="phraselists">List of model features.</param>
         /// <param name="patterns">List of patterns.</param>
         /// <param name="utterances">List of example utterances.</param>
-        public LuisApp(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string name = default(string), string versionId = default(string), string desc = default(string), string culture = default(string), IList<HierarchicalModel> intents = default(IList<HierarchicalModel>), IList<HierarchicalModel> entities = default(IList<HierarchicalModel>), IList<ClosedList> closedLists = default(IList<ClosedList>), IList<HierarchicalModel> composites = default(IList<HierarchicalModel>), IList<PatternAny> patternAnyEntities = default(IList<PatternAny>), IList<RegexEntity> regexEntities = default(IList<RegexEntity>), IList<PrebuiltEntity> prebuiltEntities = default(IList<PrebuiltEntity>), IList<JSONRegexFeature> regexFeatures = default(IList<JSONRegexFeature>), IList<JSONModelFeature> modelFeatures = default(IList<JSONModelFeature>), IList<PatternRule> patterns = default(IList<PatternRule>), IList<JSONUtterance> utterances = default(IList<JSONUtterance>))
+        public LuisApp(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string name = default(string), string versionId = default(string), string desc = default(string), string culture = default(string), IList<HierarchicalModel> intents = default(IList<HierarchicalModel>), IList<HierarchicalModel> entities = default(IList<HierarchicalModel>), IList<ClosedList> closedLists = default(IList<ClosedList>), IList<HierarchicalModel> composites = default(IList<HierarchicalModel>), IList<HierarchicalModel> hierarchicals = default(IList<HierarchicalModel>), IList<PatternAny> patternAnyEntities = default(IList<PatternAny>), IList<RegexEntity> regexEntities = default(IList<RegexEntity>), IList<PrebuiltEntity> prebuiltEntities = default(IList<PrebuiltEntity>), IList<JSONRegexFeature> regexFeatures = default(IList<JSONRegexFeature>), IList<JSONModelFeature> phraselists = default(IList<JSONModelFeature>), IList<PatternRule> patterns = default(IList<PatternRule>), IList<JSONUtterance> utterances = default(IList<JSONUtterance>))
         {
             AdditionalProperties = additionalProperties;
             Name = name;
@@ -63,11 +64,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
             Entities = entities;
             ClosedLists = closedLists;
             Composites = composites;
+            Hierarchicals = hierarchicals;
             PatternAnyEntities = patternAnyEntities;
             RegexEntities = regexEntities;
             PrebuiltEntities = prebuiltEntities;
             RegexFeatures = regexFeatures;
-            ModelFeatures = modelFeatures;
+            Phraselists = phraselists;
             Patterns = patterns;
             Utterances = utterances;
             CustomInit();
@@ -134,6 +136,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public IList<HierarchicalModel> Composites { get; set; }
 
         /// <summary>
+        /// Gets or sets list of hierarchical entities.
+        /// </summary>
+        [JsonProperty(PropertyName = "hierarchicals")]
+        public IList<HierarchicalModel> Hierarchicals { get; set; }
+
+        /// <summary>
         /// Gets or sets list of Pattern.Any entities.
         /// </summary>
         [JsonProperty(PropertyName = "patternAnyEntities")]
@@ -160,8 +168,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Gets or sets list of model features.
         /// </summary>
-        [JsonProperty(PropertyName = "model_features")]
-        public IList<JSONModelFeature> ModelFeatures { get; set; }
+        [JsonProperty(PropertyName = "phraselists")]
+        public IList<JSONModelFeature> Phraselists { get; set; }
 
         /// <summary>
         /// Gets or sets list of patterns.

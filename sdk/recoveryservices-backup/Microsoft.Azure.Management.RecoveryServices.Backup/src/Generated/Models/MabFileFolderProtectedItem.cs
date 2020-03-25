@@ -66,18 +66,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// this backup item.</param>
         /// <param name="lastBackupStatus">Status of last backup
         /// operation.</param>
+        /// <param name="lastBackupTime">Timestamp of the last backup operation
+        /// on this backup item.</param>
         /// <param name="protectionState">Protected, ProtectionStopped,
         /// IRPending or ProtectionError</param>
         /// <param name="deferredDeleteSyncTimeInUTC">Sync time for deferred
-        /// deletion.</param>
+        /// deletion in UTC</param>
         /// <param name="extendedInfo">Additional information with this backup
         /// item.</param>
-        public MabFileFolderProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string computerName = default(string), string lastBackupStatus = default(string), string protectionState = default(string), long? deferredDeleteSyncTimeInUTC = default(long?), MabFileFolderProtectedItemExtendedInfo extendedInfo = default(MabFileFolderProtectedItemExtendedInfo))
+        public MabFileFolderProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), string friendlyName = default(string), string computerName = default(string), string lastBackupStatus = default(string), System.DateTime? lastBackupTime = default(System.DateTime?), string protectionState = default(string), long? deferredDeleteSyncTimeInUTC = default(long?), MabFileFolderProtectedItemExtendedInfo extendedInfo = default(MabFileFolderProtectedItemExtendedInfo))
             : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate)
         {
             FriendlyName = friendlyName;
             ComputerName = computerName;
             LastBackupStatus = lastBackupStatus;
+            LastBackupTime = lastBackupTime;
             ProtectionState = protectionState;
             DeferredDeleteSyncTimeInUTC = deferredDeleteSyncTimeInUTC;
             ExtendedInfo = extendedInfo;
@@ -108,6 +111,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string LastBackupStatus { get; set; }
 
         /// <summary>
+        /// Gets or sets timestamp of the last backup operation on this backup
+        /// item.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastBackupTime")]
+        public System.DateTime? LastBackupTime { get; set; }
+
+        /// <summary>
         /// Gets or sets protected, ProtectionStopped, IRPending or
         /// ProtectionError
         /// </summary>
@@ -115,7 +125,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string ProtectionState { get; set; }
 
         /// <summary>
-        /// Gets or sets sync time for deferred deletion.
+        /// Gets or sets sync time for deferred deletion in UTC
         /// </summary>
         [JsonProperty(PropertyName = "deferredDeleteSyncTimeInUTC")]
         public long? DeferredDeleteSyncTimeInUTC { get; set; }

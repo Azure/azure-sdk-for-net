@@ -37,11 +37,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the virtual machine scale set.</param>
         /// <param name="extensions">The extensions information.</param>
         /// <param name="statuses">The resource status information.</param>
-        public VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default(VirtualMachineScaleSetInstanceViewStatusesSummary), IList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default(IList<VirtualMachineScaleSetVMExtensionsSummary>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        /// <param name="orchestrationServices">The orchestration services
+        /// information.</param>
+        public VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default(VirtualMachineScaleSetInstanceViewStatusesSummary), IList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default(IList<VirtualMachineScaleSetVMExtensionsSummary>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>), IList<OrchestrationServiceSummary> orchestrationServices = default(IList<OrchestrationServiceSummary>))
         {
             VirtualMachine = virtualMachine;
             Extensions = extensions;
             Statuses = statuses;
+            OrchestrationServices = orchestrationServices;
             CustomInit();
         }
 
@@ -68,6 +71,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "statuses")]
         public IList<InstanceViewStatus> Statuses { get; set; }
+
+        /// <summary>
+        /// Gets the orchestration services information.
+        /// </summary>
+        [JsonProperty(PropertyName = "orchestrationServices")]
+        public IList<OrchestrationServiceSummary> OrchestrationServices { get; private set; }
 
     }
 }

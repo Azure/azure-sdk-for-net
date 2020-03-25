@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -36,6 +38,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="fileSystemId">fileSystemId</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="mountTargetId">mountTargetId</param>
         /// <param name="ipAddress">ipAddress</param>
@@ -46,11 +49,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="netmask">netmask</param>
         /// <param name="smbServerFqdn">smbServerFQDN</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public MountTarget(string location, string fileSystemId, string id = default(string), string name = default(string), object tags = default(object), string mountTargetId = default(string), string ipAddress = default(string), string subnet = default(string), string startIp = default(string), string endIp = default(string), string gateway = default(string), string netmask = default(string), string smbServerFqdn = default(string), string provisioningState = default(string))
+        public MountTarget(string location, string fileSystemId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string mountTargetId = default(string), string ipAddress = default(string), string subnet = default(string), string startIp = default(string), string endIp = default(string), string gateway = default(string), string netmask = default(string), string smbServerFqdn = default(string), string provisioningState = default(string))
         {
             Location = location;
             Id = id;
             Name = name;
+            Type = type;
             Tags = tags;
             MountTargetId = mountTargetId;
             FileSystemId = fileSystemId;
@@ -89,10 +93,16 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Name { get; private set; }
 
         /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
         /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
-        public object Tags { get; set; }
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets mountTargetId

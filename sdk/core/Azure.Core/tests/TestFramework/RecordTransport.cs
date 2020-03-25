@@ -9,20 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Http;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
-    public static class RandomExtensions
-    {
-        public static Guid NewGuid(this Random random)
-        {
-            var bytes = new byte[16];
-            random.NextBytes(bytes);
-            return new Guid(bytes);
-        }
-    }
     public class RecordTransport : HttpPipelineTransport
     {
         private readonly HttpPipelineTransport _innerTransport;
@@ -41,19 +31,19 @@ namespace Azure.Core.Testing
             _session = session;
         }
 
-        public override void Process(HttpPipelineMessage message)
+        public override void Process(HttpMessage message)
         {
             _innerTransport.Process(message);
             Record(message);
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message)
+        public override async ValueTask ProcessAsync(HttpMessage message)
         {
             await _innerTransport.ProcessAsync(message);
             Record(message);
         }
 
-        private void Record(HttpPipelineMessage message)
+        private void Record(HttpMessage message)
         {
             RecordEntry recordEntry = CreateEntry(message.Request, message.Response);
             if (_filter(recordEntry))
@@ -79,12 +69,16 @@ namespace Azure.Core.Testing
         {
             var entry = new RecordEntry
             {
-                RequestUri = request.UriBuilder.ToString(),
+                RequestUri = request.Uri.ToString(),
                 RequestMethod = request.Method,
-                RequestHeaders = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
-                ResponseHeaders = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
-                RequestBody = ReadToEnd(request.Content),
-                ResponseBody = ReadToEnd(response),
+                Request =
+                {
+                    Body = ReadToEnd(request.Content),
+                },
+                Response =
+                {
+                    Body = ReadToEnd(response),
+                },
                 StatusCode = response.Status
             };
 
@@ -92,20 +86,20 @@ namespace Azure.Core.Testing
             {
                 var gotHeader = request.Headers.TryGetValues(requestHeader.Name, out IEnumerable<string> headerValues);
                 Debug.Assert(gotHeader);
-                entry.RequestHeaders.Add(requestHeader.Name, headerValues.ToArray());
+                entry.Request.Headers.Add(requestHeader.Name, headerValues.ToArray());
             }
 
             // Make sure we record Content-Length even if it's not set explicitly
             if (!request.Headers.TryGetValue("Content-Length", out _) && request.Content != null && request.Content.TryComputeLength(out long computedLength))
             {
-                entry.RequestHeaders.Add("Content-Length", new[] { computedLength.ToString(CultureInfo.InvariantCulture) });
+                entry.Request.Headers.Add("Content-Length", new[] { computedLength.ToString(CultureInfo.InvariantCulture) });
             }
 
             foreach (HttpHeader responseHeader in response.Headers)
             {
                 var gotHeader = response.Headers.TryGetValues(responseHeader.Name, out IEnumerable<string> headerValues);
                 Debug.Assert(gotHeader);
-                entry.ResponseHeaders.Add(responseHeader.Name, headerValues.ToArray());
+                entry.Response.Headers.Add(responseHeader.Name, headerValues.ToArray());
             }
 
             return entry;
@@ -128,7 +122,7 @@ namespace Azure.Core.Testing
             return memoryStream.ToArray();
         }
 
-        private byte[] ReadToEnd(HttpPipelineRequestContent requestContent)
+        private byte[] ReadToEnd(RequestContent requestContent)
         {
             if (requestContent == null)
             {

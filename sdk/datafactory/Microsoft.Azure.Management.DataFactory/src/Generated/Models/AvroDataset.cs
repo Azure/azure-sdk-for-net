@@ -99,10 +99,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
-            if (Location != null)
-            {
-                Location.Validate();
-            }
             if (AvroCompressionLevel > 9)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "AvroCompressionLevel", 9);

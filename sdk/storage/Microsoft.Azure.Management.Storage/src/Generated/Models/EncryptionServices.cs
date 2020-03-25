@@ -64,16 +64,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         public EncryptionService File { get; set; }
 
         /// <summary>
-        /// Gets the encryption function of the table storage service.
+        /// Gets or sets the encryption function of the table storage service.
         /// </summary>
         [JsonProperty(PropertyName = "table")]
-        public EncryptionService Table { get; private set; }
+        public EncryptionService Table { get; set; }
 
         /// <summary>
-        /// Gets the encryption function of the queue storage service.
+        /// Gets or sets the encryption function of the queue storage service.
         /// </summary>
         [JsonProperty(PropertyName = "queue")]
-        public EncryptionService Queue { get; private set; }
+        public EncryptionService Queue { get; set; }
 
     }
 }

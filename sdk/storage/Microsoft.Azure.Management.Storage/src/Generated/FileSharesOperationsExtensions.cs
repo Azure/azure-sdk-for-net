@@ -38,9 +38,6 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            /// <param name='skipToken'>
-            /// Optional. Continuation token for the list operation.
-            /// </param>
             /// <param name='maxpagesize'>
             /// Optional. Specified maximum number of shares that can be included in the
             /// list.
@@ -49,9 +46,9 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional. When specified, only share names starting with the filter will be
             /// listed.
             /// </param>
-            public static IPage<FileShareItem> List(this IFileSharesOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string))
+            public static IPage<FileShareItem> List(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string))
             {
-                return operations.ListAsync(resourceGroupName, accountName, skipToken, maxpagesize, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, maxpagesize, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -69,9 +66,6 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            /// <param name='skipToken'>
-            /// Optional. Continuation token for the list operation.
-            /// </param>
             /// <param name='maxpagesize'>
             /// Optional. Specified maximum number of shares that can be included in the
             /// list.
@@ -83,9 +77,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FileShareItem>> ListAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FileShareItem>> ListAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, maxpagesize, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, maxpagesize, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -119,7 +113,8 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='shareQuota'>
             /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-            /// less than or equal to 5TB (5120).
+            /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
+            /// is 102400.
             /// </param>
             public static FileShare Create(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?))
             {
@@ -154,7 +149,8 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='shareQuota'>
             /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-            /// less than or equal to 5TB (5120).
+            /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
+            /// is 102400.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -195,7 +191,8 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='shareQuota'>
             /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-            /// less than or equal to 5TB (5120).
+            /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
+            /// is 102400.
             /// </param>
             public static FileShare Update(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?))
             {
@@ -230,7 +227,8 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='shareQuota'>
             /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-            /// less than or equal to 5TB (5120).
+            /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
+            /// is 102400.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

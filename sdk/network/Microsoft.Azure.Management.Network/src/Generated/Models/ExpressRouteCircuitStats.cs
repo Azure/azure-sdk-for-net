@@ -29,10 +29,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitStats class.
         /// </summary>
-        /// <param name="primarybytesIn">Gets BytesIn of the peering.</param>
-        /// <param name="primarybytesOut">Gets BytesOut of the peering.</param>
-        /// <param name="secondarybytesIn">Gets BytesIn of the peering.</param>
-        /// <param name="secondarybytesOut">Gets BytesOut of the
+        /// <param name="primarybytesIn">The Primary BytesIn of the
+        /// peering.</param>
+        /// <param name="primarybytesOut">The primary BytesOut of the
+        /// peering.</param>
+        /// <param name="secondarybytesIn">The secondary BytesIn of the
+        /// peering.</param>
+        /// <param name="secondarybytesOut">The secondary BytesOut of the
         /// peering.</param>
         public ExpressRouteCircuitStats(long? primarybytesIn = default(long?), long? primarybytesOut = default(long?), long? secondarybytesIn = default(long?), long? secondarybytesOut = default(long?))
         {
@@ -49,25 +52,25 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets BytesIn of the peering.
+        /// Gets or sets the Primary BytesIn of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "primarybytesIn")]
         public long? PrimarybytesIn { get; set; }
 
         /// <summary>
-        /// Gets BytesOut of the peering.
+        /// Gets or sets the primary BytesOut of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "primarybytesOut")]
         public long? PrimarybytesOut { get; set; }
 
         /// <summary>
-        /// Gets BytesIn of the peering.
+        /// Gets or sets the secondary BytesIn of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "secondarybytesIn")]
         public long? SecondarybytesIn { get; set; }
 
         /// <summary>
-        /// Gets BytesOut of the peering.
+        /// Gets or sets the secondary BytesOut of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "secondarybytesOut")]
         public long? SecondarybytesOut { get; set; }

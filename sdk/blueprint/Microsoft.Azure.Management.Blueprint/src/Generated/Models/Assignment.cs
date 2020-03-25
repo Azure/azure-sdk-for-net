@@ -51,6 +51,10 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="description">Multi-line explain this resource.</param>
         /// <param name="blueprintId">ID of the published version of a
         /// blueprint definition.</param>
+        /// <param name="scope">The target subscription scope of the blueprint
+        /// assignment (format: '/subscriptions/{subscriptionId}'). For
+        /// management group level assignments, the property is
+        /// required.</param>
         /// <param name="status">Status of blueprint assignment. This field is
         /// readonly.</param>
         /// <param name="locks">Defines how resources deployed by a blueprint
@@ -59,13 +63,14 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// Possible values include: 'creating', 'validating', 'waiting',
         /// 'deploying', 'cancelling', 'locking', 'succeeded', 'failed',
         /// 'canceled', 'deleting'</param>
-        public Assignment(string location, ManagedServiceIdentity identity, IDictionary<string, ParameterValueBase> parameters, IDictionary<string, ResourceGroupValue> resourceGroups, string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), string blueprintId = default(string), AssignmentStatus status = default(AssignmentStatus), AssignmentLockSettings locks = default(AssignmentLockSettings), string provisioningState = default(string))
+        public Assignment(string location, ManagedServiceIdentity identity, IDictionary<string, ParameterValue> parameters, IDictionary<string, ResourceGroupValue> resourceGroups, string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), string blueprintId = default(string), string scope = default(string), AssignmentStatus status = default(AssignmentStatus), AssignmentLockSettings locks = default(AssignmentLockSettings), string provisioningState = default(string))
             : base(location, id, type, name)
         {
             Identity = identity;
             DisplayName = displayName;
             Description = description;
             BlueprintId = blueprintId;
+            Scope = scope;
             Parameters = parameters;
             ResourceGroups = resourceGroups;
             Status = status;
@@ -104,10 +109,18 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public string BlueprintId { get; set; }
 
         /// <summary>
+        /// Gets or sets the target subscription scope of the blueprint
+        /// assignment (format: '/subscriptions/{subscriptionId}'). For
+        /// management group level assignments, the property is required.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scope")]
+        public string Scope { get; set; }
+
+        /// <summary>
         /// Gets or sets blueprint assignment parameter values.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
-        public IDictionary<string, ParameterValueBase> Parameters { get; set; }
+        public IDictionary<string, ParameterValue> Parameters { get; set; }
 
         /// <summary>
         /// Gets or sets names and locations of resource group placeholders.
@@ -175,13 +188,23 @@ namespace Microsoft.Azure.Management.Blueprint.Models
                     throw new ValidationException(ValidationRules.MaxLength, "Description", 500);
                 }
             }
-            if (ResourceGroups != null)
+            if (Parameters != null)
             {
-                foreach (var valueElement in ResourceGroups.Values)
+                foreach (var valueElement in Parameters.Values)
                 {
                     if (valueElement != null)
                     {
                         valueElement.Validate();
+                    }
+                }
+            }
+            if (ResourceGroups != null)
+            {
+                foreach (var valueElement1 in ResourceGroups.Values)
+                {
+                    if (valueElement1 != null)
+                    {
+                        valueElement1.Validate();
                     }
                 }
             }

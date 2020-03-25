@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -8,29 +7,64 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary>
-    /// Represents a KeyVault secret that has been deleted, allowing it to be recovered, if needed.
+    /// Represents a Key Vault secret that has been deleted, allowing it to be recovered, if needed.
     /// </summary>
-    public class DeletedSecret : SecretBase
+    public class DeletedSecret : KeyVaultSecret
     {
-        internal DeletedSecret()
-        {
+        private const string RecoveryIdPropertyName = "recoveryId";
+        private const string DeletedOnPropertyName = "deletedDate";
+        private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
 
+        private static readonly JsonEncodedText s_recoveryIdPropertyNameBytes = JsonEncodedText.Encode(RecoveryIdPropertyName);
+        private static readonly JsonEncodedText s_deletedOnPropertyNameBytes = JsonEncodedText.Encode(DeletedOnPropertyName);
+        private static readonly JsonEncodedText s_scheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
+
+        private string _recoveryId;
+
+        internal DeletedSecret(SecretProperties properties = null) : base(properties)
+        {
         }
 
         /// <summary>
-        /// The identifier of the deleted secret. This is used to recover the secret.
+        /// Gets a <see cref="Uri"/> of the deleted secret that can be used to recover it.
         /// </summary>
-        public string RecoveryId { get; private set; }
+        public Uri RecoveryId
+        {
+            get => _recoveryId is null ? null : new Uri(_recoveryId);
+            internal set => _recoveryId = value?.ToString();
+        }
 
         /// <summary>
-        /// The time when the secret was deleted, in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the secret was deleted.
         /// </summary>
-        public DateTimeOffset? DeletedDate { get; private set; }
+        public DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
-        /// The time when the secret is scheduled to be purged, in UTC
+        /// Gets a <see cref="DateTimeOffset"/> for when the deleted secret will be purged.
         /// </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; private set; }
+        public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
+
+        internal override void ReadProperty(JsonProperty prop)
+        {
+            switch (prop.Name)
+            {
+                case RecoveryIdPropertyName:
+                    _recoveryId = prop.Value.GetString();
+                    break;
+
+                case DeletedOnPropertyName:
+                    DeletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
+
+                case ScheduledPurgeDatePropertyName:
+                    ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
+
+                default:
+                    base.ReadProperty(prop);
+                    break;
+            }
+        }
 
         internal override void WriteProperties(Utf8JsonWriter json)
         {
@@ -38,37 +72,17 @@ namespace Azure.Security.KeyVault.Secrets
 
             if (RecoveryId != null)
             {
-                json.WriteString("recoveryId", RecoveryId);
+                json.WriteString(s_recoveryIdPropertyNameBytes, RecoveryId.ToString());
             }
 
-            if (DeletedDate.HasValue)
+            if (DeletedOn.HasValue)
             {
-                json.WriteNumber("deletedDate", DeletedDate.Value.ToUnixTimeSeconds());
+                json.WriteNumber(s_deletedOnPropertyNameBytes, DeletedOn.Value.ToUnixTimeSeconds());
             }
 
             if (ScheduledPurgeDate.HasValue)
             {
-                json.WriteNumber("scheduledPurgeDate", ScheduledPurgeDate.Value.ToUnixTimeSeconds());
-            }
-        }
-
-        internal override void ReadProperties(JsonElement json)
-        {
-            base.ReadProperties(json);
-
-            if (json.TryGetProperty("recoveryId", out JsonElement recoveryId))
-            {
-                RecoveryId = recoveryId.GetString();
-            }
-
-            if (json.TryGetProperty("deletedDate", out JsonElement deletedDate))
-            {
-                DeletedDate = DateTimeOffset.FromUnixTimeSeconds(deletedDate.GetInt64());
-            }
-
-            if (json.TryGetProperty("scheduledPurgeDate", out JsonElement scheduledPurgeDate))
-            {
-                ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(scheduledPurgeDate.GetInt64());
+                json.WriteNumber(s_scheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeSeconds());
             }
         }
     }

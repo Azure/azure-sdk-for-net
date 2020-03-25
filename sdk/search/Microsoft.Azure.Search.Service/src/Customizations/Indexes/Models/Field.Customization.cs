@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Search.Models
             Type = dataType;
 
             // Set all defaults per their SDK-documented values, which differ from the REST API defaults.
-            // This is for backwards compatibility with all prior versions of the Azure Search .NET SDK.
+            // This is for backwards compatibility with all prior versions of the Azure Cognitive Search .NET SDK.
             IsKey = false;
             IsRetrievable = true;
             IsSearchable = false;
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Search.Models
         /// fields of type Edm.String or Collection(Edm.String), and it must be
         /// null for complex fields. Default is false for simple fields and null for
         /// complex fields. Note: searchable fields consume extra space in your
-        /// index since Azure Search will store an additional tokenized version
+        /// index since Azure Cognitive Search will store an additional tokenized version
         /// of the field value for full-text searches. If you want to save space
         /// in your index and you don't need a field to be included in searches,
         /// set searchable to false.
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable the field to be
-        /// referenced in $orderby expressions. By default Azure Search sorts
+        /// referenced in $orderby expressions. By default Azure Cognitive Search sorts
         /// results by score, but in many experiences users will want to sort
         /// by fields in the documents. A simple field can be sortable only if
         /// it is single-valued (it has a single value in the scope of the

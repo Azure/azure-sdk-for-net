@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Runtime.ExceptionServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
@@ -28,22 +26,22 @@ namespace Azure.Core.Testing
 
         private const string AsyncSuffix = "Async";
 
-        private readonly MethodInfo TaskFromResultMethod = typeof(Task)
+        private readonly MethodInfo _taskFromResultMethod = typeof(Task)
             .GetMethod("FromResult", BindingFlags.Static | BindingFlags.Public);
 
-        private readonly MethodInfo TaskFromExceptionMethod = typeof(Task)
+        private readonly MethodInfo _taskFromExceptionMethod = typeof(Task)
             .GetMethods(BindingFlags.Static | BindingFlags.Public)
             .Single(m => m.Name == "FromException" && m.IsGenericMethod);
 
         [DebuggerStepThrough]
         public void Intercept(IInvocation invocation)
         {
-            var parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
+            Type[] parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
 
             var methodName = invocation.Method.Name;
             if (!methodName.EndsWith(AsyncSuffix))
             {
-                var asyncAlternative = GetMethod(invocation, methodName + AsyncSuffix, parameterTypes);
+                MethodInfo asyncAlternative = GetMethod(invocation, methodName + AsyncSuffix, parameterTypes);
 
                 // Check if there is an async alternative to sync call
                 if (asyncAlternative != null)
@@ -65,77 +63,181 @@ namespace Azure.Core.Testing
 
             var nonAsyncMethodName = methodName.Substring(0, methodName.Length - AsyncSuffix.Length);
 
-            var methodInfo = GetMethod(invocation, nonAsyncMethodName, parameterTypes);
+            MethodInfo methodInfo = GetMethod(invocation, nonAsyncMethodName, parameterTypes);
             if (methodInfo == null)
             {
                 throw new InvalidOperationException($"Unable to find a method with name {nonAsyncMethodName} and {string.Join<Type>(",", parameterTypes)} parameters. "
                                                     + "Make sure both methods have the same signature including the cancellationToken parameter");
             }
 
-            var returnType = methodInfo.ReturnType;
-            bool returnsIEnumerable = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(IEnumerable<>);
+            Type returnType = methodInfo.ReturnType;
+            bool returnsSyncCollection = returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Pageable<>);
 
             try
             {
+                // If we've got GetAsync<Model>() and just found Get<T>(), we
+                // need to change the method to Get<Model>().
+                if (methodInfo.ContainsGenericParameters)
+                {
+                    methodInfo = methodInfo.MakeGenericMethod(invocation.Method.GetGenericArguments());
+                }
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
                 // Map IEnumerable to IAsyncEnumerable
-                if (returnsIEnumerable)
+                if (returnsSyncCollection)
                 {
-                    Type[] modelType = returnType.GenericTypeArguments.Single().GenericTypeArguments;
-                    Type wrapperType = typeof(AsyncEnumerableWrapper<>).MakeGenericType(modelType);
+                    Type[] modelType = returnType.GenericTypeArguments;
+                    Type wrapperType = typeof(SyncPageableWrapper<>).MakeGenericType(modelType);
 
                     invocation.ReturnValue = Activator.CreateInstance(wrapperType, new[] { result });
                 }
                 else
                 {
-                    invocation.ReturnValue = TaskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    SetAsyncResult(invocation, returnType, result);
                 }
             }
             catch (TargetInvocationException exception)
             {
-                if (returnsIEnumerable)
+                if (returnsSyncCollection)
                 {
                     ExceptionDispatchInfo.Capture(exception.InnerException).Throw();
                 }
                 else
                 {
-                    invocation.ReturnValue = TaskFromExceptionMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new[] { exception.InnerException });
+                    SetAsyncException(invocation, returnType, exception.InnerException);
                 }
             }
         }
 
-        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)
+        private void SetAsyncResult(IInvocation invocation, Type returnType, object result)
         {
-            return invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
+            Type methodReturnType = invocation.Method.ReturnType;
+            if (methodReturnType.IsGenericType)
+            {
+                // If the sync method returned Response<Model> and the async
+                // method's return type is still an open Response<U>, we need
+                // to close it to Response<Model> as well.  We don't care about
+                // this if Response<> has already been closed.
+                if (returnType.IsGenericType &&
+                    returnType.GetGenericTypeDefinition() == typeof(Response<>) &&
+                    returnType.ContainsGenericParameters)
+                {
+                    Type modelType = methodReturnType.GetGenericArguments()[0].GetGenericArguments()[0];
+                    returnType = returnType.GetGenericTypeDefinition().MakeGenericType(modelType);
+                }
+
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                {
+                    invocation.ReturnValue = _taskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    return;
+                }
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>))
+                {
+                    invocation.ReturnValue = Activator.CreateInstance(typeof(ValueTask<>).MakeGenericType(returnType), result);
+                    return;
+                }
+            }
+
+            throw new NotSupportedException();
         }
 
-        private class AsyncEnumerableWrapper<T> : AsyncCollection<T>
+        private void SetAsyncException(IInvocation invocation, Type returnType, Exception result)
         {
-            private readonly IEnumerable<Response<T>> _enumerable;
+            Type methodReturnType = invocation.Method.ReturnType;
+            if (methodReturnType.IsGenericType)
+            {
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+                {
+                    invocation.ReturnValue = _taskFromExceptionMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    return;
+                }
 
-            public AsyncEnumerableWrapper(IEnumerable<Response<T>> enumerable)
+                if (methodReturnType.GetGenericTypeDefinition() == typeof(ValueTask<>))
+                {
+                    var task = _taskFromExceptionMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
+                    invocation.ReturnValue = Activator.CreateInstance(typeof(ValueTask<>).MakeGenericType(returnType), task);
+                    return;
+                }
+            }
+
+            throw new NotSupportedException();
+        }
+
+        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)
+        {
+            BindingFlags flags = IsInternal(invocation.Method) ?
+                BindingFlags.Instance | BindingFlags.NonPublic :
+                BindingFlags.Instance | BindingFlags.Public;
+
+            // Do our own slow "lightweight binding" in situations where we
+            // have generic arguments that aren't factored into the binder for
+            // the regular GetMethod call.  We're taking lots of shortcuts like
+            // only comparing the generic type or count and it's only enough
+            // for the cases we have today.
+            static Type GenericDef(Type t) => t.IsGenericType ? t.GetGenericTypeDefinition() : t;
+            MethodInfo GetMethodSlow() =>
+                invocation.TargetType
+                    // Start with all methods that have the right name
+                    .GetMethods(flags).Where(m => m.Name == nonAsyncMethodName)
+                    // Check if their type parameters have the same generic
+                    // type definitions (i.e., if I invoked
+                    // GetAsync<Model>(Wrapper<Model>) we want that to match
+                    // with Get<T>(Wrapper<T>)
+                    .Where(m =>
+                        m.GetParameters().Select(p => GenericDef(p.ParameterType))
+                        .SequenceEqual(types.Select(GenericDef)))
+                    // Check if they have the same number of type arguments
+                    // (all of our cases today either specialize on 0 or 1 type
+                    // argument for the static or dynamic user schema approach)
+                    .Where(m =>
+                        m.GetGenericArguments().Length ==
+                        invocation.Method.GetGenericArguments().Length)
+                    // Hopefully we're down to 1.  If you arrive here in the
+                    // future because SingleOrDefault threw, we need to make
+                    // the comparison logic more specific.  If you arrive here
+                    // because we're returning null, then we need to search
+                    // a little more broadly.  Either way, congratulations on
+                    // blazing new API patterns and taking us boldly into the
+                    // future.
+                    .SingleOrDefault();
+            try
+            {
+                return invocation.TargetType.GetMethod(
+                    nonAsyncMethodName,
+                    flags,
+                    null,
+                    types,
+                    null) ??
+                    // Search a little more broadly if the regular binder
+                    // couldn't find a match
+                    GetMethodSlow();
+            }
+            catch (AmbiguousMatchException)
+            {
+                // Use our own binder to pick the best method if the regular
+                // binder couldn't decide between multiple choices
+                return GetMethodSlow();
+            }
+        }
+
+        private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
+
+        private class SyncPageableWrapper<T> : AsyncPageable<T>
+        {
+            private readonly Pageable<T> _enumerable;
+
+            public SyncPageableWrapper(Pageable<T> enumerable)
             {
                 _enumerable = enumerable;
             }
 
 #pragma warning disable 1998
-            public override async IAsyncEnumerable<Page<T>> ByPage(string continuationToken = default, int? pageSizeHint = default)
+            public override async IAsyncEnumerable<Page<T>> AsPages(string continuationToken = default, int? pageSizeHint = default)
 #pragma warning restore 1998
             {
-                if (continuationToken != null)
+                foreach (Page<T> page in _enumerable.AsPages())
                 {
-                    throw new InvalidOperationException("Calling ByPage with a continuationToken is not supported in the sync mode");
-                }
-
-                if (pageSizeHint != null)
-                {
-                    throw new InvalidOperationException("Calling ByPage with a pageSizeHint is not supported in the sync mode");
-                }
-
-                foreach (Response<T> response in _enumerable)
-                {
-                    yield return new Page<T>(new[] { response.Value }, null, response.GetRawResponse());
+                    yield return page;
                 }
             }
         }

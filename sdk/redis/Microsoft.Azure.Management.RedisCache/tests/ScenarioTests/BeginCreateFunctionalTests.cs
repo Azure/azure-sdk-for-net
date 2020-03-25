@@ -34,19 +34,32 @@ namespace AzureRedisCache.Tests
                                                 Name = SkuName.Premium,
                                                 Family = SkuFamily.P,
                                                 Capacity = 1
-                                            }
+                                            },
+                                            MinimumTlsVersion = TlsVersion.OneFullStopTwo,
+                                            ReplicasPerMaster = 2,
                                         });
 
                 Assert.Contains(redisCacheName, response.Id);
                 Assert.Equal(redisCacheName, response.Name);
-                Assert.Equal("creating", response.ProvisioningState, ignoreCase: true);
+                Assert.Equal(ProvisioningState.Creating, response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, response.Sku.Name);
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
+                Assert.Equal(TlsVersion.OneFullStopTwo, response.MinimumTlsVersion);
+                Assert.Equal(2, response.ReplicasPerMaster);
+
+                Assert.Equal(3, response.Instances.Count);
+                for (int i = 0; i < response.Instances.Count; i++)
+                {
+                    Assert.Equal(15000 + i, response.Instances[i].SslPort);
+                    Assert.Null(response.Instances[i].NonSslPort);
+                    Assert.Null(response.Instances[i].ShardId);
+                    Assert.Null(response.Instances[i].Zone);
+                }
 
                 for (int i = 0; i < 60; i++)
                 {
                     response = _client.Redis.Get(resourceGroupName, redisCacheName);
-                    if ("succeeded".Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase))
+                    if (ProvisioningState.Succeeded.Equals(response.ProvisioningState, StringComparison.OrdinalIgnoreCase))
                     {
                         break;
                     }

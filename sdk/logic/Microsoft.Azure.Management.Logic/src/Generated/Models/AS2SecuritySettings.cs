@@ -31,21 +31,21 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         /// <param name="overrideGroupSigningCertificate">The value indicating
         /// whether to send or request a MDN.</param>
-        /// <param name="enableNrrForInboundEncodedMessages">The value
+        /// <param name="enableNRRForInboundEncodedMessages">The value
         /// indicating whether to enable NRR for inbound encoded
         /// messages.</param>
-        /// <param name="enableNrrForInboundDecodedMessages">The value
+        /// <param name="enableNRRForInboundDecodedMessages">The value
         /// indicating whether to enable NRR for inbound decoded
         /// messages.</param>
-        /// <param name="enableNrrForOutboundMdn">The value indicating whether
+        /// <param name="enableNRRForOutboundMDN">The value indicating whether
         /// to enable NRR for outbound MDN.</param>
-        /// <param name="enableNrrForOutboundEncodedMessages">The value
+        /// <param name="enableNRRForOutboundEncodedMessages">The value
         /// indicating whether to enable NRR for outbound encoded
         /// messages.</param>
-        /// <param name="enableNrrForOutboundDecodedMessages">The value
+        /// <param name="enableNRRForOutboundDecodedMessages">The value
         /// indicating whether to enable NRR for outbound decoded
         /// messages.</param>
-        /// <param name="enableNrrForInboundMdn">The value indicating whether
+        /// <param name="enableNRRForInboundMDN">The value indicating whether
         /// to enable NRR for inbound MDN.</param>
         /// <param name="signingCertificateName">The name of the signing
         /// certificate.</param>
@@ -54,17 +54,17 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="sha2AlgorithmFormat">The Sha2 algorithm format. Valid
         /// values are Sha2, ShaHashSize, ShaHyphenHashSize,
         /// Sha2UnderscoreHashSize.</param>
-        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNrrForInboundEncodedMessages, bool enableNrrForInboundDecodedMessages, bool enableNrrForOutboundMdn, bool enableNrrForOutboundEncodedMessages, bool enableNrrForOutboundDecodedMessages, bool enableNrrForInboundMdn, string signingCertificateName = default(string), string encryptionCertificateName = default(string), string sha2AlgorithmFormat = default(string))
+        public AS2SecuritySettings(bool overrideGroupSigningCertificate, bool enableNRRForInboundEncodedMessages, bool enableNRRForInboundDecodedMessages, bool enableNRRForOutboundMDN, bool enableNRRForOutboundEncodedMessages, bool enableNRRForOutboundDecodedMessages, bool enableNRRForInboundMDN, string signingCertificateName = default(string), string encryptionCertificateName = default(string), string sha2AlgorithmFormat = default(string))
         {
             OverrideGroupSigningCertificate = overrideGroupSigningCertificate;
             SigningCertificateName = signingCertificateName;
             EncryptionCertificateName = encryptionCertificateName;
-            EnableNrrForInboundEncodedMessages = enableNrrForInboundEncodedMessages;
-            EnableNrrForInboundDecodedMessages = enableNrrForInboundDecodedMessages;
-            EnableNrrForOutboundMdn = enableNrrForOutboundMdn;
-            EnableNrrForOutboundEncodedMessages = enableNrrForOutboundEncodedMessages;
-            EnableNrrForOutboundDecodedMessages = enableNrrForOutboundDecodedMessages;
-            EnableNrrForInboundMdn = enableNrrForInboundMdn;
+            EnableNRRForInboundEncodedMessages = enableNRRForInboundEncodedMessages;
+            EnableNRRForInboundDecodedMessages = enableNRRForInboundDecodedMessages;
+            EnableNRRForOutboundMDN = enableNRRForOutboundMDN;
+            EnableNRRForOutboundEncodedMessages = enableNRRForOutboundEncodedMessages;
+            EnableNRRForOutboundDecodedMessages = enableNRRForOutboundDecodedMessages;
+            EnableNRRForInboundMDN = enableNRRForInboundMDN;
             Sha2AlgorithmFormat = sha2AlgorithmFormat;
             CustomInit();
         }
@@ -96,43 +96,43 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the value indicating whether to enable NRR for inbound
         /// encoded messages.
         /// </summary>
-        [JsonProperty(PropertyName = "enableNrrForInboundEncodedMessages")]
-        public bool EnableNrrForInboundEncodedMessages { get; set; }
+        [JsonProperty(PropertyName = "enableNRRForInboundEncodedMessages")]
+        public bool EnableNRRForInboundEncodedMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for inbound
         /// decoded messages.
         /// </summary>
-        [JsonProperty(PropertyName = "enableNrrForInboundDecodedMessages")]
-        public bool EnableNrrForInboundDecodedMessages { get; set; }
+        [JsonProperty(PropertyName = "enableNRRForInboundDecodedMessages")]
+        public bool EnableNRRForInboundDecodedMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for
         /// outbound MDN.
         /// </summary>
-        [JsonProperty(PropertyName = "enableNrrForOutboundMdn")]
-        public bool EnableNrrForOutboundMdn { get; set; }
+        [JsonProperty(PropertyName = "enableNRRForOutboundMDN")]
+        public bool EnableNRRForOutboundMDN { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for
         /// outbound encoded messages.
         /// </summary>
-        [JsonProperty(PropertyName = "enableNrrForOutboundEncodedMessages")]
-        public bool EnableNrrForOutboundEncodedMessages { get; set; }
+        [JsonProperty(PropertyName = "enableNRRForOutboundEncodedMessages")]
+        public bool EnableNRRForOutboundEncodedMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for
         /// outbound decoded messages.
         /// </summary>
-        [JsonProperty(PropertyName = "enableNrrForOutboundDecodedMessages")]
-        public bool EnableNrrForOutboundDecodedMessages { get; set; }
+        [JsonProperty(PropertyName = "enableNRRForOutboundDecodedMessages")]
+        public bool EnableNRRForOutboundDecodedMessages { get; set; }
 
         /// <summary>
         /// Gets or sets the value indicating whether to enable NRR for inbound
         /// MDN.
         /// </summary>
-        [JsonProperty(PropertyName = "enableNrrForInboundMdn")]
-        public bool EnableNrrForInboundMdn { get; set; }
+        [JsonProperty(PropertyName = "enableNRRForInboundMDN")]
+        public bool EnableNRRForInboundMDN { get; set; }
 
         /// <summary>
         /// Gets or sets the Sha2 algorithm format. Valid values are Sha2,

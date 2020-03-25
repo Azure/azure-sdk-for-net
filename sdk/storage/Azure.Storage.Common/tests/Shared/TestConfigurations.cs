@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -29,7 +28,7 @@ namespace Azure.Storage.Test
     public class TestConfigurations
     {
         /// <summary>
-        /// Gets or sets a mapping of tenant names to definitions.  The 
+        /// Gets or sets a mapping of tenant names to definitions.  The
         /// Target*TenantName properties define the keys to use with this
         /// dictionary.  You should only access the tenants via the GetTenant
         /// method that will Assert.Inconclusive if the desired tenant wasn't
@@ -68,39 +67,63 @@ namespace Azure.Storage.Test
         private string TargetOAuthTenantName { get; set; }
 
         /// <summary>
+        /// Gets the name of the tenant in the Tenants dictionary to use for
+        /// any tests that require hierarchical namespace.
+        /// </summary>
+        private string TargetHierarchicalNamespaceTenantName { get; set; }
+
+        /// <summary>
+        /// Gets the name of the tenant in the Tenants dictionary to use for
+        /// any tests that require managed disk
+        /// </summary>
+        private string TargetManagedDiskTenantName { get; set; }
+
+        /// <summary>
         /// Gets the tenant to use by default for our tests.
         /// </summary>
         public static TenantConfiguration DefaultTargetTenant =>
-            GetTenant("TargetTestTenant", _configurations.Value.TargetTenantName);
+            GetTenant("TargetTestTenant", s_configurations.Value.TargetTenantName);
 
         /// <summary>
         /// Gets a tenant to use for any tests that require Read Access
         /// Geo-Redundant Storage to be setup.
         /// </summary>
         public static TenantConfiguration DefaultSecondaryTargetTenant =>
-            GetTenant("TargetSecondaryTestTenant", _configurations.Value.TargetSecondaryTenantName);
+            GetTenant("TargetSecondaryTestTenant", s_configurations.Value.TargetSecondaryTenantName);
 
         /// <summary>
         /// Gets a tenant to use for any tests that require Premium SSDs.
         /// </summary>
         public static TenantConfiguration DefaultTargetPremiumBlobTenant =>
-            GetTenant("TargetPremiumBlobTenant", _configurations.Value.TargetPremiumBlobTenantName);
+            GetTenant("TargetPremiumBlobTenant", s_configurations.Value.TargetPremiumBlobTenantName);
 
         /// <summary>
         /// Gets a tenant that uses preview features for tests that require it.
         /// </summary>
         public static TenantConfiguration DefaultTargetPreviewBlobTenant =>
-            GetTenant("TargetPreviewBlobTenant", _configurations.Value.TargetPreviewBlobTenantName);
+            GetTenant("TargetPreviewBlobTenant", s_configurations.Value.TargetPreviewBlobTenantName);
 
         /// <summary>
         /// Gets a tenant to use for any tests that require authentication with
         /// Azure AD.
         /// </summary>
         public static TenantConfiguration DefaultTargetOAuthTenant =>
-            GetTenant("TargetOAuthTenant", _configurations.Value.TargetOAuthTenantName);
+            GetTenant("TargetOAuthTenant", s_configurations.Value.TargetOAuthTenantName);
 
         /// <summary>
-        /// When loading our test configuration, we'll check the 
+        /// Gets a tenant to use for any tests that require hierarchical namespace.
+        /// </summary>
+        public static TenantConfiguration DefaultTargetHierarchicalNamespaceTenant =>
+            GetTenant("TargetHierarchicalNamespaceTenant", s_configurations.Value.TargetHierarchicalNamespaceTenantName);
+
+        /// <summary>
+        /// Gets a tenant to use for any tests that a managed disk account.
+        /// </summary>
+        public static TenantConfiguration DefaultTargetManagedDiskTenant =>
+            GetTenant("TargetManagedDiskTenant", s_configurations.Value.TargetManagedDiskTenantName);
+
+        /// <summary>
+        /// When loading our test configuration, we'll check the
         /// AZ_STORAGE_CONFIG_PATH first.
         /// </summary>
         private const string DefaultTestConfigPathEnvironmentVariable = @"AZ_STORAGE_CONFIG_PATH";
@@ -122,7 +145,7 @@ namespace Azure.Storage.Test
         /// Lazily load the live test configuraions the first time they're
         /// required.
         /// </summary>
-        private static readonly Lazy<TestConfigurations> _configurations =
+        private static readonly Lazy<TestConfigurations> s_configurations =
             new Lazy<TestConfigurations>(LoadTestConfigurations);
 
         /// <summary>
@@ -138,7 +161,7 @@ namespace Azure.Storage.Test
         /// </returns>
         private static TenantConfiguration GetTenant(string type, string name)
         {
-            if (!_configurations.Value.Tenants.TryGetValue(name, out var config))
+            if (!s_configurations.Value.Tenants.TryGetValue(name, out TenantConfiguration config))
             {
                 Assert.Inconclusive($"Live test configuration tenant type '{type}' named '{name}' was not found in file {TestConfigurationsPath}!");
             }
@@ -157,10 +180,10 @@ namespace Azure.Storage.Test
         {
             // Get the live test configurations path
             TestConfigurationsPath = Environment.GetEnvironmentVariable(DefaultTestConfigPathEnvironmentVariable);
-            if (String.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
+            if (string.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
             {
                 TestConfigurationsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, DefaultTestConfigFilePath);
-                if (String.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
+                if (string.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
                 {
                     Assert.Inconclusive($"Live test configuration not found at file {TestConfigurationsPath}!");
                 }
@@ -185,7 +208,7 @@ namespace Azure.Storage.Test
         /// <returns>The test configurations.</returns>
         private static TestConfigurations ReadFromXml(XDocument doc)
         {
-            var config = doc.Element("TestConfigurations");
+            XElement config = doc.Element("TestConfigurations");
             string Get(string name) => (string)config.Element(name);
             return new TestConfigurations
             {
@@ -194,21 +217,13 @@ namespace Azure.Storage.Test
                 TargetPremiumBlobTenantName = Get("TargetPremiumBlobTenant"),
                 TargetPreviewBlobTenantName = Get("TargetPreviewBlobTenant"),
                 TargetOAuthTenantName = Get("TargetOAuthTenant"),
+                TargetHierarchicalNamespaceTenantName = Get("TargetHierarchicalNamespaceTenant"),
+                TargetManagedDiskTenantName = Get("TargetManagedDiskTenant"),
                 Tenants =
                     config.Element("TenantConfigurations").Elements("TenantConfiguration")
                     .Select(TenantConfiguration.Parse)
                     .ToDictionary(tenant => tenant.TenantName)
             };
         }
-
-        /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to Console.Out for easy debugging.
-        /// 
-        /// This is only here to run before any of our tests make requests.
-        /// </summary>
-#pragma warning disable IDE0052 // Remove unread private members
-        private static readonly TestEventListener _logging = new TestEventListener();
-#pragma warning restore IDE0052 // Remove unread private members
     }
 }

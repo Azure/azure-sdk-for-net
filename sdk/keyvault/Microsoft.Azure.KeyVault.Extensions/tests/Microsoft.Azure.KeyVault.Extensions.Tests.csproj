@@ -3,6 +3,10 @@
     <Description>Microsoft Azure Key Vault Extensions tests</Description>
     <VersionPrefix>1.0.0</VersionPrefix>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <DefineConstants Condition="'$(AZURE_KEYVAULT_TEST_MODE)'=='Live'">
+      $(DefineConstants);
+      AZURE_KEYVAULT_TEST_MODE_LIVE;
+    </DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <None Update="appsettings.json">

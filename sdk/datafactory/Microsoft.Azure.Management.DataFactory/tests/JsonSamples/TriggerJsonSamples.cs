@@ -181,6 +181,25 @@ namespace DataFactory.Tests.JsonSamples
 ";
 
         [JsonSample]
+        public const string RerunTumblingWindowTriggerSample = @"
+{
+  name: ""myDemoRerunTWTrigger"",
+  properties: {
+    type: ""RerunTumblingWindowTrigger"",
+    typeProperties: {
+      ""parentTrigger"": {
+                ""type"": ""TriggerReference"",
+                ""referenceName"": ""parentTrigger""
+            },
+            ""requestedStartTime"": ""2017-04-14T13:00:00Z"",
+            ""requestedEndTime"": ""2018-04-14T13:00:00Z"",
+            ""rerunConcurrency"": 1
+    }
+  }
+}
+";
+
+        [JsonSample]
         public const string TumblingWindowTriggerWithDependencySample = @"
 {
   name: ""myDemoTWTriggerWithDependency"",

@@ -41,14 +41,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// API key.
-        /// </summary>
-        public string ApiKey { get; set; }
-
-        /// <summary>
         /// Supported Cognitive Services endpoints.
         /// </summary>
         public string Endpoint { get; set; }
+
+        /// <summary>
+        /// Subscription credentials which uniquely identify client subscription.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CustomVisionPredictionClient class.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// </param>
         /// <param name='disposeHttpClient'>
         /// True: will dispose the provided httpClient on calling CustomVisionPredictionClient.Dispose(). False: will not dispose provided httpClient</param>
-        public CustomVisionPredictionClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        protected CustomVisionPredictionClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public CustomVisionPredictionClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected CustomVisionPredictionClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
@@ -83,9 +83,89 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public CustomVisionPredictionClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected CustomVisionPredictionClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomVisionPredictionClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public CustomVisionPredictionClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomVisionPredictionClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling CustomVisionPredictionClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public CustomVisionPredictionClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomVisionPredictionClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public CustomVisionPredictionClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
@@ -179,10 +259,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 imageUrl.Validate();
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -218,14 +294,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Prediction-Key"))
-                {
-                    _httpRequest.Headers.Remove("Prediction-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Prediction-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -247,6 +315,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _requestContent = SafeJsonConvert.SerializeObject(imageUrl, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -371,10 +445,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageData");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -410,14 +480,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Prediction-Key"))
-                {
-                    _httpRequest.Headers.Remove("Prediction-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Prediction-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -458,6 +520,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _multiPartContent.Add(_imageData, "imageData");
             }
             _httpRequest.Content = _multiPartContent;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -585,10 +653,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 imageUrl.Validate();
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -624,14 +688,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Prediction-Key"))
-                {
-                    _httpRequest.Headers.Remove("Prediction-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Prediction-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -653,6 +709,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _requestContent = SafeJsonConvert.SerializeObject(imageUrl, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -777,10 +839,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageData");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -816,14 +874,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Prediction-Key"))
-                {
-                    _httpRequest.Headers.Remove("Prediction-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Prediction-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -864,6 +914,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _multiPartContent.Add(_imageData, "imageData");
             }
             _httpRequest.Content = _multiPartContent;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -990,10 +1046,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 imageUrl.Validate();
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1029,14 +1081,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Prediction-Key"))
-                {
-                    _httpRequest.Headers.Remove("Prediction-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Prediction-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1058,6 +1102,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _requestContent = SafeJsonConvert.SerializeObject(imageUrl, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1182,10 +1232,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageData");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1221,14 +1267,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Prediction-Key"))
-                {
-                    _httpRequest.Headers.Remove("Prediction-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Prediction-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1269,6 +1307,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _multiPartContent.Add(_imageData, "imageData");
             }
             _httpRequest.Content = _multiPartContent;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -1396,10 +1440,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 imageUrl.Validate();
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1435,14 +1475,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Prediction-Key"))
-                {
-                    _httpRequest.Headers.Remove("Prediction-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Prediction-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1464,6 +1496,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _requestContent = SafeJsonConvert.SerializeObject(imageUrl, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1588,10 +1626,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageData");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1627,14 +1661,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Prediction-Key"))
-                {
-                    _httpRequest.Headers.Remove("Prediction-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Prediction-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1675,6 +1701,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
                 _multiPartContent.Add(_imageData, "imageData");
             }
             _httpRequest.Content = _multiPartContent;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {

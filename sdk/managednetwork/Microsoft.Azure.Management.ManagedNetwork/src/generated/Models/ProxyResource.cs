@@ -35,8 +35,10 @@ namespace Microsoft.Azure.Management.ManagedNetwork.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
+            : base(id, name, type, location)
         {
             CustomInit();
         }

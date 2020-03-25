@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     /// The requirements to validate customer address where the device needs to
     /// be shipped.
     /// </summary>
-    public partial class ValidateAddress
+    public partial class ValidateAddress : ValidationInputRequest
     {
         /// <summary>
         /// Initializes a new instance of the ValidateAddress class.
@@ -36,10 +36,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="deviceType">Device type to be used for the job.
         /// Possible values include: 'DataBox', 'DataBoxDisk',
         /// 'DataBoxHeavy'</param>
-        public ValidateAddress(ShippingAddress shippingAddress, SkuName deviceType)
+        /// <param name="transportPreferences">Preferences related to the
+        /// shipment logistics of the sku.</param>
+        public ValidateAddress(ShippingAddress shippingAddress, SkuName deviceType, TransportPreferences transportPreferences = default(TransportPreferences))
         {
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;
+            TransportPreferences = transportPreferences;
             CustomInit();
         }
 
@@ -62,6 +65,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public SkuName DeviceType { get; set; }
 
         /// <summary>
+        /// Gets or sets preferences related to the shipment logistics of the
+        /// sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "transportPreferences")]
+        public TransportPreferences TransportPreferences { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -76,6 +86,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (ShippingAddress != null)
             {
                 ShippingAddress.Validate();
+            }
+            if (TransportPreferences != null)
+            {
+                TransportPreferences.Validate();
             }
         }
     }

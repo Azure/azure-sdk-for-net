@@ -31,14 +31,14 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Initializes a new instance of the
         /// AS2AcknowledgementConnectionSettings class.
         /// </summary>
-        /// <param name="ignoreCertificateNameMismatch">The value indicating
-        /// whether to ignore mismatch in certificate name.</param>
-        /// <param name="supportHttpStatusCodeContinue">The value indicating
-        /// whether to support HTTP status code 'CONTINUE'.</param>
-        /// <param name="keepHttpConnectionAlive">The value indicating whether
-        /// to keep the connection alive.</param>
-        /// <param name="unfoldHttpHeaders">The value indicating whether to
-        /// unfold the HTTP headers.</param>
+        /// <param name="ignoreCertificateNameMismatch">Indicates whether to
+        /// ignore mismatch in certificate name.</param>
+        /// <param name="supportHttpStatusCodeContinue">Indicates whether to
+        /// support HTTP status code 'CONTINUE'.</param>
+        /// <param name="keepHttpConnectionAlive">Indicates whether to keep the
+        /// connection alive.</param>
+        /// <param name="unfoldHttpHeaders">Indicates whether to unfold the
+        /// HTTP headers.</param>
         public AS2AcknowledgementConnectionSettings(bool ignoreCertificateNameMismatch, bool supportHttpStatusCodeContinue, bool keepHttpConnectionAlive, bool unfoldHttpHeaders)
         {
             IgnoreCertificateNameMismatch = ignoreCertificateNameMismatch;
@@ -54,29 +54,27 @@ namespace Microsoft.Azure.Management.Logic.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the value indicating whether to ignore mismatch in
-        /// certificate name.
+        /// Gets or sets indicates whether to ignore mismatch in certificate
+        /// name.
         /// </summary>
         [JsonProperty(PropertyName = "ignoreCertificateNameMismatch")]
         public bool IgnoreCertificateNameMismatch { get; set; }
 
         /// <summary>
-        /// Gets or sets the value indicating whether to support HTTP status
-        /// code 'CONTINUE'.
+        /// Gets or sets indicates whether to support HTTP status code
+        /// 'CONTINUE'.
         /// </summary>
         [JsonProperty(PropertyName = "supportHttpStatusCodeContinue")]
         public bool SupportHttpStatusCodeContinue { get; set; }
 
         /// <summary>
-        /// Gets or sets the value indicating whether to keep the connection
-        /// alive.
+        /// Gets or sets indicates whether to keep the connection alive.
         /// </summary>
         [JsonProperty(PropertyName = "keepHttpConnectionAlive")]
         public bool KeepHttpConnectionAlive { get; set; }
 
         /// <summary>
-        /// Gets or sets the value indicating whether to unfold the HTTP
-        /// headers.
+        /// Gets or sets indicates whether to unfold the HTTP headers.
         /// </summary>
         [JsonProperty(PropertyName = "unfoldHttpHeaders")]
         public bool UnfoldHttpHeaders { get; set; }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -8,42 +7,55 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// A certificate which has been deleted from the vault
+    /// A deleted <see cref="KeyVaultCertificateWithPolicy"/>.
     /// </summary>
-    public class DeletedCertificate : CertificateWithPolicy
+    public class DeletedCertificate : KeyVaultCertificateWithPolicy
     {
-        /// <summary>
-        /// Id identifying the deleted certificate
-        /// </summary>
-        public string RecoveryId { get; private set; }
-
-        /// <summary>
-        /// The time the certificate was deleted in UTC
-        /// </summary>
-        public DateTimeOffset? DeletedDate { get; private set; }
-
-        /// <summary>
-        /// The time the certificate is scheduled to be permanently deleted in UTC
-        /// </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; private set; }
-
         private const string RecoveryIdPropertyName = "recoveryId";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
-        private const string DeletedDatePropertyName = "deletedDate";
+        private const string DeletedOnPropertyName = "deletedDate";
+
+        private string _recoveryId;
+
+        internal DeletedCertificate(CertificateProperties properties = null) : base(properties)
+        {
+        }
+
+        /// <summary>
+        /// Gets the identifier of the deleted certificate.
+        /// </summary>
+        public Uri RecoveryId
+        {
+            get => new Uri(_recoveryId);
+            internal set => _recoveryId = value?.ToString();
+        }
+
+        /// <summary>
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was deleted.
+        /// </summary>
+        public DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// Gets a <see cref="DateTimeOffset"/> for when the deleted certificate will be purged.
+        /// </summary>
+        public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
 
         internal override void ReadProperty(JsonProperty prop)
         {
-            switch(prop.Name)
+            switch (prop.Name)
             {
                 case RecoveryIdPropertyName:
-                    RecoveryId = prop.Value.GetString();
+                    _recoveryId = prop.Value.GetString();
                     break;
-                case DeletedDatePropertyName:
-                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+
+                case DeletedOnPropertyName:
+                    DeletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
+
                 case ScheduledPurgeDatePropertyName:
                     ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
+
                 default:
                     base.ReadProperty(prop);
                     break;

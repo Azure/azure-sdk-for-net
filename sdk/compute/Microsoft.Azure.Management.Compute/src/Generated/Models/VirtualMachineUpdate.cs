@@ -48,8 +48,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual machine disks.</param>
         /// <param name="additionalCapabilities">Specifies additional
         /// capabilities enabled or disabled on the virtual machine.</param>
-        /// <param name="osProfile">Specifies the operating system settings for
-        /// the virtual machine.</param>
+        /// <param name="osProfile">Specifies the operating system settings
+        /// used while creating the virtual machine. Some of the settings
+        /// cannot be changed once VM is provisioned.</param>
         /// <param name="networkProfile">Specifies the network interfaces of
         /// the virtual machine.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
@@ -66,9 +67,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// maintenance, see [Planned maintenance for virtual machines in
         /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
         /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to
-        /// availability set at creation time. An existing VM cannot be added
-        /// to an availability set. &lt;br&gt;&lt;br&gt;This property cannot
-        /// exist along with a non-null properties.virtualMachineScaleSet
+        /// availability set at creation time. The availability set to which
+        /// the VM is being added should be under the same resource group as
+        /// the availability set resource. An existing VM cannot be added to an
+        /// availability set. &lt;br&gt;&lt;br&gt;This property cannot exist
+        /// along with a non-null properties.virtualMachineScaleSet
         /// reference.</param>
         /// <param name="virtualMachineScaleSet">Specifies information about
         /// the virtual machine scale set that the virtual machine should be
@@ -85,13 +88,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2018-04-01.</param>
         /// <param name="priority">Specifies the priority for the virtual
         /// machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01.
-        /// Possible values include: 'Regular', 'Low'</param>
+        /// Possible values include: 'Regular', 'Low', 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
-        /// low priority virtual machine. Only supported value is 'Deallocate'.
-        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. Possible
-        /// values include: 'Deallocate', 'Delete'</param>
+        /// Azure Spot virtual machine and Azure Spot scale set.
+        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, the only
+        /// supported value is 'Deallocate' and the minimum api-version is
+        /// 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2017-10-30-preview. Possible values include: 'Deallocate',
+        /// 'Delete'</param>
         /// <param name="billingProfile">Specifies the billing related details
-        /// of a low priority virtual machine. &lt;br&gt;&lt;br&gt;Minimum
+        /// of a Azure Spot virtual machine. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2019-03-01.</param>
         /// <param name="host">Specifies information about the dedicated host
         /// that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum
@@ -182,8 +189,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the operating system settings for the
-        /// virtual machine.
+        /// Gets or sets specifies the operating system settings used while
+        /// creating the virtual machine. Some of the settings cannot be
+        /// changed once VM is provisioned.
         /// </summary>
         [JsonProperty(PropertyName = "properties.osProfile")]
         public OSProfile OsProfile { get; set; }
@@ -215,10 +223,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// in
         /// Azure](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-windows-planned-maintenance?toc=%2fazure%2fvirtual-machines%2fwindows%2ftoc.json)
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Currently, a VM can only be
-        /// added to availability set at creation time. An existing VM cannot
-        /// be added to an availability set.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This property cannot exist
-        /// along with a non-null properties.virtualMachineScaleSet reference.
+        /// added to availability set at creation time. The availability set to
+        /// which the VM is being added should be under the same resource group
+        /// as the availability set resource. An existing VM cannot be added to
+        /// an availability set. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This
+        /// property cannot exist along with a non-null
+        /// properties.virtualMachineScaleSet reference.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
@@ -249,25 +259,28 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the priority for the virtual machine.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01. Possible values include: 'Regular', 'Low'
+        /// 2019-03-01. Possible values include: 'Regular', 'Low', 'Spot'
         /// </summary>
         [JsonProperty(PropertyName = "properties.priority")]
         public string Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the eviction policy for the low priority
-        /// virtual machine. Only supported value is 'Deallocate'.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01. Possible values include: 'Deallocate', 'Delete'
+        /// Gets or sets specifies the eviction policy for the Azure Spot
+        /// virtual machine and Azure Spot scale set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot virtual
+        /// machines, the only supported value is 'Deallocate' and the minimum
+        /// api-version is 2019-03-01. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For
+        /// Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported
+        /// and the minimum api-version is 2017-10-30-preview. Possible values
+        /// include: 'Deallocate', 'Delete'
         /// </summary>
         [JsonProperty(PropertyName = "properties.evictionPolicy")]
         public string EvictionPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the billing related details of a low
-        /// priority virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01.
+        /// Gets or sets specifies the billing related details of a Azure Spot
+        /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
+        /// api-version: 2019-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfile")]
         public BillingProfile BillingProfile { get; set; }

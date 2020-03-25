@@ -24,13 +24,28 @@ namespace Azure.Core.Tests
                     invocations.Add((args, s));
                 }, EventLevel.Verbose);
 
-            HttpPipelineEventSource.Singleton.Request(new MockRequest());
+            AzureCoreEventSource.Singleton.Request("id", "GET", "http", "header");
 
             Assert.AreEqual(1, invocations.Count);
             var singleInvocation = invocations.Single();
 
             Assert.AreEqual("Request", singleInvocation.Item1.EventName);
             Assert.NotNull(singleInvocation.Item2);
+        }
+
+        [Test]
+        public void IgnoresEventCountersEvents()
+        {
+            var invocations = new List<(EventWrittenEventArgs, string)>();
+            using var _ = new AzureEventSourceListener(
+                (args, s) =>
+                {
+                    invocations.Add((args, s));
+                }, EventLevel.Verbose);
+
+            TestSource.Log.Write("EventCounters");
+
+            Assert.AreEqual(0, invocations.Count);
         }
 
         [Test]

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.Core.Http;
 
 namespace Azure.Core.Testing
 {
@@ -81,7 +80,7 @@ namespace Azure.Core.Testing
             {
                 foreach (RecordEntry entry in Entries)
                 {
-                    entry.Sanitize(sanitizer);
+                    sanitizer.Sanitize(entry);
                 }
             }
         }

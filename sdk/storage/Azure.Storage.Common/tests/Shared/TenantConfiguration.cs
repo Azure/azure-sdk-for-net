@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text;
 using System.Xml.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Test
 {
@@ -40,6 +38,7 @@ namespace Azure.Storage.Test
         public string ActiveDirectoryAuthEndpoint { get; private set; }
         public TenantType TenantType { get; private set; }
         public string ConnectionString { get; private set; }
+        public string EncryptionScope { get; private set; }
 
         /// <summary>
         /// Build a connection string for any tenant configuration that didn't
@@ -53,13 +52,13 @@ namespace Azure.Storage.Test
         private string BuildConnectionString(bool sanitize = true)
         {
             var connection = new StorageConnectionString(
-                storageCredentials: new StorageSharedKeyCredential(this.AccountName, this.AccountKey),
-                blobStorageUri: (AsUri(this.BlobServiceEndpoint), AsUri(this.BlobServiceSecondaryEndpoint)),
-                fileStorageUri: (AsUri(this.FileServiceEndpoint), AsUri(this.FileServiceSecondaryEndpoint)),
-                queueStorageUri: (AsUri(this.QueueServiceEndpoint), AsUri(this.QueueServiceSecondaryEndpoint)),
-                tableStorageUri: (AsUri(this.TableServiceEndpoint), AsUri(this.TableServiceSecondaryEndpoint)));
+                storageCredentials: new StorageSharedKeyCredential(AccountName, AccountKey),
+                blobStorageUri: (AsUri(BlobServiceEndpoint), AsUri(BlobServiceSecondaryEndpoint)),
+                fileStorageUri: (AsUri(FileServiceEndpoint), AsUri(FileServiceSecondaryEndpoint)),
+                tableStorageUri: (AsUri(TableServiceEndpoint), AsUri(TableServiceSecondaryEndpoint)),
+                queueStorageUri: (AsUri(QueueServiceEndpoint), AsUri(QueueServiceSecondaryEndpoint)));
             return connection.ToString(exportSecrets: !sanitize);
-            Uri AsUri(string text) => !String.IsNullOrWhiteSpace(text) ? new Uri(text) : default;
+            Uri AsUri(string text) => !string.IsNullOrWhiteSpace(text) ? new Uri(text) : default;
         }
 
         /// <summary>
@@ -73,7 +72,7 @@ namespace Azure.Storage.Test
         /// </param>
         /// <returns>A string represenation of the tenant configuration.</returns>
         public static string Serialize(TenantConfiguration config, bool sanitize = true) =>
-            String.Join(
+            string.Join(
                 "\n",
                 // Keep these in the same order as Parse below!
                 config.TenantName,
@@ -102,7 +101,8 @@ namespace Azure.Storage.Test
                 config.TenantType.ToString(),
                 !sanitize ?
                     config.ConnectionString :
-                    config.BuildConnectionString(sanitize));
+                    config.BuildConnectionString(sanitize),
+                config.EncryptionScope);
 
         /// <summary>
         /// Parse a TenantType and ignore case.
@@ -121,7 +121,7 @@ namespace Azure.Storage.Test
         public static TenantConfiguration Parse(string text)
         {
             var values = text?.Split('\n');
-            if (values == null || values.Length != 21)
+            if (values == null || values.Length != 22)
             {
                 throw new ArgumentException();
             }
@@ -149,7 +149,8 @@ namespace Azure.Storage.Test
                 ActiveDirectoryTenantId = values[17],
                 ActiveDirectoryAuthEndpoint = values[18],
                 TenantType = ParseTenantType(values[19]),
-                ConnectionString = values[20]
+                ConnectionString = values[20],
+                EncryptionScope = values[21]
             };
         }
 
@@ -184,12 +185,13 @@ namespace Azure.Storage.Test
                 ActiveDirectoryApplicationSecret = Get("ActiveDirectoryApplicationSecret"),
                 ActiveDirectoryTenantId = Get("ActiveDirectoryTenantId"),
                 ActiveDirectoryAuthEndpoint = Get("ActiveDirectoryAuthEndpoint"),
-                ConnectionString = Get("ConnectionString")
+                ConnectionString = Get("ConnectionString"),
+                EncryptionScope = Get("EncryptionScope")
             };
 
             // Build a connection string from the other properties if one
             // wasn't provided with the configuration
-            if (String.IsNullOrWhiteSpace(config.ConnectionString))
+            if (string.IsNullOrWhiteSpace(config.ConnectionString))
             {
                 config.ConnectionString = config.BuildConnectionString(false);
             }

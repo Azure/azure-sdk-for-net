@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// the extracted entity starts.</param>
         /// <param name="endCharIndex">The index within the utterance where the
         /// extracted entity ends.</param>
-        /// <param name="role">The role of the entity within the
+        /// <param name="role">The role the entity plays in the
         /// utterance.</param>
         public EntityLabelObject(string entityName, int startCharIndex, int endCharIndex, string role = default(string))
         {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public int EndCharIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the role of the entity within the utterance.
+        /// Gets or sets the role the entity plays in the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "role")]
         public string Role { get; set; }

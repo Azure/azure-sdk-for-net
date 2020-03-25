@@ -63,9 +63,6 @@ namespace Microsoft.Azure.Management.Storage
         /// Storage account names must be between 3 and 24 characters in length and use
         /// numbers and lower-case letters only.
         /// </param>
-        /// <param name='skipToken'>
-        /// Optional. Continuation token for the list operation.
-        /// </param>
         /// <param name='maxpagesize'>
         /// Optional. Specified maximum number of containers that can be included in
         /// the list.
@@ -95,7 +92,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ListContainerItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ListContainerItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -162,7 +159,6 @@ namespace Microsoft.Azure.Management.Storage
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("maxpagesize", maxpagesize);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -178,10 +174,6 @@ namespace Microsoft.Azure.Management.Storage
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (skipToken != null)
-            {
-                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
             }
             if (maxpagesize != null)
             {
@@ -1993,14 +1985,21 @@ namespace Microsoft.Azure.Management.Storage
         /// numbers, lower-case letters and dash (-) only. Every dash (-) character
         /// must be immediately preceded and followed by a letter or number.
         /// </param>
-        /// <param name='immutabilityPeriodSinceCreationInDays'>
-        /// The immutability period for the blobs in the container since the policy
-        /// creation, in days.
-        /// </param>
         /// <param name='ifMatch'>
         /// The entity state (ETag) version of the immutability policy to update. A
         /// value of "*" can be used to apply the operation only if the immutability
         /// policy already exists. If omitted, this operation will always be applied.
+        /// </param>
+        /// <param name='immutabilityPeriodSinceCreationInDays'>
+        /// The immutability period for the blobs in the container since the policy
+        /// creation, in days.
+        /// </param>
+        /// <param name='allowProtectedAppendWrites'>
+        /// This property can only be changed for unlocked time-based retention
+        /// policies. When enabled, new blocks can be written to an append blob while
+        /// maintaining immutability protection and compliance. Only new blocks can be
+        /// added and any existing blocks cannot be modified or deleted. This property
+        /// cannot be changed with ExtendImmutabilityPolicy API
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2023,7 +2022,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, int immutabilityPeriodSinceCreationInDays, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersCreateOrUpdateImmutabilityPolicyHeaders>> CreateOrUpdateImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch = default(string), int? immutabilityPeriodSinceCreationInDays = default(int?), bool? allowProtectedAppendWrites = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2098,8 +2097,12 @@ namespace Microsoft.Azure.Management.Storage
             }
             string immutabilityPolicyName = "default";
             ImmutabilityPolicy parameters = default(ImmutabilityPolicy);
-            parameters = new ImmutabilityPolicy();
-            parameters.ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
+            if (immutabilityPeriodSinceCreationInDays != null || allowProtectedAppendWrites != null)
+            {
+                parameters = new ImmutabilityPolicy();
+                parameters.ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
+                parameters.AllowProtectedAppendWrites = allowProtectedAppendWrites;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3198,6 +3201,13 @@ namespace Microsoft.Azure.Management.Storage
         /// The immutability period for the blobs in the container since the policy
         /// creation, in days.
         /// </param>
+        /// <param name='allowProtectedAppendWrites'>
+        /// This property can only be changed for unlocked time-based retention
+        /// policies. When enabled, new blocks can be written to an append blob while
+        /// maintaining immutability protection and compliance. Only new blocks can be
+        /// added and any existing blocks cannot be modified or deleted. This property
+        /// cannot be changed with ExtendImmutabilityPolicy API
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -3219,7 +3229,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersExtendImmutabilityPolicyHeaders>> ExtendImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersExtendImmutabilityPolicyHeaders>> ExtendImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int? immutabilityPeriodSinceCreationInDays = default(int?), bool? allowProtectedAppendWrites = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3297,8 +3307,12 @@ namespace Microsoft.Azure.Management.Storage
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
             ImmutabilityPolicy parameters = default(ImmutabilityPolicy);
-            parameters = new ImmutabilityPolicy();
-            parameters.ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
+            if (immutabilityPeriodSinceCreationInDays != null || allowProtectedAppendWrites != null)
+            {
+                parameters = new ImmutabilityPolicy();
+                parameters.ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
+                parameters.AllowProtectedAppendWrites = allowProtectedAppendWrites;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

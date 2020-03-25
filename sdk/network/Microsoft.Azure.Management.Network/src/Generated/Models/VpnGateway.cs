@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// gateway.</param>
         /// <param name="bgpSettings">Local network gateway's BGP speaker
         /// settings.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// <param name="provisioningState">The provisioning state of the VPN
+        /// gateway resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
         /// <param name="vpnGatewayScaleUnit">The scale unit for this vpn
         /// gateway.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public VpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<VpnConnection> connections = default(IList<VpnConnection>), BgpSettings bgpSettings = default(BgpSettings), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -88,11 +88,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource. Possible
+        /// Gets the provisioning state of the VPN gateway resource. Possible
         /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the scale unit for this vpn gateway.

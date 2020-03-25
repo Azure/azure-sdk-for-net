@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using Azure.Core;
 using NUnit.Framework;
 
@@ -35,18 +35,28 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
         }
 
         [Test]
         public void ToAes()
         {
+            byte[] plaintext = Encoding.UTF8.GetBytes("test");
+
             using Aes aes = Aes.Create();
+            using ICryptoTransform encryptor = aes.CreateEncryptor();
+            byte[] ciphertext = encryptor.TransformFinalBlock(plaintext, 0, plaintext.Length);
+
             JsonWebKey jwk = new JsonWebKey(aes);
+            CollectionAssert.AreEqual(aes.Key, jwk.K);
             Assert.True(HasPrivateKey(jwk));
 
-            Aes key = jwk.ToAes();
+            using Aes key = jwk.ToAes();
             CollectionAssert.AreEqual(jwk.K, key.Key);
+
+            using ICryptoTransform decryptor = key.CreateDecryptor(key.Key, aes.IV);
+            plaintext = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
+            Assert.AreEqual("test", Encoding.UTF8.GetString(plaintext));
         }
 
         [Test]
@@ -104,13 +114,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             {
                 ecdsa.GenerateKey(ECCurve.CreateFromValue(oid));
             }
-            catch (PlatformNotSupportedException)
+            catch (NotSupportedException)
             {
                 Assert.Inconclusive("This platform does not support OID {0} with friendly name '{1}'", oid, friendlyName);
             }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
-            Assert.AreEqual(friendlyName, jwk.CurveName);
+            Assert.AreEqual(friendlyName, jwk.CurveName?.ToString());
 
             ReadOnlyMemory<byte> serialized = jwk.Serialize();
             Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
@@ -119,7 +129,40 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
+#endif
+        }
+
+        [Test]
+        public void FromECDsaNoPrivateKey()
+        {
+#if NET461
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#else
+            using ECDsa ecdsa = ECDsa.Create();
+            ECParameters ecParameters = ecdsa.ExportParameters(false);
+            ecdsa.ImportParameters(ecParameters);
+
+            Assert.That(() => new JsonWebKey(ecdsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+#endif
+        }
+
+        [Test]
+        public void ToECDsaNoPrivateKey()
+        {
+#if NET461
+            Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
+#else
+            JsonWebKey jwk;
+            using (ECDsa ecdsa = ECDsa.Create())
+            {
+                jwk = new JsonWebKey(ecdsa, includePrivateParameters: false);
+            }
+
+            using (ECDsa ecdsa = jwk.ToECDsa(includePrivateParameters: true))
+            {
+                Assert.That(() => ecdsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+            }
 #endif
         }
 
@@ -129,13 +172,34 @@ namespace Azure.Security.KeyVault.Keys.Tests
 #if NET461
             Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
 #else
+            byte[] plaintext = Encoding.UTF8.GetBytes("test");
+            byte[] signature = null;
+
             using ECDsa ecdsa = ECDsa.Create();
-            int bitLength = ecdsa.KeySize;
+            try
+            {
+                ecdsa.GenerateKey(ECCurve.CreateFromValue(oid));
+            }
+            catch (NotSupportedException)
+            {
+                Assert.Inconclusive("This platform does not support OID {0} with friendly name '{1}'", oid, friendlyName);
+            }
+
+            if (includePrivateParameters)
+            {
+                signature = ecdsa.SignData(plaintext, HashAlgorithmName.SHA256);
+            }
 
             JsonWebKey jwk = new JsonWebKey(ecdsa, includePrivateParameters);
 
-            ECDsa key = jwk.ToECDsa(includePrivateParameters);
+            using ECDsa key = jwk.ToECDsa(includePrivateParameters);
+            int bitLength = ecdsa.KeySize;
             Assert.AreEqual(bitLength, key.KeySize);
+
+            if (signature != null)
+            {
+                Assert.IsTrue(ecdsa.VerifyData(plaintext, signature, HashAlgorithmName.SHA256));
+            }
 #endif
         }
 
@@ -151,7 +215,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [TestCaseSource(nameof(GetECDSaInvalidTestData))]
-        public void ToECDsaInvalidKey(string curveName, byte[] x, byte[] y, string name)
+        public void ToECDsaInvalidKey(string curveName, byte[] x, byte[] y, string name, bool nullOnError)
         {
 #if NET461
             Assert.Ignore("Creating ECDsa with JsonWebKey is not supported on net461.");
@@ -159,12 +223,20 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey jwk = new JsonWebKey
             {
                 KeyType = KeyType.Ec,
-                CurveName = curveName,
                 X = x,
                 Y = y,
             };
 
+            if (curveName is { })
+            {
+                jwk.CurveName = curveName;
+            }
+
             Assert.Throws<InvalidOperationException>(() => jwk.ToECDsa(), "Expected exception not thrown for data named '{0}'", name);
+            if (nullOnError)
+            {
+                Assert.IsNull(jwk.ToECDsa(false, false), "Expected null result for data named '{0}'", name);
+            }
 #endif
         }
 
@@ -198,20 +270,56 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey deserialized = new JsonWebKey();
             deserialized.Deserialize(ms);
 
-            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Instance));
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.s_instance));
+        }
+
+        [Test]
+        public void FromRSANoPrivateKey()
+        {
+            using RSA rsa = RSA.Create();
+            RSAParameters rsaParameters = rsa.ExportParameters(false);
+            rsa.ImportParameters(rsaParameters);
+
+            Assert.That(() => new JsonWebKey(rsa, includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+        }
+
+        [Test]
+        public void ToRSANoPrivateKey()
+        {
+            JsonWebKey jwk;
+            using (RSA rsa = RSA.Create())
+            {
+                jwk = new JsonWebKey(rsa, includePrivateParameters: false);
+            }
+
+            using (RSA rsa = jwk.ToRSA(includePrivateParameters: true))
+            {
+                Assert.That(() => rsa.ExportParameters(includePrivateParameters: true), Throws.InstanceOf<CryptographicException>());
+            }
         }
 
         [TestCase(false)]
         [TestCase(true)]
         public void ToRSA(bool includePrivateParameters)
         {
+            byte[] plaintext = Encoding.UTF8.GetBytes("test");
+
             using RSA rsa = RSA.Create();
+            byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.Pkcs1);
+
             JsonWebKey jwk = new JsonWebKey(rsa, includePrivateParameters);
+
             int bitLength = jwk.N.Length * 8;
             Assert.AreEqual(includePrivateParameters, HasPrivateKey(jwk));
 
-            RSA key = jwk.ToRSA(includePrivateParameters);
+            using RSA key = jwk.ToRSA(includePrivateParameters);
             Assert.AreEqual(bitLength, key.KeySize);
+
+            if (includePrivateParameters)
+            {
+                plaintext = key.Decrypt(ciphertext, RSAEncryptionPadding.Pkcs1);
+                Assert.AreEqual("test", Encoding.UTF8.GetString(plaintext));
+            }
         }
 
         [Test]
@@ -248,7 +356,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ("1.3.132.0.35", "P-521"),
             };
 
-            foreach (var oid in oids)
+            foreach ((string Oid, string FriendlyName) oid in oids)
             {
                 yield return new object[] { oid.Oid, oid.FriendlyName, false };
                 yield return new object[] { oid.Oid, oid.FriendlyName, true };
@@ -270,18 +378,18 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return result;
             }
 
-            yield return new object[] { null, x, y, "nullCurveName" };
-            yield return new object[] { "invalid", x, y, "invalidCurveName" };
+            yield return new object[] { null, x, y, "nullCurveName", false };
+            yield return new object[] { "invalid", x, y, "invalidCurveName", true };
 
-            yield return new object[] { curveName, null, y, "nullX" };
-            yield return new object[] { curveName, Array.Empty<byte>(), y, "emptyX" };
-            yield return new object[] { curveName, new byte[x.Length], y, "zeroX" };
-            yield return new object[] { curveName, Resize(x), y, "longerX" };
+            yield return new object[] { curveName, null, y, "nullX", false };
+            yield return new object[] { curveName, Array.Empty<byte>(), y, "emptyX", false };
+            yield return new object[] { curveName, new byte[x.Length], y, "zeroX", false };
+            yield return new object[] { curveName, Resize(x), y, "longerX", false };
 
-            yield return new object[] { curveName, x, null, "nullY" };
-            yield return new object[] { curveName, x, Array.Empty<byte>(), "emptyY" };
-            yield return new object[] { curveName, x, new byte[x.Length], "zeroY" };
-            yield return new object[] { curveName, x, Resize(y), "longerY" };
+            yield return new object[] { curveName, x, null, "nullY", false };
+            yield return new object[] { curveName, x, Array.Empty<byte>(), "emptyY", false };
+            yield return new object[] { curveName, x, new byte[x.Length], "zeroY", false };
+            yield return new object[] { curveName, x, Resize(y), "longerY", false };
         }
 
         private static IEnumerable<object> GetRSAInvalidKeyData()
@@ -300,10 +408,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RSAParameters zeroE = rsaParameters;
             zeroE.Exponent = new byte[] { 0, 0, 0, 0 };
             yield return new object[] { zeroE, nameof(zeroE) };
-
-            RSAParameters longerE = rsaParameters;
-            longerE.Exponent = new byte[] { 0x1, 0x2, 0x3, 0x4, 0x5 };
-            yield return new object[] { longerE, nameof(longerE) };
 
             RSAParameters nullN = rsaParameters;
             nullN.Modulus = null;
@@ -340,14 +444,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private class JsonWebKeyComparer : IEqualityComparer<JsonWebKey>
         {
-            internal static readonly IEqualityComparer<JsonWebKey> Instance = new JsonWebKeyComparer();
+            internal static readonly IEqualityComparer<JsonWebKey> s_instance = new JsonWebKeyComparer();
 
             public bool Equals(JsonWebKey x, JsonWebKey y)
             {
                 if (ReferenceEquals(x, y)) return true;
                 if (x is null || y is null) return false;
 
-                if (!string.Equals(x.KeyId, y.KeyId)) return false;
+                if (!string.Equals(x.Id, y.Id)) return false;
                 if (x.KeyType != y.KeyType) return false;
                 if (!CollectionEquals(x.KeyOps, y.KeyOps)) return false;
 
@@ -403,7 +507,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 throw new NotImplementedException();
             }
 
-            private static bool CollectionEquals<T>(ICollection<T> x, ICollection<T> y)
+            private static bool CollectionEquals<T>(IReadOnlyCollection<T> x, IReadOnlyCollection<T> y)
             {
                 if (ReferenceEquals(x, y)) return true;
                 if (x is null) return y.Count == 0;

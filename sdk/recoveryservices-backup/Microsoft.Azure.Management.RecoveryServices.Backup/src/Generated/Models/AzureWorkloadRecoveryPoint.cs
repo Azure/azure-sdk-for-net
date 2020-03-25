@@ -47,17 +47,17 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets UTC time at which recovery point was created
+        /// Gets UTC time at which recovery point was created
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointTimeInUTC")]
-        public System.DateTime? RecoveryPointTimeInUTC { get; set; }
+        public System.DateTime? RecoveryPointTimeInUTC { get; private set; }
 
         /// <summary>
-        /// Gets or sets type of restore point. Possible values include:
-        /// 'Invalid', 'Full', 'Log', 'Differential'
+        /// Gets type of restore point. Possible values include: 'Invalid',
+        /// 'Full', 'Log', 'Differential'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
     }
 }

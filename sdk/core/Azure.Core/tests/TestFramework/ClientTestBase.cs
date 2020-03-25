@@ -6,19 +6,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using Castle.DynamicProxy;
-using NUnit.Framework;
 
 namespace Azure.Core.Testing
 {
-    [TestFixture(true)]
-    [TestFixture(false)]
-    public class ClientTestBase
+    [ClientTestFixture]
+    public abstract class ClientTestBase
     {
-        private static readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
+        private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
 
-        private static readonly IInterceptor _useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
-        private static readonly IInterceptor _avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
-        private static readonly IInterceptor _diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
+        private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
+        private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
+        private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
 
         public bool IsAsync { get; }
 
@@ -35,13 +33,15 @@ namespace Azure.Core.Testing
             return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
-        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class
+        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class => InstrumentClient(client, null);
+
+        public virtual TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class
         {
             Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
 
             if (ClientValidation<TClient>.Validated == false)
             {
-                foreach (var methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))
+                foreach (MethodInfo methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))
                 {
                     if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
                     {
@@ -60,15 +60,19 @@ namespace Azure.Core.Testing
             }
 
             List<IInterceptor> interceptors = new List<IInterceptor>();
+            if (preInterceptors != null)
+            {
+                interceptors.AddRange(preInterceptors);
+            }
 
             if (TestDiagnostics)
             {
-                interceptors.Add(_diagnosticScopeValidatingInterceptor);
+                interceptors.Add(s_diagnosticScopeValidatingInterceptor);
             }
 
-            interceptors.Add(IsAsync ? _avoidSyncInterceptor : _useSyncInterceptor);
+            interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
 
-            return _proxyGenerator.CreateClassProxyWithTarget(client, interceptors.ToArray());
+            return s_proxyGenerator.CreateClassProxyWithTarget(client, interceptors.ToArray());
         }
 
 

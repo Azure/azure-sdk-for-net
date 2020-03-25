@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Adds a new data set to an existing share or updates it if existing.
+            /// Adds a new data set to an existing share.
             /// </summary>
             /// <remarks>
             /// Create a DataSet
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// Adds a new data set to an existing share or updates it if existing.
+            /// Adds a new data set to an existing share.
             /// </summary>
             /// <remarks>
             /// Create a DataSet
@@ -254,6 +254,61 @@ namespace Microsoft.Azure.Management.DataShare
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Delete DataSet in a share.
+            /// </summary>
+            /// <remarks>
+            /// Delete a DataSet in a share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='dataSetName'>
+            /// The name of the dataSet.
+            /// </param>
+            public static void BeginDelete(this IDataSetsOperations operations, string resourceGroupName, string accountName, string shareName, string dataSetName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, accountName, shareName, dataSetName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete DataSet in a share.
+            /// </summary>
+            /// <remarks>
+            /// Delete a DataSet in a share
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the share account.
+            /// </param>
+            /// <param name='shareName'>
+            /// The name of the share.
+            /// </param>
+            /// <param name='dataSetName'>
+            /// The name of the dataSet.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IDataSetsOperations operations, string resourceGroupName, string accountName, string shareName, string dataSetName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, dataSetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

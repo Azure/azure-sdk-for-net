@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Service Bus is a fully managed enterprise integration message broker. Service Bus can decouple applications and services. Service Bus offers a reliable and secure platform for asynchronous transfer of data and state. This client library allows for both sending and receiving events using Azure Service Bus. For more information about Service Bus, see https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview</Description>
+    <Version>5.0.0-preview.1</Version>
+    <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
+    <EnableApiCompat>false</EnableApiCompat>
+    <GenerateAPIListing>false</GenerateAPIListing>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="SharedSource\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Microsoft.Azure.Amqp" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="System.Reflection.TypeExtensions" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="System.Threading.Channels" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="System.Runtime.Serialization.Primitives" />
+  </ItemGroup>
+
+  <!-- Import Service Bus shared source -->
+  <!--<Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Azure.Messaging.ServiceBus.Shared.Core.projitems" Label="Core" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Azure.Messaging.ServiceBus.Shared.Diagnostics.projitems" Label="Diagnostics" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Azure.Messaging.ServiceBus.Shared.Authorization.projitems" Label="Authorization" />-->
+
+  <!-- Import Azure.Core shared source -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="SharedSource\Azure.Core\HashCodeBuilder.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="SharedSource\Azure.Core\DiagnosticScope.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="SharedSource\Azure.Core\DiagnosticScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="SharedSource\Azure.Core\HttpMessageSanitizer.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\Azure.Core\ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="SharedSource\Azure.Core\ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="SharedSource\Azure.Core\ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="SharedSource\Azure.Core\TaskExtensions.cs" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <!-- Import the Azure.Core reference -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+</Project>

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.IO;
@@ -14,8 +13,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class EncryptedBlockBlobClientTests : BlobTestBase
     {
-        public EncryptedBlockBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public EncryptedBlockBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -23,22 +22,27 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task DeleteAsync()
         {
-            using (this.GetNewContainer(out var container))
-            {
-                // First upload a regular block blob
-                var blobName = this.GetNewBlobName();
-                var blob = this.InstrumentClient(container.GetBlockBlobClient(blobName));
-                var data = this.GetRandomBuffer(Constants.KB);
-                using var stream = new MemoryStream(data);
-                await blob.UploadAsync(stream);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // Create an EncryptedBlockBlobClient pointing at the same blob
-                var encryptedBlob = this.InstrumentClient(container.GetEncryptedBlockBlobClient(blobName));
+            // First upload a regular block blob
+            var blobName = GetNewBlobName();
+            var blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+            using var stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
 
-                // Delete the blob
-                var response = await encryptedBlob.DeleteAsync();
-                Assert.IsNotNull(response.Headers.RequestId);
-            }
+            // Create an EncryptedBlockBlobClient pointing at the same blob
+            var encryptedBlob = InstrumentClient(
+                new EncryptedBlockBlobClient(
+                    blob.Uri,
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    GetOptions()));
+
+            // Delete the blob
+            var response = await encryptedBlob.DeleteAsync();
+            Assert.IsNotNull(response.Headers.RequestId);
         }
     }
 }

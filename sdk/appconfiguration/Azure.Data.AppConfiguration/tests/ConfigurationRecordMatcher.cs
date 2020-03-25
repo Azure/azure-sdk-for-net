@@ -25,8 +25,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
         protected override bool IsBodyEquivalent(RecordEntry record, RecordEntry otherRecord)
         {
-            byte[] body = record.ResponseBody ?? Array.Empty<byte>();
-            byte[] otherBody = record.ResponseBody ?? Array.Empty<byte>();
+            byte[] body = record.Response.Body ?? Array.Empty<byte>();
+            byte[] otherBody = record.Response.Body ?? Array.Empty<byte>();
 
             if (body.SequenceEqual(otherBody))
                 return true;

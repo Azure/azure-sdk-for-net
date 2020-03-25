@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/luis/api/v2.0/apps/",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy8=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"New LUIS App\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,16 +30,16 @@
           "no-cache"
         ],
         "Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/c50458a8-77f3-404b-9f67-5dbcd6d330b3"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/c3b66003-69c1-4027-8ab1-0b37d67fc719"
         ],
         "Apim-Request-Id": [
-          "67aff394-f74c-4060-82fc-e85d7f19fc7b"
+          "11d317df-4027-4edc-abd4-4e615c13eda7"
         ],
         "Request-Id": [
-          "67aff394-f74c-4060-82fc-e85d7f19fc7b"
+          "11d317df-4027-4edc-abd4-4e615c13eda7"
         ],
         "Operation-Location": [
-          "https://westus.api.cognitive.microsoft.com/luis/api/v2.0/apps/c50458a8-77f3-404b-9f67-5dbcd6d330b3"
+          "https://westus.api.cognitive.microsoft.com/luis/api/v3.0-preview/apps/c3b66003-69c1-4027-8ab1-0b37d67fc719"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -54,7 +54,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:18:39 GMT"
+          "Tue, 29 Oct 2019 13:21:50 GMT"
         ],
         "Content-Length": [
           "38"
@@ -63,23 +63,23 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "\"c50458a8-77f3-404b-9f67-5dbcd6d330b3\"",
+      "ResponseBody": "\"c3b66003-69c1-4027-8ab1-0b37d67fc719\"",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/c50458a8-77f3-404b-9f67-5dbcd6d330b3/versions?skip=0&take=100",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jNTA0NThhOC03N2YzLTQwNGItOWY2Ny01ZGJjZDZkMzMwYjMvdmVyc2lvbnM/c2tpcD0wJnRha2U9MTAw",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/c3b66003-69c1-4027-8ab1-0b37d67fc719/versions?skip=0&take=100",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2MzYjY2MDAzLTY5YzEtNDAyNy04YWIxLTBiMzdkNjdmYzcxOS92ZXJzaW9ucz9za2lwPTAmdGFrZT0xMDA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -90,10 +90,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "de31adeb-1cde-4cd4-95eb-940ec2e84f02"
+          "14c3f374-9dc7-4725-8a2b-4b62bf72edd2"
         ],
         "Request-Id": [
-          "de31adeb-1cde-4cd4-95eb-940ec2e84f02"
+          "14c3f374-9dc7-4725-8a2b-4b62bf72edd2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -108,7 +108,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:18:39 GMT"
+          "Tue, 29 Oct 2019 13:21:50 GMT"
         ],
         "Content-Length": [
           "321"
@@ -117,29 +117,29 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2019-08-25T19:18:39Z\",\r\n    \"lastModifiedDateTime\": \"2019-08-25T19:18:39Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": null,\r\n    \"endpointUrl\": null,\r\n    \"assignedEndpointKey\": null,\r\n    \"externalApiKeys\": null,\r\n    \"intentsCount\": 1,\r\n    \"entitiesCount\": 0,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"version\": \"0.1\",\r\n    \"createdDateTime\": \"2019-10-29T13:21:51Z\",\r\n    \"lastModifiedDateTime\": \"2019-10-29T13:21:51Z\",\r\n    \"lastTrainedDateTime\": null,\r\n    \"lastPublishedDateTime\": null,\r\n    \"endpointUrl\": null,\r\n    \"assignedEndpointKey\": null,\r\n    \"externalApiKeys\": null,\r\n    \"intentsCount\": 1,\r\n    \"entitiesCount\": 0,\r\n    \"endpointHitsCount\": 0,\r\n    \"trainingStatus\": \"NeedsTraining\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/c50458a8-77f3-404b-9f67-5dbcd6d330b3/versions/0.1/customprebuiltdomains",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jNTA0NThhOC03N2YzLTQwNGItOWY2Ny01ZGJjZDZkMzMwYjMvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZG9tYWlucw==",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/c3b66003-69c1-4027-8ab1-0b37d67fc719/versions/0.1/customprebuiltdomains",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2MzYjY2MDAzLTY5YzEtNDAyNy04YWIxLTBiMzdkNjdmYzcxOS92ZXJzaW9ucy8wLjEvY3VzdG9tcHJlYnVpbHRkb21haW5z",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"domainName\": \"Communication\"\r\n}",
+      "RequestBody": "{\r\n  \"domainName\": \"Calendar\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "37"
+          "32"
         ]
       },
       "ResponseHeaders": {
@@ -150,10 +150,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "17b784cc-75b9-4f19-bd2c-088690993542"
+          "9c39a67f-70c4-4cb9-b8cd-1f6a8e9838e3"
         ],
         "Request-Id": [
-          "17b784cc-75b9-4f19-bd2c-088690993542"
+          "9c39a67f-70c4-4cb9-b8cd-1f6a8e9838e3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -168,32 +168,32 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:18:44 GMT"
+          "Tue, 29 Oct 2019 13:21:56 GMT"
         ],
         "Content-Length": [
-          "2341"
+          "1639"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  \"a6d143c2-b465-42d7-bd85-a70dd1d6551e\",\r\n  \"2f74405a-52ca-4692-b742-eef809e3c1d2\",\r\n  \"e4541433-d012-49a2-8553-b04855773b96\",\r\n  \"d154a268-482e-4093-b96f-2ae45b1528b0\",\r\n  \"a2be7605-4110-412e-ad58-785af2c54b13\",\r\n  \"72596cc5-f265-4fde-ab7f-6f459329c141\",\r\n  \"179958f8-67be-4c25-88d3-719448b3ef34\",\r\n  \"d1d4f946-29f9-4ea0-a0fc-2bea722d9192\",\r\n  \"b2c43117-c857-4251-abbc-0d56b810ed05\",\r\n  \"576d72c0-1a52-4bb2-a8f0-86df7e41a706\",\r\n  \"72915459-f328-4a8e-a53b-dd89d03127f9\",\r\n  \"cff854d9-cb23-4d3b-855c-97dddeda28ca\",\r\n  \"dff0a564-0786-4d46-8ed1-7f2febb679ce\",\r\n  \"41dcf257-a858-4b6a-8b77-1f0bece4729c\",\r\n  \"1d07327d-0ebf-4737-a4ec-e73746ea07de\",\r\n  \"0f66b1be-1306-4552-875f-9572b1de0788\",\r\n  \"61c28f5b-a432-4afd-b703-8f58eb668485\",\r\n  \"6aadea05-6c18-40d0-98ec-c6cb28c27905\",\r\n  \"b5f41c8b-522e-4377-8ef3-95f4901bb60f\",\r\n  \"1869ebb8-c4dc-4337-bdd3-ab19134977a8\",\r\n  \"f62e3127-21c7-48b0-a95d-659d3a0e86f0\",\r\n  \"c51018b6-0fc1-426b-a739-d47696933ad0\",\r\n  \"4ddbf4c2-ed62-416d-8be0-0f7ce3a4a440\",\r\n  \"06235eb4-8a9b-4680-a3ed-23e40265d739\",\r\n  \"3b1a4b72-36c4-4c6f-a43e-3ed7a0e6b519\",\r\n  \"504317da-04c8-49b0-8739-7fab2f768c22\",\r\n  \"4e62a6b4-aec9-4bf0-b860-58753cb97865\",\r\n  \"cff42ed2-c483-4096-86b4-30e98adf2447\",\r\n  \"50b29ff8-513a-4df6-890e-dad9341e2d7c\",\r\n  \"05ae443b-6ee7-4685-bfcb-99be4c342be4\",\r\n  \"f66a2e2b-0b9d-41a9-aa21-7f63de9745bd\",\r\n  \"c4ad14e8-143e-4c4e-a441-f6988d99289b\",\r\n  \"a2914844-d6d9-4c0c-96c5-38499c96d167\",\r\n  \"120923cb-6903-4d74-88bb-d35db72ec374\",\r\n  \"d0df7dd3-42c7-4eaa-b0f1-c3a33a223327\",\r\n  \"42c7c0af-657e-4fb9-8490-df71fd177bb8\",\r\n  \"151daac3-ffbb-421c-b1db-b07dcc3699c8\",\r\n  \"e49c3408-d470-437c-9521-2d09a404786b\",\r\n  \"13c01b36-300f-428d-b385-cf68324dc628\",\r\n  \"77edbef9-4737-4c97-9833-1f5bce67e480\",\r\n  \"7807fbdc-9ff6-46e5-93ae-f9e4425e30e0\",\r\n  \"7f17083e-3043-4ed9-a1c6-a4059a83cd30\",\r\n  \"3b4078aa-acf4-4237-ad36-a67f2a0e10d9\",\r\n  \"f22fc3a8-6ef1-447d-8ee2-4d65e90ab917\",\r\n  \"609b3c3f-6f00-4739-ac44-68cdbfe19fa5\",\r\n  \"feef6358-b540-49a7-a602-80aa0b1ab656\",\r\n  \"97fc7b1a-39ba-4fba-8757-98218fb0aec6\",\r\n  \"5dd9e52f-3de2-47d0-af45-6c40f10297ba\",\r\n  \"ea86df97-11ba-48bb-96dd-04d106cee3fe\",\r\n  \"c0147448-0b25-4ebc-97dc-36a2b7c0d0ed\",\r\n  \"dc287984-bc70-496b-962e-ee8abd98de4e\",\r\n  \"e579c3d3-9fbd-4f1c-9e0d-d3b921d23bb4\",\r\n  \"1475a299-4dca-4365-b9fd-21886b05ca54\",\r\n  \"23b281bb-91dc-4c34-ae37-ac88c2fb54ad\",\r\n  \"6e3c4b2f-cecf-41b3-b697-79533ae29461\",\r\n  \"d3c12dbb-20c6-4b4f-881a-d3474f61528c\",\r\n  \"924f6c3e-e9eb-499c-bd7f-89c1d9a6989d\",\r\n  \"08c6ea51-6112-467a-84f5-1f96923222fe\",\r\n  \"ecc61c96-02dd-4a04-9dd6-287f138dc36a\",\r\n  \"47aea53b-dd3d-4ce3-8f41-aef7e8c7a846\"\r\n]",
+      "ResponseBody": "[\r\n  \"d1e446b3-ad1b-4ea5-968e-de939d37f105\",\r\n  \"f72ba758-3ca5-42d9-aa26-731337f1ab86\",\r\n  \"4e5eb8ce-22ee-4340-892d-c64e494c522e\",\r\n  \"125e3eb6-13fd-42b7-a6fc-ccf2bd20a036\",\r\n  \"d2564210-84b0-4d55-96f1-fb3b9a4cc8bb\",\r\n  \"c142bc78-3679-4e28-b2a0-d5813c469d04\",\r\n  \"2192bd8e-65c1-4ef6-a839-0535be5cd26c\",\r\n  \"51cc1788-d282-4f01-89bd-9e052c6a3d88\",\r\n  \"d3471b6e-f5be-4003-8c19-66a1c1f95cec\",\r\n  \"619a3003-12da-41b1-95b6-16d723f39db2\",\r\n  \"4230e3a0-b7ea-4d32-b4f8-487af0049e6c\",\r\n  \"4098c6c1-c4e1-42f8-a8fb-47d65189149e\",\r\n  \"a730b807-351b-4c4b-877d-07e86aa1e342\",\r\n  \"ee57ac45-116f-478b-819a-8062f7e47ef9\",\r\n  \"6eb73af8-ebff-49a1-bd63-4732b5b14ddf\",\r\n  \"4c27942b-3f81-4b59-b142-937f3060510d\",\r\n  \"4c211bf2-a9e7-4ac0-ada5-b39dea464e42\",\r\n  \"427560fa-261a-46aa-baef-8cc351fcad8c\",\r\n  \"afb593da-2abe-49f5-9de1-6812958953e6\",\r\n  \"9c3cabb7-c752-45dd-bf12-63d616df0537\",\r\n  \"4b13edaf-811b-449b-94a6-15ee9bfa51e8\",\r\n  \"dade2d45-ab76-4217-8932-f7927f0cd1b8\",\r\n  \"0a2ad72b-3b27-4238-831a-4df8b0a9e474\",\r\n  \"fd770fa7-1e3e-48d4-8e2f-632c1d10f84e\",\r\n  \"d751e95d-52a8-44bc-8e50-cefd727b416d\",\r\n  \"52637e33-79f0-4a51-8aed-121f9151b988\",\r\n  \"3cc240c3-354b-4165-8e63-bda8aba85c20\",\r\n  \"11bebb71-6d1a-4f06-8e4c-74a306c19990\",\r\n  \"4ce4aa03-57b7-4fb2-a5c7-2fd8b8883188\",\r\n  \"8b0ab35a-12a2-493c-bdc9-214ca63e5070\",\r\n  \"fc0195cc-75e8-47ea-992c-7da592fa0155\",\r\n  \"0e4726f0-30bf-4287-aea2-3c85c98850cb\",\r\n  \"2193dc5e-b415-44a0-b9e8-223e14a3c7bc\",\r\n  \"cdf90a3f-239c-4557-a750-5277a05c71e9\",\r\n  \"06b04abc-f9e8-4806-ac5c-c5b4580ebe18\",\r\n  \"7ad0fcd5-dff4-48b4-88ff-8e0d55b524a3\",\r\n  \"69889372-85e2-491c-9edf-2dc85ade33f5\",\r\n  \"c42ccc4e-0956-44bf-899c-9478c24f7002\",\r\n  \"66704ca3-9869-48da-8bed-0cea5635beb3\",\r\n  \"62871d5f-1855-44c7-90f4-b8466e556865\",\r\n  \"c365da04-e364-4804-b4a9-315cd47dd867\",\r\n  \"25946ebb-8ec4-4e1d-8354-0cba7b090165\"\r\n]",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/c50458a8-77f3-404b-9f67-5dbcd6d330b3/versions/0.1/customprebuiltmodels",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jNTA0NThhOC03N2YzLTQwNGItOWY2Ny01ZGJjZDZkMzMwYjMvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0bW9kZWxz",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/c3b66003-69c1-4027-8ab1-0b37d67fc719/versions/0.1/customprebuiltmodels",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2MzYjY2MDAzLTY5YzEtNDAyNy04YWIxLTBiMzdkNjdmYzcxOS92ZXJzaW9ucy8wLjEvY3VzdG9tcHJlYnVpbHRtb2RlbHM=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -204,10 +204,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "ec301b71-6e33-4d29-8cb3-af026471d6ec"
+          "8c0e69b9-08b9-48a1-b23b-225312833855"
         ],
         "Request-Id": [
-          "ec301b71-6e33-4d29-8cb3-af026471d6ec"
+          "8c0e69b9-08b9-48a1-b23b-225312833855"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -222,32 +222,32 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:18:44 GMT"
+          "Tue, 29 Oct 2019 13:21:56 GMT"
         ],
         "Content-Length": [
-          "12155"
+          "12649"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"a6d143c2-b465-42d7-bd85-a70dd1d6551e\",\r\n    \"name\": \"Communication.AddContact\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"AddContact\"\r\n  },\r\n  {\r\n    \"id\": \"2f74405a-52ca-4692-b742-eef809e3c1d2\",\r\n    \"name\": \"Communication.AddFlag\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"AddFlag\"\r\n  },\r\n  {\r\n    \"id\": \"e4541433-d012-49a2-8553-b04855773b96\",\r\n    \"name\": \"Communication.AddMore\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"AddMore\"\r\n  },\r\n  {\r\n    \"id\": \"d154a268-482e-4093-b96f-2ae45b1528b0\",\r\n    \"name\": \"Communication.Answer\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Answer\"\r\n  },\r\n  {\r\n    \"id\": \"a2be7605-4110-412e-ad58-785af2c54b13\",\r\n    \"name\": \"Communication.AssignContactNickname\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"AssignContactNickname\"\r\n  },\r\n  {\r\n    \"id\": \"13c01b36-300f-428d-b385-cf68324dc628\",\r\n    \"name\": \"Communication.Attachment\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Attachment\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"77edbef9-4737-4c97-9833-1f5bce67e480\",\r\n    \"name\": \"Communication.AudioDeviceType\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"AudioDeviceType\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"72596cc5-f265-4fde-ab7f-6f459329c141\",\r\n    \"name\": \"Communication.CallBack\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"CallBack\"\r\n  },\r\n  {\r\n    \"id\": \"179958f8-67be-4c25-88d3-719448b3ef34\",\r\n    \"name\": \"Communication.CallVoiceMail\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"CallVoiceMail\"\r\n  },\r\n  {\r\n    \"id\": \"d1d4f946-29f9-4ea0-a0fc-2bea722d9192\",\r\n    \"name\": \"Communication.Cancel\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Cancel\"\r\n  },\r\n  {\r\n    \"id\": \"7807fbdc-9ff6-46e5-93ae-f9e4425e30e0\",\r\n    \"name\": \"Communication.Category\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Category\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"b2c43117-c857-4251-abbc-0d56b810ed05\",\r\n    \"name\": \"Communication.CheckIMStatus\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"CheckIMStatus\"\r\n  },\r\n  {\r\n    \"id\": \"576d72c0-1a52-4bb2-a8f0-86df7e41a706\",\r\n    \"name\": \"Communication.CheckMessages\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"CheckMessages\"\r\n  },\r\n  {\r\n    \"id\": \"72915459-f328-4a8e-a53b-dd89d03127f9\",\r\n    \"name\": \"Communication.Confirm\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Confirm\"\r\n  },\r\n  {\r\n    \"id\": \"7f17083e-3043-4ed9-a1c6-a4059a83cd30\",\r\n    \"name\": \"Communication.ContactAttribute\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"ContactAttribute\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"3b4078aa-acf4-4237-ad36-a67f2a0e10d9\",\r\n    \"name\": \"Communication.ContactName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"ContactName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"f22fc3a8-6ef1-447d-8ee2-4d65e90ab917\",\r\n    \"name\": \"Communication.DestinationPhone\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"DestinationPhone\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"cff854d9-cb23-4d3b-855c-97dddeda28ca\",\r\n    \"name\": \"Communication.Dial\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Dial\"\r\n  },\r\n  {\r\n    \"id\": \"609b3c3f-6f00-4739-ac44-68cdbfe19fa5\",\r\n    \"name\": \"Communication.EmailPlatform\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"EmailPlatform\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"feef6358-b540-49a7-a602-80aa0b1ab656\",\r\n    \"name\": \"Communication.EmailSubject\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"EmailSubject\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"dff0a564-0786-4d46-8ed1-7f2febb679ce\",\r\n    \"name\": \"Communication.EndCall\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"EndCall\"\r\n  },\r\n  {\r\n    \"id\": \"41dcf257-a858-4b6a-8b77-1f0bece4729c\",\r\n    \"name\": \"Communication.FindContact\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"FindContact\"\r\n  },\r\n  {\r\n    \"id\": \"1d07327d-0ebf-4737-a4ec-e73746ea07de\",\r\n    \"name\": \"Communication.FindSpeedDial\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"FindSpeedDial\"\r\n  },\r\n  {\r\n    \"id\": \"0f66b1be-1306-4552-875f-9572b1de0788\",\r\n    \"name\": \"Communication.FinishTask\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"FinishTask\"\r\n  },\r\n  {\r\n    \"id\": \"61c28f5b-a432-4afd-b703-8f58eb668485\",\r\n    \"name\": \"Communication.Forward\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Forward\"\r\n  },\r\n  {\r\n    \"id\": \"97fc7b1a-39ba-4fba-8757-98218fb0aec6\",\r\n    \"name\": \"Communication.FromRelationshipName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"FromRelationshipName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"6aadea05-6c18-40d0-98ec-c6cb28c27905\",\r\n    \"name\": \"Communication.GetForwardingsStatus\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"GetForwardingsStatus\"\r\n  },\r\n  {\r\n    \"id\": \"b5f41c8b-522e-4377-8ef3-95f4901bb60f\",\r\n    \"name\": \"Communication.GetNotifications\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"GetNotifications\"\r\n  },\r\n  {\r\n    \"id\": \"1869ebb8-c4dc-4337-bdd3-ab19134977a8\",\r\n    \"name\": \"Communication.GoBack\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"GoBack\"\r\n  },\r\n  {\r\n    \"id\": \"f62e3127-21c7-48b0-a95d-659d3a0e86f0\",\r\n    \"name\": \"Communication.Ignore\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Ignore\"\r\n  },\r\n  {\r\n    \"id\": \"c51018b6-0fc1-426b-a739-d47696933ad0\",\r\n    \"name\": \"Communication.IgnoreWithMessage\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"IgnoreWithMessage\"\r\n  },\r\n  {\r\n    \"id\": \"5dd9e52f-3de2-47d0-af45-6c40f10297ba\",\r\n    \"name\": \"Communication.Key\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Key\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"ea86df97-11ba-48bb-96dd-04d106cee3fe\",\r\n    \"name\": \"Communication.Line\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Line\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"c0147448-0b25-4ebc-97dc-36a2b7c0d0ed\",\r\n    \"name\": \"Communication.Message\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Message\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"dc287984-bc70-496b-962e-ee8abd98de4e\",\r\n    \"name\": \"Communication.MessageType\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"MessageType\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"e579c3d3-9fbd-4f1c-9e0d-d3b921d23bb4\",\r\n    \"name\": \"Communication.OrderReference\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"OrderReference\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"1475a299-4dca-4365-b9fd-21886b05ca54\",\r\n    \"name\": \"Communication.PositionReference\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"PositionReference\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"4ddbf4c2-ed62-416d-8be0-0f7ce3a4a440\",\r\n    \"name\": \"Communication.PressKey\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"PressKey\"\r\n  },\r\n  {\r\n    \"id\": \"06235eb4-8a9b-4680-a3ed-23e40265d739\",\r\n    \"name\": \"Communication.QueryLastText\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"QueryLastText\"\r\n  },\r\n  {\r\n    \"id\": \"3b1a4b72-36c4-4c6f-a43e-3ed7a0e6b519\",\r\n    \"name\": \"Communication.ReadAloud\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"ReadAloud\"\r\n  },\r\n  {\r\n    \"id\": \"504317da-04c8-49b0-8739-7fab2f768c22\",\r\n    \"name\": \"Communication.Redial\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Redial\"\r\n  },\r\n  {\r\n    \"id\": \"4e62a6b4-aec9-4bf0-b860-58753cb97865\",\r\n    \"name\": \"Communication.Reject\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Reject\"\r\n  },\r\n  {\r\n    \"id\": \"23b281bb-91dc-4c34-ae37-ac88c2fb54ad\",\r\n    \"name\": \"Communication.RelationshipName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"RelationshipName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"cff42ed2-c483-4096-86b4-30e98adf2447\",\r\n    \"name\": \"Communication.Reply\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"Reply\"\r\n  },\r\n  {\r\n    \"id\": \"50b29ff8-513a-4df6-890e-dad9341e2d7c\",\r\n    \"name\": \"Communication.SearchMessages\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SearchMessages\"\r\n  },\r\n  {\r\n    \"id\": \"6e3c4b2f-cecf-41b3-b697-79533ae29461\",\r\n    \"name\": \"Communication.SearchTexts\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SearchTexts\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"05ae443b-6ee7-4685-bfcb-99be4c342be4\",\r\n    \"name\": \"Communication.SendEmail\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SendEmail\"\r\n  },\r\n  {\r\n    \"id\": \"d3c12dbb-20c6-4b4f-881a-d3474f61528c\",\r\n    \"name\": \"Communication.SenderName\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SenderName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"f66a2e2b-0b9d-41a9-aa21-7f63de9745bd\",\r\n    \"name\": \"Communication.SendMessage\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SendMessage\"\r\n  },\r\n  {\r\n    \"id\": \"c4ad14e8-143e-4c4e-a441-f6988d99289b\",\r\n    \"name\": \"Communication.SetSpeedDial\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SetSpeedDial\"\r\n  },\r\n  {\r\n    \"id\": \"a2914844-d6d9-4c0c-96c5-38499c96d167\",\r\n    \"name\": \"Communication.ShowNext\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"ShowNext\"\r\n  },\r\n  {\r\n    \"id\": \"120923cb-6903-4d74-88bb-d35db72ec374\",\r\n    \"name\": \"Communication.ShowPrevious\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"ShowPrevious\"\r\n  },\r\n  {\r\n    \"id\": \"924f6c3e-e9eb-499c-bd7f-89c1d9a6989d\",\r\n    \"name\": \"Communication.SpeedDial\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"SpeedDial\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"d0df7dd3-42c7-4eaa-b0f1-c3a33a223327\",\r\n    \"name\": \"Communication.TurnForwardingOff\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"TurnForwardingOff\"\r\n  },\r\n  {\r\n    \"id\": \"42c7c0af-657e-4fb9-8490-df71fd177bb8\",\r\n    \"name\": \"Communication.TurnForwardingOn\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"TurnForwardingOn\"\r\n  },\r\n  {\r\n    \"id\": \"151daac3-ffbb-421c-b1db-b07dcc3699c8\",\r\n    \"name\": \"Communication.TurnSpeakerOff\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"TurnSpeakerOff\"\r\n  },\r\n  {\r\n    \"id\": \"e49c3408-d470-437c-9521-2d09a404786b\",\r\n    \"name\": \"Communication.TurnSpeakerOn\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Communication\",\r\n    \"customPrebuiltModelName\": \"TurnSpeakerOn\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"d1e446b3-ad1b-4ea5-968e-de939d37f105\",\r\n    \"name\": \"Calendar.AcceptEventEntry\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"AcceptEventEntry\"\r\n  },\r\n  {\r\n    \"id\": \"4e5eb8ce-22ee-4340-892d-c64e494c522e\",\r\n    \"name\": \"Calendar.Cancel\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Cancel\"\r\n  },\r\n  {\r\n    \"id\": \"125e3eb6-13fd-42b7-a6fc-ccf2bd20a036\",\r\n    \"name\": \"Calendar.ChangeCalendarEntry\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"ChangeCalendarEntry\"\r\n  },\r\n  {\r\n    \"id\": \"c142bc78-3679-4e28-b2a0-d5813c469d04\",\r\n    \"name\": \"Calendar.CheckAvailability\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"CheckAvailability\"\r\n  },\r\n  {\r\n    \"id\": \"619a3003-12da-41b1-95b6-16d723f39db2\",\r\n    \"name\": \"Calendar.Confirm\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Confirm\"\r\n  },\r\n  {\r\n    \"id\": \"4230e3a0-b7ea-4d32-b4f8-487af0049e6c\",\r\n    \"name\": \"Calendar.ConnectToMeeting\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"ConnectToMeeting\"\r\n  },\r\n  {\r\n    \"id\": \"4098c6c1-c4e1-42f8-a8fb-47d65189149e\",\r\n    \"name\": \"Calendar.ContactMeetingAttendees\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"ContactMeetingAttendees\"\r\n  },\r\n  {\r\n    \"id\": \"ee57ac45-116f-478b-819a-8062f7e47ef9\",\r\n    \"name\": \"Calendar.CreateCalendarEntry\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"CreateCalendarEntry\"\r\n  },\r\n  {\r\n    \"id\": \"4c27942b-3f81-4b59-b142-937f3060510d\",\r\n    \"name\": \"Calendar.DeleteCalendarEntry\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"DeleteCalendarEntry\"\r\n  },\r\n  {\r\n    \"id\": \"4ce4aa03-57b7-4fb2-a5c7-2fd8b8883188\",\r\n    \"name\": \"Calendar.DestinationCalendar\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"DestinationCalendar\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"8b0ab35a-12a2-493c-bdc9-214ca63e5070\",\r\n    \"name\": \"Calendar.Duration\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Duration\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"6eb73af8-ebff-49a1-bd63-4732b5b14ddf\",\r\n    \"name\": \"Calendar.EndDate\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"EndDate\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"d3471b6e-f5be-4003-8c19-66a1c1f95cec\",\r\n    \"name\": \"Calendar.EndTime\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"EndTime\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"4c211bf2-a9e7-4ac0-ada5-b39dea464e42\",\r\n    \"name\": \"Calendar.FindCalendarDetail\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"FindCalendarDetail\"\r\n  },\r\n  {\r\n    \"id\": \"427560fa-261a-46aa-baef-8cc351fcad8c\",\r\n    \"name\": \"Calendar.FindCalendarEntry\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"FindCalendarEntry\"\r\n  },\r\n  {\r\n    \"id\": \"afb593da-2abe-49f5-9de1-6812958953e6\",\r\n    \"name\": \"Calendar.FindCalendarWhen\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"FindCalendarWhen\"\r\n  },\r\n  {\r\n    \"id\": \"9c3cabb7-c752-45dd-bf12-63d616df0537\",\r\n    \"name\": \"Calendar.FindCalendarWhere\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"FindCalendarWhere\"\r\n  },\r\n  {\r\n    \"id\": \"4b13edaf-811b-449b-94a6-15ee9bfa51e8\",\r\n    \"name\": \"Calendar.FindCalendarWho\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"FindCalendarWho\"\r\n  },\r\n  {\r\n    \"id\": \"dade2d45-ab76-4217-8932-f7927f0cd1b8\",\r\n    \"name\": \"Calendar.FindDuration\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"FindDuration\"\r\n  },\r\n  {\r\n    \"id\": \"0a2ad72b-3b27-4238-831a-4df8b0a9e474\",\r\n    \"name\": \"Calendar.FindMeetingRoom\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"FindMeetingRoom\"\r\n  },\r\n  {\r\n    \"id\": \"fd770fa7-1e3e-48d4-8e2f-632c1d10f84e\",\r\n    \"name\": \"Calendar.GoBack\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"GoBack\"\r\n  },\r\n  {\r\n    \"id\": \"fc0195cc-75e8-47ea-992c-7da592fa0155\",\r\n    \"name\": \"Calendar.Location\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Location\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"0e4726f0-30bf-4287-aea2-3c85c98850cb\",\r\n    \"name\": \"Calendar.MeetingRoom\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"MeetingRoom\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"a730b807-351b-4c4b-877d-07e86aa1e342\",\r\n    \"name\": \"Calendar.Message\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Message\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"2193dc5e-b415-44a0-b9e8-223e14a3c7bc\",\r\n    \"name\": \"Calendar.MoveEarlierTimeSpan\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"MoveEarlierTimeSpan\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"cdf90a3f-239c-4557-a750-5277a05c71e9\",\r\n    \"name\": \"Calendar.MoveLaterTimeSpan\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"MoveLaterTimeSpan\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"06b04abc-f9e8-4806-ac5c-c5b4580ebe18\",\r\n    \"name\": \"Calendar.OrderReference\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"OrderReference\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"7ad0fcd5-dff4-48b4-88ff-8e0d55b524a3\",\r\n    \"name\": \"Calendar.OriginalEndDate\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"OriginalEndDate\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"69889372-85e2-491c-9edf-2dc85ade33f5\",\r\n    \"name\": \"Calendar.OriginalEndTime\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"OriginalEndTime\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"c42ccc4e-0956-44bf-899c-9478c24f7002\",\r\n    \"name\": \"Calendar.OriginalStartDate\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"OriginalStartDate\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"66704ca3-9869-48da-8bed-0cea5635beb3\",\r\n    \"name\": \"Calendar.OriginalStartTime\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"OriginalStartTime\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"62871d5f-1855-44c7-90f4-b8466e556865\",\r\n    \"name\": \"Calendar.PositionReference\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"PositionReference\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"d751e95d-52a8-44bc-8e50-cefd727b416d\",\r\n    \"name\": \"Calendar.Reject\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Reject\"\r\n  },\r\n  {\r\n    \"id\": \"25946ebb-8ec4-4e1d-8354-0cba7b090165\",\r\n    \"name\": \"Calendar.RelationshipName\",\r\n    \"typeId\": 5,\r\n    \"readableType\": \"Closed List Entity Extractor\",\r\n    \"subLists\": [\r\n      {\r\n        \"id\": 102916862,\r\n        \"canonicalForm\": \"aunt\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916863,\r\n        \"canonicalForm\": \"aunts\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916864,\r\n        \"canonicalForm\": \"boss\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916865,\r\n        \"canonicalForm\": \"brother\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916866,\r\n        \"canonicalForm\": \"brother in law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916867,\r\n        \"canonicalForm\": \"brother-in-law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916868,\r\n        \"canonicalForm\": \"brothers\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916869,\r\n        \"canonicalForm\": \"child\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916870,\r\n        \"canonicalForm\": \"children\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916871,\r\n        \"canonicalForm\": \"colleague\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916872,\r\n        \"canonicalForm\": \"colleagues\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916873,\r\n        \"canonicalForm\": \"cousin\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916874,\r\n        \"canonicalForm\": \"cousins\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916875,\r\n        \"canonicalForm\": \"dad\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916876,\r\n        \"canonicalForm\": \"daughter\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916877,\r\n        \"canonicalForm\": \"daughter in law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916878,\r\n        \"canonicalForm\": \"daughter-in-law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916879,\r\n        \"canonicalForm\": \"daughters\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916880,\r\n        \"canonicalForm\": \"families\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916881,\r\n        \"canonicalForm\": \"family\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916882,\r\n        \"canonicalForm\": \"father\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916883,\r\n        \"canonicalForm\": \"father in law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916884,\r\n        \"canonicalForm\": \"father-in-law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916885,\r\n        \"canonicalForm\": \"friend\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916886,\r\n        \"canonicalForm\": \"friends\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916887,\r\n        \"canonicalForm\": \"grandchild\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916888,\r\n        \"canonicalForm\": \"grandchildren\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916889,\r\n        \"canonicalForm\": \"granddaughter\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916890,\r\n        \"canonicalForm\": \"grandfather\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916891,\r\n        \"canonicalForm\": \"grandma\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916892,\r\n        \"canonicalForm\": \"grandmother\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916893,\r\n        \"canonicalForm\": \"grandparent\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916894,\r\n        \"canonicalForm\": \"grandparents\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916895,\r\n        \"canonicalForm\": \"grandson\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916896,\r\n        \"canonicalForm\": \"grandsons\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916897,\r\n        \"canonicalForm\": \"husband\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916898,\r\n        \"canonicalForm\": \"in-laws\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916899,\r\n        \"canonicalForm\": \"kids\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916900,\r\n        \"canonicalForm\": \"mom\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916901,\r\n        \"canonicalForm\": \"mother\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916902,\r\n        \"canonicalForm\": \"mother in law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916903,\r\n        \"canonicalForm\": \"mother-in-law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916904,\r\n        \"canonicalForm\": \"neighbor\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916905,\r\n        \"canonicalForm\": \"neighbors\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916906,\r\n        \"canonicalForm\": \"nephew\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916907,\r\n        \"canonicalForm\": \"niece\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916908,\r\n        \"canonicalForm\": \"parent\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916909,\r\n        \"canonicalForm\": \"parents\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916910,\r\n        \"canonicalForm\": \"partner\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916911,\r\n        \"canonicalForm\": \"siblings\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916912,\r\n        \"canonicalForm\": \"sister\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916913,\r\n        \"canonicalForm\": \"sister in law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916914,\r\n        \"canonicalForm\": \"sister-in-law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916915,\r\n        \"canonicalForm\": \"sisters\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916916,\r\n        \"canonicalForm\": \"son\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916917,\r\n        \"canonicalForm\": \"son in law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916918,\r\n        \"canonicalForm\": \"son-in-law\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916919,\r\n        \"canonicalForm\": \"step daughter\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916920,\r\n        \"canonicalForm\": \"step-daughter\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916921,\r\n        \"canonicalForm\": \"stepfather\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916922,\r\n        \"canonicalForm\": \"stepmother\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916923,\r\n        \"canonicalForm\": \"stepsister\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916924,\r\n        \"canonicalForm\": \"stepson\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916925,\r\n        \"canonicalForm\": \"students\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916926,\r\n        \"canonicalForm\": \"teachers\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916927,\r\n        \"canonicalForm\": \"uncle\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916928,\r\n        \"canonicalForm\": \"uncles\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916929,\r\n        \"canonicalForm\": \"wife\",\r\n        \"list\": []\r\n      },\r\n      {\r\n        \"id\": 102916930,\r\n        \"canonicalForm\": \"manager\",\r\n        \"list\": []\r\n      }\r\n    ],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"RelationshipName\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"52637e33-79f0-4a51-8aed-121f9151b988\",\r\n    \"name\": \"Calendar.ShowNext\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"ShowNext\"\r\n  },\r\n  {\r\n    \"id\": \"3cc240c3-354b-4165-8e63-bda8aba85c20\",\r\n    \"name\": \"Calendar.ShowPrevious\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"ShowPrevious\"\r\n  },\r\n  {\r\n    \"id\": \"c365da04-e364-4804-b4a9-315cd47dd867\",\r\n    \"name\": \"Calendar.SlotAttribute\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"SlotAttribute\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"2192bd8e-65c1-4ef6-a839-0535be5cd26c\",\r\n    \"name\": \"Calendar.StartDate\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"StartDate\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"d2564210-84b0-4d55-96f1-fb3b9a4cc8bb\",\r\n    \"name\": \"Calendar.StartTime\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"StartTime\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"f72ba758-3ca5-42d9-aa26-731337f1ab86\",\r\n    \"name\": \"Calendar.Subject\",\r\n    \"typeId\": 1,\r\n    \"readableType\": \"Entity Extractor\",\r\n    \"children\": [],\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"Subject\",\r\n    \"roles\": []\r\n  },\r\n  {\r\n    \"id\": \"11bebb71-6d1a-4f06-8e4c-74a306c19990\",\r\n    \"name\": \"Calendar.TimeRemaining\",\r\n    \"typeId\": 0,\r\n    \"readableType\": \"Intent Classifier\",\r\n    \"customPrebuiltDomainName\": \"Calendar\",\r\n    \"customPrebuiltModelName\": \"TimeRemaining\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/c50458a8-77f3-404b-9f67-5dbcd6d330b3/versions/0.1/customprebuiltdomains/Communication",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jNTA0NThhOC03N2YzLTQwNGItOWY2Ny01ZGJjZDZkMzMwYjMvdmVyc2lvbnMvMC4xL2N1c3RvbXByZWJ1aWx0ZG9tYWlucy9Db21tdW5pY2F0aW9u",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/c3b66003-69c1-4027-8ab1-0b37d67fc719/versions/0.1/customprebuiltdomains/Communication",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2MzYjY2MDAzLTY5YzEtNDAyNy04YWIxLTBiMzdkNjdmYzcxOS92ZXJzaW9ucy8wLjEvY3VzdG9tcHJlYnVpbHRkb21haW5zL0NvbW11bmljYXRpb24=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -258,10 +258,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "ecb76d4a-1ce9-4a3a-8cc1-db899ec43c5e"
+          "a04713b2-6808-4c04-a3e0-5c52fefd8e82"
         ],
         "Request-Id": [
-          "ecb76d4a-1ce9-4a3a-8cc1-db899ec43c5e"
+          "a04713b2-6808-4c04-a3e0-5c52fefd8e82"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -276,7 +276,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:19:04 GMT"
+          "Tue, 29 Oct 2019 13:21:56 GMT"
         ],
         "Content-Length": [
           "51"
@@ -289,19 +289,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/luis/api/v2.0/apps/c50458a8-77f3-404b-9f67-5dbcd6d330b3?force=false",
-      "EncodedRequestUri": "L2x1aXMvYXBpL3YyLjAvYXBwcy9jNTA0NThhOC03N2YzLTQwNGItOWY2Ny01ZGJjZDZkMzMwYjM/Zm9yY2U9ZmFsc2U=",
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/c3b66003-69c1-4027-8ab1-0b37d67fc719?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2MzYjY2MDAzLTY5YzEtNDAyNy04YWIxLTBiMzdkNjdmYzcxOT9mb3JjZT1mYWxzZQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "62b834e0069943d9b035f32abd230359"
+          "120f721e60454544a884022b1bc988a5"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27617.04",
+          "FxVersion/4.6.27817.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -312,10 +312,10 @@
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "39e34cf8-b7fa-45fe-9c76-fdc41b4fb6f6"
+          "1d12955a-0e5e-4b13-88ed-e7f0306a267e"
         ],
         "Request-Id": [
-          "39e34cf8-b7fa-45fe-9c76-fdc41b4fb6f6"
+          "1d12955a-0e5e-4b13-88ed-e7f0306a267e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -330,7 +330,7 @@
           "SAMEORIGIN"
         ],
         "Date": [
-          "Sun, 25 Aug 2019 19:19:04 GMT"
+          "Tue, 29 Oct 2019 13:21:57 GMT"
         ],
         "Content-Length": [
           "51"

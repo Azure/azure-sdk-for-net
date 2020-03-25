@@ -62,9 +62,6 @@ namespace Microsoft.Azure.Management.Storage
         /// Storage account names must be between 3 and 24 characters in length and use
         /// numbers and lower-case letters only.
         /// </param>
-        /// <param name='skipToken'>
-        /// Optional. Continuation token for the list operation.
-        /// </param>
         /// <param name='maxpagesize'>
         /// Optional. Specified maximum number of shares that can be included in the
         /// list.
@@ -94,7 +91,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -161,7 +158,6 @@ namespace Microsoft.Azure.Management.Storage
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("maxpagesize", maxpagesize);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -177,10 +173,6 @@ namespace Microsoft.Azure.Management.Storage
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (skipToken != null)
-            {
-                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
             }
             if (maxpagesize != null)
             {
@@ -340,7 +332,8 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='shareQuota'>
         /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-        /// less than or equal to 5TB (5120).
+        /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
+        /// is 102400.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -436,9 +429,9 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            if (shareQuota > 5120)
+            if (shareQuota > 102400)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "shareQuota", 5120);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "shareQuota", 102400);
             }
             if (shareQuota < 1)
             {
@@ -650,7 +643,8 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='shareQuota'>
         /// The maximum size of the share, in gigabytes. Must be greater than 0, and
-        /// less than or equal to 5TB (5120).
+        /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
+        /// is 102400.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -746,9 +740,9 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            if (shareQuota > 5120)
+            if (shareQuota > 102400)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "shareQuota", 5120);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "shareQuota", 102400);
             }
             if (shareQuota < 1)
             {

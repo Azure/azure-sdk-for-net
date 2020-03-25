@@ -92,6 +92,74 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Update a gallery Application Version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Application Gallery in which the Application
+            /// Definition resides.
+            /// </param>
+            /// <param name='galleryApplicationName'>
+            /// The name of the gallery Application Definition in which the Application
+            /// Version is to be updated.
+            /// </param>
+            /// <param name='galleryApplicationVersionName'>
+            /// The name of the gallery Application Version to be updated. Needs to follow
+            /// semantic version name pattern: The allowed characters are digit and period.
+            /// Digits must be within the range of a 32-bit integer. Format:
+            /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
+            /// </param>
+            /// <param name='galleryApplicationVersion'>
+            /// Parameters supplied to the update gallery Application Version operation.
+            /// </param>
+            public static GalleryApplicationVersion Update(this IGalleryApplicationVersionsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion)
+            {
+                return operations.UpdateAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a gallery Application Version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Application Gallery in which the Application
+            /// Definition resides.
+            /// </param>
+            /// <param name='galleryApplicationName'>
+            /// The name of the gallery Application Definition in which the Application
+            /// Version is to be updated.
+            /// </param>
+            /// <param name='galleryApplicationVersionName'>
+            /// The name of the gallery Application Version to be updated. Needs to follow
+            /// semantic version name pattern: The allowed characters are digit and period.
+            /// Digits must be within the range of a 32-bit integer. Format:
+            /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
+            /// </param>
+            /// <param name='galleryApplicationVersion'>
+            /// Parameters supplied to the update gallery Application Version operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GalleryApplicationVersion> UpdateAsync(this IGalleryApplicationVersionsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves information about a gallery Application Version.
             /// </summary>
             /// <param name='operations'>
@@ -323,6 +391,74 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<GalleryApplicationVersion> BeginCreateOrUpdateAsync(this IGalleryApplicationVersionsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersion galleryApplicationVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a gallery Application Version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Application Gallery in which the Application
+            /// Definition resides.
+            /// </param>
+            /// <param name='galleryApplicationName'>
+            /// The name of the gallery Application Definition in which the Application
+            /// Version is to be updated.
+            /// </param>
+            /// <param name='galleryApplicationVersionName'>
+            /// The name of the gallery Application Version to be updated. Needs to follow
+            /// semantic version name pattern: The allowed characters are digit and period.
+            /// Digits must be within the range of a 32-bit integer. Format:
+            /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
+            /// </param>
+            /// <param name='galleryApplicationVersion'>
+            /// Parameters supplied to the update gallery Application Version operation.
+            /// </param>
+            public static GalleryApplicationVersion BeginUpdate(this IGalleryApplicationVersionsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a gallery Application Version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Application Gallery in which the Application
+            /// Definition resides.
+            /// </param>
+            /// <param name='galleryApplicationName'>
+            /// The name of the gallery Application Definition in which the Application
+            /// Version is to be updated.
+            /// </param>
+            /// <param name='galleryApplicationVersionName'>
+            /// The name of the gallery Application Version to be updated. Needs to follow
+            /// semantic version name pattern: The allowed characters are digit and period.
+            /// Digits must be within the range of a 32-bit integer. Format:
+            /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
+            /// </param>
+            /// <param name='galleryApplicationVersion'>
+            /// Parameters supplied to the update gallery Application Version operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GalleryApplicationVersion> BeginUpdateAsync(this IGalleryApplicationVersionsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionUpdate galleryApplicationVersion, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, galleryApplicationVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

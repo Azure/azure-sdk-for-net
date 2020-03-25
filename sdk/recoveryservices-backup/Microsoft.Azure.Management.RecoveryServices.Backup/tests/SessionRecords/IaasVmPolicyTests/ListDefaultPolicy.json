@@ -135,8 +135,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2017-07-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxNy0wNy0wMQ==",
+      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies?api-version=2019-06-15",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXM/YXBpLXZlcnNpb249MjAxOS0wNi0xNQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -206,8 +206,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/defaultpolicy?api-version=2016-12-01",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXMvZGVmYXVsdHBvbGljeT9hcGktdmVyc2lvbj0yMDE2LTEyLTAx",
+      "RequestUri": "/Subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault/backupPolicies/defaultpolicy?api-version=2019-06-15",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvZTdhMTkxZjUtNzEzYy00YmRiLWI1ZTQtY2YzZGQ5MDIzMGVmL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHQvYmFja3VwUG9saWNpZXMvZGVmYXVsdHBvbGljeT9hcGktdmVyc2lvbj0yMDE5LTA2LTE1",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

@@ -1,58 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
     /// Content type of the certificate when downloaded from getSecret.
     /// </summary>
-    public struct CertificateContentType
+    public readonly struct CertificateContentType : IEquatable<CertificateContentType>
     {
-        private string _value;
+        private readonly string _value;
 
-        public CertificateContentType(string curveName)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificateContentType"/> structure.
+        /// </summary>
+        /// <param name="value">The string value of the instance.</param>
+        public CertificateContentType(string value)
         {
-            _value = curveName;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
-        /// Content is downloaded in pkcs12 (PFX) format
+        /// Gets a value indicating that content is downloaded in pkcs12 (PFX) format.
         /// </summary>
-        public static readonly CertificateContentType Pkcs12 = new CertificateContentType("application/x-pkcs12");
+        public static CertificateContentType Pkcs12 { get; } = new CertificateContentType("application/x-pkcs12");
 
         /// <summary>
-        /// Content is downloaded in PEM format
+        /// Gets a value indicating that content is downloaded in PEM format.
         /// </summary>
-        public static readonly CertificateContentType Pem = new CertificateContentType("application/x-pem");
+        public static CertificateContentType Pem { get; } = new CertificateContentType("application/x-pem-file");
 
-        public override bool Equals(object obj)
-        {
-            return obj is CertificateContentType && this.Equals((CertificateContentType)obj);
-        }
+        /// <summary>
+        /// Determines if two <see cref="CertificateContentType"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="CertificateContentType"/> to compare.</param>
+        /// <param name="right">The second <see cref="CertificateContentType"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(CertificateContentType left, CertificateContentType right) => left.Equals(right);
 
-        public bool Equals(CertificateContentType other)
-        {
-            return string.CompareOrdinal(_value, other._value) == 0;
-        }
+        /// <summary>
+        /// Determines if two <see cref="CertificateContentType"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="CertificateContentType"/> to compare.</param>
+        /// <param name="right">The second <see cref="CertificateContentType"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(CertificateContentType left, CertificateContentType right) => !left.Equals(right);
 
-        public override int GetHashCode()
-        {
-            return _value?.GetHashCode() ?? 0;
-        }
-
-        public override string ToString()
-        {
-            return _value;
-        }
-
-        public static bool operator ==(CertificateContentType a, CertificateContentType b) => a.Equals(b);
-
-        public static bool operator !=(CertificateContentType a, CertificateContentType b) => !a.Equals(b);
-
+        /// <summary>
+        /// Converts a string to a <see cref="CertificateContentType"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
         public static implicit operator CertificateContentType(string value) => new CertificateContentType(value);
 
-        public static implicit operator string(CertificateContentType o) => o._value;
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is CertificateContentType other && Equals(other);
 
+        /// <inheritdoc/>
+        public bool Equals(CertificateContentType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

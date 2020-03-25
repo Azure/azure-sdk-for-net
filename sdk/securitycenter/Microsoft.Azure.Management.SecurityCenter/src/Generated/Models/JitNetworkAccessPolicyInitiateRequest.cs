@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         /// <param name="virtualMachines">A list of virtual machines &amp;
         /// ports to open access for</param>
-        public JitNetworkAccessPolicyInitiateRequest(IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines)
+        /// <param name="justification">The justification for making the
+        /// initiate request</param>
+        public JitNetworkAccessPolicyInitiateRequest(IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string))
         {
             VirtualMachines = virtualMachines;
+            Justification = justification;
             CustomInit();
         }
 
@@ -50,6 +53,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "virtualMachines")]
         public IList<JitNetworkAccessPolicyInitiateVirtualMachine> VirtualMachines { get; set; }
+
+        /// <summary>
+        /// Gets or sets the justification for making the initiate request
+        /// </summary>
+        [JsonProperty(PropertyName = "justification")]
+        public string Justification { get; set; }
 
         /// <summary>
         /// Validate the object.

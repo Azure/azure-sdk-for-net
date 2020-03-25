@@ -1,21 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<!-- Please do not move/edit code below this line -->
 	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
-	<!-- Please do not move/edit code below this line -->
+	<!-- Please do not move/edit code above this line -->
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.14.0-preview</Version>
-		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
+		<Version>19.19.0-preview</Version>
+		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Fixed incorrect properties of ApplicationGatewayOnDemandProbe
-            - Added operation UnprepareNetworkPolicies for Subnets
-            - Added operations for FirewallPolicies and FirewallPolicyRuleGroups
-            - Added read-only property LoadBalancerFrontendIpConfiguration to PublicIPPrefix
-            - Updated models for PrivateEndpoints and PrivateLinks
+            - Added support for NetworkVirtualAppliance
+            - Added support for FQDN in LocalNetworkGateway and VpnSiteLink
+            - Added support for private IP address and BGP peering addresses in VirtualNetworkGateway
+            - Added support for IPv6 private peering in ExpressRouteCircuitConnection
+            - Added support for IP groups in AzureFirewall
+            - Added client-side validation for Azure Firewall name's length
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
