@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets password of the package.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.packagePassword")]
-        public SecretBase PackagePassword { get; set; }
+        public SecureString PackagePassword { get; set; }
 
         /// <summary>
         /// Gets or sets the package access credential.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (PackagePassword != null)
             {
                 PackagePassword.Validate();
-            }            
+            }
             if (AccessCredential != null)
             {
                 AccessCredential.Validate();
