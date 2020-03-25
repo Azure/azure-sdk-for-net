@@ -8,10 +8,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizedForm
+    public class RecognizedCustomForm
     {
 #pragma warning disable CA1801 // Remove unused parameter
-        internal RecognizedForm(DocumentResult_internal documentResult, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        internal RecognizedCustomForm(DocumentResult_internal documentResult, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
 #pragma warning restore CA1801 // Remove unused parameter
         {
             // Supervised

@@ -189,6 +189,27 @@ namespace Azure.AI.FormRecognizer.Training
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual CustomComposedModel GetCustomComposedModel(string modelId, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<CustomComposedModel>> GetCustomComposedModelAsync(string modelId, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Management Ops
@@ -267,7 +288,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelIds"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Operation<CustomComposedModel> StartComposeModel(IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
+        public virtual ComposeModelOperation StartComposeModel(IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -277,7 +298,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelIds"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Operation<CustomComposedModel>> StartComposeModelAsync(IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
+        public virtual async Task<ComposeModelOperation> StartComposeModelAsync(IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();

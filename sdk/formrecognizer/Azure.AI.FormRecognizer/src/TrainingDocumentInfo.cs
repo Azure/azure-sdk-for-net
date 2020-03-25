@@ -17,6 +17,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// </summary>
         [CodeGenSchemaMember("pages")]
-        public int PageCount { get; set; }
+        public int PageCount { get; internal set; }
     }
 }

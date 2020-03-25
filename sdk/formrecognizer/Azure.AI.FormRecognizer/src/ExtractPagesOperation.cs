@@ -13,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeFormsOperation : Operation<IReadOnlyList<RecognizedForm>>
+    public class RecognizeCustomFormsOperation : Operation<IReadOnlyList<RecognizedCustomForm>>
     {
         private Response _response;
-        private IReadOnlyList<RecognizedForm> _value;
+        private IReadOnlyList<RecognizedCustomForm> _value;
         private bool _hasCompleted;
 
         private readonly string _modelId;
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<RecognizedForm> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<RecognizedCustomForm> Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -41,11 +41,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedCustomForm>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedCustomForm>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="operations"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal RecognizeFormsOperation(ServiceClient operations, string modelId, string operationLocation)
+        internal RecognizeCustomFormsOperation(ServiceClient operations, string modelId, string operationLocation)
         {
             _serviceClient = operations;
             _modelId = modelId;
@@ -64,12 +64,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RecognizeFormsOperation"/> instance.
+        /// Initializes a new <see cref="RecognizeCustomFormsOperation"/> instance.
         /// </summary>
         /// <param name="id">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="cancellationToken"></param>
-        public RecognizeFormsOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public RecognizeCustomFormsOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
         {
             Id = id;
             _serviceClient = client.ServiceClient;
@@ -108,10 +108,10 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 #pragma warning disable CA1801 // Remove unused parameter
-        private static IReadOnlyList<RecognizedForm> ConvertToExtractedForms(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<RecognizedCustomForm> ConvertToExtractedForms(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
 #pragma warning restore CA1801 // Remove unused parameter
         {
-            List<RecognizedForm> pages = new List<RecognizedForm>();
+            List<RecognizedCustomForm> pages = new List<RecognizedCustomForm>();
             for (int i = 0; i < pageResults.Count; i++)
             {
                 // TODO: Implement
