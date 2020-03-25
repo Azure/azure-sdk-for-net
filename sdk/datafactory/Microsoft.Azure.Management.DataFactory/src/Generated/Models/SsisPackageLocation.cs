@@ -47,14 +47,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string).</param>
         /// <param name="configurationAccessCredential">The configuration file
         /// access credential.</param>
-        /// <param name="packageName">The package name.</param>
-        /// <param name="packageContent">The embedded package content. Type:
-        /// string (or Expression with resultType string).</param>
-        /// <param name="packageLastModifiedDate">The embedded package last
-        /// modified date.</param>
-        /// <param name="childPackages">The embedded child package
-        /// list.</param>
-        public SSISPackageLocation(object packagePath = default(object), string type = default(string), SecretBase packagePassword = default(SecretBase), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object), SSISAccessCredential configurationAccessCredential = default(SSISAccessCredential), string packageName = default(string), object packageContent = default(object), string packageLastModifiedDate = default(string), IList<SSISChildPackage> childPackages = default(IList<SSISChildPackage>))
+        public SSISPackageLocation(object packagePath, string type = default(string), SecureString packagePassword = default(SecureString), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object), SSISAccessCredential configurationAccessCredential = default(SSISAccessCredential))
         {
             PackagePath = packagePath;
             Type = type;
@@ -62,10 +55,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AccessCredential = accessCredential;
             ConfigurationPath = configurationPath;
             ConfigurationAccessCredential = configurationAccessCredential;
-            PackageName = packageName;
-            PackageContent = packageContent;
-            PackageLastModifiedDate = packageLastModifiedDate;
-            ChildPackages = childPackages;
             CustomInit();
         }
 
@@ -113,30 +102,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "typeProperties.configurationAccessCredential")]
         public SSISAccessCredential ConfigurationAccessCredential { get; set; }
 
-        /// <summary>
-        /// Gets or sets the package name.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.packageName")]
-        public string PackageName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the embedded package content. Type: string (or
-        /// Expression with resultType string).
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.packageContent")]
-        public object PackageContent { get; set; }
-
-        /// <summary>
-        /// Gets or sets the embedded package last modified date.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.packageLastModifiedDate")]
-        public string PackageLastModifiedDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the embedded child package list.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeProperties.childPackages")]
-        public IList<SSISChildPackage> ChildPackages { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -146,6 +111,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (PackagePath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PackagePath");
+            }
+            if (PackagePassword != null)
+            {
+                PackagePassword.Validate();
+            }            
             if (AccessCredential != null)
             {
                 AccessCredential.Validate();
@@ -153,16 +126,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (ConfigurationAccessCredential != null)
             {
                 ConfigurationAccessCredential.Validate();
-            }
-            if (ChildPackages != null)
-            {
-                foreach (var element in ChildPackages)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }
