@@ -661,6 +661,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Surrendering ownership of a partition..
+        /// </summary>
+        internal static string OperationSurrenderOwnership
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationSurrenderOwnership", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The last enqueued event properties cannot be read when an event is not available..
         /// </summary>
         internal static string CannotReadLastEnqueuedEventPropertiesWithoutEvent
