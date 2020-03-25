@@ -68,14 +68,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void RecognizePiiEntitiesArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
-        }
-
-        [Test]
         public void RecognizeLinkedEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((string)null));
