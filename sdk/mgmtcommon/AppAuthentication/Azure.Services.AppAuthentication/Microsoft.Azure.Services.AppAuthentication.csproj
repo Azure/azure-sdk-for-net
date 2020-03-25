@@ -2,17 +2,16 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Services.AppAuthentication</PackageId>
         <Description>Enables a service to authenticate to Azure services using the developer's Azure Active Directory/ Microsoft account during development, and authenticate as itself (using OAuth 2.0 Client Credentials flow) when deployed to Azure.</Description>
-        <Version>1.2.1</Version>
+        <Version>1.3.1</Version>
         <AssemblyName>Microsoft.Azure.Services.AppAuthentication</AssemblyName>
         <PackageTags>Azure Authentication AppAuthentication</PackageTags>
 	    <PackageReleaseNotes>
 		<![CDATA[
 			Documentation can be found at https://go.microsoft.com/fwlink/p/?linkid=862452.
 			
-			Adding optional MsiRetryTimeout connection string parameter
-			Bug fixes
+			Bug fixes and refactoring
 		]]>
-	    </PackageReleaseNotes>
+		</PackageReleaseNotes>
     </PropertyGroup>
     <ItemGroup>
         <Content Include="build\*.targets" PackagePath="build\" />
@@ -22,7 +21,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.19.4" />
+        <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.3.0" />
        	<PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.1" PrivateAssets="All" />
     </ItemGroup>
 

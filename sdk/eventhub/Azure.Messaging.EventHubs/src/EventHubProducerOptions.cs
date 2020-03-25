@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ComponentModel;
 using Azure.Messaging.EventHubs.Core;
 
@@ -50,13 +49,13 @@ namespace Azure.Messaging.EventHubs
         /// <summary>
         ///   The set of options to use for determining whether a failed operation should be retried and,
         ///   if so, the amount of time to wait between retry attempts.  If not specified, the retry policy from
-        ///   the associcated <see cref="EventHubClient" /> will be used.
+        ///   the associated <see cref="EventHubClient" /> will be used.
         /// </summary>
         ///
         public RetryOptions RetryOptions { get; set; }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>

@@ -20,7 +20,7 @@ namespace Azure.Core.Testing
         {
             SortedDictionary<string, string> pairs = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            foreach (var pair in connectionString.Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var pair in connectionString.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 var indexOfEquals = pair.IndexOf('=');
                 if (indexOfEquals == -1)

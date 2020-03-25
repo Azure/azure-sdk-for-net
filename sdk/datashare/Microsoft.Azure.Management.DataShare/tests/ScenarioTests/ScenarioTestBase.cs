@@ -1,4 +1,4 @@
-﻿namespace DataShare.Tests.ScenarioTests
+namespace DataShare.Tests.ScenarioTests
 {
     using System;
     using System.Runtime.CompilerServices;
@@ -14,7 +14,7 @@
         private const string ResourceGroupNamePrefix = "sdktestingadsrg";
         protected const string AccountNamePrefix = "sdktestingshareaccount";
         protected const string AccountLocation = "West US 2";
-        protected static string ClassName = typeof(T).FullName;
+        protected static Type Type = typeof(T);
 
         protected string ResourceGroupName { get; private set; }
         protected string AccountName { get; private set; }
@@ -28,7 +28,7 @@
             const string modeEnvironmentVariableName = "AZURE_TEST_MODE";
             const string playback = "Playback";
 
-            using (MockContext mockContext = MockContext.Start(ScenarioTestBase<T>.ClassName, methodName))
+            using (MockContext mockContext = MockContext.Start(Type, methodName))
             {
                 string mode = Environment.GetEnvironmentVariable(modeEnvironmentVariableName);
 

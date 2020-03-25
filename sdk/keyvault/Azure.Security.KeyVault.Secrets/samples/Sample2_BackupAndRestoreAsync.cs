@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// Sample demonstrates how to backup and restore secrets in the key vault using the 
     /// asynchronous methods of the SecretClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class BackupAndRestore
     {
         [Test]

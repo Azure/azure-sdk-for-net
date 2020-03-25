@@ -4,7 +4,11 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 - [Azure.Storage.Blobs][blobs] is Microsoft's object storage solution for the cloud. Blob storage is optimized for storing massive amounts of unstructured data that does not adhere to a particular data model or definition, such as text or binary data.
 
+- [Azure.Storage.Blobs.Cryptography][blobs_cryptography] supports client-side encryption for Azure Storage block blobs.
+
 - [Azure.Storage.Queues][queues] is a service for storing large numbers of messages.  A queue message can be up to 64 KB in size and a queue may contain millions of messages, up to the total capacity limit of a storage account.
+
+- [Azure.Storage.Queues.Cryptography][queues_cryptography] supports client-side encryption for Azure Storage queues.
 
 - [Azure.Storage.Files][files] offers fully managed file shares in the cloud that are accessible via the industry standard Server Message Block (SMB) protocol.  Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, Linux, and macOS.
 
@@ -13,6 +17,9 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 - [Microsoft.Azure.Management.Storage][management] supports managing Azure Storage resources, including the creation of new storage accounts.
 
 ## Contributing
+
+See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
+testing, and contributing to these libraries.
 
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
@@ -28,10 +35,13 @@ additional questions or comments.
 
 <!-- LINKS -->
 [blobs]: ./Azure.Storage.Blobs/README.md
+[blobs_cryptography]: ./Azure.Storage.Blobs.Cryptography/README.md
 [queues]: ./Azure.Storage.Queues/README.md
+[queues_cryptography]: ./Azure.Storage.Queues.Cryptography/README.md
 [files]: ./Azure.Storage.Files/README.md
 [common]: ./Azure.Storage.Common/README.md
 [management]: ./Microsoft.Azure.Management.Storage/
+[storage_contrib]: ./CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

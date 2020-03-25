@@ -9,17 +9,17 @@ using Azure.Core.Http;
 
 namespace Azure.Core.Pipeline
 {
-    public class BearerTokenAuthenticationPolicy: HttpPipelinePolicy
+    public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly TokenCredential _credential;
 
         private readonly string[] _scopes;
 
-        private string _headerValue;
+        private string? _headerValue;
 
         private DateTimeOffset _refreshOn;
 
-        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new []{ scope })
+        public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new[] { scope })
         {
         }
 
@@ -61,7 +61,10 @@ namespace Azure.Core.Pipeline
                 _refreshOn = token.ExpiresOn - TimeSpan.FromMinutes(2);
             }
 
-            message.Request.SetHeader(HttpHeader.Names.Authorization, _headerValue);
+            if (_headerValue != null)
+            {
+                message.Request.SetHeader(HttpHeader.Names.Authorization, _headerValue);
+            }
 
             if (async)
             {

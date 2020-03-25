@@ -16,25 +16,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A task which is run when a compute node joins a pool in the Azure Batch
-    /// service, or when the compute node is rebooted or reimaged.
+    /// A Task which is run when a Node joins a Pool in the Azure Batch
+    /// service, or when the Compute Node is rebooted or reimaged.
     /// </summary>
     /// <remarks>
-    /// Batch will retry tasks when a recovery operation is triggered on a
-    /// compute node. Examples of recovery operations include (but are not
-    /// limited to) when an unhealthy compute node is rebooted or a compute
-    /// node disappeared due to host failure. Retries due to recovery
-    /// operations are independent of and are not counted against the
-    /// maxTaskRetryCount. Even if the maxTaskRetryCount is 0, an internal
-    /// retry due to a recovery operation may occur. Because of this, all tasks
-    /// should be idempotent. This means tasks need to tolerate being
-    /// interrupted and restarted without causing any corruption or duplicate
-    /// data. The best practice for long running tasks is to use some form of
-    /// checkpointing. In some cases the start task may be re-run even though
-    /// the node was not rebooted. Special care should be taken to avoid start
-    /// tasks which create breakaway process or install/launch services from
-    /// the start task working directory, as this will block Batch from being
-    /// able to re-run the start task.
+    /// Batch will retry Tasks when a recovery operation is triggered on a
+    /// Node. Examples of recovery operations include (but are not limited to)
+    /// when an unhealthy Node is rebooted or a Compute Node disappeared due to
+    /// host failure. Retries due to recovery operations are independent of and
+    /// are not counted against the maxTaskRetryCount. Even if the
+    /// maxTaskRetryCount is 0, an internal retry due to a recovery operation
+    /// may occur. Because of this, all Tasks should be idempotent. This means
+    /// Tasks need to tolerate being interrupted and restarted without causing
+    /// any corruption or duplicate data. The best practice for long running
+    /// Tasks is to use some form of checkpointing. In some cases the StartTask
+    /// may be re-run even though the Compute Node was not rebooted. Special
+    /// care should be taken to avoid StartTasks which create breakaway process
+    /// or install/launch services from the StartTask working directory, as
+    /// this will block Batch from being able to re-run the StartTask.
     /// </remarks>
     public partial class StartTask
     {
@@ -49,12 +48,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the StartTask class.
         /// </summary>
-        /// <param name="commandLine">The command line of the start
-        /// task.</param>
+        /// <param name="commandLine">The command line of the
+        /// StartTask.</param>
         /// <param name="containerSettings">The settings for the container
-        /// under which the start task runs.</param>
+        /// under which the StartTask runs.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
-        /// will download to the compute node before running the command line.
+        /// will download to the Compute Node before running the command line.
         /// There is a maximum size for the list of resource files. When the
         /// max size is exceeded, the request will fail and the response error
         /// code will be RequestEntityTooLarge. If this occurs, the collection
@@ -62,15 +61,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// using .zip files, Application Packages, or Docker
         /// Containers.</param>
         /// <param name="environmentSettings">A list of environment variable
-        /// settings for the start task.</param>
-        /// <param name="userIdentity">The user identity under which the start
-        /// task runs.</param>
+        /// settings for the StartTask.</param>
+        /// <param name="userIdentity">The user identity under which the
+        /// StartTask runs.</param>
         /// <param name="maxTaskRetryCount">The maximum number of times the
-        /// task may be retried.</param>
+        /// Task may be retried.</param>
         /// <param name="waitForSuccess">Whether the Batch service should wait
-        /// for the start task to complete successfully (that is, to exit with
-        /// exit code 0) before scheduling any tasks on the compute
-        /// node.</param>
+        /// for the StartTask to complete successfully (that is, to exit with
+        /// exit code 0) before scheduling any Tasks on the Compute
+        /// Node.</param>
         public StartTask(string commandLine, TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), UserIdentity userIdentity = default(UserIdentity), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
         {
             CommandLine = commandLine;
@@ -89,7 +88,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the command line of the start task.
+        /// Gets or sets the command line of the StartTask.
         /// </summary>
         /// <remarks>
         /// The command line does not run under a shell, and therefore cannot
@@ -98,7 +97,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using "cmd
         /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the
         /// command line refers to file paths, it should use a relative path
-        /// (relative to the task working directory), or use the Batch provided
+        /// (relative to the Task working directory), or use the Batch provided
         /// environment variable
         /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
@@ -106,14 +105,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// Gets or sets the settings for the container under which the start
-        /// task runs.
+        /// Gets or sets the settings for the container under which the
+        /// StartTask runs.
         /// </summary>
         /// <remarks>
         /// When this is specified, all directories recursively below the
         /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
-        /// node) are mapped into the container, all task environment variables
-        /// are mapped into the container, and the task command line is
+        /// node) are mapped into the container, all Task environment variables
+        /// are mapped into the container, and the Task command line is
         /// executed in the container. Files produced in the container outside
         /// of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk,
         /// meaning that Batch file APIs will not be able to access those
@@ -124,7 +123,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
-        /// to the compute node before running the command line.  There is a
+        /// to the Compute Node before running the command line.  There is a
         /// maximum size for the list of resource files. When the max size is
         /// exceeded, the request will fail and the response error code will be
         /// RequestEntityTooLarge. If this occurs, the collection of
@@ -132,62 +131,62 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// .zip files, Application Packages, or Docker Containers.
         /// </summary>
         /// <remarks>
-        /// Files listed under this element are located in the task's working
+        /// Files listed under this element are located in the Task's working
         /// directory.
         /// </remarks>
         [JsonProperty(PropertyName = "resourceFiles")]
         public IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of environment variable settings for the start
-        /// task.
+        /// Gets or sets a list of environment variable settings for the
+        /// StartTask.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the user identity under which the start task runs.
+        /// Gets or sets the user identity under which the StartTask runs.
         /// </summary>
         /// <remarks>
-        /// If omitted, the task runs as a non-administrative user unique to
-        /// the task.
+        /// If omitted, the Task runs as a non-administrative user unique to
+        /// the Task.
         /// </remarks>
         [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of times the task may be retried.
+        /// Gets or sets the maximum number of times the Task may be retried.
         /// </summary>
         /// <remarks>
-        /// The Batch service retries a task if its exit code is nonzero. Note
+        /// The Batch service retries a Task if its exit code is nonzero. Note
         /// that this value specifically controls the number of retries. The
-        /// Batch service will try the task once, and may then retry up to this
+        /// Batch service will try the Task once, and may then retry up to this
         /// limit. For example, if the maximum retry count is 3, Batch tries
-        /// the task up to 4 times (one initial try and 3 retries). If the
+        /// the Task up to 4 times (one initial try and 3 retries). If the
         /// maximum retry count is 0, the Batch service does not retry the
-        /// task. If the maximum retry count is -1, the Batch service retries
-        /// the task without limit.
+        /// Task. If the maximum retry count is -1, the Batch service retries
+        /// the Task without limit.
         /// </remarks>
         [JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the Batch service should wait for the start
-        /// task to complete successfully (that is, to exit with exit code 0)
-        /// before scheduling any tasks on the compute node.
+        /// Gets or sets whether the Batch service should wait for the
+        /// StartTask to complete successfully (that is, to exit with exit code
+        /// 0) before scheduling any Tasks on the Compute Node.
         /// </summary>
         /// <remarks>
-        /// If true and the start task fails on a compute node, the Batch
-        /// service retries the start task up to its maximum retry count
-        /// (maxTaskRetryCount). If the task has still not completed
+        /// If true and the StartTask fails on a Node, the Batch service
+        /// retries the StartTask up to its maximum retry count
+        /// (maxTaskRetryCount). If the Task has still not completed
         /// successfully after all retries, then the Batch service marks the
-        /// compute node unusable, and will not schedule tasks to it. This
-        /// condition can be detected via the node state and failure info
-        /// details. If false, the Batch service will not wait for the start
-        /// task to complete. In this case, other tasks can start executing on
-        /// the compute node while the start task is still running; and even if
-        /// the start task fails, new tasks will continue to be scheduled on
-        /// the node. The default is false.
+        /// Node unusable, and will not schedule Tasks to it. This condition
+        /// can be detected via the Compute Node state and failure info
+        /// details. If false, the Batch service will not wait for the
+        /// StartTask to complete. In this case, other Tasks can start
+        /// executing on the Compute Node while the StartTask is still running;
+        /// and even if the StartTask fails, new Tasks will continue to be
+        /// scheduled on the Compute Node. The default is true.
         /// </remarks>
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }

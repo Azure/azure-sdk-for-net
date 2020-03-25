@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace FrontDoor.Tests.ScenarioTests
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             
             string subid = ConnectionStringKeys.SubscriptionIdKey;
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var frontDoorMgmtClient = FrontDoorTestUtilities.GetFrontDoorManagementClient(context, handler1);
@@ -52,7 +52,9 @@ namespace FrontDoor.Tests.ScenarioTests
                         name: "healthProbeSettings1",
                         path: "/",
                         protocol: "Http",
-                        intervalInSeconds: 120
+                        intervalInSeconds: 120,
+                        //healthProbeMethod: "GET",
+                        enabledState: "Enabled"
                     );
                 
                 LoadBalancingSettingsModel loadBalancingSettings1 = new LoadBalancingSettingsModel(
@@ -78,6 +80,10 @@ namespace FrontDoor.Tests.ScenarioTests
                     healthProbeSettings: new refID("/subscriptions/"+subid+"/resourceGroups/"+resourceGroupName+"/providers/Microsoft.Network/frontDoors/"+frontDoorName+"/healthProbeSettings/healthProbeSettings1")
                     );
 
+                BackendPoolsSettings backendPoolsSettings1 = new BackendPoolsSettings(
+                    sendRecvTimeoutSeconds: 123
+                    );
+
                 FrontendEndpoint frontendEndpoint1 = new FrontendEndpoint(
                     name: "frontendEndpoint1",
                     hostName: frontDoorName+".azurefd.net",
@@ -98,12 +104,12 @@ namespace FrontDoor.Tests.ScenarioTests
                     LoadBalancingSettings = new List<LoadBalancingSettingsModel> { loadBalancingSettings1 },
                     HealthProbeSettings = new List<HealthProbeSettingsModel> { healthProbeSettings1 },
                     FrontendEndpoints = new List<FrontendEndpoint> { frontendEndpoint1 },
-                    BackendPools = new List<BackendPool> { backendPool1 }
+                    BackendPools = new List<BackendPool> { backendPool1 },
+                    BackendPoolsSettings = backendPoolsSettings1
                 };
-                
-                
-                var createdFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, createParameters);
 
+                var createdFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, createParameters);
+                
                 // validate that correct frontdoor is created
                 VerifyFrontDoor(createdFrontDoor, createParameters);
 
@@ -139,14 +145,14 @@ namespace FrontDoor.Tests.ScenarioTests
 
             }
         }
-        
+
         [Fact]
         public void WAFCRUDTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var frontDoorMgmtClient = FrontDoorTestUtilities.GetFrontDoorManagementClient(context, handler1);
@@ -202,7 +208,7 @@ namespace FrontDoor.Tests.ScenarioTests
                         }
                     ),
                     ManagedRules = new ManagedRuleSetList(
-                        new List <ManagedRuleSet> {
+                        new List<ManagedRuleSet> {
                             new ManagedRuleSet
                             {
                                 RuleSetType = "DefaultRuleSet",
@@ -216,7 +222,7 @@ namespace FrontDoor.Tests.ScenarioTests
                                         {
                                             new ManagedRuleOverride
                                             {
-                                                RuleId = "Rule1",
+                                                RuleId = "942100",
                                                 Action = "Redirect",
                                                 EnabledState = "Disabled"
                                             }
@@ -224,9 +230,9 @@ namespace FrontDoor.Tests.ScenarioTests
                                     }
                                 }
                             }
-                            
+
                     })
-                    
+
                 };
 
                 var policy = frontDoorMgmtClient.Policies.CreateOrUpdate(resourceGroupName, policyName, createParameters);
@@ -303,6 +309,7 @@ namespace FrontDoor.Tests.ScenarioTests
             Assert.True(frontDoor.Tags.SequenceEqual(parameters.Tags));
             VerifyRoutingRules(frontDoor.RoutingRules, parameters.RoutingRules);
             VerifyBackendPool(frontDoor.BackendPools, parameters.BackendPools);
+            VerifyBackendPoolsSettings(frontDoor.BackendPoolsSettings, parameters.BackendPoolsSettings);
             VerifyHealthProbeSettings(frontDoor.HealthProbeSettings, parameters.HealthProbeSettings);
             VerifyLoadBalancingSettings(frontDoor.LoadBalancingSettings, parameters.LoadBalancingSettings);
             VerifyFrontendEndpoint(frontDoor.FrontendEndpoints, parameters.FrontendEndpoints);
@@ -343,6 +350,11 @@ namespace FrontDoor.Tests.ScenarioTests
             }
         }
 
+        private static void VerifyBackendPoolsSettings(BackendPoolsSettings backendPoolsSettings, BackendPoolsSettings parameters)
+        {
+            Assert.Equal(backendPoolsSettings.SendRecvTimeoutSeconds, parameters.SendRecvTimeoutSeconds);
+        }
+
         private static void VerifyHealthProbeSettings(IList<HealthProbeSettingsModel> healthProbeSettings, IList<HealthProbeSettingsModel> parameters)
         {
             Assert.Equal(healthProbeSettings.Count, parameters.Count);
@@ -351,6 +363,8 @@ namespace FrontDoor.Tests.ScenarioTests
                 Assert.Equal(healthProbeSettings[i].Path, parameters[i].Path);
                 Assert.Equal(healthProbeSettings[i].Protocol, parameters[i].Protocol);
                 Assert.Equal(healthProbeSettings[i].IntervalInSeconds, parameters[i].IntervalInSeconds);
+                //Assert.Equal(healthProbeSettings[i].HealthProbeMethod, parameters[i].HealthProbeMethod);
+                Assert.Equal(healthProbeSettings[i].EnabledState, parameters[i].EnabledState);
             }
         }
 

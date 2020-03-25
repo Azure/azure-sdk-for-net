@@ -3,8 +3,12 @@
 // license information.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -111,7 +115,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = filePath
                 };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -213,7 +217,7 @@ namespace Azure.Storage.Files
         public virtual FileClient WithSnapshot(string shareSnapshot)
         {
             var builder = new FileUriBuilder(this.Uri) { Snapshot = shareSnapshot };
-            return new FileClient(builder.ToUri(), this.Pipeline);
+            return new FileClient(builder.Uri, this.Pipeline);
         }
 
         #region Create
@@ -235,6 +239,12 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -251,11 +261,15 @@ namespace Azure.Storage.Files
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default) =>
             this.CreateInternal(
                 maxSize,
                 httpHeaders,
                 metadata,
+                smbProperties,
+                filePermission,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -278,6 +292,12 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -294,11 +314,15 @@ namespace Azure.Storage.Files
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default) =>
             await this.CreateInternal(
                 maxSize,
                 httpHeaders,
                 metadata,
+                smbProperties,
+                filePermission,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -321,6 +345,12 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -340,6 +370,8 @@ namespace Azure.Storage.Files
             long maxSize,
             FileHttpHeaders? httpHeaders,
             Metadata metadata,
+            FileSmbProperties? smbProperties,
+            string filePermission,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -353,7 +385,16 @@ namespace Azure.Storage.Files
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    return await FileRestClient.File.CreateAsync(
+                    var smbProps = smbProperties ?? new FileSmbProperties();
+
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
+
+                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    {
+                        filePermission = Constants.File.FilePermissionInherit;
+                    }
+
+                    var response = await FileRestClient.File.CreateAsync(
                         this.Pipeline,
                         this.Uri,
                         fileContentLength: maxSize,
@@ -364,9 +405,18 @@ namespace Azure.Storage.Files
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         metadata: metadata,
+                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
+                        filePermission: filePermission,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return new Response<StorageFileInfo>(
+                        response.GetRawResponse(),
+                        new StorageFileInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -798,7 +848,9 @@ namespace Azure.Storage.Files
 
                     // Wrap the FlattenedStorageFileProperties into a StorageFileDownloadInfo
                     // to make the Content easier to find
-                    return new Response<StorageFileDownloadInfo>(response.GetRawResponse(), new StorageFileDownloadInfo(response.Value));
+                    return new Response<StorageFileDownloadInfo>(
+                        response.GetRawResponse(),
+                        new StorageFileDownloadInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -864,6 +916,7 @@ namespace Azure.Storage.Files
                     range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
+                    bufferResponse: false,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             this.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
@@ -1073,13 +1126,17 @@ namespace Azure.Storage.Files
                     $"{nameof(shareSnapshot)}: {shareSnapshot}");
                 try
                 {
-                    return await FileRestClient.File.GetPropertiesAsync(
+                    var response = await FileRestClient.File.GetPropertiesAsync(
                         this.Pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return new Response<StorageFileProperties>(
+                        response.GetRawResponse(),
+                        new StorageFileProperties(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1110,6 +1167,12 @@ namespace Azure.Storage.Files
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
         /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1125,10 +1188,14 @@ namespace Azure.Storage.Files
         public virtual Response<StorageFileInfo> SetHttpHeaders(
             long? newSize = default,
             FileHttpHeaders? httpHeaders = default,
+            FileSmbProperties?  smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default) =>
             this.SetHttpHeadersInternal(
                 newSize,
                 httpHeaders,
+                smbProperties,
+                filePermission,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1148,6 +1215,12 @@ namespace Azure.Storage.Files
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
         /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1163,10 +1236,14 @@ namespace Azure.Storage.Files
         public virtual async Task<Response<StorageFileInfo>> SetHttpHeadersAsync(
             long? newSize = default,
             FileHttpHeaders? httpHeaders = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default) =>
             await this.SetHttpHeadersInternal(
                 newSize,
                 httpHeaders,
+                smbProperties,
+                filePermission,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1186,6 +1263,12 @@ namespace Azure.Storage.Files
         /// <param name="httpHeaders">
         /// Optional. The standard HTTP header system properties to set.  If not specified, existing values will be cleared.
         /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set ofr the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1204,6 +1287,8 @@ namespace Azure.Storage.Files
         private async Task<Response<StorageFileInfo>> SetHttpHeadersInternal(
             long? newSize,
             FileHttpHeaders? httpHeaders,
+            FileSmbProperties? smbProperties,
+            string filePermission,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1217,7 +1302,15 @@ namespace Azure.Storage.Files
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    return await FileRestClient.File.SetPropertiesAsync(
+                    var smbProps = smbProperties ?? new FileSmbProperties();
+
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
+                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    {
+                        filePermission = Constants.File.Preserve;
+                    }
+
+                    var response = await FileRestClient.File.SetPropertiesAsync(
                         this.Pipeline,
                         this.Uri,
                         fileContentLength: newSize,
@@ -1227,9 +1320,19 @@ namespace Azure.Storage.Files
                         fileCacheControl: httpHeaders?.CacheControl,
                         fileContentHash: httpHeaders?.ContentHash,
                         fileContentDisposition: httpHeaders?.ContentDisposition,
+                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
+                        filePermission:  filePermission,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
+                        filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
+                        operationName: Constants.File.SetHttpHeadersOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return new Response<StorageFileInfo>(
+                        response.GetRawResponse(),
+                        new StorageFileInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1341,13 +1444,17 @@ namespace Azure.Storage.Files
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
-                    return await FileRestClient.File.SetMetadataAsync(
+                    var response = await FileRestClient.File.SetMetadataAsync(
                         this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return new Response<StorageFileInfo>(
+                        response.GetRawResponse(),
+                        new StorageFileInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -1574,6 +1681,196 @@ namespace Azure.Storage.Files
             }
         }
         #endregion UploadRange
+
+        #region Upload
+        /// <summary>
+        /// The <see cref="Upload"/> operation writes <paramref name="content"/>
+        /// to a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the file to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageFileUploadInfo> Upload(
+            Stream content,
+            IProgress<StorageProgress> progressHandler = default,
+            CancellationToken cancellationToken = default) =>
+            this.UploadInternal(
+                content,
+                progressHandler,
+                Constants.File.MaxFileUpdateRange,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadAsync"/> operation writes
+        /// <paramref name="content"/> to a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the file to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<StorageFileUploadInfo>> UploadAsync(
+            Stream content,
+            IProgress<StorageProgress> progressHandler = default,
+            CancellationToken cancellationToken = default) =>
+            await this.UploadInternal(
+                content,
+                progressHandler,
+                Constants.File.MaxFileUpdateRange,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadInternal"/> operation writes
+        /// <paramref name="content"/> to a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{StorageProgress}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="singleRangeThreshold">
+        /// The maximum size stream that we'll upload as a single range.  The
+        /// default value is 4MB.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<StorageFileUploadInfo>> UploadInternal(
+            Stream content,
+            IProgress<StorageProgress> progressHandler,
+            int singleRangeThreshold,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            // Try to upload the file as a single range
+            Debug.Assert(singleRangeThreshold <= Constants.File.MaxFileUpdateRange);
+            try
+            {
+                var length = content.Length;
+                if (length <= singleRangeThreshold)
+                {
+                    return await this.UploadRangeInternal(
+                        FileRangeWriteType.Update,
+                        new HttpRange(0, length),
+                        content,
+                        null,
+                        progressHandler,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+            }
+            catch
+            {
+            }
+
+            // Otherwise naively split the file into ranges and upload them individually
+            var response = default(Response<StorageFileUploadInfo>);
+            var pool = default(MemoryPool<byte>);
+            try
+            {
+                pool = (singleRangeThreshold < MemoryPool<byte>.Shared.MaxBufferSize) ?
+                    MemoryPool<byte>.Shared :
+                    new StorageMemoryPool(singleRangeThreshold, 1);
+                for (;;)
+                {
+                    // Get the next chunk of content
+                    var parentPosition = content.Position;
+                    var buffer = pool.Rent(singleRangeThreshold);
+                    if (!MemoryMarshal.TryGetArray<byte>(buffer.Memory, out var segment))
+                    {
+                        throw Errors.UnableAccessArray();
+                    }
+                    var count = async ?
+                        await content.ReadAsync(segment.Array, 0, singleRangeThreshold, cancellationToken).ConfigureAwait(false) :
+                        content.Read(segment.Array, 0, singleRangeThreshold);
+
+                    // Stop when we've exhausted the content
+                    if (count <= 0) { break; }
+
+                    // Upload the chunk
+                    var partition = new StreamPartition(
+                        buffer.Memory,
+                        parentPosition,
+                        count,
+                        () => buffer.Dispose(),
+                        cancellationToken);
+                    response = await this.UploadRangeInternal(
+                        FileRangeWriteType.Update,
+                        new HttpRange(partition.ParentPosition, partition.Length),
+                        partition,
+                        null,
+                        progressHandler,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+
+                }
+            }
+            finally
+            {
+                if (pool is StorageMemoryPool)
+                {
+                    pool.Dispose();
+                }
+            }
+            return response;
+        }
+        #endregion Upload
 
         #region GetRangeList
         /// <summary>
@@ -2003,169 +2300,9 @@ namespace Azure.Storage.Files
             }
         }
         #endregion ForceCloseHandles
-    }
-}
 
-namespace Azure.Storage.Files.Models
-{
-    /// <summary>
-    /// The properties and content returned from downloading a file
-    /// </summary>
-    public partial class StorageFileDownloadInfo
-    {
-        /// <summary>
-        /// Internal flattened property representation
-        /// </summary>
-        internal FlattenedStorageFileProperties _flattened;
+        #region Helpers
 
-        /// <summary>
-        /// The number of bytes present in the response body.
-        /// </summary>
-        public long ContentLength => this._flattened.ContentLength;
-
-        /// <summary>
-        /// Content
-        /// </summary>
-        public Stream Content => this._flattened.Content;
-
-        /// <summary>
-        /// If the file has an MD5 hash and this operation is to read the full content, this response header is returned so that the client can check for message content integrity.
-        /// </summary>
-#pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentHash => this._flattened.ContentHash;
-#pragma warning restore CA1819 // Properties should not return arrays
-
-        /// <summary>
-        /// Properties returned when downloading a file
-        /// </summary>
-        public StorageFileDownloadProperties Properties { get; private set; }
-
-        /// <summary>
-        /// Creates a new StorageFileDownloadInfo backed by FlattenedStorageFileProperties
-        /// </summary>
-        /// <param name="flattened">The FlattenedStorageFileProperties returned with the request</param>
-        internal StorageFileDownloadInfo(FlattenedStorageFileProperties flattened)
-        {
-            this._flattened = flattened;
-            this.Properties = new StorageFileDownloadProperties() { _flattened = flattened };
-        }
-    }
-
-    /// <summary>
-    /// Properties returned when downloading a File
-    /// </summary>
-    public partial class StorageFileDownloadProperties
-    {
-        /// <summary>
-        /// Internal flattened property representation
-        /// </summary>
-        internal FlattenedStorageFileProperties _flattened;
-
-        /// <summary>
-        /// Returns the date and time the file was last modified. Any operation that modifies the file or its properties updates the last modified time.
-        /// </summary>
-        public DateTimeOffset LastModified => this._flattened.LastModified;
-
-        /// <summary>
-        /// A set of name-value pairs associated with this file as user-defined metadata.
-        /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> Metadata => this._flattened.Metadata;
-
-        /// <summary>
-        /// The content type specified for the file. The default content type is 'application/octet-stream'
-        /// </summary>
-        public string ContentType => this._flattened.ContentType;
-
-        /// <summary>
-        /// Indicates the range of bytes returned if the client requested a subset of the file by setting the Range request header.
-        /// </summary>
-        public string ContentRange => this._flattened.ContentRange;
-
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally, in quotes.
-        /// </summary>
-        public ETag ETag => this._flattened.ETag;
-
-        /// <summary>
-        /// Returns the value that was specified for the Content-Encoding request header.
-        /// </summary>
-        public string ContentEncoding => this._flattened.ContentEncoding;
-
-        /// <summary>
-        /// Returned if it was previously specified for the file.
-        /// </summary>
-        public string CacheControl => this._flattened.CacheControl;
-
-        /// <summary>
-        /// Returns the value that was specified for the 'x-ms-content-disposition' header and specifies how to process the response.
-        /// </summary>
-        public string ContentDisposition => this._flattened.ContentDisposition;
-
-        /// <summary>
-        /// Returns the value that was specified for the Content-Language request header.
-        /// </summary>
-        public string ContentLanguage => this._flattened.ContentLanguage;
-
-        /// <summary>
-        /// This header uniquely identifies the request that was made and can be used for troubleshooting the request.
-        /// </summary>
-        public string RequestId => this._flattened.RequestId;
-
-        /// <summary>
-        /// Indicates the version of the File service used to execute the request.
-        /// </summary>
-        public string Version => this._flattened.Version;
-
-        /// <summary>
-        /// Indicates that the service supports requests for partial file content.
-        /// </summary>
-        public string AcceptRanges => this._flattened.AcceptRanges;
-
-        /// <summary>
-        /// A UTC date/time value generated by the service that indicates the time at which the response was initiated.
-        /// </summary>
-        public DateTimeOffset Date => this._flattened.Date;
-
-        /// <summary>
-        /// Conclusion time of the last attempted Copy File operation where this file was the destination file. This value can specify the time of a completed, aborted, or failed copy attempt.
-        /// </summary>
-        public DateTimeOffset CopyCompletionTime => this._flattened.CopyCompletionTime;
-
-        /// <summary>
-        /// Only appears when x-ms-copy-status is failed or pending. Describes cause of fatal or non-fatal copy operation failure.
-        /// </summary>
-        public string CopyStatusDescription => this._flattened.CopyStatusDescription;
-
-        /// <summary>
-        /// String identifier for the last attempted Copy File operation where this file was the destination file.
-        /// </summary>
-        public string CopyId => this._flattened.CopyId;
-
-        /// <summary>
-        /// Contains the number of bytes copied and the total bytes in the source in the last attempted Copy File operation where this file was the destination file. Can show between 0 and Content-Length bytes copied.
-        /// </summary>
-        public string CopyProgress => this._flattened.CopyProgress;
-
-        /// <summary>
-        /// URL up to 2KB in length that specifies the source file used in the last attempted Copy File operation where this file was the destination file.
-        /// </summary>
-        public Uri CopySource => this._flattened.CopySource;
-
-        /// <summary>
-        /// State of the copy operation identified by 'x-ms-copy-id'.
-        /// </summary>
-        public CopyStatus CopyStatus => this._flattened.CopyStatus;
-
-        /// <summary>
-        /// If the file has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole file's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range.
-        /// </summary>
-#pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] FileContentHash => this._flattened.FileContentHash;
-#pragma warning restore CA1819 // Properties should not return arrays
-
-        /// <summary>
-        /// The value of this header is set to true if the file data and application metadata are completely encrypted using the specified algorithm. Otherwise, the value is set to false (when the file is unencrypted, or if only parts of the file/application metadata are encrypted).
-        /// </summary>
-        public bool IsServerEncrypted => this._flattened.IsServerEncrypted;
+        #endregion Helpers
     }
 }

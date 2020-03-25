@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.Batch.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,10 +37,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// /subscriptions/{subscription}/resourceGroups/{group}/providers/{provider}/virtualNetworks/{network}/subnets/{subnet}.</param>
         /// <param name="endpointConfiguration">The configuration for endpoints
         /// on compute nodes in the Batch pool.</param>
-        public NetworkConfiguration(string subnetId = default(string), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration))
+        /// <param name="publicIPs">The list of public IPs which the Batch
+        /// service will use when provisioning Compute Nodes.</param>
+        public NetworkConfiguration(string subnetId = default(string), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), IList<string> publicIPs = default(IList<string>))
         {
             SubnetId = subnetId;
             EndpointConfiguration = endpointConfiguration;
+            PublicIPs = publicIPs;
             CustomInit();
         }
 
@@ -93,6 +98,21 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "endpointConfiguration")]
         public PoolEndpointConfiguration EndpointConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of public IPs which the Batch service will
+        /// use when provisioning Compute Nodes.
+        /// </summary>
+        /// <remarks>
+        /// The number of IPs specified here limits the maximum size of the
+        /// Pool - 50 dedicated nodes or 20 low-priority nodes can be allocated
+        /// for each public IP. For example, a pool needing 150 dedicated VMs
+        /// would need at least 3 public IPs specified. Each element of this
+        /// collection is of the form:
+        /// /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}.
+        /// </remarks>
+        [JsonProperty(PropertyName = "publicIPs")]
+        public IList<string> PublicIPs { get; set; }
 
         /// <summary>
         /// Validate the object.

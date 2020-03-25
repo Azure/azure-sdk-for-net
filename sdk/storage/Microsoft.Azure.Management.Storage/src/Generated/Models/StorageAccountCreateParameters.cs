@@ -58,9 +58,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// supported per storage account at this time. To clear the existing
         /// custom domain, use an empty string for the custom domain name
         /// property.</param>
-        /// <param name="encryption">Provides the encryption settings on the
-        /// account. If left unspecified the account encryption settings will
-        /// remain the same. The default setting is unencrypted.</param>
+        /// <param name="encryption">Not applicable. Azure Storage encryption
+        /// is enabled for all storage accounts and cannot be disabled.</param>
         /// <param name="networkRuleSet">Network rule set</param>
         /// <param name="accessTier">Required for storage accounts where kind =
         /// BlobStorage. The access tier used for billing. Possible values
@@ -145,9 +144,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
-        /// Gets or sets provides the encryption settings on the account. If
-        /// left unspecified the account encryption settings will remain the
-        /// same. The default setting is unencrypted.
+        /// Gets or sets not applicable. Azure Storage encryption is enabled
+        /// for all storage accounts and cannot be disabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }

@@ -6,5 +6,4 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageReleaseNotes>See the Microsoft.Azure.Search package for detailed release notes on the entire Azure Search .NET SDK.</PackageReleaseNotes>
   </PropertyGroup>
-  <Import Project="..\..\Microsoft.Azure.Search.Version.props" />
 </Project>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace GuestConfiguration.Tests.ScenarioTests
@@ -19,7 +19,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
         [Fact]
         public void CanCreateGetUpdateGuestConfigurationAssignment()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new GuestConfigurationTestBase(context))
                 {
@@ -74,7 +74,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
         [Fact]
         public void CanGetGuestConfigurationAssignmentReports()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new GuestConfigurationTestBase(context))
                 {
@@ -101,7 +101,7 @@ namespace GuestConfiguration.Tests.ScenarioTests
         [Fact]
         public void CanListAllGuestConfigurationAssignments()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 using (var testFixture = new GuestConfigurationTestBase(context))
                 {
@@ -117,4 +117,5 @@ namespace GuestConfiguration.Tests.ScenarioTests
         }
     }
 }
+
 

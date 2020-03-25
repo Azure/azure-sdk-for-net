@@ -5,6 +5,7 @@ namespace TrackOne
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Azure.Amqp;
 
     /// <summary>
@@ -191,6 +192,14 @@ namespace TrackOne
                     return null;
                 }
             }
+
+            public Dictionary<string, object> WithoutTypedMembers() =>
+                this
+                    .Where(pair => pair.Key != ClientConstants.SequenceNumberName
+                        && pair.Key != ClientConstants.OffsetName
+                        && pair.Key != ClientConstants.EnqueuedTimeUtcName
+                        && pair.Key != ClientConstants.PartitionKeyName)
+                    .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }

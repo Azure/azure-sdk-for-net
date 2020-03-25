@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The configuration for compute nodes in a pool based on the Azure
+    /// The configuration for Compute Nodes in a Pool based on the Azure
     /// Virtual Machines infrastructure.
     /// </summary>
     public partial class VirtualMachineConfiguration
@@ -35,18 +35,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// class.
         /// </summary>
         /// <param name="imageReference">A reference to the Azure Virtual
-        /// Machines Marketplace image or the custom Virtual Machine Image to
+        /// Machines Marketplace Image or the custom Virtual Machine Image to
         /// use.</param>
-        /// <param name="nodeAgentSKUId">The SKU of the Batch node agent to be
-        /// provisioned on compute nodes in the pool.</param>
+        /// <param name="nodeAgentSKUId">The SKU of the Batch Compute Node
+        /// agent to be provisioned on Compute Nodes in the Pool.</param>
         /// <param name="windowsConfiguration">Windows operating system
         /// settings on the virtual machine.</param>
         /// <param name="dataDisks">The configuration for data disks attached
-        /// to the compute nodes in the pool.</param>
+        /// to the Compute Nodes in the Pool.</param>
         /// <param name="licenseType">The type of on-premises license to be
         /// used when deploying the operating system.</param>
         /// <param name="containerConfiguration">The container configuration
-        /// for the pool.</param>
+        /// for the Pool.</param>
         public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration))
         {
             ImageReference = imageReference;
@@ -65,24 +65,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a reference to the Azure Virtual Machines Marketplace
-        /// image or the custom Virtual Machine Image to use.
+        /// Image or the custom Virtual Machine Image to use.
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
-        /// Gets or sets the SKU of the Batch node agent to be provisioned on
-        /// compute nodes in the pool.
+        /// Gets or sets the SKU of the Batch Compute Node agent to be
+        /// provisioned on Compute Nodes in the Pool.
         /// </summary>
         /// <remarks>
-        /// The Batch node agent is a program that runs on each node in the
-        /// pool, and provides the command-and-control interface between the
-        /// node and the Batch service. There are different implementations of
-        /// the node agent, known as SKUs, for different operating systems. You
-        /// must specify a node agent SKU which matches the selected image
-        /// reference. To get the list of supported node agent SKUs along with
-        /// their list of verified image references, see the 'List supported
-        /// node agent SKUs' operation.
+        /// The Batch Compute Node agent is a program that runs on each Compute
+        /// Node in the Pool, and provides the command-and-control interface
+        /// between the Compute Node and the Batch service. There are different
+        /// implementations of the Compute Node agent, known as SKUs, for
+        /// different operating systems. You must specify a Compute Node agent
+        /// SKU which matches the selected Image reference. To get the list of
+        /// supported Compute Node agent SKUs along with their list of verified
+        /// Image references, see the 'List supported Compute Node agent SKUs'
+        /// operation.
         /// </remarks>
         [JsonProperty(PropertyName = "nodeAgentSKUId")]
         public string NodeAgentSKUId { get; set; }
@@ -93,24 +94,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property must not be specified if the imageReference property
-        /// specifies a Linux OS image.
+        /// specifies a Linux OS Image.
         /// </remarks>
         [JsonProperty(PropertyName = "windowsConfiguration")]
         public WindowsConfiguration WindowsConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration for data disks attached to the
-        /// compute nodes in the pool.
+        /// Compute Nodes in the Pool.
         /// </summary>
         /// <remarks>
-        /// This property must be specified if the compute nodes in the pool
+        /// This property must be specified if the Compute Nodes in the Pool
         /// need to have empty data disks attached to them. This cannot be
-        /// updated. Each node gets its own disk (the disk is not a file
-        /// share). Existing disks cannot be attached, each attached disk is
-        /// empty. When the node is removed from the pool, the disk and all
-        /// data associated with it is also deleted. The disk is not formatted
-        /// after being attached, it must be formatted before use - for more
-        /// information see
+        /// updated. Each Compute Node gets its own disk (the disk is not a
+        /// file share). Existing disks cannot be attached, each attached disk
+        /// is empty. When the Compute Node is removed from the Pool, the disk
+        /// and all data associated with it is also deleted. The disk is not
+        /// formatted after being attached, it must be formatted before use -
+        /// for more information see
         /// https://docs.microsoft.com/en-us/azure/virtual-machines/linux/classic/attach-disk#initialize-a-new-data-disk-in-linux
         /// and
         /// https://docs.microsoft.com/en-us/azure/virtual-machines/windows/attach-disk-ps#add-an-empty-data-disk-to-a-virtual-machine.
@@ -123,10 +124,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// deploying the operating system.
         /// </summary>
         /// <remarks>
-        /// This only applies to images that contain the Windows operating
+        /// This only applies to Images that contain the Windows operating
         /// system, and should only be used when you hold valid on-premises
-        /// licenses for the nodes which will be deployed. If omitted, no
-        /// on-premises licensing discount is applied. Values are:
+        /// licenses for the Compute Nodes which will be deployed. If omitted,
+        /// no on-premises licensing discount is applied. Values are:
         ///
         /// Windows_Server - The on-premises license is for Windows Server.
         /// Windows_Client - The on-premises license is for Windows Client.
@@ -136,13 +137,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string LicenseType { get; set; }
 
         /// <summary>
-        /// Gets or sets the container configuration for the pool.
+        /// Gets or sets the container configuration for the Pool.
         /// </summary>
         /// <remarks>
-        /// If specified, setup is performed on each node in the pool to allow
-        /// tasks to run in containers. All regular tasks and job manager tasks
-        /// run on this pool must specify the containerSettings property, and
-        /// all other tasks may specify it.
+        /// If specified, setup is performed on each Compute Node in the Pool
+        /// to allow Tasks to run in containers. All regular Tasks and Job
+        /// manager Tasks run on this Pool must specify the containerSettings
+        /// property, and all other Tasks may specify it.
         /// </remarks>
         [JsonProperty(PropertyName = "containerConfiguration")]
         public ContainerConfiguration ContainerConfiguration { get; set; }

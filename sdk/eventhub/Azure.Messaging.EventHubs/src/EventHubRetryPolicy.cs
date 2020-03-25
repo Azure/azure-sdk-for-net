@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs
     public abstract class EventHubRetryPolicy
     {
         /// <summary>
-        ///   Calculates the amount of time to allow the curent attempt for an operation to
+        ///   Calculates the amount of time to allow the current attempt for an operation to
         ///   complete before considering it to be timed out.
         /// </summary>
         ///
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs
                                                       int attemptCount);
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>

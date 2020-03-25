@@ -42,33 +42,33 @@ namespace Azure.Storage.Common
             base.OnSendingRequest(message);
 
             // Add a x-ms-date header if it doesn't already exist
-            if (IncludeXMsDate && !message.Request.Headers.Contains("x-ms-date"))
+            if (IncludeXMsDate && !message.Request.Headers.Contains(Constants.HeaderNames.Date))
             {
                 var date = DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture);
-                message.Request.Headers.Add("x-ms-date", date);
+                message.Request.Headers.Add(Constants.HeaderNames.Date, date);
             }
 
             var stringToSign = this.BuildStringToSign(message);
             var signature = this._credentials.ComputeHMACSHA256(stringToSign);
 
-            var key = new AuthenticationHeaderValue("SharedKey", this._credentials.AccountName + ":" + signature).ToString();
-            message.Request.Headers.SetValue("Authorization", key);
+            var key = new AuthenticationHeaderValue(Constants.HeaderNames.SharedKey, this._credentials.AccountName + ":" + signature).ToString();
+            message.Request.Headers.SetValue(Constants.HeaderNames.Authorization, key);
         }
 
         private string BuildStringToSign(HttpPipelineMessage message)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key
 
-            message.Request.Headers.TryGetValue("Content-Encoding", out var contentEncoding);
-            message.Request.Headers.TryGetValue("Content-Language", out var contentLanguage);
-            message.Request.Headers.TryGetValue("Content-Length", out var contentLength);
-            message.Request.Headers.TryGetValue("Content-MD5", out var contentMD5);
-            message.Request.Headers.TryGetValue("Content-Type", out var contentType);
-            message.Request.Headers.TryGetValue("If-Modified-Since", out var ifModifiedSince);
-            message.Request.Headers.TryGetValue("If-Match", out var ifMatch);
-            message.Request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch);
-            message.Request.Headers.TryGetValue("If-Unmodified-Since", out var ifUnmodifiedSince);
-            message.Request.Headers.TryGetValue("Range", out var range);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out var contentEncoding);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out var contentLanguage);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out var contentLength);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out var contentMD5);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.ContentType, out var contentType);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfModifiedSince, out var ifModifiedSince);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfMatch, out var ifMatch);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfNoneMatch, out var ifNoneMatch);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.IfUnmodifiedSince, out var ifUnmodifiedSince);
+            message.Request.Headers.TryGetValue(Constants.HeaderNames.Range, out var range);
 
             var stringToSign = String.Join("\n",
                 message.Request.Method.ToString().ToUpperInvariant(),
@@ -96,7 +96,7 @@ namespace Azure.Storage.Common
             foreach (var headerName in
                 message.Request.Headers
                 .Select(h => h.Name)
-                .Where(name => name.StartsWith("x-ms-", StringComparison.OrdinalIgnoreCase))
+                .Where(name => name.StartsWith(Constants.HeaderNames.XMsPrefix, StringComparison.OrdinalIgnoreCase))
 #pragma warning disable CA1308 // Normalize strings to uppercase
                 .OrderBy(name => name.Trim().ToLowerInvariant()))
 #pragma warning restore CA1308 // Normalize strings to uppercase

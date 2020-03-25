@@ -1,0 +1,1650 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https:\u002f\u002fpakrym-azconfig-ui.azconfig.io\u002fkv\u002fkey-221701127?label=test_label",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application\u002fvnd.microsoft.appconfig.kv\u002bjson",
+        "Authorization": "Sanitized",
+        "Content-Length": "98",
+        "Content-Type": "application\u002fjson",
+        "Date": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "Request-Id": "|e844dbdb-43d9842b852579ab.",
+        "User-Agent": [
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "2591e073de7eaeac6748b9b57148ddac",
+        "x-ms-content-sha256": "b11OQu6GthUatwGXUIKHHSRVyik0TdrUk5kZm3yZd2A=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": "test_value",
+        "content_type": "test_content_type",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Type": "application\u002fvnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
+        "Date": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "ETag": "\u0022oXtaUcvKCvIND0zzYfz5l6c2FA3\u0022",
+        "Last-Modified": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "Server": "nginx\u002f1.13.12",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Sync-Token": "zAJw6V16=ODotMSM0NDQzODE=;sn=444381",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "2591e073de7eaeac6748b9b57148ddac",
+        "x-ms-correlation-request-id": "635a1bb3-2a66-4089-b490-d6bd7bd2d2e4",
+        "x-ms-request-id": "635a1bb3-2a66-4089-b490-d6bd7bd2d2e4"
+      },
+      "ResponseBody": {
+        "etag": "oXtaUcvKCvIND0zzYfz5l6c2FA3",
+        "key": "key-221701127",
+        "label": "test_label",
+        "content_type": "test_content_type",
+        "value": "test_value",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "locked": false,
+        "last_modified": "2019-08-21T19:39:56\u002b00:00"
+      }
+    },
+    {
+      "RequestUri": "https:\u002f\u002fpakrym-azconfig-ui.azconfig.io\u002fkv\u002f?key=*\u0026label=*",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application\u002fvnd.microsoft.appconfig.kv\u002bjson",
+        "Authorization": "Sanitized",
+        "Date": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "Request-Id": "|e844dbdc-43d9842b852579ab.",
+        "Sync-Token": "zAJw6V16=ODotMSM0NDQzODE=",
+        "User-Agent": [
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "84541e8df77daf76efc402134da0cdf1",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002b\u002fTImW\u002b5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Type": "application\u002fvnd.microsoft.appconfig.kvset\u002bjson; charset=utf-8",
+        "Date": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "Link": "\u003c\u002fkv\u002f?key=*\u0026label=*\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D\u003e; rel=\u0022next\u0022",
+        "Server": "nginx\u002f1.13.12",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Sync-Token": "zAJw6V16=ODotMSM0NDQzODE=;sn=444381",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "84541e8df77daf76efc402134da0cdf1",
+        "x-ms-correlation-request-id": "932f38f0-eeeb-48f4-8239-67cda56352cf",
+        "x-ms-request-id": "932f38f0-eeeb-48f4-8239-67cda56352cf"
+      },
+      "ResponseBody": {
+        "items": [
+          {
+            "etag": "BSsldiGjNhbX2MznqtuFHcpjkxM",
+            "key": "3b2ddb83-0205-4f11-bd21-660590fbb2f8_0",
+            "label": null,
+            "content_type": "",
+            "value": "0",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:14:47\u002b00:00"
+          },
+          {
+            "etag": "7db9w9wCukFEW2sgvZHDkRopoTs",
+            "key": "845b68e0-9617-422a-9db7-e911aed727c6_0",
+            "label": null,
+            "content_type": "",
+            "value": "0",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:13\u002b00:00"
+          },
+          {
+            "etag": "Swe3KG4Ei41uLWRtchrlYy54PcI",
+            "key": "9805488e-2c43-4317-8bd9-400bef28395a_0",
+            "label": null,
+            "content_type": "",
+            "value": "0",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:25\u002b00:00"
+          },
+          {
+            "etag": "Al3nrQNM6vuDgq7vYDmjRtW703g",
+            "key": "BatchKey",
+            "label": null,
+            "content_type": "",
+            "value": "key-cf4ac67640fc46f2b682583c217b28da",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "s0zd1djtEPdZPdDG2PlUp1i8MZ4",
+            "key": "Sample_key",
+            "label": null,
+            "content_type": "",
+            "value": "Sample_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-07-12T20:36:44\u002b00:00"
+          },
+          {
+            "etag": "oXtaUcvKCvIND0zzYfz5l6c2FA3",
+            "key": "key-221701127",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-08-21T19:39:56\u002b00:00"
+          },
+          {
+            "etag": "rniPVf34RW2LNcl6lXHzat7XjNo",
+            "key": "key-2f74f72c7ea94dceb84923853512b57e",
+            "label": null,
+            "content_type": "",
+            "value": "my_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:25\u002b00:00"
+          },
+          {
+            "etag": "QB6ZifyjGfUn17lEKZMAK6No3jf",
+            "key": "key-3190cf7a8dda4c778523f1b39603dc0f",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-05-01T19:08:03\u002b00:00"
+          },
+          {
+            "etag": "tT5ZteN3oXgr8CEJQBPx8JkAuu1",
+            "key": "key-3190cf7a8dda4c778523f1b39603dc0f",
+            "label": "test_label_diff",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-05-01T19:08:04\u002b00:00"
+          },
+          {
+            "etag": "JmFAJhlGhqYS9XzZN5ZfdktOK3L",
+            "key": "key-4dc1baef29474d1ea11dbf3b5c9a690c",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:23\u002b00:00"
+          },
+          {
+            "etag": "1jVUkRTzlwDiJ3YjMFxJxXY3XNY",
+            "key": "key-51a0f05528af49adaa5e790fd4a5dbdb",
+            "label": "0",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:24\u002b00:00"
+          },
+          {
+            "etag": "Z5BbCpC5iN2Qw1Tg9GiosFPgNnK",
+            "key": "key-5c1bd7cc96cb4f888c94dd435e3d4ed7",
+            "label": null,
+            "content_type": "",
+            "value": "my_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:14:47\u002b00:00"
+          },
+          {
+            "etag": "NNkiTFfEo9LzydkJzQXKNJKTyII",
+            "key": "key-6413b030f9384ec9875636ae4ef38210",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-08T22:57:05\u002b00:00"
+          },
+          {
+            "etag": "yOAsvJzz97wJK3rXYDNGKswPLfs",
+            "key": "key-6bb536ace5014b92954c9df281293851",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T22:41:42\u002b00:00"
+          },
+          {
+            "etag": "Hwxe1GRQ1v2BxfVH1SvSlAck0PC",
+            "key": "key-6e845682d2c04206a3203269e74aa2cf",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-05-01T19:07:48\u002b00:00"
+          },
+          {
+            "etag": "kvgqu9HLXGYVrWo7IQD3kAw0hhP",
+            "key": "key-6e845682d2c04206a3203269e74aa2cf",
+            "label": "test_label_diff",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-05-01T19:07:49\u002b00:00"
+          },
+          {
+            "etag": "PzXHmex5qhvK8zapRdnjKgvkEJX",
+            "key": "key-6f09b6c6a6874898aa22ca1f1dd285aa",
+            "label": null,
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:14:46\u002b00:00"
+          },
+          {
+            "etag": "rPpoe0t5YhfTsIrDj57y1QHzRpn",
+            "key": "key-6f09b6c6a6874898aa22ca1f1dd285aa",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:14:47\u002b00:00"
+          },
+          {
+            "etag": "ytubwGBJqHHXmIvJZx23ir8rtah",
+            "key": "key-7397ba163fb24443bb60bcf0d7b2fa9b",
+            "label": null,
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-05-15T23:51:11\u002b00:00"
+          },
+          {
+            "etag": "m7EFRi22ngO0wY2LWxzcDYgMx0G",
+            "key": "key-7d4e0bd02b004cafa8f82538e0716c93",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:25\u002b00:00"
+          },
+          {
+            "etag": "Bl3dmm3GEsNjrsYiDfbVUiC0bI5",
+            "key": "key-8ceee39b359e4ce3a2e1c33ff46c86dc",
+            "label": "0",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:14:46\u002b00:00"
+          },
+          {
+            "etag": "8CyYkv9oFg0BAPHmThI4s60qrQY",
+            "key": "key-924dfd3642cd49529ec6420627ccfbf3",
+            "label": null,
+            "content_type": "",
+            "value": "my_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:13\u002b00:00"
+          },
+          {
+            "etag": "m8QLwhqsr8XTjnxCNNumh8AP1M7",
+            "key": "key-943254d1c4f1401aacb7230e9668affd",
+            "label": null,
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:12\u002b00:00"
+          },
+          {
+            "etag": "Hkd41xJvSuXdYustHzporIKJ0wS",
+            "key": "key-a238e8dd62644ae1af58516c98613bae",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-08T20:03:50\u002b00:00"
+          },
+          {
+            "etag": "uAKXASYUXCUwezzzW5Jlush2m4x",
+            "key": "key-a75422d0f28240a782dc7e30319e79dc",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:13\u002b00:00"
+          },
+          {
+            "etag": "ajYPN5RxPfDSDLQVb163LNdi058",
+            "key": "key-aab1f468a763417b91afd28bc1838c8e",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:11\u002b00:00"
+          },
+          {
+            "etag": "kOx6aqsmzjRJD9KF8IETDwer9ip",
+            "key": "key-b7378ab7ffe64e26870d1a643748a3cd",
+            "label": null,
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:24\u002b00:00"
+          },
+          {
+            "etag": "7gCEPElcrZSc2KqojaReq6B0BTl",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "0",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "A295aSba8OqTpK6TuubVEnmH6WX",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "1",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "jZQGOCGk1mFlgUFtn0SjrcCtzyV",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "10",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "GrcSfdqUAx61KyzU5Qb2ENLn95e",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "100",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "dtDAm9GvnVw1gopBJAOuzOJTQ03",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "101",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "EnkfI7YFm1IDAO5HiXbFjXmOzX1",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "102",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "jYsoGa1f1YEcd0yELx5HiaGhvsR",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "103",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "tBkbnQSCkFoXjijXSGDZ03jgiwj",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "104",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "oZ5bse5uIirT9Yvuzosn11KFObK",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "11",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "n02gKlCcub63X51JWfQmppcQbEJ",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "12",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "ISyMAYEyIqz873h4fIZk0Xj9AQv",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "13",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "1xS4prbjZkBwPrZvWxgil0AFIB4",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "14",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "1fyB7zOsE2YGiJ7ObGEOsdBcqpD",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "15",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "1boCrTtA6VLKXp8PnTaPOR3FM6x",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "16",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "CZbN36eEf9yoQEyZ9O9zMbAqZbX",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "17",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "QQKFxFl1zNZIrZS3zYYi7346QdH",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "18",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "DEbldCu2zL678iULAdGN72StNVn",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "19",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "8GGP9SAoyolceIxKHTu8KY9Wvqw",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "2",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "L3ST8Lj63jdx4EjeudE1ECTS0Wr",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "20",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "oCpzWi0RVDYCPhBglMz5kDeBJ8Y",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "21",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "6FJoCtDTKS0xnuaCVRZ8uHdTCha",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "22",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "fz53meLZnSdI4b4Vpk3JyiiQR0I",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "23",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "2CDPC8Wr9DZqj9ZWfdeWT3NWagW",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "24",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "QyxYBkNjbKLBVIVxIyNY3S22qGS",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "25",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "kKK7dumcn3ltdo52E1LwfTr3Wvu",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "26",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "KC3W2UWmNsE3XGkMhM6zvCXqk4k",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "27",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "BIADUiLRaH2ljd0SEqz7PBhf1Gc",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "28",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "Ged7OeAF5oBkhmlObODaluLsQyO",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "29",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "7Mg1DqOhsJOwGdJ8cdu1NeSUidP",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "3",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "AU5oO6kWPnBT59jptGDQe7fCuBq",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "30",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "Kv4HH4sI8MbJoypIqF3Bl3fnFAK",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "31",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "Ophsnd4qtnlscjo89Zbe9C1hlCa",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "32",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "V5raFgRdRGFO9qHiCD75ixJEWXm",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "33",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "SfTQbrLzgCYXVozR3a3I8wI0oUO",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "34",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "XuVWk6t1KAu9tGW7i7TkEFBpUU7",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "35",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "foeyVp3r6HujpVSyPTUyrseexLL",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "36",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "93AZxTGVH4THERefq0bS2lbdz2F",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "37",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "Bf18rhKxGsiWqm2crApgCVNvIuU",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "38",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "KzoC7BgyPeXs9O4yTzE4PUCDi9v",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "39",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:34\u002b00:00"
+          },
+          {
+            "etag": "4CWbzerlzfUH4KzEmyyztitWnsD",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "4",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "XTejB8X3kWb5FPOaoMhC9UHpJFN",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "40",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "0Sdntni96ET7QCHpyX2dFHnkfGP",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "41",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "FJGe0i2mGByuRGsoKEA0H9tYFbn",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "42",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "2RvzVofcStvpXiM4C8cDRkgDmvp",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "43",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "5wJOq1vf6Jb9daw8tl6qxnwCZbs",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "44",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "aH9ARp7yF1pNLbV9LxmfnA6rmsT",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "45",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "HfoJ54WUcWIrPwHKI94C9vgbjOl",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "46",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "OULDr25XVx0oKQhVN3AfLw1u1Tn",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "47",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "BNYIm3m7MUd5LZBEsL8FSsvPTB2",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "48",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "nvMZebRJ1615NhfcOeeokWRzmcH",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "49",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "vHJFzwbcqcEvpdCEeVWGJzI6Abv",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "5",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "JVqP9R5MocV3mgj7CMarQoHL3Pw",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "50",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "29ddAuacRZF9S4Ggwi4CJuUDr0b",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "51",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "tNDl2T6FAqmynLMi5bCGYZ0e3IM",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "52",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "Y0y3O9X5mahuxU6OKLqfSJ3YsZn",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "53",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "eB9ZWHEr9GadlctchHGjP21xZ9Q",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "54",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "NEStkwSkBDT4sOLhWkaQvFZTvP1",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "55",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "rmtYzLG6ez2NeMChNdNmz7fePfv",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "56",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "xapjYeQYFlU6lemUiZWcrwccXKU",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "57",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "Bwc4jdg5dL7ox0JQWW8V4MrIoS6",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "58",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "AWIgzA7SnPmGAxqXmn2SWiKETnV",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "59",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "HOCiqquLK07UDyuFlAPkvlBYX3a",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "6",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "XtYirCQHjxWXwGiVYveAqVAXZZP",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "60",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "3wOP1BXbUTTFob1rz6c1ddR4DWA",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "61",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "A7mf4c8KMqK5nZa92Vz378rrZzN",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "62",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "A1nvM7jxrs5ZRhTw74NObMv7THh",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "63",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "XdjghKnwfYayZfkaCR9OH96v0vV",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "64",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "i8nh2PgYLj4hH6ahJMgYqvK5Xjd",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "65",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "4c9iiEDmklpLhH5dxxefLHeNgsl",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "66",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "NZOLcOuzDqkeWXKVh2UMMtzGrWp",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "67",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:35\u002b00:00"
+          },
+          {
+            "etag": "AsVet5OVE19T5756FNWyagyQbpR",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "68",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "TsyaPzXGftIIllAZqOE0lEv8RmK",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "69",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "TkdMb5UGORinQ2hhJHvjcPS7dLe",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "7",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          }
+        ],
+        "@nextLink": "\u002fkv\u002f?key=*\u0026label=*\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D"
+      }
+    },
+    {
+      "RequestUri": "https:\u002f\u002fpakrym-azconfig-ui.azconfig.io\u002fkv\u002f?key=*\u0026label=*\u0026after=a2V5LWNmNGFjNjc2NDBmYzQ2ZjJiNjgyNTgzYzIxN2IyOGRhCjc%3D",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application\u002fvnd.microsoft.appconfig.kv\u002bjson",
+        "Authorization": "Sanitized",
+        "Date": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "Request-Id": "|e844dbdd-43d9842b852579ab.",
+        "Sync-Token": "zAJw6V16=ODotMSM0NDQzODE=",
+        "User-Agent": [
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "cabfcfb72e56965cfa8b42903e0e01d3",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002b\u002fTImW\u002b5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Type": "application\u002fvnd.microsoft.appconfig.kvset\u002bjson; charset=utf-8",
+        "Date": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "Server": "nginx\u002f1.13.12",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Sync-Token": "zAJw6V16=ODotMSM0NDQzODE=;sn=444381",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "cabfcfb72e56965cfa8b42903e0e01d3",
+        "x-ms-correlation-request-id": "3cd553cb-b315-4dcc-81bb-a96c1724fa66",
+        "x-ms-request-id": "3cd553cb-b315-4dcc-81bb-a96c1724fa66"
+      },
+      "ResponseBody": {
+        "items": [
+          {
+            "etag": "Q2Z5NQszD58WLtEsnI22eJuJADg",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "70",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "nfeiBYI6FJyUnx0Q42mdwNLgEY3",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "71",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "g4XWdXRlmR3Ws8VuRmgKy7h3h7y",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "72",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "BOFmxxvW9hWyQyMpuXdFykZYX44",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "73",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "GRUcn4c4UCQ4RPycFdtJpFfA3X9",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "74",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "jIrjYd60GFJDKJyBy3N8InxSxSO",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "75",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "dppuVb7okkoOBSaLjUyG0tC2VUD",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "76",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "yRujpaAOB1HtoUTHPnORna4xZSh",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "77",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "KnSSOymn6mfbXz78KOgR8mpt5tc",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "78",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "8gq60Y4wJkAsEKoWi54kMb0Tmne",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "79",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "hgQOLS8KmSmzLrgbskMrbbh5d1A",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "8",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "7XNxR9O2y8z8BvrsAkyheDsdgtG",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "80",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "rjgRl2LbJJ2egBBcdrWzCTVjJ9O",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "81",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "D5S8gG0unOiK9Fe1YnmjxQ3jbrH",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "82",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "0zuolQDEkzzXiVVvCrcTMNBc0ae",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "83",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "sR6Ozip69m9ZxmEpTBKeCpjLxTs",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "84",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "xChrqKgc2CCRmVTrrYV0smUZg0d",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "85",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "7JXheigBkgac1XVKkP4XhSSa1zH",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "86",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "vJD1ePxF8Oiu0qDIMCHJwhNXNJF",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "87",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "WLlRh5l1lPLmgJdSi1bCRd0YhMt",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "88",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "lgUe0ATlH4p4sUarlzyur9Nkrx0",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "89",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "jUsSTsoqlivOsXJvdl3196Y6qJ1",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "9",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:33\u002b00:00"
+          },
+          {
+            "etag": "pbeqUMMoXmamUV9n1AgLZnAt2bi",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "90",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "qSvR3IzYEUumPUH1IXnghI4ex7n",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "91",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "HrKByuB53G5HnxP87Lz8N4fq8e9",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "92",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "7NDv5NCTZZ3ECnOsp6J256PZsT9",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "93",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "dzevUSzenyL6YjorFcRSBAgBTez",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "94",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "73lCVRiJYEHZwNIBlrvUxljVzM1",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "95",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "SRPmlnuw9FwBlpJjtkAIGqLDCmE",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "96",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:36\u002b00:00"
+          },
+          {
+            "etag": "9BNihRAF6y6kq0B5kcC5dNU7y6A",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "97",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "AdoLCdCDYOf3Sz85y2B96XfUfXZ",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "98",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "ZdPxJTOtU9w782rnFZZNBjG0kyn",
+            "key": "key-cf4ac67640fc46f2b682583c217b28da",
+            "label": "99",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-08T20:02:37\u002b00:00"
+          },
+          {
+            "etag": "k6X8vEXuZ4SNBU3cAzjDdcmGoCb",
+            "key": "key-e82f382b5bd84e4aaf0bce20f4772d53",
+            "label": "0",
+            "content_type": "",
+            "value": "test_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:12\u002b00:00"
+          },
+          {
+            "etag": "V7KfUIanaxfhJpRKMYDi8hLnYne",
+            "key": "key-edd8b27f910f4db0875d579a39d37b96",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:13\u002b00:00"
+          },
+          {
+            "etag": "VRUB0LOThPyn5vTm95EUtIi0KUs",
+            "key": "key-fb87f1ea99a049a4bdf25b842eeb9dd7",
+            "label": "test_label",
+            "content_type": "test_content_type",
+            "value": "test_value",
+            "tags": {
+              "tag1": "value1",
+              "tag2": "value2"
+            },
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:25\u002b00:00"
+          },
+          {
+            "etag": "hVBFMWYZEPzw2YjCUOoDiEearLp",
+            "key": "keyFields-0dc1a5cce3714a75a767afbd67bf336d",
+            "label": "my_label",
+            "content_type": "",
+            "value": "my_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:12\u002b00:00"
+          },
+          {
+            "etag": "xRncVWEnGCOgj3BcgbND0N4zq9M",
+            "key": "keyFields-4090cd05582f4af7b4c0992cbfcff1cd",
+            "label": "my_label",
+            "content_type": "",
+            "value": "my_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:18:12\u002b00:00"
+          },
+          {
+            "etag": "XhFpq03V1daNxUwYwoUKnexJH1V",
+            "key": "keyFields-63f3e10777c848dfa5e9545432e715d1",
+            "label": "my_label",
+            "content_type": "",
+            "value": "my_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:24\u002b00:00"
+          },
+          {
+            "etag": "tWVtoES6JPJO477cIwslytSIaI9",
+            "key": "keyFields-7cbdbfe436f94dd08b281ef511ac4064",
+            "label": "my_label",
+            "content_type": "",
+            "value": "my_value",
+            "tags": {},
+            "locked": false,
+            "last_modified": "2019-04-10T23:26:24\u002b00:00"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https:\u002f\u002fpakrym-azconfig-ui.azconfig.io\u002fkv\u002fkey-221701127?label=test_label",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Date": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "Request-Id": "|e844dbde-43d9842b852579ab.",
+        "Sync-Token": "zAJw6V16=ODotMSM0NDQzODE=",
+        "User-Agent": [
+          "azsdk-net-Data.AppConfiguration\u002f1.0.0-dev.20190821.1\u002b4b941047f10fb559bb90c3077c742a7949e8c70e",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "0dfd6e30b1887b896ae235b9dc9960c7",
+        "x-ms-content-sha256": "47DEQpj8HBSa\u002b\u002fTImW\u002b5JCeuQeRkm5NMpJWZG3hSuFU=",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Authorization, x-ms-client-request-id, x-ms-content-sha256, x-ms-date, host, Accept, Accept-Datetime, Date, If-Match, If-None-Match, Sync-Token, x-ms-return-client-request-id, ETag, Last-Modified, Link, Memento-Datetime, x-ms-retry-after, x-ms-request-id, WWW-Authenticate",
+        "Connection": "keep-alive",
+        "Content-Type": "application\u002fvnd.microsoft.appconfig.kv\u002bjson; charset=utf-8",
+        "Date": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "ETag": "\u0022oXtaUcvKCvIND0zzYfz5l6c2FA3\u0022",
+        "Last-Modified": "Wed, 21 Aug 2019 19:39:56 GMT",
+        "Server": "nginx\u002f1.13.12",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Sync-Token": "zAJw6V16=ODotMSM0NDQzODI=;sn=444382",
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "0dfd6e30b1887b896ae235b9dc9960c7",
+        "x-ms-correlation-request-id": "452ba87a-1e0d-4f32-95eb-34322545da51",
+        "x-ms-request-id": "452ba87a-1e0d-4f32-95eb-34322545da51"
+      },
+      "ResponseBody": {
+        "etag": "oXtaUcvKCvIND0zzYfz5l6c2FA3",
+        "key": "key-221701127",
+        "label": "test_label",
+        "content_type": "test_content_type",
+        "value": "test_value",
+        "tags": {
+          "tag1": "value1",
+          "tag2": "value2"
+        },
+        "locked": false,
+        "last_modified": "2019-08-21T19:39:56\u002b00:00"
+      }
+    }
+  ],
+  "Variables": {
+    "APPCONFIGURATION_CONNECTION_STRING": "Endpoint=https:\u002f\u002fpakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002bFOYz;Secret=;",
+    "RandomSeed": "1545326504"
+  }
+}

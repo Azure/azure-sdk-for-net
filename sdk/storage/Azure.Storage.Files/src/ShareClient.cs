@@ -4,8 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -92,7 +96,7 @@ namespace Azure.Storage.Files
         {
             var conn = StorageConnectionString.Parse(connectionString);
             var builder = new FileUriBuilder(conn.FileEndpoint) { ShareName = shareName };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -194,7 +198,7 @@ namespace Azure.Storage.Files
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new FileUriBuilder(this.Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), this.Pipeline);
+            return new ShareClient(p.Uri, this.Pipeline);
         }
 
         /// <summary>
@@ -339,6 +343,7 @@ namespace Azure.Storage.Files
                         metadata: metadata,
                         quota: quotaInBytes,
                         async: async,
+                        operationName: Constants.File.Share.CreateOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -454,6 +459,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
+                        operationName: Constants.File.Share.CreateSnapshotOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -577,6 +583,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
+                        operationName: Constants.File.Share.DeleteOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -700,6 +707,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
+                        operationName: Constants.File.Share.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -811,6 +819,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         quota: quotaInBytes,
                         async: async,
+                        operationName: "Azure.Storage.Files.ShareClient.SetQuota",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -929,6 +938,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         metadata: metadata,
                         async: async,
+                        operationName: Constants.File.Share.SetMetadataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1035,6 +1045,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: Constants.File.Share.GetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1159,6 +1170,7 @@ namespace Azure.Storage.Files
                         this.Uri,
                         permissions: permissions,
                         async: async,
+                        operationName: Constants.File.Share.SetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1259,6 +1271,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: Constants.File.Share.GetStatisticsOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1275,6 +1288,203 @@ namespace Azure.Storage.Files
         }
         #endregion GetStatistics
 
+        #region GetPermission
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        public virtual Response<string> GetPermission(
+            string filePermissionKey = default,
+            CancellationToken cancellationToken = default) =>
+            this.GetPermissionInternal(
+                filePermissionKey,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// </summary>
+        /// <param name="filePermissionKey">
+        /// The file permission key.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{String}"/> file permission.
+        /// </returns>
+        public virtual async Task<Response<string>> GetPermissionAsync(
+            string filePermissionKey = default,
+            CancellationToken cancellationToken = default) =>
+            await this.GetPermissionInternal(
+                filePermissionKey,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<string>> GetPermissionInternal(
+            string filePermissionKey,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                try
+                {
+                    // Get the permission as a JSON object
+                    var jsonResponse =
+                        await FileRestClient.Share.GetPermissionAsync(
+                            this.Pipeline,
+                            this.Uri,
+                            filePermissionKey: filePermissionKey,
+                            async: async,
+                            operationName: Constants.File.Share.GetPermissionOperationName,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+
+                    // Parse the JSON object
+                    using var doc = JsonDocument.Parse(jsonResponse.Value);
+                    if (doc.RootElement.ValueKind != JsonValueKind.Object ||
+                        !doc.RootElement.TryGetProperty("permission", out var permissionProperty) ||
+                        permissionProperty.ValueKind != JsonValueKind.String)
+                    {
+                        throw FileErrors.InvalidPermissionJson(jsonResponse.Value);
+                    }
+                    var permission = permissionProperty.GetString();
+
+                    // Return the Permission string
+                    return new Response<string>(
+                        jsonResponse.GetRawResponse(),
+                        permission);
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+            }
+        }
+        #endregion GetPermission
+
+        #region CreatePermission
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
+        /// can be used for the files/directories in the share. 
+        /// </summary>
+        /// <param name="permission">
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        public virtual Response<PermissionInfo> CreatePermission(
+            string permission,
+            CancellationToken cancellationToken = default) =>
+            this.CreatePermissionInternal(
+                permission,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Creates a permission (a security descriptor) at the share level. The created security descriptor 
+        /// can be used for the files/directories in the share. 
+        /// </summary>
+        /// <param name="permission">
+        /// File permission in the Security Descriptor Definition Language (SDDL). SDDL must have an owner, group, 
+        /// and discretionary access control list (DACL). The provided SDDL string format of the security descriptor 
+        /// should not have domain relative identifier (like 'DU', 'DA', 'DD' etc) in it.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PermissionInfo}"/> with ID of the newly created file permission.
+        /// </returns>
+        public virtual async Task<Response<PermissionInfo>> CreatePermissionAsync(
+            string permission,
+            CancellationToken cancellationToken = default) =>
+            await this.CreatePermissionInternal(
+                permission,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<Response<PermissionInfo>> CreatePermissionInternal(
+            string permission,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (this.Pipeline.BeginLoggingScope(nameof(ShareClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(ShareClient),
+                    message: $"{nameof(this.Uri)}: {this.Uri}");
+                try
+                {
+                    // Serialize the permission as a JSON object
+                    using var stream = new MemoryStream();
+                    using var writer = new Utf8JsonWriter(stream);
+                    writer.WriteStartObject();
+                    writer.WriteString("permission", permission);
+                    writer.WriteEndObject();
+                    if (async)
+                    {
+                        await writer.FlushAsync().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        writer.Flush();
+                    }
+                    var json = Encoding.UTF8.GetString(stream.ToArray());
+
+                    return await FileRestClient.Share.CreatePermissionAsync(
+                        this.Pipeline,
+                        this.Uri,
+                        sharePermissionJson: json,
+                        async: async,
+                        operationName: Constants.File.Share.CreatePermissionOperationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(ShareClient));
+                }
+            }
+        }
+        #endregion CreatePermission
+
         #region CreateDirectory
         /// <summary>
         /// The <see cref="CreateDirectory"/> operation creates a new
@@ -1286,7 +1496,13 @@ namespace Azure.Storage.Files
         /// The name of the directory to create.
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this directory.
+        /// Optional custom metadata to set for the directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1300,13 +1516,20 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<DirectoryClient> CreateDirectory(
            string directoryName,
            IDictionary<string, string> metadata = default,
+           FileSmbProperties? smbProperties = default,
+           string filePermission = default,
            CancellationToken cancellationToken = default)
         {
             var directory = this.GetDirectoryClient(directoryName);
-            var response = directory.Create(metadata, cancellationToken);
+            var response = directory.Create(
+                metadata,
+                smbProperties,
+                filePermission,
+                cancellationToken);
             return new Response<DirectoryClient>(response.GetRawResponse(), directory);
         }
 
@@ -1320,7 +1543,13 @@ namespace Azure.Storage.Files
         /// The name of the directory to create.
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this directory.
+        /// Optional custom metadata to set for the directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1334,13 +1563,20 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DirectoryClient>> CreateDirectoryAsync(
            string directoryName,
            IDictionary<string, string> metadata = default,
+           FileSmbProperties? smbProperties = default,
+           string filePermission = default,
            CancellationToken cancellationToken = default)
         {
             var directory = this.GetDirectoryClient(directoryName);
-            var response = await directory.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
+            var response = await directory.CreateAsync(
+                metadata,
+                smbProperties,
+                filePermission,
+                cancellationToken).ConfigureAwait(false);
             return new Response<DirectoryClient>(response.GetRawResponse(), directory);
         }
         #endregion CreateDirectory
@@ -1365,6 +1601,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response DeleteDirectory(
             string directoryName,
             CancellationToken cancellationToken = default) =>
@@ -1389,6 +1626,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDirectoryAsync(
             string directoryName,
             CancellationToken cancellationToken = default) =>

@@ -16,9 +16,9 @@ namespace AnomalyDetectorSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6208")]
         public void TestLastAnomalySeries()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "TestLastAnomalySeries");
+                HttpMockServer.Initialize(this.GetType(), "TestLastAnomalySeries");
                 IAnomalyDetectorClient client = GetAnomalyDetectorClient(HttpMockServer.CreateInstance());
                 var series = new List<Point>{
                     new Point(DateTime.Parse("1962-01-01T00:00:00Z"), 1),
@@ -86,9 +86,9 @@ namespace AnomalyDetectorSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6208")]
         public void TestSineDistributionSeries()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "TestSineDistributionSeries");
+                HttpMockServer.Initialize(this.GetType(), "TestSineDistributionSeries");
                 IAnomalyDetectorClient client = GetAnomalyDetectorClient(HttpMockServer.CreateInstance());
                 int len = 49;
                 int frequency = 4;
@@ -110,9 +110,9 @@ namespace AnomalyDetectorSDK.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6208")]
         public void TestNormalDistributionSeries()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "TestNormalDistributionSeries");
+                HttpMockServer.Initialize(this.GetType(), "TestNormalDistributionSeries");
                 IAnomalyDetectorClient client = GetAnomalyDetectorClient(HttpMockServer.CreateInstance());
 
                 var startTime = DateTime.Parse("2018-05-01T00:00:00Z");

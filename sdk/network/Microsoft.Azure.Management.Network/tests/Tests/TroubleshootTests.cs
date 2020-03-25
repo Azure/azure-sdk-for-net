@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Network;
@@ -31,7 +31,7 @@ namespace Network.Tests.Tests
             var handler3 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler4 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
 
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
@@ -152,3 +152,4 @@ namespace Network.Tests.Tests
         }
     }
 }
+

@@ -16,15 +16,15 @@ namespace Azure.Core.Http
 
         private int _queryIndex = -1;
 
-        private Uri _uri;
+        private Uri? _uri;
 
         private int _port;
 
-        private string _host;
+        private string? _host;
 
-        private string _scheme;
+        private string? _scheme;
 
-        public string Scheme
+        public string? Scheme
         {
             get => _scheme;
             set
@@ -34,7 +34,7 @@ namespace Azure.Core.Http
             }
         }
 
-        public string Host
+        public string? Host
         {
             get => _host;
             set
@@ -200,8 +200,8 @@ namespace Azure.Core.Http
         }
 
         private bool HasDefaultPortForScheme =>
-            (Port == 80 && Scheme.Equals("http", StringComparison.InvariantCultureIgnoreCase)) ||
-            (Port == 443 && Scheme.Equals("https", StringComparison.InvariantCultureIgnoreCase));
+            (Port == 80 && string.Equals(Scheme, "http", StringComparison.InvariantCultureIgnoreCase)) ||
+            (Port == 443 && string.Equals(Scheme, "https", StringComparison.InvariantCultureIgnoreCase));
 
         private void ResetUri()
         {

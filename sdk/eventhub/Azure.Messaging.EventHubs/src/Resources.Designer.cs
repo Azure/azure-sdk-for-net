@@ -210,24 +210,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to System property &apos;{0}&apos; is missing in the event..
+        ///   Looks up a localized string similar to A proxy may only be used for a web sockets connection..
         /// </summary>
-        internal static string MissingSystemProperty
+        internal static string ProxyMustUseWebSockets
         {
             get
             {
-                return ResourceManager.GetString("MissingSystemProperty", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to A proxy may only be used for a websockets connection..
-        /// </summary>
-        internal static string ProxyMustUseWebsockets
-        {
-            get
-            {
-                return ResourceManager.GetString("ProxyMustUseWebsockets", resourceCulture);
+                return ResourceManager.GetString("ProxyMustUseWebSockets", resourceCulture);
             }
         }
 
@@ -320,6 +309,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The value supplied must be greater than or equal to {0}..
+        /// </summary>
+        internal static string ValueMustBeAtLeast
+        {
+            get
+            {
+                return ResourceManager.GetString("ValueMustBeAtLeast", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The credential is not a known and supported credential type.  Please use a JWT credential or shared key credential..
         /// </summary>
         internal static string UnsupportedCredential
@@ -360,6 +360,94 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("UnknownRetryMode", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Serialization operation failed due to unsupported type {0}..
+        /// </summary>
+        internal static string FailedToSerializeUnsupportedType
+        {
+            get
+            {
+                return ResourceManager.GetString("FailedToSerializeUnsupportedType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The requested transport event type, '{0}', is not supported by the active transport client..
+        /// </summary>
+        internal static string UnsupportedTransportEventType
+        {
+            get
+            {
+                return ResourceManager.GetString("UnsupportedTransportEventType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Could not create a subscription for events for Event Hub: '{0}', partition: '{1}'..
+        /// </summary>
+        internal static string FailedToCreateEventSubscription
+        {
+            get
+            {
+                return ResourceManager.GetString("FailedToCreateEventSubscription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to An unrecoverable exception was encountered that left the environment in a bad state..
+        /// </summary>
+        internal static string UnrecoverableException
+        {
+            get
+            {
+                return ResourceManager.GetString("UnrecoverableException", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has already been disposed and cannot perform the requested operation..
+        /// </summary>
+        internal static string DisposedInstanceCannotPerformOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("DisposedInstanceCannotPerformOperation", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to acquire an access token using the provided credential..
+        /// </summary>
+        internal static string CouldNotAcquireAccessToken
+        {
+            get
+            {
+                return ResourceManager.GetString("CouldNotAcquireAccessToken", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to An unknown error was encountered while communicating with the Event Hubs service..
+        /// </summary>
+        internal static string UnknownCommunicationException
+        {
+            get
+            {
+                return ResourceManager.GetString("UnknownCommunicationException", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}.
+        /// </summary>
+        internal static string InvalidMessageBody
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidMessageBody", resourceCulture);
             }
         }
     }

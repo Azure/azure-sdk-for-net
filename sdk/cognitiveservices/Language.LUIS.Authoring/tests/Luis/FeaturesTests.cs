@@ -6,9 +6,10 @@
     using System.IO;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class FeaturesTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListFeatures()
         {
             var appJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportApp.json"));

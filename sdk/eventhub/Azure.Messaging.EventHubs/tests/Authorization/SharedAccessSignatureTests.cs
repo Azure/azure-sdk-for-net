@@ -7,7 +7,7 @@ using System.Reflection;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests.Authorization
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of unit tests for the <see cref="SharedAccessSignature" />
@@ -15,7 +15,6 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class SharedAccessSignatureTests
     {
         /// <summary>A string that is 300 characters long, breaking invariants for argument maximum lengths.</summary>
@@ -339,7 +338,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         ///
         [Test]
         [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey&notreal=123")]
-        [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&fale=test&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey")]
+        [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&false=test&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey")]
         public void ParseToleratesExtraTokens(string signature)
         {
             Assert.That(() => ParseSignature(signature), Throws.Nothing);

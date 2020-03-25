@@ -1,6 +1,6 @@
 # Azure Storage Queues client library for .NET
 
-> Server Version: 2018-11-09
+> Server Version: 2019-02-02
 
 Azure Queue storage is a service for storing large numbers of messages that 
 can be accessed from anywhere in the world via authenticated calls using
@@ -17,7 +17,7 @@ a storage account.
 Install the Azure Storage Queues client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Queues --version 12.0.0-preview.1
+dotnet add package Azure.Storage.Queues --version 12.0.0-preview.3
 ```
 
 ### Prerequisites
@@ -158,6 +158,9 @@ Get started with our [Queue samples][samples]:
 
 ## Contributing
 
+See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
+testing, and contributing to this library.
+
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
@@ -173,7 +176,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Queues/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Storage/Azure.Storage.Queues.html
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.Queues.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/queues/storage-queues-introduction
 [nuget]: https://www.nuget.org/
@@ -189,6 +192,7 @@ additional questions or comments.
 [StorageRequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src/StorageRequestFailedException.cs
 [error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-error-codes
 [samples]: samples/
+[storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

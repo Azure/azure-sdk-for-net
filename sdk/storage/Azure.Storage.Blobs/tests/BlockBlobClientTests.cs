@@ -113,6 +113,68 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task StageBlockAsync_CPK()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                blob = this.InstrumentClient(new BlockBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                var data = this.GetRandomBuffer(Size);
+
+                // Create BlockBlob
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream, customerProvidedKey: customerProvidedKey);
+                }
+
+                using (var stream = new MemoryStream(data))
+                {
+                    // Act
+                    var response = await blob.StageBlockAsync(
+                        base64BlockId: this.ToBase64(this.GetNewBlockName()),
+                        content: stream,
+                        customerProvidedKey: customerProvidedKey);
+
+                    // Assert
+                    Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+                }
+            }
+        }
+
+        [Test]
+        public async Task StageBlockAsync_CpkHttpError()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var httpBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
+                var httpsBlob = this.InstrumentClient(new BlockBlobClient(this.GetHttpsUri(httpBlob.Uri), httpBlob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                var data = this.GetRandomBuffer(Size);
+
+                // Create BlockBlob
+                using (var stream = new MemoryStream(data))
+                {
+                    await httpsBlob.UploadAsync(stream, customerProvidedKey: customerProvidedKey);
+                }
+
+                using (var stream = new MemoryStream(data))
+                {
+                    // Act
+                    await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                        httpBlob.StageBlockAsync(
+                            base64BlockId: this.ToBase64(this.GetNewBlockName()),
+                            content: stream,
+                            customerProvidedKey: customerProvidedKey),
+                        actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+                }
+            }
+        }
+
+        [Test]
         public async Task StageBlockAsync_Lease()
         {
             var garbageLeaseId = this.GetGarbageLeaseId();
@@ -186,7 +248,7 @@ namespace Azure.Storage.Blobs.Test
 
             using (this.GetNewContainer(out var container))
             {
-                var credentials = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
+                var credentials = new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey);
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
@@ -208,12 +270,7 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.StageBlockAsync(this.ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
 
-                    var attempts = 0;
-                    while (attempts++ < 7 && progressList.Last().BytesTransferred < data.LongLength)
-                    {
-                        // wait to allow lingering progress events to execute
-                        await this.Delay(500, 100).ConfigureAwait(false);
-                    }
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     // Changing from Assert.AreEqual because these don't always update fast enough
                     Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
@@ -270,6 +327,62 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await destBlob.StageBlockFromUriAsync(sourceBlob.Uri, this.ToBase64(this.GetNewBlockName()));
+            }
+        }
+
+        [Test]
+        public async Task StageBlockFromUriAsync_CPK()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                const int blobSize = Constants.KB;
+                var data = this.GetRandomBuffer(blobSize);
+
+                var sourceBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await sourceBlob.UploadAsync(stream);
+                }
+
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                destBlob = this.InstrumentClient(new BlockBlobClient(this.GetHttpsUri(destBlob.Uri), destBlob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+
+                // Act
+                await destBlob.StageBlockFromUriAsync(
+                    sourceBlob.Uri, 
+                    this.ToBase64(this.GetNewBlockName()),
+                    customerProvidedKey: customerProvidedKey);
+            }
+        }
+
+        [Test]
+        public async Task StageBlockFromUriAsync_CpkHttpError()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                const int blobSize = Constants.KB;
+                var data = this.GetRandomBuffer(blobSize);
+
+                var sourceBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                using (var stream = new MemoryStream(data))
+                {
+                    await sourceBlob.UploadAsync(stream);
+                }
+
+                var destBlob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                Assert.AreEqual(Constants.Blob.Http, destBlob.Uri.Scheme);
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    destBlob.StageBlockFromUriAsync(
+                        sourceBlob.Uri,
+                        this.ToBase64(this.GetNewBlockName()),
+                        customerProvidedKey: customerProvidedKey),
+                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
             }
         }
 
@@ -786,6 +899,92 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task CommitBlockListAsync_AccessTier()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var data = this.GetRandomBuffer(Size);
+                var firstBlockName = this.GetNewBlockName();
+                var secondBlockName = this.GetNewBlockName();
+                var thirdBlockName = this.GetNewBlockName();
+
+                // Act
+                // Stage blocks
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(firstBlockName), stream);
+                }
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(secondBlockName), stream);
+                }
+
+                // Commit first two Blocks
+                var commitList = new string[]
+                {
+                    this.ToBase64(firstBlockName),
+                    this.ToBase64(secondBlockName)
+                };
+
+                await blob.CommitBlockListAsync(commitList, accessTier: AccessTier.Cool);
+
+                // Stage 3rd Block
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(thirdBlockName), stream);
+                }
+
+                // Assert
+                var blobList = await blob.GetBlockListAsync(BlockListType.All);
+                Assert.AreEqual(2, blobList.Value.CommittedBlocks.Count());
+                Assert.AreEqual(this.ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
+                Assert.AreEqual(this.ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
+                Assert.AreEqual(1, blobList.Value.UncommittedBlocks.Count());
+                Assert.AreEqual(this.ToBase64(thirdBlockName), blobList.Value.UncommittedBlocks.First().Name);
+
+                var response = await blob.GetPropertiesAsync();
+                Assert.AreEqual(AccessTier.Cool.ToString(), response.Value.AccessTier);
+            }
+        }
+
+        [Test]
+        public async Task CommitBlockListAsync_AccessTierFail()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                var data = this.GetRandomBuffer(Size);
+                var firstBlockName = this.GetNewBlockName();
+                var secondBlockName = this.GetNewBlockName();
+
+                // Act
+                // Stage blocks
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(firstBlockName), stream);
+                }
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.StageBlockAsync(this.ToBase64(secondBlockName), stream);
+                }
+
+                // Commit first two Blocks
+                var commitList = new string[]
+                {
+                    this.ToBase64(firstBlockName),
+                    this.ToBase64(secondBlockName)
+                };
+
+                await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
+                    blob.CommitBlockListAsync(commitList, accessTier:AccessTier.P10),
+                    e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
+            }
+        }
+
+        [Test]
         public async Task GetBlockListAsync()
         {
             using (this.GetNewContainer(out var container))
@@ -1000,6 +1199,49 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadAsync_CPK()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                blob = this.InstrumentClient(new BlockBlobClient(this.GetHttpsUri(blob.Uri), blob.Pipeline));
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                var data = this.GetRandomBuffer(Size);
+
+                // Act
+                using var stream = new MemoryStream(data);
+                var response = await blob.UploadAsync(
+                    content: stream,
+                    customerProvidedKey: customerProvidedKey);
+
+                // Assert
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_CpkHttpError()
+        {
+            using (this.GetNewContainer(out var container))
+            {
+                // Arrange
+                var blob = this.InstrumentClient(container.GetBlockBlobClient(this.GetNewBlobName()));
+                Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
+                var customerProvidedKey = this.GetCustomerProvidedKey();
+                var data = this.GetRandomBuffer(Size);
+
+                // Act
+                using var stream = new MemoryStream(data);
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                    blob.UploadAsync(
+                        content: stream,
+                        customerProvidedKey: customerProvidedKey),
+                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
+            }
+        }
+
+        [Test]
         public async Task UploadAsync_Headers()
         {
             var constants = new TestConstants(this);
@@ -1144,7 +1386,7 @@ namespace Azure.Storage.Blobs.Test
             using (this.GetNewContainer(out var container))
             {
                 // Arrange
-                var credentials = new StorageSharedKeyCredential(TestConfigurations.DefaultTargetTenant.AccountName, TestConfigurations.DefaultTargetTenant.AccountKey);
+                var credentials = new StorageSharedKeyCredential(this.TestConfigDefault.AccountName, this.TestConfigDefault.AccountKey);
                 var containerFaulty = this.InstrumentClient(
                     new BlobContainerClient(
                         container.Uri,
@@ -1164,15 +1406,10 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await blobFaulty.UploadAsync(stream, null, metadata, null, progressHandler: progressHandler);
 
-                    var attempts = 0;
-                    while (attempts++ < 7 && progressList.Last().BytesTransferred < data.LongLength)
-                    {
-                        // wait to allow lingering progress events to execute
-                        await this.Delay(500, 100).ConfigureAwait(false);
-                    }
+                    await this.WaitForProgressAsync(progressList, data.LongLength);
                     Assert.IsTrue(progressList.Count > 1, "Too few progress received");
                     // Changing from Assert.AreEqual because these don't always update fast enough
-                    Assert.GreaterOrEqual(data.LongLength, progressList.Last().BytesTransferred, "Final progress has unexpected value");
+                    Assert.GreaterOrEqual(data.LongLength, progressList.LastOrDefault().BytesTransferred, "Final progress has unexpected value");
                 }
 
                 // Assert

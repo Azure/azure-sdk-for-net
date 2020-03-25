@@ -14,7 +14,6 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   class.
     /// </summary>
     [TestFixture]
-    [Parallelizable(ParallelScope.All)]
     public class TrackOneRetryPolicyTests
     {
         /// <summary>
@@ -60,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => Object.ReferenceEquals(value, lastException)), It.Is<int>(value => value == retryCount)))
                 .Returns(expectedInterval);
 
-            Assert.That(TrackOne.RetryPolicy.IsRetryableException(lastException), Is.True, "The operation cancelled exception should be considered as retriable by the TrackOne.RetryPolicy.");
+            Assert.That(TrackOne.RetryPolicy.IsRetryableException(lastException), Is.True, "The operation canceled exception should be considered as retriable by the TrackOne.RetryPolicy.");
             Assert.That(retryPolicy.GetNextRetryInterval(lastException, TimeSpan.FromHours(4), retryCount), Is.EqualTo(expectedInterval));
         }
 
@@ -83,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<EventHubsException>(value => value.GetType() == mappedException.GetType()), It.Is<int>(value => value == retryCount)))
                 .Returns(expectedInterval);
 
-            Assert.That(TrackOne.RetryPolicy.IsRetryableException(lastException), Is.True, "The timeoutd exception should be considered as retriable by the TrackOne.RetryPolicy.");
+            Assert.That(TrackOne.RetryPolicy.IsRetryableException(lastException), Is.True, "The timeout exception should be considered as retriable by the TrackOne.RetryPolicy.");
             Assert.That(retryPolicy.GetNextRetryInterval(lastException, TimeSpan.FromHours(4), retryCount), Is.EqualTo(expectedInterval));
         }
 
@@ -98,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var lastException = new OperationCanceledException("RETRY!");
             var retryPolicy = new TrackOneRetryPolicy(Mock.Of<EventHubRetryPolicy>());
 
-            Assert.That(TrackOne.RetryPolicy.IsRetryableException(lastException), Is.True, "The operation cancelled exception should be considered as retriable by the TrackOne.RetryPolicy.");
+            Assert.That(TrackOne.RetryPolicy.IsRetryableException(lastException), Is.True, "The operation canceled exception should be considered as retriable by the TrackOne.RetryPolicy.");
             Assert.That(retryPolicy.GetNextRetryInterval(lastException, TimeSpan.Zero, 0), Is.Null);
         }
 
@@ -119,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => Object.ReferenceEquals(value, lastException)), It.Is<int>(value => value == retryCount)))
                 .Returns(TimeSpan.FromHours(4));
 
-            Assert.That(TrackOne.RetryPolicy.IsRetryableException(lastException), Is.True, "The operation cancelled exception should be considered as retriable by the TrackOne.RetryPolicy.");
+            Assert.That(TrackOne.RetryPolicy.IsRetryableException(lastException), Is.True, "The operation canceled exception should be considered as retriable by the TrackOne.RetryPolicy.");
             Assert.That(retryPolicy.GetNextRetryInterval(lastException, TimeSpan.FromSeconds(30), retryCount), Is.Null);
         }
     }

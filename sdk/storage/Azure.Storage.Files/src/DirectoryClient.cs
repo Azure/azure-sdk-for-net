@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Models;
@@ -29,13 +30,13 @@ namespace Azure.Storage.Files
         public virtual Uri Uri => this._uri;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// The <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
-        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send 
+        /// Gets the <see cref="HttpPipeline"/> transport pipeline used to send
         /// every request.
         /// </summary>
         protected virtual HttpPipeline Pipeline => this._pipeline;
@@ -56,7 +57,7 @@ namespace Azure.Storage.Files
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="shareName">
@@ -77,7 +78,7 @@ namespace Azure.Storage.Files
         /// A connection string includes the authentication information
         /// required for your application to access data in an Azure Storage
         /// account at runtime.
-        /// 
+        ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
         /// <param name="shareName">
@@ -100,7 +101,7 @@ namespace Azure.Storage.Files
                     ShareName = shareName,
                     DirectoryOrFilePath = directoryPath
                 };
-            this._uri = builder.ToUri();
+            this._uri = builder.Uri;
             this._pipeline = (options ?? new FileClientOptions()).Build(conn.Credentials);
         }
 
@@ -213,11 +214,17 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="Create"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -233,9 +240,13 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual Response<StorageDirectoryInfo> Create(
             Metadata metadata = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default) =>
             this.CreateInternal(
                 metadata,
+                smbProperties,
+                filePermission,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -243,11 +254,17 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="CreateAsync"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -263,9 +280,13 @@ namespace Azure.Storage.Files
         /// </remarks>
         public virtual async Task<Response<StorageDirectoryInfo>> CreateAsync(
             Metadata metadata = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default) =>
             await this.CreateInternal(
                 metadata,
+                smbProperties,
+                filePermission,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -273,11 +294,17 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="CreateInternal"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
         /// </summary>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -296,6 +323,8 @@ namespace Azure.Storage.Files
         /// </remarks>
         private async Task<Response<StorageDirectoryInfo>> CreateInternal(
             Metadata metadata,
+            FileSmbProperties? smbProperties,
+            string filePermission,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -306,13 +335,31 @@ namespace Azure.Storage.Files
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
-                    return await FileRestClient.Directory.CreateAsync(
+                    var smbProps = smbProperties ?? new FileSmbProperties();
+
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
+                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    {
+                        filePermission = Constants.File.FilePermissionInherit;
+                    }
+
+                    var response = await FileRestClient.Directory.CreateAsync(
                         this.Pipeline,
                         this.Uri,
                         metadata: metadata,
+                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.FileAttributesNone,
+                        filePermission: filePermission,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
+                        operationName: Constants.File.Directory.CreateOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return new Response<StorageDirectoryInfo>(
+                        response.GetRawResponse(),
+                        new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -330,7 +377,7 @@ namespace Azure.Storage.Files
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation removes the specified empty directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
         /// </summary>
         /// <param name="cancellationToken">
@@ -352,7 +399,7 @@ namespace Azure.Storage.Files
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation removes the specified empty directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
         /// </summary>
         /// <param name="cancellationToken">
@@ -375,7 +422,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="DeleteInternal"/> operation removes the specified
         /// empty directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
         /// </summary>
         /// <param name="async">
@@ -406,6 +453,7 @@ namespace Azure.Storage.Files
                         this.Pipeline,
                         this.Uri,
                         async: async,
+                        operationName: Constants.File.Directory.DeleteOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -426,9 +474,9 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="GetProperties"/> operation returns all
         /// user-defined metadata and system properties for the specified
-        /// directory. The data returned does not include the directory's 
+        /// directory. The data returned does not include the directory's
         /// list of subdirectories or files.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-directory-properties"/>.
         /// </summary>
         /// <param name="shareSnapshot">
@@ -447,7 +495,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// </remarks>       
+        /// </remarks>
         public virtual Response<StorageDirectoryProperties> GetProperties(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
@@ -460,9 +508,9 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
         /// user-defined metadata and system properties for the specified
-        /// directory. The data returned does not include the directory's 
+        /// directory. The data returned does not include the directory's
         /// list of subdirectories or files.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-directory-properties"/>.
         /// </summary>
         /// <param name="shareSnapshot">
@@ -481,7 +529,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// </remarks>       
+        /// </remarks>
         public virtual async Task<Response<StorageDirectoryProperties>> GetPropertiesAsync(
             string shareSnapshot = default,
             CancellationToken cancellationToken = default) =>
@@ -494,9 +542,9 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="GetPropertiesInternal"/> operation returns all
         /// user-defined metadata and system properties for the specified
-        /// directory. The data returned does not include the directory's 
+        /// directory. The data returned does not include the directory's
         /// list of subdirectories or files.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-directory-properties"/>.
         /// </summary>
         /// <param name="shareSnapshot">
@@ -518,7 +566,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// </remarks>       
+        /// </remarks>
         private async Task<Response<StorageDirectoryProperties>> GetPropertiesInternal(
             string shareSnapshot,
             bool async,
@@ -533,13 +581,18 @@ namespace Azure.Storage.Files
                     $"{nameof(shareSnapshot)}: {shareSnapshot}");
                 try
                 {
-                    return await FileRestClient.Directory.GetPropertiesAsync(
+                    var response = await FileRestClient.Directory.GetPropertiesAsync(
                         this.Pipeline,
                         this.Uri,
                         sharesnapshot: shareSnapshot,
                         async: async,
+                        operationName: Constants.File.Directory.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return new Response<StorageDirectoryProperties>(
+                        response.GetRawResponse(),
+                        new StorageDirectoryProperties(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -554,11 +607,162 @@ namespace Azure.Storage.Files
         }
         #endregion GetProperties
 
+        #region SetHttpHeaders
+        /// <summary>
+        /// The <see cref="SetHttpHeaders"/> operation sets system
+        /// properties on the directory.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-properties"/>.
+        /// </summary>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<StorageDirectoryInfo> SetHttpHeaders(
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
+            CancellationToken cancellationToken = default) =>
+            this.SetHttpHeadersInternal(
+                smbProperties,
+                filePermission,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetHttpHeadersAsync"/> operation sets system
+        /// properties on the directory.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-properties"/>.
+        /// </summary>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<StorageDirectoryInfo>> SetHttpHeadersAsync(
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
+            CancellationToken cancellationToken = default) =>
+            await this.SetHttpHeadersInternal(
+                smbProperties,
+                filePermission,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetHttpHeadersInternal"/> operation sets system
+        /// properties on the directory.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/set-directory-properties"/>.
+        /// </summary>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set ofr the directory.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="StorageRequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<StorageDirectoryInfo>> SetHttpHeadersInternal(
+            FileSmbProperties? smbProperties,
+            string filePermission,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (this.Pipeline.BeginLoggingScope(nameof(DirectoryClient)))
+            {
+                this.Pipeline.LogMethodEnter(
+                    nameof(DirectoryClient),
+                    message:
+                    $"{nameof(this.Uri)}: {this.Uri}\n");
+                try
+                {
+                    var smbProps = smbProperties ?? new FileSmbProperties();
+
+                    FileExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
+                    if(filePermission == null && smbProps.FilePermissionKey == null)
+                    {
+                        filePermission = Constants.File.Preserve;
+                    }
+
+                    var response = await FileRestClient.Directory.SetPropertiesAsync(
+                        this.Pipeline,
+                        this.Uri,
+                        fileAttributes: smbProps.FileAttributes?.ToString() ?? Constants.File.Preserve,
+                        filePermission: filePermission,
+                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
+                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
+                        filePermissionKey: smbProps.FilePermissionKey,
+                        async: async,
+                        operationName: Constants.File.Directory.SetHttpHeadersOperationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return new Response<StorageDirectoryInfo>(
+                        response.GetRawResponse(),
+                        new StorageDirectoryInfo(response.Value));
+                }
+                catch (Exception ex)
+                {
+                    this.Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    this.Pipeline.LogMethodExit(nameof(DirectoryClient));
+                }
+            }
+        }
+
+        #endregion SetHttpHeaders
+
         #region SetMetadata
         /// <summary>
         /// The <see cref="SetMetadata"/> operation sets one or more
         /// user-defined name-value pairs for the specified directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata"/>.
         /// </summary>
         /// <param name="metadata">
@@ -587,7 +791,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="SetMetadataAsync"/> operation sets one or more
         /// user-defined name-value pairs for the specified directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata"/>.
         /// </summary>
         /// <param name="metadata">
@@ -616,7 +820,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="SetMetadataInternal"/> operation sets one or more
         /// user-defined name-value pairs for the specified directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-metadata"/>.
         /// </summary>
         /// <param name="metadata">
@@ -648,13 +852,18 @@ namespace Azure.Storage.Files
                     message: $"{nameof(this.Uri)}: {this.Uri}");
                 try
                 {
-                    return await FileRestClient.Directory.SetMetadataAsync(
+                    var response = await FileRestClient.Directory.SetMetadataAsync(
                         this.Pipeline,
                         this.Uri,
                         metadata: metadata,
                         async: async,
+                        operationName: Constants.File.Directory.SetMetadataOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return new Response<StorageDirectoryInfo>(
+                        response.GetRawResponse(),
+                        new StorageDirectoryInfo(response.Value));
                 }
                 catch (Exception ex)
                 {
@@ -675,7 +884,7 @@ namespace Azure.Storage.Files
         /// sequence of files and subdirectories in this directory.
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-directories-and-files"/>.
         /// </summary>
         /// <param name="options">
@@ -703,7 +912,7 @@ namespace Azure.Storage.Files
         /// async collection of files and subdirectories in this directory.
         /// Enumerating the files and directories may make multiple requests
         /// to the service while fetching all the values.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-directories-and-files"/>.
         /// </summary>
         /// <param name="options">
@@ -730,7 +939,7 @@ namespace Azure.Storage.Files
         /// The <see cref="GetFilesAndDirectoriesInternal"/> operation returns a
         /// single segment of files and subdirectories in this directory, starting
         /// from the specified <paramref name="marker"/>.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-directories-and-files"/>.
         /// </summary>
         /// <param name="marker">
@@ -789,6 +998,7 @@ namespace Azure.Storage.Files
                         maxresults: pageSizeHint,
                         sharesnapshot: options?.ShareSnapshot,
                         async: async,
+                        operationName: Constants.File.Directory.ListFilesAndDirectoriesSegmentOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -811,7 +1021,7 @@ namespace Azure.Storage.Files
         /// of the open handles on a directory or a file.  Enumerating the
         /// handles may make multiple requests to the service while fetching
         /// all the values.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
         /// <param name="recursive">
@@ -839,7 +1049,7 @@ namespace Azure.Storage.Files
         /// sequence of the open handles on a directory or a file.
         /// Enumerating the handles may make multiple requests to the service
         /// while fetching all the values.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
         /// <param name="recursive">
@@ -865,7 +1075,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="GetHandlesAsync"/> operation returns a list of open
         /// handles on a directory or a file.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/list-handles"/>.
         /// </summary>
         /// <param name="marker">
@@ -925,6 +1135,7 @@ namespace Azure.Storage.Files
                         maxresults: maxResults,
                         recursive: recursive,
                         async: async,
+                        operationName: Constants.File.Directory.GetHandlesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -943,17 +1154,17 @@ namespace Azure.Storage.Files
 
         #region ForceCloseHandles
         /// <summary>
-        /// The <see cref="ForceCloseHandles"/> operation closes a handle or handles opened on a directory 
-        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or 
-        /// directory or closing all handles opened on that resource. It optionally supports recursively closing 
+        /// The <see cref="ForceCloseHandles"/> operation closes a handle or handles opened on a directory
+        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or
+        /// directory or closing all handles opened on that resource. It optionally supports recursively closing
         /// handles on subresources when the resource is a directory.
-        /// 
-        /// This API is intended to be used alongside <see cref="GetHandles"/> to force close handles that 
-        /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by 
-        /// SMB clients. The API has client-side impact on the handle being closed, including user visible 
-        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement 
+        ///
+        /// This API is intended to be used alongside <see cref="GetHandles"/> to force close handles that
+        /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by
+        /// SMB clients. The API has client-side impact on the handle being closed, including user visible
+        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
         /// </summary>
         /// <param name="handleId">
@@ -982,7 +1193,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// </remarks> 
+        /// </remarks>
         public virtual Response<StorageClosedHandlesSegment> ForceCloseHandles(
             string handleId = Constants.CloseAllHandles,
             string marker = default,
@@ -997,17 +1208,17 @@ namespace Azure.Storage.Files
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a directory 
-        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or 
-        /// directory or closing all handles opened on that resource. It optionally supports recursively closing 
+        /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a directory
+        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or
+        /// directory or closing all handles opened on that resource. It optionally supports recursively closing
         /// handles on subresources when the resource is a directory.
-        /// 
-        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that 
-        /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by 
-        /// SMB clients. The API has client-side impact on the handle being closed, including user visible 
-        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement 
+        ///
+        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that
+        /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by
+        /// SMB clients. The API has client-side impact on the handle being closed, including user visible
+        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
         /// </summary>
         /// <param name="handleId">
@@ -1036,7 +1247,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// </remarks> 
+        /// </remarks>
         public virtual async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesAsync(
             string handleId = Constants.CloseAllHandles,
             string marker = default,
@@ -1051,17 +1262,17 @@ namespace Azure.Storage.Files
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a directory 
-        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or 
-        /// directory or closing all handles opened on that resource. It optionally supports recursively closing 
+        /// The <see cref="ForceCloseHandlesAsync"/> operation closes a handle or handles opened on a directory
+        /// or a file at the service. It supports closing a single handle specified by <paramref name="handleId"/> on a file or
+        /// directory or closing all handles opened on that resource. It optionally supports recursively closing
         /// handles on subresources when the resource is a directory.
-        /// 
-        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that 
-        /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by 
-        /// SMB clients. The API has client-side impact on the handle being closed, including user visible 
-        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement 
+        ///
+        /// This API is intended to be used alongside <see cref="GetHandlesAsync"/> to force close handles that
+        /// block operations, such as renaming a directory. These handles may have leaked or been lost track of by
+        /// SMB clients. The API has client-side impact on the handle being closed, including user visible
+        /// errors due to failed attempts to read or write files. This API is not intended for use as a replacement
         /// or alternative for SMB close.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/force-close-handles"/>.
         /// </summary>
         /// <param name="handleId">
@@ -1093,7 +1304,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
-        /// </remarks> 
+        /// </remarks>
         private async Task<Response<StorageClosedHandlesSegment>> ForceCloseHandlesInternal(
             string handleId,
             string marker,
@@ -1121,6 +1332,7 @@ namespace Azure.Storage.Files
                         handleId: handleId,
                         recursive: recursive,
                         async: async,
+                        operationName: Constants.File.Directory.ForceCloseHandlesOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1141,12 +1353,18 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="CreateSubdirectory"/> operation creates a new
         /// subdirectory under this directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the subdirectory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the subdirectory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1160,25 +1378,38 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<DirectoryClient> CreateSubdirectory(
             string subdirectoryName,
             Metadata metadata = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default)
         {
             var subdir = this.GetSubdirectoryClient(subdirectoryName);
-            var response = subdir.Create(metadata, cancellationToken);
+            var response = subdir.Create(
+                metadata,
+                smbProperties,
+                filePermission,
+                cancellationToken);
             return new Response<DirectoryClient>(response.GetRawResponse(), subdir);
         }
 
         /// <summary>
         /// The <see cref="CreateSubdirectoryAsync"/> operation creates a new
         /// subdirectory under this directory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory"/>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this directory.
+        /// Optional custom metadata to set for the subdirectory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the subdirectory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the subdirectory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1192,13 +1423,21 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<DirectoryClient>> CreateSubdirectoryAsync(
             string subdirectoryName,
             Metadata metadata = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default)
         {
             var subdir = this.GetSubdirectoryClient(subdirectoryName);
-            var response = await subdir.CreateAsync(metadata, cancellationToken).ConfigureAwait(false);
+            var response = await subdir.CreateAsync(
+                    metadata,
+                    smbProperties,
+                    filePermission,
+                    cancellationToken)
+                .ConfigureAwait(false);
             return new Response<DirectoryClient>(response.GetRawResponse(), subdir);
         }
         #endregion CreateSubdirectory
@@ -1207,7 +1446,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="DeleteSubdirectory"/> operation removes the
         /// specified empty subdirectory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
@@ -1221,6 +1460,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response DeleteSubdirectory(
             string subdirectoryName,
             CancellationToken cancellationToken = default) =>
@@ -1229,7 +1469,7 @@ namespace Azure.Storage.Files
         /// <summary>
         /// The <see cref="DeleteSubdirectoryAsync"/> operation removes the
         /// specified empty subdirectory.
-        /// 
+        ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-directory"/>.
         /// </summary>
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
@@ -1243,6 +1483,7 @@ namespace Azure.Storage.Files
         /// <remarks>
         /// Note that the directory must be empty before it can be deleted.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSubdirectoryAsync(
             string subdirectoryName,
             CancellationToken cancellationToken = default) =>
@@ -1271,6 +1512,12 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1282,15 +1529,24 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<FileClient> CreateFile(
             string fileName,
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default)
         {
             var file = this.GetFileClient(fileName);
-            var response = file.Create(maxSize, httpHeaders, metadata, cancellationToken);
+            var response = file.Create(
+                maxSize,
+                httpHeaders,
+                metadata,
+                smbProperties,
+                filePermission,
+                cancellationToken);
             return new Response<FileClient>(response.GetRawResponse(), file);
         }
 
@@ -1313,6 +1569,12 @@ namespace Azure.Storage.Files
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1324,15 +1586,24 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<FileClient>> CreateFileAsync(
             string fileName,
             long maxSize,
             FileHttpHeaders? httpHeaders = default,
             Metadata metadata = default,
+            FileSmbProperties? smbProperties = default,
+            string filePermission = default,
             CancellationToken cancellationToken = default)
         {
             var file = this.GetFileClient(fileName);
-            var response = await file.CreateAsync(maxSize, httpHeaders, metadata, cancellationToken).ConfigureAwait(false);
+            var response = await file.CreateAsync(
+                maxSize,
+                httpHeaders,
+                metadata,
+                smbProperties,
+                filePermission,
+                cancellationToken).ConfigureAwait(false);
             return new Response<FileClient>(response.GetRawResponse(), file);
         }
         #endregion CreateFile
@@ -1356,6 +1627,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response DeleteFile(
             string fileName,
             CancellationToken cancellationToken = default) =>
@@ -1379,6 +1651,7 @@ namespace Azure.Storage.Files
         /// A <see cref="StorageRequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileAsync(
             string fileName,
             CancellationToken cancellationToken = default) =>

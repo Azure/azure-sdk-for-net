@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="enabledState">Describes if the policy is in enabled
         /// state or disabled state. Possible values include: 'Disabled',
         /// 'Enabled'</param>
-        /// <param name="mode">Describes if it is in detection mode  or
+        /// <param name="mode">Describes if it is in detection mode or
         /// prevention mode at policy level. Possible values include:
         /// 'Prevention', 'Detection'</param>
         public PolicySettings(string enabledState = default(string), string mode = default(string))
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string EnabledState { get; set; }
 
         /// <summary>
-        /// Gets or sets describes if it is in detection mode  or prevention
+        /// Gets or sets describes if it is in detection mode or prevention
         /// mode at policy level. Possible values include: 'Prevention',
         /// 'Detection'
         /// </summary>

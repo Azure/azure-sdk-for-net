@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -13,25 +12,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public class SendOptions
     {
-        /// <summary>The maximum size to allow for the batch, in bytes.</summary>
-        private int _maximumSizeInBytes = EventHubProducer.MaximumBatchSizeLimit;
-
-        /// <summary>
-        ///   The maximum size to allow for a single batch of events, in bytes.  If this size is exceeded,
-        ///   the set of events will be broken into multiple batches for sending.
-        /// </summary>
-        ///
-        private int MaximumBatchSizeInBytes
-        {
-            get => _maximumSizeInBytes;
-
-            set
-            {
-                Guard.ArgumentInRange(nameof(MaximumBatchSizeInBytes), value, EventHubProducer.MinimumBatchSizeLimit, EventHubProducer.MaximumBatchSizeLimit);
-                _maximumSizeInBytes = value;
-            }
-        }  //TODO: Expose this when splitting of batches is supported.
-
         /// <summary>
         ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
         ///   service map this key to a specific partition but allowing the service to choose an arbitrary,
@@ -52,7 +32,7 @@ namespace Azure.Messaging.EventHubs
         public string PartitionKey { get; set; }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>

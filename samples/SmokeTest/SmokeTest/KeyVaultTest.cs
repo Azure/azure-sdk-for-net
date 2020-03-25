@@ -1,4 +1,8 @@
-﻿using Azure.Identity;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
+using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using System;
 using System.Threading.Tasks;
@@ -7,7 +11,7 @@ namespace SmokeTest
 {
     class KeyVaultTest
     {
-        private const string SecretName = "SmokeTestSecret";
+        private static string SecretName = $"SmokeTestSecret-{Guid.NewGuid()}";
         private const string SecretValue = "smokeTestValue";
         private static SecretClient client;
 

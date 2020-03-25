@@ -1,4 +1,8 @@
-﻿using Azure;
+﻿// ------------------------------------
+// Copyright(c) Microsoft Corporation.
+// Licensed under the MIT License.
+// ------------------------------------
+using Azure;
 using Azure.Messaging.EventHubs;
 using Microsoft.Azure.Amqp.Framing;
 using System;
@@ -17,8 +21,8 @@ namespace SmokeTest
     class EventHubsTest
     {
         private static EventHubClient client;
-        private static EventSender sender;
-        private static EventReceiver receiver;
+        private static EventHubProducer sender;
+        private static EventHubConsumer receiver;
 
         /// <summary>
         /// Test the Event Hubs SDK by sending and receiving events
@@ -43,16 +47,12 @@ namespace SmokeTest
         {
             Console.Write("Creating the Sender and Receivers... ");
             var partition = (await client.GetPartitionIdsAsync()).First();
-            var senderOptions = new EventSenderOptions
+            var producerOptions = new EventHubProducerOptions
             {
                 PartitionId = partition
             };
-            var receiverOptions = new EventReceiverOptions
-            {
-                BeginReceivingAt = EventPosition.NewEventsOnly
-            };
-            sender = client.CreateSender(senderOptions);
-            receiver = client.CreateReceiver(partition, receiverOptions);
+            sender = client.CreateProducer(producerOptions);
+            receiver = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest);
             Console.WriteLine("\tdone");
         }
 
@@ -79,35 +79,16 @@ namespace SmokeTest
             {
                 receivedEvents.AddRange(await receiver.ReceiveAsync(eventBatch.Length + 10, TimeSpan.FromMilliseconds(25)));
             }
-            index = 0;
 
-            //Check if at least one event was received in order to start validation
             if (receivedEvents.Count == 0)
             {
                 throw new Exception(String.Format("Error, No events received."));
             }
             Console.Write(receivedEvents.Count() + " events received.\n");
 
-            Console.WriteLine("Beginning validation...");
-            foreach (var receivedEvent in receivedEvents)
+            if (receivedEvents.Count() < eventBatch.Count())
             {
-                var receivedEventMessage = Encoding.UTF8.GetString(receivedEvent.Body.ToArray());
-                var sentEventMessage = Encoding.UTF8.GetString(eventBatch[index].Body.ToArray());
-
-                if (receivedEventMessage == sentEventMessage)
-                {
-                    Console.WriteLine("\tEvent '" + receivedEventMessage + "' correctly validated.");
-                }
-                else
-                {
-                    throw new Exception(String.Format("Error, Event: '" + receivedEventMessage + "' was not expected."));                
-                }
-                index++;
-            }
-
-            if (index < eventBatch.Count())
-            {
-                throw new Exception(String.Format("Error, expecting " + eventBatch.Count().ToString() + " events, but only got " + index.ToString() + "."));
+                throw new Exception(String.Format($"Error, expecting {eventBatch.Count()} events, but only got {receivedEvents.Count().ToString()}."));
             }
 
             Console.WriteLine("done");

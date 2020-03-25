@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.Test
             var serviceUri = this.GetServiceClient_AccountSas();
             var blobUriBuilder = new FileUriBuilder(serviceUri.Uri);
 
-            var blobUri = blobUriBuilder.ToUri();
+            var blobUri = blobUriBuilder.Uri;
 
             var expectedUri = WebUtility.UrlDecode(serviceUri.Uri.AbsoluteUri);
             var actualUri = WebUtility.UrlDecode(blobUri.AbsoluteUri);
@@ -41,7 +41,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.ToUri();
+            var newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual("", fileUriBuilder.Snapshot);
             Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("comp=list", fileUriBuilder.UnparsedParams);
+            Assert.AreEqual("comp=list", fileUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.ToUri();
+            var newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -74,7 +74,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual("", fileUriBuilder.Snapshot);
             Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("restype=share", fileUriBuilder.UnparsedParams);
+            Assert.AreEqual("restype=share", fileUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.ToUri();
+            var newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual("path", fileUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual("", fileUriBuilder.Snapshot);
             Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("restype=directory&comp=list", fileUriBuilder.UnparsedParams);
+            Assert.AreEqual("restype=directory&comp=list", fileUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.ToUri();
+            var newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -120,7 +120,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual("", fileUriBuilder.DirectoryOrFilePath);
             Assert.AreEqual("2011-03-09T01:42:34.9360000Z", fileUriBuilder.Snapshot);
             Assert.IsNull(fileUriBuilder.Sas);
-            Assert.AreEqual("", fileUriBuilder.UnparsedParams);
+            Assert.AreEqual("", fileUriBuilder.Query);
             Assert.AreEqual(originalUri, newUri);
         }
 
@@ -133,7 +133,7 @@ namespace Azure.Storage.Files.Test
 
             // Act
             var fileUriBuilder = new FileUriBuilder(originalUri.Uri);
-            var newUri = fileUriBuilder.ToUri();
+            var newUri = fileUriBuilder.Uri;
 
             // Assert
             Assert.AreEqual("https", fileUriBuilder.Scheme);
@@ -155,7 +155,7 @@ namespace Azure.Storage.Files.Test
             Assert.AreEqual(new DateTimeOffset(2015, 4, 29, 22, 18, 26, TimeSpan.Zero), fileUriBuilder.Sas.StartTime);
             Assert.AreEqual("2015-04-05", fileUriBuilder.Sas.Version);
 
-            Assert.AreEqual("comp=list", fileUriBuilder.UnparsedParams);
+            Assert.AreEqual("comp=list", fileUriBuilder.Query);
 
             Assert.AreEqual(originalUri, newUri);
         }

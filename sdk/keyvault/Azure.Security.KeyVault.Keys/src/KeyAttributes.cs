@@ -65,16 +65,16 @@ namespace Azure.Security.KeyVault.Keys
                         Enabled = prop.Value.GetBoolean();
                         break;
                     case NotBeforePropertyName:
-                        NotBefore = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        NotBefore = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case ExpiresPropertyName:
-                        Expires = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        Expires = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        Created = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        Updated = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case RecoveryLevelPropertyName:
                         RecoveryLevel = prop.Value.GetString();
@@ -83,7 +83,7 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal void WriteProperties(ref Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (Enabled.HasValue)
             {
@@ -92,12 +92,12 @@ namespace Azure.Security.KeyVault.Keys
 
             if (NotBefore.HasValue)
             {
-                json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeSeconds());
             }
 
             if (Expires.HasValue)
             {
-                json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeSeconds());
             }
 
             // Created is read-only don't serialize

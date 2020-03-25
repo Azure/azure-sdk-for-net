@@ -150,7 +150,7 @@ namespace Azure.Storage.Sas
         /// </returns>
         public BlobSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
-            sharedKeyCredential = sharedKeyCredential ?? throw new ArgumentNullException(nameof(sharedKeyCredential));
+            sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
             this.EnsureState();
 
@@ -207,7 +207,7 @@ namespace Azure.Storage.Sas
         /// </returns>
         public BlobSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
         {
-            userDelegationKey = userDelegationKey ?? throw new ArgumentNullException(nameof(userDelegationKey));
+            userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
 
             this.EnsureState();
 

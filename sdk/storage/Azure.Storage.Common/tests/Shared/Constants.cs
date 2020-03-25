@@ -17,6 +17,8 @@ namespace Azure.Storage.Test
         public const int MB = KB * 1024;
         public const int GB = MB * 1024;
         public const long TB = GB * 1024L;
+        public const string Https = "https";
+        public const int HttpPort = 443;
 
         public string CacheControl { get; private set; }
         public string ContentDisposition { get; private set; }

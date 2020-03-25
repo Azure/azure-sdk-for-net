@@ -25,7 +25,7 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         [MemberData(nameof(CustomMetricsDataAsync))]
         public async Task GetEventsAsync<T>(string eventType, MultiQueryAsync<T> multiQueryAsync, SingleQueryAsync<T> singleQueryAsync) where T : EventsResultData
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetByTypeAsync.{eventType}"))
+            using (var ctx = MockContext.Start(this.GetType(), $"GetByTypeAsync.{eventType}"))
             {
                 var timespan = "P1D";
                 var top = 1;
@@ -69,7 +69,7 @@ namespace Data.ApplicationInsights.Tests.ScenarioTests.Events
         [MemberData(nameof(CustomMetricsData))]
         public void GetByType<T>(string eventType, MultiQuery<T> multiQuery, SingleQuery<T> singleQuery) where T : EventsResultData
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetByType.{eventType}"))
+            using (var ctx = MockContext.Start(this.GetType(), $"GetByType.{eventType}"))
             {
                 var timespan = "P1D";
                 var top = 10;

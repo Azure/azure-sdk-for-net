@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies how tasks should be distributed across compute nodes.
+    /// Specifies how Tasks should be distributed across Compute Nodes.
     /// </summary>
     public partial class TaskSchedulingPolicy
     {
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskSchedulingPolicy class.
         /// </summary>
-        /// <param name="nodeFillType">How tasks are distributed across compute
-        /// nodes in a pool.</param>
+        /// <param name="nodeFillType">How Tasks are distributed across Compute
+        /// Nodes in a Pool.</param>
         public TaskSchedulingPolicy(ComputeNodeFillType nodeFillType)
         {
             NodeFillType = nodeFillType;
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets how tasks are distributed across compute nodes in a
-        /// pool.
+        /// Gets or sets how Tasks are distributed across Compute Nodes in a
+        /// Pool.
         /// </summary>
         /// <remarks>
         /// If not specified, the default is spread. Possible values include:

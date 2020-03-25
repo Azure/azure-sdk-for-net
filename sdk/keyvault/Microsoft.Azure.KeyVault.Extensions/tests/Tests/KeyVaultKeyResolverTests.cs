@@ -70,7 +70,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         [Fact]
         public void ResolveKey()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Arrange
                 var client = GetKeyVaultClient();
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         [Fact]
         public void ResolveSecret128Base64()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 VerifyResolveSecretBase64(128, VerifyResolver, "ResolveSecret128Base64");
             }
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         [Fact]
         public void ResolveSecret192Base64()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 VerifyResolveSecretBase64(192, VerifyResolver, "ResolveSecret192Base64");
             }
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         [Fact]
         public void ResolveSecret256Base64()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 VerifyResolveSecretBase64(256, VerifyResolver, "ResolveSecret256Base64");
             }

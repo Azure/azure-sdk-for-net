@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             [CallerMemberName]
             string methodName = "unknown_caller")
         {
-            using (var mockContext = MockContext.Start(this.GetType().FullName, methodName))
+            using (var mockContext = MockContext.Start(this.GetType(), methodName))
             {
                 _currentContext = mockContext;
                 Data = new TTestFixture();

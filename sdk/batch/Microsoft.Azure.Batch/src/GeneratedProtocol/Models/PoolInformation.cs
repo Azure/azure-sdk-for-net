@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies how a job should be assigned to a pool.
+    /// Specifies how a Job should be assigned to a Pool.
     /// </summary>
     public partial class PoolInformation
     {
@@ -29,11 +29,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolInformation class.
         /// </summary>
-        /// <param name="poolId">The ID of an existing pool. All the tasks of
-        /// the job will run on the specified pool.</param>
+        /// <param name="poolId">The ID of an existing Pool. All the Tasks of
+        /// the Job will run on the specified Pool.</param>
         /// <param name="autoPoolSpecification">Characteristics for a temporary
-        /// 'auto pool'. The Batch service will create this auto pool when the
-        /// job is submitted.</param>
+        /// 'auto pool'. The Batch service will create this auto Pool when the
+        /// Job is submitted.</param>
         public PoolInformation(string poolId = default(string), AutoPoolSpecification autoPoolSpecification = default(AutoPoolSpecification))
         {
             PoolId = poolId;
@@ -47,16 +47,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of an existing pool. All the tasks of the job
-        /// will run on the specified pool.
+        /// Gets or sets the ID of an existing Pool. All the Tasks of the Job
+        /// will run on the specified Pool.
         /// </summary>
         /// <remarks>
-        /// You must ensure that the pool referenced by this property exists.
-        /// If the pool does not exist at the time the Batch service tries to
-        /// schedule a job, no tasks for the job will run until you create a
-        /// pool with that id. Note that the Batch service will not reject the
-        /// job request; it will simply not run tasks until the pool exists.
-        /// You must specify either the pool ID or the auto pool specification,
+        /// You must ensure that the Pool referenced by this property exists.
+        /// If the Pool does not exist at the time the Batch service tries to
+        /// schedule a Job, no Tasks for the Job will run until you create a
+        /// Pool with that id. Note that the Batch service will not reject the
+        /// Job request; it will simply not run Tasks until the Pool exists.
+        /// You must specify either the Pool ID or the auto Pool specification,
         /// but not both.
         /// </remarks>
         [JsonProperty(PropertyName = "poolId")]
@@ -64,16 +64,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets characteristics for a temporary 'auto pool'. The Batch
-        /// service will create this auto pool when the job is submitted.
+        /// service will create this auto Pool when the Job is submitted.
         /// </summary>
         /// <remarks>
-        /// If auto pool creation fails, the Batch service moves the job to a
-        /// completed state, and the pool creation error is set in the job's
+        /// If auto Pool creation fails, the Batch service moves the Job to a
+        /// completed state, and the Pool creation error is set in the Job's
         /// scheduling error property. The Batch service manages the lifetime
         /// (both creation and, unless keepAlive is specified, deletion) of the
-        /// auto pool. Any user actions that affect the lifetime of the auto
-        /// pool while the job is active will result in unexpected behavior.
-        /// You must specify either the pool ID or the auto pool specification,
+        /// auto Pool. Any user actions that affect the lifetime of the auto
+        /// Pool while the Job is active will result in unexpected behavior.
+        /// You must specify either the Pool ID or the auto Pool specification,
         /// but not both.
         /// </remarks>
         [JsonProperty(PropertyName = "autoPoolSpecification")]

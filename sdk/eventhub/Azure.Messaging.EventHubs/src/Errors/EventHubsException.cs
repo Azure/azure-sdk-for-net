@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Errors
                     return base.Message;
                 }
 
-                return String.Format(CultureInfo.InvariantCulture, "{0}, ({1})", base.Message, ResourceName);
+                return String.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, ResourceName);
             }
         }
 

@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class BufferResponsePolicyTests: SyncAsyncPolicyTestBase
+    public class BufferResponsePolicyTests : SyncAsyncPolicyTestBase
     {
         public BufferResponsePolicyTests(bool isAsync) : base(isAsync) { }
 
@@ -71,6 +71,21 @@ namespace Azure.Core.Tests
             await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
 
             Assert.True(readTrackingStream.IsClosed);
+        }
+
+        [Test]
+        public async Task DoesntBufferWhenDisabled()
+        {
+            ReadTrackingStream readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = readTrackingStream
+            };
+
+            var mockTransport = CreateMockTransport(mockResponse);
+            Response response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared, bufferResponse: false);
+
+            Assert.IsNotInstanceOf<MemoryStream>(response.ContentStream);
         }
 
         private class ReadTrackingStream : Stream

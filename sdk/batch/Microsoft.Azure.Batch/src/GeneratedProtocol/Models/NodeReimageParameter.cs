@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Options for reimaging a compute node.
+    /// Options for reimaging a Compute Node.
     /// </summary>
     public partial class NodeReimageParameter
     {
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeReimageParameter class.
         /// </summary>
-        /// <param name="nodeReimageOption">When to reimage the compute node
-        /// and what to do with currently running tasks.</param>
+        /// <param name="nodeReimageOption">When to reimage the Compute Node
+        /// and what to do with currently running Tasks.</param>
         public NodeReimageParameter(ComputeNodeReimageOption? nodeReimageOption = default(ComputeNodeReimageOption?))
         {
             NodeReimageOption = nodeReimageOption;
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets when to reimage the compute node and what to do with
-        /// currently running tasks.
+        /// Gets or sets when to reimage the Compute Node and what to do with
+        /// currently running Tasks.
         /// </summary>
         /// <remarks>
         /// The default value is requeue. Possible values include: 'requeue',

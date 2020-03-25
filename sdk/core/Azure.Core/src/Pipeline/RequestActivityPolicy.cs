@@ -40,7 +40,9 @@ namespace Azure.Core.Pipeline
             var activity = new Activity("Azure.Core.Http.Request");
             activity.AddTag("http.method", message.Request.Method.Method);
             activity.AddTag("http.url", message.Request.UriBuilder.ToString());
-            if (message.Request.Headers.TryGetValue("User-Agent", out string userAgent))
+            activity.AddTag("requestId", message.Request.ClientRequestId);
+
+            if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
                 activity.AddTag("http.user_agent", userAgent);
             }
@@ -59,14 +61,15 @@ namespace Azure.Core.Pipeline
 
             if (isAsync)
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
             }
             else
             {
-                ProcessNext(message, pipeline);
+                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
             }
 
             activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
+            activity.AddTag("serviceRequestId", message.Response.Headers.RequestId);
 
             if (diagnosticSourceActivityEnabled)
             {
@@ -84,14 +87,14 @@ namespace Azure.Core.Pipeline
 
             if (currentActivity != null)
             {
-                if (currentActivity.IdFormat == ActivityIdFormat.W3C)
+                if (currentActivity.IsW3CFormat())
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
                         message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
-                        if (currentActivity.TraceStateString != null)
+                        if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
                         {
-                            message.Request.Headers.Add(TraceStateHeaderName, currentActivity.TraceStateString);
+                            message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
                     }
                 }

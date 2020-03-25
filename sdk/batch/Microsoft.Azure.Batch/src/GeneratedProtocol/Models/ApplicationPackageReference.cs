@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A reference to an application package to be deployed to compute nodes.
+    /// A reference to an Package to be deployed to Compute Nodes.
     /// </summary>
     public partial class ApplicationPackageReference
     {
@@ -58,11 +58,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the default version is deployed.
         /// </summary>
         /// <remarks>
-        /// If this is omitted on a pool, and no default version is specified
+        /// If this is omitted on a Pool, and no default version is specified
         /// for this application, the request fails with the error code
         /// InvalidApplicationPackageReferences and HTTP status code 409. If
-        /// this is omitted on a task, and no default version is specified for
-        /// this application, the task fails with a pre-processing error.
+        /// this is omitted on a Task, and no default version is specified for
+        /// this application, the Task fails with a pre-processing error.
         /// </remarks>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }

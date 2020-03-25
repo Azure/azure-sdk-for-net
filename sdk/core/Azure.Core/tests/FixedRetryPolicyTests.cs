@@ -10,14 +10,14 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class FixedRetryPolicyTests: RetryPolicyTestBase
+    public class FixedRetryPolicyTests : RetryPolicyTestBase
     {
         public FixedRetryPolicyTests(bool isAsync) : base(RetryMode.Fixed, isAsync) { }
 
         [Test]
         public async Task WaitsBetweenRetries()
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Fixed, delay: TimeSpan.FromSeconds(3));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
@@ -36,8 +36,8 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitsSameAmountEveryTime()
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
-            var policy = new RetryPolicyMock(RetryMode.Fixed,delay: TimeSpan.FromSeconds(3), maxRetries: 3);
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
+            var policy = new RetryPolicyMock(RetryMode.Fixed, delay: TimeSpan.FromSeconds(3), maxRetries: 3);
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests
         [TestCase(3, 2, 3)]
         public async Task UsesLargerOfDelayAndServerDelay(int delay, int retryAfter, int expected)
         {
-            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new[] { 500 });
             var policy = new RetryPolicyMock(RetryMode.Fixed, delay: TimeSpan.FromSeconds(delay));
             var mockTransport = CreateMockTransport();
             var task = SendGetRequest(mockTransport, policy, responseClassifier);

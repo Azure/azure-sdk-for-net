@@ -2,23 +2,50 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
     /// Elliptic Curve Cryptography (ECC) curve names.
     /// </summary>
-    [Flags]
-    public enum KeyCurveName : uint
+    public struct KeyCurveName
     {
-        P256 = 0x0001,
-        P384 = 0x0002,
-        P521 = 0x0004,
-        P256K = 0x0008,
-        Other = 0x0010,
+        private string _value;
 
-        All = uint.MaxValue
+        public KeyCurveName(string curveName)
+        {
+            _value = curveName;
+        }
+
+        public static readonly KeyCurveName P256 = new KeyCurveName("P-256");
+
+        public static readonly KeyCurveName P384 = new KeyCurveName("P-384");
+
+        public static readonly KeyCurveName P521 = new KeyCurveName("P-521");
+
+        public static readonly KeyCurveName P256K = new KeyCurveName("P-256K");
+
+        public override bool Equals(object obj)
+        {
+            return obj is KeyCurveName && string.CompareOrdinal(_value, ((KeyCurveName)obj)._value) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return _value;
+        }
+
+        public static bool operator ==(KeyCurveName a, KeyCurveName b) => a.Equals(b);
+
+        public static bool operator !=(KeyCurveName a, KeyCurveName b) => !a.Equals(b);
+
+        public static implicit operator KeyCurveName(string value) => new KeyCurveName(value);
+
+        public static implicit operator string(KeyCurveName o) => o._value;
+
     }
-
 }

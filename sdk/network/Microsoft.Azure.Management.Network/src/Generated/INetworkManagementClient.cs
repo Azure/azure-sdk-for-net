@@ -96,16 +96,6 @@ namespace Microsoft.Azure.Management.Network
         IAvailableResourceGroupDelegationsOperations AvailableResourceGroupDelegations { get; }
 
         /// <summary>
-        /// Gets the IAvailablePrivateEndpointTypesOperations.
-        /// </summary>
-        IAvailablePrivateEndpointTypesOperations AvailablePrivateEndpointTypes { get; }
-
-        /// <summary>
-        /// Gets the IAvailableResourceGroupPrivateEndpointTypesOperations.
-        /// </summary>
-        IAvailableResourceGroupPrivateEndpointTypesOperations AvailableResourceGroupPrivateEndpointTypes { get; }
-
-        /// <summary>
         /// Gets the IAzureFirewallsOperations.
         /// </summary>
         IAzureFirewallsOperations AzureFirewalls { get; }
@@ -201,14 +191,14 @@ namespace Microsoft.Azure.Management.Network
         IExpressRouteLinksOperations ExpressRouteLinks { get; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointsOperations.
+        /// Gets the IFirewallPoliciesOperations.
         /// </summary>
-        IPrivateEndpointsOperations PrivateEndpoints { get; }
+        IFirewallPoliciesOperations FirewallPolicies { get; }
 
         /// <summary>
-        /// Gets the IPrivateLinkServicesOperations.
+        /// Gets the IFirewallPolicyRuleGroupsOperations.
         /// </summary>
-        IPrivateLinkServicesOperations PrivateLinkServices { get; }
+        IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; }
 
         /// <summary>
         /// Gets the ILoadBalancersOperations.
@@ -314,6 +304,21 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointsOperations.
+        /// </summary>
+        IPrivateEndpointsOperations PrivateEndpoints { get; }
+
+        /// <summary>
+        /// Gets the IAvailablePrivateEndpointTypesOperations.
+        /// </summary>
+        IAvailablePrivateEndpointTypesOperations AvailablePrivateEndpointTypes { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkServicesOperations.
+        /// </summary>
+        IPrivateLinkServicesOperations PrivateLinkServices { get; }
 
         /// <summary>
         /// Gets the IPublicIPAddressesOperations.
@@ -426,6 +431,11 @@ namespace Microsoft.Azure.Management.Network
         IVpnSitesOperations VpnSites { get; }
 
         /// <summary>
+        /// Gets the IVpnSiteLinksOperations.
+        /// </summary>
+        IVpnSiteLinksOperations VpnSiteLinks { get; }
+
+        /// <summary>
         /// Gets the IVpnSitesConfigurationOperations.
         /// </summary>
         IVpnSitesConfigurationOperations VpnSitesConfiguration { get; }
@@ -449,6 +459,16 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVpnConnectionsOperations.
         /// </summary>
         IVpnConnectionsOperations VpnConnections { get; }
+
+        /// <summary>
+        /// Gets the IVpnSiteLinkConnectionsOperations.
+        /// </summary>
+        IVpnSiteLinkConnectionsOperations VpnSiteLinkConnections { get; }
+
+        /// <summary>
+        /// Gets the IVpnLinkConnectionsOperations.
+        /// </summary>
+        IVpnLinkConnectionsOperations VpnLinkConnections { get; }
 
         /// <summary>
         /// Gets the IP2sVpnServerConfigurationsOperations.

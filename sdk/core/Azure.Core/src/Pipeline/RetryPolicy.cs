@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,10 +45,10 @@ namespace Azure.Core.Pipeline
         private async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             int attempt = 0;
-            List<Exception> exceptions = null;
+            List<Exception>? exceptions = null;
             while (true)
             {
-                Exception lastException = null;
+                Exception? lastException = null;
 
                 try
                 {
@@ -87,7 +88,7 @@ namespace Azure.Core.Pipeline
                     else
                     {
                         // Rethrow a singular exception
-                        if (exceptions.Count == 1)
+                        if (exceptions?.Count == 1)
                         {
                             ExceptionDispatchInfo.Capture(lastException).Throw();
                         }
@@ -139,6 +140,11 @@ namespace Azure.Core.Pipeline
 
         protected virtual TimeSpan GetServerDelay(HttpPipelineMessage message)
         {
+            if (message.Response == null)
+            {
+                return TimeSpan.Zero;
+            }
+
             if (message.Response.TryGetHeader(RetryAfterMsHeaderName, out var retryAfterValue) ||
                 message.Response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
             {

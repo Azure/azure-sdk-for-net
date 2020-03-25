@@ -46,13 +46,19 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// event hub authorization rule.</param>
         /// <param name="eventHubName">The name of the event hub. If none is
         /// specified, the default event hub will be selected.</param>
-        /// <param name="metrics">the list of metric settings.</param>
-        /// <param name="logs">the list of logs settings.</param>
-        /// <param name="workspaceId">The workspace ID (resource ID of a Log
-        /// Analytics workspace) for a Log Analytics workspace to which you
-        /// would like to send Diagnostic Logs. Example:
+        /// <param name="metrics">The list of metric settings.</param>
+        /// <param name="logs">The list of logs settings.</param>
+        /// <param name="workspaceId">The full ARM resource ID of the Log
+        /// Analytics workspace to which you would like to send Diagnostic
+        /// Logs. Example:
         /// /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2</param>
-        public DiagnosticSettingsResource(string id = default(string), string name = default(string), string type = default(string), string storageAccountId = default(string), string serviceBusRuleId = default(string), string eventHubAuthorizationRuleId = default(string), string eventHubName = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string))
+        /// <param name="logAnalyticsDestinationType">A string indicating
+        /// whether the export to Log Analytics should use the default
+        /// destination type, i.e. AzureDiagnostics, or use a destination type
+        /// constructed as follows: &lt;normalized service
+        /// identity&gt;_&lt;normalized category name&gt;. Possible values are:
+        /// Dedicated and null (null is default.)</param>
+        public DiagnosticSettingsResource(string id = default(string), string name = default(string), string type = default(string), string storageAccountId = default(string), string serviceBusRuleId = default(string), string eventHubAuthorizationRuleId = default(string), string eventHubName = default(string), IList<MetricSettings> metrics = default(IList<MetricSettings>), IList<LogSettings> logs = default(IList<LogSettings>), string workspaceId = default(string), string logAnalyticsDestinationType = default(string))
             : base(id, name, type)
         {
             StorageAccountId = storageAccountId;
@@ -62,6 +68,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
             Metrics = metrics;
             Logs = logs;
             WorkspaceId = workspaceId;
+            LogAnalyticsDestinationType = logAnalyticsDestinationType;
             CustomInit();
         }
 
@@ -110,13 +117,23 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public IList<LogSettings> Logs { get; set; }
 
         /// <summary>
-        /// Gets or sets the workspace ID (resource ID of a Log Analytics
-        /// workspace) for a Log Analytics workspace to which you would like to
-        /// send Diagnostic Logs. Example:
+        /// Gets or sets the full ARM resource ID of the Log Analytics
+        /// workspace to which you would like to send Diagnostic Logs. Example:
         /// /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2
         /// </summary>
         [JsonProperty(PropertyName = "properties.workspaceId")]
         public string WorkspaceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a string indicating whether the export to Log
+        /// Analytics should use the default destination type, i.e.
+        /// AzureDiagnostics, or use a destination type constructed as follows:
+        /// &amp;lt;normalized service identity&amp;gt;_&amp;lt;normalized
+        /// category name&amp;gt;. Possible values are: Dedicated and null
+        /// (null is default.)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.logAnalyticsDestinationType")]
+        public string LogAnalyticsDestinationType { get; set; }
 
     }
 }

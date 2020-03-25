@@ -49,12 +49,12 @@ namespace Azure.Security.KeyVault.Keys
 
             if (DeletedDate.HasValue)
             {
-                json.WriteNumber(DeletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber(DeletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeSeconds());
             }
 
             if (ScheduledPurgeDate.HasValue)
             {
-                json.WriteNumber(ScheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber(ScheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeSeconds());
             }
         }
 
@@ -69,10 +69,10 @@ namespace Azure.Security.KeyVault.Keys
                         RecoveryId = prop.Value.GetString();
                         break;
                     case DeletedDatePropertyName:
-                        DeletedDate = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case ScheduledPurgeDatePropertyName:
-                        ScheduledPurgeDate = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                 }
             }

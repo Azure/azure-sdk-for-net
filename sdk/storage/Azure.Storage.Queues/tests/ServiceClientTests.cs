@@ -53,6 +53,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task GetQueuesAsync_MaxResults()
         {
             var service = this.GetServiceClient_SharedKey();
@@ -63,7 +64,7 @@ namespace Azure.Storage.Queues.Test
                     service.GetQueuesAsync()
                     .ByPage(pageSizeHint: 1)
                     .FirstAsync();
-                Assert.AreEqual(1, page.Values.Length);
+                Assert.AreEqual(1, page.Values.Count);
             }
         }
 
@@ -103,6 +104,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        [AsyncOnly]
         public async Task GetQueuesAsync_Error()
         {
             var service = this.GetServiceClient_SharedKey();

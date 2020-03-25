@@ -22,14 +22,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum SchedulingState
     {
         /// <summary>
-        /// Tasks can be scheduled on the node.
+        /// Tasks can be scheduled on the Compute Node.
         /// </summary>
         [EnumMember(Value = "enabled")]
         Enabled,
         /// <summary>
-        /// No new tasks will be scheduled on the node. Tasks already running
-        /// on the node may still run to completion. All nodes start with
-        /// scheduling enabled.
+        /// No new Tasks will be scheduled on the Compute Node. Tasks already
+        /// running on the Compute Node may still run to completion. All
+        /// Compute Nodes start with scheduling enabled.
         /// </summary>
         [EnumMember(Value = "disabled")]
         Disabled

@@ -1008,6 +1008,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             await this.ReceiveLinkManager.CloseAsync().ConfigureAwait(false);
             await this.RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
+            this.requestResponseLockedMessages.Close();
         }
 
         protected virtual async Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)

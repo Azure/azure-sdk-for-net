@@ -45,11 +45,11 @@ namespace Azure.Security.KeyVault.Keys
             Hsm = hsm;
             if(hsm)
             {
-                KeyType = KeyType.EllipticCurveHsm;
+                KeyType = KeyType.EcHsm;
             }
             else
             {
-                KeyType = KeyType.EllipticCurve;
+                KeyType = KeyType.Ec;
             }
 
             if (curveName.HasValue)

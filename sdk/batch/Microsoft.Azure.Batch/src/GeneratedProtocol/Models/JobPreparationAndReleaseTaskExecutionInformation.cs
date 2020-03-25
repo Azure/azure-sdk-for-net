@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The status of the Job Preparation and Job Release tasks on a compute
-    /// node.
+    /// The status of the Job Preparation and Job Release Tasks on a Compute
+    /// Node.
     /// </summary>
     public partial class JobPreparationAndReleaseTaskExecutionInformation
     {
@@ -32,18 +32,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// JobPreparationAndReleaseTaskExecutionInformation class.
         /// </summary>
-        /// <param name="poolId">The ID of the pool containing the compute node
+        /// <param name="poolId">The ID of the Pool containing the Compute Node
         /// to which this entry refers.</param>
-        /// <param name="nodeId">The ID of the compute node to which this entry
+        /// <param name="nodeId">The ID of the Compute Node to which this entry
         /// refers.</param>
-        /// <param name="nodeUrl">The URL of the compute node to which this
+        /// <param name="nodeUrl">The URL of the Compute Node to which this
         /// entry refers.</param>
         /// <param name="jobPreparationTaskExecutionInfo">Information about the
-        /// execution status of the Job Preparation task on this compute
-        /// node.</param>
+        /// execution status of the Job Preparation Task on this Compute
+        /// Node.</param>
         /// <param name="jobReleaseTaskExecutionInfo">Information about the
-        /// execution status of the Job Release task on this compute
-        /// node.</param>
+        /// execution status of the Job Release Task on this Compute
+        /// Node.</param>
         public JobPreparationAndReleaseTaskExecutionInformation(string poolId = default(string), string nodeId = default(string), string nodeUrl = default(string), JobPreparationTaskExecutionInformation jobPreparationTaskExecutionInfo = default(JobPreparationTaskExecutionInformation), JobReleaseTaskExecutionInformation jobReleaseTaskExecutionInfo = default(JobReleaseTaskExecutionInformation))
         {
             PoolId = poolId;
@@ -60,20 +60,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the pool containing the compute node to
+        /// Gets or sets the ID of the Pool containing the Compute Node to
         /// which this entry refers.
         /// </summary>
         [JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
-        /// Gets or sets the ID of the compute node to which this entry refers.
+        /// Gets or sets the ID of the Compute Node to which this entry refers.
         /// </summary>
         [JsonProperty(PropertyName = "nodeId")]
         public string NodeId { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL of the compute node to which this entry
+        /// Gets or sets the URL of the Compute Node to which this entry
         /// refers.
         /// </summary>
         [JsonProperty(PropertyName = "nodeUrl")]
@@ -81,18 +81,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets information about the execution status of the Job
-        /// Preparation task on this compute node.
+        /// Preparation Task on this Compute Node.
         /// </summary>
         [JsonProperty(PropertyName = "jobPreparationTaskExecutionInfo")]
         public JobPreparationTaskExecutionInformation JobPreparationTaskExecutionInfo { get; set; }
 
         /// <summary>
         /// Gets or sets information about the execution status of the Job
-        /// Release task on this compute node.
+        /// Release Task on this Compute Node.
         /// </summary>
         /// <remarks>
-        /// This property is set only if the Job Release task has run on the
-        /// node.
+        /// This property is set only if the Job Release Task has run on the
+        /// Compute Node.
         /// </remarks>
         [JsonProperty(PropertyName = "jobReleaseTaskExecutionInfo")]
         public JobReleaseTaskExecutionInformation JobReleaseTaskExecutionInfo { get; set; }

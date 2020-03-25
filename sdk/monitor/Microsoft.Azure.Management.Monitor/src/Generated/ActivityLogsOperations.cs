@@ -87,8 +87,12 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EventData>>> ListWithHttpMessagesAsync(ODataQuery<EventData> odataQuery = default(ODataQuery<EventData>), string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<EventData>>> ListWithHttpMessagesAsync(ODataQuery<EventData> odataQuery, string select = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (odataQuery == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "odataQuery");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");

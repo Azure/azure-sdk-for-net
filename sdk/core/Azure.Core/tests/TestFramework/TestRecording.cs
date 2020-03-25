@@ -13,7 +13,7 @@ namespace Azure.Core.Testing
     public class TestRecording : IDisposable
     {
         private const string RandomSeedVariableKey = "RandomSeed";
-        private const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
+        internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
         public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
         {
@@ -177,7 +177,7 @@ namespace Azure.Core.Testing
             Dispose(true);
         }
 
-        public T InstrumentClientOptions<T>(T clientOptions) where T: ClientOptions
+        public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
         {
             clientOptions.Transport = CreateTransport(clientOptions.Transport);
             return clientOptions;
@@ -283,7 +283,7 @@ namespace Azure.Core.Testing
             return new DisableRecordingScope(this);
         }
 
-        public struct DisableRecordingScope: IDisposable
+        public struct DisableRecordingScope : IDisposable
         {
             private readonly TestRecording _testRecording;
 

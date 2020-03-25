@@ -133,8 +133,8 @@ namespace Azure.Core.Tests
             uriBuilder.Host = "localhost";
             uriBuilder.Port = 80;
             uriBuilder.Query = initialQuery;
-            uriBuilder.AppendQuery("a","b");
-            uriBuilder.AppendQuery("c","d");
+            uriBuilder.AppendQuery("a", "b");
+            uriBuilder.AppendQuery("c", "d");
 
             Assert.AreEqual(expectedResult, uriBuilder.Uri.ToString());
         }
@@ -162,7 +162,7 @@ namespace Azure.Core.Tests
         {
             var uriBuilder = new RequestUriBuilder();
             uriBuilder.Uri = new Uri("http://localhost/");
-            uriBuilder.AppendQuery("a","b");
+            uriBuilder.AppendQuery("a", "b");
 
             Assert.AreEqual("http://localhost/?a=b", uriBuilder.Uri.ToString());
         }

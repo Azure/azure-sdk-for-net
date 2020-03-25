@@ -82,15 +82,40 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="additionalLocations">Additional datacenter locations
         /// of the API Management service.</param>
         /// <param name="customProperties">Custom properties of the API
-        /// Management service. Setting
+        /// Management service.&lt;/br&gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168`
         /// will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all
-        /// TLS(1.0, 1.1 and 1.2). Setting
+        /// TLS(1.0, 1.1 and 1.2).&lt;/br&gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11`
-        /// can be used to disable just TLS 1.1 and setting
+        /// can be used to disable just TLS 1.1.&lt;/br&gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10`
         /// can be used to disable TLS 1.0 on an API Management
-        /// service.</param>
+        /// service.&lt;/br&gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11`
+        /// can be used to disable just TLS 1.1 for communications with
+        /// backends.&lt;/br&gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10`
+        /// can be used to disable TLS 1.0 for communications with
+        /// backends.&lt;/br&gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2`
+        /// can be used to enable HTTP2 protocol on an API Management
+        /// service.&lt;/br&gt;Not specifying any of these properties on PATCH
+        /// operation will reset omitted properties' values to their defaults.
+        /// For all the settings except Http2 the default value is `True` if
+        /// the service was created on or before April 1st 2018 and `False`
+        /// otherwise. Http2 setting's default value is
+        /// `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of next ciphers
+        /// by using settings
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`:
+        /// TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+        /// TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+        /// TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+        /// TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+        /// TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256,
+        /// TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA,
+        /// TLS_RSA_WITH_AES_128_CBC_SHA. For example,
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`.
+        /// The default value is `true` for them.</param>
         /// <param name="certificates">List of Certificates that need to be
         /// installed in the API Management service. Max supported certificates
         /// that can be installed is 10.</param>
@@ -245,15 +270,41 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IList<AdditionalLocation> AdditionalLocations { get; set; }
 
         /// <summary>
-        /// Gets or sets custom properties of the API Management service.
-        /// Setting
+        /// Gets or sets custom properties of the API Management
+        /// service.&amp;lt;/br&amp;gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168`
         /// will disable the cipher TLS_RSA_WITH_3DES_EDE_CBC_SHA for all
-        /// TLS(1.0, 1.1 and 1.2). Setting
+        /// TLS(1.0, 1.1 and 1.2).&amp;lt;/br&amp;gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11`
-        /// can be used to disable just TLS 1.1 and setting
+        /// can be used to disable just TLS 1.1.&amp;lt;/br&amp;gt;Setting
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10`
-        /// can be used to disable TLS 1.0 on an API Management service.
+        /// can be used to disable TLS 1.0 on an API Management
+        /// service.&amp;lt;/br&amp;gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11`
+        /// can be used to disable just TLS 1.1 for communications with
+        /// backends.&amp;lt;/br&amp;gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10`
+        /// can be used to disable TLS 1.0 for communications with
+        /// backends.&amp;lt;/br&amp;gt;Setting
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2`
+        /// can be used to enable HTTP2 protocol on an API Management
+        /// service.&amp;lt;/br&amp;gt;Not specifying any of these properties
+        /// on PATCH operation will reset omitted properties' values to their
+        /// defaults. For all the settings except Http2 the default value is
+        /// `True` if the service was created on or before April 1st 2018 and
+        /// `False` otherwise. Http2 setting's default value is
+        /// `False`.&amp;lt;/br&amp;gt;&amp;lt;/br&amp;gt;You can disable any
+        /// of next ciphers by using settings
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`:
+        /// TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+        /// TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
+        /// TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+        /// TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+        /// TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA256,
+        /// TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA,
+        /// TLS_RSA_WITH_AES_128_CBC_SHA. For example,
+        /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`.
+        /// The default value is `true` for them.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customProperties")]
         public IDictionary<string, string> CustomProperties { get; set; }

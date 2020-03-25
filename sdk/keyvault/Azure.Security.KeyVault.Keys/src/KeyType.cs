@@ -7,74 +7,84 @@ using System;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Supported JsonWebKey key types (kty)
+    /// <see cref="JsonWebKey"/> key types.
     /// </summary>
-    public enum KeyType : uint
+    public struct KeyType : IEquatable<KeyType>
     {
-        /// <summary>
-        /// Cryptographic algorithm Elliptic Curve
-        /// </summary>
-        EllipticCurve = 0x0001,
-        /// <summary>
-        /// Cryptographic algorithm Elliptic Curve HSM
-        /// </summary>
-        EllipticCurveHsm = 0x0002,
-        /// <summary>
-        /// Cryptographic algorithm RSA
-        /// </summary>
-        Rsa = 0x0004,
-        /// <summary>
-        /// Cryptographic algorithm RSA HSM
-        /// </summary>
-        RsaHsm = 0x0008,
-        /// <summary>
-        /// Cryptographic algorithm Octet
-        /// </summary>
-        Octet = 0x0010,
-        /// <summary>
-        /// Other type of cyptographic algorithm 
-        /// </summary>
-        Other = 0x0020,
-    }
+        private readonly string _value;
 
-    internal static class KeyTypeExtensions
-    {
-        internal static KeyType ParseFromString(string value)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyType"/> structure.
+        /// </summary>
+        /// <param name="value"></param>
+        public KeyType(string value)
         {
-            switch (value)
-            {
-                case "EC":
-                    return KeyType.EllipticCurve;
-                case "EC-HSM":
-                    return KeyType.EllipticCurveHsm;
-                case "RSA":
-                    return KeyType.Rsa;
-                case "RSA-HSM":
-                    return KeyType.RsaHsm;
-                case "oct":
-                    return KeyType.Octet;
-                default:
-                    return KeyType.Other;
-            }
+            _value = value;
         }
 
-        internal static string AsString(KeyType keyType)
-        {
-            switch (keyType)
-            {
-                case KeyType.EllipticCurve:
-                    return "EC";
-                case KeyType.EllipticCurveHsm:
-                    return "EC-HSM";
-                case KeyType.Rsa:
-                    return "RSA";
-                case KeyType.RsaHsm:
-                    return "RSA-HSM";
-                case KeyType.Octet:
-                    return "oct";
-                default:
-                    return string.Empty;
-            }
-        }
+        /// <summary>
+        /// Elliptic curve cryptographic algorithm.
+        /// </summary>
+        public static readonly KeyType Ec = new KeyType("EC");
+
+        /// <summary>
+        /// Elliptic curve cryptographic algorithm backed by HSM.
+        /// </summary>
+        public static readonly KeyType EcHsm = new KeyType("EC-HSM");
+
+        /// <summary>
+        /// RSA cryptographic algorithm.
+        /// </summary>
+        public static readonly KeyType Rsa = new KeyType("RSA");
+
+        /// <summary>
+        /// RSA cryptographic algorithm backed by HSM.
+        /// </summary>
+        public static readonly KeyType RsaHsm = new KeyType("RSA-HSM");
+
+        /// <summary>
+        /// AES cryptographic algorithm.
+        /// </summary>
+        public static readonly KeyType Oct = new KeyType("oct");
+
+        /// <summary>
+        /// Determines if two <see cref="KeyType"/> values are the same.
+        /// </summary>
+        /// <param name="a">The first <see cref="KeyType"/> to compare.</param>
+        /// <param name="b">The second <see cref="KeyType"/> to compare.</param>
+        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(KeyType a, KeyType b) => a.Equals(b);
+
+        /// <summary>
+        /// Determines if two <see cref="KeyType"/> values are different.
+        /// </summary>
+        /// <param name="a">The first <see cref="KeyType"/> to compare.</param>
+        /// <param name="b">The second <see cref="KeyType"/> to compare.</param>
+        /// <returns>True if <paramref name="a"/> and <paramref name="b"/> are different; otherwise, false.</returns>
+        public static bool operator !=(KeyType a, KeyType b) => !a.Equals(b);
+
+        /// <summary>
+        /// Converts a string to a <see cref="KeyType"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        public static implicit operator KeyType(string value) => new KeyType(value);
+
+        /// <summary>
+        /// Converts a <see cref="KeyType"/> to a string.
+        /// </summary>
+        /// <param name="value">The <see cref="KeyType"/> to convert.</param>
+        public static implicit operator string(KeyType value) => value._value;
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj) => obj is KeyType other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(KeyType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+        /// <inheritdoc/>
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

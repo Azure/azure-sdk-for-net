@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -13,7 +14,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// <summary>
     /// Sample demonstrates how to set, get, update and delete a secret using the synchronous methods of the SecretClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class HelloWorld
     {
         [Test]

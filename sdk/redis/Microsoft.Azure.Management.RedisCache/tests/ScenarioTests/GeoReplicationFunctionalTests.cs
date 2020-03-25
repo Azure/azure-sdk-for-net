@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -17,7 +17,7 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void GeoReplicationFunctionalTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceGroupName = TestUtilities.GenerateName("RedisGeo");
                 var redisCacheName1 = TestUtilities.GenerateName("RedisGeo1");
@@ -143,3 +143,4 @@ namespace AzureRedisCache.Tests
         }
     }
 }
+

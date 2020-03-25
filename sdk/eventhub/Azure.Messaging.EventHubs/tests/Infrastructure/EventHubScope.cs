@@ -4,16 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
-using System.Security.Authentication;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest;
-using Polly;
 
 namespace Azure.Messaging.EventHubs.Tests.Infrastructure
 {
@@ -26,28 +22,10 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
     ///
     public sealed class EventHubScope : IAsyncDisposable
     {
-        /// <summary>The maximum number of attempts to retry a management operation.</summary>
-        private const int RetryMaximumAttemps = 8;
+        /// <summary>The manager for common live test resource operations.</summary>
+        private static readonly LiveResourceManager ResourceManager = new LiveResourceManager();
 
-        /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
-        private const double RetryExponentialBackoffSeconds = 0.5;
-
-        /// <summary>The number of seconds to use as the basis for applying jitter to retry backoff calculations.</summary>
-        private const double RetryBaseJitterSeconds = 3.0;
-
-        /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
-        private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
-
-        /// <summary>The random number generator to use for each requesting thread.</summary>
-        private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
-
-        /// <summary>The seed to use for random number generation.</summary>
-        private static int s_randomSeed = Environment.TickCount;
-
-        /// <summary>The token credential to be used with the Event Hubs management client.</summary>
-        private static ManagementToken s_managementToken;
-
-        /// <summary>Serves as a sentinal flag to denote when the instance has been disposed.</summary>
+        /// <summary>Serves as a sentinel flag to denote when the instance has been disposed.</summary>
         private bool _disposed = false;
 
         /// <summary>
@@ -91,12 +69,21 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
 
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var eventHubNamespace = TestEnvironment.EventHubsNamespace;
-            var token = await AquireManagementTokenAsync();
+            var token = await ResourceManager.AquireManagementTokenAsync();
             var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription };
 
             try
             {
-                await CreateRetryPolicy().ExecuteAsync(() => client.EventHubs.DeleteAsync(resourceGroup, eventHubNamespace, EventHubName));
+                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.EventHubs.DeleteAsync(resourceGroup, eventHubNamespace, EventHubName));
+            }
+            catch
+            {
+                // This should not be considered a critical failure that results in a test failure.  Due
+                // to ARM being temperamental, some management operations may be rejected.  Throwing here
+                // does not help to ensure resource cleanup only flags the test itself as a failure.
+                //
+                // If an Event Hub fails to be deleted, removing of the associated namespace at the end of the
+                // test run will also remove the orphan.
             }
             finally
             {
@@ -139,159 +126,112 @@ namespace Azure.Messaging.EventHubs.Tests.Infrastructure
         /// <param name="consumerGroups">The set of consumer groups to create and associate with the Event Hub; the default consumer group should not be included, as it is implicitly created.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
         ///
+        /// <returns>The <see cref="EventHubScope" /> in which the test should be executed.</returns>
+        ///
         public static async Task<EventHubScope> CreateAsync(int partitionCount,
                                                             IEnumerable<string> consumerGroups,
                                                             [CallerMemberName] string caller = "")
         {
-            var eventHubName = $"{ caller }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
+            caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
+
             var groups = (consumerGroups ?? Enumerable.Empty<string>()).ToList();
             var resourceGroup = TestEnvironment.EventHubsResourceGroup;
             var eventHubNamespace = TestEnvironment.EventHubsNamespace;
-            var token = await AquireManagementTokenAsync();
-            var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription };
+            var token = await ResourceManager.AquireManagementTokenAsync();
 
-            try
+            string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
+
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription })
             {
-                var eventHub = new Eventhub(name: eventHubName, partitionCount: partitionCount);
-                await CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, eventHubName, eventHub));
+                var eventHub = new Eventhub(partitionCount: partitionCount);
+                eventHub = await ResourceManager.CreateRetryPolicy<Eventhub>().ExecuteAsync(() => client.EventHubs.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, CreateName(), eventHub));
 
-                var consumerPolicy = CreateRetryPolicy<ConsumerGroup>();
+                var consumerPolicy = ResourceManager.CreateRetryPolicy<ConsumerGroup>();
 
                 await Task.WhenAll
                 (
                     consumerGroups.Select(groupName =>
                     {
                         var group = new ConsumerGroup(name: groupName);
-                        return consumerPolicy.ExecuteAsync(() => client.ConsumerGroups.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, eventHubName, groupName, group));
+                        return consumerPolicy.ExecuteAsync(() => client.ConsumerGroups.CreateOrUpdateAsync(resourceGroup, eventHubNamespace, eventHub.Name, groupName, group));
                     })
                 );
-            }
-            finally
-            {
-                client?.Dispose();
-            }
 
-            return new EventHubScope(eventHubName, groups);
+                return new EventHubScope(eventHub.Name, groups);
+            }
         }
 
         /// <summary>
-        ///   Creates the retry policy to apply to a management operation.
+        ///   Performs the tasks needed to create a new Event Hubs namespace within a resource group, intended to be used as
+        ///   an ephemeral container for the Event Hub instances used in a given test run.
         /// </summary>
         ///
-        /// <typeparam name="T">The expected type of response from the management operation.</typeparam>
+        /// <returns>The key attributes for identifying and accessing a dynamically created Event Hubs namespace.</returns>
         ///
-        /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
-        /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
-        ///
-        /// <returns>The retry policy in which to execute the management operation.</returns>
-        ///
-        private static IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttemps, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
-           Policy<T>
-               .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-               .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
-
-        /// <summary>
-        ///   Creates the retry policy to apply to a management operation.
-        /// </summary>
-        ///
-        /// <param name="maxRetryAttempts">The maximum retry attempts to allow.</param>
-        /// <param name="exponentialBackoffSeconds">The number of seconds to use as the basis for backing off on retry attempts.</param>
-        /// <param name="baseJitterSeconds">TThe number of seconds to use as the basis for applying jitter to retry backoff calculations.</param>
-        ///
-        /// <returns>The retry policy in which to execute the management operation.</returns>
-        ///
-        private static IAsyncPolicy CreateRetryPolicy(int maxRetryAttempts = RetryMaximumAttemps, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
-            Policy
-                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
-
-        /// <summary>
-        ///   Determines whether the specified HTTP status code is considered eligible to retry
-        ///   the associated operation.
-        /// </summary>
-        ///
-        /// <param name="statusCode">The status code to consider.</param>
-        ///
-        /// <returns><c>true</c> if the status code is eligible for retries; otherwise, <c>false</c>.</returns>
-        ///
-        private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
-            ((statusCode == HttpStatusCode.Unauthorized)
-                || (statusCode == HttpStatusCode.InternalServerError)
-                || (statusCode == HttpStatusCode.ServiceUnavailable)
-                || (statusCode == HttpStatusCode.Conflict)
-                || (statusCode == HttpStatusCode.GatewayTimeout));
-
-        /// <summary>
-        ///   Calculates the retry delay to use for management-related operations.
-        /// </summary>
-        ///
-        /// <param name="attempt">The current attempt numner.</param>
-        /// <param name="exponentialBackoffSeconds">The exponential backoff amount,, in seconds.</param>
-        /// <param name="baseJitterSeconds">The amount of base jitter to include, in seconds.</param>
-        ///
-        /// <returns>The interval to wait before retrying the attempted operation.</returns>
-        ///
-        private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
-            TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds));
-
-        /// <summary>
-        ///   Aquires a JWT token for use with the Event Hubs management client.
-        /// </summary>
-        ///
-        /// <returns>The token to use for management operations against the Event Hubs Live test namespace.</returns>
-        ///
-        private static async Task<string> AquireManagementTokenAsync()
+        public static async Task<NamespaceProperties> CreateNamespaceAsync()
         {
-            var token = s_managementToken;
+            var subscription = TestEnvironment.EventHubsSubscription;
+            var resourceGroup = TestEnvironment.EventHubsResourceGroup;
+            var token = await ResourceManager.AquireManagementTokenAsync();
 
-            // If there was no current token, or it is within the buffer for expiration, request a new token.
-            // There is a benign race condition here, where there may be multiple requests in-flight for a new token.  Since
-            // this is test infrastructure, just allow the aquired token to replace the current one without attempting to
-            // coordinate or ensure that the most recent is kept.
+            string CreateName() => $"net-eventhubs-{ Guid.NewGuid().ToString("D") }";
 
-            if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
             {
-                var credential = new ClientCredential(TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ TestEnvironment.EventHubsTenant }");
-                var result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
+                var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
 
-                if ((String.IsNullOrEmpty(result?.AccessToken)))
-                {
-                    throw new AuthenticationException("Unable to aquire an Active Directory token for the Event Hubs management client.");
-                }
+                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: ResourceManager.GenerateTags(), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
+                eventHubsNamespace = await ResourceManager.CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
 
-                token = new ManagementToken(result.AccessToken, result.ExpiresOn);
-                Interlocked.Exchange(ref s_managementToken, token);
+                var accessKey = await ResourceManager.CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, TestEnvironment.EventHubsDefaultSharedAccessKey));
+                return new NamespaceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
             }
-
-            return token.Token;
         }
 
         /// <summary>
-        ///   An internal type for tracking the management access token and
-        ///   its associated expiration.
+        ///   Performs the tasks needed to remove an ephemeral Event Hubs namespace used as a container for Event Hub instances
+        ///   for a specific test run.
         /// </summary>
         ///
-        private class ManagementToken
+        /// <param name="namespaceName">The name of the namespace to delete.</param>
+        ///
+        public static async Task DeleteNamespaceAsync(string namespaceName)
         {
-            /// <summary>The value bearer token to use for authorization.</summary>
-            public readonly string Token;
+            var subscription = TestEnvironment.EventHubsSubscription;
+            var resourceGroup = TestEnvironment.EventHubsResourceGroup;
+            var token = await ResourceManager.AquireManagementTokenAsync();
 
-            /// <summary>The date and time, in UTC, that the token expires.</summary>
-            public readonly DateTimeOffset ExpiresOn;
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            {
+                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
+            }
+        }
+
+        /// <summary>
+        ///   The key attributes for identifying and accessing a dynamically created Event Hubs namespace,
+        ///   intended to serve as an ephemeral container for the Event Hub instances used during a test run.
+        /// </summary>
+        ///
+        public struct NamespaceProperties
+        {
+            /// <summary>The name of the Event Hubs namespace that was dynamically created.</summary>
+            public readonly string Name;
+
+            /// <summary>The connection string to use for accessing the dynamically created namespace.</summary>
+            public readonly string ConnectionString;
 
             /// <summary>
-            ///   Initializes a new instance of the <see cref="ManagementToken"/> class.
+            ///   Initializes a new instance of the <see cref="NamespaceProperties"/> struct.
             /// </summary>
             ///
-            /// <param name="token">The value of the bearer token.</param>
-            /// <param name="expiresOn">The date and time, in UTC, that the token expires on.</param>
+            /// <param name="name">The name of the namespace.</param>
+            /// <param name="connectionString">The connection string to use for accessing the namespace.</param>
             ///
-            public ManagementToken(string token, DateTimeOffset expiresOn)
+            internal NamespaceProperties(string name,
+                                         string connectionString)
             {
-                Token = token;
-                ExpiresOn = expiresOn;
+                Name = name;
+                ConnectionString = connectionString;
             }
         }
     }

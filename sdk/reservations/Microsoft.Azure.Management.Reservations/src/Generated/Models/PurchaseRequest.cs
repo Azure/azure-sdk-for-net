@@ -34,7 +34,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="location">The Azure Region where the reserved resource
         /// lives.</param>
         /// <param name="reservedResourceType">Possible values include:
-        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb'</param>
+        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb',
+        /// 'RedHat', 'SqlDataWarehouse', 'VMwareCloudSimple',
+        /// 'RedHatOsa'</param>
         /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
         /// <param name="displayName">Friendly name of the Reservation</param>
         /// <param name="appliedScopeType">Possible values include: 'Single',
@@ -42,7 +44,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="reservedResourceProperties">Properties specific to
         /// each reserved resource type. Not required if not
         /// applicable.</param>
-        public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default(PurchaseRequestPropertiesReservedResourceProperties))
+        public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), bool? renew = default(bool?), PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default(PurchaseRequestPropertiesReservedResourceProperties))
         {
             Sku = sku;
             Location = location;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
             DisplayName = displayName;
             AppliedScopeType = appliedScopeType;
             AppliedScopes = appliedScopes;
+            Renew = renew;
             ReservedResourceProperties = reservedResourceProperties;
             CustomInit();
         }
@@ -75,7 +78,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'VirtualMachines',
-        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb'
+        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat',
+        /// 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
         /// </summary>
         [JsonProperty(PropertyName = "properties.reservedResourceType")]
         public string ReservedResourceType { get; set; }
@@ -112,6 +116,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.appliedScopes")]
         public IList<string> AppliedScopes { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.renew")]
+        public bool? Renew { get; set; }
 
         /// <summary>
         /// Gets or sets properties specific to each reserved resource type.

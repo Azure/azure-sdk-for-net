@@ -44,7 +44,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// trigger run. Name, value pair depends on type of trigger.</param>
         /// <param name="triggeredPipelines">List of pipeline name and run Id
         /// triggered by the trigger run.</param>
-        public TriggerRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string triggerRunId = default(string), string triggerName = default(string), string triggerType = default(string), System.DateTime? triggerRunTimestamp = default(System.DateTime?), string status = default(string), string message = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>), IDictionary<string, string> triggeredPipelines = default(IDictionary<string, string>))
+        /// <param name="runDimension">Run dimension for which trigger was
+        /// fired.</param>
+        /// <param name="dependencyStatus">Status of the upstream
+        /// pipelines.</param>
+        public TriggerRun(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string triggerRunId = default(string), string triggerName = default(string), string triggerType = default(string), System.DateTime? triggerRunTimestamp = default(System.DateTime?), string status = default(string), string message = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>), IDictionary<string, string> triggeredPipelines = default(IDictionary<string, string>), IDictionary<string, string> runDimension = default(IDictionary<string, string>), IDictionary<string, object> dependencyStatus = default(IDictionary<string, object>))
         {
             AdditionalProperties = additionalProperties;
             TriggerRunId = triggerRunId;
@@ -55,6 +59,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Message = message;
             Properties = properties;
             TriggeredPipelines = triggeredPipelines;
+            RunDimension = runDimension;
+            DependencyStatus = dependencyStatus;
             CustomInit();
         }
 
@@ -119,6 +125,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "triggeredPipelines")]
         public IDictionary<string, string> TriggeredPipelines { get; private set; }
+
+        /// <summary>
+        /// Gets run dimension for which trigger was fired.
+        /// </summary>
+        [JsonProperty(PropertyName = "runDimension")]
+        public IDictionary<string, string> RunDimension { get; private set; }
+
+        /// <summary>
+        /// Gets status of the upstream pipelines.
+        /// </summary>
+        [JsonProperty(PropertyName = "dependencyStatus")]
+        public IDictionary<string, object> DependencyStatus { get; private set; }
 
     }
 }

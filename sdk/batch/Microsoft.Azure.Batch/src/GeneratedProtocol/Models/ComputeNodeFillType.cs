@@ -22,14 +22,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum ComputeNodeFillType
     {
         /// <summary>
-        /// Tasks should be assigned evenly across all nodes in the pool.
+        /// Tasks should be assigned evenly across all Compute Nodes in the
+        /// Pool.
         /// </summary>
         [EnumMember(Value = "spread")]
         Spread,
         /// <summary>
-        /// As many tasks as possible (maxTasksPerNode) should be assigned to
-        /// each node in the pool before any tasks are assigned to the next
-        /// node in the pool.
+        /// As many Tasks as possible (maxTasksPerNode) should be assigned to
+        /// each Compute Node in the Pool before any Tasks are assigned to the
+        /// next Compute Node in the Pool.
         /// </summary>
         [EnumMember(Value = "pack")]
         Pack

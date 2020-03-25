@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         internal XElement Serialize()
         {
             var rules = new XElement(
-                XName.Get("AuthorizationRules", ManagementClientConstants.SbNs),
+                XName.Get("AuthorizationRules", ManagementClientConstants.ServiceBusNamespace),
                 this.Select(rule => rule.Serialize()));
 
             return rules;
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         internal static AuthorizationRules ParseFromXElement(XElement xElement)
         {
             var rules = new AuthorizationRules();
-            var xRules = xElement.Elements(XName.Get("AuthorizationRule", ManagementClientConstants.SbNs));
+            var xRules = xElement.Elements(XName.Get("AuthorizationRule", ManagementClientConstants.ServiceBusNamespace));
             rules.AddRange(xRules.Select(rule => AuthorizationRule.ParseFromXElement(rule)));
             return rules;
         }

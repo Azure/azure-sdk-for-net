@@ -19,7 +19,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
         [MemberData(nameof(AggregatedIntervalMultiSegmentMetric))]
         public async Task GetMetrics(MetricsPostBodySchema metric, bool hasInterval, bool isSegmented)
         {
-            using (var ctx = MockContext.Start(GetType().FullName, $"GetMetrics.{metric.Id}"))
+            using (var ctx = MockContext.Start(this.GetType(), $"GetMetrics.{metric.Id}"))
             {
                 var metricRequest = new List<MetricsPostBodySchema>
                 {
@@ -80,7 +80,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             }
             else
             {
-                for (var i=0; i<expected.Parameters.Segment.Count; i++)
+                for (var i = 0; i < expected.Parameters.Segment.Count; i++)
                 {
                     var segmentName = expected.Parameters.Segment[i];
                     Assert.Equal(segmentName, segmentInfo[i].Key);

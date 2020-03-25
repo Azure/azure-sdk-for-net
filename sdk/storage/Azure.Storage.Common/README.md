@@ -1,6 +1,6 @@
 # Azure Storage Common client library for .NET
 
-> Server Version: 2018-11-09
+> Server Version: 2019-02-02
 
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
@@ -20,9 +20,9 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.Common` client library will be included:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.1
-dotnet add package Azure.Storage.Queues --version 12.0.0-preview.1
-dotnet add package Azure.Storage.Files --version 12.0.0-preview.1
+dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.3
+dotnet add package Azure.Storage.Queues --version 12.0.0-preview.3
+dotnet add package Azure.Storage.Files --version 12.0.0-preview.3
 ```
 
 ### Prerequisites
@@ -58,6 +58,9 @@ Get started with our [Common samples][samples] and then continue on with our [Bl
 
 ## Contributing
 
+See the [Storage CONTRIBUTING.md][storage_contrib] for details on building,
+testing, and contributing to these libraries.
+
 This project welcomes contributions and suggestions.  Most contributions require
 you to agree to a Contributor License Agreement (CLA) declaring that you have
 the right to, and actually do, grant us the rights to use your contribution. For
@@ -73,7 +76,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Common/
-[docs]: https://azure.github.io/azure-sdk-for-net/api/Storage/Azure.Storage.html
+[docs]: https://azure.github.io/azure-sdk-for-net/api/Azure.Storage.html
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/
 [nuget]: https://www.nuget.org/
@@ -93,6 +96,7 @@ additional questions or comments.
 [blobs_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#next-steps
 [files_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files/README.md#next-steps
 [queues_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#next-steps
+[storage_contrib]: ../CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

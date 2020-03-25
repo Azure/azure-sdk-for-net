@@ -20,7 +20,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -75,7 +75,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         firstTemplate.Name);
 
                     Assert.NotNull(publisherEmailTemplate);
-                    Assert.True(publisherEmailTemplate.IsDefault);                    
+                    Assert.True(publisherEmailTemplate.IsDefault);
                 }
                 finally
                 {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         [Fact]
         public void ListDefaultPolicy()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             using (var testHelper = new TestHelper() { VaultName = PoliciesTestVault, ResourceGroup = PoliciesTestVaultRg})
             {
                 testHelper.Initialize(context);
@@ -37,3 +37,4 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Tests
         }
     }
 }
+

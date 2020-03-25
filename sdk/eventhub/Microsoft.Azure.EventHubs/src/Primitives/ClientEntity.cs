@@ -62,6 +62,12 @@ namespace Microsoft.Azure.EventHubs
         public abstract Task CloseAsync();
 
         /// <summary>
+        /// Returns a boolean representing whether client object is closed or not.
+        /// </summary>
+        /// <value>Returns <see cref="System.Boolean" />.</value>
+        public bool IsClosed { get; protected set; }
+
+        /// <summary>
         /// Registers a <see cref="EventHubsPlugin"/> to be used with this client.
         /// </summary>
         public virtual void RegisterPlugin(EventHubsPlugin eventHubsPlugin)

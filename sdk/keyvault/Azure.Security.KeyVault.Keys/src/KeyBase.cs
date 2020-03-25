@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Keys
     /// <summary>
     /// KeyBase is the resource containing all the properties of the key except <see cref="JsonWebKey"/> properties.
     /// </summary>
-    public class KeyBase : Model
+    public class KeyBase : IJsonDeserializable, IJsonSerializable
     {
         internal KeyBase() { }
 
@@ -22,7 +22,8 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="name">The name of the key.</param>
         public KeyBase(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException($"{nameof(name)} must not be null or empty", nameof(name));
+            Argument.NotNullOrEmpty(name, nameof(name));
+
             Name = name;
         }
 
@@ -36,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Key identifier.
         /// </summary>
-        public Uri VaultId { get; private set; }
+        public Uri Id { get; private set; }
 
         /// <summary>
         /// Vault base URL.
@@ -115,14 +116,15 @@ namespace Azure.Security.KeyVault.Keys
             if (!string.Equals(idToParse.Segments[1], "keys" + "/", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'keys/', found '{1}'", id, idToParse.Segments[1]));
 
+            Id = idToParse;
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');
             Version = (idToParse.Segments.Length == 4) ? idToParse.Segments[3].TrimEnd('/') : null;
         }
 
-        internal override void WriteProperties(Utf8JsonWriter json) { }
+        internal virtual void WriteProperties(Utf8JsonWriter json) { }
 
-        internal override void ReadProperties(JsonElement json)
+        internal virtual void ReadProperties(JsonElement json)
         {
             foreach(JsonProperty prop in json.EnumerateObject())
             {
@@ -147,5 +149,9 @@ namespace Azure.Security.KeyVault.Keys
                 }
             }
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
     }
 }

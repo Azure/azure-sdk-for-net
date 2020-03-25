@@ -85,7 +85,7 @@ function generateService(w: IndentWriter, model: IServiceModel): void {
         //             w.scope(() => {
         //                 const headerAccess = responseType.type === `void` ? ``: `.Raw`;
         //                 w.write(`=> response${headerAccess}.Headers.TryGetValue("${header.name}", out string header) ?`);
-        //                 w.scope(() => {
+        //                 w.scope(() => {  
         //                     w.line(`${types.convertFromString('header', header.model, service)} :`)
         //                     w.line(`default;`);
         //                 });
@@ -120,6 +120,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const methodName = naming.method(operation.name, true);
     const regionName = (operation.group ? naming.type(operation.group) + '.' : '') + methodName;
     const pipelineName = "pipeline";
+    const bufferResponseName = "bufferResponse";
     const cancellationName = "cancellationToken";
     const bodyName = "_body";
     const requestName = "_request";
@@ -130,6 +131,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     const pairName = `_headerPair`;
     let responseName = "_response";
     const resultName = "_result";
+    const scopeName = "_scope";
+    const operationName = "operationName";
     const result = operation.response.model;
     const sync = serviceModel.info.sync;
 
@@ -154,6 +157,8 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
+    w.line(`/// <param name="${bufferResponseName}">Whether to buffer the response content.  The default value is true.</param>`);
+    w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.Task<${returnType}> ${methodName}(`);        
@@ -169,36 +174,59 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`bool async = true`);
         }
         if (separateParams()) {  w.line(`,`); }
+        w.line(`bool ${bufferResponseName} = true,`);
+        w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
+        w.line(`,`);
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
         w.write(')')
     });
     w.scope('{', '}', () => {
-        w.write(`using (Azure.Core.Http.Request ${requestName} = ${methodName}_CreateRequest(`);
-        w.scope(() => {
-            const separateParams = IndentWriter.createFenceposter();
-            for (const arg of operation.request.arguments) {
-                if (separateParams()) { w.line(`,`); }
-                w.write(`${naming.parameter(arg.clientName)}`);
-            }
-            w.write(`))`);
-        });
+        w.line(`Azure.Core.Pipeline.DiagnosticScope ${scopeName} = ${pipelineName}.Diagnostics.CreateScope(${operationName});`)
+        w.line(`try`);
         w.scope('{', '}', () => {
-            w.write(`Azure.Response ${responseName} = `);
-            const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${cancellationName}).ConfigureAwait(false)`;
-            if (sync) {
-                w.write('async ?');
-                w.scope(() => {
-                    w.line(`// Send the request asynchronously if we're being called via an async path`);
-                    w.line(`${asyncCall} :`);
-                    w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
-                    w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
-                    w.line(`${pipelineName}.SendRequest(${requestName}, ${cancellationName});`);
-                });
-            } else {
-                w.line(`${asyncCall};`);
+            for (const arg of operation.request.arguments) {
+                if (arg.trace)
+                {
+                    w.line(`${scopeName}.AddAttribute("${naming.parameter(arg.name)}", ${naming.parameter(arg.clientName)});`);
+                }
             }
-            w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
-            w.line(`return ${methodName}_CreateResponse(${responseName});`);
+            w.line(`${scopeName}.Start();`);
+            w.write(`using (Azure.Core.Http.Request ${requestName} = ${methodName}_CreateRequest(`);
+            w.scope(() => {
+                const separateParams = IndentWriter.createFenceposter();
+                for (const arg of operation.request.arguments) {
+                    if (separateParams()) { w.line(`,`); }
+                    w.write(`${naming.parameter(arg.clientName)}`);
+                }
+                w.write(`))`);
+            });
+            w.scope('{', '}', () => {
+                w.write(`Azure.Response ${responseName} = `);
+                const asyncCall = `await ${pipelineName}.SendRequestAsync(${requestName}, ${bufferResponseName}, ${cancellationName}).ConfigureAwait(false)`;
+                if (sync) {
+                    w.write('async ?');
+                    w.scope(() => {
+                        w.line(`// Send the request asynchronously if we're being called via an async path`);
+                        w.line(`${asyncCall} :`);
+                        w.line(`// Send the request synchronously through the API that blocks if we're being called via a sync path`);
+                        w.line(`// (this is safe because the Task will complete before the user can call Wait)`);
+                        w.line(`${pipelineName}.SendRequest(${requestName}, ${bufferResponseName}, ${cancellationName});`);
+                    });
+                } else {
+                    w.line(`${asyncCall};`);
+                }
+                w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
+                w.line(`return ${methodName}_CreateResponse(${responseName});`);
+            });
+        });
+        w.line(`catch (System.Exception ex)`);
+        w.scope('{', '}', () => {
+            w.line(`${scopeName}.Failed(ex);`);
+            w.line(`throw;`);
+        });
+        w.line(`finally`);
+        w.scope('{', '}', () => {
+            w.line(`${scopeName}.Dispose();`);
         });
     });
     w.line();
@@ -233,8 +261,17 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         const useParameter = (param: IParameter, use: ((value: string) => void)) => {
             const constant = isEnumType(param.model) && param.model.constant;
             const nullable = !constant && !param.required;
+            const skipValue = isEnumType(param.model) ? param.model.skipValue : undefined;
             const name = naming.variable(param.clientName);
-            if (nullable) { w.write(`if (${name} != null) {`); }
+            if (nullable) {
+                w.write(`if (${name} != null) {`);
+            } else if (skipValue) {
+                const value = (<IEnumType>param.model).values.find(v => v.name == skipValue || v.value == skipValue);
+                if (!value) { throw `Cannot find a value for x-az-enum-skip-value ${skipValue} in ${types.getName(param.model)}`; }
+                const skipValueName = naming.enumField(value.name || value.value);
+                w.write(`if (${name} != ${types.getName(param.model)}.${skipValueName}) {`);
+            }
+            const indent = !!(nullable || skipValue);
             if (constant) {
                 use(`"${((<IEnumType>param.model).values[0].value || '').toString()}"`);
             } else if (param.model.type === 'dictionary') {
@@ -244,10 +281,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         use("_pair");
                     });
                 });
-            } else if (isPrimitiveType(param.model) && param.model.collectionFormat === `multi`) {
-                if (!param.model.itemType || param.model.itemType.type !== `string`) {
-                    throw `collectionFormat multi is only supported for strings, at the moment`;
-                }
+            } else if (param.location === `header` && isPrimitiveType(param.model) && param.model.collectionFormat === `csv`) {
                 w.scope(() => {
                     w.line(`foreach (string _item in ${naming.parameter(param.clientName)})`);
                     w.scope('{', '}', () => {
@@ -258,14 +292,14 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 if (param.model.type === `boolean`) {
                     w.line();
                     w.line(`#pragma warning disable CA1308 // Normalize strings to uppercase`);
-                } else if (nullable) { w.write(` `); }
+                } else if (indent) { w.write(` `); }
                 use(types.convertToString(name, param.model, service, param.required));
                 if (param.model.type === `boolean`) {
                     w.line();
                     w.line(`#pragma warning restore CA1308 // Normalize strings to uppercase`);
-                } else if (nullable) { w.write(` `); }
+                } else if (indent) { w.write(` `); }
             }
-            if (nullable) { w.write(`}`); }
+            if (indent) { w.write(`}`); }
             w.line();
         };        
 
@@ -321,7 +355,13 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         if (operation.request.body) {
             w.line(`// Create the body`);
             const bodyType = operation.request.body.model;
-            if (operation.consumes === `stream` || bodyType.type === `file`) {
+            if (bodyType.type === `string`) {
+                // Temporary Hack: Serialize string content as JSON
+                w.line(`string ${textName} = ${naming.parameter(operation.request.body.clientName)};`)
+                w.line(`${requestName}.Headers.SetValue("Content-Type", "application/json");`);
+                w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
+                w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
+            } else if (operation.consumes === `stream` || bodyType.type === `file`) {
                 // Serialize a file
                 w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(${naming.parameter(operation.request.body.clientName)});`);
             } else if (operation.consumes === `xml`) {
@@ -360,7 +400,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`System.Xml.Linq.XElement ${bodyName} = null;`);
                 }
                 
-                w.line(`string ${textName} = ${bodyName}.ToString();`);
+                w.line(`string ${textName} = ${bodyName}.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);`);
                 w.line(`${requestName}.Headers.SetValue("Content-Type", "application/xml");`);
                 w.line(`${requestName}.Headers.SetValue("Content-Length", ${textName}.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));`);
                 w.line(`${requestName}.Content = Azure.Core.Pipeline.HttpPipelineRequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
@@ -444,7 +484,14 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.line(`// Create the result`);
         if (response.body) {
             const responseType = response.body;
-            if (operation.produces === `stream` || responseType.type === `file`) {
+            if (responseType.type === `string`) {
+                const streamName = "_streamReader";
+                w.line(`${types.getName(model)} ${valueName};`);
+                w.line(`using (System.IO.StreamReader ${streamName} = new System.IO.StreamReader(${responseName}.ContentStream))`)
+                w.scope('{', '}', () => {
+                    w.line(`${valueName} = ${streamName}.ReadToEnd();`);
+                });
+            } else if (operation.produces === `stream` || responseType.type === `file`) {
                 // Deserialize a file
                 w.line(`${types.getName(model)} ${valueName} = new ${types.getName(model)}();`);
                 w.line(`${valueName}.${naming.property(response.bodyClientName)} = ${responseName}.ContentStream; // You should manually wrap with RetriableStream!`);
@@ -532,9 +579,9 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     w.line(`if (${responseName}.Headers.TryGetValue("${header.name}", out ${headerName}))`);
                     w.scope('{', '}', () => {
                         w.write(`${valueName}.${naming.pascalCase(header.clientName)} = `);
-                        if (isPrimitiveType(header.model) && header.model.collectionFormat === `multi`) {
+                        if (isPrimitiveType(header.model) && header.model.collectionFormat === `csv`) {
                             if (!header.model.itemType || header.model.itemType.type !== `string`) {
-                                throw `collectionFormat multi is only supported for strings, at the moment`;
+                                throw `collectionFormat csv is only supported for strings, at the moment`;
                             }
                             w.write(`(${headerName} ?? "").Split(',')`);
                         } else {
@@ -571,7 +618,12 @@ function generateValidation(w: IndentWriter, operation: IOperation, parameter: I
 function generateModels(w: IndentWriter, model: IServiceModel): void {
     w.line(`#region Models`);
     const fencepost = IndentWriter.createFenceposter();
-    for (const [name, def] of <[string, IModelType][]>Object.entries(model.models)) {
+    const types = <[string, IModelType][]>Object.entries(model.models);
+    types.sort((a, b) =>
+        a[0] < b[0] ? -1 :
+        a[0] > b[0] ? 1 :
+        0);
+    for (const [name, def] of types) {
         if (fencepost()) { w.line(); }
         if (isEnumType(def) && !def.modelAsString) { generateEnum(w, model, def); }
         else if (isEnumType(def) && def.modelAsString) { generateEnumStrings(w, model, def); }
@@ -623,7 +675,7 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
                             // Write the values
                             for (const value of type.values) {
                                 w.write(`case ${types.getName(type)}.${naming.enumField(value.name || value.value)}:`);
-                                w.scope(() => w.line(`return "${value.value}";`));
+                                w.scope(() => w.line(`return ${value.value == null ? 'null' : '"' + value.value + '"'};`));
                             }
                             // Throw for random values
                             w.write(`default:`);
@@ -638,7 +690,7 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
                         w.scope('{', '}', () => {
                             // Write the values
                             for (const value of type.values) {
-                                w.write(`case "${value.value}":`);
+                                w.write(`case ${value.value == null ? 'null' : '"' + value.value + '"'}:`);
                                 w.scope(() => w.line(`return ${types.getName(type)}.${naming.enumField(value.name || value.value)};`));
                             }
                             // Throw for random values

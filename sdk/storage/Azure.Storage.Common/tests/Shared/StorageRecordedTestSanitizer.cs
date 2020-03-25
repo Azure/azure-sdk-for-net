@@ -60,21 +60,21 @@ namespace Azure.Storage.Test.Shared
                                 writer.WriteStartObject();
                                 foreach (var property in doc.RootElement.EnumerateObject())
                                 {
-                                    switch (doc.RootElement.GetProperty(property.Name).Type)
+                                    switch (doc.RootElement.GetProperty(property.Name).ValueKind)
                                     {
-                                        case JsonValueType.Null:
+                                        case JsonValueKind.Null:
                                             writer.WriteNull(property.Name);
                                             break;
-                                        case JsonValueType.True:
+                                        case JsonValueKind.True:
                                             writer.WriteBoolean(property.Name, true);
                                             break;
-                                        case JsonValueType.False:
+                                        case JsonValueKind.False:
                                             writer.WriteBoolean(property.Name, false);
                                             break;
-                                        case JsonValueType.Number:
+                                        case JsonValueKind.Number:
                                             writer.WriteNumber(property.Name, property.Value.GetDouble());
                                             break;
-                                        case JsonValueType.String:
+                                        case JsonValueKind.String:
                                             writer.WriteString(
                                                 property.Name,
                                                 property.Name == "access_token" ?

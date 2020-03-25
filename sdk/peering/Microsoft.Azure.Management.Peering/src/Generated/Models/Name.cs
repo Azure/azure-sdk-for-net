@@ -16,5 +16,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         public const string BasicDirectFree = "Basic_Direct_Free";
         public const string PremiumDirectFree = "Premium_Direct_Free";
         public const string PremiumExchangeMetered = "Premium_Exchange_Metered";
+        public const string PremiumDirectMetered = "Premium_Direct_Metered";
+        public const string PremiumDirectUnlimited = "Premium_Direct_Unlimited";
     }
 }

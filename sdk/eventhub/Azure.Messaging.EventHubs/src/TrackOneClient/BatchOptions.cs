@@ -4,12 +4,12 @@
 namespace TrackOne
 {
     /// <summary>
-    /// Options to define partiton key and maximum message size while creating an <see cref="EventDataBatch"/>. 
+    /// Options to define partition key and maximum message size while creating an <see cref="EventDataBatch"/>. 
     /// </summary>
     internal class BatchOptions
     {
         /// <summary>
-        /// Partition key associated with the batch.
+        /// Partition key associate with the batch.
         /// </summary>
         public string PartitionKey { get; set; }
 

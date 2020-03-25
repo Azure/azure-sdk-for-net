@@ -20,7 +20,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");
-                var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
+                var pipeline = new HttpPipeline(transport, new[] { policy }, responseClassifier);
                 return pipeline.SendRequestAsync(request, CancellationToken.None);
             }
         }

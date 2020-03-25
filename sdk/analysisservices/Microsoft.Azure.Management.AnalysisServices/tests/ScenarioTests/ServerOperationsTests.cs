@@ -27,7 +27,7 @@ namespace AnalysisServices.Tests.ScenarioTests
             string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = this.GetAnalysisServicesClient(context);
 
@@ -79,9 +79,9 @@ namespace AnalysisServices.Tests.ScenarioTests
                     var errorResponse = gatewayException.Body.Error;
                     var expectedMessage = string.Format("A unified gateway is not associated with server {0}.", AnalysisServicesTestUtilities.DefaultServerName);
                     Assert.Equal("GatewayNotAssociated", errorResponse.Code);
-                    Assert.Equal(expectedMessage, errorResponse.Message); 
+                    Assert.Equal(expectedMessage, errorResponse.Message);
                 }
-                
+
                 // List gateway status of non-existing server will return error since resource not found.
                 const string notexistingServerName = "notexistingserver";
                 try
@@ -205,7 +205,7 @@ namespace AnalysisServices.Tests.ScenarioTests
             string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = this.GetAnalysisServicesClient(context);
 
@@ -292,7 +292,7 @@ namespace AnalysisServices.Tests.ScenarioTests
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
             var defaultScaleOutCap = 2;
             var s1SKU = "S1";
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = this.GetAnalysisServicesClient(context);
 
@@ -401,7 +401,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                     }
             };
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = this.GetAnalysisServicesClient(context);
 
@@ -450,7 +450,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 // Confirm that the server creation did succeed
                 Assert.True(resultGet.ProvisioningState == "Succeeded");
                 Assert.True(resultGet.State == "Succeeded");
-                
+
                 // Update firewall and verify          
                 ResourceSku newSku = resultGet.Sku;
                 sampleIPV4FirewallSetting.EnablePowerBIService = "False";
@@ -463,7 +463,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                             RangeEnd = "255.255.255.255"
                         }
                     };
-                
+
                 AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
                 {
                     IpV4FirewallSettings = sampleIPV4FirewallSetting
@@ -508,7 +508,7 @@ namespace AnalysisServices.Tests.ScenarioTests
             string executingAssemblyPath = typeof(AnalysisServices.Tests.ScenarioTests.ServerOperationsTests).GetTypeInfo().Assembly.Location;
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
 
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = this.GetAnalysisServicesClient(context);
 

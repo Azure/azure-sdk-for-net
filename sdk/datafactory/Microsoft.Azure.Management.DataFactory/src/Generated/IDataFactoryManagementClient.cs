@@ -131,14 +131,14 @@ namespace Microsoft.Azure.Management.DataFactory
         ITriggersOperations Triggers { get; }
 
         /// <summary>
-        /// Gets the IRerunTriggersOperations.
-        /// </summary>
-        IRerunTriggersOperations RerunTriggers { get; }
-
-        /// <summary>
         /// Gets the ITriggerRunsOperations.
         /// </summary>
         ITriggerRunsOperations TriggerRuns { get; }
+
+        /// <summary>
+        /// Gets the IRerunTriggersOperations.
+        /// </summary>
+        IRerunTriggersOperations RerunTriggers { get; }
 
     }
 }

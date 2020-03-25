@@ -29,14 +29,14 @@ namespace Azure.Core.Tests
             session.Variables["b"] = "value b";
 
             RecordEntry recordEntry = new RecordEntry();
-            recordEntry.RequestHeaders.Add("Content-Type", new [] { contentType });
-            recordEntry.RequestHeaders.Add("Other-Header", new [] { "multi", "value" });
+            recordEntry.RequestHeaders.Add("Content-Type", new[] { contentType });
+            recordEntry.RequestHeaders.Add("Other-Header", new[] { "multi", "value" });
             recordEntry.RequestBody = bodyBytes;
             recordEntry.RequestUri = "url";
             recordEntry.RequestMethod = RequestMethod.Delete;
 
-            recordEntry.ResponseHeaders.Add("Content-Type", new [] { contentType });
-            recordEntry.ResponseHeaders.Add("Other-Response-Header", new [] { "multi", "value" });
+            recordEntry.ResponseHeaders.Add("Content-Type", new[] { contentType });
+            recordEntry.ResponseHeaders.Add("Other-Response-Header", new[] { "multi", "value" });
 
             recordEntry.ResponseBody = bodyBytes;
             recordEntry.StatusCode = 202;
@@ -62,11 +62,11 @@ namespace Azure.Core.Tests
             Assert.AreEqual("url", recordEntry.RequestUri);
             Assert.AreEqual(202, recordEntry.StatusCode);
 
-            CollectionAssert.AreEqual(new [] { contentType }, deserializedRecord.RequestHeaders["content-type"]);
-            CollectionAssert.AreEqual(new [] { "multi", "value" }, deserializedRecord.RequestHeaders["other-header"]);
+            CollectionAssert.AreEqual(new[] { contentType }, deserializedRecord.RequestHeaders["content-type"]);
+            CollectionAssert.AreEqual(new[] { "multi", "value" }, deserializedRecord.RequestHeaders["other-header"]);
 
-            CollectionAssert.AreEqual(new [] { contentType }, deserializedRecord.ResponseHeaders["content-type"]);
-            CollectionAssert.AreEqual(new [] { "multi", "value" }, deserializedRecord.ResponseHeaders["other-response-header"]);
+            CollectionAssert.AreEqual(new[] { contentType }, deserializedRecord.ResponseHeaders["content-type"]);
+            CollectionAssert.AreEqual(new[] { "multi", "value" }, deserializedRecord.ResponseHeaders["other-response-header"]);
 
             CollectionAssert.AreEqual(bodyBytes, deserializedRecord.RequestBody);
             CollectionAssert.AreEqual(bodyBytes, deserializedRecord.ResponseBody);
@@ -83,7 +83,7 @@ namespace Azure.Core.Tests
             mockRequest.Headers.Add("Some-Header", "Random value");
             mockRequest.Headers.Add("Some-Other-Header", "V");
 
-            RecordEntry[] entries = new []
+            RecordEntry[] entries = new[]
             {
                 new RecordEntry()
                 {
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests
                     RequestHeaders =
                     {
                         { "Some-Header", new[] { "Non-Random value"}},
-                        { "Extra-Header", new [] { "Extra-Value" }}
+                        { "Extra-Header", new[] { "Extra-Value" }}
                     }
                 }
             };
@@ -112,6 +112,31 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void RecordMatcherIgnoresIgnoredHeaders()
+        {
+            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+
+            MockRequest mockRequest = new MockRequest();
+            mockRequest.Method = RequestMethod.Put;
+            mockRequest.UriBuilder.Uri = new Uri("http://localhost");
+
+            RecordEntry[] entries = new[]
+            {
+                new RecordEntry()
+                {
+                    RequestUri = "http://localhost",
+                    RequestMethod = RequestMethod.Put,
+                    RequestHeaders =
+                    {
+                        { "Request-Id", new[] { "Non-Random value"}},
+                    }
+                }
+            };
+
+            Assert.NotNull(matcher.FindMatch(mockRequest, entries));
+        }
+
+        [Test]
         public void RecordMatcherThrowsExceptionsWhenNoRecordsLeft()
         {
             var matcher = new RecordMatcher(new RecordedTestSanitizer());
@@ -122,7 +147,7 @@ namespace Azure.Core.Tests
             mockRequest.Headers.Add("Some-Header", "Random value");
             mockRequest.Headers.Add("Some-Other-Header", "V");
 
-            RecordEntry[] entries = {};
+            RecordEntry[] entries = { };
 
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
             Assert.AreEqual(

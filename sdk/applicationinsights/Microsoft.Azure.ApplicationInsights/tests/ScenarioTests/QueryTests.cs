@@ -19,7 +19,7 @@ namespace Data.ApplicationInsights.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task CanExecuteSimplePostQuery_DemoWorkspace()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 await ExecuteAndVerify(async (client) => await client.Query.ExecuteWithHttpMessagesAsync(DefaultAppId, SimpleQuery), ctx: ctx);
             }
@@ -28,7 +28,7 @@ namespace Data.ApplicationInsights.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task CanExecutePostQueryWithTimespan_DemoWorkspace()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 await ExecuteAndVerify(async (client) => await client.Query.ExecuteWithHttpMessagesAsync(DefaultAppId, SimpleQuery, PastHourTimespan), ctx: ctx);
             }
@@ -37,7 +37,7 @@ namespace Data.ApplicationInsights.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetsExceptionWithSyntaxError()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 var client = GetClient(ctx: ctx);
                 var badQuery = "union * | foobar";
@@ -63,7 +63,7 @@ namespace Data.ApplicationInsights.Tests
         [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetsExceptionWithShortWait()
         {
-            using (var ctx = MockContext.Start(GetType().FullName))
+            using (var ctx = MockContext.Start(this.GetType()))
             {
                 var client = GetClient(ctx);
                 client.Preferences.Wait = 1;

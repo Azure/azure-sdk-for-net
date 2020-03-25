@@ -70,22 +70,22 @@ namespace Azure.Core.Testing
 
         private static byte[] DeserializeBody(IDictionary<string, string[]> headers, in JsonElement property)
         {
-            if (property.Type == JsonValueType.Null)
+            if (property.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
 
             if (IsTextContentType(headers, out Encoding encoding))
             {
-                if (property.Type == JsonValueType.Object)
+                if (property.ValueKind == JsonValueKind.Object)
                 {
                     var arrayBufferWriter = new ArrayBufferWriter<byte>();
                     using var writer = new Utf8JsonWriter(arrayBufferWriter);
-                    property.WriteAsValue(writer);
+                    property.WriteValue(writer);
                     writer.Flush();
                     return arrayBufferWriter.WrittenMemory.ToArray();
                 }
-                else if (property.Type == JsonValueType.Array)
+                else if (property.ValueKind == JsonValueKind.Array)
                 {
                     StringBuilder stringBuilder = new StringBuilder();
 
@@ -102,7 +102,7 @@ namespace Azure.Core.Testing
                 }
             }
 
-            if (property.Type == JsonValueType.Array)
+            if (property.ValueKind == JsonValueKind.Array)
             {
                 return Array.Empty<byte>();
             }
@@ -114,7 +114,7 @@ namespace Azure.Core.Testing
         {
             foreach (JsonProperty item in property.EnumerateObject())
             {
-                if (item.Value.Type == JsonValueType.Array)
+                if (item.Value.ValueKind == JsonValueKind.Array)
                 {
                     var values = new List<string>();
                     foreach (JsonElement headerValue in item.Value.EnumerateArray())
@@ -170,7 +170,7 @@ namespace Azure.Core.Testing
                 try
                 {
                     using JsonDocument document = JsonDocument.Parse(requestBody);
-                    document.RootElement.WriteAsProperty(name.AsSpan(), jsonWriter);
+                    document.RootElement.WriteProperty(name.AsSpan(), jsonWriter);
                     return;
                 }
                 catch (Exception)
@@ -273,6 +273,7 @@ namespace Azure.Core.Testing
             RequestUri = sanitizer.SanitizeUri(RequestUri);
             if (RequestBody != null)
             {
+                int contentLength = RequestBody.Length;
                 TryGetContentType(RequestHeaders, out string contentType);
                 if (IsTextContentType(RequestHeaders, out Encoding encoding))
                 {
@@ -282,12 +283,14 @@ namespace Azure.Core.Testing
                 {
                     RequestBody = sanitizer.SanitizeBody(contentType, RequestBody);
                 }
+                UpdateSanitizedContentLength(RequestHeaders, contentLength, RequestBody?.Length ?? 0);
             }
 
             sanitizer.SanitizeHeaders(RequestHeaders);
 
             if (ResponseBody != null)
             {
+                int contentLength = ResponseBody.Length;
                 TryGetContentType(ResponseHeaders, out string contentType);
                 if (IsTextContentType(ResponseHeaders, out Encoding encoding))
                 {
@@ -297,9 +300,32 @@ namespace Azure.Core.Testing
                 {
                     ResponseBody = sanitizer.SanitizeBody(contentType, ResponseBody);
                 }
+                UpdateSanitizedContentLength(ResponseHeaders, contentLength, ResponseBody?.Length ?? 0);
             }
 
             sanitizer.SanitizeHeaders(ResponseHeaders);
+        }
+
+        /// <summary>
+        /// Optionally update the Content-Length header if we've sanitized it
+        /// and the new value is a different length from the original
+        /// Content-Length header.  We don't add a Content-Length header if it
+        /// wasn't already present.
+        /// </summary>
+        /// <param name="headers">The Request or Response headers</param>
+        /// <param name="originalLength">THe original Content-Length</param>
+        /// <param name="sanitizedLength">The sanitized Content-Length</param>
+        private static void UpdateSanitizedContentLength(IDictionary<string, string[]> headers, int originalLength, int sanitizedLength)
+        {
+            // Note: If the RequestBody/ResponseBody was set to null by our
+            // sanitizer, we'll pass 0 as the sanitizedLength and use that as
+            // our new Content-Length.  That's fine for all current scenarios
+            // (i.e., we never do that), but it's possible we may want to
+            // remove the Content-Length header in the future.
+            if (originalLength != sanitizedLength && headers.ContainsKey("Content-Length"))
+            {
+                headers["Content-Length"] = new string[] { sanitizedLength.ToString() };
+            }
         }
     }
 }

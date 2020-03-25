@@ -17,9 +17,9 @@ namespace Azure.Core.Pipeline
 
         public bool IsTelemetryEnabled { get; set; }
 
-        public string ApplicationId { get; set; }
+        public string? ApplicationId { get; set; }
 
-        public static string DefaultApplicationId { get; set; }
+        public static string? DefaultApplicationId { get; set; }
 
         private static bool? EnvironmentVariableToBool(string value)
         {

@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class BearerTokenAuthenticationPolicyTests: SyncAsyncPolicyTestBase
+    public class BearerTokenAuthenticationPolicyTests : SyncAsyncPolicyTestBase
     {
         public BearerTokenAuthenticationPolicyTests(bool isAsync) : base(isAsync) { }
 
@@ -38,7 +38,7 @@ namespace Azure.Core.Tests
                     .Returns(new AccessToken("token", DateTimeOffset.MaxValue));
             }
 
-            var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new [] { "scope1", "scope2" });
+            var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new[] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200));
             await SendGetRequest(transport, policy);
 
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests
                     .Returns(() => currentToken);
             }
 
-            var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new [] { "scope1", "scope2" });
+            var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new[] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
 
             currentToken = new AccessToken("token1", DateTimeOffset.UtcNow);

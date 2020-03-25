@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Compatibility
         ///   Initializes a new instance of the <see cref="TrackOneSharedAccessTokenProvider"/> class.
         /// </summary>
         ///
-        /// <param name="sharedAccessSignature">The shared access signature on which to base tokens produced by thr provider.</param>
+        /// <param name="sharedAccessSignature">The shared access signature on which to base tokens produced by the provider.</param>
         ///
         public TrackOneSharedAccessTokenProvider(SharedAccessSignature sharedAccessSignature)
         {

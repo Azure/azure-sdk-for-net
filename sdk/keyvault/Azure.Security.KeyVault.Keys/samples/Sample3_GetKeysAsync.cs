@@ -2,12 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Samples
@@ -17,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// and list deleted keys in a soft-delete enabled Key Vault
     /// using the asynchronous methods of the KeyClient.
     /// </summary>
-    [Category("Live")]
+    [LiveOnly]
     public partial class GetKeys
     {
         [Test]

@@ -12,13 +12,23 @@ namespace Microsoft.Azure.ServiceBus.Filters
     {
         internal static object ParseValueObject(XElement element)
         {
-            var prefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.XmlSchemaNs));
+            var serializedPrefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.SerializationNamespace));
+            var type = element.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace)).Value;
+
+            if (!string.IsNullOrEmpty(serializedPrefix))
+            {
+                if (type.Substring(serializedPrefix.Length + 1) == "duration")
+                {
+                    return XmlConvert.ToTimeSpan(element.Value);
+                }
+            }
+
+            var prefix = element.GetPrefixOfNamespace(XNamespace.Get(ManagementClientConstants.XmlSchemaNamespace));
             if (string.IsNullOrWhiteSpace(prefix))
             {
                 return element.Value;
             }
 
-            var type = element.Attribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs)).Value;
             switch (type.Substring(prefix.Length + 1))
             {
                 case "string":
@@ -33,6 +43,8 @@ namespace Microsoft.Azure.ServiceBus.Filters
                     return XmlConvert.ToDouble(element.Value);
                 case "dateTime":
                     return XmlConvert.ToDateTime(element.Value, XmlDateTimeSerializationMode.Utc);
+                case "duration":
+                    return XmlConvert.ToTimeSpan(element.Value);
                 default:
                     MessagingEventSource.Log.ManagementSerializationException(
                             $"{nameof(XmlObjectConvertor)}_{nameof(ParseValueObject)}",
@@ -69,6 +81,10 @@ namespace Microsoft.Azure.ServiceBus.Filters
             {
                 type += "dateTime";
             }
+            else if (value is TimeSpan)
+            {
+                type += "duration";
+            }
             else
             {
                 var unknownType = value.GetType().Name;
@@ -80,9 +96,9 @@ namespace Microsoft.Azure.ServiceBus.Filters
                     "Only following types are supported through HTTP: string,int,long,bool,double,DateTime");
             }
 
-            var element = new XElement(XName.Get("Value", ManagementClientConstants.SbNs),
-                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNs), type),
-                new XAttribute(XNamespace.Xmlns + prefix, ManagementClientConstants.XmlSchemaNs),
+            var element = new XElement(XName.Get("Value", ManagementClientConstants.ServiceBusNamespace),
+                new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), type),
+                new XAttribute(XNamespace.Xmlns + prefix, ManagementClientConstants.XmlSchemaNamespace),
                 value);
 
             return element;

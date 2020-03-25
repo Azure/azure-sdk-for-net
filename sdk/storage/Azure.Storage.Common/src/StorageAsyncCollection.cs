@@ -138,7 +138,7 @@ namespace Azure.Storage
         /// make mutliple service requests.
         /// </summary>
         /// <returns>A sequence of values.</returns>
-        protected override IEnumerator<Response<T>> GetEnumerator()
+        protected IEnumerator<Response<T>> GetEnumerator()
         {
             string continuationToken = null;
             do

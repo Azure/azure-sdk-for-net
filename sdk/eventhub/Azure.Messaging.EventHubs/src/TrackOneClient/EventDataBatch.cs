@@ -24,7 +24,7 @@ namespace TrackOne
         /// Creates a new <see cref="EventDataBatch"/>.
         /// </summary>
         /// <param name="maxSizeInBytes">The maximum size allowed for the batch</param>
-        /// <param name="partitionKey">Partition key associated with the batch</param>
+        /// <param name="partitionKey">Partition key associate with the batch</param>
         public EventDataBatch(long maxSizeInBytes, string partitionKey = null)
         {
             this.PartitionKey = partitionKey;

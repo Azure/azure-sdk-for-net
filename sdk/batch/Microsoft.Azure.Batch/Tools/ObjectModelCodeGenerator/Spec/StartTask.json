@@ -71,7 +71,7 @@
         "Type": "bool?",
         "Name": "WaitForSuccess",
         "SummaryComment": "A value indicating whether the Batch service should wait for the start task to complete before scheduling any tasks on the compute node.",
-        "RemarksComment": "If this is not specified, the default is false.",
+        "RemarksComment": "If this is not specified, the default is true.",
         "BoundAccess": "read,write",
         "UnboundAccess": "read,write"
       },

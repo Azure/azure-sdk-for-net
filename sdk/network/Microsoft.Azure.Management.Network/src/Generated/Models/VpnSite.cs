@@ -52,9 +52,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
         /// <param name="isSecuritySite">IsSecuritySite flag.</param>
+        /// <param name="vpnSiteLinks">List of all vpn site links</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public VpnSite(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), DeviceProperties deviceProperties = default(DeviceProperties), string ipAddress = default(string), string siteKey = default(string), AddressSpace addressSpace = default(AddressSpace), BgpSettings bgpProperties = default(BgpSettings), string provisioningState = default(string), bool? isSecuritySite = default(bool?), string etag = default(string))
+        public VpnSite(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), DeviceProperties deviceProperties = default(DeviceProperties), string ipAddress = default(string), string siteKey = default(string), AddressSpace addressSpace = default(AddressSpace), BgpSettings bgpProperties = default(BgpSettings), string provisioningState = default(string), bool? isSecuritySite = default(bool?), IList<VpnSiteLink> vpnSiteLinks = default(IList<VpnSiteLink>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -65,6 +66,7 @@ namespace Microsoft.Azure.Management.Network.Models
             BgpProperties = bgpProperties;
             ProvisioningState = provisioningState;
             IsSecuritySite = isSecuritySite;
+            VpnSiteLinks = vpnSiteLinks;
             Etag = etag;
             CustomInit();
         }
@@ -123,6 +125,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isSecuritySite")]
         public bool? IsSecuritySite { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of all vpn site links
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vpnSiteLinks")]
+        public IList<VpnSiteLink> VpnSiteLinks { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

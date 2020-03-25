@@ -19,7 +19,7 @@ namespace MixedReality.Tests
         protected MockContext StartTest()
         {
             var frame = new StackTrace().GetFrame(1);
-            var callingClassType = frame.GetMethod().ReflectedType?.ToString();
+            var callingClassType = frame.GetMethod().ReflectedType;
             var callingMethodName = frame.GetMethod().Name;
 
             var context = MockContext.Start(callingClassType, callingMethodName);

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core.Http
@@ -19,11 +20,11 @@ namespace Azure.Core.Http
             UriBuilder.Uri = uri;
         }
 
-        public virtual HttpPipelineRequestContent Content { get; set; }
+        public virtual HttpPipelineRequestContent? Content { get; set; }
 
         protected internal abstract void AddHeader(string name, string value);
 
-        protected internal abstract bool TryGetHeader(string name, out string value);
+        protected internal abstract bool TryGetHeader(string name, [NotNullWhen(true)] out string? value);
 
         protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string> values);
 

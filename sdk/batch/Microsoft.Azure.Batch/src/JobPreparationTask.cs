@@ -7,8 +7,11 @@
 
     public partial class JobPreparationTask
     {
-       public JobPreparationTask() : this(commandLine: null)
-       {
-       }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobPreparationTask"/> class.
+        /// </summary>
+        public JobPreparationTask() : this(commandLine: null)
+        {
+        }
     }
 }

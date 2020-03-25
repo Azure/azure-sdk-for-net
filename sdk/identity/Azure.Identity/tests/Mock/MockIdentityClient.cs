@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests.Mock
             return CreateToken(scopes, clientId: clientId, cancellationToken: cancellationToken);
         }
 
-        public async override Task<AccessToken> AuthenticateAsync(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> AuthenticateAsync(string[] scopes, string clientId = null, CancellationToken cancellationToken = default)
         {
             return await CreateTokenAsync(scopes, clientId: clientId, cancellationToken: cancellationToken);
         }
@@ -78,7 +78,7 @@ namespace Azure.Identity.Tests.Mock
 
         public static MockManagedIdentityClient LiveTokenClient { get; } = new MockManagedIdentityClient(LiveTokenFactory);
 
-        private Func<string[], string, string, string, CancellationToken, AccessToken> _tokenFactory;
+        private readonly Func<string[], string, string, string, CancellationToken, AccessToken> _tokenFactory;
 
         private AccessToken CreateToken(string[] scopes, string tenantId = default, string clientId = default, string clientSecret = default, CancellationToken cancellationToken = default)
         {
@@ -118,8 +118,8 @@ namespace Azure.Identity.Tests.Mock
         public static MockAadClient ExpiredTokenClient { get; } = new MockAadClient(ExpiredTokenFactory);
 
         public static MockAadClient LiveTokenClient { get; } = new MockAadClient(LiveTokenFactory);
-        
-        private Func<string[], string, string, string, CancellationToken, AccessToken> _tokenFactory;
+
+        private readonly Func<string[], string, string, string, CancellationToken, AccessToken> _tokenFactory;
 
         public MockAadClient()
             : this(LiveTokenFactory)
@@ -147,7 +147,7 @@ namespace Azure.Identity.Tests.Mock
             return CreateToken(scopes, clientId: clientId, tenantId: tenantId, clientSecret: clientSecret, cancellationToken: cancellationToken);
         }
 
-        public async override Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public override async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             return await CreateTokenAsync(scopes, clientId: clientId, tenantId: tenantId, clientSecret: clientSecret, cancellationToken: cancellationToken);
         }

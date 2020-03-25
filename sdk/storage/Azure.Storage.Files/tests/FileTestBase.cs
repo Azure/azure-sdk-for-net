@@ -12,6 +12,7 @@ using Azure.Storage.Files.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Tests
 {
@@ -79,28 +80,28 @@ namespace Azure.Storage.Files.Tests
         public FileServiceClient GetServiceClient_SharedKey()
             => this.InstrumentClient(
                 new FileServiceClient(
-                    new Uri(TestConfigurations.DefaultTargetTenant.FileServiceEndpoint),
+                    new Uri(this.TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
-                        TestConfigurations.DefaultTargetTenant.AccountName,
-                        TestConfigurations.DefaultTargetTenant.AccountKey),
+                        this.TestConfigDefault.AccountName,
+                        this.TestConfigDefault.AccountKey),
                     this.GetOptions()));
 
         public FileServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? this.GetNewAccountSasCredentials(sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public FileServiceClient GetServiceClient_FileServiceSasShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsShare(shareName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsShare(shareName, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public FileServiceClient GetServiceClient_FileServiceSasFile(string shareName, string filePath, StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => this.InstrumentClient(
                 new FileServiceClient(
-                    new Uri($"{TestConfigurations.DefaultTargetTenant.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
+                    new Uri($"{this.TestConfigDefault.FileServiceEndpoint}?{sasCredentials ?? this.GetNewFileServiceSasCredentialsFile(shareName, filePath, sharedKeyCredentials ?? this.GetNewSharedKeyCredentials())}"),
                     this.GetOptions()));
 
         public IDisposable GetNewShare(out ShareClient share, string shareName = default, FileServiceClient service = default, IDictionary<string, string> metadata = default)
@@ -112,8 +113,8 @@ namespace Azure.Storage.Files.Tests
 
         public StorageSharedKeyCredential GetNewSharedKeyCredentials()
             => new StorageSharedKeyCredential(
-                TestConfigurations.DefaultTargetTenant.AccountName,
-                TestConfigurations.DefaultTargetTenant.AccountKey);
+                this.TestConfigDefault.AccountName,
+                this.TestConfigDefault.AccountKey);
 
         public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
             => new AccountSasBuilder
@@ -165,6 +166,34 @@ namespace Azure.Storage.Files.Tests
                         }
                 }
             };
+
+        public static void AssertValidStorageFileInfo(StorageFileInfo storageFileInfo)
+        {
+            Assert.IsNotNull(storageFileInfo.ETag);
+            Assert.IsNotNull(storageFileInfo.LastModified);
+            Assert.IsNotNull(storageFileInfo.IsServerEncrypted);
+            Assert.IsNotNull(storageFileInfo.SmbProperties);
+            AssertValidFileSmbProperties(storageFileInfo.SmbProperties.Value);
+        }
+
+        public static void AssertValidStorageDirectoryInfo(StorageDirectoryInfo storageDirectoryInfo)
+        {
+            Assert.IsNotNull(storageDirectoryInfo.ETag);
+            Assert.IsNotNull(storageDirectoryInfo.LastModified);
+            Assert.IsNotNull(storageDirectoryInfo.SmbProperties);
+            AssertValidFileSmbProperties(storageDirectoryInfo.SmbProperties.Value);
+        }
+
+        public static void AssertValidFileSmbProperties(FileSmbProperties fileSmbProperties)
+        {
+            Assert.IsNotNull(fileSmbProperties.FileAttributes);
+            Assert.IsNotNull(fileSmbProperties.FilePermissionKey);
+            Assert.IsNotNull(fileSmbProperties.FileCreationTime);
+            Assert.IsNotNull(fileSmbProperties.FileLastWriteTime);
+            Assert.IsNotNull(fileSmbProperties.FileChangeTime);
+            Assert.IsNotNull(fileSmbProperties.FileId);
+            Assert.IsNotNull(fileSmbProperties.ParentId);
+        }
 
         class DisposingShare : IDisposable
         {

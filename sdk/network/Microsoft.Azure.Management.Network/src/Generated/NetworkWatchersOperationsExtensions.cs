@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// Configures flow log and traffic analytics (optional) on a specified
             /// resource.
             /// </summary>
             /// <param name='operations'>
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// Configures flow log and traffic analytics (optional) on a specified
             /// resource.
             /// </summary>
             /// <param name='operations'>
@@ -595,7 +595,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             /// <param name='parameters'>
             /// Parameters that define a resource to query flow log and traffic analytics
-            /// (optional)  status.
+            /// (optional) status.
             /// </param>
             public static FlowLogInformation GetFlowLogStatus(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
             {
@@ -617,7 +617,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             /// <param name='parameters'>
             /// Parameters that define a resource to query flow log and traffic analytics
-            /// (optional)  status.
+            /// (optional) status.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1092,7 +1092,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// Configures flow log and traffic analytics (optional) on a specified
             /// resource.
             /// </summary>
             /// <param name='operations'>
@@ -1113,7 +1113,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Configures flow log  and traffic analytics (optional) on a specified
+            /// Configures flow log and traffic analytics (optional) on a specified
             /// resource.
             /// </summary>
             /// <param name='operations'>
@@ -1154,7 +1154,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             /// <param name='parameters'>
             /// Parameters that define a resource to query flow log and traffic analytics
-            /// (optional)  status.
+            /// (optional) status.
             /// </param>
             public static FlowLogInformation BeginGetFlowLogStatus(this INetworkWatchersOperations operations, string resourceGroupName, string networkWatcherName, FlowLogStatusParameters parameters)
             {
@@ -1176,7 +1176,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             /// <param name='parameters'>
             /// Parameters that define a resource to query flow log and traffic analytics
-            /// (optional)  status.
+            /// (optional) status.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

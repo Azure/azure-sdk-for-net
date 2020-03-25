@@ -11,16 +11,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Http;
 
-// TODO (pri 2): we should log correction/activity
-// TODO (pri 2): we should log exceptions
 namespace Azure.Core.Diagnostics
 {
-    // TODO (pri 2): make the type internal
     [EventSource(Name = EventSourceName)]
     internal sealed class HttpPipelineEventSource : EventSource
     {
-        // TODO (pri 3): do we want the same source name for all SDk components?
-        private const string EventSourceName = "AzureSDK";
+        private const string EventSourceName = "Azure-Core";
 
         private const int MaxEventPayloadSize = 10 * 1024;
         private const int CopyBufferSize = 8 * 1024;
@@ -41,11 +37,10 @@ namespace Azure.Core.Diagnostics
         private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
 
-        private HttpPipelineEventSource() : base(EventSourceName) { }
+        private HttpPipelineEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
         internal static readonly HttpPipelineEventSource Singleton = new HttpPipelineEventSource();
 
-        // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
         public void Request(Request request)
         {
@@ -58,7 +53,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task RequestContentAsync(Request request, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (request.Content != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContent(request.ClientRequestId, await FormatContentAsync(request.Content, cancellationToken).ConfigureAwait(false));
             }
@@ -67,7 +62,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void RequestContent(Request request, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (request.Content != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContent(request.ClientRequestId, FormatContent(request.Content, cancellationToken));
             }
@@ -76,7 +71,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task RequestContentTextAsync(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (request.Content != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContentText(request.ClientRequestId, await FormatContentStringAsync(request.Content, encoding, cancellationToken).ConfigureAwait(false));
             }
@@ -85,7 +80,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void RequestContentText(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (request.Content != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContentText(request.ClientRequestId, FormatContentString(request.Content, encoding, cancellationToken));
             }
@@ -103,7 +98,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task ResponseContentAsync(Response response, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContent(response.ClientRequestId, await FormatContentAsync(response.ContentStream, cancellationToken).ConfigureAwait(false));
             }
@@ -112,7 +107,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void ResponseContent(Response response)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContent(response.ClientRequestId, FormatContent(response.ContentStream));
             }
@@ -130,7 +125,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task ResponseContentTextAsync(Response response, Encoding encoding, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContentText(response.ClientRequestId, await FormatContentStringAsync(response.ContentStream, encoding, cancellationToken).ConfigureAwait(false));
             }
@@ -139,7 +134,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void ResponseContentText(Response response, Encoding encoding)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContentText(response.ClientRequestId, FormatContentString(response.ContentStream, encoding));
             }
@@ -157,7 +152,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task ErrorResponseContentAsync(Response response, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContent(response.ClientRequestId, await FormatContentAsync(response.ContentStream, cancellationToken).ConfigureAwait(false));
             }
@@ -166,7 +161,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void ErrorResponseContent(Response response)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContent(response.ClientRequestId, FormatContent(response.ContentStream));
             }
@@ -175,7 +170,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public async Task ErrorResponseContentTextAsync(Response response, Encoding encoding, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContentText(response.ClientRequestId, await FormatContentStringAsync(response.ContentStream, encoding, cancellationToken).ConfigureAwait(false));
             }
@@ -184,7 +179,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void ErrorResponseContentText(Response response, Encoding encoding)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            if (response.ContentStream != null && IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContentText(response.ClientRequestId, FormatContentString(response.ContentStream, encoding));
             }

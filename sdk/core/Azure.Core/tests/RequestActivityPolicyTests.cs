@@ -30,7 +30,9 @@ namespace Azure.Core.Tests
             {
                 activity = Activity.Current;
                 startEvent = testListener.Events.Dequeue();
-                return new MockResponse(201);
+                MockResponse mockResponse = new MockResponse(201);
+                mockResponse.AddHeader(new HttpHeader("x-ms-request-id", "server request id"));
+                return mockResponse;
             });
 
             using Request request = mockTransport.CreateRequest();
@@ -53,6 +55,44 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.url", "http://example.com/"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.method", "GET"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("http.user_agent", "agent"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", request.ClientRequestId));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
+        }
+
+
+        [Test]
+        [NonParallelizable]
+        public async Task ActivityIdIsStampedOnRequest()
+        {
+            using var testListener = new TestDiagnosticListener("Azure.Pipeline");
+
+            var previousFormat = Activity.DefaultIdFormat;
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            try
+            {
+                Activity activity = null;
+
+                MockTransport mockTransport = CreateMockTransport(_ =>
+                {
+                    activity = Activity.Current;
+                    return new MockResponse(201);
+                });
+
+                using Request request = mockTransport.CreateRequest();
+                request.Method = RequestMethod.Get;
+                request.UriBuilder.Uri = new Uri("http://example.com");
+
+                Task<Response> requestTask = SendRequestAsync(mockTransport, request, RequestActivityPolicy.Shared);
+
+                await requestTask;
+
+                Assert.True(mockTransport.SingleRequest.TryGetHeader("traceparent", out string requestId));
+                Assert.AreEqual(activity.Id, requestId);
+            }
+            finally
+            {
+                Activity.DefaultIdFormat = previousFormat;
+            }
         }
 
         [Test]

@@ -9,38 +9,34 @@ using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Storage.Test
 {
     /// <summary>
     /// The TestEventListener listens for the AzureSDK logging event source
     /// and traces the output so it's easy to view the logs when testing.
-    /// 
+    ///
     /// Simply create an instance of the TestEventListener before you start
     /// running your tests.
     /// </summary>
-    internal class TestEventListener : EventListener
+    internal class TestEventListener : AzureEventSourceListener
     {
-        /// <summary>
-        /// Listen for the SDK logging to start.
-        /// </summary>
-        /// <param name="eventSource">The new event source.</param>
-        protected override void OnEventSourceCreated(EventSource eventSource)
+        public TestEventListener() : base((e, _) => LogEvent(e), EventLevel.Verbose)
         {
-            // Only trace SDK events while we're debugging because it's too
-            // noisy otherwise
-            if (Debugger.IsAttached && eventSource.Name == "AzureSDK")
-            {
-                this.EnableEvents(eventSource, EventLevel.LogAlways, EventKeywords.All);
-            }
         }
 
         /// <summary>
         /// Trace any SDK events.
         /// </summary>
         /// <param name="args">Event arguments.</param>
-        protected override void OnEventWritten(EventWrittenEventArgs args)
+        public static void LogEvent(EventWrittenEventArgs args)
         {
+            if (!Debugger.IsAttached)
+            {
+                return;
+            }
+
             var category = args.EventName;
             var payload = GetPayload(args);
 

@@ -1,7 +1,34 @@
 ﻿<Project ToolsVersion="15.0">
+  <PropertyGroup>
+    <SessionRecordsDirectory>SessionRecords</SessionRecordsDirectory>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)\TestFramework\*.cs" Link="TestFramework\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\src\Shared\ContentTypeUtilities.cs" Link="TestFramework\ContentTypeUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\src\Shared\NullableAttributes.cs" Link="TestFramework\NullableAttributes.cs" />
     <None Update="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(ExcludeRecordingFramework)' == 'true'">
+    <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\LiveOnlyAttribute.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\PlaybackTransport.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\*Record*.cs" />
+  </ItemGroup>
+
+  <Target Name="UpdateSessionRecords">
+    <ItemGroup>
+      <_CopyItems Include="$(OutputPath)\netcoreapp2.1\SessionRecords\**\*.*" />
+    </ItemGroup>
+
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\$(SessionRecordsDirectory)" />
+    <Copy
+      SourceFiles="@(_CopyItems)"
+      DestinationFolder="$(MSBuildProjectDirectory)\$(SessionRecordsDirectory)\%(RecursiveDir)"
+      SkipUnchangedFiles="true"
+      OverwriteReadOnlyFiles="true"
+      Retries="3"
+      RetryDelayMilliseconds="300"/>
+  </Target>
+
 </Project>

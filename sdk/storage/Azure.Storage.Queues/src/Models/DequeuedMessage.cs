@@ -19,7 +19,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// Update a <see cref="DequeuedMessage"/> after calling
         /// <see cref="QueueClient.UpdateMessageAsync"/> with the resulting
-        /// <see cref="UpdatedMessage"/>
+        /// <see cref="UpdatedMessage"/>.
         /// </summary>
         /// <param name="updated">The message details.</param>
         /// <returns>The updated <see cref="DequeuedMessage"/>.</returns>

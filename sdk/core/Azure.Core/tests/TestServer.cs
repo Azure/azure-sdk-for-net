@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.Core.Tests
 {
-    public class TestServer: IStartup, IDisposable
+    public class TestServer : IStartup, IDisposable
     {
         private readonly RequestDelegate _app;
         private readonly IWebHost _host;

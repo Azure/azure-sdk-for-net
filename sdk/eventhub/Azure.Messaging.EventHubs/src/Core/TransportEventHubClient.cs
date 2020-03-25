@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Metadata;
 
@@ -11,14 +12,24 @@ namespace Azure.Messaging.EventHubs.Core
     ///   for different transports.
     /// </summary>
     ///
-    internal abstract class TransportEventHubClient
+    internal abstract class TransportEventHubClient : IAsyncDisposable
     {
+        /// <summary>
+        ///   Indicates whether or not this client has been closed.
+        ///   </summary>
+        ///
+        /// <value>
+        ///   <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// </value>
+        ///
+        public virtual bool Closed { get; }
+
         /// <summary>
         ///   Updates the active retry policy for the client.
         /// </summary>
-        /// 
+        ///
         /// <param name="newRetryPolicy">The retry policy to set as active.</param>
-        /// 
+        ///
         public abstract void UpdateRetryPolicy(EventHubRetryPolicy newRetryPolicy);
 
         /// <summary>
@@ -33,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract Task<EventHubProperties> GetPropertiesAsync(CancellationToken cancellationToken);
 
         /// <summary>
-        ///   Retrieves information about a specific partiton for an Event Hub, including elements that describe the available
+        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
         ///   events in the partition event stream.
         /// </summary>
         ///
@@ -97,5 +108,14 @@ namespace Azure.Messaging.EventHubs.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public abstract Task CloseAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the client,
+        ///   including ensuring that the client itself has been closed.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public virtual async ValueTask DisposeAsync() => await CloseAsync(CancellationToken.None).ConfigureAwait(false);
     }
 }

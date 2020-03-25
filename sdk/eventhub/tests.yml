@@ -1,16 +1,20 @@
 trigger: none
 
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: azure
+
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
     MaxParallel: 1
     ServiceDirectory: eventhub
     EnvVars:
-      EVENT_HUBS_CONNECTION_STRING: $(net-eventhubs-internal-namespace-connection-string)
-      EVENT_HUBS_STORAGE_CONNECTION_STRING: $(net-eventhubs-internal-storage-connection-string)
       EVENT_HUBS_CLIENT: $(aad-azure-sdk-test-client-id)
       EVENT_HUBS_SECRET: $(aad-azure-sdk-test-client-secret)
       EVENT_HUBS_TENANT: $(aad-azure-sdk-test-tenant-id)
       EVENT_HUBS_SUBSCRIPTION: $(test-subscription-id)
-      EVENT_HUBS_NAMESPACE: $(net-eventhubs-internal-namespace)
       EVENT_HUBS_RESOURCEGROUP: $(net-eventhubs-internal-group)

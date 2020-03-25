@@ -1,0 +1,10 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\Directory.Build.props" />
+  <Choose>
+    <When Condition="'$(IsDataPlaneProject)' == 'true'">
+      <PropertyGroup>
+        <VersionPrefix>10.0.0</VersionPrefix>
+      </PropertyGroup>
+    </When>
+  </Choose>
+</Project>

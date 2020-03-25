@@ -14,11 +14,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the node agent.
+    /// Information about the Compute Node agent.
     /// </summary>
     /// <remarks>
-    /// The Batch node agent is a program that runs on each node in the pool
-    /// and provides Batch capability on the compute node.
+    /// The Batch Compute Node agent is a program that runs on each Compute
+    /// Node in the Pool and provides Batch capability on the Compute Node.
     /// </remarks>
     public partial class NodeAgentInformation
     {
@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the NodeAgentInformation class.
         /// </summary>
-        /// <param name="version">The version of the Batch node agent running
-        /// on the compute node.</param>
-        /// <param name="lastUpdateTime">The time when the node agent was
-        /// updated on the compute node.</param>
+        /// <param name="version">The version of the Batch Compute Node agent
+        /// running on the Compute Node.</param>
+        /// <param name="lastUpdateTime">The time when the Compute Node agent
+        /// was updated on the Compute Node.</param>
         public NodeAgentInformation(string version, System.DateTime lastUpdateTime)
         {
             Version = version;
@@ -50,24 +50,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the version of the Batch node agent running on the
-        /// compute node.
+        /// Gets or sets the version of the Batch Compute Node agent running on
+        /// the Compute Node.
         /// </summary>
         /// <remarks>
-        /// This version number can be checked against the node agent release
-        /// notes located at
+        /// This version number can be checked against the Compute Node agent
+        /// release notes located at
         /// https://github.com/Azure/Batch/blob/master/changelogs/nodeagent/CHANGELOG.md.
         /// </remarks>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the time when the node agent was updated on the
-        /// compute node.
+        /// Gets or sets the time when the Compute Node agent was updated on
+        /// the Compute Node.
         /// </summary>
         /// <remarks>
-        /// This is the most recent time that the node agent was updated to a
-        /// new version.
+        /// This is the most recent time that the Compute Node agent was
+        /// updated to a new version.
         /// </remarks>
         [JsonProperty(PropertyName = "lastUpdateTime")]
         public System.DateTime LastUpdateTime { get; set; }

@@ -16,33 +16,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifies details of a Job Manager task.
+    /// Specifies details of a Job Manager Task.
     /// </summary>
     /// <remarks>
-    /// The Job Manager task is automatically started when the job is created.
-    /// The Batch service tries to schedule the Job Manager task before any
-    /// other tasks in the job. When shrinking a pool, the Batch service tries
-    /// to preserve compute nodes where Job Manager tasks are running for as
-    /// long as possible (that is, nodes running 'normal' tasks are removed
-    /// before nodes running Job Manager tasks). When a Job Manager task fails
-    /// and needs to be restarted, the system tries to schedule it at the
-    /// highest priority. If there are no idle nodes available, the system may
-    /// terminate one of the running tasks in the pool and return it to the
-    /// queue in order to make room for the Job Manager task to restart. Note
-    /// that a Job Manager task in one job does not have priority over tasks in
-    /// other jobs. Across jobs, only job level priorities are observed. For
-    /// example, if a Job Manager in a priority 0 job needs to be restarted, it
-    /// will not displace tasks of a priority 1 job. Batch will retry tasks
-    /// when a recovery operation is triggered on a compute node. Examples of
-    /// recovery operations include (but are not limited to) when an unhealthy
-    /// compute node is rebooted or a compute node disappeared due to host
-    /// failure. Retries due to recovery operations are independent of and are
-    /// not counted against the maxTaskRetryCount. Even if the
+    /// The Job Manager Task is automatically started when the Job is created.
+    /// The Batch service tries to schedule the Job Manager Task before any
+    /// other Tasks in the Job. When shrinking a Pool, the Batch service tries
+    /// to preserve Nodes where Job Manager Tasks are running for as long as
+    /// possible (that is, Compute Nodes running 'normal' Tasks are removed
+    /// before Compute Nodes running Job Manager Tasks). When a Job Manager
+    /// Task fails and needs to be restarted, the system tries to schedule it
+    /// at the highest priority. If there are no idle Compute Nodes available,
+    /// the system may terminate one of the running Tasks in the Pool and
+    /// return it to the queue in order to make room for the Job Manager Task
+    /// to restart. Note that a Job Manager Task in one Job does not have
+    /// priority over Tasks in other Jobs. Across Jobs, only Job level
+    /// priorities are observed. For example, if a Job Manager in a priority 0
+    /// Job needs to be restarted, it will not displace Tasks of a priority 1
+    /// Job. Batch will retry Tasks when a recovery operation is triggered on a
+    /// Node. Examples of recovery operations include (but are not limited to)
+    /// when an unhealthy Node is rebooted or a Compute Node disappeared due to
+    /// host failure. Retries due to recovery operations are independent of and
+    /// are not counted against the maxTaskRetryCount. Even if the
     /// maxTaskRetryCount is 0, an internal retry due to a recovery operation
-    /// may occur. Because of this, all tasks should be idempotent. This means
-    /// tasks need to tolerate being interrupted and restarted without causing
+    /// may occur. Because of this, all Tasks should be idempotent. This means
+    /// Tasks need to tolerate being interrupted and restarted without causing
     /// any corruption or duplicate data. The best practice for long running
-    /// tasks is to use some form of checkpointing.
+    /// Tasks is to use some form of checkpointing.
     /// </remarks>
     public partial class JobManagerTask
     {
@@ -58,37 +58,37 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobManagerTask class.
         /// </summary>
         /// <param name="id">A string that uniquely identifies the Job Manager
-        /// task within the job.</param>
+        /// Task within the Job.</param>
         /// <param name="commandLine">The command line of the Job Manager
-        /// task.</param>
+        /// Task.</param>
         /// <param name="displayName">The display name of the Job Manager
-        /// task.</param>
+        /// Task.</param>
         /// <param name="containerSettings">The settings for the container
-        /// under which the Job Manager task runs.</param>
+        /// under which the Job Manager Task runs.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
-        /// will download to the compute node before running the command
+        /// will download to the Compute Node before running the command
         /// line.</param>
         /// <param name="outputFiles">A list of files that the Batch service
-        /// will upload from the compute node after running the command
+        /// will upload from the Compute Node after running the command
         /// line.</param>
         /// <param name="environmentSettings">A list of environment variable
-        /// settings for the Job Manager task.</param>
+        /// settings for the Job Manager Task.</param>
         /// <param name="constraints">Constraints that apply to the Job Manager
-        /// task.</param>
+        /// Task.</param>
         /// <param name="killJobOnCompletion">Whether completion of the Job
-        /// Manager task signifies completion of the entire job.</param>
+        /// Manager Task signifies completion of the entire Job.</param>
         /// <param name="userIdentity">The user identity under which the Job
-        /// Manager task runs.</param>
-        /// <param name="runExclusive">Whether the Job Manager task requires
-        /// exclusive use of the compute node where it runs.</param>
-        /// <param name="applicationPackageReferences">A list of application
-        /// packages that the Batch service will deploy to the compute node
+        /// Manager Task runs.</param>
+        /// <param name="runExclusive">Whether the Job Manager Task requires
+        /// exclusive use of the Compute Node where it runs.</param>
+        /// <param name="applicationPackageReferences">A list of Application
+        /// Packages that the Batch service will deploy to the Compute Node
         /// before running the command line.</param>
         /// <param name="authenticationTokenSettings">The settings for an
-        /// authentication token that the task can use to perform Batch service
+        /// authentication token that the Task can use to perform Batch service
         /// operations.</param>
-        /// <param name="allowLowPriorityNode">Whether the Job Manager task may
-        /// run on a low-priority compute node.</param>
+        /// <param name="allowLowPriorityNode">Whether the Job Manager Task may
+        /// run on a low-priority Compute Node.</param>
         public JobManagerTask(string id, string commandLine, string displayName = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
         {
             Id = id;
@@ -114,8 +114,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the Job Manager task
-        /// within the job.
+        /// Gets or sets a string that uniquely identifies the Job Manager Task
+        /// within the Job.
         /// </summary>
         /// <remarks>
         /// The ID can contain any combination of alphanumeric characters
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name of the Job Manager task.
+        /// Gets or sets the display name of the Job Manager Task.
         /// </summary>
         /// <remarks>
         /// It need not be unique and can contain any Unicode characters up to
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the command line of the Job Manager task.
+        /// Gets or sets the command line of the Job Manager Task.
         /// </summary>
         /// <remarks>
         /// The command line does not run under a shell, and therefore cannot
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using "cmd
         /// /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux. If the
         /// command line refers to file paths, it should use a relative path
-        /// (relative to the task working directory), or use the Batch provided
+        /// (relative to the Task working directory), or use the Batch provided
         /// environment variable
         /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
@@ -154,16 +154,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the settings for the container under which the Job
-        /// Manager task runs.
+        /// Manager Task runs.
         /// </summary>
         /// <remarks>
-        /// If the pool that will run this task has containerConfiguration set,
-        /// this must be set as well. If the pool that will run this task
+        /// If the Pool that will run this Task has containerConfiguration set,
+        /// this must be set as well. If the Pool that will run this Task
         /// doesn't have containerConfiguration set, this must not be set. When
         /// this is specified, all directories recursively below the
         /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
-        /// node) are mapped into the container, all task environment variables
-        /// are mapped into the container, and the task command line is
+        /// node) are mapped into the container, all Task environment variables
+        /// are mapped into the container, and the Task command line is
         /// executed in the container. Files produced in the container outside
         /// of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk,
         /// meaning that Batch file APIs will not be able to access those
@@ -174,10 +174,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
-        /// to the compute node before running the command line.
+        /// to the Compute Node before running the command line.
         /// </summary>
         /// <remarks>
-        /// Files listed under this element are located in the task's working
+        /// Files listed under this element are located in the Task's working
         /// directory. There is a maximum size for the list of resource files.
         /// When the max size is exceeded, the request will fail and the
         /// response error code will be RequestEntityTooLarge. If this occurs,
@@ -190,112 +190,112 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will upload
-        /// from the compute node after running the command line.
+        /// from the Compute Node after running the command line.
         /// </summary>
         /// <remarks>
-        /// For multi-instance tasks, the files will only be uploaded from the
-        /// compute node on which the primary task is executed.
+        /// For multi-instance Tasks, the files will only be uploaded from the
+        /// Compute Node on which the primary Task is executed.
         /// </remarks>
         [JsonProperty(PropertyName = "outputFiles")]
         public IList<OutputFile> OutputFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the Job
-        /// Manager task.
+        /// Manager Task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets constraints that apply to the Job Manager task.
+        /// Gets or sets constraints that apply to the Job Manager Task.
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets whether completion of the Job Manager task signifies
-        /// completion of the entire job.
+        /// Gets or sets whether completion of the Job Manager Task signifies
+        /// completion of the entire Job.
         /// </summary>
         /// <remarks>
-        /// If true, when the Job Manager task completes, the Batch service
-        /// marks the job as complete. If any tasks are still running at this
-        /// time (other than Job Release), those tasks are terminated. If
-        /// false, the completion of the Job Manager task does not affect the
-        /// job status. In this case, you should either use the
-        /// onAllTasksComplete attribute to terminate the job, or have a client
-        /// or user terminate the job explicitly. An example of this is if the
-        /// Job Manager creates a set of tasks but then takes no further role
+        /// If true, when the Job Manager Task completes, the Batch service
+        /// marks the Job as complete. If any Tasks are still running at this
+        /// time (other than Job Release), those Tasks are terminated. If
+        /// false, the completion of the Job Manager Task does not affect the
+        /// Job status. In this case, you should either use the
+        /// onAllTasksComplete attribute to terminate the Job, or have a client
+        /// or user terminate the Job explicitly. An example of this is if the
+        /// Job Manager creates a set of Tasks but then takes no further role
         /// in their execution. The default value is true. If you are using the
-        /// onAllTasksComplete and onTaskFailure attributes to control job
-        /// lifetime, and using the Job Manager task only to create the tasks
-        /// for the job (not to monitor progress), then it is important to set
+        /// onAllTasksComplete and onTaskFailure attributes to control Job
+        /// lifetime, and using the Job Manager Task only to create the Tasks
+        /// for the Job (not to monitor progress), then it is important to set
         /// killJobOnCompletion to false.
         /// </remarks>
         [JsonProperty(PropertyName = "killJobOnCompletion")]
         public bool? KillJobOnCompletion { get; set; }
 
         /// <summary>
-        /// Gets or sets the user identity under which the Job Manager task
+        /// Gets or sets the user identity under which the Job Manager Task
         /// runs.
         /// </summary>
         /// <remarks>
-        /// If omitted, the task runs as a non-administrative user unique to
-        /// the task.
+        /// If omitted, the Task runs as a non-administrative user unique to
+        /// the Task.
         /// </remarks>
         [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the Job Manager task requires exclusive use of
-        /// the compute node where it runs.
+        /// Gets or sets whether the Job Manager Task requires exclusive use of
+        /// the Compute Node where it runs.
         /// </summary>
         /// <remarks>
-        /// If true, no other tasks will run on the same compute node for as
-        /// long as the Job Manager is running. If false, other tasks can run
-        /// simultaneously with the Job Manager on a compute node. The Job
-        /// Manager task counts normally against the node's concurrent task
-        /// limit, so this is only relevant if the node allows multiple
-        /// concurrent tasks. The default value is true.
+        /// If true, no other Tasks will run on the same Node for as long as
+        /// the Job Manager is running. If false, other Tasks can run
+        /// simultaneously with the Job Manager on a Compute Node. The Job
+        /// Manager Task counts normally against the Compute Node's concurrent
+        /// Task limit, so this is only relevant if the Compute Node allows
+        /// multiple concurrent Tasks. The default value is true.
         /// </remarks>
         [JsonProperty(PropertyName = "runExclusive")]
         public bool? RunExclusive { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of application packages that the Batch service
-        /// will deploy to the compute node before running the command line.
+        /// Gets or sets a list of Application Packages that the Batch service
+        /// will deploy to the Compute Node before running the command line.
         /// </summary>
         /// <remarks>
-        /// Application packages are downloaded and deployed to a shared
-        /// directory, not the task working directory. Therefore, if a
-        /// referenced package is already on the compute node, and is up to
-        /// date, then it is not re-downloaded; the existing copy on the
-        /// compute node is used. If a referenced application package cannot be
-        /// installed, for example because the package has been deleted or
-        /// because download failed, the task fails.
+        /// Application Packages are downloaded and deployed to a shared
+        /// directory, not the Task working directory. Therefore, if a
+        /// referenced Application Package is already on the Compute Node, and
+        /// is up to date, then it is not re-downloaded; the existing copy on
+        /// the Compute Node is used. If a referenced Application Package
+        /// cannot be installed, for example because the package has been
+        /// deleted or because download failed, the Task fails.
         /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets the settings for an authentication token that the task
+        /// Gets or sets the settings for an authentication token that the Task
         /// can use to perform Batch service operations.
         /// </summary>
         /// <remarks>
-        /// If this property is set, the Batch service provides the task with
+        /// If this property is set, the Batch service provides the Task with
         /// an authentication token which can be used to authenticate Batch
-        /// service operations without requiring an account access key. The
+        /// service operations without requiring an Account access key. The
         /// token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment
-        /// variable. The operations that the task can carry out using the
-        /// token depend on the settings. For example, a task can request job
-        /// permissions in order to add other tasks to the job, or check the
-        /// status of the job or of other tasks under the job.
+        /// variable. The operations that the Task can carry out using the
+        /// token depend on the settings. For example, a Task can request Job
+        /// permissions in order to add other Tasks to the Job, or check the
+        /// status of the Job or of other Tasks under the Job.
         /// </remarks>
         [JsonProperty(PropertyName = "authenticationTokenSettings")]
         public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the Job Manager task may run on a low-priority
-        /// compute node.
+        /// Gets or sets whether the Job Manager Task may run on a low-priority
+        /// Compute Node.
         /// </summary>
         /// <remarks>
         /// The default value is true.

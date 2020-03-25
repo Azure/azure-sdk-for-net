@@ -29,8 +29,8 @@ namespace Azure.Storage.Blobs.Models
             {
                 switch (element.Name.LocalName)
                 {
-                    case "Code":
-                    case "Message":
+                    case Constants.Xml.Code:
+                    case Constants.Xml.Message:
                         continue;
                     default:
                         error.AdditionalInformation[element.Name.LocalName] = element.Value;
@@ -60,5 +60,19 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>A StorageRequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
             => new StorageRequestFailedException(response, null, null, this.ErrorCode);
+    }
+
+    /// <summary>
+    /// Convert DataLakeStorageError into StorageRequestFailedExceptions.
+    /// </summary>
+    internal partial class DataLakeStorageError
+    {
+        /// <summary>
+        /// Create an exception corresponding to the DataLakeStorageError.
+        /// </summary>
+        /// <param name="response">The failed response.</param>
+        /// <returns>A StorageRequestFailedException.</returns>
+        public Exception CreateException(Azure.Response response)
+            => new StorageRequestFailedException(response, this.Error.Message, null, this.Error.Code);
     }
 }

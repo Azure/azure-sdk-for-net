@@ -268,5 +268,12 @@ namespace Microsoft.Azure.Batch.Conventions.Files
             TimeSpan flushInterval
         )
             => await _storagePath.SaveTrackedAsync(kind, sourcePath, destinationRelativePath, flushInterval);
+
+        /// <summary>
+        /// Gets the Blob name prefix/folder where files of the given kind are stored
+        /// </summary>
+        /// <param name="kind">The output kind.</param>
+        /// <returns>The Blob name prefix/folder where files of the given kind are stored.</returns>
+        public string GetOutputStoragePath(TaskOutputKind kind) => _storagePath.BlobNamePrefix(kind);
     }
 }

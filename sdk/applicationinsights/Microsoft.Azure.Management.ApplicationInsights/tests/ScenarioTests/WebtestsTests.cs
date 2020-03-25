@@ -30,7 +30,7 @@ namespace ApplicationInsights.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void CreateGetListUpdateDeleteWebtests()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var insightsClient = this.GetAppInsightsManagementClient(context, handler);
 

@@ -8,7 +8,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Primitives;
     using Xunit;
 
     public class ClientTestBase

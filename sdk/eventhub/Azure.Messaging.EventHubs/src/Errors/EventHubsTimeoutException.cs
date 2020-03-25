@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Errors
         /// <param name="message">The error message that explains the reason for the exception.</param>
         ///
         internal EventHubsTimeoutException(string resourceName,
-                                            string message) : this(resourceName, message, null)
+                                           string message) : this(resourceName, message, null)
         {
         }
 
@@ -33,8 +33,8 @@ namespace Azure.Messaging.EventHubs.Errors
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
         ///
         internal EventHubsTimeoutException(string resourceName,
-                                            string message,
-                                            Exception innerException) : base(true, resourceName, message, innerException)
+                                           string message,
+                                           Exception innerException) : base(true, resourceName, message, innerException)
         {
         }
     }

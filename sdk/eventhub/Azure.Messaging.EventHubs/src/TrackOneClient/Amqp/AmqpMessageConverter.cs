@@ -51,7 +51,7 @@ namespace TrackOne.Amqp
                         firstEvent = data;
                     }
 
-                    // Create AMQP message if not created yet. We might have created AmqpMessage while building the EventDataBatch. 
+                    // Create AMQP message if not created yet. We might have created AmqpMessage while building the EventDataBatch.
                     AmqpMessage amqpMessage = data.AmqpMessage;
                     data.AmqpMessage = null; // Retry on the same message should create a new AmqpMessage
                     if (amqpMessage == null)
@@ -79,7 +79,7 @@ namespace TrackOne.Amqp
             {
                 var data = eventDatas.First();
 
-                // Create AMQP message if not created yet. We might have created AmqpMessage while building the EventDataBatch. 
+                // Create AMQP message if not created yet. We might have created AmqpMessage while building the EventDataBatch.
                 returnMessage = data.AmqpMessage;
                 data.AmqpMessage = null; // Retry on the same message should create a new AmqpMessage
                 if (returnMessage == null)

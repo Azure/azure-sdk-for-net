@@ -3,9 +3,12 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
@@ -15,10 +18,9 @@ namespace Azure.Storage.Common.Test
     public class StreamPartitionerTests
     {
         [Test]
-        public async Task ReadAsync()
+        public async Task GetNextPartitionAsync()
         {
             var expected = TestHelper.GetRandomBuffer(10 * Constants.MB);
-            _ = new ReadOnlyMemory<byte>(expected);
             var actual = new byte[expected.Length];
 
             Assert.AreNotSame(expected, actual);
@@ -32,7 +34,7 @@ namespace Azure.Storage.Common.Test
                 do
                 {
                     var position = expectedStream.Position;
-                    using (var buffer = await reader.ReadAsync())
+                    using (var buffer = await reader.GetNextPartitionAsync())
                     {
                         if (buffer.Length == 0)
                         {
@@ -58,7 +60,6 @@ namespace Azure.Storage.Common.Test
         public async Task Read_WithReadOnlyMemory()
         {
             var expected = TestHelper.GetRandomBuffer(10 * Constants.MB);
-            _ = new ReadOnlyMemory<byte>(expected);
             var actual = new byte[expected.Length];
 
             Assert.AreNotSame(expected, actual);
@@ -72,7 +73,7 @@ namespace Azure.Storage.Common.Test
                 do
                 {
                     var position = expectedStream.Position;
-                    using (var buffer = await reader.ReadAsync())
+                    using (var buffer = await reader.GetNextPartitionAsync())
                     {
                         if (buffer.Length == 0)
                         {
@@ -98,7 +99,7 @@ namespace Azure.Storage.Common.Test
 
         [Test]
         [NonParallelizable]
-        public async Task ReadAsync_1GB()
+        public async Task GetNextPartitionAsync_1GB()
         {
             long memoryStart;
             long memoryEnd;
@@ -117,7 +118,7 @@ namespace Azure.Storage.Common.Test
                 do
                 {
                     var position = expectedStream.Position;
-                    using (var buffer = await reader.ReadAsync())
+                    using (var buffer = await reader.GetNextPartitionAsync())
                     {
                         if (buffer.Length == 0)
                         {
@@ -149,8 +150,9 @@ namespace Azure.Storage.Common.Test
         }
 
         [Test]
+        [LiveOnly]
         [NonParallelizable]
-        public async Task ReadAsync_1GB_WithReadOnlyMemory()
+        public async Task GetNextPartitionAsync_1GB_WithReadOnlyMemory()
         {
             long memoryStart;
             long memoryEnd;
@@ -169,7 +171,7 @@ namespace Azure.Storage.Common.Test
                 do
                 {
                     var position = expectedStream.Position;
-                    using (var buffer = await reader.ReadAsync())
+                    using (var buffer = await reader.GetNextPartitionAsync())
                     {
                         if (buffer.Length == 0)
                         {
@@ -202,6 +204,62 @@ namespace Azure.Storage.Common.Test
 
             Assert.AreEqual(Math.Ceiling(1d * length / Constants.DefaultBufferSize), buffersRead);
             Assert.IsTrue(memoryEnd - memoryStart < 8 * Constants.DefaultBufferSize); // TODO Assuming at most 8 buffers allocated
+        }
+
+        [Test]
+        [LiveOnly]
+        [NonParallelizable]
+        public async Task GetNextPartitionAsync_1GB_Sequencing()
+        {
+            var length = (511 * Constants.MB) - (1 * Constants.KB);
+            var numberOfBytesToSample = 1 * Constants.KB;
+            var maxActivePartitions = 4;
+            var maxLoadedPartitions = 8;
+
+            var expected = TestHelper.GetRandomBuffer(length);
+            var actual = new byte[expected.Length];
+
+            Assert.AreNotSame(expected, actual);
+
+            var sequence = new List<(long position, ReadOnlyMemory<byte> bytes)>();
+
+            using (var expectedStream = new NonSeekableStream(expected))
+            using (var reader = new StreamPartitioner(expectedStream))
+            {
+                Assert.IsTrue(expectedStream.CanRead);
+                Assert.IsFalse(expectedStream.CanSeek);
+
+                await foreach (var buffer in reader.GetPartitionsAsync(maxActivePartitions, maxLoadedPartitions))
+                {
+                    using (buffer)
+                    {
+                        if (buffer.Length == 0)
+                        {
+                            Assert.AreEqual(expectedStream.Length, expectedStream.Position);
+                            break;
+                        }
+                        else
+                        {
+                            buffer.Read(out var memory, numberOfBytesToSample);
+
+                            sequence.Add((buffer.ParentPosition, memory));
+                        }
+                    }
+                }
+            }
+
+            var currentPosition = 0L;
+
+            foreach (var buffer in sequence.Skip(1))
+            {
+                Assert.IsTrue(currentPosition < buffer.position, "Partitions received out of order");
+                var expectedBytes = new byte[buffer.bytes.Length];
+                Array.Copy(expected, buffer.position, expectedBytes, 0, buffer.bytes.Length);
+
+                TestHelper.AssertSequenceEqual(expectedBytes, buffer.bytes.ToArray());
+
+                currentPosition = buffer.position;
+            }
         }
 
         class NonSeekableStream : MemoryStream

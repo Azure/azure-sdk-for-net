@@ -19,7 +19,7 @@ namespace Azure.Core.Tests
                 new MockResponse(500),
                 new MockResponse(1));
 
-            var pipeline = new HttpPipeline(mockTransport, new [] {
+            var pipeline = new HttpPipeline(mockTransport, new[] {
                 new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
             }, responseClassifier: new CustomResponseClassifier());
 
@@ -33,7 +33,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsFalseIfNotExist()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
 
             Assert.False(message.TryGetProperty("someName", out _));
         }
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyReturnsValueIfSet()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
             message.SetProperty("someName", "value");
 
             Assert.True(message.TryGetProperty("someName", out object value));
@@ -51,13 +51,13 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertyIsCaseSensitive()
         {
-            HttpPipelineMessage message = new HttpPipelineMessage(CancellationToken.None);
+            HttpPipelineMessage message = new HttpPipelineMessage(new MockRequest(), new ResponseClassifier(), CancellationToken.None);
             message.SetProperty("someName", "value");
 
             Assert.False(message.TryGetProperty("SomeName", out object value));
         }
 
-        class CustomResponseClassifier : ResponseClassifier
+        private class CustomResponseClassifier : ResponseClassifier
         {
             public override bool IsRetriableResponse(Response response)
             {

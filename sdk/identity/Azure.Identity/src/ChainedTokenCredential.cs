@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations to be tried in order 
+    /// Provides a <see cref="TokenCredential"/> implementation which chains multiple <see cref="TokenCredential"/> implementations to be tried in order
     /// until one of the getToken methods returns a non-default <see cref="AccessToken"/>.
     /// </summary>
     public class ChainedTokenCredential : TokenCredential
     {
-        private TokenCredential[] _sources;
+        private readonly TokenCredential[] _sources;
 
         /// <summary>
         /// Creates an instance with the specified <see cref="TokenCredential"/> sources.
@@ -23,11 +23,17 @@ namespace Azure.Identity
         /// <param name="sources">The ordered chain of <see cref="TokenCredential"/> implementations to tried when calling <see cref="GetToken"/> or <see cref="GetTokenAsync"/></param>
         public ChainedTokenCredential(params TokenCredential[] sources)
         {
-            if (sources == null) throw new ArgumentNullException(nameof(sources));
+            if (sources == null)
+            {
+                throw new ArgumentNullException(nameof(sources));
+            }
 
-            if (sources.Length == 0) throw new ArgumentException("sources must not be empty", nameof(sources));
+            if (sources.Length == 0)
+            {
+                throw new ArgumentException("sources must not be empty", nameof(sources));
+            }
 
-            for(int i = 0; i < sources.Length; i++)
+            for (int i = 0; i < sources.Length; i++)
             {
                 if (sources[i] == null)
                 {
@@ -66,7 +72,7 @@ namespace Azure.Identity
         {
             AccessToken token = new AccessToken();
 
-            for(int i = 0; i < _sources.Length && token.Token == null; i++)
+            for (int i = 0; i < _sources.Length && token.Token == null; i++)
             {
                 token = await _sources[i].GetTokenAsync(scopes, cancellationToken).ConfigureAwait(false);
             }

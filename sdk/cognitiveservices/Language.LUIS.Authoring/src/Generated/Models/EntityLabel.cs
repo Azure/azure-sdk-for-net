@@ -36,11 +36,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// the extracted entity starts.</param>
         /// <param name="endTokenIndex">The index within the utterance where
         /// the extracted entity ends.</param>
-        public EntityLabel(string entityName, int startTokenIndex, int endTokenIndex)
+        /// <param name="role">The role of the entity within the
+        /// utterance.</param>
+        /// <param name="roleId">The role Id.</param>
+        public EntityLabel(string entityName, int startTokenIndex, int endTokenIndex, string role = default(string), string roleId = default(string))
         {
             EntityName = entityName;
             StartTokenIndex = startTokenIndex;
             EndTokenIndex = endTokenIndex;
+            Role = role;
+            RoleId = roleId;
             CustomInit();
         }
 
@@ -68,6 +73,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "endTokenIndex")]
         public int EndTokenIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the role of the entity within the utterance.
+        /// </summary>
+        [JsonProperty(PropertyName = "role")]
+        public string Role { get; set; }
+
+        /// <summary>
+        /// Gets or sets the role Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "roleId")]
+        public string RoleId { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -14,11 +14,11 @@ namespace Azure.Core.Tests
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class RetriableStreamTests: SyncAsyncTestBase
+    public class RetriableStreamTests : SyncAsyncTestBase
     {
         private readonly byte[] _buffer = new byte[256];
 
-        public RetriableStreamTests(bool isAsync): base(isAsync)
+        public RetriableStreamTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -279,7 +279,7 @@ namespace Azure.Core.Tests
             public override long Position { get; set; }
         }
 
-        private class MockReadStream: ReadOnlyStream
+        private class MockReadStream : ReadOnlyStream
         {
             private readonly long _throwAfter;
 

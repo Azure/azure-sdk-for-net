@@ -150,3 +150,6 @@ pingme.txt
 # TS/Node files
 dist/
 node_modules/
+
+# MSBuild binary log files
+msbuild.binlog

@@ -16,12 +16,37 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class DiskCreateOption
     {
+        /// <summary>
+        /// Create an empty data disk of a size given by diskSizeGB.
+        /// </summary>
         public const string Empty = "Empty";
+        /// <summary>
+        /// Disk will be attached to a VM.
+        /// </summary>
         public const string Attach = "Attach";
+        /// <summary>
+        /// Create a new disk from a platform image specified by the given
+        /// imageReference.
+        /// </summary>
         public const string FromImage = "FromImage";
+        /// <summary>
+        /// Create a disk by importing from a blob specified by a sourceUri in
+        /// a storage account specified by storageAccountId.
+        /// </summary>
         public const string Import = "Import";
+        /// <summary>
+        /// Create a new disk or snapshot by copying from a disk or snapshot
+        /// specified by the given sourceResourceId.
+        /// </summary>
         public const string Copy = "Copy";
+        /// <summary>
+        /// Create a new disk by copying from a backup recovery point.
+        /// </summary>
         public const string Restore = "Restore";
+        /// <summary>
+        /// Create a new disk by obtaining a write token and using it to
+        /// directly upload the contents of the disk.
+        /// </summary>
         public const string Upload = "Upload";
     }
 }

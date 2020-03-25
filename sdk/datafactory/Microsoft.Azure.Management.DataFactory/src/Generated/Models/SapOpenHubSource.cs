@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -41,9 +42,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        public SapOpenHubSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object))
+        /// <param name="excludeLastRequest">Whether to exclude the records of
+        /// the last request. The default value is true. Type: boolean (or
+        /// Expression with resultType boolean).</param>
+        /// <param name="baseRequestId">The ID of request for delta loading.
+        /// Once it is set, only data with requestId larger than the value of
+        /// this property will be retrieved. The default value is 0. Type:
+        /// integer (or Expression with resultType integer ).</param>
+        public SapOpenHubSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object excludeLastRequest = default(object), object baseRequestId = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
+            ExcludeLastRequest = excludeLastRequest;
+            BaseRequestId = baseRequestId;
             CustomInit();
         }
 
@@ -51,6 +61,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets whether to exclude the records of the last request.
+        /// The default value is true. Type: boolean (or Expression with
+        /// resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "excludeLastRequest")]
+        public object ExcludeLastRequest { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of request for delta loading. Once it is set,
+        /// only data with requestId larger than the value of this property
+        /// will be retrieved. The default value is 0. Type: integer (or
+        /// Expression with resultType integer ).
+        /// </summary>
+        [JsonProperty(PropertyName = "baseRequestId")]
+        public object BaseRequestId { get; set; }
 
     }
 }

@@ -2,7 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys
@@ -12,8 +15,14 @@ namespace Azure.Security.KeyVault.Keys
     /// structure that represents a cryptographic key.
     /// For more information, see <see href="http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18"/>.
     /// </summary>
-    public class JsonWebKey : Model
+    public class JsonWebKey : IJsonDeserializable, IJsonSerializable
     {
+        private static readonly KeyOperation[] AesKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
+        private static readonly KeyOperation[] RSAPublicKeyOperation = { KeyOperation.Encrypt, KeyOperation.Verify, KeyOperation.WrapKey };
+        private static readonly KeyOperation[] RSAPrivateKeyOperation = { KeyOperation.Encrypt, KeyOperation.Decrypt, KeyOperation.Sign, KeyOperation.Verify, KeyOperation.WrapKey, KeyOperation.UnwrapKey };
+        private static readonly KeyOperation[] ECPublicKeyOperation = { KeyOperation.Sign };
+        private static readonly KeyOperation[] ECPrivateKeyOperation = { KeyOperation.Sign, KeyOperation.Verify };
+
         /// <summary>
         /// The identifier of the key.
         /// </summary>
@@ -26,16 +35,71 @@ namespace Azure.Security.KeyVault.Keys
         public KeyType KeyType { get; set; }
 
         /// <summary>
-        /// Supported Key Operations
+        /// Supported Key Operations.
         /// </summary>
-        public IList<KeyOperations> KeyOps { get; set; }
+        public IList<KeyOperation> KeyOps { get; set; }
 
         /// <summary>
-        /// Creates an instance of <see cref="JsonWebKey"/>
+        /// Creates an instance of <see cref="JsonWebKey"/>.
         /// </summary>
         public JsonWebKey()
         {
-            KeyOps = new List<KeyOperations>();
+            KeyOps = new List<KeyOperation>();
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Oct"/>.
+        /// </summary>
+        /// <param name="aesProvider">An <see cref="Aes"/> provider.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="aesProvider"/> is null.</exception>
+        public JsonWebKey(Aes aesProvider)
+        {
+            Argument.NotNull(aesProvider, nameof(aesProvider));
+
+            KeyType = KeyType.Oct;
+            KeyOps = new List<KeyOperation>(AesKeyOperation);
+
+            K = aesProvider.Key;
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Ec"/>.
+        /// </summary>
+        /// <param name="ecdsa">An <see cref="ECDsa"/> provider.</param>
+        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="ecdsa"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The elliptic curve name is invalid.</exception>
+        public JsonWebKey(ECDsa ecdsa, bool includePrivateParameters = default)
+        {
+            Argument.NotNull(ecdsa, nameof(ecdsa));
+
+            Initialize(ecdsa, includePrivateParameters);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="JsonWebKey"/> using type <see cref="KeyType.Rsa"/>.
+        /// </summary>
+        /// <param name="rsaProvider">An <see cref="RSA"/> provider.</param>
+        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="rsaProvider"/> is null.</exception>
+        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = default)
+        {
+            Argument.NotNull(rsaProvider, nameof(rsaProvider));
+
+            KeyType = KeyType.Rsa;
+            KeyOps = new List<KeyOperation>(includePrivateParameters ? RSAPrivateKeyOperation : RSAPublicKeyOperation);
+
+            RSAParameters rsaParameters = rsaProvider.ExportParameters(includePrivateParameters);
+
+            E = rsaParameters.Exponent;
+            N = rsaParameters.Modulus;
+
+            D = rsaParameters.D;
+            DP = rsaParameters.DP;
+            DQ = rsaParameters.DQ;
+            P = rsaParameters.P;
+            Q = rsaParameters.Q;
+            QI = rsaParameters.InverseQ;
         }
 
         #region RSA Public Key Parameters
@@ -84,7 +148,7 @@ namespace Azure.Security.KeyVault.Keys
         #region EC Public Key Parameters
 
         /// <summary>
-        /// The curve for Elliptic Curve Cryptography (ECC) algorithms
+        /// The curve for Elliptic Curve Cryptography (ECC) algorithms.
         /// </summary>
         public string CurveName { get; set; }
 
@@ -119,9 +183,92 @@ namespace Azure.Security.KeyVault.Keys
         #endregion
 
         /// <summary>
-        /// HSM Token, used with "Bring Your Own Key"
+        /// HSM Token, used with "Bring Your Own Key".
         /// </summary>
         public byte[] T { get; set; }
+
+        /// <summary>
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Oct"/> to an <see cref="Aes"/> object.
+        /// </summary>
+        /// <returns>An <see cref="Aes"/> object.</returns>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Oct"/> or <see cref="K"/> is null.</exception>
+        public Aes ToAes()
+        {
+            if (KeyType != KeyType.Oct)
+            {
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Oct)} key");
+            }
+
+            if (K is null)
+            {
+                throw new InvalidOperationException("key does not contain a value");
+            }
+
+            Aes key = Aes.Create();
+            key.Key = K;
+
+            return key;
+        }
+
+        /// <summary>
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Ec"/> or <see cref="KeyType.EcHsm"/> to an <see cref="ECDsa"/> object.
+        /// </summary>
+        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <returns>An <see cref="ECDsa"/> object.</returns>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Ec"/> or <see cref="KeyType.EcHsm"/>, or one or more key parameters are invalid.</exception>
+        public ECDsa ToECDsa(bool includePrivateParameters = false)
+        {
+            if (KeyType != KeyType.Ec && KeyType != KeyType.EcHsm)
+            {
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Ec)} or {nameof(KeyType.EcHsm)} type");
+            }
+
+            ValidateKeyParameter(nameof(X), X);
+            ValidateKeyParameter(nameof(Y), Y);
+
+            return Convert(includePrivateParameters);
+        }
+
+        /// <summary>
+        /// Converts this <see cref="JsonWebKey"/> of type <see cref="KeyType.Rsa"/> or <see cref="KeyType.RsaHsm"/> to an <see cref="RSA"/> object.
+        /// </summary>
+        /// <param name="includePrivateParameters">Whether to include private parameters.</param>
+        /// <returns>An <see cref="RSA"/> object.</returns>
+        /// <exception cref="InvalidOperationException">This key is not of type <see cref="KeyType.Rsa"/> or <see cref="KeyType.RsaHsm"/>, or one or more key parameters are invalid.</exception>
+        public RSA ToRSA(bool includePrivateParameters = false)
+        {
+            if (KeyType != KeyType.Rsa && KeyType != KeyType.RsaHsm)
+            {
+                throw new InvalidOperationException($"key is not an {nameof(KeyType.Rsa)} or {nameof(KeyType.RsaHsm)} type");
+            }
+
+            ValidateKeyParameter(nameof(E), E);
+            ValidateKeyParameter(nameof(N), N);
+
+            // Key parameter length requirements defined by 2.2.2.9.1 RSA Private Key BLOB specification: https://docs.microsoft.com/openspecs/windows_protocols/ms-wcce/5cf2e6b9-3195-4f85-bc18-05b50e6d4e11
+            var rsaParameters = new RSAParameters
+            {
+                Exponent = ForceBufferLength(nameof(E), E, 4),
+                Modulus = TrimBuffer(N),
+            };
+
+            if (includePrivateParameters)
+            {
+                var bitLength = rsaParameters.Modulus.Length * 8;
+
+                rsaParameters.D = ForceBufferLength(nameof(D), D, bitLength / 8);
+                rsaParameters.DP = ForceBufferLength(nameof(DP), DP, bitLength / 16);
+                rsaParameters.DQ = ForceBufferLength(nameof(DQ), DQ, bitLength / 16);
+                rsaParameters.P = ForceBufferLength(nameof(P), P, bitLength / 16);
+                rsaParameters.Q = ForceBufferLength(nameof(Q), Q, bitLength / 16);
+                rsaParameters.InverseQ = ForceBufferLength(nameof(QI), QI, bitLength / 16);
+            }
+
+            RSA rsa = RSA.Create();
+            rsa.ImportParameters(rsaParameters);
+
+            return rsa;
+        }
 
         private const string KeyIdPropertyName = "kid";
         private const string KeyTypePropertyName = "kty";
@@ -155,7 +302,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string TPropertyName = "t";
         private static readonly JsonEncodedText TPropertyNameBytes = JsonEncodedText.Encode(TPropertyName);
 
-        internal override void ReadProperties(JsonElement json)
+        internal void ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
             {
@@ -165,12 +312,12 @@ namespace Azure.Security.KeyVault.Keys
                         KeyId = prop.Value.GetString();
                         break;
                     case KeyTypePropertyName:
-                        KeyType = KeyTypeExtensions.ParseFromString(prop.Value.GetString());
+                        KeyType = prop.Value.GetString();
                         break;
                     case KeyOpsPropertyName:
                         foreach (var element in prop.Value.EnumerateArray())
                         {
-                            KeyOps.Add(KeyOperationsExtensions.ParseFromString(element.ToString()));
+                            KeyOps.Add(element.ToString());
                         }
                         break;
                     case CurveNamePropertyName:
@@ -216,18 +363,18 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal override void WriteProperties(Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (KeyType != default)
             {
-                json.WriteString(KeyTypePropertyNameBytes, KeyTypeExtensions.AsString(KeyType));
+                json.WriteString(KeyTypePropertyNameBytes, KeyType);
             }
             if (KeyOps != null)
             {
                 json.WriteStartArray(KeyOpsPropertyNameBytes);
                 foreach (var operation in KeyOps)
                 {
-                    json.WriteStringValue(KeyOperationsExtensions.AsString(operation));
+                    json.WriteStringValue(operation);
                 }
                 json.WriteEndArray();
             }
@@ -284,6 +431,129 @@ namespace Azure.Security.KeyVault.Keys
                 json.WriteString(TPropertyNameBytes, Base64Url.Encode(T));
             }
         }
+
+        void IJsonDeserializable.ReadProperties(JsonElement json) => ReadProperties(json);
+
+        void IJsonSerializable.WriteProperties(Utf8JsonWriter json) => WriteProperties(json);
+
+        private static byte[] ForceBufferLength(string name, byte[] value, int requiredLength)
+        {
+            if (value is null || value.Length == 0)
+            {
+                throw new InvalidOperationException($"key parameter {name} is null or empty");
+            }
+
+            if (value.Length == requiredLength)
+            {
+                return value;
+            }
+
+            if (value.Length < requiredLength)
+            {
+                byte[] padded = new byte[requiredLength];
+                Array.Copy(value, 0, padded, requiredLength - value.Length, value.Length);
+
+                return padded;
+            }
+
+            // Throw if any extra bytes are non-zero.
+            var extraLength = value.Length - requiredLength;
+            for (int i = 0; i < extraLength; ++i)
+            {
+                if (value[i] != 0)
+                {
+                    throw new InvalidOperationException($"key parameter {name} is too long: expected at most {requiredLength} bytes, but found {value.Length - i} bytes");
+                }
+            }
+
+            byte[] trimmed = new byte[requiredLength];
+            Array.Copy(value, value.Length - requiredLength, trimmed, 0, requiredLength);
+
+            return trimmed;
+        }
+
+        private static readonly byte[] ZeroBuffer = new byte[] { 0 };
+        private static byte[] TrimBuffer(byte[] value)
+        {
+            if (value is null || value.Length <= 1 || value[0] != 0)
+            {
+                return value;
+            }
+
+            for (int i = 1; i < value.Length; ++i)
+            {
+                if (value[i] != 0)
+                {
+                    var trimmed = new byte[value.Length - i];
+                    Array.Copy(value, i, trimmed, 0, trimmed.Length);
+
+                    return trimmed;
+                }
+            }
+
+            return ZeroBuffer;
+        }
+
+        private static void ValidateKeyParameter(string name, byte[] value)
+        {
+            if (value != null)
+            {
+                for (int i = 0; i < value.Length; ++i)
+                {
+                    if (value[i] != 0)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            throw new InvalidOperationException($"key parameter {name} is null or zeros");
+        }
+
+        // ECParameters is defined in netstandard2.0 but not net461 (introduced in net47). Separate method with no inlining to prevent TypeLoadException on net461.
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private void Initialize(ECDsa ecdsa, bool includePrivateParameters)
+        {
+            KeyType = KeyType.Ec;
+            KeyOps = new List<KeyOperation>(includePrivateParameters ? ECPrivateKeyOperation : ECPublicKeyOperation);
+
+            ECParameters ecParameters = ecdsa.ExportParameters(includePrivateParameters);
+            CurveName = KeyCurveName.Find(ecParameters.Curve.Oid, ecdsa.KeySize).ToString() ?? throw new InvalidOperationException("elliptic curve name is invalid");
+            D = ecParameters.D;
+            X = ecParameters.Q.X;
+            Y = ecParameters.Q.Y;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private ECDsa Convert(bool includePrivateParameters)
+        {
+            ref readonly KeyCurveName curveName = ref KeyCurveName.Find(CurveName);
+
+            int requiredParameterSize = curveName.KeyParameterSize;
+            if (requiredParameterSize <= 0)
+            {
+                throw new InvalidOperationException($"invalid curve name: {CurveName ?? "null"}");
+            }
+
+            ECParameters ecParameters = new ECParameters
+            {
+                Curve = ECCurve.CreateFromOid(curveName.Oid),
+                Q = new ECPoint
+                {
+                    X = ForceBufferLength(nameof(X), X, requiredParameterSize),
+                    Y = ForceBufferLength(nameof(Y), Y, requiredParameterSize),
+                },
+            };
+
+            if (includePrivateParameters)
+            {
+                ecParameters.D = ForceBufferLength(nameof(D), D, requiredParameterSize);
+            }
+
+            ECDsa ecdsa = ECDsa.Create();
+            ecdsa.ImportParameters(ecParameters);
+
+            return ecdsa;
+        }
     }
 }
-

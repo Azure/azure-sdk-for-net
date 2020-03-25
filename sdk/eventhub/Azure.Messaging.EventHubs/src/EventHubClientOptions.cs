@@ -53,7 +53,7 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs
         ///   Validates the retry options are specified, throwing an <see cref="ArgumentException" /> if it is not valid.
         /// </summary>
         ///
-        /// <param name="retryOptions">The set of retry options to validae.</param>
+        /// <param name="retryOptions">The set of retry options to validate.</param>
         ///
         private void ValidateRetryOptions(RetryOptions retryOptions)
         {

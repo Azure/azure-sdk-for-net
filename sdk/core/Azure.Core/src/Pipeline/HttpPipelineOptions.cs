@@ -18,7 +18,8 @@ namespace Azure.Core.Pipeline
             ResponseClassifier = new ResponseClassifier();
         }
 
-        public HttpPipelineTransport Transport {
+        public HttpPipelineTransport Transport
+        {
             get => _transport;
             set => _transport = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -60,4 +61,3 @@ namespace Azure.Core.Pipeline
         #endregion
     }
 }
-

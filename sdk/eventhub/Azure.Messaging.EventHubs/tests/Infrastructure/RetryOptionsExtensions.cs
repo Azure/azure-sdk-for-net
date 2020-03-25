@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="instance">The instance that this method was invoked on.</param>
         /// <param name="other">The other set of retry options to consider.</param>
         ///
-        /// <returns><c>true</c>, if the two sets of options are structurally equivilent; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c>, if the two sets of options are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
         public static bool IsEquivalentTo(this RetryOptions instance,
                                           RetryOptions other)

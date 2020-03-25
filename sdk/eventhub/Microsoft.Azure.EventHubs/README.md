@@ -55,21 +55,46 @@ Code samples for the Azure Event Hubs client library that detail how to get star
 
 For information on building the Azure Event Hubs client library, please see [Building the Microsoft Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net#to-build)
 
-## Running tests
+### Running tests
 
-1. Deploy the Azure Resource Manager template located at [/sdk/eventhub/Microsoft.Azure.EventHubs/assets/azure-deploy-test-dependencies.json](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Microsoft.Azure.EventHubs/assets/azure-deploy-test-dependencies.json) by clicking the following button:
+The Event Hubs client library tests may be executed using the `dotnet` CLI, or the test runner of your choice - such as Visual Studio or Visual Studio Code.  For those developers using Visual Studio, it is safe to use the Live Unit Testing feature, as any tests with external dependencies have been marked to be excluded.
 
-    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FMicrosoft.Azure.EventHubs%2Fassets%2Fazure-deploy-test-dependencies.json" target="_blank">
-        <img src="http://azuredeploy.net/deploybutton.png"/>
-    </a>
+Tests in the Event Hubs client library are split into two categories:
 
-    *Running the above template will provision a standard Event Hubs namespace along with the required entities to successfully run the unit tests.*
+- **Unit tests** have no special considerations; these are self-contained and execute locally without any reliance on external resources.  Unit tests are considered the default test type in the Event Hubs client library and, thus, have no explicit category trait attached to them.
 
-1. Add an Environment Variable named `EVENT_HUBS_CONNECTION_STRING` and set the value as the connection string of the newly created namespace. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
+- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "LiveTest".  To run them, an Azure resource group and Azure Service Principal with "contributor" rights to that resource group are required.  For each test run, the Live tests will use the service principal to dynamically create an Event Hubs namespace and Azure Storage account within the resource group and remove them once the test run is complete.
 
-1. Add an Environment Variable named `EVENT_HUBS_STORAGE_CONNECTION_STRING` and set the value as the connection string of the newly created storage account. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
+The Live tests read information from the following environment variables:
 
-Once you have completed the above, you can run `dotnet test` from the `/sdk/eventhub/Microsoft.Azure.EventHubs/tests` directory.
+`EVENT_HUBS_RESOURCEGROUP`  
+ The name of the Azure resource group that contains the Event Hubs namespace
+   
+`EVENT_HUBS_SUBSCRIPTION`  
+ The identifier (GUID) of the Azure subscription to which the service principal belongs
+    
+`EVENT_HUBS_TENANT`  
+ The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
+
+`EVENT_HUBS_CLIENT`  
+ The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
+   
+`EVENT_HUBS_SECRET`  
+ The client secret (password) of the Azure Active Directory application that is associated with the service principal
+ 
+To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
+
+The simplest way to get started is to execute the script with your subscription name and then follow the prompts:
+
+```powershell
+./live-tests-azure-setup -SubscriptionName "<< YOUR SUBSCRIPTION NAME >>"
+```
+
+Help for the full set of parameters and additional information is available by specifying the `-Help` flag.
+
+```powershell
+./live-tests-azure-setup -Help
+```
 
 ## Development history
 

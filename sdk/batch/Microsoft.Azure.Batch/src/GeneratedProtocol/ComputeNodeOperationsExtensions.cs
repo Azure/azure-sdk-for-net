@@ -23,23 +23,23 @@ namespace Microsoft.Azure.Batch.Protocol
     public static partial class ComputeNodeOperationsExtensions
     {
             /// <summary>
-            /// Adds a user account to the specified compute node.
+            /// Adds a user Account to the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can add a user account to a node only when it is in the idle or running
-            /// state.
+            /// You can add a user Account to a Compute Node only when it is in the idle or
+            /// running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the machine on which you want to create a user account.
+            /// The ID of the machine on which you want to create a user Account.
             /// </param>
             /// <param name='user'>
-            /// The user account to be created.
+            /// The user Account to be created.
             /// </param>
             /// <param name='computeNodeAddUserOptions'>
             /// Additional parameters for the operation
@@ -50,23 +50,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Adds a user account to the specified compute node.
+            /// Adds a user Account to the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can add a user account to a node only when it is in the idle or running
-            /// state.
+            /// You can add a user Account to a Compute Node only when it is in the idle or
+            /// running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the machine on which you want to create a user account.
+            /// The ID of the machine on which you want to create a user Account.
             /// </param>
             /// <param name='user'>
-            /// The user account to be created.
+            /// The user Account to be created.
             /// </param>
             /// <param name='computeNodeAddUserOptions'>
             /// Additional parameters for the operation
@@ -83,23 +83,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes a user account from the specified compute node.
+            /// Deletes a user Account from the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can delete a user account to a node only when it is in the idle or
-            /// running state.
+            /// You can delete a user Account to a Compute Node only when it is in the idle
+            /// or running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the machine on which you want to delete a user account.
+            /// The ID of the machine on which you want to delete a user Account.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user account to delete.
+            /// The name of the user Account to delete.
             /// </param>
             /// <param name='computeNodeDeleteUserOptions'>
             /// Additional parameters for the operation
@@ -110,23 +110,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes a user account from the specified compute node.
+            /// Deletes a user Account from the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can delete a user account to a node only when it is in the idle or
-            /// running state.
+            /// You can delete a user Account to a Compute Node only when it is in the idle
+            /// or running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the machine on which you want to delete a user account.
+            /// The ID of the machine on which you want to delete a user Account.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user account to delete.
+            /// The name of the user Account to delete.
             /// </param>
             /// <param name='computeNodeDeleteUserOptions'>
             /// Additional parameters for the operation
@@ -143,26 +143,26 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the password and expiration time of a user account on the specified
-            /// compute node.
+            /// Updates the password and expiration time of a user Account on the specified
+            /// Compute Node.
             /// </summary>
             /// <remarks>
-            /// This operation replaces of all the updatable properties of the account. For
+            /// This operation replaces of all the updatable properties of the Account. For
             /// example, if the expiryTime element is not specified, the current value is
             /// replaced with the default value, not left unmodified. You can update a user
-            /// account on a node only when it is in the idle or running state.
+            /// Account on a Compute Node only when it is in the idle or running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the machine on which you want to update a user account.
+            /// The ID of the machine on which you want to update a user Account.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user account to update.
+            /// The name of the user Account to update.
             /// </param>
             /// <param name='nodeUpdateUserParameter'>
             /// The parameters for the request.
@@ -176,26 +176,26 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Updates the password and expiration time of a user account on the specified
-            /// compute node.
+            /// Updates the password and expiration time of a user Account on the specified
+            /// Compute Node.
             /// </summary>
             /// <remarks>
-            /// This operation replaces of all the updatable properties of the account. For
+            /// This operation replaces of all the updatable properties of the Account. For
             /// example, if the expiryTime element is not specified, the current value is
             /// replaced with the default value, not left unmodified. You can update a user
-            /// account on a node only when it is in the idle or running state.
+            /// Account on a Compute Node only when it is in the idle or running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the machine on which you want to update a user account.
+            /// The ID of the machine on which you want to update a user Account.
             /// </param>
             /// <param name='userName'>
-            /// The name of the user account to update.
+            /// The name of the user Account to update.
             /// </param>
             /// <param name='nodeUpdateUserParameter'>
             /// The parameters for the request.
@@ -215,16 +215,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified compute node.
+            /// Gets information about the specified Compute Node.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node that you want to get information about.
+            /// The ID of the Compute Node that you want to get information about.
             /// </param>
             /// <param name='computeNodeGetOptions'>
             /// Additional parameters for the operation
@@ -235,16 +235,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified compute node.
+            /// Gets information about the specified Compute Node.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node that you want to get information about.
+            /// The ID of the Compute Node that you want to get information about.
             /// </param>
             /// <param name='computeNodeGetOptions'>
             /// Additional parameters for the operation
@@ -261,23 +261,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Restarts the specified compute node.
+            /// Restarts the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can restart a node only if it is in an idle or running state.
+            /// You can restart a Compute Node only if it is in an idle or running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node that you want to restart.
+            /// The ID of the Compute Node that you want to restart.
             /// </param>
             /// <param name='nodeRebootOption'>
-            /// When to reboot the compute node and what to do with currently running
-            /// tasks. The default value is requeue. Possible values include: 'requeue',
+            /// When to reboot the Compute Node and what to do with currently running
+            /// Tasks. The default value is requeue. Possible values include: 'requeue',
             /// 'terminate', 'taskCompletion', 'retainedData'
             /// </param>
             /// <param name='computeNodeRebootOptions'>
@@ -289,23 +289,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Restarts the specified compute node.
+            /// Restarts the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can restart a node only if it is in an idle or running state.
+            /// You can restart a Compute Node only if it is in an idle or running state.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node that you want to restart.
+            /// The ID of the Compute Node that you want to restart.
             /// </param>
             /// <param name='nodeRebootOption'>
-            /// When to reboot the compute node and what to do with currently running
-            /// tasks. The default value is requeue. Possible values include: 'requeue',
+            /// When to reboot the Compute Node and what to do with currently running
+            /// Tasks. The default value is requeue. Possible values include: 'requeue',
             /// 'terminate', 'taskCompletion', 'retainedData'
             /// </param>
             /// <param name='computeNodeRebootOptions'>
@@ -323,25 +323,25 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Reinstalls the operating system on the specified compute node.
+            /// Reinstalls the operating system on the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can reinstall the operating system on a node only if it is in an idle
-            /// or running state. This API can be invoked only on pools created with the
-            /// cloud service configuration property.
+            /// You can reinstall the operating system on a Compute Node only if it is in
+            /// an idle or running state. This API can be invoked only on Pools created
+            /// with the cloud service configuration property.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node that you want to restart.
+            /// The ID of the Compute Node that you want to restart.
             /// </param>
             /// <param name='nodeReimageOption'>
-            /// When to reimage the compute node and what to do with currently running
-            /// tasks. The default value is requeue. Possible values include: 'requeue',
+            /// When to reimage the Compute Node and what to do with currently running
+            /// Tasks. The default value is requeue. Possible values include: 'requeue',
             /// 'terminate', 'taskCompletion', 'retainedData'
             /// </param>
             /// <param name='computeNodeReimageOptions'>
@@ -353,25 +353,25 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Reinstalls the operating system on the specified compute node.
+            /// Reinstalls the operating system on the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can reinstall the operating system on a node only if it is in an idle
-            /// or running state. This API can be invoked only on pools created with the
-            /// cloud service configuration property.
+            /// You can reinstall the operating system on a Compute Node only if it is in
+            /// an idle or running state. This API can be invoked only on Pools created
+            /// with the cloud service configuration property.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node that you want to restart.
+            /// The ID of the Compute Node that you want to restart.
             /// </param>
             /// <param name='nodeReimageOption'>
-            /// When to reimage the compute node and what to do with currently running
-            /// tasks. The default value is requeue. Possible values include: 'requeue',
+            /// When to reimage the Compute Node and what to do with currently running
+            /// Tasks. The default value is requeue. Possible values include: 'requeue',
             /// 'terminate', 'taskCompletion', 'retainedData'
             /// </param>
             /// <param name='computeNodeReimageOptions'>
@@ -389,24 +389,24 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Disables task scheduling on the specified compute node.
+            /// Disables Task scheduling on the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can disable task scheduling on a node only if its current scheduling
-            /// state is enabled.
+            /// You can disable Task scheduling on a Compute Node only if its current
+            /// scheduling state is enabled.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node on which you want to disable task scheduling.
+            /// The ID of the Compute Node on which you want to disable Task scheduling.
             /// </param>
             /// <param name='nodeDisableSchedulingOption'>
-            /// What to do with currently running tasks when disabling task scheduling on
-            /// the compute node. The default value is requeue. Possible values include:
+            /// What to do with currently running Tasks when disabling Task scheduling on
+            /// the Compute Node. The default value is requeue. Possible values include:
             /// 'requeue', 'terminate', 'taskCompletion'
             /// </param>
             /// <param name='computeNodeDisableSchedulingOptions'>
@@ -418,24 +418,24 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Disables task scheduling on the specified compute node.
+            /// Disables Task scheduling on the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can disable task scheduling on a node only if its current scheduling
-            /// state is enabled.
+            /// You can disable Task scheduling on a Compute Node only if its current
+            /// scheduling state is enabled.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node on which you want to disable task scheduling.
+            /// The ID of the Compute Node on which you want to disable Task scheduling.
             /// </param>
             /// <param name='nodeDisableSchedulingOption'>
-            /// What to do with currently running tasks when disabling task scheduling on
-            /// the compute node. The default value is requeue. Possible values include:
+            /// What to do with currently running Tasks when disabling Task scheduling on
+            /// the Compute Node. The default value is requeue. Possible values include:
             /// 'requeue', 'terminate', 'taskCompletion'
             /// </param>
             /// <param name='computeNodeDisableSchedulingOptions'>
@@ -453,20 +453,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Enables task scheduling on the specified compute node.
+            /// Enables Task scheduling on the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can enable task scheduling on a node only if its current scheduling
-            /// state is disabled
+            /// You can enable Task scheduling on a Compute Node only if its current
+            /// scheduling state is disabled
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node on which you want to enable task scheduling.
+            /// The ID of the Compute Node on which you want to enable Task scheduling.
             /// </param>
             /// <param name='computeNodeEnableSchedulingOptions'>
             /// Additional parameters for the operation
@@ -477,20 +477,20 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Enables task scheduling on the specified compute node.
+            /// Enables Task scheduling on the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// You can enable task scheduling on a node only if its current scheduling
-            /// state is disabled
+            /// You can enable Task scheduling on a Compute Node only if its current
+            /// scheduling state is disabled
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node on which you want to enable task scheduling.
+            /// The ID of the Compute Node on which you want to enable Task scheduling.
             /// </param>
             /// <param name='computeNodeEnableSchedulingOptions'>
             /// Additional parameters for the operation
@@ -507,22 +507,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the settings required for remote login to a compute node.
+            /// Gets the settings required for remote login to a Compute Node.
             /// </summary>
             /// <remarks>
-            /// Before you can remotely login to a node using the remote login settings,
-            /// you must create a user account on the node. This API can be invoked only on
-            /// pools created with the virtual machine configuration property. For pools
-            /// created with a cloud service configuration, see the GetRemoteDesktop API.
+            /// Before you can remotely login to a Compute Node using the remote login
+            /// settings, you must create a user Account on the Compute Node. This API can
+            /// be invoked only on Pools created with the virtual machine configuration
+            /// property. For Pools created with a cloud service configuration, see the
+            /// GetRemoteDesktop API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node for which to obtain the remote login settings.
+            /// The ID of the Compute Node for which to obtain the remote login settings.
             /// </param>
             /// <param name='computeNodeGetRemoteLoginSettingsOptions'>
             /// Additional parameters for the operation
@@ -533,22 +534,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the settings required for remote login to a compute node.
+            /// Gets the settings required for remote login to a Compute Node.
             /// </summary>
             /// <remarks>
-            /// Before you can remotely login to a node using the remote login settings,
-            /// you must create a user account on the node. This API can be invoked only on
-            /// pools created with the virtual machine configuration property. For pools
-            /// created with a cloud service configuration, see the GetRemoteDesktop API.
+            /// Before you can remotely login to a Compute Node using the remote login
+            /// settings, you must create a user Account on the Compute Node. This API can
+            /// be invoked only on Pools created with the virtual machine configuration
+            /// property. For Pools created with a cloud service configuration, see the
+            /// GetRemoteDesktop API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node for which to obtain the remote login settings.
+            /// The ID of the Compute Node for which to obtain the remote login settings.
             /// </param>
             /// <param name='computeNodeGetRemoteLoginSettingsOptions'>
             /// Additional parameters for the operation
@@ -565,22 +567,22 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the Remote Desktop Protocol file for the specified compute node.
+            /// Gets the Remote Desktop Protocol file for the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// Before you can access a node by using the RDP file, you must create a user
-            /// account on the node. This API can only be invoked on pools created with a
-            /// cloud service configuration. For pools created with a virtual machine
-            /// configuration, see the GetRemoteLoginSettings API.
+            /// Before you can access a Compute Node by using the RDP file, you must create
+            /// a user Account on the Compute Node. This API can only be invoked on Pools
+            /// created with a cloud service configuration. For Pools created with a
+            /// virtual machine configuration, see the GetRemoteLoginSettings API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node for which you want to get the Remote Desktop
+            /// The ID of the Compute Node for which you want to get the Remote Desktop
             /// Protocol file.
             /// </param>
             /// <param name='computeNodeGetRemoteDesktopOptions'>
@@ -592,22 +594,22 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets the Remote Desktop Protocol file for the specified compute node.
+            /// Gets the Remote Desktop Protocol file for the specified Compute Node.
             /// </summary>
             /// <remarks>
-            /// Before you can access a node by using the RDP file, you must create a user
-            /// account on the node. This API can only be invoked on pools created with a
-            /// cloud service configuration. For pools created with a virtual machine
-            /// configuration, see the GetRemoteLoginSettings API.
+            /// Before you can access a Compute Node by using the RDP file, you must create
+            /// a user Account on the Compute Node. This API can only be invoked on Pools
+            /// created with a cloud service configuration. For Pools created with a
+            /// virtual machine configuration, see the GetRemoteLoginSettings API.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node for which you want to get the Remote Desktop
+            /// The ID of the Compute Node for which you want to get the Remote Desktop
             /// Protocol file.
             /// </param>
             /// <param name='computeNodeGetRemoteDesktopOptions'>
@@ -624,23 +626,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Upload Azure Batch service log files from the specified compute node to
+            /// Upload Azure Batch service log files from the specified Compute Node to
             /// Azure Blob Storage.
             /// </summary>
             /// <remarks>
             /// This is for gathering Azure Batch service log files in an automated fashion
-            /// from nodes if you are experiencing an error and wish to escalate to Azure
-            /// support. The Azure Batch service log files should be shared with Azure
-            /// support to aid in debugging issues with the Batch service.
+            /// from Compute Nodes if you are experiencing an error and wish to escalate to
+            /// Azure support. The Azure Batch service log files should be shared with
+            /// Azure support to aid in debugging issues with the Batch service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node from which you want to upload the Azure Batch
+            /// The ID of the Compute Node from which you want to upload the Azure Batch
             /// service log files.
             /// </param>
             /// <param name='uploadBatchServiceLogsConfiguration'>
@@ -655,23 +657,23 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Upload Azure Batch service log files from the specified compute node to
+            /// Upload Azure Batch service log files from the specified Compute Node to
             /// Azure Blob Storage.
             /// </summary>
             /// <remarks>
             /// This is for gathering Azure Batch service log files in an automated fashion
-            /// from nodes if you are experiencing an error and wish to escalate to Azure
-            /// support. The Azure Batch service log files should be shared with Azure
-            /// support to aid in debugging issues with the Batch service.
+            /// from Compute Nodes if you are experiencing an error and wish to escalate to
+            /// Azure support. The Azure Batch service log files should be shared with
+            /// Azure support to aid in debugging issues with the Batch service.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool that contains the compute node.
+            /// The ID of the Pool that contains the Compute Node.
             /// </param>
             /// <param name='nodeId'>
-            /// The ID of the compute node from which you want to upload the Azure Batch
+            /// The ID of the Compute Node from which you want to upload the Azure Batch
             /// service log files.
             /// </param>
             /// <param name='uploadBatchServiceLogsConfiguration'>
@@ -692,13 +694,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the compute nodes in the specified pool.
+            /// Lists the Compute Nodes in the specified Pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool from which you want to list nodes.
+            /// The ID of the Pool from which you want to list Compute Nodes.
             /// </param>
             /// <param name='computeNodeListOptions'>
             /// Additional parameters for the operation
@@ -709,13 +711,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the compute nodes in the specified pool.
+            /// Lists the Compute Nodes in the specified Pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='poolId'>
-            /// The ID of the pool from which you want to list nodes.
+            /// The ID of the Pool from which you want to list Compute Nodes.
             /// </param>
             /// <param name='computeNodeListOptions'>
             /// Additional parameters for the operation
@@ -732,7 +734,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the compute nodes in the specified pool.
+            /// Lists the Compute Nodes in the specified Pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -749,7 +751,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists the compute nodes in the specified pool.
+            /// Lists the Compute Nodes in the specified Pool.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

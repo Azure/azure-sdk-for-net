@@ -11,9 +11,9 @@ namespace Azure
 
         public RequestFailedException(int status, string message)
             : this(status, message, null)
-        {}
+        { }
 
-        public RequestFailedException(int status, string message, Exception innerException)
+        public RequestFailedException(int status, string message, Exception? innerException)
             : base(message, innerException)
         {
             Status = status;
