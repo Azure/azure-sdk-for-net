@@ -480,18 +480,13 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             LastEnqueuedEventProperties readLastEnquedEventInformation()
             {
-                if (!Options.TrackLastEnqueuedEventProperties)
-                {
-                    throw new InvalidOperationException(Resources.TrackLastEnqueuedEventPropertiesNotSet);
-                }
-
                 // This is not an expected scenario; the guard exists to prevent a race condition that is
                 // unlikely, but possible, when partition processing is being stopped or consumer creation
                 // outright failed.
 
                 if ((consumer == null) || (consumer.IsClosed))
                 {
-                    throw new InvalidOperationException(Resources.ClientNeededForThisInformationNotAvailable);
+                    Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformationNotAvailable);
                 }
 
                 return new LastEnqueuedEventProperties(consumer.LastReceivedEvent);
@@ -870,7 +865,15 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="EventProcessorOptions.TrackLastEnqueuedEventProperties" /> set or when the processor is not running.</exception>
         ///
-        protected virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties(string partitionId) => throw new NotImplementedException();
+        protected virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties(string partitionId)
+        {
+            if (!ActivePartitionProcessors.TryGetValue(partitionId, out var processor))
+            {
+                Argument.AssertNotClosed(true, Resources.ClientNeededForThisInformationNotAvailable);
+            }
+
+            return processor.ReadLastEnqueuedEventProperties();
+        }
 
         /// <summary>
         ///   Signals the <see cref="EventProcessor{TPartition}" /> to begin processing events. Should this method be called while the processor is running, no action is taken.
