@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence"> Confidence score. </param>
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this field. </param>
         /// <param name="page"> The 1-based page number in the input document. </param>
-        internal FieldValue_internal(LabeledFieldType type, string valueString, string valueDate, string valueTime, string valuePhoneNumber, float? valueNumber, int? valueInteger, IList<FieldValue_internal> valueArray, IDictionary<string, FieldValue_internal> valueObject, string text, IList<float> boundingBox, float? confidence, IList<string> elements, int? page)
+        internal FieldValue_internal(FormValueType type, string valueString, string valueDate, string valueTime, string valuePhoneNumber, float? valueNumber, int? valueInteger, IList<FieldValue_internal> valueArray, IDictionary<string, FieldValue_internal> valueObject, string text, IList<float> boundingBox, float? confidence, IList<string> elements, int? page)
         {
             Type = type;
             ValueString = valueString;
@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Type of field value. </summary>
-        public LabeledFieldType Type { get; internal set; }
+        public FormValueType Type { get; internal set; }
         /// <summary> String value. </summary>
         public string ValueString { get; internal set; }
         /// <summary> Date value. </summary>

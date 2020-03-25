@@ -8,23 +8,25 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class CustomLabeledForm
+    public class RecognizedForm
     {
-        internal CustomLabeledForm(DocumentResult_internal documentResult, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+#pragma warning disable CA1801 // Remove unused parameter
+        internal RecognizedForm(DocumentResult_internal documentResult, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+#pragma warning restore CA1801 // Remove unused parameter
         {
             // Supervised
             FormType = documentResult.DocType;
             PageRange = new FormPageRange(documentResult.PageRange);
 
-            Fields = ConvertFields(documentResult.Fields, readResults);
-            Tables = ConvertLabeledTables(pageResults, readResults);
+            //Fields = ConvertFields(documentResult.Fields, readResults);
+            //Tables = ConvertLabeledTables(pageResults, readResults);
 
-            // TODO: Populate CheckBoxes
+            //// TODO: Populate CheckBoxes
 
-            if (readResults != null)
-            {
-                PageTextElements = ConvertPageText(readResults);
-            }
+            //if (readResults != null)
+            //{
+            //    PageText = ConvertPageText(readResults);
+            //}
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public float FormTypeConfidence { get; }
+        public float? FormTypeConfidence { get; }
 
         /// <summary>
         /// </summary>
@@ -41,73 +43,70 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<LabeledFormField> Fields { get; }
+        public IReadOnlyList<FormField> Fields { get; }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<LabeledFormTable> Tables { get; }
+        public IReadOnlyList<FormTable> Tables { get; }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<LabeledFormCheckBox> CheckBoxes { get; }
+        public IReadOnlyList<FormCheckBox> CheckBoxes { get; }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormPageElements> PageTextElements { get; }
+        public IReadOnlyList<FormPageElements> TextElements { get; }
 
         /// <summary>
-        /// Return the field value text for a given label.
+        /// Return the first field of the given name.
         /// </summary>
-        /// <param name="label"></param>
+        /// <param name="name"></param>
+        /// <param name="field"></param>
         /// <returns></returns>
-        public string GetFieldValue(string label)
+        public bool TryGetFieldValue(string name, out FormField field)
         {
-            var field = Fields.Where(f => f.Label == label).FirstOrDefault();
-            if (field == default)
-            {
-                throw new FieldNotFoundException($"Field '{label}' not found on form.");
-            }
+            field = Fields.Where(f => f.Name.Text == name).FirstOrDefault();
 
-            return field.Value;
+            return field != default;
         }
 
-        private static IReadOnlyList<LabeledFormField> ConvertFields(IDictionary<string, FieldValue_internal> fields, IList<ReadResult_internal> readResults)
-        {
-            List<LabeledFormField> list = new List<LabeledFormField>();
-            foreach (var field in fields)
-            {
-                list.Add(new LabeledFormField(field, readResults));
-            }
-            return list;
-        }
+        //private static IReadOnlyList<LabeledFormField> ConvertFields(IDictionary<string, FieldValue_internal> fields, IList<ReadResult_internal> readResults)
+        //{
+        //    List<LabeledFormField> list = new List<LabeledFormField>();
+        //    foreach (var field in fields)
+        //    {
+        //        list.Add(new LabeledFormField(field, readResults));
+        //    }
+        //    return list;
+        //}
 
 
-        internal static IReadOnlyList<FormPageElements> ConvertPageText(IList<ReadResult_internal> readResults)
-        {
-            List<FormPageElements> pageTexts = new List<FormPageElements>();
-            foreach (var readResult in readResults)
-            {
-                if (readResult.Lines != null)
-                {
-                    pageTexts.Add(new FormPageElements(readResult));
-                }
-            }
-            return pageTexts;
-        }
+        //internal static IReadOnlyList<FormPageElements> ConvertPageText(IList<ReadResult_internal> readResults)
+        //{
+        //    List<FormPageElements> pageTexts = new List<FormPageElements>();
+        //    foreach (var readResult in readResults)
+        //    {
+        //        if (readResult.Lines != null)
+        //        {
+        //            pageTexts.Add(new FormPageElements(readResult));
+        //        }
+        //    }
+        //    return pageTexts;
+        //}
 
-        internal static IReadOnlyList<LabeledFormTable> ConvertLabeledTables(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
-        {
-            List<LabeledFormTable> tables = new List<LabeledFormTable>();
+        //internal static IReadOnlyList<LabeledFormTable> ConvertLabeledTables(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        //{
+        //    List<LabeledFormTable> tables = new List<LabeledFormTable>();
 
-            foreach (var pageResult in pageResults)
-            {
-                foreach (var table in pageResult.Tables)
-                {
-                    tables.Add(new LabeledFormTable(table, readResults[pageResult.Page - 1], pageResult.Page));
-                }
-            }
+        //    foreach (var pageResult in pageResults)
+        //    {
+        //        foreach (var table in pageResult.Tables)
+        //        {
+        //            tables.Add(new LabeledFormTable(table, readResults[pageResult.Page - 1], pageResult.Page));
+        //        }
+        //    }
 
-            return tables;
-        }
+        //    return tables;
+        //}
     }
 }

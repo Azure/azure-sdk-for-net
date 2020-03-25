@@ -14,10 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeContentOperation : Operation<IReadOnlyList<FormPageContent>>
+    public class RecognizeContentOperation : Operation<IReadOnlyList<RecognizedPageContent>>
     {
         private Response _response;
-        private IReadOnlyList<FormPageContent> _value;
+        private IReadOnlyList<RecognizedPageContent> _value;
         private bool _hasCompleted;
 
         // TODO: use this.
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<FormPageContent> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<RecognizedPageContent> Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -41,11 +41,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<FormPageContent>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedPageContent>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<FormPageContent>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedPageContent>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         internal RecognizeContentOperation(ServiceClient operations, string operationLocation)
@@ -102,16 +102,16 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<FormPageContent> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
+        private static IReadOnlyList<RecognizedPageContent> ConvertValue(ICollection<PageResult_internal> pageResults, ICollection<ReadResult_internal> readResults)
         {
             Debug.Assert(pageResults.Count == readResults.Count);
 
-            List<FormPageContent> pages = new List<FormPageContent>();
+            List<RecognizedPageContent> pages = new List<RecognizedPageContent>();
             List<ReadResult_internal> rawPages = readResults.ToList();
 
             foreach (var page in pageResults)
             {
-                pages.Add(new FormPageContent(page, rawPages[page.Page - 1]));
+                pages.Add(new RecognizedPageContent(page, rawPages[page.Page - 1]));
             }
 
             return pages;

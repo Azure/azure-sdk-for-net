@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResults != null)
             {
-                PageTextElements = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
+                TextElements = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
             }
         }
 
@@ -80,11 +80,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         // TODO: Have this handle Items correctly
         // https://github.com/Azure/azure-sdk-for-net/issues/10379
-        public IReadOnlyDictionary<string, UnitedStatesReceiptField> Fields { get; internal set; }
+        public IReadOnlyDictionary<string, FormField> Fields { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormPageElements> PageTextElements { get; }
+        public IReadOnlyList<FormPageElements> TextElements { get; }
 
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
         {
@@ -103,19 +103,19 @@ namespace Azure.AI.FormRecognizer.Models
             TransactionTime = ConvertDateTimeOffsetValue("TransactionTime", fields);
 
             Items = ConvertReceiptItems(fields);
-            Fields = ConvertExtractedFields(fields);
+            //Fields = ConvertExtractedFields(fields);
         }
 
-        private static IReadOnlyDictionary<string, UnitedStatesReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
-        {
-            Dictionary<string, UnitedStatesReceiptField> extractedFields = new Dictionary<string, UnitedStatesReceiptField>();
-            foreach (var field in fields)
-            {
-                UnitedStatesReceiptField extractedField = new UnitedStatesReceiptField(field.Value);
-                extractedFields[field.Key] = extractedField;
-            }
-            return extractedFields;
-        }
+        //private static IReadOnlyDictionary<string, UnitedStatesReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
+        //{
+        //    Dictionary<string, UnitedStatesReceiptField> extractedFields = new Dictionary<string, UnitedStatesReceiptField>();
+        //    foreach (var field in fields)
+        //    {
+        //        UnitedStatesReceiptField extractedField = new UnitedStatesReceiptField(field.Value);
+        //        extractedFields[field.Key] = extractedField;
+        //    }
+        //    return extractedFields;
+        //}
 
         private static UnitedStatesReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
         {
@@ -143,7 +143,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 // TODO: How should we handle Phone Numbers?
                 // https://github.com/Azure/azure-sdk-for-net/issues/10333
-                Debug.Assert(value.Type == LabeledFieldType.StringValue || value.Type == LabeledFieldType.PhoneNumberValue);
+                Debug.Assert(value.Type == FormValueType.StringType || value.Type == FormValueType.PhoneNumberType);
 
                 // TODO: When should we use text and when should we use string?
                 // For now, use text if the value is null.
@@ -161,7 +161,7 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
             {
-                Debug.Assert(value.Type == LabeledFieldType.FloatValue);
+                Debug.Assert(value.Type == FormValueType.FloatType);
 
                 // TODO: Sometimes ValueNumber isn't populated in ReceiptItems.  The following is a
                 // workaround to get the value from Text if ValueNumber isn't there.
@@ -187,7 +187,7 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
             {
-                Debug.Assert(value.Type == LabeledFieldType.IntegerValue);
+                Debug.Assert(value.Type == FormValueType.IntegerType);
 
                 // TODO: Sometimes ValueInteger isn't populated in ReceiptItems.  The following is a
                 // workaround to get the value from Text if ValueNumber isn't there.
@@ -217,8 +217,8 @@ namespace Azure.AI.FormRecognizer.Models
                 // https://github.com/Azure/azure-sdk-for-net/issues/10361
                 dateTimeOffsetValue = value.Type switch
                 {
-                    LabeledFieldType.DateValue => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
-                    LabeledFieldType.TimeValue => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
+                    FormValueType.DateType => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
+                    FormValueType.TimeType => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
                     _ => throw new InvalidOperationException($"The value type {value.Type} was expected to be a Date or Time")
                 };
             }
@@ -233,12 +233,12 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue("Items", out value))
             {
-                Debug.Assert(value.Type == LabeledFieldType.ArrayValue);
+                Debug.Assert(value.Type == FormValueType.ArrayType);
 
                 ICollection<FieldValue_internal> arrayValue = value.ValueArray;
                 foreach (var receiptItemValue in arrayValue)
                 {
-                    Debug.Assert(receiptItemValue.Type == LabeledFieldType.ObjectValue);
+                    Debug.Assert(receiptItemValue.Type == FormValueType.ObjectType);
 
                     IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 

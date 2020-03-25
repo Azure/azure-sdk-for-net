@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// List of forms the model learned to recognize, including form fields found in each form.
         /// </summary>
-        public IReadOnlyList<CustomModelLearnedPage> LearnedPages { get; internal set; }
+        public IReadOnlyList<CustomModelLearnedForm> LearnedPages { get; internal set; }
 
         /// <summary>
         /// Information about the trained model, including model ID and training completion status.
@@ -35,15 +35,15 @@ namespace Azure.AI.FormRecognizer.Training
         public TrainingInfo TrainingInfo { get; internal set; }
 
 
-        private static IReadOnlyList<CustomModelLearnedPage> ConvertLearnedForms(KeysResult_internal keys)
+        private static IReadOnlyList<CustomModelLearnedForm> ConvertLearnedForms(KeysResult_internal keys)
         {
-            List<CustomModelLearnedPage> forms = new List<CustomModelLearnedPage>();
+            List<CustomModelLearnedForm> forms = new List<CustomModelLearnedForm>();
 
             foreach (var key in keys.Clusters)
             {
-                CustomModelLearnedPage form = new CustomModelLearnedPage()
+                CustomModelLearnedForm form = new CustomModelLearnedForm()
                 {
-                    PageTypeId = key.Key,
+                    FormType = key.Key,
                     // TODO: Q3
                     // https://github.com/Azure/azure-sdk-for-net/issues/10360
                     LearnedFields = new List<string>(key.Value)

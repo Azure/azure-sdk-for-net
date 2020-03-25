@@ -7,9 +7,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormPageContent
+    public class RecognizedPageContent
     {
-        internal FormPageContent(PageResult_internal pageResult, ReadResult_internal readResult)
+        internal RecognizedPageContent(PageResult_internal pageResult, ReadResult_internal readResult)
         {
             Tables = ConvertTables(pageResult.Tables, readResult);
 

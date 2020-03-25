@@ -12,31 +12,31 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// </summary>
     [CodeGenSchema("FieldValueType")]
-    public enum LabeledFieldType
+    public enum FormValueType
     {
         /// <summary> string. </summary>
         [CodeGenSchemaMember("String")]
-        StringValue,
+        StringType,
         /// <summary> date. </summary>
         [CodeGenSchemaMember("Date")]
-        DateValue,
+        DateType,
         /// <summary> time. </summary>
         [CodeGenSchemaMember("Time")]
-        TimeValue,
+        TimeType,
         /// <summary> phoneNumber. </summary>
         [CodeGenSchemaMember("PhoneNumber")]
-        PhoneNumberValue,
+        PhoneNumberType,
         /// <summary> number. </summary>
         [CodeGenSchemaMember("Number")]
-        FloatValue,
+        FloatType,
         /// <summary> integer. </summary>
         [CodeGenSchemaMember("Integer")]
-        IntegerValue,
+        IntegerType,
         /// <summary> array. </summary>
         [CodeGenSchemaMember("Array")]
-        ArrayValue,
+        ArrayType,
         /// <summary> object. </summary>
         [CodeGenSchemaMember("Object")]
-        ObjectValue
+        ObjectType
     }
 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -14,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeFormsOperation : Operation<IReadOnlyList<CustomFormPage>>
+    public class RecognizeFormsOperation : Operation<IReadOnlyList<RecognizedForm>>
     {
         private Response _response;
-        private IReadOnlyList<CustomFormPage> _value;
+        private IReadOnlyList<RecognizedForm> _value;
         private bool _hasCompleted;
 
         private readonly string _modelId;
@@ -30,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<CustomFormPage> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<RecognizedForm> Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -42,11 +41,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<CustomFormPage>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<CustomFormPage>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -100,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = ConvertToExtractedPages(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
+                    _value = ConvertToExtractedForms(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
                 }
 
                 _response = update.GetRawResponse();
@@ -108,13 +107,15 @@ namespace Azure.AI.FormRecognizer.Models
 
             return GetRawResponse();
         }
-
-        private static IReadOnlyList<CustomFormPage> ConvertToExtractedPages(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+#pragma warning disable CA1801 // Remove unused parameter
+        private static IReadOnlyList<RecognizedForm> ConvertToExtractedForms(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+#pragma warning restore CA1801 // Remove unused parameter
         {
-            List<CustomFormPage> pages = new List<CustomFormPage>();
+            List<RecognizedForm> pages = new List<RecognizedForm>();
             for (int i = 0; i < pageResults.Count; i++)
             {
-                pages.Add(new CustomFormPage(pageResults[i], readResults[i]));
+                // TODO: Implement
+                //pages.Add(new RecognizedForm(pageResults[i], readResults[i]));
             }
             return pages;
         }

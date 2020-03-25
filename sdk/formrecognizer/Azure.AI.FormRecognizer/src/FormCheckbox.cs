@@ -10,13 +10,21 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormCheckBox
     {
+        internal FormCheckBox()
+        {
+        }
+
+        /// <summary>
+        /// </summary>
+        public int PageNumber { get; }
+
         /// <summary>
         /// </summary>
         public BoundingBox BoundingBox { get; }
 
         /// <summary>
         /// </summary>
-        public float Confidence { get; }
+        public float? Confidence { get; }
 
         /// <summary>
         /// </summary>
@@ -24,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public bool IsChecked {  get { return CheckedState == FormCheckBoxState.Checked; } }
+        public bool IsChecked { get { return CheckedState == FormCheckBoxState.Checked; } }
 
         /// <summary>
         /// </summary>

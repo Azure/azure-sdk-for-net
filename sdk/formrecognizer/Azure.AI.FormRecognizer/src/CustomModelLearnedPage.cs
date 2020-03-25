@@ -7,15 +7,15 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class CustomModelLearnedPage
+    public class CustomModelLearnedForm
     {
-        internal CustomModelLearnedPage()
+        internal CustomModelLearnedForm()
         {
         }
 
         /// <summary>
         /// </summary>
-        public string PageTypeId { get; internal set; }
+        public string FormType { get; internal set; }
 
         /// <summary>
         /// </summary>

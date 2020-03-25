@@ -10,29 +10,24 @@ namespace Azure.AI.FormRecognizer.Models
     public class LineTextElement : FormTextElement
     {
         internal LineTextElement(TextLine_internal textLine)
+            : base(textLine.Text, new BoundingBox(textLine.BoundingBox), confidence: null)
         {
-            Text = textLine.Text;
-            BoundingBox = new BoundingBox(textLine.BoundingBox);
-            Words = ConvertWords(textLine.Words);
+            //Words = ConvertWords(textLine.Words);
         }
 
         /// <summary> List of words in the text line. </summary>
-        public IReadOnlyList<WordTextElement> Words { get; internal set; }
+        public IReadOnlyList<FormTextElement> Words { get; internal set; }
 
-        /// <summary>
-        /// </summary>
-        public static implicit operator string(LineTextElement line) => line.Text;
+        //private static IReadOnlyList<WordTextElement> ConvertWords(ICollection<TextWord_internal> textWords)
+        //{
+        //    List<WordTextElement> rawWords = new List<WordTextElement>();
 
-        private static IReadOnlyList<WordTextElement> ConvertWords(ICollection<TextWord_internal> textWords)
-        {
-            List<WordTextElement> rawWords = new List<WordTextElement>();
+        //    foreach (TextWord_internal textWord in textWords)
+        //    {
+        //        rawWords.Add(new WordTextElement(textWord));
+        //    }
 
-            foreach (TextWord_internal textWord in textWords)
-            {
-                rawWords.Add(new WordTextElement(textWord));
-            }
-
-            return rawWords;
-        }
+        //    return rawWords;
+        //}
     }
 }

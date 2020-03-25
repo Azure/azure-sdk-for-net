@@ -9,7 +9,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormTableCell
     {
+#pragma warning disable CA1801
         internal FormTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, ICollection<string> references)
+#pragma warning restore CA1801
         {
             BoundingBox = new BoundingBox(dataTableCell.BoundingBox);
             ColumnIndex = dataTableCell.ColumnIndex;
@@ -23,7 +25,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (references != null)
             {
-                TextElements = FormField.ConvertTextReferences(readResult, references);
+                //TextElements = FormField.ConvertTextReferences(readResult, references);
             }
         }
 

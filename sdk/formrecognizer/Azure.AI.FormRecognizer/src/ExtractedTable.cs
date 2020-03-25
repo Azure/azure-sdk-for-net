@@ -17,6 +17,11 @@ namespace Azure.AI.FormRecognizer.Models
             Cells = ConvertCells(table.Cells, readResult);
         }
 
+
+        /// <summary>
+        /// </summary>
+        public int PageNumber { get; }
+
         /// <summary>
         /// </summary>
         public IReadOnlyList<FormTableCell> Cells { get; }
