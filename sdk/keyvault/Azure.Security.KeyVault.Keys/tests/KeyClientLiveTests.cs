@@ -613,8 +613,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(key.Name);
 
             DeleteKeyOperation operation = await Client.StartDeleteKeyAsync(keyName);
-
-            DeletedKey deletedKey = await operation.WaitForCompletionAsync();
+            DeletedKey deletedKey = operation.Value;
 
             await WaitForDeletedKey(keyName);
 
