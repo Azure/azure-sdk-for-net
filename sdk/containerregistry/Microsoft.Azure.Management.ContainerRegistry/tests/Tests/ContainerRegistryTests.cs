@@ -419,8 +419,8 @@ namespace ContainerRegistry.Tests
                 // Schedule a run from task
                 var run1 = registryClient.Registries.ScheduleRun(resourceGroup.Name, registry.Name,
                     new TaskRunRequest(
-                        task.Name,
-                        values: new List<SetValue> { new SetValue("key1", "value1"), new SetValue("key2", "value2", isSecret: true) }));
+                        taskId: task.Name,
+                        overrideTaskStepProperties: new OverrideTaskStepProperties(values: new List<SetValue> { new SetValue("key1", "value1"), new SetValue("key2", "value2", isSecret: true) })));
 
                 Assert.Equal("ca1", run1.RunId);
 
