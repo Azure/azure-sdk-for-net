@@ -304,6 +304,19 @@ namespace Azure.Storage.Files.DataLake.Models
         public string ContinuationToken { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters CumulativeCounters { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct AccessControlRecursiveChangeOptions
+    {
+        public int? BatchSize { get { throw null; } set { } }
+    }
+    public partial class AccessControlRecursiveChangesSummary
+    {
+        internal AccessControlRecursiveChangesSummary() { }
+        public long ChangedDirectoriesCount { get { throw null; } }
+        public long ChangedFilesCount { get { throw null; } }
+        public string ContinuationToken { get { throw null; } }
+        public long FailedChangesCount { get { throw null; } }
+    }
     public enum AccessControlType
     {
         Other = 0,
