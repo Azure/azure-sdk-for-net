@@ -8,7 +8,6 @@ stages:
     jobs:
       - deployment: SignPackage
         environment: esrp
-        timeoutInMinutes: 20
         pool:
           vmImage: windows-2019
 
