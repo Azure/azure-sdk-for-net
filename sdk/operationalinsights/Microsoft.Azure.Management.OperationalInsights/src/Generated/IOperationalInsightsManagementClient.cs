@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Operational Insights Client
@@ -90,6 +94,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Get the status of an azure asynchronous operation.
+        /// </summary>
+        /// <param name='location'>
+        /// The region name of operation.
+        /// </param>
+        /// <param name='asyncOperationId'>
+        /// The operation Id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<OperationStatus>> GetAsyncOperationsStatusWithHttpMessagesAsync(string location, string asyncOperationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -36,17 +36,13 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// <param name="provisioningState">The provisioning state of the
         /// workspace. Possible values include: 'Creating', 'Succeeded',
         /// 'Failed', 'Canceled', 'Deleting', 'ProvisioningAccount'</param>
-        /// <param name="source">The source of the workspace.  Source defines
-        /// where the workspace was created. 'Azure' implies it was created in
-        /// Azure.  'External' implies it was created via the Operational
-        /// Insights Portal. This value is set on the service side and
-        /// read-only on the client side.</param>
-        /// <param name="customerId">The ID associated with the workspace.
-        /// Setting this value at creation time allows the workspace being
-        /// created to be linked to an existing workspace.</param>
-        /// <param name="portalUrl">The URL of the Operational Insights portal
-        /// for this workspace.  This value is set on the service side and
-        /// read-only on the client side.</param>
+        /// <param name="source">This is a read-only legacy property. It is
+        /// always set to 'Azure' by the service. Kept here for backward
+        /// compatibility.</param>
+        /// <param name="customerId">This is a read-only property. Represents
+        /// the ID associated with the workspace.</param>
+        /// <param name="portalUrl">This is a legacy property and is not used
+        /// anymore. Kept here for backward compatibility.</param>
         /// <param name="sku">The SKU of the workspace.</param>
         /// <param name="retentionInDays">The workspace data retention in days.
         /// -1 means Unlimited retention for the Unlimited Sku. 730 days is the
@@ -78,30 +74,25 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets the source of the workspace.  Source defines where the
-        /// workspace was created. 'Azure' implies it was created in Azure.
-        /// 'External' implies it was created via the Operational Insights
-        /// Portal. This value is set on the service side and read-only on the
-        /// client side.
+        /// Gets this is a read-only legacy property. It is always set to
+        /// 'Azure' by the service. Kept here for backward compatibility.
         /// </summary>
         [JsonProperty(PropertyName = "properties.source")]
-        public string Source { get; set; }
+        public string Source { get; private set; }
 
         /// <summary>
-        /// Gets or sets the ID associated with the workspace.  Setting this
-        /// value at creation time allows the workspace being created to be
-        /// linked to an existing workspace.
+        /// Gets this is a read-only property. Represents the ID associated
+        /// with the workspace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customerId")]
-        public string CustomerId { get; set; }
+        public string CustomerId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the URL of the Operational Insights portal for this
-        /// workspace.  This value is set on the service side and read-only on
-        /// the client side.
+        /// Gets this is a legacy property and is not used anymore. Kept here
+        /// for backward compatibility.
         /// </summary>
         [JsonProperty(PropertyName = "properties.portalUrl")]
-        public string PortalUrl { get; set; }
+        public string PortalUrl { get; private set; }
 
         /// <summary>
         /// Gets or sets the SKU of the workspace.
