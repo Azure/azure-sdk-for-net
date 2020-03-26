@@ -16,20 +16,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Dynamics AX source.
+    /// A copy activity source for sharePoint online list source.
     /// </summary>
-    public partial class DynamicsAXSource : TabularSource
+    public partial class SharePointOnlineListSource : CopySource
     {
         /// <summary>
-        /// Initializes a new instance of the DynamicsAXSource class.
+        /// Initializes a new instance of the SharePointOnlineListSource class.
         /// </summary>
-        public DynamicsAXSource()
+        public SharePointOnlineListSource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DynamicsAXSource class.
+        /// Initializes a new instance of the SharePointOnlineListSource class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -41,21 +41,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        /// <param name="queryTimeout">Query timeout. Type: string (or
-        /// Expression with resultType string), pattern:
+        /// <param name="query">The OData query to filter the data in
+        /// SharePoint Online list. For example, "$top=1". Type: string (or
+        /// Expression with resultType string).</param>
+        /// <param name="httpRequestTimeout">The wait time to get a response
+        /// from SharePoint Online. Default value is 5 minutes (00:05:00).
+        /// Type: string (or Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        /// <param name="additionalColumns">Specifies the additional columns to
-        /// be added to source data. Type: array of objects (or Expression with
-        /// resultType array of objects).</param>
-        /// <param name="query">A query to retrieve data from source. Type:
-        /// string (or Expression with resultType string).</param>
-        /// <param name="httpRequestTimeout">The timeout (TimeSpan) to get an
-        /// HTTP response. It is the timeout to get a response, not the timeout
-        /// to read response data. Default value: 00:05:00. Type: string (or
-        /// Expression with resultType string), pattern:
-        /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public DynamicsAXSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object queryTimeout = default(object), IList<AdditionalColumns> additionalColumns = default(IList<AdditionalColumns>), object query = default(object), object httpRequestTimeout = default(object))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, queryTimeout, additionalColumns)
+        public SharePointOnlineListSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object query = default(object), object httpRequestTimeout = default(object))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             Query = query;
             HttpRequestTimeout = httpRequestTimeout;
@@ -68,17 +62,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a query to retrieve data from source. Type: string (or
-        /// Expression with resultType string).
+        /// Gets or sets the OData query to filter the data in SharePoint
+        /// Online list. For example, "$top=1". Type: string (or Expression
+        /// with resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public object Query { get; set; }
 
         /// <summary>
-        /// Gets or sets the timeout (TimeSpan) to get an HTTP response. It is
-        /// the timeout to get a response, not the timeout to read response
-        /// data. Default value: 00:05:00. Type: string (or Expression with
-        /// resultType string), pattern:
+        /// Gets or sets the wait time to get a response from SharePoint
+        /// Online. Default value is 5 minutes (00:05:00). Type: string (or
+        /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
         /// </summary>
         [JsonProperty(PropertyName = "httpRequestTimeout")]
