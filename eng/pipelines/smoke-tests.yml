@@ -6,23 +6,36 @@ jobs:
 
     strategy:
       matrix:
-        Linux:
+        Linux (Public):
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp:
+          CloudType: public
+        Windows_NetCoreApp (Public):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetFramework:
+          CloudType: public
+        Windows_NetFramework (Public):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-        MacOs:
+          CloudType: public
+        MacOs (Public):
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-
+          CloudType: public
+        Windows_NetCoreApp (Gov):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          CloudType: gov
+        Windows_NetFramework (Gov):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          CloudType: gov
     pool:
       vmImage: $(OSVmImage)
 
@@ -54,14 +67,46 @@ jobs:
       - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: dotnet restore
 
+      # Set secret environment variables for different clouds
+      - pwsh: |
+          $variables = @{
+            KEY_VAULT_URI='$(smoke-tests-key-vault-project-url)'
+            EVENT_HUBS_CONNECTION_STRING='$(smoke-tests-event-hubs-connection-string)'
+            BLOB_CONNECTION_STRING='$(smoke-tests-storage-connection-string)'
+            AZURE_CLIENT_SECRET='$(aad-azure-sdk-test-client-secret)'
+            AZURE_TENANT_ID='$(aad-azure-sdk-test-tenant-id)'
+            AZURE_CLIENT_ID='$(aad-azure-sdk-test-client-id)'
+            AZURE_AUTHORITY_HOST='$(aad-azure-sdk-test-authority-uri)'
+            COSMOS_AUTH_KEY='$(smoke-tests-cosmos-key)'
+            COSMOS_URI='$(smoke-tests-cosmos-endpoint)'
+          };
+          foreach ($key in $variables.Keys) {
+            Write-Host "Setting variable '$key'"
+            Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($variables[$key])"
+            Write-Host "##vso[task.setvariable variable=$key;]$($variables[$key])"
+          }
+        displayName: Set secrets for public cloud
+        condition: and(succeeded(), eq(variables['CloudType'], 'public'))
+
+      - pwsh: |
+          $variables = @{
+            KEY_VAULT_URI='$(smoke-tests-key-vault-project-url-gov)'
+            EVENT_HUBS_CONNECTION_STRING='$(smoke-tests-event-hubs-connection-string-gov)'
+            BLOB_CONNECTION_STRING='$(smoke-tests-storage-connection-string-gov)'
+            AZURE_CLIENT_SECRET='$(aad-azure-sdk-test-client-secret-gov)'
+            AZURE_TENANT_ID='$(aad-azure-sdk-test-tenant-id-gov)'
+            AZURE_CLIENT_ID='$(aad-azure-sdk-test-client-id-gov)'
+            AZURE_AUTHORITY_HOST='$(aad-azure-sdk-test-authority-uri-gov)'
+            COSMOS_AUTH_KEY='$(smoke-tests-cosmos-key-gov)'
+            COSMOS_URI='$(smoke-tests-cosmos-endpoint-gov)'
+          };
+          foreach ($key in $variables.Keys) {
+            Write-Host "Setting variable '$key'"
+            Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($variables[$key])"
+            Write-Host "##vso[task.setvariable variable=$key;]$($variables[$key])"
+          }
+        displayName: Set secrets for government cloud
+        condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
+
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
-        env:
-          KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)
-          EVENT_HUBS_CONNECTION_STRING: $(smoke-tests-event-hubs-connection-string)
-          BLOB_CONNECTION_STRING: $(smoke-tests-storage-connection-string)
-          CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
-          DIR_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
-          APP_CLIENT_ID: $(aad-azure-sdk-test-client-id)
-          COSMOS_AUTH_KEY: $(smoke-tests-cosmos-key)
-          COSMOS_URI: $(smoke-tests-cosmos-endpoint)

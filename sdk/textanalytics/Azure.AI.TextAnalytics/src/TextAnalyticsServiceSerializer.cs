@@ -410,14 +410,14 @@ namespace Azure.AI.TextAnalytics
 
         private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName)
         {
-            DocumentSentimentLabel sentiment = default;
+            TextSentiment sentiment = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentiment = (DocumentSentimentLabel)Enum.Parse(typeof(DocumentSentimentLabel), sentimentValue.ToString(), ignoreCase: true);
+                sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
@@ -446,7 +446,7 @@ namespace Azure.AI.TextAnalytics
 
         private static SentenceSentiment ReadSentenceSentiment(JsonElement documentElement, string scoresElementName)
         {
-            SentenceSentimentLabel sentiment = default;
+            TextSentiment sentiment = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
@@ -455,7 +455,7 @@ namespace Azure.AI.TextAnalytics
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentiment = (SentenceSentimentLabel)Enum.Parse(typeof(SentenceSentimentLabel), sentimentValue.ToString(), ignoreCase: true);
+                sentiment = (TextSentiment)Enum.Parse(typeof(TextSentiment), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))

@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             var inputs = new List<string>
             {

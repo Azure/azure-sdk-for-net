@@ -20,6 +20,10 @@ namespace CognitiveServices.Tests
         private const string c_resourceNamespace = "Microsoft.CognitiveServices";
         private const string c_resourceType = "accounts";
 
+        public CognitiveServicesAccountTests()
+        {
+        }
+
         [Fact]
         public void CognitiveServicesAccountCreateTest()
         {
@@ -663,6 +667,257 @@ namespace CognitiveServices.Tests
 
                 Assert.Equal(minName, minAccount.Name);
                 Assert.Equal(maxName, maxAccount.Name);
+            }
+        }
+
+
+        [Fact]
+        public void CognitiveServicesAccountIdentityTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                { // create with MSI
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("csa");
+                    CognitiveServicesAccount parameters = new CognitiveServicesAccount
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = CognitiveServicesManagementTestUtilities.DefaultTags,
+                        Sku = new Sku { Name = "S0" },
+                        Kind = "Face",
+                        Properties = new CognitiveServicesAccountProperties(),
+                    };
+
+                    // custom parameters
+                    parameters.Identity = new Identity(IdentityType.SystemAssigned, null, null, null);
+
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // verify
+                    Assert.NotNull(account?.Identity);
+                    Assert.False(string.IsNullOrEmpty(account.Identity.PrincipalId));
+                    Assert.False(string.IsNullOrEmpty(account.Identity.TenantId));
+                    Assert.Equal(IdentityType.SystemAssigned, account.Identity.Type);
+                }
+
+                { // patch with MSI
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("csa");
+                    CognitiveServicesAccount parameters = new CognitiveServicesAccount
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = CognitiveServicesManagementTestUtilities.DefaultTags,
+                        Sku = new Sku { Name = "S0" },
+                        Kind = "Face",
+                        Properties = new CognitiveServicesAccountProperties(),
+                    };
+
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // custom parameters
+                    parameters = account;
+                    parameters.Identity = new Identity(IdentityType.SystemAssigned, null, null, null);
+                    account = cognitiveServicesMgmtClient.Accounts.Update(rgname, accountName, parameters);
+
+                    // verify
+                    Assert.NotNull(account?.Identity);
+                    Assert.False(string.IsNullOrEmpty(account.Identity.PrincipalId));
+                    Assert.False(string.IsNullOrEmpty(account.Identity.TenantId));
+                    Assert.Equal(IdentityType.SystemAssigned, account.Identity.Type);
+                }
+            }
+        }
+
+        [Fact]
+        public void CognitiveServicesAccountEncryptionTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                { // create with Encryption
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("csa");
+                    CognitiveServicesAccount parameters = new CognitiveServicesAccount
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = CognitiveServicesManagementTestUtilities.DefaultTags,
+                        Sku = new Sku { Name = "E0" },
+                        Kind = "Face",
+                        Properties = new CognitiveServicesAccountProperties(),
+                    };
+
+                    // custom parameters
+                    parameters.Identity = new Identity(IdentityType.SystemAssigned, null, null, null);
+                    parameters.Properties.Encryption = new Encryption(
+                        new KeyVaultProperties()
+                        {
+                            KeyName = "FakeKeyName",
+                            KeyVersion = "891CF236-D241-4738-9462-D506AF493DFA",
+                            KeyVaultUri = "https://pltfrmscrts-use-pc-dev.vault.azure.net/"
+                        },
+                        KeySource.MicrosoftKeyVault);
+
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // verify
+                    Assert.NotNull(account?.Properties?.Encryption);
+                    Assert.NotNull(account?.Properties?.Encryption?.KeyVaultProperties);
+                    Assert.Equal(parameters.Properties.Encryption.KeySource, account.Properties.Encryption.KeySource);
+                    Assert.Equal(parameters.Properties.Encryption.KeyVaultProperties.KeyName, account.Properties.Encryption.KeyVaultProperties.KeyName);
+                    Assert.Equal(parameters.Properties.Encryption.KeyVaultProperties.KeyVersion, account.Properties.Encryption.KeyVaultProperties.KeyVersion);
+                    Assert.Equal(parameters.Properties.Encryption.KeyVaultProperties.KeyVaultUri, account.Properties.Encryption.KeyVaultProperties.KeyVaultUri);
+                    Assert.NotNull(account?.Identity);
+                    Assert.False(string.IsNullOrEmpty(account.Identity.PrincipalId));
+                    Assert.False(string.IsNullOrEmpty(account.Identity.TenantId));
+                    Assert.Equal(IdentityType.SystemAssigned, account.Identity.Type);
+                }
+
+                { // patch with Encryption
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("csa");
+                    CognitiveServicesAccount parameters = new CognitiveServicesAccount
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = CognitiveServicesManagementTestUtilities.DefaultTags,
+                        Sku = new Sku { Name = "E0" },
+                        Kind = "Face",
+                        Properties = new CognitiveServicesAccountProperties(),
+                    };
+
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // custom parameters
+                    parameters = account;
+                    parameters.Identity = new Identity(IdentityType.SystemAssigned, null, null, null);
+                    parameters.Properties.Encryption = new Encryption(
+                        new KeyVaultProperties()
+                        {
+                            KeyName = "FakeKeyName",
+                            KeyVersion = "891CF236-D241-4738-9462-D506AF493DFA",
+                            KeyVaultUri = "https://pltfrmscrts-use-pc-dev.vault.azure.net/"
+                        },
+                        KeySource.MicrosoftKeyVault);
+                    account = cognitiveServicesMgmtClient.Accounts.Update(rgname, accountName, parameters);
+
+                    // verify
+                    Assert.NotNull(account?.Properties?.Encryption);
+                    Assert.NotNull(account?.Properties?.Encryption?.KeyVaultProperties);
+                    Assert.Equal(parameters.Properties.Encryption.KeySource, account.Properties.Encryption.KeySource);
+                    Assert.Equal(parameters.Properties.Encryption.KeyVaultProperties.KeyName, account.Properties.Encryption.KeyVaultProperties.KeyName);
+                    Assert.Equal(parameters.Properties.Encryption.KeyVaultProperties.KeyVersion, account.Properties.Encryption.KeyVaultProperties.KeyVersion);
+                    Assert.Equal(parameters.Properties.Encryption.KeyVaultProperties.KeyVaultUri, account.Properties.Encryption.KeyVaultProperties.KeyVaultUri);
+                    Assert.NotNull(account?.Identity);
+                    Assert.False(string.IsNullOrEmpty(account.Identity.PrincipalId));
+                    Assert.False(string.IsNullOrEmpty(account.Identity.TenantId));
+                    Assert.Equal(IdentityType.SystemAssigned, account.Identity.Type);
+                }
+            }
+        }
+
+
+        [Fact]
+        public void CognitiveServicesAccountUserOwnedStorageTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = CognitiveServicesManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                { // create with Encryption
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("csa");
+                    CognitiveServicesAccount parameters = new CognitiveServicesAccount
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = CognitiveServicesManagementTestUtilities.DefaultTags,
+                        Sku = new Sku { Name = "S0" },
+                        Kind = "SpeechServices",
+                        Properties = new CognitiveServicesAccountProperties(),
+                    };
+
+                    // custom parameters
+                    parameters.Identity = new Identity(IdentityType.SystemAssigned, null, null, null);
+                    parameters.Properties.UserOwnedStorage = new List<UserOwnedStorage>()
+                    {
+                        new UserOwnedStorage()
+                        {
+                            ResourceId = "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/felixwa-01/providers/Microsoft.Storage/storageAccounts/felixwatest"
+                        }
+                    };
+
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // verify
+                    Assert.NotNull(account?.Properties?.UserOwnedStorage);
+                    Assert.True(account.Properties.UserOwnedStorage.Count == 1);
+                    Assert.Equal(parameters.Properties.UserOwnedStorage[0].ResourceId, account.Properties.UserOwnedStorage[0].ResourceId);
+                    Assert.NotNull(account?.Identity);
+                    Assert.False(string.IsNullOrEmpty(account.Identity.PrincipalId));
+                    Assert.False(string.IsNullOrEmpty(account.Identity.TenantId));
+                    Assert.Equal(IdentityType.SystemAssigned, account.Identity.Type);
+                }
+
+                { // patch with Encryption
+                    // prepare account properties
+                    string accountName = TestUtilities.GenerateName("csa");
+                    CognitiveServicesAccount parameters = new CognitiveServicesAccount
+                    {
+                        Location = "CENTRALUSEUAP",
+                        Tags = CognitiveServicesManagementTestUtilities.DefaultTags,
+                        Sku = new Sku { Name = "S0" },
+                        Kind = "SpeechServices",
+                        Properties = new CognitiveServicesAccountProperties(),
+                    };
+
+                    // Create cognitive services account
+                    var account = cognitiveServicesMgmtClient.Accounts.Create(rgname, accountName, parameters);
+
+                    // custom parameters
+                    parameters = account;
+                    parameters.Identity = new Identity(IdentityType.SystemAssigned, null, null, null);
+                    parameters.Properties.UserOwnedStorage = new List<UserOwnedStorage>()
+                    {
+                        new UserOwnedStorage()
+                        {
+                            ResourceId = "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/felixwa-01/providers/Microsoft.Storage/storageAccounts/felixwatest"
+                        }
+                    };
+                    account = cognitiveServicesMgmtClient.Accounts.Update(rgname, accountName, parameters);
+
+                    // verify
+                    Assert.NotNull(account?.Properties?.UserOwnedStorage);
+                    Assert.True(account.Properties.UserOwnedStorage.Count == 1);
+                    Assert.Equal(parameters.Properties.UserOwnedStorage[0].ResourceId, account.Properties.UserOwnedStorage[0].ResourceId);
+                    Assert.NotNull(account?.Identity);
+                    Assert.False(string.IsNullOrEmpty(account.Identity.PrincipalId));
+                    Assert.False(string.IsNullOrEmpty(account.Identity.TenantId));
+                    Assert.Equal(IdentityType.SystemAssigned, account.Identity.Type);
+                }
             }
         }
     }

@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   The name of the specific Service Bus entity instance under the associated Service Bus namespace.
         /// </summary>
         ///
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>
         ///   The name of the shared access key, either for the Service Bus namespace
@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Core
             string sharedAccessKey)
         {
             Endpoint = endpoint;
-            EntityName = entityName;
+            EntityPath = entityName;
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
         }

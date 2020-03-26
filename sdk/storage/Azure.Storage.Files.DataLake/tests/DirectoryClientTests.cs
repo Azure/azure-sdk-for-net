@@ -879,7 +879,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetAccessControlAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetRootDirectoryClient());
+            //DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetRootDirectoryClient());
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(""));
 
             // Act
             Response<PathInfo> response = await directory.SetPermissionsAsync(permissions: PathPermissions);
@@ -1516,7 +1517,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetPermissionsAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetRootDirectoryClient());
+            //DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetRootDirectoryClient());
+            DataLakeDirectoryClient directory = InstrumentClient(test.FileSystem.GetDirectoryClient(""));
 
             // Act
             Response<PathInfo> response = await directory.SetPermissionsAsync(permissions: PathPermissions);

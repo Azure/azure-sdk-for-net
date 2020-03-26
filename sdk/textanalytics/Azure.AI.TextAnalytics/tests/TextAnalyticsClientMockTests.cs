@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Transport = transport
             };
 
-            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), new TextAnalyticsApiKeyCredential(s_apiKey), options));
+            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), new AzureKeyCredential(s_apiKey), options));
 
             return client;
         }
@@ -138,7 +138,7 @@ namespace Azure.AI.TextAnalytics.Tests
                             json.WriteString("subtype", JsonSerializer.Serialize(entity.SubCategory));
                             json.WriteNumber("offset", entity.GraphemeOffset);
                             json.WriteNumber("length", entity.GraphemeLength);
-                            json.WriteNumber("score", entity.Score);
+                            json.WriteNumber("score", entity.ConfidenceScore);
                             json.WriteEndObject();
                         }
                         json.WriteEndArray();

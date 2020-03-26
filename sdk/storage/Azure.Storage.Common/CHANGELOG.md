@@ -1,7 +1,10 @@
 # Release History
 
-## 12.3.0-preview.1 (Unreleased)
+## 12.4.0-preview.1 (Unreleased)
 
+
+## 12.3.0 (2020-03)
+- Added InitialTransferLength to StorageTransferOptions
 
 ## 12.2.0 (2020-02)
 - Added support for service version 2019-07-07.

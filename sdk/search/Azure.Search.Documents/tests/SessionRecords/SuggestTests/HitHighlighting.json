@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/docs/search.post.suggest?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "159",
+        "Content-Type": "application/json",
+        "traceparent": "00-9e074c6a4a1e184cb504e47e0ef4cebd-511f08ad095b4941-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200309.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "0387e2d36fbcb030f57c066150877d06",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "filter": "category eq \u0027Luxury\u0027",
+        "highlightPostTag": "\u003C/b\u003E",
+        "highlightPreTag": "\u003Cb\u003E",
+        "search": "hotel",
+        "suggesterName": "sg",
+        "top": 1
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "400",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Mon, 09 Mar 2020 09:47:47 GMT",
+        "elapsed-time": "7",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "0387e2d3-6fbc-b030-f57c-066150877d06",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/$metadata#docs(*)",
+        "value": [
+          {
+            "@search.text": "Best \u003Cb\u003Ehotel\u003C/b\u003E in town if you like luxury \u003Cb\u003Ehotels\u003C/b\u003E. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this \u003Cb\u003Ehotel\u003C/b\u003E.",
+            "hotelId": "1"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1967020220",
+    "SearchIndexName": "bapsfvkb",
+    "SearchServiceName": "azs-net-wvqysflr"
+  }
+}

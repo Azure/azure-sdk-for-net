@@ -9,7 +9,7 @@ using Castle.DynamicProxy;
 
 namespace Azure.Core.Testing
 {
-    [ClientTestFixtureAttribute]
+    [ClientTestFixture]
     public abstract class ClientTestBase
     {
         private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();

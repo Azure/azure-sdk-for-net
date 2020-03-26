@@ -77,59 +77,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ReplicationEligibilityResults>> GetWithHttpMessagesAsync(string virtualMachineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the validation errors in case the VM is unsuitable for
-        /// protection.
-        /// </summary>
-        /// <remarks>
-        /// Validates whether a given VM can be protected or not in which case
-        /// returns list of errors.
-        /// </remarks>
-        /// <param name='virtualMachineName'>
-        /// Virtual Machine name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplicationEligibilityResultsCollection>> BeginListWithHttpMessagesAsync(string virtualMachineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets the validation errors in case the VM is unsuitable for
-        /// protection.
-        /// </summary>
-        /// <remarks>
-        /// Validates whether a given VM can be protected or not in which case
-        /// returns list of errors.
-        /// </remarks>
-        /// <param name='virtualMachineName'>
-        /// Virtual Machine name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplicationEligibilityResults>> BeginGetWithHttpMessagesAsync(string virtualMachineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

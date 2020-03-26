@@ -11,39 +11,9 @@ namespace Azure.Core
 {
     internal static class PageableHelpers
     {
-        public static FuncPageable<T> CreateEnumerable<T>(Func<string?, Page<T>> pageFunc) where T : notnull
-        {
-            return new FuncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
-        }
-
-        public static FuncPageable<T> CreateEnumerable<T>(Func<string?, int?, Page<T>> pageFunc) where T : notnull
-        {
-            return new FuncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken, pageSizeHint));
-        }
-
-        public static AsyncPageable<T> CreateAsyncEnumerable<T>(Func<string?, Task<Page<T>>> pageFunc) where T : notnull
-        {
-            return new FuncAsyncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken));
-        }
-
-        public static AsyncPageable<T> CreateAsyncEnumerable<T>(Func<string?, int?, Task<Page<T>>> pageFunc) where T : notnull
-        {
-            return new FuncAsyncPageable<T>((continuationToken, pageSizeHint) => pageFunc(continuationToken, pageSizeHint));
-        }
-
-        public static Pageable<T> CreateEnumerable<T>(Func<Page<T>> firstPageFunc, Func<string?, Page<T>> nextPageFunc) where T : notnull
-        {
-            return new FuncPageable<T>((continuationToken, pageSizeHint) => firstPageFunc(), (continuationToken, pageSizeHint) => nextPageFunc(continuationToken));
-        }
-
         public static Pageable<T> CreateEnumerable<T>(Func<int?, Page<T>> firstPageFunc, Func<string?, int?, Page<T>> nextPageFunc, int? pageSize = default) where T : notnull
         {
             return new FuncPageable<T>((continuationToken, pageSizeHint) => firstPageFunc(pageSizeHint), (continuationToken, pageSizeHint) => nextPageFunc(continuationToken, pageSizeHint), pageSize);
-        }
-
-        public static AsyncPageable<T> CreateAsyncEnumerable<T>(Func<Task<Page<T>>> firstPageFunc, Func<string?, Task<Page<T>>> nextPageFunc) where T : notnull
-        {
-            return new FuncAsyncPageable<T>((continuationToken, pageSizeHint) => firstPageFunc(), (continuationToken, pageSizeHint) => nextPageFunc(continuationToken));
         }
 
         public static AsyncPageable<T> CreateAsyncEnumerable<T>(Func<int?, Task<Page<T>>> firstPageFunc, Func<string?, int?, Task<Page<T>>> nextPageFunc, int? pageSize = default) where T : notnull
@@ -59,13 +29,6 @@ namespace Azure.Core
             private readonly AsyncPageFunc<T> _firstPageFunc;
             private readonly AsyncPageFunc<T> _nextPageFunc;
             private readonly int? _defaultPageSize;
-
-            public FuncAsyncPageable(AsyncPageFunc<T> pageFunc, int? defaultPageSize = default)
-            {
-                _firstPageFunc = pageFunc;
-                _nextPageFunc = pageFunc;
-                _defaultPageSize = defaultPageSize;
-            }
 
             public FuncAsyncPageable(AsyncPageFunc<T> firstPageFunc, AsyncPageFunc<T> nextPageFunc, int? defaultPageSize = default)
             {
@@ -84,7 +47,7 @@ namespace Azure.Core
                     yield return pageResponse;
                     continuationToken = pageResponse.ContinuationToken;
                     pageFunc = _nextPageFunc;
-                } while (continuationToken != null);
+                } while (!string.IsNullOrEmpty(continuationToken));
             }
         }
 
@@ -93,13 +56,6 @@ namespace Azure.Core
             private readonly PageFunc<T> _firstPageFunc;
             private readonly PageFunc<T> _nextPageFunc;
             private readonly int? _defaultPageSize;
-
-            public FuncPageable(PageFunc<T> pageFunc, int? defaultPageSize = default)
-            {
-                _firstPageFunc = pageFunc;
-                _nextPageFunc = pageFunc;
-                _defaultPageSize = defaultPageSize;
-            }
 
             public FuncPageable(PageFunc<T> firstPageFunc, PageFunc<T> nextPageFunc, int? defaultPageSize = default)
             {
@@ -118,7 +74,7 @@ namespace Azure.Core
                     yield return pageResponse;
                     continuationToken = pageResponse.ContinuationToken;
                     pageFunc = _nextPageFunc;
-                } while (continuationToken != null);
+                } while (!string.IsNullOrEmpty(continuationToken));
             }
         }
     }

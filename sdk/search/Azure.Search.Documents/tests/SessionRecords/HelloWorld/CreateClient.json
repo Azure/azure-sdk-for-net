@@ -1,0 +1,77 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/servicestats?api-version=2019-05-06-Preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "traceparent": "00-d3cada4d2d96394eb4c6f6303e227df6-1c0f937f3b60e640-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200308.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "4b6405bb4fdcb9544c0fdf174384b8eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "581",
+        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
+        "Date": "Sun, 08 Mar 2020 23:05:22 GMT",
+        "elapsed-time": "55",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "4b6405bb-4fdc-b954-4c0f-df174384b8eb",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-gjxdhkdl.search.windows.net/$metadata#Microsoft.Azure.Search.V2019_05_06_Preview.ServiceStatistics",
+        "counters": {
+          "documentCount": {
+            "usage": 0,
+            "quota": null
+          },
+          "indexesCount": {
+            "usage": 1,
+            "quota": 3
+          },
+          "indexersCount": {
+            "usage": 0,
+            "quota": 3
+          },
+          "dataSourcesCount": {
+            "usage": 0,
+            "quota": 3
+          },
+          "storageSize": {
+            "usage": 0,
+            "quota": 52428800
+          },
+          "synonymMaps": {
+            "usage": 0,
+            "quota": 3
+          },
+          "skillsetCount": {
+            "usage": 0,
+            "quota": 3
+          }
+        },
+        "limits": {
+          "maxFieldsPerIndex": 1000,
+          "maxFieldNestingDepthPerIndex": 10,
+          "maxComplexCollectionFieldsPerIndex": 40,
+          "maxComplexObjectsInCollectionsPerDocument": 3000
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2134332413",
+    "SearchIndexName": "grurisvf",
+    "SearchServiceName": "azs-net-gjxdhkdl"
+  }
+}

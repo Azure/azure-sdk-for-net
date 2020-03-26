@@ -378,20 +378,20 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     public bool IsRunning { get; protected set; }
     
     protected EventProcessor(
-        int eventBatchMaximumSize,
+        int eventBatchMaximumCount,
         string consumerGroup, 
         string connectionString, 
         EventProcessorOptions options = default);
         
     protected EventProcessor(
-        int eventBatchMaximumSize,
+        int eventBatchMaximumCount,
         string consumerGroup, 
         string connectionString, 
         string eventHubName, 
         EventProcessorOptions options = default);
     
     protected EventProcessor(
-        int eventBatchMaximumSize,
+        int eventBatchMaximumCount,
         string consumerGroup,  
         string fullyQualifiedNamespace, 
         string eventHubName, 
@@ -425,9 +425,9 @@ public class EventProcessorOptions
     public EventHubConnectionOptions ConnectionOptions { get; set; }
     public EventHubsRetryOptions RetryOptions { get; set; }
     public string Identifier { get; set; }
-    public int? PrefetchCount { get; set; } 
+    public int PrefetchCount { get; set; } 
     public bool TrackLastEnqueuedEventProperties { get; set; }
-    public TimeSpan MaximumWaitTime { get; set; } = TimeSpan.FromSeconds(60);
+    public TimeSpan? MaximumWaitTime { get; set; } = TimeSpan.FromSeconds(60);
     public EventPosition DefaultStartingPosition { get; set; } = EventPosition.Earliest;
     public TimeSpan LoadBalancingUpdateInterval { get; set; } = TimeSpan.FromSeconds(10);
     public TimeSpan PartitionOwnershipExpirationInterval { get; set; } = TimeSpan.FromSeconds(30);

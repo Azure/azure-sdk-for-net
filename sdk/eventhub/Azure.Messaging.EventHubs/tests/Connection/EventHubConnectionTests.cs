@@ -38,6 +38,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { "FakeNamespace", null, credential.Object };
             yield return new object[] { "FakNamespace", "", credential.Object };
             yield return new object[] { "FakeNamespace", "FakePath", null };
+            yield return new object[] { "sb://fakenamspace.com", "FakePath", credential.Object };
         }
 
         /// <summary>
@@ -93,12 +94,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorRequiresConnectionString(string connectionString)
         {
-            var expectedType = connectionString is null ? typeof(ArgumentNullException) : typeof(ArgumentException);
-
-            Assert.That(() => new EventHubConnection(connectionString), Throws.TypeOf(expectedType), "The constructor without options should perform validation.");
-            Assert.That(() => new EventHubConnection(connectionString, "eventHub"), Throws.TypeOf(expectedType), "The constructor with the event hub without options should perform validation.");
-            Assert.That(() => new EventHubConnection(connectionString, "eventHub", new EventHubConnectionOptions()), Throws.TypeOf(expectedType), "The constructor with the event hub and options should perform validation.");
-            Assert.That(() => new EventHubConnection(connectionString, new EventHubConnectionOptions()), Throws.TypeOf(expectedType), "The constructor with options and no event hub should perform validation.");
+            Assert.That(() => new EventHubConnection(connectionString), Throws.InstanceOf<ArgumentException>(), "The constructor without options should perform validation.");
+            Assert.That(() => new EventHubConnection(connectionString, "eventHub"), Throws.InstanceOf<ArgumentException>(), "The constructor with the event hub without options should perform validation.");
+            Assert.That(() => new EventHubConnection(connectionString, "eventHub", new EventHubConnectionOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with the event hub and options should perform validation.");
+            Assert.That(() => new EventHubConnection(connectionString, new EventHubConnectionOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options and no event hub should perform validation.");
         }
 
         /// <summary>
@@ -733,7 +732,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 WasCloseAsyncCalled = true;
                 return base.CloseAsync(cancellationToken);
             }
-
         }
 
         /// <summary>

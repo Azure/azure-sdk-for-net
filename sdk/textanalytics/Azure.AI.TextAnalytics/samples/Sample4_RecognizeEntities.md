@@ -3,12 +3,12 @@ This sample demonstrates how to recognize entities in one or more documents. To 
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to recognize entities in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating a `TextAnalyticsApiKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
+To create a new `TextAnalyticsClient` to recognize entities in a document, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample4CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Recognizing entities in a single document
@@ -18,13 +18,12 @@ To recognize entities in a document, use the `RecognizeEntities` method.  The re
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-Response<IReadOnlyCollection<CategorizedEntity>> response = client.RecognizeEntities(input);
-IEnumerable<CategorizedEntity> entities = response.Value;
+IReadOnlyCollection<CategorizedEntity> entities = client.RecognizeEntities(input).Value;
 
-Console.WriteLine($"Recognized {entities.Count()} entities:");
+Console.WriteLine($"Recognized {entities.Count} entities:");
 foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.GraphemeOffset}, Length: {entity.GraphemeLength}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
 

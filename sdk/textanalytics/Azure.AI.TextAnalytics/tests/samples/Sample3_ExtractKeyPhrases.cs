@@ -5,7 +5,6 @@ using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -19,16 +18,15 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:TextAnalyticsSample3CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
             #region Snippet:ExtractKeyPhrases
             string input = "My cat might need to see a veterinarian.";
 
-            Response<IReadOnlyCollection<string>> response = client.ExtractKeyPhrases(input);
-            IEnumerable<string> keyPhrases = response.Value;
+            IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(input).Value;
 
-            Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
+            Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
             foreach (string keyPhrase in keyPhrases)
             {
                 Console.WriteLine(keyPhrase);

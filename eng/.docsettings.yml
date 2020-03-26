@@ -9,6 +9,7 @@ omitted_paths:
   - samples/*
   - common/SmokeTests/*
   - sdk/*/samples/*
+  - sdk/*/*/samples/*
   - sdk/*/swagger/*
   - doc/ApiDocGeneration/*
 language: net
@@ -68,6 +69,7 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search','#5499']
   - ['sdk/keyvault','#5499']
   - ['sdk/eventhub','#5499']
+  - ['sdk/formrecognizer/Azure.AI.FormRecognizer','#5499']
 
 # List for changelogs begins here
   - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query/CHANGELOG.md','#5499']
@@ -138,6 +140,7 @@ known_content_issues:
   - ['sdk/extensions/Azure.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

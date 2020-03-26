@@ -40,6 +40,10 @@
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
         },
+        "sku": {
+            "defaultValue": "Standard",
+            "type": "string"
+        },
         "azConfigPrefix": {
             "defaultValue": "azconfig-net",
             "type": "string"
@@ -57,9 +61,12 @@
     "resources": [
         {
             "type": "Microsoft.AppConfiguration/configurationStores",
-            "apiVersion": "2019-02-01-preview",
+            "apiVersion": "2019-10-01",
             "name": "[variables('uniqueAzConfigName')]",
-            "location":"[parameters('location')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('sku')]"
+            },
             "properties": {
                 "endpoint":"[variables('endpointValue')]"
             }

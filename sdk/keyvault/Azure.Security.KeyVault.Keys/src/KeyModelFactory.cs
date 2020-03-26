@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Security.KeyVault.Keys
 {
@@ -81,6 +82,39 @@ namespace Azure.Security.KeyVault.Keys
         /// <param name="updatedOn">Sets the <see cref="Keys.KeyProperties.UpdatedOn"/> property.</param>
         /// <param name="recoveryLevel">Sets the <see cref="Keys.KeyProperties.RecoveryLevel"/> property.</param>
         /// <returns>A new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KeyProperties KeyProperties(
+            Uri id,
+            Uri vaultUri,
+            string name,
+            string version,
+            bool managed,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? updatedOn,
+            string recoveryLevel) => KeyProperties(
+                id,
+                vaultUri,
+                name,
+                version,
+                managed,
+                createdOn,
+                updatedOn,
+                recoveryLevel,
+                default);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.
+        /// </summary>
+        /// <param name="id">Sets the <see cref="Keys.KeyProperties.Id"/> property.</param>
+        /// <param name="vaultUri">Sets the <see cref="Keys.KeyProperties.VaultUri"/> property.</param>
+        /// <param name="name">Sets the <see cref="Keys.KeyProperties.Name"/> property.</param>
+        /// <param name="version">Sets the <see cref="Keys.KeyProperties.Version"/> property.</param>
+        /// <param name="managed">Sets the <see cref="Keys.KeyProperties.Managed"/> property.</param>
+        /// <param name="createdOn">Sets the <see cref="Keys.KeyProperties.CreatedOn"/> property.</param>
+        /// <param name="updatedOn">Sets the <see cref="Keys.KeyProperties.UpdatedOn"/> property.</param>
+        /// <param name="recoveryLevel">Sets the <see cref="Keys.KeyProperties.RecoveryLevel"/> property.</param>
+        /// <param name="recoverableDays">Sets the <see cref="Keys.KeyProperties.RecoverableDays"/> property.</param>
+        /// <returns>A new instance of the <see cref="Keys.KeyProperties"/> for mocking purposes.</returns>
         public static KeyProperties KeyProperties(
             Uri id = default,
             Uri vaultUri = default,
@@ -89,7 +123,8 @@ namespace Azure.Security.KeyVault.Keys
             bool managed = default,
             DateTimeOffset? createdOn = default,
             DateTimeOffset? updatedOn = default,
-            string recoveryLevel = default)
+            string recoveryLevel = default,
+            int? recoverableDays = default)
         {
             return new KeyProperties
             {
@@ -101,6 +136,7 @@ namespace Azure.Security.KeyVault.Keys
                 CreatedOn = createdOn,
                 UpdatedOn = updatedOn,
                 RecoveryLevel = recoveryLevel,
+                RecoverableDays = recoverableDays,
             };
         }
 

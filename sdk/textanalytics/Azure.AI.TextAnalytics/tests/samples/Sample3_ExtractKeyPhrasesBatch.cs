@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
             var inputs = new List<TextDocumentInput>
@@ -67,7 +67,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
                     Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }

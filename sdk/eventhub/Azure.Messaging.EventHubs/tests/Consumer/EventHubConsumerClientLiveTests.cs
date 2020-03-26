@@ -1953,11 +1953,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase(EventHubsTransportType.AmqpWebSockets)]
         public async Task ConsumerCanRetrievePartitionProperties(EventHubsTransportType transportType)
         {
-            var partitionCount = 4;
+            var partitionCount = 1;
 
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
-                var options = new EventHubConnectionOptions();
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var consumerOptions = new EventHubConsumerClientOptions { ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
 
@@ -2113,9 +2112,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                       EventPosition startingPosition,
                                                                       ReadEventOptions readOptions = default,
                                                                       int expectedEventCount = int.MaxValue,
-                                                                      int consecutiveEmptyLimit = 15,
-                                                                      int consecutiveEmptyDelayThreshold = 5,
-                                                                      int consecutiveEmptyDelayMilliseconds = 250,
+                                                                      int consecutiveEmptyLimit = 20,
+                                                                      int consecutiveEmptyDelayThreshold = 8,
+                                                                      int consecutiveEmptyDelayMilliseconds = 350,
                                                                       Func<Task<bool>> iterationCallback = default,
                                                                       CancellationToken cancellationToken = default)
         {
@@ -2179,9 +2178,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                       ReadEventOptions readOptions = default,
                                                                       bool startReadingAtFirst = true,
                                                                       int expectedEventCount = int.MaxValue,
-                                                                      int consecutiveEmptyLimit = 15,
-                                                                      int consecutiveEmptyDelayThreshold = 5,
-                                                                      int consecutiveEmptyDelayMilliseconds = 250,
+                                                                      int consecutiveEmptyLimit = 20,
+                                                                      int consecutiveEmptyDelayThreshold = 8,
+                                                                      int consecutiveEmptyDelayMilliseconds = 350,
                                                                       Func<Task<bool>> iterationCallback = default,
                                                                       CancellationToken cancellationToken = default)
         {

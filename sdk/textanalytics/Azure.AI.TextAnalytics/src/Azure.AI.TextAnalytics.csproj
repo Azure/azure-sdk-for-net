@@ -2,12 +2,15 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services Text Analytics Service client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
-    <Version>1.0.0-preview.3</Version>
+    <Version>1.0.0-preview.4</Version>
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
     <GenerateAPIListing>false</GenerateAPIListing>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <EnableApiCompat>false</EnableApiCompat>
+    
+    <!-- Use latest changes from Azure Core that haven't been published -->
+    <UseProjectReferenceToAzureClients>true</UseProjectReferenceToAzureClients>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
@@ -27,5 +30,6 @@
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" />
   </ItemGroup>
 </Project>

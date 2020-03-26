@@ -32,8 +32,8 @@
             var executingAssemblyPath = new Uri(typeof(BaseTests).GetTypeInfo().Assembly.CodeBase);
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath.AbsolutePath), @"..\..\..\SessionRecords");
 
-            ICustomVisionTrainingClient trainingClient = new CustomVisionTrainingClient();
-            trainingClient.ApiKey = "";
+            var credentials = new ApiKeyServiceClientCredentials("");
+            ICustomVisionTrainingClient trainingClient = new CustomVisionTrainingClient(credentials);
             trainingClient.Endpoint = Endpoint;
 
             HttpMockServer.Initialize(typeof(BaseTests).Name, "Unused", RecorderMode);
@@ -46,9 +46,9 @@
 
         protected ICustomVisionPredictionClient GetPredictionClientClient()
         {
-            ICustomVisionPredictionClient client = new CustomVisionPredictionClient(handlers: HttpMockServer.CreateInstance())
+            var credentials = new ApiKeyServiceClientCredentials(PredictionKey);
+            ICustomVisionPredictionClient client = new CustomVisionPredictionClient(credentials, handlers: HttpMockServer.CreateInstance())
             {
-                ApiKey = PredictionKey,
                 Endpoint = Endpoint
             };
 

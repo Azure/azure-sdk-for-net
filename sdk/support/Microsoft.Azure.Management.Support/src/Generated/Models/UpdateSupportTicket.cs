@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// Updates severity and contact details in the support ticket.
+    /// Updates severity, ticket status and contact details in the support
+    /// ticket.
     /// </summary>
     public partial class UpdateSupportTicket
     {
@@ -30,12 +31,15 @@ namespace Microsoft.Azure.Management.Support.Models
         /// Initializes a new instance of the UpdateSupportTicket class.
         /// </summary>
         /// <param name="severity">Severity level. Possible values include:
-        /// 'minimal', 'moderate', 'critical'</param>
+        /// 'minimal', 'moderate', 'critical', 'highestcriticalimpact'</param>
+        /// <param name="status">Status to be updated on the ticket. Possible
+        /// values include: 'open', 'closed'</param>
         /// <param name="contactDetails">Contact details to be updated on the
         /// support ticket.</param>
-        public UpdateSupportTicket(string severity = default(string), UpdateContactProfile contactDetails = default(UpdateContactProfile))
+        public UpdateSupportTicket(string severity = default(string), string status = default(string), UpdateContactProfile contactDetails = default(UpdateContactProfile))
         {
             Severity = severity;
+            Status = status;
             ContactDetails = contactDetails;
             CustomInit();
         }
@@ -47,10 +51,17 @@ namespace Microsoft.Azure.Management.Support.Models
 
         /// <summary>
         /// Gets or sets severity level. Possible values include: 'minimal',
-        /// 'moderate', 'critical'
+        /// 'moderate', 'critical', 'highestcriticalimpact'
         /// </summary>
         [JsonProperty(PropertyName = "severity")]
         public string Severity { get; set; }
+
+        /// <summary>
+        /// Gets or sets status to be updated on the ticket. Possible values
+        /// include: 'open', 'closed'
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
 
         /// <summary>
         /// Gets or sets contact details to be updated on the support ticket.

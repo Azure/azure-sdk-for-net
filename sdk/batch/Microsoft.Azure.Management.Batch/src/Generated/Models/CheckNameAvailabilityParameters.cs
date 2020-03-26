@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The resource type. Must be set to Microsoft.Batch/batchAccounts
+        /// The resource type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public static string Type { get; private set; }

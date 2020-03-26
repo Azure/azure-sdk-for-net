@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -49,5 +50,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "comments")]
         public string Comments { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Comments != null)
+            {
+                if (Comments.Length > 1024)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Comments", 1024);
+                }
+            }
+        }
     }
 }

@@ -263,5 +263,58 @@ namespace Azure.Storage.Blobs.Models
                     Metadata = metadata,
                     HasImmutabilityPolicy = hasImmutabilityPolicy,
                 };
+
+        /// <summary>
+        /// Creates a new BlobCopyInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobCopyInfo BlobCopyInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            string copyId,
+            CopyStatus copyStatus)
+            => new BlobCopyInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+            };
+
+        /// <summary>
+        /// Creates a new BlobItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobItem BlobItem(
+            string name,
+            bool deleted,
+            BlobItemProperties properties,
+            string snapshot = default,
+            IDictionary<string, string> metadata = default)
+            => new BlobItem()
+            {
+                Name = name,
+                Deleted = deleted,
+                Properties = properties,
+                Snapshot = snapshot,
+                Metadata = metadata,
+            };
+
+        /// <summary>
+        /// Creates a new BlobSnapshotInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobSnapshotInfo BlobSnapshotInfo(
+            string snapshot,
+            ETag eTag,
+            DateTimeOffset lastModified,
+            bool isServerEncrypted)
+            => new BlobSnapshotInfo()
+            {
+                Snapshot = snapshot,
+                ETag = eTag,
+                LastModified = lastModified,
+                IsServerEncrypted = isServerEncrypted,
+            };
     }
 }

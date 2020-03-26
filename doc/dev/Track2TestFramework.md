@@ -1,4 +1,4 @@
-# Accquring TestFramework
+# Acquiring TestFramework
 
 To start using test framework import `sdk\core\Azure.Core\tests\TestFramework.props` into test `.csproj`:
 
