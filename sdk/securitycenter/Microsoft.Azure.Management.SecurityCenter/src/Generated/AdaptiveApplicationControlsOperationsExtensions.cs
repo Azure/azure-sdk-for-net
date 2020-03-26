@@ -135,5 +135,36 @@ namespace Microsoft.Azure.Management.Security
                 }
             }
 
+            /// <summary>
+            /// Delete an application control VM/server group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// Name of an application control VM/server group
+            /// </param>
+            public static void Delete(this IAdaptiveApplicationControlsOperations operations, string groupName)
+            {
+                operations.DeleteAsync(groupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete an application control VM/server group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='groupName'>
+            /// Name of an application control VM/server group
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(groupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
     }
 }

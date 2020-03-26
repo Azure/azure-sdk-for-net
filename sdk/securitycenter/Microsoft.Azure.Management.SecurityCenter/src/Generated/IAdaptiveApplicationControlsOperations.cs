@@ -96,5 +96,24 @@ namespace Microsoft.Azure.Management.Security
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingPutGroupData body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete an application control VM/server group
+        /// </summary>
+        /// <param name='groupName'>
+        /// Name of an application control VM/server group
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string groupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
