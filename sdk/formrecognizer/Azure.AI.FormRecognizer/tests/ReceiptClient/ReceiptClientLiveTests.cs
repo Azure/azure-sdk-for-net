@@ -46,13 +46,14 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartExtractReceiptsPopulatesExtractedReceipt()
         {
             var client = CreateInstrumentedClient();
-
             using var stream = new FileStream(@"", FileMode.Open);
-            var response = await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg);
 
-            Assert.IsNotNull(response);
+            var operation = await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg);
+            await operation.WaitForCompletionAsync();
 
-            var receipt = response.Value.Single();
+            Assert.IsTrue(operation.HasValue);
+
+            var receipt = operation.Value.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
