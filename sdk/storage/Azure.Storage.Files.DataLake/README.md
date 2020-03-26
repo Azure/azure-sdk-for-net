@@ -192,8 +192,14 @@ DataLakeFileClient fileClient = subDirectoryClient.GetFileClient(Randomize("samp
 fileClient.Create();
 
 // Create progress handler to observe operation and collect paths that failed to change Access Controls.
-// Customer is expected to provide own implementation.
-IProgress<Response<AccessControlRecursiveChanges>> progress = null;
+IProgress<Response<AccessControlChanges>> progress = new Progress<Response<AccessControlChanges>>(
+    response =>
+    {
+        foreach (var failure in response.Value.BatchFailures)
+        {
+            Console.WriteLine($"Failed to change Access Controlls at {failure.Name}");
+        }
+    });
 
 // Set Access Control List Recursively
 IList<PathAccessControlItem> accessControlList

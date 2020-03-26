@@ -95,28 +95,17 @@ namespace Azure.Storage.Files.DataLake.Tests
             public string LeaseId { get; set; }
         }
 
-        public class InMemoryAccessControlRecursiveChangeProgress : IProgress<Response<AccessControlRecursiveChanges>>
+        public class InMemoryAccessControlRecursiveChangeProgress : IProgress<Response<AccessControlChanges>>
         {
-            public List<AccessControlRecursiveChangeFailure> FailedEntries { get; } = new List<AccessControlRecursiveChangeFailure>();
+            public List<AccessControlChangeFailure> Failures { get; } = new List<AccessControlChangeFailure>();
+            public List<AccessControlChangeCounters> BatchCounters { get; } = new List<AccessControlChangeCounters>();
+            public List<AccessControlChangeCounters> CummulativeCounters { get; } = new List<AccessControlChangeCounters>();
 
-            public void Report(Response<AccessControlRecursiveChanges> response)
+            public void Report(Response<AccessControlChanges> response)
             {
-                FailedEntries.AddRange(response.Value.FailedEntries);
-            }
-        }
-
-        public class ActionableAccessControlRecursiveChangeProgress : IProgress<Response<AccessControlRecursiveChanges>>
-        {
-            private Action<AccessControlRecursiveChanges> action;
-
-            public ActionableAccessControlRecursiveChangeProgress(Action<AccessControlRecursiveChanges> action)
-            {
-                this.action = action;
-            }
-
-            public void Report(Response<AccessControlRecursiveChanges> response)
-            {
-                action(response);
+                Failures.AddRange(response.Value.BatchFailures);
+                BatchCounters.Add(response.Value.BatchCounters);
+                CummulativeCounters.Add(response.Value.CumulativeCounters);
             }
         }
     }
