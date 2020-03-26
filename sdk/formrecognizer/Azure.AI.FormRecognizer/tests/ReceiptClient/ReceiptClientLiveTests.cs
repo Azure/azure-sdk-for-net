@@ -22,6 +22,12 @@ namespace Azure.AI.FormRecognizer.Tests
     [LiveOnly]
     public class ReceiptClientLiveTests : ClientTestBase
     {
+        /// <summary>The name of the folder in which test assets are stored.</summary>
+        private const string AssetsFolderName = "Assets";
+
+        /// <summary>The name of the image file which contains the receipt to be used for tests.</summary>
+        private const string ReceiptFilename = "contoso-receipt.jpg";
+
         /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the tests.</summary>
         private const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
 
@@ -43,8 +49,7 @@ namespace Azure.AI.FormRecognizer.Tests
         ///
         [Test]
         [TestCase(true)]
-        [TestCase(false)]
-        [Ignore("The receipt file has not been uploaded yet.")]
+        [TestCase(false, Ignore="The receipt file has not been uploaded to GitHub yet.")]
         public async Task StartExtractReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();
@@ -52,7 +57,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(@"", FileMode.Open);
+                var path = Path.Combine(AssetsFolderName, ReceiptFilename);
+                using var stream = new FileStream(path, FileMode.Open);
                 operation = await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg);
             }
             else
