@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Defines a data change detection policy that captures changes based on the value of a high water mark column. </summary>
@@ -14,6 +16,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
         public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName)
         {
+            if (highWaterMarkColumnName == null)
+            {
+                throw new ArgumentNullException(nameof(highWaterMarkColumnName));
+            }
+
             HighWaterMarkColumnName = highWaterMarkColumnName;
             ODataType = "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
         }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Represents a synonym map definition. </summary>
@@ -15,6 +17,15 @@ namespace Azure.Search.Documents.Models
         /// <param name="synonyms"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
         public SynonymMap(string name, string synonyms)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (synonyms == null)
+            {
+                throw new ArgumentNullException(nameof(synonyms));
+            }
+
             Name = name;
             Format = "solr";
             Synonyms = synonyms;

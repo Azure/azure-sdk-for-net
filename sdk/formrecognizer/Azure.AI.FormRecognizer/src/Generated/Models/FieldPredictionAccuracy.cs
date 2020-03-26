@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.AI.FormRecognizer.Custom
 {
     /// <summary> Report for a custom model training field. </summary>
@@ -15,6 +17,11 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <param name="accuracy"> Estimated extraction accuracy for this field. </param>
         internal FieldPredictionAccuracy(string label, float accuracy)
         {
+            if (label == null)
+            {
+                throw new ArgumentNullException(nameof(label));
+            }
+
             Label = label;
             Accuracy = accuracy;
         }

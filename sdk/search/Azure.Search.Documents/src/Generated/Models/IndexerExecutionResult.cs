@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -19,11 +20,20 @@ namespace Azure.Search.Documents.Models
         /// <param name="warnings"> The item-level indexing warnings. </param>
         /// <param name="itemCount"> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </param>
         /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, IReadOnlyList<ItemError> errors, IReadOnlyList<ItemWarning> warnings, int itemCount, int failedItemCount)
+        internal IndexerExecutionResult(IndexerExecutionStatus status, IEnumerable<ItemError> errors, IEnumerable<ItemWarning> warnings, int itemCount, int failedItemCount)
         {
+            if (errors == null)
+            {
+                throw new ArgumentNullException(nameof(errors));
+            }
+            if (warnings == null)
+            {
+                throw new ArgumentNullException(nameof(warnings));
+            }
+
             Status = status;
-            Errors = errors;
-            Warnings = warnings;
+            Errors = errors.ToArray();
+            Warnings = warnings.ToArray();
             ItemCount = itemCount;
             FailedItemCount = failedItemCount;
         }
@@ -62,9 +72,9 @@ namespace Azure.Search.Documents.Models
         /// <summary> The end time of this indexer execution, if the execution has already completed. </summary>
         public DateTimeOffset? EndTime { get; }
         /// <summary> The item-level indexing errors. </summary>
-        public IReadOnlyList<ItemError> Errors { get; } = new List<ItemError>();
+        public IReadOnlyList<ItemError> Errors { get; }
         /// <summary> The item-level indexing warnings. </summary>
-        public IReadOnlyList<ItemWarning> Warnings { get; } = new List<ItemWarning>();
+        public IReadOnlyList<ItemWarning> Warnings { get; }
         /// <summary> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </summary>
         public int ItemCount { get; }
         /// <summary> The number of items that failed to be indexed during this indexer execution. </summary>

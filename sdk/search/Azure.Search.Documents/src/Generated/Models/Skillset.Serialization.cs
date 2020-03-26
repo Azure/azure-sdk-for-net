@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Models
         {
             string name = default;
             string description = default;
-            IList<Skill> skills = new List<Skill>();
+            IList<Skill> skills = default;
             CognitiveServicesAccount cognitiveServices = default;
             string odataetag = default;
             foreach (var property in element.EnumerateObject())

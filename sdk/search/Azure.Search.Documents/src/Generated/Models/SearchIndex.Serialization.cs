@@ -111,7 +111,7 @@ namespace Azure.Search.Documents.Models
         internal static SearchIndex DeserializeSearchIndex(JsonElement element)
         {
             string name = default;
-            IList<SearchField> fields = new List<SearchField>();
+            IList<SearchField> fields = default;
             IList<ScoringProfile> scoringProfiles = default;
             string defaultScoringProfile = default;
             CorsOptions corsOptions = default;

@@ -16,8 +16,9 @@ namespace Azure.Search.Documents.Models
         internal static SearchResult DeserializeSearchResult(JsonElement element)
         {
             double searchscore = default;
-            IReadOnlyDictionary<string, IReadOnlyList<string>> searchhighlights = default;
-            IDictionary<string, object> additionalProperties = new Dictionary<string, object>();
+            IReadOnlyDictionary<string, IList<string>> searchhighlights = default;
+            IReadOnlyDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@search.score"))
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    Dictionary<string, IReadOnlyList<string>> dictionary = new Dictionary<string, IReadOnlyList<string>>();
+                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         List<string> array = new List<string>();
@@ -44,8 +45,9 @@ namespace Azure.Search.Documents.Models
                     searchhighlights = dictionary;
                     continue;
                 }
-                additionalProperties.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
+            additionalProperties = additionalPropertiesDictionary;
             return new SearchResult(searchscore, searchhighlights, additionalProperties);
         }
     }

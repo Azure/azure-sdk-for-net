@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class SearchError
+    internal partial class SearchServiceError
     {
-        internal static SearchError DeserializeSearchError(JsonElement element)
+        internal static SearchServiceError DeserializeSearchServiceError(JsonElement element)
         {
             string code = default;
             string message = default;
-            IReadOnlyList<SearchError> details = default;
+            IReadOnlyList<SearchServiceError> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -40,16 +40,16 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    List<SearchError> array = new List<SearchError>();
+                    List<SearchServiceError> array = new List<SearchServiceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSearchError(item));
+                        array.Add(DeserializeSearchServiceError(item));
                     }
                     details = array;
                     continue;
                 }
             }
-            return new SearchError(code, message, details);
+            return new SearchServiceError(code, message, details);
         }
     }
 }

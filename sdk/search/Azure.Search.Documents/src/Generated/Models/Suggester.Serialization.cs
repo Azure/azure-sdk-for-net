@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Models
         {
             string name = default;
             SearchMode searchMode = default;
-            IList<string> sourceFields = new List<string>();
+            IList<string> sourceFields = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

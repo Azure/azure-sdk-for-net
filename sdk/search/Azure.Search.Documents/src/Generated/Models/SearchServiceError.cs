@@ -11,11 +11,11 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Describes an error condition for the Azure Cognitive Search API. </summary>
-    internal partial class SearchError
+    internal partial class SearchServiceError
     {
-        /// <summary> Initializes a new instance of SearchError. </summary>
+        /// <summary> Initializes a new instance of SearchServiceError. </summary>
         /// <param name="message"> A human-readable representation of the error. </param>
-        internal SearchError(string message)
+        internal SearchServiceError(string message)
         {
             if (message == null)
             {
@@ -25,11 +25,11 @@ namespace Azure.Search.Documents.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of SearchError. </summary>
+        /// <summary> Initializes a new instance of SearchServiceError. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        internal SearchError(string code, string message, IReadOnlyList<SearchError> details)
+        internal SearchServiceError(string code, string message, IReadOnlyList<SearchServiceError> details)
         {
             Code = code;
             Message = message;
@@ -41,6 +41,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> A human-readable representation of the error. </summary>
         public string Message { get; }
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
-        public IReadOnlyList<SearchError> Details { get; }
+        public IReadOnlyList<SearchServiceError> Details { get; }
     }
 }

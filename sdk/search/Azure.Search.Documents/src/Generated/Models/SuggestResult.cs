@@ -5,25 +5,32 @@
 
 #nullable disable
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A result containing a document found by a suggestion query, plus associated metadata. </summary>
-    internal partial class SuggestResult : IDictionary<string, object>
+    internal partial class SuggestResult : IReadOnlyDictionary<string, object>
     {
         /// <summary> Initializes a new instance of SuggestResult. </summary>
         /// <param name="text"> The text of the suggestion result. </param>
         internal SuggestResult(string text)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
             Text = text;
+            AdditionalProperties = new Dictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SuggestResult. </summary>
         /// <param name="text"> The text of the suggestion result. </param>
         /// <param name="additionalProperties"> . </param>
-        internal SuggestResult(string text, IDictionary<string, object> additionalProperties)
+        internal SuggestResult(string text, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Text = text;
             AdditionalProperties = additionalProperties;
@@ -31,42 +38,25 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The text of the suggestion result. </summary>
         public string Text { get; }
-        internal IDictionary<string, object> AdditionalProperties { get; } = new Dictionary<string, object>();
+        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
         /// <inheritdoc />
-        public ICollection<string> Keys => AdditionalProperties.Keys;
-        /// <inheritdoc />
-        public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
         public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
-        /// <inheritdoc />
-        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
         /// <inheritdoc />
         public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
         /// <inheritdoc />
-        public bool Remove(string key) => AdditionalProperties.Remove(key);
+        public IEnumerable<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
-        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
+        public IEnumerable<object> Values => AdditionalProperties.Values;
         /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc />
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc />
-        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
+        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public object this[string key]
         {
             get => AdditionalProperties[key];
-            set => AdditionalProperties[key] = value;
         }
     }
 }

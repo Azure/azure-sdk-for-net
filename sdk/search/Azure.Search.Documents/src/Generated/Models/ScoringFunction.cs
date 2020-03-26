@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Abstract base class for functions that can modify document scores during ranking. </summary>
@@ -15,6 +17,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         public ScoringFunction(string fieldName, double boost)
         {
+            if (fieldName == null)
+            {
+                throw new ArgumentNullException(nameof(fieldName));
+            }
+
             FieldName = fieldName;
             Boost = boost;
             Type = null;

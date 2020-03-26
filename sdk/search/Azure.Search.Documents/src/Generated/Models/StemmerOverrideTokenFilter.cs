@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,9 +17,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of StemmerOverrideTokenFilter. </summary>
         /// <param name="rules"> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public StemmerOverrideTokenFilter(IList<string> rules, string name) : base(name)
+        public StemmerOverrideTokenFilter(IEnumerable<string> rules, string name) : base(name)
         {
-            Rules = rules;
+            if (rules == null)
+            {
+                throw new ArgumentNullException(nameof(rules));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Rules = rules.ToArray();
             ODataType = "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";
         }
 
@@ -32,6 +43,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </summary>
-        public IList<string> Rules { get; } = new List<string>();
+        public IList<string> Rules { get; }
     }
 }

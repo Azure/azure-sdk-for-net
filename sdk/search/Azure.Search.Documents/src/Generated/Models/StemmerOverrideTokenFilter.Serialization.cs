@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
 
         internal static StemmerOverrideTokenFilter DeserializeStemmerOverrideTokenFilter(JsonElement element)
         {
-            IList<string> rules = new List<string>();
+            IList<string> rules = default;
             string odatatype = default;
             string name = default;
             foreach (var property in element.EnumerateObject())

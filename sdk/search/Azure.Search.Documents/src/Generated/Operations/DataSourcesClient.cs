@@ -56,7 +56,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a datasource. </summary>
-        /// <param name="dataSourceName"> The name of the datasource to create or update. </param>
+        /// <param name="dataSourceName"> The name of the datasource to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a datasource. </summary>
-        /// <param name="dataSourceName"> The name of the datasource to create or update. </param>
+        /// <param name="dataSourceName"> The name of the datasource to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves a datasource definition. </summary>
-        /// <param name="dataSourceName"> The name of the datasource to create or update. </param>
+        /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataSource>> GetAsync(string dataSourceName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves a datasource definition. </summary>
-        /// <param name="dataSourceName"> The name of the datasource to create or update. </param>
+        /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataSource> Get(string dataSourceName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new datasource. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="dataSource"> The definition of the datasource to create or update. </param>
+        /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataSource>> CreateAsync(Guid? xMsClientRequestId, DataSource dataSource, CancellationToken cancellationToken = default)
         {
@@ -124,7 +124,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new datasource. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="dataSource"> The definition of the datasource to create or update. </param>
+        /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataSource> Create(Guid? xMsClientRequestId, DataSource dataSource, CancellationToken cancellationToken = default)
         {

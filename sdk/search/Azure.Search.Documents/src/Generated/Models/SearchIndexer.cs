@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -18,6 +19,19 @@ namespace Azure.Search.Documents.Models
         /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
         public SearchIndexer(string name, string dataSourceName, string targetIndexName)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (dataSourceName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceName));
+            }
+            if (targetIndexName == null)
+            {
+                throw new ArgumentNullException(nameof(targetIndexName));
+            }
+
             Name = name;
             DataSourceName = dataSourceName;
             TargetIndexName = targetIndexName;

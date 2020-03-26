@@ -309,18 +309,18 @@ namespace Azure.Search.Documents.Models
     }
     public partial class CommonGramTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public CommonGramTokenFilter(System.Collections.Generic.IList<string> commonWords, string name) : base (default(string)) { }
+        public CommonGramTokenFilter(System.Collections.Generic.IEnumerable<string> commonWords, string name) : base (default(string)) { }
         public System.Collections.Generic.IList<string> CommonWords { get { throw null; } }
         public bool? IgnoreCase { get { throw null; } set { } }
         public bool? UseQueryMode { get { throw null; } set { } }
     }
     public partial class ConditionalSkill : Azure.Search.Documents.Models.Skill
     {
-        public ConditionalSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public ConditionalSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
     }
     public partial class CorsOptions
     {
-        public CorsOptions(System.Collections.Generic.IList<string> allowedOrigins) { }
+        public CorsOptions(System.Collections.Generic.IEnumerable<string> allowedOrigins) { }
         public System.Collections.Generic.IList<string> AllowedOrigins { get { throw null; } }
         public long? MaxAgeInSeconds { get { throw null; } set { } }
     }
@@ -413,7 +413,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class DictionaryDecompounderTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public DictionaryDecompounderTokenFilter(System.Collections.Generic.IList<string> wordList, string name) : base (default(string)) { }
+        public DictionaryDecompounderTokenFilter(System.Collections.Generic.IEnumerable<string> wordList, string name) : base (default(string)) { }
         public int? MaxSubwordSize { get { throw null; } set { } }
         public int? MinSubwordSize { get { throw null; } set { } }
         public int? MinWordSize { get { throw null; } set { } }
@@ -482,7 +482,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class EntityRecognitionSkill : Azure.Search.Documents.Models.Skill
     {
-        public EntityRecognitionSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public EntityRecognitionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.EntityCategory> Categories { get { throw null; } set { } }
         public Azure.Search.Documents.Models.EntityRecognitionSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public bool? IncludeTypelessEntities { get { throw null; } set { } }
@@ -527,24 +527,16 @@ namespace Azure.Search.Documents.Models
         public static bool operator !=(Azure.Search.Documents.Models.EntityRecognitionSkillLanguage left, Azure.Search.Documents.Models.EntityRecognitionSkillLanguage right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FacetResult : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
+    public partial class FacetResult : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
     {
         internal FacetResult() { }
         public long? Count { get { throw null; } }
-        public object this[string key] { get { throw null; } set { } }
-        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
-        int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }
-        public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
-        public void Add(string key, object value) { }
+        public object this[string key] { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
+        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
         public bool ContainsKey(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
-        public bool Remove(string key) { throw null; }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Add(System.Collections.Generic.KeyValuePair<string, object> value) { }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Clear() { }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Contains(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
-        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] destination, int offset) { }
-        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
@@ -584,7 +576,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class ImageAnalysisSkill : Azure.Search.Documents.Models.Skill
     {
-        public ImageAnalysisSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public ImageAnalysisSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public Azure.Search.Documents.Models.ImageAnalysisSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.ImageDetail> Details { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.VisualFeature> VisualFeatures { get { throw null; } set { } }
@@ -756,13 +748,13 @@ namespace Azure.Search.Documents.Models
     }
     public partial class KeepTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public KeepTokenFilter(System.Collections.Generic.IList<string> keepWords, string name) : base (default(string)) { }
+        public KeepTokenFilter(System.Collections.Generic.IEnumerable<string> keepWords, string name) : base (default(string)) { }
         public System.Collections.Generic.IList<string> KeepWords { get { throw null; } }
         public bool? LowerCaseKeepWords { get { throw null; } set { } }
     }
     public partial class KeyPhraseExtractionSkill : Azure.Search.Documents.Models.Skill
     {
-        public KeyPhraseExtractionSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public KeyPhraseExtractionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public Azure.Search.Documents.Models.KeyPhraseExtractionSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public int? MaxKeyPhraseCount { get { throw null; } set { } }
     }
@@ -800,7 +792,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class KeywordMarkerTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public KeywordMarkerTokenFilter(System.Collections.Generic.IList<string> keywords, string name) : base (default(string)) { }
+        public KeywordMarkerTokenFilter(System.Collections.Generic.IEnumerable<string> keywords, string name) : base (default(string)) { }
         public bool? IgnoreCase { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Keywords { get { throw null; } }
     }
@@ -816,7 +808,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class LanguageDetectionSkill : Azure.Search.Documents.Models.Skill
     {
-        public LanguageDetectionSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public LanguageDetectionSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
     }
     public partial class LengthTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
@@ -849,12 +841,12 @@ namespace Azure.Search.Documents.Models
     }
     public partial class MappingCharFilter : Azure.Search.Documents.Models.CharFilter
     {
-        public MappingCharFilter(System.Collections.Generic.IList<string> mappings, string name) : base (default(string)) { }
+        public MappingCharFilter(System.Collections.Generic.IEnumerable<string> mappings, string name) : base (default(string)) { }
         public System.Collections.Generic.IList<string> Mappings { get { throw null; } }
     }
     public partial class MergeSkill : Azure.Search.Documents.Models.Skill
     {
-        public MergeSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public MergeSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public string InsertPostTag { get { throw null; } set { } }
         public string InsertPreTag { get { throw null; } set { } }
     }
@@ -986,7 +978,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class OcrSkill : Azure.Search.Documents.Models.Skill
     {
-        public OcrSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public OcrSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public Azure.Search.Documents.Models.OcrSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public bool? ShouldDetectOrientation { get { throw null; } set { } }
         public Azure.Search.Documents.Models.TextExtractionAlgorithm? TextExtractionAlgorithm { get { throw null; } set { } }
@@ -1058,7 +1050,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class PatternCaptureTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public PatternCaptureTokenFilter(System.Collections.Generic.IList<string> patterns, string name) : base (default(string)) { }
+        public PatternCaptureTokenFilter(System.Collections.Generic.IEnumerable<string> patterns, string name) : base (default(string)) { }
         public System.Collections.Generic.IList<string> Patterns { get { throw null; } }
         public bool? PreserveOriginal { get { throw null; } set { } }
     }
@@ -1198,7 +1190,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SearchIndex
     {
-        public SearchIndex(string name, System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchField> fields) { }
+        public SearchIndex(string name, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchField> fields) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.Analyzer> Analyzers { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.CharFilter> CharFilters { get { throw null; } set { } }
         public Azure.Search.Documents.Models.CorsOptions CorsOptions { get { throw null; } set { } }
@@ -1303,7 +1295,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SentimentSkill : Azure.Search.Documents.Models.Skill
     {
-        public SentimentSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public SentimentSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public Azure.Search.Documents.Models.SentimentSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1339,7 +1331,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class ShaperSkill : Azure.Search.Documents.Models.Skill
     {
-        public ShaperSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public ShaperSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
     }
     public partial class ShingleTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
@@ -1353,7 +1345,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class Skill
     {
-        public Skill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) { }
+        public Skill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) { }
         public string Context { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> Inputs { get { throw null; } }
@@ -1362,7 +1354,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class Skillset
     {
-        public Skillset(string name, string description, System.Collections.Generic.IList<Azure.Search.Documents.Models.Skill> skills) { }
+        public Skillset(string name, string description, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.Skill> skills) { }
         public Azure.Search.Documents.Models.CognitiveServicesAccount CognitiveServicesAccount { get { throw null; } set { } }
         public string Description { get { throw null; } }
         public string ETag { get { throw null; } set { } }
@@ -1407,7 +1399,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SplitSkill : Azure.Search.Documents.Models.Skill
     {
-        public SplitSkill(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public SplitSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public Azure.Search.Documents.Models.SplitSkillLanguage? DefaultLanguageCode { get { throw null; } set { } }
         public int? MaximumPageLength { get { throw null; } set { } }
         public Azure.Search.Documents.Models.TextSplitMode? TextSplitMode { get { throw null; } set { } }
@@ -1459,7 +1451,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class StemmerOverrideTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public StemmerOverrideTokenFilter(System.Collections.Generic.IList<string> rules, string name) : base (default(string)) { }
+        public StemmerOverrideTokenFilter(System.Collections.Generic.IEnumerable<string> rules, string name) : base (default(string)) { }
         public System.Collections.Generic.IList<string> Rules { get { throw null; } }
     }
     public partial class StemmerTokenFilter : Azure.Search.Documents.Models.TokenFilter
@@ -1573,7 +1565,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class Suggester
     {
-        public Suggester(string name, Azure.Search.Documents.Models.SearchMode searchMode, System.Collections.Generic.IList<string> sourceFields) { }
+        public Suggester(string name, Azure.Search.Documents.Models.SearchMode searchMode, System.Collections.Generic.IEnumerable<string> sourceFields) { }
         public string Name { get { throw null; } }
         public Azure.Search.Documents.Models.SearchMode SearchMode { get { throw null; } }
         public System.Collections.Generic.IList<string> SourceFields { get { throw null; } }
@@ -1595,7 +1587,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SynonymTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public SynonymTokenFilter(System.Collections.Generic.IList<string> synonyms, string name) : base (default(string)) { }
+        public SynonymTokenFilter(System.Collections.Generic.IEnumerable<string> synonyms, string name) : base (default(string)) { }
         public bool? Expand { get { throw null; } set { } }
         public bool? IgnoreCase { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Synonyms { get { throw null; } }
@@ -1622,7 +1614,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class TextTranslationSkill : Azure.Search.Documents.Models.Skill
     {
-        public TextTranslationSkill(Azure.Search.Documents.Models.TextTranslationSkillLanguage defaultToLanguageCode, System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public TextTranslationSkill(Azure.Search.Documents.Models.TextTranslationSkillLanguage defaultToLanguageCode, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public Azure.Search.Documents.Models.TextTranslationSkillLanguage? DefaultFromLanguageCode { get { throw null; } set { } }
         public Azure.Search.Documents.Models.TextTranslationSkillLanguage DefaultToLanguageCode { get { throw null; } }
         public Azure.Search.Documents.Models.TextTranslationSkillLanguage? SuggestedFrom { get { throw null; } set { } }
@@ -1843,7 +1835,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class WebApiSkill : Azure.Search.Documents.Models.Skill
     {
-        public WebApiSkill(string uri, System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IList<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IList<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public WebApiSkill(string uri, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public int? BatchSize { get { throw null; } set { } }
         public int? DegreeOfParallelism { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> HttpHeaders { get { throw null; } set { } }

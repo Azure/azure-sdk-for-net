@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -15,10 +17,19 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
         /// <param name="version"> Version of schema used for this result. </param>
         /// <param name="readResults"> Text extracted from the input. </param>
-        internal AnalyzeResult_internal(string version, IReadOnlyList<ReadResult_internal> readResults)
+        internal AnalyzeResult_internal(string version, IEnumerable<ReadResult_internal> readResults)
         {
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (readResults == null)
+            {
+                throw new ArgumentNullException(nameof(readResults));
+            }
+
             Version = version;
-            ReadResults = readResults;
+            ReadResults = readResults.ToArray();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
@@ -39,7 +50,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Version of schema used for this result. </summary>
         public string Version { get; }
         /// <summary> Text extracted from the input. </summary>
-        public IReadOnlyList<ReadResult_internal> ReadResults { get; } = new List<ReadResult_internal>();
+        public IReadOnlyList<ReadResult_internal> ReadResults { get; }
         /// <summary> Page-level information extracted from the input. </summary>
         public IReadOnlyList<PageResult_internal> PageResults { get; }
         /// <summary> Document-level information extracted from the input. </summary>
