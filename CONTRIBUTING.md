@@ -247,7 +247,7 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 # On-boarding New generated code library
 
-1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*`. (e.g.  `sdk/storage/Microsoft.Azure.Management.Storage`)
+1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*`. (e.g.  `sdk/storage/Azure.Management.Storage`)
 2. Modify `autorest.md` to point to you Swagger file. E.g.
 
 ``` yaml
