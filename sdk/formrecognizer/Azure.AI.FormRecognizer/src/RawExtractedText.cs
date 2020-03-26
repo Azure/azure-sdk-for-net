@@ -7,35 +7,41 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FieldText : FormTextElement
+    public readonly struct FieldText
     {
-        internal FieldText(string text, BoundingBox boundingBox, float? confidence)
-            : base(text, boundingBox, confidence)
+        /// <summary>
+        /// </summary>
+        /// <param name="textElements"></param>
+        /// <param name="confidence"></param>
+        /// <param name="boundingBox"></param>
+        /// <param name="text"></param>
+        public FieldText(string text, BoundingBox boundingBox, float? confidence, IReadOnlyList<FormTextElement> textElements)
         {
-            //Confidence = confidence;
-            //BoundingBox = boundingBox;
-            //Text = text;
+            Confidence = confidence;
+            BoundingBox = boundingBox;
+            Text = text;
+            TextElements = textElements;
         }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormTextElement> TextElements { get; internal set; }
+        public IReadOnlyList<FormTextElement> TextElements { get; }
 
-        ///// <summary>
-        ///// </summary>
-        //public float? Confidence { get; }
+        /// <summary>
+        /// </summary>
+        public float? Confidence { get; }
 
-        ///// <summary>
-        ///// </summary>
-        //public BoundingBox BoundingBox { get; }
+        /// <summary>
+        /// </summary>
+        public BoundingBox BoundingBox { get; }
 
-        ///// <summary>
-        ///// </summary>
-        //public string Text { get; }
+        /// <summary>
+        /// </summary>
+        public string Text { get; }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="text"></param>
-        //public static implicit operator string(FormText text) => text.Text;
+        /// <summary>
+        /// </summary>
+        /// <param name="text"></param>
+        public static implicit operator string(FieldText text) => text.Text;
     }
 }

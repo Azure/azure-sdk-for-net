@@ -111,12 +111,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(multiPageFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf);
+                var extractFormOperation = client.StartRecognizeCustomForms(modelId, stream);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
+                    IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
                         foreach (var table in form.Tables)
@@ -167,12 +167,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var extractFormOperation = client.StartRecognizeForms(modelId, testFormPath);
+            var extractFormOperation = client.StartRecognizeCustomForms(modelId, testFormPath);
 
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
             {
-                IReadOnlyList<RecognizedForm> pages = extractFormOperation.Value;
+                IReadOnlyList<RecognizedCustomForm> pages = extractFormOperation.Value;
                 foreach (var page in pages)
                 {
                     foreach (var table in page.Tables)
@@ -194,12 +194,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf, includeTextElements: true);
+                var extractFormOperation = client.StartRecognizeCustomForms(modelId, stream, includeTextElements: true);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
+                    IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
                         foreach (var table in form.Tables)
@@ -246,12 +246,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf);
+                var extractFormOperation = client.StartRecognizeCustomForms(modelId, stream);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
+                    IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
                         foreach (var table in form.Tables)
@@ -282,12 +282,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
-            var extractFormOperation = client.StartRecognizeForms(modelId, new Uri(formPath));
+            var extractFormOperation = client.StartRecognizeCustomForms(modelId, new Uri(formPath));
 
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
             {
-                IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
+                IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
                 foreach (var form in forms)
                 {
                     foreach (var table in form.Tables)
@@ -312,12 +312,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeForms(modelId, stream, contentType: ContentType.Pdf, includeTextElements: true);
+                var extractFormOperation = client.StartRecognizeCustomForms(modelId, stream, includeTextElements: true);
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
+                    IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
                         foreach (var table in form.Tables)
@@ -355,7 +355,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, contentType: ContentType.Jpeg, includeTextElements: false);
+                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, includeTextElements: false);
 
                 await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractReceiptOperation.HasValue)
@@ -387,7 +387,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractLayoutOperation = client.StartRecognizeContent(stream, contentType: ContentType.Pdf);
+                var extractLayoutOperation = client.StartRecognizeContent(stream);
 
                 await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractLayoutOperation.HasValue)
@@ -467,7 +467,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, contentType: ContentType.Jpeg, includeTextElements: false);
+                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, includeTextElements: false);
                 operationId = extractReceiptOperation.Id;
 
                 await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
