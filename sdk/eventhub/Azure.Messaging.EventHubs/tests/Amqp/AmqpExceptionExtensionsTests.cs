@@ -11,12 +11,12 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="ExceptionExtensions" />
+    ///   The suite of tests for the <see cref="Amqp.ExceptionExtensions" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class ExceptionExtensionsTests
+    public class AmqpExceptionExtensionsTests
     {
         /// <summary>
         ///   The set of test cases for "normal" exceptions that do not get

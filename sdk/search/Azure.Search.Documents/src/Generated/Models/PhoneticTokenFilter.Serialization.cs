@@ -34,7 +34,10 @@ namespace Azure.Search.Documents.Models
 
         internal static PhoneticTokenFilter DeserializePhoneticTokenFilter(JsonElement element)
         {
-            PhoneticTokenFilter result = new PhoneticTokenFilter();
+            PhoneticEncoder? encoder = default;
+            bool? replace = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encoder"))
@@ -43,7 +46,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Encoder = property.Value.GetString().ToPhoneticEncoder();
+                    encoder = property.Value.GetString().ToPhoneticEncoder();
                     continue;
                 }
                 if (property.NameEquals("replace"))
@@ -52,21 +55,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ReplaceOriginalTokens = property.Value.GetBoolean();
+                    replace = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new PhoneticTokenFilter(encoder, replace, odatatype, name);
         }
     }
 }

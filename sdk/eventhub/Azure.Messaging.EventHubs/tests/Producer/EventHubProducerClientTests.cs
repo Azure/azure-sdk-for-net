@@ -480,7 +480,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SendInvokesTheTransportProducerWithABatch()
+        public async Task SendManageLockingTheBatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
             var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", batchOptions.ToSendOptions());
@@ -489,6 +489,45 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await producer.SendAsync(batch);
             Assert.That(transportProducer.SendBatchCalledWith, Is.SameAs(batch), "The batch should be the same instance.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task SendInvokesTheTransportProducerWithABatch()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockTransportBatch = new Mock<TransportEventBatch>();
+            var mockTransportProducer = new Mock<TransportProducer>();
+            var batch = new EventDataBatch(mockTransportBatch.Object, "ns", "eh", batchOptions.ToSendOptions());
+            var producer = new EventHubProducerClient(new MockConnection(() => mockTransportProducer.Object));
+
+            mockTransportBatch
+                .Setup(transport => transport.TryAdd(It.IsAny<EventData>()))
+                .Returns(true);
+
+            mockTransportProducer
+                .Setup(transport => transport.SendAsync(It.IsAny<EventDataBatch>(), It.IsAny<CancellationToken>()))
+                .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
+
+            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
+            var sendTask = producer.SendAsync(batch);
+
+            Assert.That(() => batch.TryAdd(new EventData(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
+            completionSource.TrySetResult(true);
+
+            await sendTask;
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+
+            cancellationSource.Cancel();
         }
 
         /// <summary>

@@ -50,7 +50,12 @@ namespace Azure.Search.Documents.Models
 
         internal static PatternAnalyzer DeserializePatternAnalyzer(JsonElement element)
         {
-            PatternAnalyzer result = new PatternAnalyzer();
+            bool? lowercase = default;
+            string pattern = default;
+            RegexFlags? flags = default;
+            IList<string> stopwords = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lowercase"))
@@ -59,7 +64,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.LowerCaseTerms = property.Value.GetBoolean();
+                    lowercase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("pattern"))
@@ -68,7 +73,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Pattern = property.Value.GetString();
+                    pattern = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("flags"))
@@ -77,7 +82,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Flags = new RegexFlags(property.Value.GetString());
+                    flags = new RegexFlags(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stopwords"))
@@ -86,25 +91,26 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Stopwords = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Stopwords.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    stopwords = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new PatternAnalyzer(lowercase, pattern, flags, stopwords, odatatype, name);
         }
     }
 }

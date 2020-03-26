@@ -21,9 +21,9 @@ namespace Azure.AI.TextAnalytics.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:DetectLanguageAsync
-            string input = "Este documento está en español.";
+            string document = "Este documento está en español.";
 
-            DetectedLanguage language = await client.DetectLanguageAsync(input);
+            DetectedLanguage language = await client.DetectLanguageAsync(document);
 
             Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
             #endregion

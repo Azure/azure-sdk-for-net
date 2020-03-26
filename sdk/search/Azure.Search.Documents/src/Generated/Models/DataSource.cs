@@ -11,8 +11,16 @@ namespace Azure.Search.Documents.Models
     public partial class DataSource
     {
         /// <summary> Initializes a new instance of DataSource. </summary>
-        public DataSource()
+        /// <param name="name"> The name of the datasource. </param>
+        /// <param name="type"> The type of the datasource. </param>
+        /// <param name="credentials"> Credentials for the datasource. </param>
+        /// <param name="container"> The data container for the datasource. </param>
+        public DataSource(string name, DataSourceType type, DataSourceCredentials credentials, DataContainer container)
         {
+            Name = name;
+            Type = type;
+            Credentials = credentials;
+            Container = container;
         }
 
         /// <summary> Initializes a new instance of DataSource. </summary>
@@ -37,15 +45,15 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the datasource. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The description of the datasource. </summary>
         public string Description { get; set; }
         /// <summary> The type of the datasource. </summary>
-        public DataSourceType Type { get; set; }
+        public DataSourceType Type { get; }
         /// <summary> Credentials for the datasource. </summary>
-        public DataSourceCredentials Credentials { get; set; } = new DataSourceCredentials();
+        public DataSourceCredentials Credentials { get; }
         /// <summary> The data container for the datasource. </summary>
-        public DataContainer Container { get; set; } = new DataContainer();
+        public DataContainer Container { get; }
         /// <summary> The data change detection policy for the datasource. </summary>
         public DataChangeDetectionPolicy DataChangeDetectionPolicy { get; set; }
         /// <summary> The data deletion detection policy for the datasource. </summary>

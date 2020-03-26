@@ -13,18 +13,13 @@ namespace Azure.Search.Documents.Models
     internal partial class ListIndexersResult
     {
         /// <summary> Initializes a new instance of ListIndexersResult. </summary>
-        internal ListIndexersResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ListIndexersResult. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
-        internal ListIndexersResult(IList<SearchIndexer> indexers)
+        internal ListIndexersResult(IReadOnlyList<SearchIndexer> indexers)
         {
             Indexers = indexers;
         }
 
         /// <summary> The indexers in the Search service. </summary>
-        public IList<SearchIndexer> Indexers { get; internal set; } = new List<SearchIndexer>();
+        public IReadOnlyList<SearchIndexer> Indexers { get; } = new List<SearchIndexer>();
     }
 }

@@ -24,21 +24,22 @@ namespace Azure.Search.Documents.Models
 
         internal static DistanceScoringParameters DeserializeDistanceScoringParameters(JsonElement element)
         {
-            DistanceScoringParameters result = new DistanceScoringParameters();
+            string referencePointParameter = default;
+            double boostingDistance = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("referencePointParameter"))
                 {
-                    result.ReferencePointParameter = property.Value.GetString();
+                    referencePointParameter = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("boostingDistance"))
                 {
-                    result.BoostingDistance = property.Value.GetDouble();
+                    boostingDistance = property.Value.GetDouble();
                     continue;
                 }
             }
-            return result;
+            return new DistanceScoringParameters(referencePointParameter, boostingDistance);
         }
     }
 }

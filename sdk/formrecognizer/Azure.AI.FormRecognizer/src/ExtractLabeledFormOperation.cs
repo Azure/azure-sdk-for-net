@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedLabeledForm> ConvertToExtractedLabeledForms(IList<DocumentResult_internal> documentResults, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<ExtractedLabeledForm> ConvertToExtractedLabeledForms(IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             List<ExtractedLabeledForm> forms = new List<ExtractedLabeledForm>();
             for (int i = 0; i < documentResults.Count; i++)

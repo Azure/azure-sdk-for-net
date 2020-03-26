@@ -13,18 +13,13 @@ namespace Azure.Search.Documents.Models
     internal partial class IndexBatch
     {
         /// <summary> Initializes a new instance of IndexBatch. </summary>
-        public IndexBatch()
-        {
-        }
-
-        /// <summary> Initializes a new instance of IndexBatch. </summary>
         /// <param name="actions"> The actions in the batch. </param>
-        internal IndexBatch(IList<IndexAction> actions)
+        public IndexBatch(IList<IndexAction> actions)
         {
             Actions = actions;
         }
 
         /// <summary> The actions in the batch. </summary>
-        public IList<IndexAction> Actions { get; set; } = new List<IndexAction>();
+        public IList<IndexAction> Actions { get; } = new List<IndexAction>();
     }
 }

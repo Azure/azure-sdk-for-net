@@ -13,7 +13,8 @@ namespace Azure.Search.Documents.Models
     public partial class StopAnalyzer : Analyzer
     {
         /// <summary> Initializes a new instance of StopAnalyzer. </summary>
-        public StopAnalyzer()
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public StopAnalyzer(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.StopAnalyzer";
         }
@@ -25,7 +26,7 @@ namespace Azure.Search.Documents.Models
         internal StopAnalyzer(IList<string> stopwords, string oDataType, string name) : base(oDataType, name)
         {
             Stopwords = stopwords;
-            ODataType = "#Microsoft.Azure.Search.StopAnalyzer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.StopAnalyzer";
         }
 
         /// <summary> A list of stopwords. </summary>

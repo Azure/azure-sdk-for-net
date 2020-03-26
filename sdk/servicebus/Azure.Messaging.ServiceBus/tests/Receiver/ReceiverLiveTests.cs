@@ -331,6 +331,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task ReceiverThrowsWhenUsingSessionEntity()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusMessage sentMessage = GetMessage("sessionId");
+                await sender.SendAsync(sentMessage);
+
+                var receiver = client.GetReceiver(scope.QueueName);
+                Assert.That(
+                    async () => await receiver.ReceiveAsync(),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
         public async Task RenewMessageLock()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

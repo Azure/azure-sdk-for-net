@@ -118,6 +118,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public static async Task<QueueScope> CreateWithQueue(bool enablePartitioning,
                                                              bool enableSession,
                                                              bool forceQueueCreation = false,
+                                                             TimeSpan? lockDuration = default,
                                                              [CallerMemberName] string caller = "")
         {
             // If there was an override and the force flag is not set for creation, then build a scope
@@ -141,7 +142,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             using (var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription })
             {
-                var queueParameters = new SBQueue(enablePartitioning: enablePartitioning, requiresSession: enableSession, maxSizeInMegabytes: 1024);
+                var queueParameters = new SBQueue(enablePartitioning: enablePartitioning, requiresSession: enableSession, maxSizeInMegabytes: 1024, lockDuration: lockDuration);
                 var queue = await CreateRetryPolicy<SBQueue>().ExecuteAsync(() => client.Queues.CreateOrUpdateAsync(resourceGroup, serviceBusNamespace, CreateName(), queueParameters)).ConfigureAwait(false);
 
                 return new QueueScope(serviceBusNamespace, queue.Name, true);

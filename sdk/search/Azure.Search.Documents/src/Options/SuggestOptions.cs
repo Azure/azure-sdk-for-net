@@ -16,6 +16,13 @@ namespace Azure.Search.Documents
     public partial class SuggestOptions : SearchRequestOptions
     {
         /// <summary>
+        /// Initializes new instance of <see cref="SuggestOptions"/>
+        /// </summary>
+        public SuggestOptions()
+        {
+        }
+
+        /// <summary>
         /// The search text to use to suggest documents. Must be at least 1
         /// character, and no more than 100 characters.
         /// </summary>

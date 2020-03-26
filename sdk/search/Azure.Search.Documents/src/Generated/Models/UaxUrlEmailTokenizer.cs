@@ -11,7 +11,8 @@ namespace Azure.Search.Documents.Models
     public partial class UaxUrlEmailTokenizer : Tokenizer
     {
         /// <summary> Initializes a new instance of UaxUrlEmailTokenizer. </summary>
-        public UaxUrlEmailTokenizer()
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public UaxUrlEmailTokenizer(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.UaxUrlEmailTokenizer";
         }
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Models
         internal UaxUrlEmailTokenizer(int? maxTokenLength, string oDataType, string name) : base(oDataType, name)
         {
             MaxTokenLength = maxTokenLength;
-            ODataType = "#Microsoft.Azure.Search.UaxUrlEmailTokenizer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.UaxUrlEmailTokenizer";
         }
 
         /// <summary> The maximum token length. Default is 255. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </summary>

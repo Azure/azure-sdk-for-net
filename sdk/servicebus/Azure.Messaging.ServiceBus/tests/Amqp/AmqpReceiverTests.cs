@@ -270,7 +270,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = new Error
             {
-                Condition = AmqpError.ServerBusyError.ToString()
+                Condition = AmqpClientConstants.ServerBusyError.ToString()
             }.ToMessagingContractException();
             var mockCredential = new Mock<TokenCredential>();
             var mockScope = new Mock<AmqpConnectionScope>();
@@ -369,7 +369,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void ReceiveAsyncDetectsAnEmbeddedAmqpErrorForOperationCanceled()
         {
-            var exception = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
+            var exception = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpClientConstants.ArgumentError }));
             var entityName = "entityName";
             var tokenValue = "123ABC";
             var retryPolicy = new BasicRetryPolicy(new ServiceBusRetryOptions());

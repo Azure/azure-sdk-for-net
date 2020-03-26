@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
 
         internal static DataSourceCredentials DeserializeDataSourceCredentials(JsonElement element)
         {
-            DataSourceCredentials result = new DataSourceCredentials();
+            string connectionString = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"))
@@ -34,11 +34,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ConnectionString = property.Value.GetString();
+                    connectionString = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new DataSourceCredentials(connectionString);
         }
     }
 }

@@ -13,18 +13,13 @@ namespace Azure.Search.Documents.Models
     public partial class ListSynonymMapsResult
     {
         /// <summary> Initializes a new instance of ListSynonymMapsResult. </summary>
-        internal ListSynonymMapsResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ListSynonymMapsResult. </summary>
         /// <param name="synonymMaps"> The synonym maps in the Search service. </param>
-        internal ListSynonymMapsResult(IList<SynonymMap> synonymMaps)
+        internal ListSynonymMapsResult(IReadOnlyList<SynonymMap> synonymMaps)
         {
             SynonymMaps = synonymMaps;
         }
 
         /// <summary> The synonym maps in the Search service. </summary>
-        public IList<SynonymMap> SynonymMaps { get; internal set; } = new List<SynonymMap>();
+        public IReadOnlyList<SynonymMap> SynonymMaps { get; } = new List<SynonymMap>();
     }
 }

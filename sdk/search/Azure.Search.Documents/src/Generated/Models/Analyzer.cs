@@ -11,8 +11,10 @@ namespace Azure.Search.Documents.Models
     public partial class Analyzer
     {
         /// <summary> Initializes a new instance of Analyzer. </summary>
-        public Analyzer()
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public Analyzer(string name)
         {
+            Name = name;
             ODataType = null;
         }
 
@@ -21,14 +23,13 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal Analyzer(string oDataType, string name)
         {
-            ODataType = oDataType;
+            ODataType = oDataType ?? null;
             Name = name;
-            ODataType = null;
         }
 
         /// <summary> The model type. </summary>
-        public string ODataType { get; internal set; }
+        internal string ODataType { get; set; }
         /// <summary> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
     }
 }

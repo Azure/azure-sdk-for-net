@@ -47,12 +47,12 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var credentials = new AzureKeyCredential(apiKey);
             var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
-            string input = "Este documento está en español.";
+            string document = "Este documento está en español.";
 
             #region Snippet:BadRequest
             try
             {
-                DetectedLanguage result = client.DetectLanguage(input);
+                DetectedLanguage result = client.DetectLanguage(document);
             }
             catch (RequestFailedException e)
             {

@@ -27,12 +27,13 @@ namespace Azure.Search.Documents.Models
 
         internal static DefaultCognitiveServicesAccount DeserializeDefaultCognitiveServicesAccount(JsonElement element)
         {
-            DefaultCognitiveServicesAccount result = new DefaultCognitiveServicesAccount();
+            string odatatype = default;
+            string description = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -41,11 +42,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new DefaultCognitiveServicesAccount(odatatype, description);
         }
     }
 }

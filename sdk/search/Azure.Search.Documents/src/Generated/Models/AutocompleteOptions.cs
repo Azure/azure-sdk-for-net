@@ -13,11 +13,6 @@ namespace Azure.Search.Documents
     public partial class AutocompleteOptions
     {
         /// <summary> Initializes a new instance of AutocompleteOptions. </summary>
-        public AutocompleteOptions()
-        {
-        }
-
-        /// <summary> Initializes a new instance of AutocompleteOptions. </summary>
         /// <param name="searchText"> The search text on which to base autocomplete results. </param>
         /// <param name="mode"> Specifies the mode for Autocomplete. The default is &apos;oneTerm&apos;. Use &apos;twoTerms&apos; to get shingles and &apos;oneTermWithContext&apos; to use the current context while producing auto-completed terms. </param>
         /// <param name="filter"> An OData expression that filters the documents used to produce completed terms for the Autocomplete result. </param>

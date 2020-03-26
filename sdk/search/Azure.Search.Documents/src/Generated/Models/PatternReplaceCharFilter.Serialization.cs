@@ -28,31 +28,34 @@ namespace Azure.Search.Documents.Models
 
         internal static PatternReplaceCharFilter DeserializePatternReplaceCharFilter(JsonElement element)
         {
-            PatternReplaceCharFilter result = new PatternReplaceCharFilter();
+            string pattern = default;
+            string replacement = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pattern"))
                 {
-                    result.Pattern = property.Value.GetString();
+                    pattern = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("replacement"))
                 {
-                    result.Replacement = property.Value.GetString();
+                    replacement = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new PatternReplaceCharFilter(pattern, replacement, odatatype, name);
         }
     }
 }

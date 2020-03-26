@@ -13,8 +13,11 @@ namespace Azure.Search.Documents.Models
     public partial class KeepTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of KeepTokenFilter. </summary>
-        public KeepTokenFilter()
+        /// <param name="keepWords"> The list of words to keep. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public KeepTokenFilter(IList<string> keepWords, string name) : base(name)
         {
+            KeepWords = keepWords;
             ODataType = "#Microsoft.Azure.Search.KeepTokenFilter";
         }
 
@@ -27,11 +30,11 @@ namespace Azure.Search.Documents.Models
         {
             KeepWords = keepWords;
             LowerCaseKeepWords = lowerCaseKeepWords;
-            ODataType = "#Microsoft.Azure.Search.KeepTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.KeepTokenFilter";
         }
 
         /// <summary> The list of words to keep. </summary>
-        public IList<string> KeepWords { get; set; } = new List<string>();
+        public IList<string> KeepWords { get; } = new List<string>();
         /// <summary> A value indicating whether to lower case all words first. Default is false. </summary>
         public bool? LowerCaseKeepWords { get; set; }
     }

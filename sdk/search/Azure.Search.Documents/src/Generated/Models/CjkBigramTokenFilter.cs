@@ -13,7 +13,8 @@ namespace Azure.Search.Documents.Models
     public partial class CjkBigramTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of CjkBigramTokenFilter. </summary>
-        public CjkBigramTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public CjkBigramTokenFilter(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
@@ -27,7 +28,7 @@ namespace Azure.Search.Documents.Models
         {
             IgnoreScripts = ignoreScripts;
             OutputUnigrams = outputUnigrams;
-            ODataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
 
         /// <summary> The scripts to ignore. </summary>

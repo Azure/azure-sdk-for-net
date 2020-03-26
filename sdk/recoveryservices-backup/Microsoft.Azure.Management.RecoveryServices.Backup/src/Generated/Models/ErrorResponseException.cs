@@ -8,15 +8,15 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.ResourceManager.Models
+namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
     using Microsoft.Rest;
 
     /// <summary>
-    /// Exception thrown for an invalid response with DefaultErrorResponse
+    /// Exception thrown for an invalid response with ErrorResponse
     /// information.
     /// </summary>
-    public partial class DefaultErrorResponseException : RestException
+    public partial class ErrorResponseException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -31,30 +31,30 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the body object.
         /// </summary>
-        public DefaultErrorResponse Body { get; set; }
+        public ErrorResponse Body { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorResponseException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
-        public DefaultErrorResponseException()
+        public ErrorResponseException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorResponseException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        public DefaultErrorResponseException(string message)
+        public ErrorResponseException(string message)
             : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the DefaultErrorResponseException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">Inner exception.</param>
-        public DefaultErrorResponseException(string message, System.Exception innerException)
+        public ErrorResponseException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }

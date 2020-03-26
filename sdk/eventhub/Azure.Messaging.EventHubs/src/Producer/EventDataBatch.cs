@@ -16,6 +16,9 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     public sealed class EventDataBatch : IDisposable
     {
+        /// <summary>A flag indicating that the batch is locked, such as when in use during a publish operation.</summary>
+        private volatile bool _locked = false;
+
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
         ///   well as any overhead for the batch itself when sent to the Event Hubs service.
@@ -115,6 +118,11 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         public bool TryAdd(EventData eventData)
         {
+            if (_locked)
+            {
+                throw new InvalidOperationException(Resources.EventBatchIsLocked);
+            }
+
             bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
             bool added = InnerBatch.TryAdd(eventData);
 
@@ -156,5 +164,18 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns>A read-only list of diagnostic identifiers.</returns>
         ///
         internal IReadOnlyList<string> GetEventDiagnosticIdentifiers() => EventDiagnosticIdentifiers;
+
+        /// <summary>
+        ///   Locks the batch to prevent new events from being added while a service
+        ///   operation is active.
+        /// </summary>
+        ///
+        internal void Lock() => _locked = true;
+
+        /// <summary>
+        ///   Unlocks the batch, allowing new events to be added.
+        /// </summary>
+        ///
+        internal void Unlock() => _locked = false;
     }
 }

@@ -11,11 +11,6 @@ namespace Azure.Search.Documents.Models
     public partial class TokenInfo
     {
         /// <summary> Initializes a new instance of TokenInfo. </summary>
-        internal TokenInfo()
-        {
-        }
-
-        /// <summary> Initializes a new instance of TokenInfo. </summary>
         /// <param name="token"> The token returned by the analyzer. </param>
         /// <param name="startOffset"> The index of the first character of the token in the input text. </param>
         /// <param name="endOffset"> The index of the last character of the token in the input text. </param>
@@ -29,12 +24,12 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The token returned by the analyzer. </summary>
-        public string Token { get; internal set; }
+        public string Token { get; }
         /// <summary> The index of the first character of the token in the input text. </summary>
-        public int StartOffset { get; internal set; }
+        public int StartOffset { get; }
         /// <summary> The index of the last character of the token in the input text. </summary>
-        public int EndOffset { get; internal set; }
+        public int EndOffset { get; }
         /// <summary> The position of the token in the input text relative to other tokens. The first token in the input text has position 0, the next has position 1, and so on. Depending on the analyzer used, some tokens might have the same position, for example if they are synonyms of each other. </summary>
-        public int Position { get; internal set; }
+        public int Position { get; }
     }
 }

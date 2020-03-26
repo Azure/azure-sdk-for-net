@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// will expire.</param>
         /// <param name="error">Error that is relayed from the script
         /// execution.</param>
-        public ScriptStatus(string containerInstanceId = default(string), string storageAccountId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), DefaultErrorResponse error = default(DefaultErrorResponse))
+        public ScriptStatus(string containerInstanceId = default(string), string storageAccountId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), ErrorResponse error = default(ErrorResponse))
         {
             ContainerInstanceId = containerInstanceId;
             StorageAccountId = storageAccountId;
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets error that is relayed from the script execution.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public DefaultErrorResponse Error { get; set; }
+        public ErrorResponse Error { get; set; }
 
     }
 }

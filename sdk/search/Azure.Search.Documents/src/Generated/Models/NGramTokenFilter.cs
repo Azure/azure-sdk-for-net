@@ -11,7 +11,8 @@ namespace Azure.Search.Documents.Models
     public partial class NGramTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of NGramTokenFilter. </summary>
-        public NGramTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public NGramTokenFilter(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.NGramTokenFilter";
         }
@@ -25,7 +26,7 @@ namespace Azure.Search.Documents.Models
         {
             MinGram = minGram;
             MaxGram = maxGram;
-            ODataType = "#Microsoft.Azure.Search.NGramTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.NGramTokenFilter";
         }
 
         /// <summary> The minimum n-gram length. Default is 1. Must be less than the value of maxGram. </summary>

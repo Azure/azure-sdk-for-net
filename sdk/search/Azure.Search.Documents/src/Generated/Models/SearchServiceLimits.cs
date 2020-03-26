@@ -29,12 +29,12 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The maximum allowed fields per index. </summary>
-        public int? MaxFieldsPerIndex { get; internal set; }
+        public int? MaxFieldsPerIndex { get; }
         /// <summary> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </summary>
-        public int? MaxFieldNestingDepthPerIndex { get; internal set; }
+        public int? MaxFieldNestingDepthPerIndex { get; }
         /// <summary> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </summary>
-        public int? MaxComplexCollectionFieldsPerIndex { get; internal set; }
+        public int? MaxComplexCollectionFieldsPerIndex { get; }
         /// <summary> The maximum number of objects in complex collections allowed per document. </summary>
-        public int? MaxComplexObjectsInCollectionsPerDocument { get; internal set; }
+        public int? MaxComplexObjectsInCollectionsPerDocument { get; }
     }
 }

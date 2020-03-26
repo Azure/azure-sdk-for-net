@@ -13,8 +13,10 @@ namespace Azure.Search.Documents.Models
     public partial class AnalyzeRequest
     {
         /// <summary> Initializes a new instance of AnalyzeRequest. </summary>
-        public AnalyzeRequest()
+        /// <param name="text"> The text to break into tokens. </param>
+        public AnalyzeRequest(string text)
         {
+            Text = text;
         }
 
         /// <summary> Initializes a new instance of AnalyzeRequest. </summary>
@@ -33,7 +35,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The text to break into tokens. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
         /// <summary> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>
         public AnalyzerName? Analyzer { get; set; }
         /// <summary> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </summary>

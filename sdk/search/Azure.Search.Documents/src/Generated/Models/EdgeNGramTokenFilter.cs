@@ -11,7 +11,8 @@ namespace Azure.Search.Documents.Models
     public partial class EdgeNGramTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of EdgeNGramTokenFilter. </summary>
-        public EdgeNGramTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public EdgeNGramTokenFilter(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenFilter";
         }
@@ -27,7 +28,7 @@ namespace Azure.Search.Documents.Models
             MinGram = minGram;
             MaxGram = maxGram;
             Side = side;
-            ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.EdgeNGramTokenFilter";
         }
 
         /// <summary> The minimum n-gram length. Default is 1. Must be less than the value of maxGram. </summary>

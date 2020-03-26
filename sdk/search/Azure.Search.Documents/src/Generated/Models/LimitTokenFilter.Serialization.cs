@@ -34,7 +34,10 @@ namespace Azure.Search.Documents.Models
 
         internal static LimitTokenFilter DeserializeLimitTokenFilter(JsonElement element)
         {
-            LimitTokenFilter result = new LimitTokenFilter();
+            int? maxTokenCount = default;
+            bool? consumeAllTokens = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTokenCount"))
@@ -43,7 +46,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxTokenCount = property.Value.GetInt32();
+                    maxTokenCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("consumeAllTokens"))
@@ -52,21 +55,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ConsumeAllTokens = property.Value.GetBoolean();
+                    consumeAllTokens = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new LimitTokenFilter(maxTokenCount, consumeAllTokens, odatatype, name);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Compute.Tests
         /// 
         /// To record this test case, you need to run it in region which support XMF VMSizeFamily like eastus2.
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMScenarioOperations_ManagedDisks")]
         public void TestVMScenarioOperations_ManagedDisks()
         {

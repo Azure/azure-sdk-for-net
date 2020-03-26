@@ -14,21 +14,22 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchServiceStatistics DeserializeSearchServiceStatistics(JsonElement element)
         {
-            SearchServiceStatistics result = new SearchServiceStatistics();
+            SearchServiceCounters counters = default;
+            SearchServiceLimits limits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("counters"))
                 {
-                    result.Counters = SearchServiceCounters.DeserializeSearchServiceCounters(property.Value);
+                    counters = SearchServiceCounters.DeserializeSearchServiceCounters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limits"))
                 {
-                    result.Limits = SearchServiceLimits.DeserializeSearchServiceLimits(property.Value);
+                    limits = SearchServiceLimits.DeserializeSearchServiceLimits(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new SearchServiceStatistics(counters, limits);
         }
     }
 }

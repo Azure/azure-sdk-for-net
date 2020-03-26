@@ -15,7 +15,9 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchError DeserializeSearchError(JsonElement element)
         {
-            SearchError result = new SearchError();
+            string code = default;
+            string message = default;
+            IReadOnlyList<SearchError> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -24,12 +26,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Code = property.Value.GetString();
+                    code = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
                 {
-                    result.Message = property.Value.GetString();
+                    message = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -38,15 +40,16 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Details = new List<SearchError>();
+                    List<SearchError> array = new List<SearchError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Details.Add(SearchError.DeserializeSearchError(item));
+                        array.Add(SearchError.DeserializeSearchError(item));
                     }
+                    details = array;
                     continue;
                 }
             }
-            return result;
+            return new SearchError(code, message, details);
         }
     }
 }

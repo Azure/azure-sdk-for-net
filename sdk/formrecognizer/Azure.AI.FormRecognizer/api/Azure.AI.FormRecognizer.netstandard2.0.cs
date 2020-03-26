@@ -157,7 +157,7 @@ namespace Azure.AI.FormRecognizer.Custom
     {
         internal TrainingDocumentInfo() { }
         public string DocumentName { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormRecognizerError> Errors { get { throw null; } }
         public int PageCount { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.Custom.TrainingStatus Status { get { throw null; } }
     }

@@ -11,8 +11,10 @@ namespace Azure.Search.Documents.Models
     public partial class FieldMapping
     {
         /// <summary> Initializes a new instance of FieldMapping. </summary>
-        public FieldMapping()
+        /// <param name="sourceFieldName"> The name of the field in the data source. </param>
+        public FieldMapping(string sourceFieldName)
         {
+            SourceFieldName = sourceFieldName;
         }
 
         /// <summary> Initializes a new instance of FieldMapping. </summary>
@@ -27,7 +29,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the field in the data source. </summary>
-        public string SourceFieldName { get; set; }
+        public string SourceFieldName { get; }
         /// <summary> The name of the target field in the index. Same as the source field name by default. </summary>
         public string TargetFieldName { get; set; }
         /// <summary> A function to apply to each source field value before indexing. </summary>
