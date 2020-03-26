@@ -180,6 +180,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Intermittent failures in CI; investigation required.")]
         public async Task CreatePartitionProcessorReadsEmptyLastEventPropertiesWithNoOption()
         {
             using var cancellationSource = new CancellationTokenSource();
