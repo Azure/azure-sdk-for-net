@@ -11,11 +11,11 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Describes an error condition for the Azure Cognitive Search API. </summary>
-    internal partial class IndexSearchError
+    internal partial class SearchServiceError
     {
-        /// <summary> Initializes a new instance of IndexSearchError. </summary>
+        /// <summary> Initializes a new instance of SearchServiceError. </summary>
         /// <param name="message"> A human-readable representation of the error. </param>
-        internal IndexSearchError(string message)
+        internal SearchServiceError(string message)
         {
             if (message == null)
             {
@@ -25,11 +25,11 @@ namespace Azure.Search.Documents.Models
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of IndexSearchError. </summary>
+        /// <summary> Initializes a new instance of SearchServiceError. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        internal IndexSearchError(string code, string message, IReadOnlyList<IndexSearchError> details)
+        internal SearchServiceError(string code, string message, IReadOnlyList<SearchServiceError> details)
         {
             Code = code;
             Message = message;
@@ -41,6 +41,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> A human-readable representation of the error. </summary>
         public string Message { get; }
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
-        public IReadOnlyList<IndexSearchError> Details { get; }
+        public IReadOnlyList<SearchServiceError> Details { get; }
     }
 }
