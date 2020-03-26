@@ -299,10 +299,10 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         private object _dummy;
         private int _dummyPrimitive;
+        public Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters AggregateCounters { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters BatchCounters { get { throw null; } }
         public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AccessControlChangeFailure> BatchFailures { get { throw null; } }
         public string ContinuationToken { get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters CumulativeCounters { get { throw null; } }
     }
     public enum AccessControlType
     {
@@ -356,7 +356,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public static Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters AccessControlChangeCounters(int directoriesSuccessfulCount, int filesSuccessfulCount, int failureCount) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.AccessControlChangeFailure AccessControlChangeFailure(string name, bool isDirectory, string errorMessage) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.AccessControlChangeResult AccessControlChangeResult(Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters counters, string continuationToken) { throw null; }
-        public static Azure.Storage.Files.DataLake.Models.AccessControlChanges AccessControlChanges(Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters cumulativeCounters, Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters batchCounters, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AccessControlChangeFailure> batchFailures, string continuationToken) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.AccessControlChanges AccessControlChanges(Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters aggregateCounters, Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters batchCounters, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.AccessControlChangeFailure> batchFailures, string continuationToken) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadInfo FileDownloadInfo(long contentLength, System.IO.Stream content, byte[] contentHash, Azure.Storage.Files.DataLake.Models.FileDownloadDetails properties) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemInfo FileSystemInfo(Azure.ETag etag, System.DateTimeOffset lastModified) { throw null; }

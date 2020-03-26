@@ -2425,7 +2425,7 @@ namespace Azure.Storage.Files.DataLake
                                             ChangedFilesCount = currentFilesSuccessfulCount,
                                             FailedChangesCount = currentFailureCount,
                                         },
-                                        CumulativeCounters = new AccessControlChangeCounters()
+                                        AggregateCounters = new AccessControlChangeCounters()
                                         {
                                             ChangedDirectoriesCount = directoriesSuccessfulCount,
                                             ChangedFilesCount = filesSuccessfulCount,
