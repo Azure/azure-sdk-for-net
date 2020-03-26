@@ -33,14 +33,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClientOptions options = new SecretClientOptions
             {
                 Transport = transport,
-                Diagnostics =
-                {
-                    LoggedHeaderNames = { "*" },
-                    IsLoggingContentEnabled = true,
-                },
             };
 
-            using AzureEventSourceListener logger = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
             SecretClient client = new SecretClient(VaultUri, new MockCredential(transport), options);
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
@@ -72,14 +66,15 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClientOptions options = new SecretClientOptions
             {
                 Transport = transport,
-                Diagnostics =
-                {
-                    LoggedHeaderNames = { "*" },
-                    IsLoggingContentEnabled = true,
-                },
+                //Diagnostics =
+                //{
+                //    // Headers and content are fake so no PII is leaked and this is useful for debugging.
+                //    LoggedHeaderNames = { "*" },
+                //    IsLoggingContentEnabled = true,
+                //},
             };
 
-            using AzureEventSourceListener logger = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
+            //using AzureEventSourceListener logger = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
             SecretClient client = new SecretClient(VaultUri, new MockCredential(transport), options);
 
             Task<Response<KeyVaultSecret>>[] tasks = new Task<Response<KeyVaultSecret>>[numberOfRequests];
@@ -106,16 +101,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             SecretClientOptions options = new SecretClientOptions
             {
                 Transport = transport,
-                Diagnostics =
-                {
-                    LoggedHeaderNames = { "*" },
-                    IsLoggingContentEnabled = true,
-                },
             };
 
             MockCredential credential = new MockCredential(transport);
 
-            using AzureEventSourceListener logger = AzureEventSourceListener.CreateTraceLogger(EventLevel.Verbose);
             SecretClient client = new SecretClient(VaultUri, credential, options);
 
             KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);

@@ -154,7 +154,7 @@ namespace Azure.Security.KeyVault
                 // Currently the hash code is simply the hash of the authority and first scope as this is what is used to determine equality.
                 // This assumes that Authority Scopes are always non-null and Scopes has a length of one.
                 // This is guaranteed by the way the AuthenticationChallenge cache is constructed.
-                return Authority.GetHashCode() ^ Scopes[0].GetHashCode();
+                return HashCodeBuilder.Combine(Authority, Scopes[0]);
             }
 
             public static AuthenticationChallenge GetChallenge(HttpMessage message)
