@@ -44,6 +44,7 @@ namespace Azure.AI.FormRecognizer
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
+        [ForwardsClientCalls]
         public virtual Response<ExtractedReceipt> ExtractReceipt(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -67,6 +68,7 @@ namespace Azure.AI.FormRecognizer
             return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
         }
 
+        [ForwardsClientCalls]
         public virtual Response<ExtractedReceipt> ExtractReceipt(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
@@ -89,6 +91,7 @@ namespace Azure.AI.FormRecognizer
             return Response.FromValue(operation.Value, task.AsTask().Result.GetRawResponse());
         }
 
+        [ForwardsClientCalls]
         public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Stream stream, FormContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
@@ -108,6 +111,7 @@ namespace Azure.AI.FormRecognizer
             return Response.FromValue(operation.Value, operationResponse.GetRawResponse());
         }
 
+        [ForwardsClientCalls]
         public virtual async Task<Response<ExtractedReceipt>> ExtractReceiptAsync(Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };

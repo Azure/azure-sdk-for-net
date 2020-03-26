@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -17,34 +18,36 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [TestFixture]
-    public class ReceiptClientLiveTests
+    [LiveOnly]
+    public class ReceiptClientLiveTests : ClientTestBase
     {
+        /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the tests.</summary>
+        private const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
+
+        /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the tests.</summary>
+        private const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReceiptClientLiveTests"/> class.
+        /// </summary>
+        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
+        public ReceiptClientLiveTests(bool isAsync) : base(isAsync)
+        {
+        }
+
         /// <summary>
         /// Verifies that the <see cref="ReceiptClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform operations.
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ExtractReceiptPopulatesExtractedReceipt(bool async)
+        [Ignore("The receipt file has not been uploaded yet.")]
+        public async Task ExtractReceiptPopulatesExtractedReceipt()
         {
-            var endpoint = new Uri("");
-            var key = "";
-            var client = new ReceiptClient(endpoint, new FormRecognizerApiKeyCredential(key));
+            var client = CreateInstrumentedClient();
 
             using var stream = new FileStream(@"", FileMode.Open);
-            Response<ExtractedReceipt> response;
-
-            if (async)
-            {
-                response = await client.ExtractReceiptAsync(stream, FormContentType.Jpeg);
-            }
-            else
-            {
-                response = client.ExtractReceipt(stream, FormContentType.Jpeg);
-            }
+            var response = await client.ExtractReceiptAsync(stream, FormContentType.Jpeg);
 
             Assert.IsNotNull(response);
 
@@ -99,6 +102,26 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
             Assert.IsNull(receipt.Tip);
             Assert.That(receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ReceiptClient" /> with the endpoint and API key provided via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="ReceiptClient" />.</returns>
+        private ReceiptClient CreateInstrumentedClient()
+        {
+            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(EndpointEnvironmentVariableName);
+            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(ApiKeyEnvironmentVariableName);
+
+            Assert.NotNull(endpointEnvironmentVariable);
+            Assert.NotNull(keyEnvironmentVariable);
+
+            var endpoint = new Uri(endpointEnvironmentVariable);
+            var credential = new FormRecognizerApiKeyCredential(keyEnvironmentVariable);
+            var client = new ReceiptClient(endpoint, credential);
+
+            return InstrumentClient(client);
         }
     }
 }

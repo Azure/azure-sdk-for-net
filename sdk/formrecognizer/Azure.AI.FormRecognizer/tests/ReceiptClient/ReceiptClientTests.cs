@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -13,9 +14,16 @@ namespace Azure.AI.FormRecognizer.Tests
     /// <summary>
     /// The suite of tests for the <see cref="ReceiptClient"/> class.
     /// </summary>
-    [TestFixture]
-    public class ReceiptClientTests
+    public class ReceiptClientTests : ClientTestBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReceiptClientTests"/> class.
+        /// </summary>
+        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
+        public ReceiptClientTests(bool isAsync) : base(isAsync)
+        {
+        }
+
         /// <summary>
         /// Verifies functionality of the <see cref="ReceiptClient"/> constructors.
         /// </summary>
@@ -56,104 +64,73 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceipt(Stream, FormContentType, bool, CancellationToken)"/>
-        /// and <see cref="ReceiptClient.ExtractReceiptAsync(Stream, FormContentType, bool, CancellationToken)"/> methods.
+        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceiptAsync(Stream, FormContentType, bool, CancellationToken)"/>
+        /// method.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
         [Ignore("Argument validation not implemented yet.")]
-        public void ExtractReceiptWithStreamRequiresTheStream(bool async)
+        public void ExtractReceiptWithStreamRequiresTheStream()
         {
-            var endpoint = new Uri("http://localhost");
-            var credential = new FormRecognizerApiKeyCredential("key");
-            var client = new ReceiptClient(endpoint, credential);
-
-            if (async)
-            {
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await client.ExtractReceiptAsync(null, FormContentType.Jpeg));
-            }
-            else
-            {
-                Assert.Throws<ArgumentNullException>(() => client.ExtractReceipt(null, FormContentType.Jpeg));
-            }
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.ExtractReceiptAsync(null, FormContentType.Jpeg));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceipt(Stream, FormContentType, bool, CancellationToken)"/>
-        /// and <see cref="ReceiptClient.ExtractReceiptAsync(Stream, FormContentType, bool, CancellationToken)"/> methods.
+        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceiptAsync(Stream, FormContentType, bool, CancellationToken)"/>
+        /// method.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void ExtractReceiptWithStreamRespectsTheCancellationToken(bool async)
+        public void ExtractReceiptWithStreamRespectsTheCancellationToken()
         {
-            var endpoint = new Uri("http://localhost");
-            var credential = new FormRecognizerApiKeyCredential("key");
-            var client = new ReceiptClient(endpoint, credential);
+            var client = CreateInstrumentedClient();
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            if (async)
-            {
-                Assert.ThrowsAsync<TaskCanceledException>(async () => await client.ExtractReceiptAsync(stream, FormContentType.Jpeg, cancellationToken: cancellationSource.Token));
-            }
-            else
-            {
-                Assert.Throws<TaskCanceledException>(() => client.ExtractReceipt(stream, FormContentType.Jpeg, cancellationToken: cancellationSource.Token));
-            }
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.ExtractReceiptAsync(stream, FormContentType.Jpeg, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceipt(Uri, bool, CancellationToken)"/>
-        /// and <see cref="ReceiptClient.ExtractReceiptAsync(Uri, bool, CancellationToken)"/> methods.
+        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceiptAsync(Uri, bool, CancellationToken)"/>
+        /// method.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
         [Ignore("Argument validation not implemented yet.")]
-        public void ExtractReceiptWithEndpointRequiresTheUri(bool async)
+        public void ExtractReceiptWithEndpointRequiresTheUri()
         {
-            var endpoint = new Uri("http://localhost");
-            var credential = new FormRecognizerApiKeyCredential("key");
-            var client = new ReceiptClient(endpoint, credential);
-
-            if (async)
-            {
-                Assert.ThrowsAsync<ArgumentNullException>(async () => await client.ExtractReceiptAsync(null));
-            }
-            else
-            {
-                Assert.Throws<ArgumentNullException>(() => client.ExtractReceipt(null));
-            }
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.ExtractReceiptAsync(null));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceipt(Uri, bool, CancellationToken)"/>
-        /// and <see cref="ReceiptClient.ExtractReceiptAsync(Uri, bool, CancellationToken)"/> methods.
+        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceiptAsync(Uri, bool, CancellationToken)"/>
+        /// method.
         /// </summary>
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void ExtractReceiptWithEndpointRespectsTheCancellationToken(bool async)
+        public void ExtractReceiptWithEndpointRespectsTheCancellationToken()
         {
-            var endpoint = new Uri("http://localhost");
-            var credential = new FormRecognizerApiKeyCredential("key");
-            var client = new ReceiptClient(endpoint, credential);
+            var client = CreateInstrumentedClient();
+            var fakeEndpoint = new Uri("http://localhost");
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            if (async)
-            {
-                Assert.ThrowsAsync<TaskCanceledException>(async () => await client.ExtractReceiptAsync(endpoint, cancellationToken: cancellationSource.Token));
-            }
-            else
-            {
-                Assert.Throws<TaskCanceledException>(() => client.ExtractReceipt(endpoint, cancellationToken: cancellationSource.Token));
-            }
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.ExtractReceiptAsync(fakeEndpoint, cancellationToken: cancellationSource.Token));
+        }
+
+        /// <summary>
+        /// Creates a fake <see cref="ReceiptClient" /> and instruments it to make use of the Azure Core
+        /// Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="ReceiptClient" />.</returns>
+        private ReceiptClient CreateInstrumentedClient()
+        {
+            var fakeEndpoint = new Uri("http://localhost");
+            var fakeCredential = new FormRecognizerApiKeyCredential("fakeKey");
+            var client = new ReceiptClient(fakeEndpoint, fakeCredential);
+
+            return InstrumentClient(client);
         }
     }
 }
