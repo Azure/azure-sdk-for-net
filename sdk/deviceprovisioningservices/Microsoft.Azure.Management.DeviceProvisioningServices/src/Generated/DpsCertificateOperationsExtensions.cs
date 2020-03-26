@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// Delete the Provisioning Service Certificate.
             /// </summary>
             /// <remarks>
-            /// Deletes the specified certificate assosciated with the Provisioning Service
+            /// Deletes the specified certificate associated with the Provisioning Service
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// Delete the Provisioning Service Certificate.
             /// </summary>
             /// <remarks>
-            /// Deletes the specified certificate assosciated with the Provisioning Service
+            /// Deletes the specified certificate associated with the Provisioning Service
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -244,6 +244,46 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             public static async Task DeleteAsync(this IDpsCertificateOperations operations, string resourceGroupName, string ifMatch, string provisioningServiceName, string certificateName, string certificatename = default(string), byte[] certificaterawBytes = default(byte[]), bool? certificateisVerified = default(bool?), string certificatepurpose = default(string), System.DateTime? certificatecreated = default(System.DateTime?), System.DateTime? certificatelastUpdated = default(System.DateTime?), bool? certificatehasPrivateKey = default(bool?), string certificatenonce = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, ifMatch, provisioningServiceName, certificateName, certificatename, certificaterawBytes, certificateisVerified, certificatepurpose, certificatecreated, certificatelastUpdated, certificatehasPrivateKey, certificatenonce, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get all the certificates tied to the provisioning service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group.
+            /// </param>
+            /// <param name='provisioningServiceName'>
+            /// Name of provisioning service to retrieve certificates for.
+            /// </param>
+            public static CertificateListDescription List(this IDpsCertificateOperations operations, string resourceGroupName, string provisioningServiceName)
+            {
+                return operations.ListAsync(resourceGroupName, provisioningServiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all the certificates tied to the provisioning service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of resource group.
+            /// </param>
+            /// <param name='provisioningServiceName'>
+            /// Name of provisioning service to retrieve certificates for.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CertificateListDescription> ListAsync(this IDpsCertificateOperations operations, string resourceGroupName, string provisioningServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
