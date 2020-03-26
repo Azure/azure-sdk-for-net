@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "cfdddaf9-9822-5d41-6be0-40ad98d7ff83",
         "x-ms-date": "Sat, 21 Mar 2020 16:43:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -28,7 +28,7 @@
         ],
         "x-ms-client-request-id": "cfdddaf9-9822-5d41-6be0-40ad98d7ff83",
         "x-ms-request-id": "baac0944-001e-00a3-3f9f-ff1a9a000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         "x-ms-client-request-id": "fb73a6fc-07dd-26bb-c09a-703eeea8b88e",
         "x-ms-date": "Sat, 21 Mar 2020 16:43:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -58,7 +58,7 @@
         ],
         "x-ms-client-request-id": "fb73a6fc-07dd-26bb-c09a-703eeea8b88e",
         "x-ms-request-id": "baac096e-001e-00a3-619f-ff1a9a000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": []
     },
@@ -75,7 +75,7 @@
         "x-ms-client-request-id": "f1b0a430-0463-fba6-046d-344df7af0e43",
         "x-ms-date": "Sat, 21 Mar 2020 16:43:28 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -90,7 +90,7 @@
         "x-ms-client-request-id": "f1b0a430-0463-fba6-046d-344df7af0e43",
         "x-ms-error-code": "BlobNotFound",
         "x-ms-request-id": "baac097e-001e-00a3-6e9f-ff1a9a000000",
-        "x-ms-version": "2019-07-07"
+        "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
