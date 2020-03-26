@@ -20,11 +20,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="oDataType"> The model type. </param>
         internal DataChangeDetectionPolicy(string oDataType)
         {
-            ODataType = oDataType;
-            ODataType = null;
+            ODataType = oDataType ?? null;
         }
 
         /// <summary> The model type. </summary>
-        public string ODataType { get; internal set; }
+        internal string ODataType { get; set; }
     }
 }

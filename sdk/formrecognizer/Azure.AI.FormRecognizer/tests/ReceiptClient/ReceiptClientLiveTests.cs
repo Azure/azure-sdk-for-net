@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core.Testing;
@@ -42,16 +43,16 @@ namespace Azure.AI.FormRecognizer.Tests
         ///
         [Test]
         [Ignore("The receipt file has not been uploaded yet.")]
-        public async Task ExtractReceiptPopulatesExtractedReceipt()
+        public async Task StartExtractReceiptsPopulatesExtractedReceipt()
         {
             var client = CreateInstrumentedClient();
 
             using var stream = new FileStream(@"", FileMode.Open);
-            var response = await client.ExtractReceiptAsync(stream, FormContentType.Jpeg);
+            var response = await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg);
 
             Assert.IsNotNull(response);
 
-            var receipt = response.Value;
+            var receipt = response.Value.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.

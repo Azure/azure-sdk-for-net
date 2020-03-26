@@ -11,8 +11,10 @@ namespace Azure.Search.Documents.Models
     public partial class DataContainer
     {
         /// <summary> Initializes a new instance of DataContainer. </summary>
-        public DataContainer()
+        /// <param name="name"> The name of the table or view (for Azure SQL data source) or collection (for CosmosDB data source) that will be indexed. </param>
+        public DataContainer(string name)
         {
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of DataContainer. </summary>
@@ -25,7 +27,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the table or view (for Azure SQL data source) or collection (for CosmosDB data source) that will be indexed. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> A query that is applied to this data container. The syntax and meaning of this parameter is datasource-specific. Not supported by Azure SQL datasources. </summary>
         public string Query { get; set; }
     }

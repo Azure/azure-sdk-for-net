@@ -1179,6 +1179,7 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default)
         {
             options ??= new SuggestOptions();
+            // TODO: This is not thread safe
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 
@@ -1303,6 +1304,7 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken)
         {
             options ??= new AutocompleteOptions();
+            // TODO: Not thread safe
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 

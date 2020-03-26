@@ -54,7 +54,14 @@ namespace Azure.Search.Documents.Models
 
         internal static ShingleTokenFilter DeserializeShingleTokenFilter(JsonElement element)
         {
-            ShingleTokenFilter result = new ShingleTokenFilter();
+            int? maxShingleSize = default;
+            int? minShingleSize = default;
+            bool? outputUnigrams = default;
+            bool? outputUnigramsIfNoShingles = default;
+            string tokenSeparator = default;
+            string filterToken = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxShingleSize"))
@@ -63,7 +70,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxShingleSize = property.Value.GetInt32();
+                    maxShingleSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minShingleSize"))
@@ -72,7 +79,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MinShingleSize = property.Value.GetInt32();
+                    minShingleSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("outputUnigrams"))
@@ -81,7 +88,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.OutputUnigrams = property.Value.GetBoolean();
+                    outputUnigrams = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("outputUnigramsIfNoShingles"))
@@ -90,7 +97,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.OutputUnigramsIfNoShingles = property.Value.GetBoolean();
+                    outputUnigramsIfNoShingles = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("tokenSeparator"))
@@ -99,7 +106,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.TokenSeparator = property.Value.GetString();
+                    tokenSeparator = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("filterToken"))
@@ -108,21 +115,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.FilterToken = property.Value.GetString();
+                    filterToken = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new ShingleTokenFilter(maxShingleSize, minShingleSize, outputUnigrams, outputUnigramsIfNoShingles, tokenSeparator, filterToken, odatatype, name);
         }
     }
 }

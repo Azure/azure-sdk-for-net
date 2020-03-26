@@ -13,8 +13,12 @@ namespace Azure.Search.Documents.Models
     public partial class SearchIndex
     {
         /// <summary> Initializes a new instance of SearchIndex. </summary>
-        public SearchIndex()
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="fields"> The fields of the index. </param>
+        public SearchIndex(string name, IList<SearchField> fields)
         {
+            Name = name;
+            Fields = fields;
         }
 
         /// <summary> Initializes a new instance of SearchIndex. </summary>
@@ -47,9 +51,9 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the index. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The fields of the index. </summary>
-        public IList<SearchField> Fields { get; set; } = new List<SearchField>();
+        public IList<SearchField> Fields { get; } = new List<SearchField>();
         /// <summary> The scoring profiles for the index. </summary>
         public IList<ScoringProfile> ScoringProfiles { get; set; }
         /// <summary> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </summary>

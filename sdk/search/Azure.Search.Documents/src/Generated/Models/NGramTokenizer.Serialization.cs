@@ -45,7 +45,11 @@ namespace Azure.Search.Documents.Models
 
         internal static NGramTokenizer DeserializeNGramTokenizer(JsonElement element)
         {
-            NGramTokenizer result = new NGramTokenizer();
+            int? minGram = default;
+            int? maxGram = default;
+            IList<TokenCharacterKind> tokenChars = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minGram"))
@@ -54,7 +58,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MinGram = property.Value.GetInt32();
+                    minGram = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxGram"))
@@ -63,7 +67,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxGram = property.Value.GetInt32();
+                    maxGram = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("tokenChars"))
@@ -72,25 +76,26 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.TokenChars = new List<TokenCharacterKind>();
+                    List<TokenCharacterKind> array = new List<TokenCharacterKind>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.TokenChars.Add(item.GetString().ToTokenCharacterKind());
+                        array.Add(item.GetString().ToTokenCharacterKind());
                     }
+                    tokenChars = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new NGramTokenizer(minGram, maxGram, tokenChars, odatatype, name);
         }
     }
 }

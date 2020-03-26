@@ -64,23 +64,23 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceiptAsync(Stream, FormContentType, bool, CancellationToken)"/>
+        /// Verifies functionality of the <see cref="ReceiptClient.StartExtractReceiptsAsync(Stream, ContentType, bool, CancellationToken)"/>
         /// method.
         /// </summary>
         [Test]
         [Ignore("Argument validation not implemented yet.")]
-        public void ExtractReceiptWithStreamRequiresTheStream()
+        public void StartExtractReceiptsWithStreamRequiresTheStream()
         {
             var client = CreateInstrumentedClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.ExtractReceiptAsync(null, FormContentType.Jpeg));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartExtractReceiptsAsync(null, ContentType.Jpeg));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceiptAsync(Stream, FormContentType, bool, CancellationToken)"/>
+        /// Verifies functionality of the <see cref="ReceiptClient.StartExtractReceiptsAsync(Stream, ContentType, bool, CancellationToken)"/>
         /// method.
         /// </summary>
         [Test]
-        public void ExtractReceiptWithStreamRespectsTheCancellationToken()
+        public void StartExtractReceiptsWithStreamRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
 
@@ -88,27 +88,27 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.ExtractReceiptAsync(stream, FormContentType.Jpeg, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceiptAsync(Uri, bool, CancellationToken)"/>
+        /// Verifies functionality of the <see cref="ReceiptClient.StartExtractReceiptsAsync(Uri, bool, CancellationToken)"/>
         /// method.
         /// </summary>
         [Test]
         [Ignore("Argument validation not implemented yet.")]
-        public void ExtractReceiptWithEndpointRequiresTheUri()
+        public void StartExtractReceiptsWithEndpointRequiresTheUri()
         {
             var client = CreateInstrumentedClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.ExtractReceiptAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartExtractReceiptsAsync(null));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.ExtractReceiptAsync(Uri, bool, CancellationToken)"/>
+        /// Verifies functionality of the <see cref="ReceiptClient.StartExtractReceiptsAsync(Uri, bool, CancellationToken)"/>
         /// method.
         /// </summary>
         [Test]
-        public void ExtractReceiptWithEndpointRespectsTheCancellationToken()
+        public void StartExtractReceiptsWithEndpointRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
             var fakeEndpoint = new Uri("http://localhost");
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.ExtractReceiptAsync(fakeEndpoint, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartExtractReceiptsAsync(fakeEndpoint, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>

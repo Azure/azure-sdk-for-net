@@ -22,9 +22,9 @@ namespace Azure.AI.TextAnalytics.Samples
             #endregion
 
             #region Snippet:RecognizeLinkedEntities
-            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+            string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(input).Value;
+            IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(document).Value;
 
             Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
             foreach (LinkedEntity linkedEntity in linkedEntities)

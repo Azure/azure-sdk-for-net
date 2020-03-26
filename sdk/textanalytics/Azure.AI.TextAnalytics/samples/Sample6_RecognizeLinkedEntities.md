@@ -16,9 +16,9 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(a
 To recognize linked entities in a document, use the `RecognizeLinkedEntities` method.  The returned value is the collection of `LinkedEntities` containing entities recognized in the document as well as links to those entities in a reference data source, such as Wikipedia.
 
 ```C# Snippet:RecognizeLinkedEntities
-string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(input).Value;
+IReadOnlyCollection<LinkedEntity> linkedEntities = client.RecognizeLinkedEntities(document).Value;
 
 Console.WriteLine($"Extracted {linkedEntities.Count} linked entit{(linkedEntities.Count > 1 ? "ies" : "y")}:");
 foreach (LinkedEntity linkedEntity in linkedEntities)
@@ -36,13 +36,13 @@ foreach (LinkedEntity linkedEntity in linkedEntities)
 To recognize linked entities in multiple documents, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizeLinkedEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
+RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(documents);
 ```
 
-To recognize linked entities in a collection of documents in different languages, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To recognize linked entities in a collection of documents in different languages, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
 ```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesBatch
-var inputs = new List<TextDocumentInput>
+var documents = new List<TextDocumentInput>
 {
     new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
     {
@@ -58,7 +58,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

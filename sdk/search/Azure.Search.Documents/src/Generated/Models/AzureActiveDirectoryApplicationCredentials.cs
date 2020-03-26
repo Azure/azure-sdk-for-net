@@ -11,8 +11,10 @@ namespace Azure.Search.Documents.Models
     public partial class AzureActiveDirectoryApplicationCredentials
     {
         /// <summary> Initializes a new instance of AzureActiveDirectoryApplicationCredentials. </summary>
-        public AzureActiveDirectoryApplicationCredentials()
+        /// <param name="applicationId"> An AAD Application ID that was granted the required access permissions to the Azure Key Vault that is to be used when encrypting your data at rest. The Application ID should not be confused with the Object ID for your AAD Application. </param>
+        public AzureActiveDirectoryApplicationCredentials(string applicationId)
         {
+            ApplicationId = applicationId;
         }
 
         /// <summary> Initializes a new instance of AzureActiveDirectoryApplicationCredentials. </summary>
@@ -25,7 +27,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> An AAD Application ID that was granted the required access permissions to the Azure Key Vault that is to be used when encrypting your data at rest. The Application ID should not be confused with the Object ID for your AAD Application. </summary>
-        public string ApplicationId { get; set; }
+        public string ApplicationId { get; }
         /// <summary> The authentication key of the specified AAD application. </summary>
         public string ApplicationSecret { get; set; }
     }

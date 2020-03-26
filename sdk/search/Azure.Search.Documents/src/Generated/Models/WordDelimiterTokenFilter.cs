@@ -13,7 +13,8 @@ namespace Azure.Search.Documents.Models
     public partial class WordDelimiterTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of WordDelimiterTokenFilter. </summary>
-        public WordDelimiterTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public WordDelimiterTokenFilter(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
         }
@@ -43,7 +44,7 @@ namespace Azure.Search.Documents.Models
             SplitOnNumerics = splitOnNumerics;
             StemEnglishPossessive = stemEnglishPossessive;
             ProtectedWords = protectedWords;
-            ODataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.WordDelimiterTokenFilter";
         }
 
         /// <summary> A value indicating whether to generate part words. If set, causes parts of words to be generated; for example &quot;AzureSearch&quot; becomes &quot;Azure&quot; &quot;Search&quot;. Default is true. </summary>

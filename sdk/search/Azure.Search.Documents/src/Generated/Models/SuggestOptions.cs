@@ -11,11 +11,6 @@ namespace Azure.Search.Documents
     public partial class SuggestOptions
     {
         /// <summary> Initializes a new instance of SuggestOptions. </summary>
-        public SuggestOptions()
-        {
-        }
-
-        /// <summary> Initializes a new instance of SuggestOptions. </summary>
         /// <param name="filter"> An OData expression that filters the documents considered for suggestions. </param>
         /// <param name="useFuzzyMatching"> A value indicating whether to use fuzzy matching for the suggestion query. Default is false. When set to true, the query will find suggestions even if there&apos;s a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy suggestion searches are slower and consume more resources. </param>
         /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. If omitted, hit highlighting of suggestions is disabled. </param>

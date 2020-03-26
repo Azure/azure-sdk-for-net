@@ -68,14 +68,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public void RecognizePiiEntitiesArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
-        }
-
-        [Test]
         public void RecognizeLinkedEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((string)null));
@@ -86,21 +78,21 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void ConvertToDocumentInputTest()
         {
-            string input = "This is a test";
-            var expectedDocument = new TextDocumentInput("0", input)
+            string document = "This is a test";
+            var expectedDocument = new TextDocumentInput("0", document)
             {
                 Language = "en"
             };
 
-            TextDocumentInput textInput = Client.ConvertToDocumentInput(input, null);
+            TextDocumentInput textInput = Client.ConvertToDocumentInput(document, null);
             Assert.IsTrue(CompareTextDocumentInput(expectedDocument, textInput));
 
-            textInput = Client.ConvertToDocumentInput(input, "es");
+            textInput = Client.ConvertToDocumentInput(document, "es");
             expectedDocument.Language = "es";
             Assert.IsTrue(CompareTextDocumentInput(expectedDocument, textInput));
 
-            textInput = Client.ConvertToDocumentInput(input, "es", 2);
-            var expectedDocument2 = new TextDocumentInput("2", input)
+            textInput = Client.ConvertToDocumentInput(document, "es", 2);
+            var expectedDocument2 = new TextDocumentInput("2", document)
             {
                 Language = "es"
             };

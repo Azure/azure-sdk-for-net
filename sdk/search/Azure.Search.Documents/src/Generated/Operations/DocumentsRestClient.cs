@@ -21,12 +21,12 @@ namespace Azure.Search.Documents
     {
         private string endpoint;
         private string indexName;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of DocumentsRestClient. </summary>
-        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, string ApiVersion = "2019-05-06-Preview")
+        public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
@@ -36,14 +36,14 @@ namespace Azure.Search.Documents
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.endpoint = endpoint;
             this.indexName = indexName;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -59,7 +59,7 @@ namespace Azure.Search.Documents
             uri.AppendRaw(indexName, true);
             uri.AppendRaw("')", false);
             uri.AppendPath("/docs/$count", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -84,8 +84,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            long value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = document.RootElement.GetInt64();
+                            value = document.RootElement.GetInt64();
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -115,8 +116,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            long value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = document.RootElement.GetInt64();
+                            value = document.RootElement.GetInt64();
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -141,7 +143,7 @@ namespace Azure.Search.Documents
             uri.AppendRaw(indexName, true);
             uri.AppendRaw("')", false);
             uri.AppendPath("/docs/search.post.search", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -175,8 +177,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -211,8 +214,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -243,7 +247,7 @@ namespace Azure.Search.Documents
             {
                 uri.AppendQueryDelimited("$select", selectedFields, ",", true);
             }
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -257,7 +261,7 @@ namespace Azure.Search.Documents
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -274,12 +278,14 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            IReadOnlyDictionary<string, object> value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            IDictionary<string, object> value = new Dictionary<string, object>();
+                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property in document.RootElement.EnumerateObject())
                             {
-                                value.Add(property.Name, property.Value.GetObject());
+                                dictionary.Add(property.Name, property.Value.GetObject());
                             }
+                            value = dictionary;
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -298,7 +304,7 @@ namespace Azure.Search.Documents
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
@@ -315,12 +321,14 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            IReadOnlyDictionary<string, object> value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            IDictionary<string, object> value = new Dictionary<string, object>();
+                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
                             foreach (var property in document.RootElement.EnumerateObject())
                             {
-                                value.Add(property.Name, property.Value.GetObject());
+                                dictionary.Add(property.Name, property.Value.GetObject());
                             }
+                            value = dictionary;
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -345,7 +353,7 @@ namespace Azure.Search.Documents
             uri.AppendRaw(indexName, true);
             uri.AppendRaw("')", false);
             uri.AppendPath("/docs/search.post.suggest", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -379,8 +387,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SuggestDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -415,8 +424,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SuggestDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -441,7 +451,7 @@ namespace Azure.Search.Documents
             uri.AppendRaw(indexName, true);
             uri.AppendRaw("')", false);
             uri.AppendPath("/docs/search.index", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -475,8 +485,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            IndexDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -511,8 +522,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            IndexDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -537,7 +549,7 @@ namespace Azure.Search.Documents
             uri.AppendRaw(indexName, true);
             uri.AppendRaw("')", false);
             uri.AppendPath("/docs/search.post.autocomplete", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -571,8 +583,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            AutocompleteResults value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -607,8 +620,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            AutocompleteResults value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

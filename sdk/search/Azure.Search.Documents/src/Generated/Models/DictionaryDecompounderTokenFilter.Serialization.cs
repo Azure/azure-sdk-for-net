@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -51,15 +52,23 @@ namespace Azure.Search.Documents.Models
 
         internal static DictionaryDecompounderTokenFilter DeserializeDictionaryDecompounderTokenFilter(JsonElement element)
         {
-            DictionaryDecompounderTokenFilter result = new DictionaryDecompounderTokenFilter();
+            IList<string> wordList = new List<string>();
+            int? minWordSize = default;
+            int? minSubwordSize = default;
+            int? maxSubwordSize = default;
+            bool? onlyLongestMatch = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("wordList"))
                 {
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.WordList.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    wordList = array;
                     continue;
                 }
                 if (property.NameEquals("minWordSize"))
@@ -68,7 +77,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MinWordSize = property.Value.GetInt32();
+                    minWordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minSubwordSize"))
@@ -77,7 +86,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MinSubwordSize = property.Value.GetInt32();
+                    minSubwordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxSubwordSize"))
@@ -86,7 +95,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxSubwordSize = property.Value.GetInt32();
+                    maxSubwordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("onlyLongestMatch"))
@@ -95,21 +104,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.OnlyLongestMatch = property.Value.GetBoolean();
+                    onlyLongestMatch = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new DictionaryDecompounderTokenFilter(wordList, minWordSize, minSubwordSize, maxSubwordSize, onlyLongestMatch, odatatype, name);
         }
     }
 }

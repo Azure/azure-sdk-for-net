@@ -3,6 +3,8 @@
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class ExtractedReceiptItem
     {
         internal ExtractedReceiptItem(string name, int? quantity, float? price, float? totalPrice)
@@ -13,9 +15,20 @@ namespace Azure.AI.FormRecognizer.Models
             TotalPrice = totalPrice;
         }
 
+        /// <summary>
+        /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// </summary>
         public int? Quantity { get; }
+
+        /// <summary>
+        /// </summary>
         public float? Price { get; }
+
+        /// <summary>
+        /// </summary>
         public float? TotalPrice { get; }
     }
 }

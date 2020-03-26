@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesBatch
-            var inputs = new List<TextDocumentInput>
+            var documents = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             foreach (RecognizeLinkedEntitiesResult result in results)
             {
-                TextDocumentInput document = inputs[i++];
+                TextDocumentInput document = documents[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 

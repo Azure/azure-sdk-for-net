@@ -6,6 +6,8 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     public class CustomModelInfo
     {
         internal CustomModelInfo(ModelInfo_internal modelInfo)
@@ -13,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Custom
             ModelId = modelInfo.ModelId.ToString();
             CreatedOn = modelInfo.CreatedDateTime;
             LastUpdatedOn = modelInfo.LastUpdatedDateTime;
-            TrainingStatus = modelInfo.Status;
+            Status = modelInfo.Status;
         }
 
         /// <summary>
@@ -22,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
         /// <summary>
         /// </summary>
-        public ModelStatus TrainingStatus { get; }
+        public ModelStatus Status { get; }
 
         /// <summary>
         /// </summary>

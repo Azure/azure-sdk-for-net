@@ -21,9 +21,9 @@ namespace Azure.AI.TextAnalytics.Samples
             #endregion
 
             #region Snippet:AnalyzeSentiment
-            string input = "That was the best day of my life!";
+            string document = "That was the best day of my life!";
 
-            DocumentSentiment docSentiment = client.AnalyzeSentiment(input);
+            DocumentSentiment docSentiment = client.AnalyzeSentiment(document);
 
             Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with confidence scores: ");
             Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");

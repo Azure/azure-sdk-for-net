@@ -7,9 +7,11 @@ using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class BoundingBox
     {
-        internal BoundingBox(ICollection<float> boundingBox)
+        internal BoundingBox(IReadOnlyList<float> boundingBox)
         {
             // TODO: improve perf here?
             // https://github.com/Azure/azure-sdk-for-net/issues/10358
@@ -24,6 +26,8 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
+        /// <summary>
+        /// </summary>
         public PointF[] Points { get; }
     }
 }

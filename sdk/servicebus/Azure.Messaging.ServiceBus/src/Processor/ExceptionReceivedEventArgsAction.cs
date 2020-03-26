@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Message receive operation</summary>
         Receive,
 
-        /// <summary>Message lock renewal operation</summary>
+        /// <summary>Lock renewal operation</summary>
         RenewLock,
 
         /// <summary>Session start operation</summary>

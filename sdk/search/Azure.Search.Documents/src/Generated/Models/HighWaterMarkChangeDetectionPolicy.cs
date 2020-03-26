@@ -11,8 +11,10 @@ namespace Azure.Search.Documents.Models
     public partial class HighWaterMarkChangeDetectionPolicy : DataChangeDetectionPolicy
     {
         /// <summary> Initializes a new instance of HighWaterMarkChangeDetectionPolicy. </summary>
-        public HighWaterMarkChangeDetectionPolicy()
+        /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
+        public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName)
         {
+            HighWaterMarkColumnName = highWaterMarkColumnName;
             ODataType = "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
         }
 
@@ -22,10 +24,10 @@ namespace Azure.Search.Documents.Models
         internal HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName, string oDataType) : base(oDataType)
         {
             HighWaterMarkColumnName = highWaterMarkColumnName;
-            ODataType = "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
         }
 
         /// <summary> The name of the high water mark column. </summary>
-        public string HighWaterMarkColumnName { get; set; }
+        public string HighWaterMarkColumnName { get; }
     }
 }

@@ -15,7 +15,6 @@ namespace Azure.AI.TextAnalytics
 
         private const string LanguagesRoute = "/languages";
         private const string EntitiesRoute = "/entities/recognition/general";
-        private const string PiiEntitiesRoute = "/entities/recognition/pii";
         private const string SentimentRoute = "/sentiment";
         private const string KeyPhrasesRoute = "/keyPhrases";
         private const string EntityLinkingRoute = "/entities/linking";
@@ -82,19 +81,6 @@ namespace Azure.AI.TextAnalytics
 
         private static Response<RecognizeLinkedEntitiesResultCollection> CreateLinkedEntityResponse(Response response, IDictionary<string, int> idToIndexMap) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream, idToIndexMap), response);
-
-        #endregion
-
-
-        #region Recognize Entities
-        private static async Task<Response<RecognizePiiEntitiesResultCollection>> CreateRecognizePiiEntitiesResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
-        {
-            RecognizePiiEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeRecognizePiiEntitiesResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
-            return Response.FromValue(result, response);
-        }
-
-        private static Response<RecognizePiiEntitiesResultCollection> CreateRecognizePiiEntitiesResponse(Response response, IDictionary<string, int> idToIndexMap) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizePiiEntitiesResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
 

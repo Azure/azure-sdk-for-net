@@ -13,8 +13,11 @@ namespace Azure.Search.Documents.Models
     public partial class PatternCaptureTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of PatternCaptureTokenFilter. </summary>
-        public PatternCaptureTokenFilter()
+        /// <param name="patterns"> A list of patterns to match against each token. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public PatternCaptureTokenFilter(IList<string> patterns, string name) : base(name)
         {
+            Patterns = patterns;
             ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
@@ -27,11 +30,11 @@ namespace Azure.Search.Documents.Models
         {
             Patterns = patterns;
             PreserveOriginal = preserveOriginal;
-            ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
         /// <summary> A list of patterns to match against each token. </summary>
-        public IList<string> Patterns { get; set; } = new List<string>();
+        public IList<string> Patterns { get; } = new List<string>();
         /// <summary> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </summary>
         public bool? PreserveOriginal { get; set; }
     }

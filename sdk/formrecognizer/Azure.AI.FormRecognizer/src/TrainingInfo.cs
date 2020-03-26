@@ -6,6 +6,8 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
+    /// <summary>
+    /// </summary>
     public class TrainingInfo
     {
         private TrainResult_internal trainResult;

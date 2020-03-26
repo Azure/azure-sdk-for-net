@@ -11,22 +11,17 @@ namespace Azure.Search.Documents.Models
     public partial class DistanceScoringParameters
     {
         /// <summary> Initializes a new instance of DistanceScoringParameters. </summary>
-        public DistanceScoringParameters()
-        {
-        }
-
-        /// <summary> Initializes a new instance of DistanceScoringParameters. </summary>
         /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
         /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
-        internal DistanceScoringParameters(string referencePointParameter, double boostingDistance)
+        public DistanceScoringParameters(string referencePointParameter, double boostingDistance)
         {
             ReferencePointParameter = referencePointParameter;
             BoostingDistance = boostingDistance;
         }
 
         /// <summary> The name of the parameter passed in search queries to specify the reference location. </summary>
-        public string ReferencePointParameter { get; set; }
+        public string ReferencePointParameter { get; }
         /// <summary> The distance in kilometers from the reference location where the boosting range ends. </summary>
-        public double BoostingDistance { get; set; }
+        public double BoostingDistance { get; }
     }
 }

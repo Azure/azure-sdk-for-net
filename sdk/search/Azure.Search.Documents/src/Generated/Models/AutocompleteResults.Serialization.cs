@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,8 @@ namespace Azure.Search.Documents.Models
     {
         internal static AutocompleteResults DeserializeAutocompleteResults(JsonElement element)
         {
-            AutocompleteResults result = new AutocompleteResults();
+            double? searchcoverage = default;
+            IReadOnlyList<Autocompletion> value = new List<Autocompletion>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@search.coverage"))
@@ -23,19 +25,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Coverage = property.Value.GetDouble();
+                    searchcoverage = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
+                    List<Autocompletion> array = new List<Autocompletion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Results.Add(Autocompletion.DeserializeAutocompletion(item));
+                        array.Add(Autocompletion.DeserializeAutocompletion(item));
                     }
+                    value = array;
                     continue;
                 }
             }
-            return result;
+            return new AutocompleteResults(searchcoverage, value);
         }
     }
 }

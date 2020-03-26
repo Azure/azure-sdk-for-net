@@ -11,7 +11,8 @@ namespace Azure.Search.Documents.Models
     public partial class PhoneticTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of PhoneticTokenFilter. </summary>
-        public PhoneticTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public PhoneticTokenFilter(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.PhoneticTokenFilter";
         }
@@ -25,7 +26,7 @@ namespace Azure.Search.Documents.Models
         {
             Encoder = encoder;
             ReplaceOriginalTokens = replaceOriginalTokens;
-            ODataType = "#Microsoft.Azure.Search.PhoneticTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.PhoneticTokenFilter";
         }
 
         /// <summary> The phonetic encoder to use. Default is &quot;metaphone&quot;. </summary>

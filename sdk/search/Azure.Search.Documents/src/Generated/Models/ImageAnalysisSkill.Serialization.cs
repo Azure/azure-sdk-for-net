@@ -77,7 +77,15 @@ namespace Azure.Search.Documents.Models
 
         internal static ImageAnalysisSkill DeserializeImageAnalysisSkill(JsonElement element)
         {
-            ImageAnalysisSkill result = new ImageAnalysisSkill();
+            ImageAnalysisSkillLanguage? defaultLanguageCode = default;
+            IList<VisualFeature> visualFeatures = default;
+            IList<ImageDetail> details = default;
+            string odatatype = default;
+            string name = default;
+            string description = default;
+            string context = default;
+            IList<InputFieldMappingEntry> inputs = new List<InputFieldMappingEntry>();
+            IList<OutputFieldMappingEntry> outputs = new List<OutputFieldMappingEntry>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultLanguageCode"))
@@ -86,7 +94,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.DefaultLanguageCode = new ImageAnalysisSkillLanguage(property.Value.GetString());
+                    defaultLanguageCode = new ImageAnalysisSkillLanguage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("visualFeatures"))
@@ -95,11 +103,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.VisualFeatures = new List<VisualFeature>();
+                    List<VisualFeature> array = new List<VisualFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.VisualFeatures.Add(item.GetString().ToVisualFeature());
+                        array.Add(item.GetString().ToVisualFeature());
                     }
+                    visualFeatures = array;
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -108,16 +117,17 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Details = new List<ImageDetail>();
+                    List<ImageDetail> array = new List<ImageDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Details.Add(item.GetString().ToImageDetail());
+                        array.Add(item.GetString().ToImageDetail());
                     }
+                    details = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -126,7 +136,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"))
@@ -135,7 +145,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Description = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("context"))
@@ -144,27 +154,31 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Context = property.Value.GetString();
+                    context = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("inputs"))
                 {
+                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Inputs.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
                     }
+                    inputs = array;
                     continue;
                 }
                 if (property.NameEquals("outputs"))
                 {
+                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Outputs.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
                     }
+                    outputs = array;
                     continue;
                 }
             }
-            return result;
+            return new ImageAnalysisSkill(defaultLanguageCode, visualFeatures, details, odatatype, name, description, context, inputs, outputs);
         }
     }
 }

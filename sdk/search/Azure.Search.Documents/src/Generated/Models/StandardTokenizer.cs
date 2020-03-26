@@ -11,7 +11,8 @@ namespace Azure.Search.Documents.Models
     public partial class StandardTokenizer : Tokenizer
     {
         /// <summary> Initializes a new instance of StandardTokenizer. </summary>
-        public StandardTokenizer()
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public StandardTokenizer(string name) : base(name)
         {
             ODataType = "#Microsoft.Azure.Search.StandardTokenizer";
         }
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Models
         internal StandardTokenizer(int? maxTokenLength, string oDataType, string name) : base(oDataType, name)
         {
             MaxTokenLength = maxTokenLength;
-            ODataType = "#Microsoft.Azure.Search.StandardTokenizer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.StandardTokenizer";
         }
 
         /// <summary> The maximum token length. Default is 255. Tokens longer than the maximum length are split. </summary>

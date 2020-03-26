@@ -47,12 +47,16 @@ namespace Azure.Search.Documents.Models
 
         internal static CustomAnalyzer DeserializeCustomAnalyzer(JsonElement element)
         {
-            CustomAnalyzer result = new CustomAnalyzer();
+            TokenizerName tokenizer = default;
+            IList<TokenFilterName> tokenFilters = default;
+            IList<string> charFilters = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tokenizer"))
                 {
-                    result.Tokenizer = new TokenizerName(property.Value.GetString());
+                    tokenizer = new TokenizerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tokenFilters"))
@@ -61,11 +65,12 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.TokenFilters = new List<TokenFilterName>();
+                    List<TokenFilterName> array = new List<TokenFilterName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.TokenFilters.Add(new TokenFilterName(item.GetString()));
+                        array.Add(new TokenFilterName(item.GetString()));
                     }
+                    tokenFilters = array;
                     continue;
                 }
                 if (property.NameEquals("charFilters"))
@@ -74,25 +79,26 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.CharFilters = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.CharFilters.Add(item.GetString());
+                        array.Add(item.GetString());
                     }
+                    charFilters = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new CustomAnalyzer(tokenizer, tokenFilters, charFilters, odatatype, name);
         }
     }
 }

@@ -13,8 +13,10 @@ namespace Azure.Search.Documents.Models
     public partial class FieldMappingFunction
     {
         /// <summary> Initializes a new instance of FieldMappingFunction. </summary>
-        public FieldMappingFunction()
+        /// <param name="name"> The name of the field mapping function. </param>
+        public FieldMappingFunction(string name)
         {
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of FieldMappingFunction. </summary>
@@ -27,7 +29,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the field mapping function. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> A dictionary of parameter name/value pairs to pass to the function. Each value must be of a primitive type. </summary>
         public IDictionary<string, object> Parameters { get; set; }
     }
