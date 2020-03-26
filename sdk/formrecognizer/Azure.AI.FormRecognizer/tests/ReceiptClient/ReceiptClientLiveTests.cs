@@ -42,13 +42,25 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         ///
         [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         [Ignore("The receipt file has not been uploaded yet.")]
-        public async Task StartExtractReceiptsPopulatesExtractedReceipt()
+        public async Task StartExtractReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();
-            using var stream = new FileStream(@"", FileMode.Open);
+            Operation<IReadOnlyList<ExtractedReceipt>> operation;
 
-            var operation = await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg);
+            if (useStream)
+            {
+                using var stream = new FileStream(@"", FileMode.Open);
+                operation = await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg);
+            }
+            else
+            {
+                var endpoint = new Uri("");
+                operation = await client.StartExtractReceiptsAsync(endpoint);
+            }
+
             await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
