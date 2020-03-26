@@ -94,13 +94,8 @@ jobs:
       - template: ../common/TestResources/deploy-test-resources.yml
         parameters:
           ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
-<<<<<<< HEAD
           CloudType: $(CloudType)
           ArmTemplateParameters: $(ArmTemplateParameters)
-=======
-          AdditionalParameters: $(AdditionalParameters)
-          Location: $(Location)
->>>>>>> cc26615fe1... dynamic resource provisoining for smoke tests
 
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
