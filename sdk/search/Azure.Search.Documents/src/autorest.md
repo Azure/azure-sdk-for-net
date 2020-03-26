@@ -60,9 +60,9 @@ SearchError is duplicated between two swaggers, rename one of them
 
 ``` yaml
 directive:
-- from: searchindex.json
+- from: searchservice.json
   where: $.definitions.SearchError
-  transform: $["x-ms-client-name"] = "IndexSearchError"
+  transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
 ## C# Customizations
