@@ -19,13 +19,19 @@ namespace Microsoft.Azure.Management.ContainerRegistry
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ContainerRegistry", "Operations", "2019-05-01"),
-                new Tuple<string, string, string>("ContainerRegistry", "Registries", "2019-05-01"),
+                new Tuple<string, string, string>("ContainerRegistry", "AgentPools", "2019-06-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Operations", "2019-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "PrivateEndpointConnections", "2019-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Registries", "2019-05-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Registries", "2019-06-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "Replications", "2019-05-01"),
+                new Tuple<string, string, string>("ContainerRegistry", "Registries", "2019-12-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Replications", "2019-12-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Runs", "2019-06-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "ScopeMaps", "2019-05-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "TaskRuns", "2019-06-01-preview"),
                 new Tuple<string, string, string>("ContainerRegistry", "Tasks", "2019-06-01-preview"),
-                new Tuple<string, string, string>("ContainerRegistry", "Webhooks", "2019-05-01"),
+                new Tuple<string, string, string>("ContainerRegistry", "Tokens", "2019-05-01-preview"),
+                new Tuple<string, string, string>("ContainerRegistry", "Webhooks", "2019-12-01-preview"),
               }.AsEnumerable();
           }
       }
