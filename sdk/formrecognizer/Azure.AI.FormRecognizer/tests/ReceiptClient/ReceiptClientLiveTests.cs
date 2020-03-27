@@ -28,6 +28,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the image file which contains the receipt to be used for tests.</summary>
         private const string ReceiptFilename = "contoso-receipt.jpg";
 
+        /// <summary>TODO.</summary>
+        private const string ReceiptFileUri = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/Assets/contoso-receipt.jpg";
+
         /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the tests.</summary>
         private const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
 
@@ -49,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Tests
         ///
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore="The receipt file has not been uploaded to GitHub yet.")]
+        [TestCase(false)]
         public async Task StartExtractReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();
@@ -63,7 +66,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var endpoint = new Uri("");
+                var endpoint = new Uri(ReceiptFileUri);
                 operation = await client.StartExtractReceiptsAsync(endpoint);
             }
 
