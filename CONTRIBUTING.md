@@ -257,7 +257,7 @@ input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
 ```
 
-3. Run `dotnet msbuild /t:GeneratedCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13).
+3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13).
 4. Add a `*ManagementClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 
 ``` C#
