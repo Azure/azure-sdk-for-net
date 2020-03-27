@@ -20,8 +20,8 @@ namespace Azure.Search.Documents.Models
             string errorMessage = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            IReadOnlyList<ItemError> errors = new List<ItemError>();
-            IReadOnlyList<ItemWarning> warnings = new List<ItemWarning>();
+            IReadOnlyList<ItemError> errors = default;
+            IReadOnlyList<ItemWarning> warnings = default;
             int itemsProcessed = default;
             int itemsFailed = default;
             string initialTrackingState = default;

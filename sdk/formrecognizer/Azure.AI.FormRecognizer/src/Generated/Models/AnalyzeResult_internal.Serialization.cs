@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal static AnalyzeResult_internal DeserializeAnalyzeResult_internal(JsonElement element)
         {
             string version = default;
-            IReadOnlyList<ReadResult_internal> readResults = new List<ReadResult_internal>();
+            IReadOnlyList<ReadResult_internal> readResults = default;
             IReadOnlyList<PageResult_internal> pageResults = default;
             IReadOnlyList<DocumentResult_internal> documentResults = default;
             IReadOnlyList<FormRecognizerError> errors = default;

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,9 +16,14 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
         /// <param name="results"> The sequence of results returned by the query. </param>
-        internal SuggestDocumentsResult(IReadOnlyList<SuggestResult> results)
+        internal SuggestDocumentsResult(IEnumerable<SuggestResult> results)
         {
-            Results = results;
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
+            Results = results.ToArray();
         }
 
         /// <summary> Initializes a new instance of SuggestDocumentsResult. </summary>
@@ -29,7 +36,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The sequence of results returned by the query. </summary>
-        public IReadOnlyList<SuggestResult> Results { get; } = new List<SuggestResult>();
+        public IReadOnlyList<SuggestResult> Results { get; }
         /// <summary> A value indicating the percentage of the index that was included in the query, or null if minimumCoverage was not set in the request. </summary>
         public double? Coverage { get; }
     }

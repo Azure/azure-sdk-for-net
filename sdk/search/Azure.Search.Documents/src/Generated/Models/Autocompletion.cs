@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The result of Autocomplete requests. </summary>
@@ -15,6 +17,15 @@ namespace Azure.Search.Documents.Models
         /// <param name="queryPlusText"> The query along with the completed term. </param>
         internal Autocompletion(string text, string queryPlusText)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (queryPlusText == null)
+            {
+                throw new ArgumentNullException(nameof(queryPlusText));
+            }
+
             Text = text;
             QueryPlusText = queryPlusText;
         }

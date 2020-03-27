@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,9 +17,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of PatternCaptureTokenFilter. </summary>
         /// <param name="patterns"> A list of patterns to match against each token. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public PatternCaptureTokenFilter(IList<string> patterns, string name) : base(name)
+        public PatternCaptureTokenFilter(IEnumerable<string> patterns, string name) : base(name)
         {
-            Patterns = patterns;
+            if (patterns == null)
+            {
+                throw new ArgumentNullException(nameof(patterns));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Patterns = patterns.ToArray();
             ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
@@ -34,7 +45,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> A list of patterns to match against each token. </summary>
-        public IList<string> Patterns { get; } = new List<string>();
+        public IList<string> Patterns { get; }
         /// <summary> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </summary>
         public bool? PreserveOriginal { get; set; }
     }

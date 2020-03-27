@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,10 +17,19 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of SearchIndex. </summary>
         /// <param name="name"> The name of the index. </param>
         /// <param name="fields"> The fields of the index. </param>
-        public SearchIndex(string name, IList<SearchField> fields)
+        public SearchIndex(string name, IEnumerable<SearchField> fields)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (fields == null)
+            {
+                throw new ArgumentNullException(nameof(fields));
+            }
+
             Name = name;
-            Fields = fields;
+            Fields = fields.ToArray();
         }
 
         /// <summary> Initializes a new instance of SearchIndex. </summary>
@@ -53,7 +64,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> The name of the index. </summary>
         public string Name { get; }
         /// <summary> The fields of the index. </summary>
-        public IList<SearchField> Fields { get; } = new List<SearchField>();
+        public IList<SearchField> Fields { get; }
         /// <summary> The scoring profiles for the index. </summary>
         public IList<ScoringProfile> ScoringProfiles { get; set; }
         /// <summary> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </summary>

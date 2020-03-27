@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Divides text using language-specific rules and reduces words to their base forms. </summary>
@@ -14,6 +16,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         public MicrosoftLanguageStemmingTokenizer(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.MicrosoftLanguageStemmingTokenizer";
         }
 

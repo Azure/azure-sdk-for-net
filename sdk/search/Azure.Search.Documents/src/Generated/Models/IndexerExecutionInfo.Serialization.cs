@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
         {
             IndexerStatus status = default;
             IndexerExecutionResult lastResult = default;
-            IReadOnlyList<IndexerExecutionResult> executionHistory = new List<IndexerExecutionResult>();
+            IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             IndexerLimits limits = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Information about a token returned by an analyzer. </summary>
@@ -17,6 +19,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="position"> The position of the token in the input text relative to other tokens. The first token in the input text has position 0, the next has position 1, and so on. Depending on the analyzer used, some tokens might have the same position, for example if they are synonyms of each other. </param>
         internal TokenInfo(string token, int startOffset, int endOffset, int position)
         {
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
+
             Token = token;
             StartOffset = startOffset;
             EndOffset = endOffset;

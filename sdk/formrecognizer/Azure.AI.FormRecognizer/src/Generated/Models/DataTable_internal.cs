@@ -5,13 +5,31 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted table contained in a page. </summary>
     internal partial class DataTable_internal
     {
+        /// <summary> Initializes a new instance of DataTable_internal. </summary>
+        /// <param name="rows"> Number of rows. </param>
+        /// <param name="columns"> Number of columns. </param>
+        /// <param name="cells"> List of cells contained in the table. </param>
+        internal DataTable_internal(int rows, int columns, IEnumerable<DataTableCell_internal> cells)
+        {
+            if (cells == null)
+            {
+                throw new ArgumentNullException(nameof(cells));
+            }
+
+            Rows = rows;
+            Columns = columns;
+            Cells = cells.ToArray();
+        }
+
         /// <summary> Initializes a new instance of DataTable_internal. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
@@ -28,6 +46,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Number of columns. </summary>
         public int Columns { get; }
         /// <summary> List of cells contained in the table. </summary>
-        public IReadOnlyList<DataTableCell_internal> Cells { get; } = new List<DataTableCell_internal>();
+        public IReadOnlyList<DataTableCell_internal> Cells { get; }
     }
 }

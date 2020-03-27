@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -16,6 +17,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="message"> A human-readable representation of the error. </param>
         internal SearchError(string message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             Message = message;
         }
 

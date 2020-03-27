@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A filter that stems words using a Snowball-generated stemmer. This token filter is implemented using Apache Lucene. </summary>
@@ -15,6 +17,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         public SnowballTokenFilter(SnowballTokenFilterLanguage language, string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             Language = language;
             ODataType = "#Microsoft.Azure.Search.SnowballTokenFilter";
         }

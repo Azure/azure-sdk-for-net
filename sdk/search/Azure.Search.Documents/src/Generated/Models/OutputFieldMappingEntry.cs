@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Output field mapping for a skill. </summary>
@@ -14,6 +16,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the output defined by the skill. </param>
         public OutputFieldMappingEntry(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             Name = name;
         }
 

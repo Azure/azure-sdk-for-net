@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     {
         internal static ListSkillsetsResult DeserializeListSkillsetsResult(JsonElement element)
         {
-            IReadOnlyList<Skillset> value = new List<Skillset>();
+            IReadOnlyList<Skillset> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))

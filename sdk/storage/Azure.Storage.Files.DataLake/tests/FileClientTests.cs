@@ -1055,6 +1055,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.IsFalse(response.Value.IsDirectory);
         }
 
         [Test]

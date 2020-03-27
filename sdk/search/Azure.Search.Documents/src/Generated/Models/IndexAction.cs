@@ -16,6 +16,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of IndexAction. </summary>
         public IndexAction()
         {
+            AdditionalProperties = new Dictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of IndexAction. </summary>
@@ -29,25 +30,25 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The operation to perform on a document in an indexing batch. </summary>
         public IndexActionType? ActionType { get; set; }
-        internal IDictionary<string, object> AdditionalProperties { get; set; } = new Dictionary<string, object>();
+        internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => AdditionalProperties.GetEnumerator();
         /// <inheritdoc />
+        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
+        /// <inheritdoc />
+        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
+        /// <inheritdoc />
         public ICollection<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public ICollection<object> Values => AdditionalProperties.Values;
         /// <inheritdoc />
-        public bool TryGetValue(string key, out object value) => AdditionalProperties.TryGetValue(key, out value);
+        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public void Add(string key, object value) => AdditionalProperties.Add(key, value);
         /// <inheritdoc />
-        public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
-        /// <inheritdoc />
         public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc />
-        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
         /// <inheritdoc />

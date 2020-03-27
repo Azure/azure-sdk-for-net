@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
     {
         internal static ListSynonymMapsResult DeserializeListSynonymMapsResult(JsonElement element)
         {
-            IReadOnlyList<SynonymMap> value = new List<SynonymMap>();
+            IReadOnlyList<SynonymMap> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))

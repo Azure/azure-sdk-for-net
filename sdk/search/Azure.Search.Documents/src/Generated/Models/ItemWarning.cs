@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Represents an item-level warning. </summary>
@@ -14,6 +16,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="message"> The message describing the warning that occurred while processing the item. </param>
         internal ItemWarning(string message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             Message = message;
         }
 

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,12 +16,24 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of ListIndexersResult. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
+        internal ListIndexersResult(IEnumerable<SearchIndexer> indexers)
+        {
+            if (indexers == null)
+            {
+                throw new ArgumentNullException(nameof(indexers));
+            }
+
+            Indexers = indexers.ToArray();
+        }
+
+        /// <summary> Initializes a new instance of ListIndexersResult. </summary>
+        /// <param name="indexers"> The indexers in the Search service. </param>
         internal ListIndexersResult(IReadOnlyList<SearchIndexer> indexers)
         {
             Indexers = indexers;
         }
 
         /// <summary> The indexers in the Search service. </summary>
-        public IReadOnlyList<SearchIndexer> Indexers { get; } = new List<SearchIndexer>();
+        public IReadOnlyList<SearchIndexer> Indexers { get; }
     }
 }

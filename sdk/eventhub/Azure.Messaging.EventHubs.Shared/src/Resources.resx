@@ -282,4 +282,7 @@
   <data name="OperationLoadBalancing" xml:space="preserve">
     <value>Executing a load balancing cycle.</value>
   </data>
+  <data name="OperationSurrenderOwnership" xml:space="preserve">
+    <value>Surrendering ownership of a partition.</value>
+  </data>
 </root>

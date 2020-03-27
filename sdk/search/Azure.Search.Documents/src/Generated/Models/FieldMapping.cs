@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Defines a mapping between a field in a data source and a target field in an index. </summary>
@@ -14,6 +16,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="sourceFieldName"> The name of the field in the data source. </param>
         public FieldMapping(string sourceFieldName)
         {
+            if (sourceFieldName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceFieldName));
+            }
+
             SourceFieldName = sourceFieldName;
         }
 

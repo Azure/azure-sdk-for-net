@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -18,12 +20,21 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text"> Text content of the cell. </param>
         /// <param name="boundingBox"> Bounding box of the cell. </param>
         /// <param name="confidence"> Confidence value. </param>
-        internal DataTableCell_internal(int rowIndex, int columnIndex, string text, IReadOnlyList<float> boundingBox, float confidence)
+        internal DataTableCell_internal(int rowIndex, int columnIndex, string text, IEnumerable<float> boundingBox, float confidence)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (boundingBox == null)
+            {
+                throw new ArgumentNullException(nameof(boundingBox));
+            }
+
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
             Text = text;
-            BoundingBox = boundingBox;
+            BoundingBox = boundingBox.ToArray();
             Confidence = confidence;
         }
 
@@ -63,7 +74,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Text content of the cell. </summary>
         public string Text { get; }
         /// <summary> Bounding box of the cell. </summary>
-        public IReadOnlyList<float> BoundingBox { get; } = new List<float>();
+        public IReadOnlyList<float> BoundingBox { get; }
         /// <summary> Confidence value. </summary>
         public float Confidence { get; }
         /// <summary> When includeTextDetails is set to true, a list of references to the text elements constituting this table cell. </summary>

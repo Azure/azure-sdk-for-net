@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -17,6 +18,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="type"> The data type of the field. </param>
         public SearchField(string name, DataType type)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             Name = name;
             Type = type;
         }

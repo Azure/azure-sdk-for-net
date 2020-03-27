@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -14,12 +16,24 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
         /// <param name="dataSources"> The datasources in the Search service. </param>
+        internal ListDataSourcesResult(IEnumerable<DataSource> dataSources)
+        {
+            if (dataSources == null)
+            {
+                throw new ArgumentNullException(nameof(dataSources));
+            }
+
+            DataSources = dataSources.ToArray();
+        }
+
+        /// <summary> Initializes a new instance of ListDataSourcesResult. </summary>
+        /// <param name="dataSources"> The datasources in the Search service. </param>
         internal ListDataSourcesResult(IReadOnlyList<DataSource> dataSources)
         {
             DataSources = dataSources;
         }
 
         /// <summary> The datasources in the Search service. </summary>
-        public IReadOnlyList<DataSource> DataSources { get; } = new List<DataSource>();
+        public IReadOnlyList<DataSource> DataSources { get; }
     }
 }

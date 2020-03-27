@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             string documentName = default;
             int pages = default;
-            IReadOnlyList<FormRecognizerError> errors = new List<FormRecognizerError>();
+            IReadOnlyList<FormRecognizerError> errors = default;
             TrainingStatus status = default;
             foreach (var property in element.EnumerateObject())
             {

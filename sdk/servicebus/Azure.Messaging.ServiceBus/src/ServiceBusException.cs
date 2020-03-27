@@ -48,10 +48,18 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (string.IsNullOrEmpty(EntityPath))
                 {
-                    return base.Message;
+                    return string.Format(
+                        CultureInfo.InvariantCulture,
+                        "{0} ({1})",
+                        base.Message,
+                        Reason);
                 }
-
-                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, EntityPath);
+                return string.Format(
+                    CultureInfo.InvariantCulture,
+                    "{0} ({1} - {2})",
+                    base.Message,
+                    EntityPath,
+                    Reason);
             }
         }
 
@@ -69,7 +77,8 @@ namespace Azure.Messaging.ServiceBus
             string message,
             FailureReason reason,
             string entityPath = default,
-            Exception innerException = default) : this(default, entityPath, message, reason, innerException)
+            Exception innerException = default) :
+            this(default, message, entityPath, reason, innerException)
         {
             switch (reason)
             {

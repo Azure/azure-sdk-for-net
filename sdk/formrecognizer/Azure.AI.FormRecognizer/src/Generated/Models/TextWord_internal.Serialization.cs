@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal static TextWord_internal DeserializeTextWord_internal(JsonElement element)
         {
             string text = default;
-            IReadOnlyList<float> boundingBox = new List<float>();
+            IReadOnlyList<float> boundingBox = default;
             float? confidence = default;
             foreach (var property in element.EnumerateObject())
             {

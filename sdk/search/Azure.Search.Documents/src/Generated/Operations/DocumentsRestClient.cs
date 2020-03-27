@@ -73,7 +73,6 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<long>> CountAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
@@ -105,7 +104,6 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<long> Count(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try

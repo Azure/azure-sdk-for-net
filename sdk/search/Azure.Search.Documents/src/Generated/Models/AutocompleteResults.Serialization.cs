@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
         internal static AutocompleteResults DeserializeAutocompleteResults(JsonElement element)
         {
             double? searchcoverage = default;
-            IReadOnlyList<Autocompletion> value = new List<Autocompletion>();
+            IReadOnlyList<Autocompletion> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@search.coverage"))

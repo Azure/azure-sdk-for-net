@@ -189,7 +189,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillsetName"> The name of the skillset to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -223,7 +223,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillsetName"> The name of the skillset to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -276,7 +276,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Skillset>> GetAsync(string skillsetName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -313,7 +313,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Skillset> Get(string skillsetName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -371,12 +371,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> List all skillsets in a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ListSkillsetsResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("SkillsetsClient.List");
             scope.Start();
             try
@@ -404,12 +403,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> List all skillsets in a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListSkillsetsResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("SkillsetsClient.List");
             scope.Start();
             try
@@ -459,7 +457,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new skillset in a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
+        /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Skillset>> CreateAsync(Guid? xMsClientRequestId, Skillset skillset, CancellationToken cancellationToken = default)
         {
@@ -496,7 +494,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new skillset in a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
+        /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Skillset> Create(Guid? xMsClientRequestId, Skillset skillset, CancellationToken cancellationToken = default)
         {

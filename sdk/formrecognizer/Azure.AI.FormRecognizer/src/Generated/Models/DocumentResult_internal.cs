@@ -5,13 +5,39 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> A set of extracted fields corresponding to the input document. </summary>
     internal partial class DocumentResult_internal
     {
+        /// <summary> Initializes a new instance of DocumentResult_internal. </summary>
+        /// <param name="docType"> Document type. </param>
+        /// <param name="pageRange"> First and last page number where the document is found. </param>
+        /// <param name="fields"> Dictionary of named field values. </param>
+        internal DocumentResult_internal(string docType, IEnumerable<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
+        {
+            if (docType == null)
+            {
+                throw new ArgumentNullException(nameof(docType));
+            }
+            if (pageRange == null)
+            {
+                throw new ArgumentNullException(nameof(pageRange));
+            }
+            if (fields == null)
+            {
+                throw new ArgumentNullException(nameof(fields));
+            }
+
+            DocType = docType;
+            PageRange = pageRange.ToArray();
+            Fields = fields;
+        }
+
         /// <summary> Initializes a new instance of DocumentResult_internal. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
@@ -26,8 +52,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> Document type. </summary>
         public string DocType { get; }
         /// <summary> First and last page number where the document is found. </summary>
-        public IReadOnlyList<int> PageRange { get; } = new List<int>();
+        public IReadOnlyList<int> PageRange { get; }
         /// <summary> Dictionary of named field values. </summary>
-        public IReadOnlyDictionary<string, FieldValue_internal> Fields { get; } = new Dictionary<string, FieldValue_internal>();
+        public IReadOnlyDictionary<string, FieldValue_internal> Fields { get; }
     }
 }

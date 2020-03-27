@@ -158,12 +158,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
         /// </summary>
-        public const string DeadLetterReasonHeader = "DeadLetterReason";
+        internal const string DeadLetterReasonHeader = "DeadLetterReason";
 
         /// <summary>
         /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
         /// </summary>
-        public static string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
+        internal const string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
 
         /// <summary>
         /// Gets the lock token for the current message.
@@ -253,6 +253,36 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 return EnqueuedTime.Add(TimeToLive);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string DeadLetterReason
+        {
+            get
+            {
+                if (Properties.TryGetValue(DeadLetterReasonHeader, out object reason))
+                {
+                    return reason as string;
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string DeadLetterErrorDescription
+        {
+            get
+            {
+                if (Properties.TryGetValue(DeadLetterErrorDescriptionHeader, out object description))
+                {
+                    return description as string;
+                }
+                return null;
             }
         }
 

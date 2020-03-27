@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A character filter that replaces characters in the input string. It uses a regular expression to identify character sequences to preserve and a replacement pattern to identify characters to replace. For example, given the input text &quot;aa bb aa bb&quot;, pattern &quot;(aa)\s+(bb)&quot;, and replacement &quot;$1#$2&quot;, the result would be &quot;aa#bb aa#bb&quot;. This character filter is implemented using Apache Lucene. </summary>
@@ -16,6 +18,19 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         public PatternReplaceCharFilter(string pattern, string replacement, string name) : base(name)
         {
+            if (pattern == null)
+            {
+                throw new ArgumentNullException(nameof(pattern));
+            }
+            if (replacement == null)
+            {
+                throw new ArgumentNullException(nameof(replacement));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             Pattern = pattern;
             Replacement = replacement;
             ODataType = "#Microsoft.Azure.Search.PatternReplaceCharFilter";

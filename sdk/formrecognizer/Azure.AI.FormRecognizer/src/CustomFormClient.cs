@@ -168,7 +168,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -202,7 +202,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken).ConfigureAwait(false);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -240,7 +240,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -274,7 +274,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken).ConfigureAwait(false);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
