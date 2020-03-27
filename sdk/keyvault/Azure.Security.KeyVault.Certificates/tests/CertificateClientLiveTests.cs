@@ -559,12 +559,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
-        [Ignore("Once get correct provider name will remove ignore attribute.")]
         public async Task VerifyGetIssuer()
         {
-            string issuerName = WellKnownIssuerNames.Self;
+            string issuerName = Recording.GenerateId();
 
-            string providerName = "CN=Azure SDK";
+            string providerName = "SSLAdmin";
 
             CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
 
@@ -572,20 +571,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await Client.CreateIssuerAsync(issuer);
 
-            CertificateIssuer getIssuer = await Client.GetIssuerAsync(WellKnownIssuerNames.Self);
+            CertificateIssuer getIssuer = await Client.GetIssuerAsync(issuerName);
 
             Assert.NotNull(getIssuer);
             Assert.NotNull(getIssuer.Id);
-            Assert.AreEqual(WellKnownIssuerNames.Self, getIssuer.Name);
+            Assert.AreEqual(issuer.Provider, getIssuer.Provider);
         }
 
         [Test]
-        [Ignore("Once get correct provider name will remove ignore attribute.")]
         public async Task VerifyUpdateIssuer()
         {
-            string issuerName = WellKnownIssuerNames.Self;
+            string issuerName = Recording.GenerateId();
 
-            string providerName = "CN=Azure SDK";
+            string providerName = "SSLAdmin";
 
             CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
 
@@ -593,17 +591,43 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await Client.CreateIssuerAsync(issuer);
 
-            string updateIssuerName = "updateIssuer";
-            IssuerProperties issuerProperties = new IssuerProperties(updateIssuerName);
-            Assert.NotNull(issuerProperties);
-
-            issuer = new CertificateIssuer(issuerProperties);
+            string updateProvider = "OneCert";
+            issuer = new CertificateIssuer(issuerName, updateProvider);
+            Assert.NotNull(issuer);
 
             CertificateIssuer updateIssuer = await Client.UpdateIssuerAsync(issuer);
 
             Assert.NotNull(updateIssuer);
             Assert.NotNull(updateIssuer.UpdatedOn);
-            Assert.AreEqual(updateIssuerName, updateIssuer.Name);
+            Assert.AreEqual(updateProvider, updateIssuer.Provider);
+        }
+
+        [Test]
+        public async Task VerifyGetPropertiesOfIssuersAsync()
+        {
+            string issuerName = Recording.GenerateId();
+            string issuerName1 = Recording.GenerateId();
+
+            string providerName = "SSLAdmin";
+            string providerName1 = "OneCert";
+
+            CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
+            CertificateIssuer issuer1 = new CertificateIssuer(issuerName1, providerName1);
+
+            RegisterForCleanupIssuer(issuerName);
+            RegisterForCleanupIssuer(issuerName1);
+
+            await Client.CreateIssuerAsync(issuer);
+            await Client.CreateIssuerAsync(issuer1);
+
+            List<IssuerProperties> issuerProperties = await Client.GetPropertiesOfIssuersAsync().ToEnumerableAsync();
+
+            foreach (IssuerProperties issuerPropertie in issuerProperties)
+            {
+                Assert.NotNull(issuerPropertie);
+                IssuerProperties returnPropertie = issuerProperties.Single(s => s.Id == issuerPropertie.Id);
+                Assert.AreEqual(issuerPropertie.Provider, returnPropertie.Provider);
+            }
         }
 
         [Test]
