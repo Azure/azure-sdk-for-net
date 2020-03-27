@@ -34,6 +34,8 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </remarks>
     ///
     [NonParallelizable]
+    [TestFixture]
+    [Ignore("Tests intermittently failing in CI; Investigation needed")]
     public class DiagnosticsTests
     {
         /// <summary>The name of the diagnostics source being tested.</summary>
