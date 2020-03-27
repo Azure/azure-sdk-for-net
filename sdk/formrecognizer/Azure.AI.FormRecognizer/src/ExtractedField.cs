@@ -52,6 +52,10 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
+        public float? Confidence { get; }
+
+        /// <summary>
+        /// </summary>
         public int? PageNumber { get; internal set; }
 
         //// TODO: Refactor to move OCR code to a common file, rather than it living in this file.

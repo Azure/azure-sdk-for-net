@@ -15,6 +15,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormPageElements> TextElements { get; }
+        public IReadOnlyList<PageTextElements> TextElements { get; }
     }
 }

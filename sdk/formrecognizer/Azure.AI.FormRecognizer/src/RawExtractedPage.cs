@@ -7,9 +7,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormPageElements
+    public class PageTextElements
     {
-        internal FormPageElements(ReadResult_internal readResult)
+        internal PageTextElements(ReadResult_internal readResult)
         {
             PageNumber = readResult.Page;
             Angle = readResult.Angle;

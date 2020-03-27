@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormPageElements> TextElements { get; }
+        public IReadOnlyList<PageTextElements> TextElements { get; }
 
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
         {
@@ -233,12 +233,12 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue("Items", out value))
             {
-                Debug.Assert(value.Type == FieldValueType.ArrayType);
+                Debug.Assert(value.Type == FieldValueType.ListType);
 
                 ICollection<FieldValue_internal> arrayValue = value.ValueArray;
                 foreach (var receiptItemValue in arrayValue)
                 {
-                    Debug.Assert(receiptItemValue.Type == FieldValueType.ObjectType);
+                    Debug.Assert(receiptItemValue.Type == FieldValueType.DictionaryType);
 
                     IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 
@@ -255,14 +255,14 @@ namespace Azure.AI.FormRecognizer.Models
             return items;
         }
 
-        private static IReadOnlyList<FormPageElements> ConvertPageText(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<PageTextElements> ConvertPageText(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
         {
-            List<FormPageElements> pageTexts = new List<FormPageElements>();
+            List<PageTextElements> pageTexts = new List<PageTextElements>();
             for (int i = startPageNumber - 1; i < endPageNumber - 1; i++)
             {
                 if (readResults[i].Lines != null)
                 {
-                    pageTexts.Add(new FormPageElements(readResults[i]));
+                    pageTexts.Add(new PageTextElements(readResults[i]));
                 }
             }
             return pageTexts;

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
+using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -73,41 +73,84 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as an <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <returns></returns>
-        public DateTimeOffset AsDateTimeOffset()
+#pragma warning disable CA1822
+        public DateTime AsDate()
+#pragma warning restore CA1822
         {
-            if (Type != FieldValueType.DateType && Type != FieldValueType.TimeType)
-            {
-                throw new InvalidOperationException($"Cannot get field as DateTimeOffset.  Field value's type is {Type}.");
-            }
+            throw new NotImplementedException();
 
-            if (_fieldValue.ValueDate == null && _fieldValue.ValueTime == null)
-            {
-                throw new InvalidOperationException($"Field date and time values are both null.");
-            }
+            //if (Type != FieldValueType.DateType && Type != FieldValueType.TimeType)
+            //{
+            //    throw new InvalidOperationException($"Cannot get field as DateTimeOffset.  Field value's type is {Type}.");
+            //}
 
-            DateTimeOffset? date = _fieldValue.ValueDate == null ? default : DateTimeOffset.Parse(_fieldValue.ValueDate, CultureInfo.InvariantCulture);
-            TimeSpan? time = _fieldValue.ValueTime == null ? default : TimeSpan.Parse(_fieldValue.ValueTime, CultureInfo.InvariantCulture);
+            //if (_fieldValue.ValueDate == null && _fieldValue.ValueTime == null)
+            //{
+            //    throw new InvalidOperationException($"Field date and time values are both null.");
+            //}
 
-            DateTimeOffset dateTimeOffset;
+            //DateTimeOffset? date = _fieldValue.ValueDate == null ? default : DateTimeOffset.Parse(_fieldValue.ValueDate, CultureInfo.InvariantCulture);
+            //TimeSpan? time = _fieldValue.ValueTime == null ? default : TimeSpan.Parse(_fieldValue.ValueTime, CultureInfo.InvariantCulture);
 
-            if (date.HasValue)
-            {
-                dateTimeOffset = new DateTimeOffset(date.Value.DateTime);
-            }
+            //DateTimeOffset dateTimeOffset;
 
-            if (time.HasValue)
-            {
-                dateTimeOffset.Add(time.Value);
-            }
+            //if (date.HasValue)
+            //{
+            //    dateTimeOffset = new DateTimeOffset(date.Value.DateTime);
+            //}
 
-            return dateTimeOffset;
+            //if (time.HasValue)
+            //{
+            //    dateTimeOffset.Add(time.Value);
+            //}
+
+            //return dateTimeOffset;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as an <see cref="DateTimeOffset"/>.
+        /// </summary>
+        /// <returns></returns>
+#pragma warning disable CA1822
+        public TimeSpan AsTime()
+#pragma warning restore CA1822
+        {
+            throw new NotImplementedException();
+            //if (Type != FieldValueType.DateType && Type != FieldValueType.TimeType)
+            //{
+            //    throw new InvalidOperationException($"Cannot get field as DateTimeOffset.  Field value's type is {Type}.");
+            //}
+
+            //if (_fieldValue.ValueDate == null && _fieldValue.ValueTime == null)
+            //{
+            //    throw new InvalidOperationException($"Field date and time values are both null.");
+            //}
+
+            //DateTimeOffset? date = _fieldValue.ValueDate == null ? default : DateTimeOffset.Parse(_fieldValue.ValueDate, CultureInfo.InvariantCulture);
+            //TimeSpan? time = _fieldValue.ValueTime == null ? default : TimeSpan.Parse(_fieldValue.ValueTime, CultureInfo.InvariantCulture);
+
+            //DateTimeOffset dateTimeOffset;
+
+            //if (date.HasValue)
+            //{
+            //    dateTimeOffset = new DateTimeOffset(date.Value.DateTime);
+            //}
+
+            //if (time.HasValue)
+            //{
+            //    dateTimeOffset.Add(time.Value);
+            //}
+
+            //return dateTimeOffset;
         }
 
         /// <summary>
         /// Gets the value of the field as a phone number <see cref="string"/>.
         /// </summary>
         /// <returns></returns>
+#pragma warning disable CA1822
         public string AsPhoneNumber()
+#pragma warning restore CA1822
         {
             if (Type != FieldValueType.PhoneNumberType)
             {
@@ -115,6 +158,26 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return _fieldValue.ValuePhoneNumber;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+#pragma warning disable CA1822
+        public IReadOnlyList<FieldValue> AsList()
+#pragma warning restore CA1822
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+#pragma warning disable CA1822
+        public IReadOnlyDictionary<string, FieldValue> AsDictionary()
+#pragma warning restore CA1822
+        {
+            throw new NotImplementedException();
         }
     }
 }

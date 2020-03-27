@@ -19,8 +19,8 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValueType.PhoneNumberType => "phoneNumber",
             FieldValueType.FloatType => "number",
             FieldValueType.IntegerType => "integer",
-            FieldValueType.ArrayType => "array",
-            FieldValueType.ObjectType => "object",
+            FieldValueType.ListType => "array",
+            FieldValueType.DictionaryType => "object",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.")
         };
 
@@ -32,8 +32,8 @@ namespace Azure.AI.FormRecognizer.Models
             if (string.Equals(value, "phoneNumber", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.PhoneNumberType;
             if (string.Equals(value, "number", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.FloatType;
             if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.IntegerType;
-            if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.ArrayType;
-            if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.ObjectType;
+            if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.ListType;
+            if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.DictionaryType;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.");
         }
     }

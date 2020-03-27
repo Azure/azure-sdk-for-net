@@ -12,12 +12,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         /// <param name="textElements"></param>
-        /// <param name="confidence"></param>
         /// <param name="boundingBox"></param>
         /// <param name="text"></param>
-        public FieldText(string text, BoundingBox boundingBox, float? confidence, IReadOnlyList<FormTextElement> textElements)
+        internal FieldText(string text, BoundingBox boundingBox, IReadOnlyList<FormTextElement> textElements)
         {
-            Confidence = confidence;
             BoundingBox = boundingBox;
             Text = text;
             TextElements = textElements;
@@ -26,10 +24,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         public IReadOnlyList<FormTextElement> TextElements { get; }
-
-        /// <summary>
-        /// </summary>
-        public float? Confidence { get; }
 
         /// <summary>
         /// </summary>

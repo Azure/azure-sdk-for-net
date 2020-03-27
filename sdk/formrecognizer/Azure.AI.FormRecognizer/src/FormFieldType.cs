@@ -34,9 +34,9 @@ namespace Azure.AI.FormRecognizer.Models
         IntegerType,
         /// <summary> array. </summary>
         [CodeGenSchemaMember("Array")]
-        ArrayType,
+        ListType,
         /// <summary> object. </summary>
         [CodeGenSchemaMember("Object")]
-        ObjectType
+        DictionaryType
     }
 }
