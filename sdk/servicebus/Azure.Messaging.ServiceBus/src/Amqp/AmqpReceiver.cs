@@ -935,67 +935,147 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         public override async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            try
-            {
-                DateTimeOffset lockedUntil;
-                await _retryPolicy.RunOperation(
-                    async (timeout) =>
-                    {
-                        lockedUntil = await RenewSessionLockInternal(
-                            timeout).ConfigureAwait(false);
-                    },
-                    ConnectionScope,
-                    cancellationToken).ConfigureAwait(false);
-                SessionLockedUntil = lockedUntil;
-            }
-            catch (Exception exception)
-            {
-                // MessagingEventSource.Log.RenewSessionLockException(this.SessionId, exception);
-                throw exception;
-            }
-            finally
-            {
-                // this.diagnosticSource.RenewSessionLockStop(activity, this.SessionId);
-            }
-            // MessagingEventSource.Log.MessageRenewLockStop(this.SessionId);
+            DateTimeOffset lockedUntil;
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                {
+                    lockedUntil = await RenewSessionLockInternal(
+                        timeout).ConfigureAwait(false);
+                },
+                ConnectionScope,
+                cancellationToken).ConfigureAwait(false);
+            SessionLockedUntil = lockedUntil;
         }
 
-        internal async Task<DateTimeOffset> RenewSessionLockInternal(
+        internal async Task<DateTimeOffset> RenewSessionLockInternal(TimeSpan timeout)
+        {
+            // Create an AmqpRequest Message to renew  lock
+            var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, timeout, null);
+
+            if (_receiveLink.TryGetOpenedObject(out var receiveLink))
+            {
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+            }
+
+            amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
+
+            AmqpResponseMessage amqpResponseMessage = await ExecuteRequest(
+                timeout,
+                amqpRequestMessage).ConfigureAwait(false);
+
+            DateTimeOffset lockedUntil;
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                lockedUntil = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
+            }
+            else
+            {
+                throw amqpResponseMessage.ToMessagingContractException();
+            }
+            return lockedUntil;
+        }
+
+        /// <summary>
+        /// Gets the session state.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The session state as byte array.</returns>
+        public override async Task<byte[]> GetStateAsync(CancellationToken cancellationToken = default)
+        {
+            byte[] sessionState = null;
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                {
+                    sessionState = await GetStateInternal(timeout).ConfigureAwait(false);
+                },
+                ConnectionScope,
+                cancellationToken).ConfigureAwait(false);
+            return sessionState;
+        }
+
+        internal async Task<byte[]> GetStateInternal(TimeSpan timeout)
+        {
+            var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, timeout, null);
+
+            if (_receiveLink.TryGetOpenedObject(out var receiveLink))
+            {
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+            }
+
+            amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
+
+            var amqpResponseMessage = await ExecuteRequest(timeout, amqpRequestMessage).ConfigureAwait(false);
+
+            byte[] sessionState = null;
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                if (amqpResponseMessage.Map[ManagementConstants.Properties.SessionState] != null)
+                {
+                    sessionState = amqpResponseMessage.GetValue<ArraySegment<byte>>(ManagementConstants.Properties.SessionState).Array;
+                }
+            }
+            else
+            {
+                throw amqpResponseMessage.ToMessagingContractException();
+            }
+
+            return sessionState;
+        }
+
+        /// <summary>
+        /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
+        /// </summary>
+        ///
+        /// <param name="sessionState">A byte array of session state</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        public override async Task SetStateAsync(
+            byte[] sessionState,
+            CancellationToken cancellationToken)
+        {
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                {
+                    await SetStateInternal(
+                        sessionState,
+                        timeout).ConfigureAwait(false);
+                },
+                ConnectionScope,
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        internal async Task SetStateInternal(
+            byte[] sessionState,
             TimeSpan timeout)
         {
-            try
+            var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, timeout, null);
+
+            if (_receiveLink.TryGetOpenedObject(out var receiveLink))
             {
-                // Create an AmqpRequest Message to renew  lock
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, timeout, null);
-
-                if (_receiveLink.TryGetOpenedObject(out var receiveLink))
-                {
-                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
-                }
-
-                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
-
-                AmqpResponseMessage amqpResponseMessage = await ExecuteRequest(
-                    timeout,
-                    amqpRequestMessage).ConfigureAwait(false);
-
-                DateTimeOffset lockedUntil;
-                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
-                {
-                    lockedUntil = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
-                }
-                else
-                {
-                    throw amqpResponseMessage.ToMessagingContractException();
-                }
-                return lockedUntil;
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
             }
-            catch (Exception exception)
+
+            amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
+
+            if (sessionState != null)
             {
-                // TODO: throw AmqpExceptionHelper.GetClientException(exception);
-                throw exception;
+                var value = new ArraySegment<byte>(sessionState);
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = value;
+            }
+            else
+            {
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = null;
+            }
+
+            var amqpResponseMessage = await ExecuteRequest(timeout, amqpRequestMessage).ConfigureAwait(false);
+            if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
+            {
+                throw amqpResponseMessage.ToMessagingContractException();
             }
         }
 

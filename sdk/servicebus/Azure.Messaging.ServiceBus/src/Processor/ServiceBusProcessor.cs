@@ -536,7 +536,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             ServiceBusReceiver receiver = null;
-            ExceptionReceivedEventArgsAction action = ExceptionReceivedEventArgsAction.Receive;
+            ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
             bool useThreadLocalReceiver = false;
             CancellationTokenSource renewSessionLockCancellationSource = null;
             Task renewSessionLock = null;
@@ -545,7 +545,7 @@ namespace Azure.Messaging.ServiceBus
                 ServiceBusReceiverOptions receiverOptions = CreateReceiverOptions();
                 if (IsSessionProcessor && _sessionId == null)
                 {
-                    action = ExceptionReceivedEventArgsAction.AcceptMessageSession;
+                    errorSource = ServiceBusErrorSource.AcceptMessageSession;
                     useThreadLocalReceiver = true;
                     await MaxConcurrentAcceptSessionsSemaphore.WaitAsync().ConfigureAwait(false);
                     try
@@ -567,7 +567,7 @@ namespace Azure.Messaging.ServiceBus
                         }
                         renewSessionLockCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                         renewSessionLock = RenewSessionLock(
-                            receiver: (ServiceBusSessionReceiver) receiver,
+                            receiver: (ServiceBusSessionReceiver)receiver,
                             renewSessionLockCancellationSource);
                     }
                     finally
@@ -583,7 +583,7 @@ namespace Azure.Messaging.ServiceBus
                 // loop within the context of this thread
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    action = ExceptionReceivedEventArgsAction.Receive;
+                    errorSource = ServiceBusErrorSource.Receive;
                     ServiceBusReceivedMessage message = await receiver.ReceiveAsync(
                         cancellationToken).ConfigureAwait(false);
                     if (message == null)
@@ -622,7 +622,7 @@ namespace Azure.Messaging.ServiceBus
                 if (!(ex is TaskCanceledException))
                 {
                     await RaiseExceptionReceived(
-                            new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
+                            new ProcessErrorEventArgs(ex, errorSource, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
                 }
             }
             finally
@@ -670,7 +670,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationToken processorCancellationToken)
         {
-            ExceptionReceivedEventArgsAction action = ExceptionReceivedEventArgsAction.Receive;
+            ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
             CancellationTokenSource renewLockCancellationTokenSource = null;
             Task renewLock = null;
 
@@ -685,7 +685,7 @@ namespace Azure.Messaging.ServiceBus
                         renewLockCancellationTokenSource);
                 }
 
-                action = ExceptionReceivedEventArgsAction.UserCallback;
+                errorSource = ServiceBusErrorSource.UserCallback;
 
                 if (IsSessionProcessor)
                 {
@@ -708,7 +708,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete)
                 {
-                    action = ExceptionReceivedEventArgsAction.Complete;
+                    errorSource = ServiceBusErrorSource.Complete;
                     // don't pass the processor cancellation token
                     // as we want in flight autocompletion to be able
                     // to finish
@@ -724,7 +724,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 processorCancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 await RaiseExceptionReceived(
-                    new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
+                    new ProcessErrorEventArgs(ex, errorSource, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
 
                 // if the message or session lock was lost, do not attempt to abandon the message
                 if (ReceiveMode == ReceiveMode.PeekLock &&
@@ -792,7 +792,7 @@ namespace Azure.Messaging.ServiceBus
                         await RaiseExceptionReceived(
                             new ProcessErrorEventArgs(
                                 exception,
-                                ExceptionReceivedEventArgsAction.RenewLock,
+                                ServiceBusErrorSource.RenewLock,
                                 FullyQualifiedNamespace,
                                 EntityPath)).ConfigureAwait(false);
                     }
@@ -853,7 +853,7 @@ namespace Azure.Messaging.ServiceBus
                         await RaiseExceptionReceived(
                             new ProcessErrorEventArgs(
                                 exception,
-                                ExceptionReceivedEventArgsAction.RenewLock,
+                                ServiceBusErrorSource.RenewLock,
                                 FullyQualifiedNamespace,
                                 EntityPath)).ConfigureAwait(false);
                     }
