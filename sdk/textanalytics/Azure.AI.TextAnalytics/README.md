@@ -327,6 +327,7 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Sample6_RecognizeLinkedEntitiesBatch.cs][recognize_linked_entities_sample2] - Recognize linked entities of a collection of documents in different languages.
 
 ## Contributing
+See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
@@ -362,6 +363,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
+[contributing]: ../../../CONTRIBUTING.md
 
 [detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
 [detect_language_sample1]: tests/samples/Sample1_DetectLanguageBatchConvenience.cs
