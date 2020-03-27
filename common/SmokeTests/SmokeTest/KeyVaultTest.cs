@@ -39,9 +39,9 @@ namespace SmokeTest
 
             string keyVaultUri = Environment.GetEnvironmentVariable("KEY_VAULT_URI");
             var authorityHost = GetAuthorityHost(Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST_ALIAS"), KnownAuthorityHosts.AzureCloud);
-
+            Console.WriteLine(authorityHost);
             var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions 
-            { 
+            {
                 AuthorityHost = authorityHost
             };
 
