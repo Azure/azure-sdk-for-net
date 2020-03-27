@@ -2600,5 +2600,26 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string SharePointOnlineListLinkedService = @"
+{
+    name: ""LinkedService-SharePointOnlineList"",
+    properties:
+    {
+        type: ""SharePointOnlineList"",
+        description: ""test description"",
+        typeProperties:
+        {
+            siteUrl : ""http://localhost/webhdfs/v1/"",
+            tenantId: ""tenantId"",
+            servicePrincipalId: ""servicePrincipalId"",
+            servicePrincipalKey : {
+                value : ""servicePrincipalKey"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
     }
 }
