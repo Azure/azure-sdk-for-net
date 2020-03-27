@@ -37,48 +37,44 @@ namespace Azure.Management.Storage
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
-        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
+        /// <param name="blobContainer"> Properties of the blob container to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BlobContainer>> CreateAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobContainer>> CreateAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(resourceGroupName, accountName, containerName, publicAccess, metadata, cancellationToken).ConfigureAwait(false);
+            return await RestClient.CreateAsync(resourceGroupName, accountName, containerName, blobContainer, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
-        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
+        /// <param name="blobContainer"> Properties of the blob container to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BlobContainer> Create(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
+        public virtual Response<BlobContainer> Create(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(resourceGroupName, accountName, containerName, publicAccess, metadata, cancellationToken);
+            return RestClient.Create(resourceGroupName, accountName, containerName, blobContainer, cancellationToken);
         }
 
         /// <summary> Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn&apos;t already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
-        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
+        /// <param name="blobContainer"> Properties of the blob container to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BlobContainer>> UpdateAsync(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobContainer>> UpdateAsync(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
         {
-            return await RestClient.UpdateAsync(resourceGroupName, accountName, containerName, publicAccess, metadata, cancellationToken).ConfigureAwait(false);
+            return await RestClient.UpdateAsync(resourceGroupName, accountName, containerName, blobContainer, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Updates container properties as specified in request body. Properties not mentioned in the request will be unchanged. Update fails if the specified container doesn&apos;t already exist. </summary>
         /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
-        /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
-        /// <param name="metadata"> A name-value pair to associate with the container as metadata. </param>
+        /// <param name="blobContainer"> Properties of the blob container to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BlobContainer> Update(string resourceGroupName, string accountName, string containerName, PublicAccess? publicAccess, IDictionary<string, string> metadata, CancellationToken cancellationToken = default)
+        public virtual Response<BlobContainer> Update(string resourceGroupName, string accountName, string containerName, BlobContainer blobContainer, CancellationToken cancellationToken = default)
         {
-            return RestClient.Update(resourceGroupName, accountName, containerName, publicAccess, metadata, cancellationToken);
+            return RestClient.Update(resourceGroupName, accountName, containerName, blobContainer, cancellationToken);
         }
 
         /// <summary> Gets properties of a specified container. </summary>

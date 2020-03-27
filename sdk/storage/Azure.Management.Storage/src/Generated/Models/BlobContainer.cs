@@ -19,6 +19,8 @@ namespace Azure.Management.Storage.Models
         }
 
         /// <summary> Initializes a new instance of BlobContainer. </summary>
+        /// <param name="defaultEncryptionScope"> Default the container to use specified encryption scope for all writes. </param>
+        /// <param name="denyEncryptionScopeOverride"> Block override of encryption scope from the container default. </param>
         /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
         /// <param name="lastModifiedTime"> Returns the date and time the container was last modified. </param>
         /// <param name="leaseStatus"> The lease status of the container. </param>
@@ -33,8 +35,10 @@ namespace Azure.Management.Storage.Models
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. Ex- Microsoft.Compute/virtualMachines or Microsoft.Storage/storageAccounts. </param>
-        internal BlobContainer(PublicAccess? publicAccess, DateTimeOffset? lastModifiedTime, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, string etag, string id, string name, string type) : base(etag, id, name, type)
+        internal BlobContainer(string defaultEncryptionScope, bool? denyEncryptionScopeOverride, PublicAccess? publicAccess, DateTimeOffset? lastModifiedTime, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDuration? leaseDuration, IDictionary<string, string> metadata, ImmutabilityPolicyProperties immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, string etag, string id, string name, string type) : base(etag, id, name, type)
         {
+            DefaultEncryptionScope = defaultEncryptionScope;
+            DenyEncryptionScopeOverride = denyEncryptionScopeOverride;
             PublicAccess = publicAccess;
             LastModifiedTime = lastModifiedTime;
             LeaseStatus = leaseStatus;
@@ -47,6 +51,10 @@ namespace Azure.Management.Storage.Models
             HasImmutabilityPolicy = hasImmutabilityPolicy;
         }
 
+        /// <summary> Default the container to use specified encryption scope for all writes. </summary>
+        public string DefaultEncryptionScope { get; set; }
+        /// <summary> Block override of encryption scope from the container default. </summary>
+        public bool? DenyEncryptionScopeOverride { get; set; }
         /// <summary> Specifies whether data in the container may be accessed publicly and the level of access. </summary>
         public PublicAccess? PublicAccess { get; set; }
         /// <summary> Returns the date and time the container was last modified. </summary>

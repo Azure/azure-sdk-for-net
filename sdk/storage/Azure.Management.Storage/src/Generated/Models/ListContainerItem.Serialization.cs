@@ -39,6 +39,16 @@ namespace Azure.Management.Storage.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (DefaultEncryptionScope != null)
+            {
+                writer.WritePropertyName("defaultEncryptionScope");
+                writer.WriteStringValue(DefaultEncryptionScope);
+            }
+            if (DenyEncryptionScopeOverride != null)
+            {
+                writer.WritePropertyName("denyEncryptionScopeOverride");
+                writer.WriteBooleanValue(DenyEncryptionScopeOverride.Value);
+            }
             if (PublicAccess != null)
             {
                 writer.WritePropertyName("publicAccess");
@@ -105,6 +115,8 @@ namespace Azure.Management.Storage.Models
             string id = default;
             string name = default;
             string type = default;
+            string defaultEncryptionScope = default;
+            bool? denyEncryptionScopeOverride = default;
             PublicAccess? publicAccess = default;
             DateTimeOffset? lastModifiedTime = default;
             LeaseStatus? leaseStatus = default;
@@ -157,6 +169,24 @@ namespace Azure.Management.Storage.Models
                 {
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("defaultEncryptionScope"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            defaultEncryptionScope = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("denyEncryptionScopeOverride"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            denyEncryptionScopeOverride = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("publicAccess"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -256,7 +286,7 @@ namespace Azure.Management.Storage.Models
                     continue;
                 }
             }
-            return new ListContainerItem(publicAccess, lastModifiedTime, leaseStatus, leaseState, leaseDuration, metadata, immutabilityPolicy, legalHold, hasLegalHold, hasImmutabilityPolicy, etag, id, name, type);
+            return new ListContainerItem(defaultEncryptionScope, denyEncryptionScopeOverride, publicAccess, lastModifiedTime, leaseStatus, leaseState, leaseDuration, metadata, immutabilityPolicy, legalHold, hasLegalHold, hasImmutabilityPolicy, etag, id, name, type);
         }
     }
 }
