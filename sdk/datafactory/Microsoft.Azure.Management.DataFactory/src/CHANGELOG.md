@@ -4,6 +4,7 @@
 ###  Feature Additions
 - Added support for copying data to and from Snowflake using copy activity
 - Added httpRequestTimeout for ODataSource, SapEccSource, SapCloudForCustomerSource, SapCloudForCustomerSink, DynamicsAXSource
+- Added SharePointOnlineListConnector
 
 ## Version 4.8.0
 ###  Feature Additions
