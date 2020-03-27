@@ -342,9 +342,20 @@ namespace Azure.Storage.Files.DataLake
         /// pipeline as the <see cref="DataLakeFileClient"/>.
         /// </summary>
         /// <param name="fileName">The name of the directory.</param>
-        /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
+        /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
             => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
+
+        /// <summary>
+        /// Create a new <see cref="DataLakePathClient"/> object by appending
+        /// <paramref name="pathName"/> to the end of <see cref="Uri"/>.  The
+        /// new <see cref="DataLakePathClient"/> uses the same request policy
+        /// pipeline as the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="pathName">The name of the path.</param>
+        /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
+        public virtual DataLakePathClient GetPathClient(string pathName)
+            => new DataLakePathClient(Uri.AppendToPath(pathName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
