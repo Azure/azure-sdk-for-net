@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// modified date.</param>
         /// <param name="childPackages">The embedded child package
         /// list.</param>
-        public SSISPackageLocation(object packagePath = default(object), string type = default(string), SecretBase packagePassword = default(SecretBase), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object), string packageName = default(string), object packageContent = default(object), string packageLastModifiedDate = default(string), IList<SSISChildPackage> childPackages = default(IList<SSISChildPackage>), SSISAccessCredential configurationAccessCredential = default(SSISAccessCredential))
+        public SSISPackageLocation(object packagePath = default(object), string type = default(string), SecretBase packagePassword = default(SecretBase), SSISAccessCredential accessCredential = default(SSISAccessCredential), object configurationPath = default(object), SSISAccessCredential configurationAccessCredential = default(SSISAccessCredential), string packageName = default(string), object packageContent = default(object), string packageLastModifiedDate = default(string), IList<SSISChildPackage> childPackages = default(IList<SSISChildPackage>))
         {
             PackagePath = packagePath;
             Type = type;
@@ -113,6 +113,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "typeProperties.configurationAccessCredential")]
         public SSISAccessCredential ConfigurationAccessCredential { get; set; }
 
+        /// <summary>
         /// Gets or sets the package name.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.packageName")]
