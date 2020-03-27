@@ -576,6 +576,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(getIssuer);
             Assert.NotNull(getIssuer.Id);
             Assert.AreEqual(issuer.Provider, getIssuer.Provider);
+            //Assert.AreEqual(issuer.Name, getIssuer.Name);
         }
 
         [Test]
@@ -627,6 +628,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.NotNull(issuerPropertie);
                 IssuerProperties returnPropertie = issuerProperties.Single(s => s.Id == issuerPropertie.Id);
                 Assert.AreEqual(issuerPropertie.Provider, returnPropertie.Provider);
+                //Assert.AreEqual(issuerPropertie.Name, returnPropertie.Name);
             }
         }
 
