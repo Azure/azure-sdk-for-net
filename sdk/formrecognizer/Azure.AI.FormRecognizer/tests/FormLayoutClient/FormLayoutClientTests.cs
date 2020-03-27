@@ -12,20 +12,20 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.Tests
 {
     /// <summary>
-    /// The suite of tests for the <see cref="ReceiptClient"/> class.
+    /// The suite of tests for the <see cref="FormLayoutClient"/> class.
     /// </summary>
-    public class ReceiptClientTests : ClientTestBase
+    public class FormLayoutClientTests : ClientTestBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReceiptClientTests"/> class.
+        /// Initializes a new instance of the <see cref="FormLayoutClientTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public ReceiptClientTests(bool isAsync) : base(isAsync)
+        public FormLayoutClientTests(bool isAsync) : base(isAsync)
         {
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient"/> constructors.
+        /// Verifies functionality of the <see cref="FormLayoutClient"/> constructors.
         /// </summary>
         [Test]
         [Ignore("Argument validation not implemented yet.")]
@@ -33,12 +33,12 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var credential = new FormRecognizerApiKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new ReceiptClient(null, credential));
-            Assert.Throws<ArgumentNullException>(() => new ReceiptClient(null, credential, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormLayoutClient(null, credential));
+            Assert.Throws<ArgumentNullException>(() => new FormLayoutClient(null, credential, new FormRecognizerClientOptions()));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient"/> constructors.
+        /// Verifies functionality of the <see cref="FormLayoutClient"/> constructors.
         /// </summary>
         [Test]
         [Ignore("Argument validation not implemented yet.")]
@@ -46,12 +46,12 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var endpoint = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new ReceiptClient(endpoint, null));
-            Assert.Throws<ArgumentNullException>(() => new ReceiptClient(endpoint, null, new FormRecognizerClientOptions()));
+            Assert.Throws<ArgumentNullException>(() => new FormLayoutClient(endpoint, null));
+            Assert.Throws<ArgumentNullException>(() => new FormLayoutClient(endpoint, null, new FormRecognizerClientOptions()));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient"/> constructors.
+        /// Verifies functionality of the <see cref="FormLayoutClient"/> constructors.
         /// </summary>
         [Test]
         [Ignore("Argument validation not implemented yet.")]
@@ -60,27 +60,27 @@ namespace Azure.AI.FormRecognizer.Tests
             var endpoint = new Uri("http://localhost");
             var credential = new FormRecognizerApiKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new ReceiptClient(endpoint, credential, null));
+            Assert.Throws<ArgumentNullException>(() => new FormLayoutClient(endpoint, credential, null));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.StartExtractReceiptsAsync(Stream, ContentType, bool, CancellationToken)"/>
+        /// Verifies functionality of the <see cref="FormLayoutClient.StartExtractLayoutsAsync(Stream, ContentType, CancellationToken)"/>
         /// method.
         /// </summary>
         [Test]
         [Ignore("Argument validation not implemented yet.")]
-        public void StartExtractReceiptsWithStreamRequiresTheStream()
+        public void StartExtractLayoutsWithStreamRequiresTheStream()
         {
             var client = CreateInstrumentedClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartExtractReceiptsAsync(null, ContentType.Jpeg));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartExtractLayoutsAsync(null, ContentType.Jpeg));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.StartExtractReceiptsAsync(Stream, ContentType, bool, CancellationToken)"/>
+        /// Verifies functionality of the <see cref="FormLayoutClient.StartExtractLayoutsAsync(Stream, ContentType, CancellationToken)"/>
         /// method.
         /// </summary>
         [Test]
-        public void StartExtractReceiptsWithStreamRespectsTheCancellationToken()
+        public void StartExtractLayoutsWithStreamRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
 
@@ -88,23 +88,23 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartExtractLayoutsAsync(stream, ContentType.Jpeg, cancellationSource.Token));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.StartExtractReceiptsAsync(Uri, bool, CancellationToken)"/>
+        /// Verifies functionality of the <see cref="FormLayoutClient.StartExtractLayoutsAsync(Uri, CancellationToken)"/>
         /// method.
         /// </summary>
         [Test]
         [Ignore("Argument validation not implemented yet.")]
-        public void StartExtractReceiptsWithUriRequiresTheUri()
+        public void StartExtractLayoutsWithUriRequiresTheUri()
         {
             var client = CreateInstrumentedClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartExtractReceiptsAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartExtractLayoutsAsync(null));
         }
 
         /// <summary>
-        /// Verifies functionality of the <see cref="ReceiptClient.StartExtractReceiptsAsync(Uri, bool, CancellationToken)"/>
+        /// Verifies functionality of the <see cref="FormLayoutClient.StartExtractLayoutsAsync(Uri, CancellationToken)"/>
         /// method.
         /// </summary>
         [Test]
@@ -116,19 +116,19 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartExtractReceiptsAsync(fakeUri, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartExtractLayoutsAsync(fakeUri, cancellationSource.Token));
         }
 
         /// <summary>
-        /// Creates a fake <see cref="ReceiptClient" /> and instruments it to make use of the Azure Core
+        /// Creates a fake <see cref="FormLayoutClient" /> and instruments it to make use of the Azure Core
         /// Test Framework functionalities.
         /// </summary>
-        /// <returns>The instrumented <see cref="ReceiptClient" />.</returns>
-        private ReceiptClient CreateInstrumentedClient()
+        /// <returns>The instrumented <see cref="FormLayoutClient" />.</returns>
+        private FormLayoutClient CreateInstrumentedClient()
         {
             var fakeEndpoint = new Uri("http://localhost");
             var fakeCredential = new FormRecognizerApiKeyCredential("fakeKey");
-            var client = new ReceiptClient(fakeEndpoint, fakeCredential);
+            var client = new FormLayoutClient(fakeEndpoint, fakeCredential);
 
             return InstrumentClient(client);
         }
