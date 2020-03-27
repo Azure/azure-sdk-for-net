@@ -16,8 +16,8 @@ namespace SmokeTest
         {
             { "AzureCloud", KnownAuthorityHosts.AzureCloud },
             { "AzureChinaCloud", KnownAuthorityHosts.AzureChinaCloud },
-            { "AzureGermanCloud ", KnownAuthorityHosts.AzureGermanCloud },
-            { "AzureUSGovernment ", KnownAuthorityHosts.AzureUSGovernment },
+            { "AzureGermanCloud", KnownAuthorityHosts.AzureGermanCloud },
+            { "AzureUSGovernment", KnownAuthorityHosts.AzureUSGovernment },
         };
 
         private static string SecretName = $"SmokeTestSecret-{Guid.NewGuid()}";
@@ -39,7 +39,7 @@ namespace SmokeTest
 
             string keyVaultUri = Environment.GetEnvironmentVariable("KEY_VAULT_URI");
             var authorityHost = GetAuthorityHost(Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST_ALIAS"), KnownAuthorityHosts.AzureCloud);
-            Console.WriteLine(authorityHost);
+
             var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions 
             {
                 AuthorityHost = authorityHost
