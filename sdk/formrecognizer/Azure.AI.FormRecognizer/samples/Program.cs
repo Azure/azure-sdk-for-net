@@ -137,15 +137,15 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 Console.WriteLine($"Field \"{field.Name.Text}\" is made of the following Raw Extracted Words:");
 
-                                if (field.Name.TextElements != null)
+                                if (field.Name.TextContent != null)
                                 {
-                                    foreach (var word in field.Name.TextElements)
+                                    foreach (var word in field.Name.TextContent)
                                     {
                                         Console.WriteLine($"Word is: {word.Text}");
                                     }
                                 }
 
-                                foreach (var word in field.ValueText.TextElements)
+                                foreach (var word in field.ValueText.TextContent)
                                 {
                                     Console.WriteLine($"Word is: {word.Text}");
                                 }
@@ -213,15 +213,15 @@ namespace Azure.AI.FormRecognizer.Samples
                             {
                                 Console.WriteLine($"Field \"{field.Name}\" is made of the following Text Elements:");
 
-                                if (field.Name.TextElements != null)
+                                if (field.Name.TextContent != null)
                                 {
-                                    foreach (var extractedItem in field.Name.TextElements)
+                                    foreach (var extractedItem in field.Name.TextContent)
                                     {
                                         Console.WriteLine(extractedItem.Text);
                                     }
                                 }
 
-                                foreach (var extractedItem in field.ValueText.TextElements)
+                                foreach (var extractedItem in field.ValueText.TextContent)
                                 {
                                     Console.WriteLine(extractedItem.Text);
                                 }
@@ -329,9 +329,9 @@ namespace Azure.AI.FormRecognizer.Samples
                         {
                             Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
 
-                            if (field.ValueText.TextElements != null)
+                            if (field.ValueText.TextContent != null)
                             {
-                                foreach (var extractedItem in field.ValueText.TextElements)
+                                foreach (var extractedItem in field.ValueText.TextContent)
                                 {
                                     Console.WriteLine(extractedItem.Text);
                                 }

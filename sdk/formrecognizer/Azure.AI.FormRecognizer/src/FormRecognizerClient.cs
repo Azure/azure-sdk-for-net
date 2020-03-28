@@ -54,10 +54,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, /* ContentType contentType, */ CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, RecognizeOptions recognizeOptions = default, /* ContentType contentType, */ CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -71,10 +72,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, /* ContentType contentType, */ CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, RecognizeOptions recognizeOptions = default,/* ContentType contentType, */ CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -89,10 +91,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
+        /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual RecognizeContentOperation StartRecognizeContent(Uri formFileUri, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContent(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
@@ -103,10 +106,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
+        /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Uri formFileUri, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
             ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
@@ -122,11 +126,11 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
         /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -141,15 +145,16 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
         /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Uri formFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken);
-            return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            throw new NotImplementedException();
+            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
+            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken);
+            //return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -157,11 +162,11 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
         /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream formFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream formFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -177,15 +182,18 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="modelId">The id of the model to use for extracting form values.</param>
         /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
-        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Uri formFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
+            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
+            //return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         #endregion
@@ -196,11 +204,11 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
         /// <param name="receiptLocale"></param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, string receiptLocale, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, string receiptLocale, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -215,15 +223,17 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
         /// <param name="receiptLocale"></param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Uri receiptFileUri, string receiptLocale, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Uri receiptFileUri, string receiptLocale, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            throw new NotImplementedException();
+
+            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
+            //ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken);
+            //return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -231,11 +241,11 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
         /// <param name="receiptLocale"></param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, string receiptLocale, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, string receiptLocale, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -251,15 +261,18 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
         /// <param name="receiptLocale"></param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Uri receiptFileUri, string receiptLocale, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Uri receiptFileUri, string receiptLocale, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
+            //ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
+            //return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
         #endregion
 
@@ -268,11 +281,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="businessCardFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
         /// completion will contain the extracted business card.</returns>
-        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Stream businessCardFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Stream businessCardFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -281,11 +294,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="businessCardFileUri">The absolute URI of the remote file to extract values from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
         /// completion will contain the extracted business card.</returns>
-        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Uri businessCardFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Uri businessCardFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -294,11 +307,11 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="businessCardFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
         /// completion will contain the extracted business card.</returns>
-        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Stream businessCardFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Stream businessCardFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -308,16 +321,16 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="businessCardFileUri">The absolute URI of the remote file to extract values from.</param>
-        /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
         /// completion will contain the extracted business card.</returns>
-        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Uri businessCardFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Uri businessCardFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
         }
-        #endregion
 
+        #endregion
     }
 }

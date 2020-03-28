@@ -18,12 +18,12 @@ namespace Azure.AI.FormRecognizer.Models
         {
             BoundingBox = boundingBox;
             Text = text;
-            TextElements = textElements;
+            TextContent = textElements;
         }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormContent> TextElements { get; }
+        public IReadOnlyList<FormContent> TextContent { get; }
 
         /// <summary>
         /// </summary>

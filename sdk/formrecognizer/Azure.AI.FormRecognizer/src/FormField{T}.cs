@@ -12,6 +12,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <typeparam name="T"></typeparam>
     public class FormField<T>
     {
+        internal FormField(T value)
+        {
+        }
+
         /// <summary>
         /// </summary>
         public string Label { get; internal set; }
