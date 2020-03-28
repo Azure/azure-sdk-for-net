@@ -5,36 +5,36 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Models.Receipts
 {
     /// <summary>
     /// </summary>
-    public class UnitedStatesReceipt
+    public class USReceipt : RecognizedReceipt
     {
-        internal UnitedStatesReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
+        internal USReceipt(RecognizedReceipt receipt)
+            : base(receipt)
         {
-            PageRange = new FormPageRange(documentResult.PageRange);
-
-            SetReceiptValues(documentResult.Fields);
-
-            if (readResults != null)
-            {
-                Pages = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
-            }
         }
 
-        /// <summary>
-        /// </summary>
-        public FormPageRange PageRange { get; }
+        //internal USReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
+        //{
+        //    PageRange = new FormPageRange(documentResult.PageRange);
+
+        //    SetReceiptValues(documentResult.Fields);
+
+        //    if (readResults != null)
+        //    {
+        //        Pages = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
+        //    }
+        //}
 
         /// <summary>
         /// </summary>
         // TODO: Can we make this nullable in case a value isn't present or
         // isn't read by the learner?
         // https://github.com/Azure/azure-sdk-for-net/issues/10361
-        public IReadOnlyList<UnitedStatesReceiptItem> Items { get; internal set; }
+        public IReadOnlyList<USReceiptItem> Items { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -50,7 +50,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public UnitedStatesReceiptType ReceiptType { get; internal set; }
+        public USReceiptType ReceiptType { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -82,13 +82,9 @@ namespace Azure.AI.FormRecognizer.Models
         //// https://github.com/Azure/azure-sdk-for-net/issues/10379
         //public IReadOnlyDictionary<string, FormField> Fields { get; internal set; }
 
-        /// <summary>
-        /// </summary>
-        public IReadOnlyList<FormPage> Pages { get; }
-
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
         {
-            ReceiptType = ConvertReceiptType(fields);
+            //ReceiptType = ConvertReceiptType(fields);
 
             //MerchantAddress = ConvertStringValue("MerchantAddress", fields);
             //MerchantName = ConvertStringValue("MerchantName", fields);
@@ -117,22 +113,22 @@ namespace Azure.AI.FormRecognizer.Models
         //    return extractedFields;
         //}
 
-        private static UnitedStatesReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
-        {
-            UnitedStatesReceiptType receiptType = UnitedStatesReceiptType.Unrecognized;
+        //private static UnitedStatesReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
+        //{
+        //    UnitedStatesReceiptType receiptType = UnitedStatesReceiptType.Unrecognized;
 
-            FieldValue_internal value;
-            if (fields.TryGetValue("ReceiptType", out value))
-            {
-                receiptType = value.ValueString switch
-                {
-                    "Itemized" => UnitedStatesReceiptType.Itemized,
-                    _ => UnitedStatesReceiptType.Unrecognized,
-                };
-            }
+        //    FieldValue_internal value;
+        //    if (fields.TryGetValue("ReceiptType", out value))
+        //    {
+        //        receiptType = value.ValueString switch
+        //        {
+        //            "Itemized" => UnitedStatesReceiptType.Itemized,
+        //            _ => UnitedStatesReceiptType.Unrecognized,
+        //        };
+        //    }
 
-            return receiptType;
-        }
+        //    return receiptType;
+        //}
 
         private static string ConvertStringValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
         {
@@ -226,9 +222,9 @@ namespace Azure.AI.FormRecognizer.Models
             return dateTimeOffsetValue;
         }
 
-        private static IReadOnlyList<UnitedStatesReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyList<USReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
         {
-            List<UnitedStatesReceiptItem> items = new List<UnitedStatesReceiptItem>();
+            List<USReceiptItem> items = new List<USReceiptItem>();
 
             FieldValue_internal value;
             if (fields.TryGetValue("Items", out value))
@@ -247,7 +243,7 @@ namespace Azure.AI.FormRecognizer.Models
                     float? price = ConvertFloatValue("Price", objectValue);
                     float? totalPrice = ConvertFloatValue("TotalPrice", objectValue);
 
-                    UnitedStatesReceiptItem item = new UnitedStatesReceiptItem(name, quantity, price, totalPrice);
+                    USReceiptItem item = new USReceiptItem(name, quantity, price, totalPrice);
                     items.Add(item);
                 }
             }

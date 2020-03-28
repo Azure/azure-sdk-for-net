@@ -13,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeCustomFormsOperation : Operation<IReadOnlyList<RecognizedCustomForm>>
+    public class RecognizeCustomFormsOperation : Operation<IReadOnlyList<RecognizedForm>>
     {
         private Response _response;
-        private IReadOnlyList<RecognizedCustomForm> _value;
+        private IReadOnlyList<RecognizedForm> _value;
         private bool _hasCompleted;
 
         private readonly string _modelId;
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<RecognizedCustomForm> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<RecognizedForm> Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -41,11 +41,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedCustomForm>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<RecognizedCustomForm>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -108,10 +108,10 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 #pragma warning disable CA1801 // Remove unused parameter
-        private static IReadOnlyList<RecognizedCustomForm> ConvertToExtractedForms(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<RecognizedForm> ConvertToExtractedForms(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
 #pragma warning restore CA1801 // Remove unused parameter
         {
-            List<RecognizedCustomForm> pages = new List<RecognizedCustomForm>();
+            List<RecognizedForm> pages = new List<RecognizedForm>();
             for (int i = 0; i < pageResults.Count; i++)
             {
                 // TODO: Implement

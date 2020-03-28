@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Models.Receipts
 {
     /// <summary>
     /// </summary>
-    public enum UnitedStatesReceiptType
+    public enum USReceiptType
     {
         /// <summary>
         /// </summary>

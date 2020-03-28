@@ -14,6 +14,12 @@ namespace Azure.AI.FormRecognizer.Models
         private DocumentResult_internal _documentResult_internal;
         private IList<ReadResult_internal> _readResults;
 
+#pragma warning disable CA1801 // Remove unused parameter
+        internal RecognizedReceipt(RecognizedReceipt receipt)
+#pragma warning restore CA1801 // Remove unused parameter
+        {
+        }
+
         internal RecognizedReceipt(DocumentResult_internal documentResult_internal, IList<ReadResult_internal> readResults)
         {
             _documentResult_internal = documentResult_internal;
@@ -26,13 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        /// <returns></returns>
-#pragma warning disable CA1822
-        public UnitedStatesReceipt AsUnitedStatesReceipt()
-#pragma warning restore CA1822
-        {
-            throw new NotImplementedException();
-        }
+        public RecognizedForm RecognizedForm { get; internal set; }
 
     }
 }

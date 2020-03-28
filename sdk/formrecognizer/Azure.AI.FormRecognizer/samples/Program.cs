@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
+                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
                         foreach (var table in form.Tables)
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.Samples
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
             {
-                IReadOnlyList<RecognizedCustomForm> pages = extractFormOperation.Value;
+                IReadOnlyList<RecognizedForm> pages = extractFormOperation.Value;
                 foreach (var page in pages)
                 {
                     foreach (var table in page.Tables)
@@ -199,7 +199,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
+                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
                         foreach (var table in form.Tables)
@@ -251,7 +251,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
+                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
                         foreach (var table in form.Tables)
@@ -287,7 +287,7 @@ namespace Azure.AI.FormRecognizer.Samples
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
             {
-                IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
+                IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                 foreach (var form in forms)
                 {
                     foreach (var table in form.Tables)
@@ -317,7 +317,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedCustomForm> forms = extractFormOperation.Value;
+                    IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
                         foreach (var table in form.Tables)

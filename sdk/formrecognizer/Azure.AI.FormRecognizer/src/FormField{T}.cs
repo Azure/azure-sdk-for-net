@@ -14,15 +14,18 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal FormField(T value)
         {
+            Value = value;
         }
 
         /// <summary>
+        /// Canonical name; uniquely identifieds field within the form.
         /// </summary>
-        public string Label { get; internal set; }
+        public string Name { get; internal set; }
 
         /// <summary>
+        /// Text from the form that labels the form field.
         /// </summary>
-        public FieldText Name { get; internal set; }
+        public FieldText FieldLabel { get; internal set; }
 
         /// <summary>
         /// </summary>

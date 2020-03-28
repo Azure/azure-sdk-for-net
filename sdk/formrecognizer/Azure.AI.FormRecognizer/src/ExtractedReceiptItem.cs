@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Models.Receipts
 {
     /// <summary>
     /// </summary>
-    public class UnitedStatesReceiptItem
+    public class USReceiptItem
     {
-        internal UnitedStatesReceiptItem(string name, int? quantity, float? price, float? totalPrice)
+        internal USReceiptItem(string name, int? quantity, float? price, float? totalPrice)
         {
             Name = name;
             Quantity = quantity;
