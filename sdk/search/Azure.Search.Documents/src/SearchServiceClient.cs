@@ -261,6 +261,7 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
         #endregion
 
+        #region Index operations
         /// <summary>
         /// Creates a new search index in the Search service.
         /// </summary>
@@ -283,7 +284,6 @@ namespace Azure.Search.Documents
         /// <exception cref="RequestFailedException">
         /// Thrown when a failure is returned by the Search service.
         /// </exception>
-        #region Index operations
         [ForwardsClientCalls]
         public virtual Response<SearchIndex> CreateIndex(
             SearchIndex index,
@@ -326,6 +326,85 @@ namespace Azure.Search.Documents
                 index,
                 cancellationToken)
                 .ConfigureAwait(false);
+
+        /// <summary>
+        /// Gets an existing index from the Search service.
+        /// </summary>
+        /// <param name="indexName">
+        /// The name of the index.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// The requested <see cref="SearchIndex"/>.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="indexName"/> is an empty string.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="indexName"/> is null.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search service.
+        /// </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SearchIndex> GetIndex(
+            string indexName,
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+
+            return IndexesClient.Get(
+                indexName,
+                options?.ClientRequestId,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an existing index from the Search service.
+        /// </summary>
+        /// <param name="indexName">
+        /// The name of the index.
+        /// </param>
+        /// <param name="options">
+        /// Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// The requested <see cref="SearchIndex"/>.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="indexName"/> is an empty string.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="indexName"/> is null.
+        /// </exception>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search service.
+        /// </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SearchIndex>> GetIndexAsync(
+            string indexName,
+            SearchRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+
+            return await IndexesClient.GetAsync(
+                indexName,
+                options?.ClientRequestId,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
         #endregion
     }
 }

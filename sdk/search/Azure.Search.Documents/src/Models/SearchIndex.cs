@@ -44,6 +44,7 @@ namespace Azure.Search.Documents.Models
             _fields.AddRange(fields);
         }
 
+        // TODO: Remove when https://github.com/Azure/autorest.csharp/issues/582 is fixed.
         private SearchIndex()
         {
         }
@@ -52,7 +53,7 @@ namespace Azure.Search.Documents.Models
         /// Gets the name of the index.
         /// </summary>
         [CodeGenMember("name")]
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         // TODO: Remove read-only collection properties when https://github.com/Azure/autorest.csharp/issues/521 is fixed.
 

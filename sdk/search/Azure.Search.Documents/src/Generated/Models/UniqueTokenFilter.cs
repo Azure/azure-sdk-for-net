@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of UniqueTokenFilter. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="onlyOnSamePosition"> A value indicating whether to remove duplicates only at the same position. Default is false. </param>
         internal UniqueTokenFilter(string oDataType, string name, bool? onlyOnSamePosition) : base(oDataType, name)

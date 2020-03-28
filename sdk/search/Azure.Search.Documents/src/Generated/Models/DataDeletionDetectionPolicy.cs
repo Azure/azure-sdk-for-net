@@ -17,13 +17,13 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
         internal DataDeletionDetectionPolicy(string oDataType)
         {
             ODataType = oDataType ?? null;
         }
 
-        /// <summary> The model type. </summary>
+        /// <summary> Identifies the concrete type of the data deletion detection policy. </summary>
         internal string ODataType { get; set; }
     }
 }

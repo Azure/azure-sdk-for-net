@@ -21,9 +21,6 @@
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
 
   <!-- References required for test resource creation -->
   <ItemGroup>
@@ -33,6 +30,11 @@
     <!-- These will be removed when Track 2 is further along -->
     <PackageReference Include="Microsoft.Azure.Search" />
     <PackageReference Include="System.ComponentModel.Annotations" />
+  </ItemGroup>
+  
+  <!-- Pull in Shared Source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
   <!-- Pull in the Azure.Core Test Framework -->

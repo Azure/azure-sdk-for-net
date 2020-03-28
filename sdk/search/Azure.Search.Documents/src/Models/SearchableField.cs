@@ -45,9 +45,11 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Gets a list of names of synonym maps to associate with this field.
         /// Currently, only one synonym map per field is supported.
+        /// </summary>
+        /// <remarks>
         /// Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map.
         /// This attribute can be changed on existing fields.
-        /// </summary>
+        /// </remarks>
         public IList<string> SynonymMaps { get; } = new List<string>();
 
         /// <inheritdoc/>
@@ -55,12 +57,11 @@ namespace Azure.Search.Documents.Models
         {
             base.Save(field);
 
-            field.Searchable = true;
+            field.IsSearchable = true;
             field.Analyzer = Analyzer;
             field.SearchAnalyzer = SearchAnalyzer;
             field.IndexAnalyzer = IndexAnalyzer;
 
-            // Do not serialize an empty collection.
             if (SynonymMaps.Count > 0)
             {
                 field.SynonymMaps = SynonymMaps;

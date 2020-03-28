@@ -17,13 +17,13 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
         internal DataChangeDetectionPolicy(string oDataType)
         {
             ODataType = oDataType ?? null;
         }
 
-        /// <summary> The model type. </summary>
+        /// <summary> Identifies the concrete type of the data change detection policy. </summary>
         internal string ODataType { get; set; }
     }
 }

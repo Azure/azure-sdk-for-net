@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -51,16 +50,6 @@ namespace Azure.Search.Documents.Tests
 
             Assert.Throws<ArgumentNullException>(() => service.GetSearchIndexClient(null));
             Assert.Throws<ArgumentException>(() => service.GetSearchIndexClient(string.Empty));
-        }
-
-        [Test]
-        public void SearchApiKeyCredential()
-        {
-            Assert.Throws<ArgumentNullException>(() => new AzureKeyCredential(null));
-            Assert.Throws<ArgumentException>(() => new AzureKeyCredential(string.Empty));
-
-            Assert.Throws<ArgumentNullException>(() => new AzureKeyCredential("fake").Update(null));
-            Assert.Throws<ArgumentException>(() => new AzureKeyCredential("fake").Update(string.Empty));
         }
 
         private class TestPipelinePolicy : HttpPipelineSynchronousPolicy
@@ -130,12 +119,12 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public async Task GetStatistics()
+        public async Task GetServiceStatistics()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchServiceClient client = resources.GetServiceClient();
-            Response < SearchServiceStatistics > response = await client.GetServiceStatisticsAsync();
+            Response<SearchServiceStatistics> response = await client.GetServiceStatisticsAsync();
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.IsNotNull(response.Value);
             Assert.IsNotNull(response.Value.Counters);
@@ -151,16 +140,124 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(1, response.Value.Counters.IndexCounter.Usage);
         }
 
-        //[Test]
-        //public async Task CreateIndexRequiresIndex()
-        //{
-        //    await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+        [Test]
+        public void CreateIndexParameterValidation()
+        {
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake"));
 
-        //    // TODO
-        //    SearchIndex index = new SearchIndex();
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.CreateIndex(null));
+            Assert.AreEqual("index", ex.ParamName);
 
-        //    SearchServiceClient client = resources.GetServiceClient();
-        //    Response<SearchIndex> response = await client.CreateIndexAsync(index);
-        //}
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.CreateIndexAsync(null));
+            Assert.AreEqual("index", ex.ParamName);
+        }
+
+        [Test]
+        public async Task CreateIndex()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+
+            string indexName = Recording.Random.GetName(8);
+            var expectedIndex = new SearchIndex(indexName)
+            {
+                Fields =
+                {
+                    new SimpleField("hotelId", DataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
+                    new SearchableField("description") { Analyzer = AnalyzerName.EnLucene },
+                    new SearchableField("descriptionFr") { Analyzer = AnalyzerName.FrLucene },
+                    new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
+                    new SimpleField("parkingIncluded", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("lastRenovationDate", DataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("rating", DataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new SimpleField("location", DataType.GeographyPoint) { IsFilterable = true, IsSortable = true },
+                    new ComplexField("address")
+                    {
+                        Fields =
+                        {
+                            new SearchableField("streetAddress"),
+                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                            new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                        },
+                    },
+                    new ComplexField("rooms", collection: true)
+                    {
+                        Fields =
+                        {
+                            new SearchableField("description") { Analyzer = AnalyzerName.EnLucene },
+                            new SearchableField("descriptionFr") { Analyzer = AnalyzerName.FrLucene },
+                            new SearchableField("type") { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("baseRate", DataType.Double) { IsFilterable = true, IsFacetable = true },
+                            new SearchableField("bedOptions") { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("sleepsCount", DataType.Int32) { IsFilterable = true, IsFacetable = true },
+                            new SimpleField("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsFacetable = true },
+                            new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
+                        },
+                    },
+                },
+                Suggesters = new[]
+                {
+                    new Suggester("sg", "description", "hotelName"),
+                },
+                ScoringProfiles = new[]
+                {
+                    new ScoringProfile("nearest")
+                    {
+                        FunctionAggregation = ScoringFunctionAggregation.Sum,
+                        Functions = new[]
+                        {
+                            new DistanceScoringFunction("location", 2, new DistanceScoringParameters("myloc", 100)),
+                        },
+                    },
+                },
+            };
+
+            SearchServiceClient client = resources.GetServiceClient();
+            SearchIndex actualIndex = await client.CreateIndexAsync(expectedIndex);
+
+            Assert.AreEqual(expectedIndex.Name, actualIndex.Name);
+            Assert.That(actualIndex.Fields, Is.EqualTo(expectedIndex.Fields).Using(SearchFieldComparer.Shared));
+            Assert.AreEqual(expectedIndex.Suggesters.Count, actualIndex.Suggesters.Count);
+            Assert.AreEqual(expectedIndex.Suggesters[0].Name, actualIndex.Suggesters[0].Name);
+            Assert.AreEqual(expectedIndex.ScoringProfiles.Count, actualIndex.ScoringProfiles.Count);
+            Assert.AreEqual(expectedIndex.ScoringProfiles[0].Name, actualIndex.ScoringProfiles[0].Name);
+        }
+
+        [Test]
+        public void GetIndexParameterValidation()
+        {
+            var endpoint = new Uri($"https://my-svc-name.search.windows.net");
+            var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake"));
+
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndex(null));
+            Assert.AreEqual("indexName", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => service.GetIndex(string.Empty));
+            Assert.AreEqual("indexName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetIndexAsync(null));
+            Assert.AreEqual("indexName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(() => service.GetIndexAsync(string.Empty));
+            Assert.AreEqual("indexName", ex.ParamName);
+        }
+
+        [Test]
+        public async Task GetIndex()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+
+            SearchServiceClient client = resources.GetServiceClient();
+            SearchIndex index = await client.GetIndexAsync(resources.IndexName);
+
+            // TODO: Replace with comparison of actual SearchIndex once test framework uses Azure.Search.Documents instead.
+            Assert.AreEqual(resources.IndexName, index.Name);
+            Assert.AreEqual(13, index.Fields.Count);
+        }
     }
 }

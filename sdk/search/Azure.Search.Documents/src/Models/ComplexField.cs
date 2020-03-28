@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -12,7 +10,7 @@ namespace Azure.Search.Documents.Models
     /// A complex field or collection of complex fields that contain child fields.
     /// Child fields may be <see cref="SimpleField"/> or <see cref="ComplexField"/>.
     /// </summary>
-    public class ComplexField : FieldBase, IEnumerable<FieldBase>
+    public class ComplexField : FieldBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComplexField"/> class.
@@ -30,29 +28,18 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public IList<FieldBase> Fields { get; } = new List<FieldBase>();
 
-        /// <summary>
-        /// Adds a child <see cref="SimpleField"/> or <see cref="ComplexField"/>.
-        /// </summary>
-        /// <param name="field">The <see cref="SimpleField"/> or <see cref="ComplexField"/> to add.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="field"/> is null.</exception>
-        public void Add(FieldBase field)
-        {
-            Argument.AssertNotNull(field, nameof(field));
-
-            Fields.Add(field);
-        }
-
         /// <inheritdoc/>
         protected override void Save(SearchField field)
         {
+            // TODO: Remove allocation when https://github.com/Azure/autorest.csharp/issues/521 is fixed.
+            IList<SearchField> fields = field.Fields ?? new List<SearchField>();
+
             foreach (FieldBase child in Fields)
             {
-                field.Fields.Add(child);
+                fields.Add(child);
             }
+
+            field.Fields = fields;
         }
-
-        IEnumerator<FieldBase> IEnumerable<FieldBase>.GetEnumerator() => Fields.GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => Fields.GetEnumerator();
     }
 }

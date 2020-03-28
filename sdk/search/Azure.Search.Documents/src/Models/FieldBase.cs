@@ -36,8 +36,6 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public DataType Type { get; }
 
-        // TODO: Remove "overrides" for boolean properties when https://github.com/Azure/autorest.csharp/issues/558 is fixed.
-
         /// <summary>
         /// Persists class-specific properties into the given <see cref="SearchField"/>.
         /// </summary>

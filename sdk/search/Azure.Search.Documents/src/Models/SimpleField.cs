@@ -62,11 +62,15 @@ namespace Azure.Search.Documents.Models
         /// <inheritdoc/>
         protected override void Save(SearchField field)
         {
-            field.Key = IsKey;
+            field.IsKey = IsKey;
             field.IsHidden = IsHidden;
-            field.Filterable = IsFilterable;
-            field.Facetable = IsFacetable;
-            field.Sortable = IsSortable;
+            field.IsFilterable = IsFilterable;
+            field.IsFacetable = IsFacetable;
+            field.IsSortable = IsSortable;
+
+            // Use a SearchableField instead, which will override this property.
+            // The service will return Searchable == false for all non-searchable simple types.
+            field.IsSearchable = false;
         }
     }
 }
