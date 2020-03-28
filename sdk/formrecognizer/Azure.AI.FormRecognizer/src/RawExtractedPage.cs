@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResult.Lines != null)
             {
-                Lines = ConvertLines(readResult.Lines);
+                //Lines = ConvertLines(readResult.Lines);
             }
         }
 

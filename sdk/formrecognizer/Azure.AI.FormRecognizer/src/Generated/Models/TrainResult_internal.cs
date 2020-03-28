@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.AI.FormRecognizer.Training;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -14,8 +16,15 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class TrainResult_internal
     {
         /// <summary> Initializes a new instance of TrainResult_internal. </summary>
-        internal TrainResult_internal()
+        /// <param name="trainingDocuments"> List of the documents used to train the model and any errors reported in each document. </param>
+        internal TrainResult_internal(IEnumerable<TrainingDocumentInfo> trainingDocuments)
         {
+            if (trainingDocuments == null)
+            {
+                throw new ArgumentNullException(nameof(trainingDocuments));
+            }
+
+            TrainingDocuments = trainingDocuments.ToArray();
         }
 
         /// <summary> Initializes a new instance of TrainResult_internal. </summary>
@@ -23,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="fields"> List of fields used to train the model and the train operation error reported by each. </param>
         /// <param name="averageModelAccuracy"> Average accuracy. </param>
         /// <param name="errors"> Errors returned during the training operation. </param>
-        internal TrainResult_internal(IList<TrainingDocumentInfo> trainingDocuments, IList<FieldPredictionAccuracy> fields, float? averageModelAccuracy, IList<FormRecognizerError> errors)
+        internal TrainResult_internal(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FieldPredictionAccuracy> fields, float? averageModelAccuracy, IReadOnlyList<FormRecognizerError> errors)
         {
             TrainingDocuments = trainingDocuments;
             Fields = fields;
@@ -32,12 +41,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> List of the documents used to train the model and any errors reported in each document. </summary>
-        public IList<TrainingDocumentInfo> TrainingDocuments { get; internal set; } = new List<TrainingDocumentInfo>();
+        public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; }
         /// <summary> List of fields used to train the model and the train operation error reported by each. </summary>
-        public IList<FieldPredictionAccuracy> Fields { get; internal set; }
+        public IReadOnlyList<FieldPredictionAccuracy> Fields { get; }
         /// <summary> Average accuracy. </summary>
-        public float? AverageModelAccuracy { get; internal set; }
+        public float? AverageModelAccuracy { get; }
         /// <summary> Errors returned during the training operation. </summary>
-        public IList<FormRecognizerError> Errors { get; internal set; }
+        public IReadOnlyList<FormRecognizerError> Errors { get; }
     }
 }

@@ -82,25 +82,25 @@ namespace Azure.AI.FormRecognizer.Models.Receipts
         //// https://github.com/Azure/azure-sdk-for-net/issues/10379
         //public IReadOnlyDictionary<string, FormField> Fields { get; internal set; }
 
-        private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
-        {
-            //ReceiptType = ConvertReceiptType(fields);
+        //private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
+        //{
+        //    //ReceiptType = ConvertReceiptType(fields);
 
-            //MerchantAddress = ConvertStringValue("MerchantAddress", fields);
-            //MerchantName = ConvertStringValue("MerchantName", fields);
-            //MerchantPhoneNumber = ConvertStringValue("MerchantPhoneNumber", fields);
+        //    //MerchantAddress = ConvertStringValue("MerchantAddress", fields);
+        //    //MerchantName = ConvertStringValue("MerchantName", fields);
+        //    //MerchantPhoneNumber = ConvertStringValue("MerchantPhoneNumber", fields);
 
-            //Subtotal = ConvertFloatValue("Subtotal", fields);
-            //Tax = ConvertFloatValue("Tax", fields);
-            //Tip = ConvertFloatValue("Tip", fields);
-            //Total = ConvertFloatValue("Total", fields);
+        //    //Subtotal = ConvertFloatValue("Subtotal", fields);
+        //    //Tax = ConvertFloatValue("Tax", fields);
+        //    //Tip = ConvertFloatValue("Tip", fields);
+        //    //Total = ConvertFloatValue("Total", fields);
 
-            //TransactionDate = ConvertDateTimeOffsetValue("TransactionDate", fields);
-            //TransactionTime = ConvertDateTimeOffsetValue("TransactionTime", fields);
+        //    //TransactionDate = ConvertDateTimeOffsetValue("TransactionDate", fields);
+        //    //TransactionTime = ConvertDateTimeOffsetValue("TransactionTime", fields);
 
-            Items = ConvertReceiptItems(fields);
-            //Fields = ConvertExtractedFields(fields);
-        }
+        //    //Items = ConvertReceiptItems(fields);
+        //    //Fields = ConvertExtractedFields(fields);
+        //}
 
         //private static IReadOnlyDictionary<string, UnitedStatesReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
         //{
@@ -222,34 +222,34 @@ namespace Azure.AI.FormRecognizer.Models.Receipts
             return dateTimeOffsetValue;
         }
 
-        private static IReadOnlyList<USReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
-        {
-            List<USReceiptItem> items = new List<USReceiptItem>();
+        //private static IReadOnlyList<USReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
+        //{
+        //    List<USReceiptItem> items = new List<USReceiptItem>();
 
-            FieldValue_internal value;
-            if (fields.TryGetValue("Items", out value))
-            {
-                Debug.Assert(value.Type == FieldValueType.ListType);
+        //    FieldValue_internal value;
+        //    if (fields.TryGetValue("Items", out value))
+        //    {
+        //        Debug.Assert(value.Type == FieldValueType.ListType);
 
-                ICollection<FieldValue_internal> arrayValue = value.ValueArray;
-                foreach (var receiptItemValue in arrayValue)
-                {
-                    Debug.Assert(receiptItemValue.Type == FieldValueType.DictionaryType);
+        //        ICollection<FieldValue_internal> arrayValue = value.ValueArray;
+        //        foreach (var receiptItemValue in arrayValue)
+        //        {
+        //            Debug.Assert(receiptItemValue.Type == FieldValueType.DictionaryType);
 
-                    IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
+        //            IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 
-                    string name = ConvertStringValue("Name", objectValue);
-                    int? quantity = ConvertIntValue("Quantity", objectValue);
-                    float? price = ConvertFloatValue("Price", objectValue);
-                    float? totalPrice = ConvertFloatValue("TotalPrice", objectValue);
+        //            string name = ConvertStringValue("Name", objectValue);
+        //            int? quantity = ConvertIntValue("Quantity", objectValue);
+        //            float? price = ConvertFloatValue("Price", objectValue);
+        //            float? totalPrice = ConvertFloatValue("TotalPrice", objectValue);
 
-                    USReceiptItem item = new USReceiptItem(name, quantity, price, totalPrice);
-                    items.Add(item);
-                }
-            }
+        //            USReceiptItem item = new USReceiptItem(name, quantity, price, totalPrice);
+        //            items.Add(item);
+        //        }
+        //    }
 
-            return items;
-        }
+        //    return items;
+        //}
 
         private static IReadOnlyList<FormPage> ConvertPageText(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
         {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,31 +15,34 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal static ModelInfo_internal DeserializeModelInfo_internal(JsonElement element)
         {
-            ModelInfo_internal result = new ModelInfo_internal();
+            Guid modelId = default;
+            CustomModelStatus status = default;
+            DateTimeOffset createdDateTime = default;
+            DateTimeOffset lastUpdatedDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"))
                 {
-                    result.ModelId = property.Value.GetGuid();
+                    modelId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
-                    result.Status = property.Value.GetString().ToCustomModelStatus();
+                    status = property.Value.GetString().ToCustomModelStatus();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))
                 {
-                    result.CreatedDateTime = property.Value.GetDateTimeOffset("S");
+                    createdDateTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedDateTime"))
                 {
-                    result.LastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
             }
-            return result;
+            return new ModelInfo_internal(modelId, status, createdDateTime, lastUpdatedDateTime);
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormTable : FormContent
     {
-        internal FormTable(DataTable_internal table, ReadResult_internal readResult)
+        internal FormTable(DataTable_internal table /*, ReadResult_internal readResult*/)
             : base("<TODO>", new BoundingBox() /* TODO */)
         {
             ColumnCount = table.Columns;
             RowCount = table.Rows;
-            Cells = ConvertCells(table.Cells, readResult);
+            //Cells = ConvertCells(table.Cells, readResult);
         }
 
         /// <summary>
@@ -57,15 +57,15 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        private static IReadOnlyList<FormTableCell> ConvertCells(ICollection<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
-        {
-            List<FormTableCell> cells = new List<FormTableCell>();
-            foreach (var result in cellsResult)
-            {
-                cells.Add(new FormTableCell(result, readResult, result.Elements));
-            }
+        //private static IReadOnlyList<FormTableCell> ConvertCells(ICollection<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
+        //{
+        //    List<FormTableCell> cells = new List<FormTableCell>();
+        //    foreach (var result in cellsResult)
+        //    {
+        //        //cells.Add(new FormTableCell(result, readResult, result.Elements));
+        //    }
 
-            return cells;
-        }
+        //    return cells;
+        //}
     }
 }

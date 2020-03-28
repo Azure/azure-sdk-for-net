@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = ConvertToExtractedForms(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
+                    //_value = ConvertToExtractedForms(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
                 }
 
                 _response = update.GetRawResponse();

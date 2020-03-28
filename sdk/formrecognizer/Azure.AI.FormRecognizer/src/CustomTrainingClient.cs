@@ -62,20 +62,22 @@ namespace Azure.AI.FormRecognizer.Training
         /// completion will contain meta-data about the trained model.</returns>
         public virtual TrainingOperation StartTraining(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
+            throw new NotImplementedException();
 
-            // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            // https://github.com/Azure/autorest.csharp/issues/467
-            // When this is complete, we will be able to default filter.Path to "".
-            // Decision to make, do we always send filter, or only if needed?
-            // Tracking with https://github.com/Azure/azure-sdk-for-net/issues/10359
-            if (filter != default)
-            {
-                trainRequest.SourceFilter = filter;
-            }
+            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
-            return new TrainingOperation(ServiceClient, response.Headers.Location);
+            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            //// https://github.com/Azure/autorest.csharp/issues/467
+            //// When this is complete, we will be able to default filter.Path to "".
+            //// Decision to make, do we always send filter, or only if needed?
+            //// Tracking with https://github.com/Azure/azure-sdk-for-net/issues/10359
+            //if (filter != default)
+            //{
+            //    trainRequest.SourceFilter = filter;
+            //}
+
+            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            //return new TrainingOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>
@@ -88,17 +90,21 @@ namespace Azure.AI.FormRecognizer.Training
         /// completion will contain meta-data about the trained model.</returns>
         public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
 
-            // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10359
-            if (filter != default)
-            {
-                trainRequest.SourceFilter = filter;
-            }
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-            return new TrainingOperation(ServiceClient, response.Headers.Location);
+            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
+
+            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10359
+            //if (filter != default)
+            //{
+            //    trainRequest.SourceFilter = filter;
+            //}
+
+            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            //return new TrainingOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>
@@ -111,17 +117,19 @@ namespace Azure.AI.FormRecognizer.Training
         /// completion will contain meta-data about the trained model.</returns>
         public virtual TrainingWithLabelsOperation StartTrainingWithLabels(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
+            throw new NotImplementedException();
 
-            // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10359
-            if (filter != default)
-            {
-                trainRequest.SourceFilter = filter;
-            }
+            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
-            return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
+            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10359
+            //if (filter != default)
+            //{
+            //    trainRequest.SourceFilter = filter;
+            //}
+
+            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            //return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>
@@ -134,17 +142,20 @@ namespace Azure.AI.FormRecognizer.Training
         /// completion will contain meta-data about the trained model.</returns>
         public virtual async Task<TrainingWithLabelsOperation> StartTrainingWithLabelsAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
 
-            // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10359
-            if (filter != default)
-            {
-                trainRequest.SourceFilter = filter;
-            }
+            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-            return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
+            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10359
+            //if (filter != default)
+            //{
+            //    trainRequest.SourceFilter = filter;
+            //}
+
+            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            //return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>

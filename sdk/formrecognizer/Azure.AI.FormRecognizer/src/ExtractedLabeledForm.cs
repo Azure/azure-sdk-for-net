@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             // Supervised
             FormType = documentResult.DocType;
-            PageRange = new FormPageRange(documentResult.PageRange);
+            //PageRange = new FormPageRange(documentResult.PageRange);
 
             //Fields = ConvertFields(documentResult.Fields, readResults);
             //Tables = ConvertLabeledTables(pageResults, readResults);
