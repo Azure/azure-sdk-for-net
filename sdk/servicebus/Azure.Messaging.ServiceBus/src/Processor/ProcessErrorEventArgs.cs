@@ -16,17 +16,17 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="exception">The exception that this event data belongs to.</param>
-        /// <param name="action">The action associated with the message.</param>
+        /// <param name="errorSource">The action associated with the message.</param>
         /// <param name="fullyQualifiedNamespace">The endpoint used when this exception occurred.</param>
         /// <param name="entityPath">The entity path used when this exception occurred.</param>
         public ProcessErrorEventArgs(
             Exception exception,
-            ExceptionReceivedEventArgsAction action,
+            ServiceBusErrorSource errorSource,
             string fullyQualifiedNamespace,
             string entityPath)
         {
             Exception = exception;
-            Action = action;
+            ErrorSource = errorSource;
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EntityPath = entityPath;
         }
@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>Gets the action associated with the message.</summary>
         ///
         /// <value>The action associated with the event.</value>
-        public ExceptionReceivedEventArgsAction Action { get; }
+        public ServiceBusErrorSource ErrorSource { get; }
 
         /// <summary>The namespace name used when this exception occurred. This is likely
         ///  to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</summary>

@@ -651,5 +651,59 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(61, identifier, exception.ToString());
             }
         }
+
+        [Event(62, Level = EventLevel.Informational, Message = "{0}: Session GetStateAsync start. SessionId = {1}")]
+        public void GetSessionStateStart(string identifiers, string sessionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(47, identifiers, sessionId);
+            }
+        }
+
+        [Event(63, Level = EventLevel.Informational, Message = "{0}: Session GetStateAsync done.")]
+        public void GetSessionStateComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(48, identifier);
+            }
+        }
+
+        [Event(64, Level = EventLevel.Error, Message = "{0}: Session GetStateAsync Exception: {1}.")]
+        public void GetSessionStateException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(49, identifier, exception.ToString());
+            }
+        }
+
+        [Event(65, Level = EventLevel.Informational, Message = "{0}: Session SetStateAsync start. SessionId = {1}")]
+        public void SetSessionStateStart(string identifiers, string sessionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(47, identifiers, sessionId);
+            }
+        }
+
+        [Event(66, Level = EventLevel.Informational, Message = "{0}: Session SetStateAsync done.")]
+        public void SetSessionStateComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(48, identifier);
+            }
+        }
+
+        [Event(67, Level = EventLevel.Error, Message = "{0}: Session SetStateAsync Exception: {1}.")]
+        public void SetSessionStateException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(49, identifier, exception.ToString());
+            }
+        }
     }
 }

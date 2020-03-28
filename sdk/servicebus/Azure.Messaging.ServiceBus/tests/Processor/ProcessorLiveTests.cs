@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -304,7 +303,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.NotNull(args);
                 Assert.NotNull(args.Exception);
                 Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
-                Assert.AreEqual(ExceptionReceivedEventArgsAction.Receive, args.Action);
+                Assert.AreEqual(ServiceBusErrorSource.Receive, args.ErrorSource);
                 Assert.AreEqual(processor.EntityPath, args.EntityPath);
 
                 if (args.Exception is ServiceBusException sbException)
