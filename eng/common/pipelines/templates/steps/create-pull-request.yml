@@ -2,7 +2,7 @@
 # Expects the buildtools to be cloned
 
 parameters:
-  BaseBranchName: master
+  BaseBranchName: $(Build.SourceBranch)
   PRBranchName: not-specified
   PROwner: azure-sdk
   CommitMsg: not-specified
