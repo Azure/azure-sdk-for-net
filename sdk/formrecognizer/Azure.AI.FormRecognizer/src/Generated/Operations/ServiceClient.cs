@@ -10,6 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.FormRecognizer.Custom;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -89,7 +90,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             return (await RestClient.AnalyzeWithCustomModelAsync(modelId, includeTextDetails, contentType, fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
@@ -100,7 +101,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public virtual Response AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             return RestClient.AnalyzeWithCustomModel(modelId, includeTextDetails, contentType, fileStream, cancellationToken).GetRawResponse();
         }
@@ -148,7 +149,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             return (await RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails, contentType, fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
@@ -158,7 +159,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response AnalyzeReceiptAsync(bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public virtual Response AnalyzeReceiptAsync(bool? includeTextDetails, ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             return RestClient.AnalyzeReceiptAsync(includeTextDetails, contentType, fileStream, cancellationToken).GetRawResponse();
         }
@@ -201,7 +202,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> AnalyzeLayoutAsyncAsync(ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AnalyzeLayoutAsyncAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             return (await RestClient.AnalyzeLayoutAsyncAsync(contentType, fileStream, cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
@@ -210,7 +211,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response AnalyzeLayoutAsync(ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public virtual Response AnalyzeLayoutAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             return RestClient.AnalyzeLayoutAsync(contentType, fileStream, cancellationToken).GetRawResponse();
         }
@@ -252,7 +253,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ModelInfo_internal> GetCustomModelsAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
-
             async Task<Page<ModelInfo_internal>> FirstPageFunc(int? pageSizeHint)
             {
                 var response = await RestClient.GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
@@ -271,7 +271,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ModelInfo_internal> GetCustomModels(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
-
             Page<ModelInfo_internal> FirstPageFunc(int? pageSizeHint)
             {
                 var response = RestClient.GetCustomModels(op, cancellationToken);

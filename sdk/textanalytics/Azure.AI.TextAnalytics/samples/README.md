@@ -15,7 +15,6 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Sentiment Analysis
 * Key Phrase Extraction
 * Named Entity Recognition
-* Recognition of Personally Identifiable Information 
 * Linked Entity Recognition
 
 You can find samples for each of this main functions below.
@@ -25,7 +24,6 @@ To get started you'll need a Text Analytics endpoint and credentials. See Text A
 - [Analyze Sentiment](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md)
 - [Extract Key Phrases](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md)
 - [Recognize Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md)
-- [Recognize PII Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md)
 - [Recognize Linked Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

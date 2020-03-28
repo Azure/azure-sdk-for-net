@@ -359,6 +359,83 @@ namespace Microsoft.Azure.Management.Kusto
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<AzureResourceSku>>> ListSkusByResourceWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Returns a list of language extensions that can run within KQL
+        /// queries.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Kusto cluster.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Kusto cluster.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IEnumerable<LanguageExtension>>> ListLanguageExtensionsWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Add a list of language extensions that can run within KQL queries.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Kusto cluster.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Kusto cluster.
+        /// </param>
+        /// <param name='languageExtensionsToAdd'>
+        /// The language extensions to add.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> AddLanguageExtensionsWithHttpMessagesAsync(string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToAdd, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Remove a list of language extensions that can run within KQL
+        /// queries.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Kusto cluster.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Kusto cluster.
+        /// </param>
+        /// <param name='languageExtensionsToRemove'>
+        /// The language extensions to remove.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RemoveLanguageExtensionsWithHttpMessagesAsync(string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToRemove, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update a Kusto cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -532,5 +609,56 @@ namespace Microsoft.Azure.Management.Kusto
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<DiagnoseVirtualNetworkResult>> BeginDiagnoseVirtualNetworkWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Add a list of language extensions that can run within KQL queries.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Kusto cluster.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Kusto cluster.
+        /// </param>
+        /// <param name='languageExtensionsToAdd'>
+        /// The language extensions to add.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginAddLanguageExtensionsWithHttpMessagesAsync(string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToAdd, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Remove a list of language extensions that can run within KQL
+        /// queries.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Kusto cluster.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Kusto cluster.
+        /// </param>
+        /// <param name='languageExtensionsToRemove'>
+        /// The language extensions to remove.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginRemoveLanguageExtensionsWithHttpMessagesAsync(string resourceGroupName, string clusterName, LanguageExtensionsList languageExtensionsToRemove, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

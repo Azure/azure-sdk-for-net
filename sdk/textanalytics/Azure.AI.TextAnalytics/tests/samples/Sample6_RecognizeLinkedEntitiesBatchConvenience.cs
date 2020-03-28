@@ -20,9 +20,9 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            var documents = new List<string>
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
                 "Text Analytics is one of the Azure Cognitive Services.",
@@ -30,14 +30,14 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(documents);
             #endregion
 
-            Debug.WriteLine($"Linked entities for each input are:\n");
+            Debug.WriteLine($"Linked entities for each document are:\n");
             int i = 0;
             foreach (RecognizeLinkedEntitiesResult result in results)
             {
-                Debug.Write($"For input: \"{inputs[i++]}\", ");
+                Debug.Write($"For document: \"{documents[i++]}\", ");
                 Debug.WriteLine($"extracted {result.Entities.Count()} linked entit{(result.Entities.Count() > 1 ? "ies" : "y")}:");
 
                 foreach (LinkedEntity linkedEntity in result.Entities)

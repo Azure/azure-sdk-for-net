@@ -145,6 +145,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies property accessors for the <see cref="EventDataBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddRespectsTheBatchLock()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var eventData = new EventData(new byte[] { 0x21 });
+
+            Assert.That(batch.TryAdd(new EventData(new byte[] { 0x21 })), Is.True, "The event should have been accepted before locking.");
+
+            batch.Lock();
+            Assert.That(() => batch.TryAdd(new EventData(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept events when locked.");
+
+            batch.Unlock();
+            Assert.That(batch.TryAdd(new EventData(Array.Empty<byte>())), Is.True, "The event should have been accepted after unlocking.");
+        }
+
+        /// <summary>
         ///   Retrieves the inner transport batch from an <see cref="EventDataBatch" />
         ///   using its private accessors.
         /// </summary>

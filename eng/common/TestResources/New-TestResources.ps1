@@ -45,8 +45,11 @@ param (
     [int] $DeleteAfterHours,
 
     [Parameter()]
+    [string] $Location = '',
+
+    [Parameter()]
     [ValidateNotNullOrEmpty()]
-    [string] $Location = 'westus2',
+    [string] $Environment = 'AzureCloud',
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]
@@ -119,6 +122,25 @@ if (!$templateFiles) {
     exit
 }
 
+# If no location is specified use safe default locations for the given
+# environment. If no matching environment is found $Location remains an empty
+# string.
+if (!$Location) {
+    $defaultLocations = @{
+        'AzureCloud' = 'westus2';
+        'AzureUSGovernment' = 'usgovvirginia';
+        'AzureChinaCloud' = 'chinaeast2';
+    }
+
+    if ($defaultLocations.ContainsKey($Environment)) {
+        $Location = $defaultLocations[$Environment]
+    } else {
+        Write-Error "Location cannot be empty and there is no default location for Environment: '$Environment'"
+    }
+
+    Write-Verbose "Location was not set. Using default location for environment: '$Location'"
+}
+
 # Log in if requested; otherwise, the user is expected to already be authenticated via Connect-AzAccount.
 if ($ProvisionerApplicationId) {
     $null = Disable-AzContextAutosave -Scope Process
@@ -128,7 +150,7 @@ if ($ProvisionerApplicationId) {
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
 
     $provisionerAccount = Retry {
-        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment
     }
 
     $exitActions += {
@@ -153,7 +175,15 @@ $resourceGroupName = if ($CI) {
     $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
     Write-Verbose "Generated base name '$BaseName' for CI build"
 
-    "rg-{0}-$BaseName" -f ($ServiceDirectory -replace '[\\\/]', '-').Substring(0, [Math]::Min($ServiceDirectory.Length, 90 - $BaseName.Length - 4)).Trim('-')
+    # If the ServiceDirectory is an absolute path use the last directory name
+    # (e.g. D:\foo\bar\ -> bar)
+    $serviceName = if (Split-Path -IsAbsolute  $ServiceDirectory) {
+        Split-Path -Leaf $ServiceDirectory
+    } else {
+        $ServiceDirectory
+    }
+
+    "rg-{0}-$BaseName" -f ($serviceName -replace '[\\\/:]', '-').Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
 } else {
     "rg-$BaseName"
 }
@@ -390,6 +420,10 @@ Optional location where resources should be created. By default this is
 
 .PARAMETER AdditionalParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
+
+.PARAMETER Environment
+Name of the cloud environment. The default is the Azure Public Cloud
+('PublicCloud')
 
 .PARAMETER CI
 Indicates the script is run as part of a Continuous Integration / Continuous

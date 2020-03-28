@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -13,15 +15,28 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class TextWord_internal
     {
         /// <summary> Initializes a new instance of TextWord_internal. </summary>
-        internal TextWord_internal()
+        /// <param name="text"> The text content of the word. </param>
+        /// <param name="boundingBox"> Bounding box of an extracted word. </param>
+        internal TextWord_internal(string text, IEnumerable<float> boundingBox)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (boundingBox == null)
+            {
+                throw new ArgumentNullException(nameof(boundingBox));
+            }
+
+            Text = text;
+            BoundingBox = boundingBox.ToArray();
         }
 
         /// <summary> Initializes a new instance of TextWord_internal. </summary>
         /// <param name="text"> The text content of the word. </param>
         /// <param name="boundingBox"> Bounding box of an extracted word. </param>
         /// <param name="confidence"> Confidence value. </param>
-        internal TextWord_internal(string text, IList<float> boundingBox, float? confidence)
+        internal TextWord_internal(string text, IReadOnlyList<float> boundingBox, float? confidence)
         {
             Text = text;
             BoundingBox = boundingBox;
@@ -29,10 +44,10 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> The text content of the word. </summary>
-        public string Text { get; internal set; }
+        public string Text { get; }
         /// <summary> Bounding box of an extracted word. </summary>
-        public IList<float> BoundingBox { get; internal set; } = new List<float>();
+        public IReadOnlyList<float> BoundingBox { get; }
         /// <summary> Confidence value. </summary>
-        public float? Confidence { get; internal set; }
+        public float? Confidence { get; }
     }
 }

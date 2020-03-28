@@ -1133,7 +1133,8 @@ namespace Azure.Storage.Blobs
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound
+                || storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     return Response.FromValue(false, default);
                 }

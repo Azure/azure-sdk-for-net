@@ -4,51 +4,93 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class ExtractedReceipt
     {
-        internal ExtractedReceipt(DocumentResult_internal documentResult, ReadResult_internal readResult)
+        internal ExtractedReceipt(DocumentResult_internal documentResult, IReadOnlyList<ReadResult_internal> readResults)
         {
-            StartPageNumber = documentResult.PageRange.First();
-            EndPageNumber = documentResult.PageRange.Last();
+            StartPageNumber = documentResult.PageRange[0];
+            EndPageNumber = documentResult.PageRange[documentResult.PageRange.Count - 1];
 
             SetReceiptValues(documentResult.Fields);
 
-            if (readResult != null)
+            if (readResults != null)
             {
-                RawExtractedPage = new RawExtractedPage(readResult);
+                RawExtractedPage = ConvertRawPages(StartPageNumber, EndPageNumber, readResults);
             }
         }
+        /// <summary>
+        /// </summary>
         public int StartPageNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public int EndPageNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         // TODO: Can we make this nullable in case a value isn't present or
         // isn't read by the learner?
         // https://github.com/Azure/azure-sdk-for-net/issues/10361
         public IReadOnlyList<ExtractedReceiptItem> Items { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public string MerchantAddress { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public string MerchantName { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public string MerchantPhoneNumber { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         public ExtractedReceiptType ReceiptType { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Subtotal { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Tax { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Tip { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Total { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public DateTimeOffset? TransactionDate { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public DateTimeOffset? TransactionTime { get; internal set; }
 
+        /// <summary>
+        /// </summary>
         // TODO: Have this handle Items correctly
         // https://github.com/Azure/azure-sdk-for-net/issues/10379
         public IReadOnlyDictionary<string, ExtractedReceiptField> ExtractedFields { get; internal set; }
 
-        public RawExtractedPage RawExtractedPage { get; }
+        /// <summary>
+        /// </summary>
+        public IReadOnlyList<RawExtractedPage> RawExtractedPage { get; }
 
-        private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
+        private void SetReceiptValues(IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             ReceiptType = ConvertReceiptType(fields);
 
@@ -68,7 +110,7 @@ namespace Azure.AI.FormRecognizer.Models
             ExtractedFields = ConvertExtractedFields(fields);
         }
 
-        private static IReadOnlyDictionary<string, ExtractedReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyDictionary<string, ExtractedReceiptField> ConvertExtractedFields(IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             Dictionary<string, ExtractedReceiptField> extractedFields = new Dictionary<string, ExtractedReceiptField>();
             foreach (var field in fields)
@@ -79,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Models
             return extractedFields;
         }
 
-        private static ExtractedReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
+        private static ExtractedReceiptType ConvertReceiptType(IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             ExtractedReceiptType receiptType = ExtractedReceiptType.Unrecognized;
 
@@ -96,7 +138,7 @@ namespace Azure.AI.FormRecognizer.Models
             return receiptType;
         }
 
-        private static string ConvertStringValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static string ConvertStringValue(string fieldName, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             string stringValue = default;
 
@@ -116,7 +158,7 @@ namespace Azure.AI.FormRecognizer.Models
             return stringValue;
         }
 
-        private static float? ConvertFloatValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static float? ConvertFloatValue(string fieldName, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             float? floatValue = default;
 
@@ -142,7 +184,7 @@ namespace Azure.AI.FormRecognizer.Models
             return floatValue;
         }
 
-        private static int? ConvertIntValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static int? ConvertIntValue(string fieldName, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             int? intValue = default;
 
@@ -168,7 +210,7 @@ namespace Azure.AI.FormRecognizer.Models
             return intValue;
         }
 
-        private static DateTimeOffset? ConvertDateTimeOffsetValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static DateTimeOffset? ConvertDateTimeOffsetValue(string fieldName, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             DateTimeOffset? dateTimeOffsetValue = default;
 
@@ -179,12 +221,8 @@ namespace Azure.AI.FormRecognizer.Models
                 // https://github.com/Azure/azure-sdk-for-net/issues/10361
                 dateTimeOffsetValue = value.Type switch
                 {
-                    // TODO: Unsuppress
-                    // https://github.com/Azure/azure-sdk-for-net/issues/10376
-#pragma warning disable CA1305 // Specify IFormatProvider
-                    FieldValueType.Date => DateTimeOffset.Parse(value.ValueDate),
-                    FieldValueType.Time => DateTimeOffset.Parse(value.ValueTime),
-#pragma warning restore CA1305 // Specify IFormatProvider
+                    FieldValueType.Date => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
+                    FieldValueType.Time => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
                     _ => throw new InvalidOperationException($"The value type {value.Type} was expected to be a Date or Time")
                 };
             }
@@ -192,7 +230,7 @@ namespace Azure.AI.FormRecognizer.Models
             return dateTimeOffsetValue;
         }
 
-        private static IReadOnlyList<ExtractedReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyList<ExtractedReceiptItem> ConvertReceiptItems(IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             List<ExtractedReceiptItem> items = new List<ExtractedReceiptItem>();
 
@@ -201,12 +239,12 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 Debug.Assert(value.Type == FieldValueType.Array);
 
-                ICollection<FieldValue_internal> arrayValue = value.ValueArray;
+                IReadOnlyList<FieldValue_internal> arrayValue = value.ValueArray;
                 foreach (var receiptItemValue in arrayValue)
                 {
                     Debug.Assert(receiptItemValue.Type == FieldValueType.Object);
 
-                    IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
+                    IReadOnlyDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 
                     string name = ConvertStringValue("Name", objectValue);
                     int? quantity = ConvertIntValue("Quantity", objectValue);
@@ -219,6 +257,16 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return items;
+        }
+
+        private static IReadOnlyList<RawExtractedPage> ConvertRawPages(int startPageNumber, int endPageNumber, IReadOnlyList<ReadResult_internal> readResults)
+        {
+            List<RawExtractedPage> rawPages = new List<RawExtractedPage>();
+            for (int i = startPageNumber - 1; i < endPageNumber - 1; i++)
+            {
+                rawPages.Add(new RawExtractedPage(readResults[i]));
+            }
+            return rawPages;
         }
     }
 }

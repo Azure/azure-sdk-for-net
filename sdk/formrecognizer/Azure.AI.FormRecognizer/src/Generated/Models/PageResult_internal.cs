@@ -13,8 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class PageResult_internal
     {
         /// <summary> Initializes a new instance of PageResult_internal. </summary>
-        internal PageResult_internal()
+        /// <param name="page"> Page number. </param>
+        internal PageResult_internal(int page)
         {
+            Page = page;
         }
 
         /// <summary> Initializes a new instance of PageResult_internal. </summary>
@@ -22,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="clusterId"> Cluster identifier. </param>
         /// <param name="keyValuePairs"> List of key-value pairs extracted from the page. </param>
         /// <param name="tables"> List of data tables extracted from the page. </param>
-        internal PageResult_internal(int page, int? clusterId, IList<KeyValuePair_internal> keyValuePairs, IList<DataTable_internal> tables)
+        internal PageResult_internal(int page, int? clusterId, IReadOnlyList<KeyValuePair_internal> keyValuePairs, IReadOnlyList<DataTable_internal> tables)
         {
             Page = page;
             ClusterId = clusterId;
@@ -31,12 +33,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Page number. </summary>
-        public int Page { get; internal set; }
+        public int Page { get; }
         /// <summary> Cluster identifier. </summary>
-        public int? ClusterId { get; internal set; }
+        public int? ClusterId { get; }
         /// <summary> List of key-value pairs extracted from the page. </summary>
-        public IList<KeyValuePair_internal> KeyValuePairs { get; internal set; }
+        public IReadOnlyList<KeyValuePair_internal> KeyValuePairs { get; }
         /// <summary> List of data tables extracted from the page. </summary>
-        public IList<DataTable_internal> Tables { get; internal set; }
+        public IReadOnlyList<DataTable_internal> Tables { get; }
     }
 }

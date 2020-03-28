@@ -16,16 +16,6 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusProcessorOptions
     {
         /// <summary>
-        /// The set of options to use for configuring the connection to the Service Bus entities.
-        /// </summary>
-        internal ServiceBusClientOptions _connectionOptions = new ServiceBusClientOptions();
-
-        /// <summary>
-        /// The set of options to govern retry behavior and try timeouts.
-        /// </summary>
-        internal ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
-
-        /// <summary>
         /// The number of messages that will be eagerly requested from Queues or Subscriptions and queued locally without regard to
         /// whether a processing is currently active, intended to help maximize throughput by allowing the receiver to receive
         /// from a local cache rather than waiting on a service request.
@@ -51,34 +41,6 @@ namespace Azure.Messaging.ServiceBus
         /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
         /// </summary>
         public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
-
-        /// <summary>
-        /// Gets or sets the options used for configuring the connection to the Service Bus entities.
-        /// </summary>
-        internal ServiceBusClientOptions ConnectionOptions
-        {
-            get => _connectionOptions;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(ConnectionOptions));
-                _connectionOptions = value;
-            }
-        }
-
-        /// <summary>
-        /// The set of options to use for determining whether a failed operation should be retried and,
-        /// if so, the amount of time to wait between retry attempts.  These options also control the
-        /// amount of time allowed for receiving messages and other interactions with the Service Bus service.
-        /// </summary>
-        public ServiceBusRetryOptions RetryOptions
-        {
-            get => _retryOptions;
-            set
-            {
-                Argument.AssertNotNull(value, nameof(RetryOptions));
-                _retryOptions = value;
-            }
-        }
 
         /// <summary>Gets or sets a value that indicates whether the message-pump should call
         /// Receiver.CompleteAsync() on messages after the callback has completed processing.
@@ -155,18 +117,24 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        /// Creates a new copy of the current <see cref="ServiceBusReceiverOptions" />, cloning its attributes into a new instance.
+        /// Creates a new copy of the current <see cref="ServiceBusProcessorOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="ServiceBusReceiverOptions" />.</returns>
-        internal ServiceBusProcessorOptions Clone() =>
-            new ServiceBusProcessorOptions
+        /// <returns>A new copy of <see cref="ServiceBusProcessorOptions" />.</returns>
+        internal ServiceBusProcessorOptions Clone()
+        {
+            var clone = new ServiceBusProcessorOptions
             {
-                _connectionOptions = ConnectionOptions.Clone(),
-                _retryOptions = RetryOptions.Clone(),
                 ReceiveMode = ReceiveMode,
+                PrefetchCount = PrefetchCount,
                 AutoComplete = AutoComplete,
-                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration
+                MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
             };
+            if (MaxConcurrentCalls > 0)
+            {
+                clone.MaxConcurrentCalls = MaxConcurrentCalls;
+            }
+            return clone;
+        }
     }
 }

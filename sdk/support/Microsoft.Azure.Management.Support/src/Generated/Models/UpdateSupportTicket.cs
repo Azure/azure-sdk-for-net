@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// Updates severity, ticket status and contact details in the support
+    /// Updates severity, ticket status, and contact details in the support
     /// ticket.
     /// </summary>
     public partial class UpdateSupportTicket

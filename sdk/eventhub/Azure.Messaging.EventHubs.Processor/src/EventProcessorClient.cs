@@ -327,12 +327,15 @@ namespace Azure.Messaging.EventHubs
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
+        ///   does not assume the ability to manage the storage account and is safe to run without permission to manage the storage account.</para>
+        ///
+        ///   <para>If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
         ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
-        ///   Event Hub will result in a connection string that contains the name.
+        ///   Event Hub will result in a connection string that contains the name.</para>
         /// </remarks>
         ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
@@ -353,12 +356,15 @@ namespace Azure.Messaging.EventHubs
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
+        ///   does not assume the ability to manage the storage account and is safe to run without permission to manage the storage account.</para>
+        ///
+        ///   <para>If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
         ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
-        ///   Event Hub will result in a connection string that contains the name.
+        ///   Event Hub will result in a connection string that contains the name.</para>
         /// </remarks>
         ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
@@ -380,9 +386,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
+        ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
+        ///   does not assume the ability to manage the storage account and is safe to run without permission to manage the storage account.</para>
+        ///
+        ///   <para>If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
-        ///   passed only once, either as part of the connection string or separately.
+        ///   passed only once, either as part of the connection string or separately.</para>
         /// </remarks>
         ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
@@ -405,9 +414,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
+        ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
+        ///   does not assume the ability to manage the storage account and is safe to run without permission to manage the storage account.</para>
+        ///
+        ///   <para>If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
-        ///   passed only once, either as part of the connection string or separately.
+        ///   passed only once, either as part of the connection string or separately.</para>
         /// </remarks>
         ///
         /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
@@ -458,6 +470,11 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
+        ///
+        /// <remarks>
+        ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
+        ///   does not assume the ability to manage the storage account and is safe to run without permission to manage the storage account.
+        /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,

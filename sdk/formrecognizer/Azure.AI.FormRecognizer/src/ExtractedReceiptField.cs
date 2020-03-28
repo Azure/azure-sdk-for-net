@@ -3,6 +3,8 @@
 
 namespace Azure.AI.FormRecognizer.Models
 {
+    /// <summary>
+    /// </summary>
     public class ExtractedReceiptField
     {
         internal ExtractedReceiptField(FieldValue_internal field)
@@ -16,8 +18,16 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
+        /// <summary>
+        /// </summary>
         public string Text { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public BoundingBox BoundingBox { get; internal set; }
+
+        /// <summary>
+        /// </summary>
         public float? Confidence { get; internal set; }
     }
 }

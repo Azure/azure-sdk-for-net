@@ -13,19 +13,19 @@ namespace Azure.AI.FormRecognizer.Models
     {
         public static string ToSerialString(this ContentType value) => value switch
         {
-            ContentType.ApplicationPdf => "application/pdf",
-            ContentType.ImageJpeg => "image/jpeg",
-            ContentType.ImagePng => "image/png",
-            ContentType.ImageTiff => "image/tiff",
+            ContentType.Pdf => "application/pdf",
+            ContentType.Jpeg => "image/jpeg",
+            ContentType.Png => "image/png",
+            ContentType.Tiff => "image/tiff",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContentType value.")
         };
 
         public static ContentType ToContentType(this string value)
         {
-            if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return ContentType.ApplicationPdf;
-            if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return ContentType.ImageJpeg;
-            if (string.Equals(value, "image/png", StringComparison.InvariantCultureIgnoreCase)) return ContentType.ImagePng;
-            if (string.Equals(value, "image/tiff", StringComparison.InvariantCultureIgnoreCase)) return ContentType.ImageTiff;
+            if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return ContentType.Pdf;
+            if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return ContentType.Jpeg;
+            if (string.Equals(value, "image/png", StringComparison.InvariantCultureIgnoreCase)) return ContentType.Png;
+            if (string.Equals(value, "image/tiff", StringComparison.InvariantCultureIgnoreCase)) return ContentType.Tiff;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContentType value.");
         }
     }

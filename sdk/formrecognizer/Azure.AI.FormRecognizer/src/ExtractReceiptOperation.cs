@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal class ExtractReceiptOperation : Operation<ExtractedReceipt>
+    internal class ExtractReceiptOperation : Operation<IReadOnlyList<ExtractedReceipt>>
     {
         private Response _response;
-        private ExtractedReceipt _value;
+        private IReadOnlyList<ExtractedReceipt> _value;
         private bool _hasCompleted;
 
         private readonly ServiceClient _operations;
 
         public override string Id { get; }
 
-        public override ExtractedReceipt Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<ExtractedReceipt> Value => OperationHelpers.GetValue(ref _value);
 
         public override bool HasCompleted => _hasCompleted;
 
@@ -30,11 +31,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<ExtractedReceipt>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<ExtractedReceipt>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         internal ExtractReceiptOperation(ServiceClient operations, string operationLocation)
@@ -54,7 +55,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
-        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
             {
@@ -71,13 +72,24 @@ namespace Azure.AI.FormRecognizer.Models
 
                     // TODO: When they support extracting more than one receipt, add a pageable method for this.
                     // https://github.com/Azure/azure-sdk-for-net/issues/10389
-                    _value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First(), update.Value.AnalyzeResult.ReadResults.First());
+                    //_value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First(), update.Value.AnalyzeResult.ReadResults.First());
+                    _value = ConvertToExtractedReceipts(update.Value.AnalyzeResult.DocumentResults, update.Value.AnalyzeResult.ReadResults);
                 }
 
                 _response = update.GetRawResponse();
             }
 
             return GetRawResponse();
+        }
+
+        private static IReadOnlyList<ExtractedReceipt> ConvertToExtractedReceipts(IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<ReadResult_internal> readResults)
+        {
+            List<ExtractedReceipt> receipts = new List<ExtractedReceipt>();
+            for (int i = 0; i < documentResults.Count; i++)
+            {
+                receipts.Add(new ExtractedReceipt(documentResults[i], readResults));
+            }
+            return receipts;
         }
     }
 }

@@ -2,6 +2,12 @@
 
 ## 1.2.0-preview.1 (Unreleased)
 
+### Added
+- `AzureKeyCredential` and its respective policy.
+
+### Changed
+- Response trace messages are properly identified.
+- Content type "application/x-www-form-urlencoded" is decoded in trace messages.
 
 ## 1.1.0 (2020-03-05)
 

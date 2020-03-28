@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var ct = 0;
                 while (ct < messageCt)
                 {
-                    foreach (ServiceBusMessage peekedMessage in await receiver.PeekBatchAsync(
+                    foreach (ServiceBusReceivedMessage peekedMessage in await receiver.PeekBatchAsync(
                     maxMessages: messageCt))
                     {
                         var peekedText = Encoding.Default.GetString(peekedMessage.Body.ToArray());
@@ -139,18 +139,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
+                IList<ServiceBusReceivedMessage> receivedMessages = new List<ServiceBusReceivedMessage>();
                 while (remainingMessages > 0)
                 {
-                    foreach (var item in await receiver.ReceiveBatchAsync(remainingMessages))
+                    foreach (var msg in await receiver.ReceiveBatchAsync(remainingMessages))
                     {
                         remainingMessages--;
                         messageEnum.MoveNext();
-                        Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        await receiver.AbandonAsync(item.LockToken);
-                        Assert.AreEqual(item.DeliveryCount, 1);
+                        Assert.AreEqual(messageEnum.Current.MessageId, msg.MessageId);
+                        receivedMessages.Add(msg);
+                        Assert.AreEqual(msg.DeliveryCount, 1);
                     }
                 }
+
                 Assert.AreEqual(0, remainingMessages);
+
+                // don't abandon in the receive loop
+                // as this would make the message available to be immediately received again
+                foreach (var msg in receivedMessages)
+                {
+                    await receiver.AbandonAsync(msg);
+                }
                 messageEnum.Reset();
                 var receivedMessageCount = 0;
                 foreach (var item in await receiver.PeekBatchAsync(messageCount))
@@ -188,7 +197,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         remainingMessages--;
                         messageEnum.MoveNext();
                         Assert.AreEqual(messageEnum.Current.MessageId, item.MessageId);
-                        await receiver.MoveToDeadLetterQueueAsync(item.LockToken);
+                        await receiver.DeadLetterAsync(item.LockToken);
                     }
                 }
                 Assert.AreEqual(0, remainingMessages);
@@ -318,6 +327,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 var message = receiver.PeekAsync();
                 Assert.IsNull(message.Result);
+            }
+        }
+
+        [Test]
+        public async Task ReceiverThrowsWhenUsingSessionEntity()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusMessage sentMessage = GetMessage("sessionId");
+                await sender.SendAsync(sentMessage);
+
+                var receiver = client.GetReceiver(scope.QueueName);
+                Assert.That(
+                    async () => await receiver.ReceiveAsync(),
+                    Throws.InstanceOf<InvalidOperationException>());
             }
         }
 

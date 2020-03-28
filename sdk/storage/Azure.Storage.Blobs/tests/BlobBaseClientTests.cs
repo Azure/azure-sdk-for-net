@@ -683,6 +683,21 @@ namespace Azure.Storage.Blobs.Test
         #endregion Parallel Download
 
         [Test]
+        public async Task DownloadEmptyBlobTest()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blobClient = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream())
+            {
+                await blobClient.UploadAsync(stream, overwrite: true);
+            }
+
+            // Act
+            await blobClient.DownloadAsync();
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
