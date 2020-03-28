@@ -38,15 +38,15 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public string MerchantAddress { get; internal set; }
+        public FormField<string> MerchantAddress { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public string MerchantName { get; internal set; }
+        public FormField<string> MerchantName { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public string MerchantPhoneNumber { get; internal set; }
+        public FormField<string> MerchantPhoneNumber { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -54,33 +54,33 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public float? Subtotal { get; internal set; }
+        public FormField<float> Subtotal { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public float? Tax { get; internal set; }
+        public FormField<float> Tax { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public float? Tip { get; internal set; }
+        public FormField<float> Tip { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public float? Total { get; internal set; }
+        public FormField<float> Total { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public DateTimeOffset? TransactionDate { get; internal set; }
+        public FormField<DateTime> TransactionDate { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public DateTimeOffset? TransactionTime { get; internal set; }
+        public FormField<TimeSpan> TransactionTime { get; internal set; }
 
-        /// <summary>
-        /// </summary>
-        // TODO: Have this handle Items correctly
-        // https://github.com/Azure/azure-sdk-for-net/issues/10379
-        public IReadOnlyDictionary<string, FormField> Fields { get; internal set; }
+        ///// <summary>
+        ///// </summary>
+        //// TODO: Have this handle Items correctly
+        //// https://github.com/Azure/azure-sdk-for-net/issues/10379
+        //public IReadOnlyDictionary<string, FormField> Fields { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -90,17 +90,17 @@ namespace Azure.AI.FormRecognizer.Models
         {
             ReceiptType = ConvertReceiptType(fields);
 
-            MerchantAddress = ConvertStringValue("MerchantAddress", fields);
-            MerchantName = ConvertStringValue("MerchantName", fields);
-            MerchantPhoneNumber = ConvertStringValue("MerchantPhoneNumber", fields);
+            //MerchantAddress = ConvertStringValue("MerchantAddress", fields);
+            //MerchantName = ConvertStringValue("MerchantName", fields);
+            //MerchantPhoneNumber = ConvertStringValue("MerchantPhoneNumber", fields);
 
-            Subtotal = ConvertFloatValue("Subtotal", fields);
-            Tax = ConvertFloatValue("Tax", fields);
-            Tip = ConvertFloatValue("Tip", fields);
-            Total = ConvertFloatValue("Total", fields);
+            //Subtotal = ConvertFloatValue("Subtotal", fields);
+            //Tax = ConvertFloatValue("Tax", fields);
+            //Tip = ConvertFloatValue("Tip", fields);
+            //Total = ConvertFloatValue("Total", fields);
 
-            TransactionDate = ConvertDateTimeOffsetValue("TransactionDate", fields);
-            TransactionTime = ConvertDateTimeOffsetValue("TransactionTime", fields);
+            //TransactionDate = ConvertDateTimeOffsetValue("TransactionDate", fields);
+            //TransactionTime = ConvertDateTimeOffsetValue("TransactionTime", fields);
 
             Items = ConvertReceiptItems(fields);
             //Fields = ConvertExtractedFields(fields);

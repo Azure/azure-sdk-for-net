@@ -355,12 +355,21 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, includeTextElements: false);
+                var extractReceiptOperation = await client.StartRecognizeReceiptsAsync(stream, "en-us", includeTextElements: false);
 
                 await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractReceiptOperation.HasValue)
                 {
-                    IReadOnlyList<UnitedStatesReceipt> result = extractReceiptOperation.Value;
+                    IReadOnlyList<RecognizedReceipt> result = extractReceiptOperation.Value;
+
+                    foreach (var receipt in result)
+                    {
+                        var usReceipt = receipt.AsUnitedStatesReceipt();
+
+                        // Extract merchant value with confidence for visual highlighting.
+                        string merchantStr = usReceipt.MerchantName.Value;
+                        float merchantConfidence = usReceipt.MerchantName.Confidence ?? 0;
+                    }
                 }
             }
         }
@@ -373,7 +382,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
             var client = new FormRecognizerClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
-            var extractedReceipt = client.StartRecognizeUSReceipts(receiptUri);
+            var extractedReceipt = client.StartRecognizeReceipts(receiptUri, "en-us");
         }
 
         private static async Task ExtractLayout()
@@ -467,21 +476,21 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractReceiptOperation = await client.StartRecognizeUSReceiptsAsync(stream, includeTextElements: false);
+                var extractReceiptOperation = await client.StartRecognizeReceiptsAsync(stream, "en-us", includeTextElements: false);
                 operationId = extractReceiptOperation.Id;
 
                 await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractReceiptOperation.HasValue)
                 {
-                    IReadOnlyList<UnitedStatesReceipt> result = extractReceiptOperation.Value;
+                    IReadOnlyList<RecognizedReceipt> result = extractReceiptOperation.Value;
                 }
             }
 
-            RecognizeUSReceiptsOperation operation = new RecognizeUSReceiptsOperation(operationId, client);
+            RecognizeReceiptsOperation operation = new RecognizeReceiptsOperation(operationId, client);
             var value = await operation.WaitForCompletionAsync();
             if (operation.HasValue)
             {
-                IReadOnlyList<UnitedStatesReceipt> result = operation.Value;
+                IReadOnlyList<RecognizedReceipt> result = operation.Value;
             }
         }
     }

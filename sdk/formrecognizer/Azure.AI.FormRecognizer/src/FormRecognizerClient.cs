@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -196,11 +195,12 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="receiptLocale"></param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeUSReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeUSReceiptsOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual RecognizeUSReceiptsOperation StartRecognizeUSReceipts(Stream receiptFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, string receiptLocale, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -214,26 +214,28 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="receiptLocale"></param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeUSReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeUSReceiptsOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual RecognizeUSReceiptsOperation StartRecognizeUSReceipts(Uri receiptFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Uri receiptFileUri, string receiptLocale, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken);
-            return new RecognizeUSReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="receiptLocale"></param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeUSReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeUSReceiptsOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual async Task<RecognizeUSReceiptsOperation> StartRecognizeUSReceiptsAsync(Stream receiptFileStream, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, string receiptLocale, /* ContentType contentType, */ bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -248,15 +250,16 @@ namespace Azure.AI.FormRecognizer
         /// Extracts values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="receiptLocale"></param>
         /// <param name="includeTextElements">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeUSReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeUSReceiptsOperation"/>.Value upon successful
+        /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual async Task<RecognizeUSReceiptsOperation> StartRecognizeUSReceiptsAsync(Uri receiptFileUri, bool includeTextElements = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Uri receiptFileUri, string receiptLocale, bool includeTextElements = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
             ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeUSReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
         #endregion
 

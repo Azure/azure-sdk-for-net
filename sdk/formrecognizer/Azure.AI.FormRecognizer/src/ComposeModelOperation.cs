@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RecognizeUSReceiptsOperation"/> instance.
+        /// Initializes a new <see cref="RecognizeReceiptsOperation"/> instance.
         /// </summary>
         /// <param name="id">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
