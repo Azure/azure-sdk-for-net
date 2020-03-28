@@ -639,13 +639,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 ServiceBusSender sender = client.GetSender(scope.QueueName);
-                var sessionId1 = "sessionId1";
-                ServiceBusMessage message = GetMessage(sessionId1);
+                var sessionId = "test-sessionId";
+                ServiceBusMessage message = GetMessage(sessionId);
                 await sender.SendAsync(message);
 
                 ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(
                     scope.QueueName,
-                    sessionId: isSessionSpecified ? sessionId1 : null);
+                    sessionId: isSessionSpecified ? sessionId : null);
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
                 Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
                 Assert.AreEqual(message.SessionId, receivedMessage.SessionId);
