@@ -7,12 +7,13 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class PageTextElements
+    public class FormPage : FormContent
     {
-        internal PageTextElements(ReadResult_internal readResult)
+        internal FormPage(ReadResult_internal readResult)
+            : base("<TODO>", new BoundingBox() /* TODO */ )
         {
             PageNumber = readResult.Page;
-            Angle = readResult.Angle;
+            TextAngle = readResult.Angle;
             Width = readResult.Width;
             Height = readResult.Height;
             Unit = readResult.Unit;
@@ -27,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
         public int PageNumber { get; set; }
 
         /// <summary> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </summary>
-        public float Angle { get; set; }
+        public float TextAngle { get; set; }
 
         /// <summary> The width of the image/PDF in pixels/inches, respectively. </summary>
         public float Width { get; set; }
@@ -39,15 +40,23 @@ namespace Azure.AI.FormRecognizer.Models
         public LengthUnit Unit { get; set; }
 
         /// <summary> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </summary>
-        public ICollection<LineTextElement> Lines { get; set; }
+        public ICollection<FormLine> Lines { get; set; }
 
-        private static ICollection<LineTextElement> ConvertLines(ICollection<TextLine_internal> textLines)
+        /// <summary>
+        /// </summary>
+        public IReadOnlyList<FormCheckBox> CheckBoxes { get; }
+
+        /// <summary>
+        /// </summary>
+        public IReadOnlyList<FormTable> Tables { get; }
+
+        private static ICollection<FormLine> ConvertLines(ICollection<TextLine_internal> textLines)
         {
-            List<LineTextElement> rawLines = new List<LineTextElement>();
+            List<FormLine> rawLines = new List<FormLine>();
 
             foreach (TextLine_internal textLine in textLines)
             {
-                rawLines.Add(new LineTextElement(textLine));
+                rawLines.Add(new FormLine(textLine));
             }
 
             return rawLines;

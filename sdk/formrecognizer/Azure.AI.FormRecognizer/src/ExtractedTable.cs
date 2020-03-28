@@ -8,15 +8,15 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormTable
+    public class FormTable : FormContent
     {
         internal FormTable(DataTable_internal table, ReadResult_internal readResult)
+            : base("<TODO>", new BoundingBox() /* TODO */)
         {
             ColumnCount = table.Columns;
             RowCount = table.Rows;
             Cells = ConvertCells(table.Cells, readResult);
         }
-
 
         /// <summary>
         /// </summary>
@@ -37,7 +37,6 @@ namespace Azure.AI.FormRecognizer.Models
         // TODO: implement table indexer
         // TODO: Handling column-span?
         // https://github.com/Azure/azure-sdk-for-net/issues/9975
-
 
         /// <summary>
         /// </summary>

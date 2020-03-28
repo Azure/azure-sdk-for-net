@@ -48,15 +48,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormTable> Tables { get; }
-
-        /// <summary>
-        /// </summary>
-        public IReadOnlyList<FormCheckBox> CheckBoxes { get; }
-
-        /// <summary>
-        /// </summary>
-        public IReadOnlyList<PageTextElements> TextElements { get; }
+        public IReadOnlyList<FormPage> Pages { get; }
 
         /// <summary>
         /// Return the first field of the given name.

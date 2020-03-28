@@ -7,16 +7,20 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class LineTextElement : FormTextElement
+    public class FormLine : FormContent
     {
-        internal LineTextElement(TextLine_internal textLine)
-            : base(textLine.Text, new BoundingBox(textLine.BoundingBox), confidence: null)
+        internal FormLine(TextLine_internal textLine)
+            : base(textLine.Text, new BoundingBox(textLine.BoundingBox))
         {
             //Words = ConvertWords(textLine.Words);
         }
 
+        /// <summary>
+        /// </summary>
+        public int LineIndex { get; internal set; }
+
         /// <summary> List of words in the text line. </summary>
-        public IReadOnlyList<FormTextElement> Words { get; internal set; }
+        public IReadOnlyList<FormWord> Words { get; internal set; }
 
         //private static IReadOnlyList<WordTextElement> ConvertWords(ICollection<TextWord_internal> textWords)
         //{

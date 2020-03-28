@@ -3,21 +3,30 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormCheckBox : FormContent
+    /// <typeparam name="T"></typeparam>
+    public class FormField<T>
     {
-        internal FormCheckBox()
-            : base("", new BoundingBox() /* TODO */)
-        {
-        }
+        /// <summary>
+        /// </summary>
+        public string Label { get; internal set; }
 
         /// <summary>
         /// </summary>
-        public int PageNumber { get; }
+        public FieldText Name { get; internal set; }
+
+        /// <summary>
+        /// </summary>
+        public FieldText ValueText { get; internal set; }
+
+        /// <summary>
+        /// </summary>
+        public T Value { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -25,14 +34,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public FormCheckBoxState CheckedState { get; }
-
-        /// <summary>
-        /// </summary>
-        public bool IsChecked { get { return CheckedState == FormCheckBoxState.Checked; } }
-
-        /// <summary>
-        /// </summary>
-        public bool IsUnchecked { get { return CheckedState == FormCheckBoxState.Unchecked; } }
+        public int? PageNumber { get; internal set; }
     }
 }

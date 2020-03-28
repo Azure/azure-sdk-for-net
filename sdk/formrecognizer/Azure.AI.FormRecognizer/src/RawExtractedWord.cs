@@ -5,15 +5,21 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class WordTextElement : FormTextElement
+    public class FormWord : FormContent
     {
-        internal WordTextElement(TextWord_internal textWord)
-            : base(textWord.Text, new BoundingBox(textWord.BoundingBox), textWord.Confidence)
+        internal FormWord(TextWord_internal textWord)
+            : base(textWord.Text, new BoundingBox(textWord.BoundingBox))
         {
+            Confidence = textWord.Confidence;
         }
 
         /// <summary>
         /// </summary>
-        public bool IsHandwritten { get; internal set; }
+        public float? Confidence { get; }
+
+        /// <summary>
+        /// </summary>
+        public FormTextStyle Style { get; internal set; }
+
     }
 }

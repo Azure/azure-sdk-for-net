@@ -9,18 +9,13 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormTextElement
+    public abstract class FormContent
     {
-        internal FormTextElement(string text, BoundingBox boundingBox, float? confidence)
+        internal FormContent(string text, BoundingBox boundingBox)
         {
-            Confidence = confidence;
             BoundingBox = boundingBox;
             Text = text;
         }
-
-        /// <summary>
-        /// </summary>
-        public float? Confidence { get; }
 
         /// <summary>
         /// </summary>

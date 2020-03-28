@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResults != null)
             {
-                TextElements = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
+                Pages = ConvertPageText(PageRange.FirstPageNumber, PageRange.LastPageNumber, readResults);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<PageTextElements> TextElements { get; }
+        public IReadOnlyList<FormPage> Pages { get; }
 
         private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
         {
@@ -255,14 +255,14 @@ namespace Azure.AI.FormRecognizer.Models
             return items;
         }
 
-        private static IReadOnlyList<PageTextElements> ConvertPageText(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<FormPage> ConvertPageText(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
         {
-            List<PageTextElements> pageTexts = new List<PageTextElements>();
+            List<FormPage> pageTexts = new List<FormPage>();
             for (int i = startPageNumber - 1; i < endPageNumber - 1; i++)
             {
                 if (readResults[i].Lines != null)
                 {
-                    pageTexts.Add(new PageTextElements(readResults[i]));
+                    pageTexts.Add(new FormPage(readResults[i]));
                 }
             }
             return pageTexts;
