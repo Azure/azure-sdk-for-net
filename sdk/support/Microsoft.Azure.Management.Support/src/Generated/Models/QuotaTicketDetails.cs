@@ -36,10 +36,10 @@ namespace Microsoft.Azure.Management.Support.Models
         /// Initializes a new instance of the QuotaTicketDetails class.
         /// </summary>
         /// <param name="quotaChangeRequestSubType">Required for certain quota
-        /// types when there is a sub type that you are requesting quota
-        /// increase for. Example: Batch</param>
+        /// types when there is a sub type, such as Batch, for which you are
+        /// requesting a quota increase.</param>
         /// <param name="quotaChangeRequestVersion">Quota change request
-        /// version</param>
+        /// version.</param>
         /// <param name="quotaChangeRequests">This property is required for
         /// providing the region and new quota limits.</param>
         public QuotaTicketDetails(string quotaChangeRequestSubType = default(string), string quotaChangeRequestVersion = default(string), IList<QuotaChangeRequest> quotaChangeRequests = default(IList<QuotaChangeRequest>))
@@ -57,13 +57,13 @@ namespace Microsoft.Azure.Management.Support.Models
 
         /// <summary>
         /// Gets or sets required for certain quota types when there is a sub
-        /// type that you are requesting quota increase for. Example: Batch
+        /// type, such as Batch, for which you are requesting a quota increase.
         /// </summary>
         [JsonProperty(PropertyName = "quotaChangeRequestSubType")]
         public string QuotaChangeRequestSubType { get; set; }
 
         /// <summary>
-        /// Gets or sets quota change request version
+        /// Gets or sets quota change request version.
         /// </summary>
         [JsonProperty(PropertyName = "quotaChangeRequestVersion")]
         public string QuotaChangeRequestVersion { get; set; }

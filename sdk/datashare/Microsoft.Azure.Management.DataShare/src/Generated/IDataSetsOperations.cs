@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataShare
         /// </exception>
         Task<AzureOperationResponse<DataSet>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string dataSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a new data set to an existing share or updates it if existing.
+        /// Adds a new data set to an existing share.
         /// </summary>
         /// <remarks>
         /// Create a DataSet

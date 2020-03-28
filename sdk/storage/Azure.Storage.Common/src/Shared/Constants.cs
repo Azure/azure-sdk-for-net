@@ -268,6 +268,11 @@ namespace Azure.Storage
             /// Max upload bytes.
             /// </summary>
             public const int MaxAppendBytes = 100 * Constants.MB; // 100 MB
+
+            /// <summary>
+            /// Metadata key for isFolder property.
+            /// </summary>
+            public const string IsDirectoryKey = "hdi_isFolder";
         }
 
         /// <summary>

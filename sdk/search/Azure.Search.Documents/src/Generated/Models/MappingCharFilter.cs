@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -13,8 +15,20 @@ namespace Azure.Search.Documents.Models
     public partial class MappingCharFilter : CharFilter
     {
         /// <summary> Initializes a new instance of MappingCharFilter. </summary>
-        public MappingCharFilter()
+        /// <param name="mappings"> A list of mappings of the following format: &quot;a=&gt;b&quot; (all occurrences of the character &quot;a&quot; will be replaced with character &quot;b&quot;). </param>
+        /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public MappingCharFilter(IEnumerable<string> mappings, string name) : base(name)
         {
+            if (mappings == null)
+            {
+                throw new ArgumentNullException(nameof(mappings));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Mappings = mappings.ToArray();
             ODataType = "#Microsoft.Azure.Search.MappingCharFilter";
         }
 
@@ -25,10 +39,10 @@ namespace Azure.Search.Documents.Models
         internal MappingCharFilter(IList<string> mappings, string oDataType, string name) : base(oDataType, name)
         {
             Mappings = mappings;
-            ODataType = "#Microsoft.Azure.Search.MappingCharFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.MappingCharFilter";
         }
 
         /// <summary> A list of mappings of the following format: &quot;a=&gt;b&quot; (all occurrences of the character &quot;a&quot; will be replaced with character &quot;b&quot;). </summary>
-        public IList<string> Mappings { get; set; } = new List<string>();
+        public IList<string> Mappings { get; }
     }
 }

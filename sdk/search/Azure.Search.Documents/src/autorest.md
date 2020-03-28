@@ -28,17 +28,6 @@ directive:
 ## CodeGen hacks
 These should eventually be fixed in the code generator.
 
-### `request` can't be used as a parameter name
-The swagger and the codegen both use the name `request` which is problematic.
-``` yaml
-directive:
-- from: swagger-document
-  where: $.paths["/indexes('{indexName}')/search.analyze"].post.parameters[1]
-  transform: >
-    $["x-ms-client-name"] = "request_todo";
-    return $;
-```
-
 ## Swagger hacks
 These should eventually be fixed in the swagger files.
 
@@ -63,6 +52,17 @@ directive:
   where: $.paths["/docs('{key}')"].get.responses["200"].schema
   transform:  >
     $.additionalProperties = true;
+```
+
+### Rename one of SearchError definitions
+
+SearchError is duplicated between two swaggers, rename one of them
+
+``` yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.SearchError
+  transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
 ## C# Customizations

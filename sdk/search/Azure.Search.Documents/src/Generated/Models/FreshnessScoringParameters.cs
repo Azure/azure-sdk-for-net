@@ -13,18 +13,13 @@ namespace Azure.Search.Documents.Models
     public partial class FreshnessScoringParameters
     {
         /// <summary> Initializes a new instance of FreshnessScoringParameters. </summary>
-        public FreshnessScoringParameters()
-        {
-        }
-
-        /// <summary> Initializes a new instance of FreshnessScoringParameters. </summary>
         /// <param name="boostingDuration"> The expiration period after which boosting will stop for a particular document. </param>
-        internal FreshnessScoringParameters(TimeSpan boostingDuration)
+        public FreshnessScoringParameters(TimeSpan boostingDuration)
         {
             BoostingDuration = boostingDuration;
         }
 
         /// <summary> The expiration period after which boosting will stop for a particular document. </summary>
-        public TimeSpan BoostingDuration { get; set; }
+        public TimeSpan BoostingDuration { get; }
     }
 }

@@ -5,14 +5,22 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Creates combinations of tokens as a single token. This token filter is implemented using Apache Lucene. </summary>
     public partial class ShingleTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of ShingleTokenFilter. </summary>
-        public ShingleTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public ShingleTokenFilter(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.ShingleTokenFilter";
         }
 
@@ -33,7 +41,7 @@ namespace Azure.Search.Documents.Models
             OutputUnigramsIfNoShingles = outputUnigramsIfNoShingles;
             TokenSeparator = tokenSeparator;
             FilterToken = filterToken;
-            ODataType = "#Microsoft.Azure.Search.ShingleTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.ShingleTokenFilter";
         }
 
         /// <summary> The maximum shingle size. Default and minimum value is 2. </summary>

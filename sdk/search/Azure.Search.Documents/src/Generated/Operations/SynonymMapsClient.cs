@@ -24,9 +24,9 @@ namespace Azure.Search.Documents
         {
         }
         /// <summary> Initializes a new instance of SynonymMapsClient. </summary>
-        internal SynonymMapsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        internal SynonymMapsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
-            RestClient = new SynonymMapsRestClient(clientDiagnostics, pipeline, endpoint, ApiVersion);
+            RestClient = new SynonymMapsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a synonym map. </summary>
-        /// <param name="synonymMapName"> The name of the synonym map to create or update. </param>
+        /// <param name="synonymMapName"> The name of the synonym map to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a synonym map. </summary>
-        /// <param name="synonymMapName"> The name of the synonym map to create or update. </param>
+        /// <param name="synonymMapName"> The name of the synonym map to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves a synonym map definition. </summary>
-        /// <param name="synonymMapName"> The name of the synonym map to create or update. </param>
+        /// <param name="synonymMapName"> The name of the synonym map to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SynonymMap>> GetAsync(string synonymMapName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves a synonym map definition. </summary>
-        /// <param name="synonymMapName"> The name of the synonym map to create or update. </param>
+        /// <param name="synonymMapName"> The name of the synonym map to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SynonymMap> Get(string synonymMapName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -96,7 +96,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the synonym maps to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ListSynonymMapsResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the synonym maps to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ListSynonymMapsResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new synonym map. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="synonymMap"> The definition of the synonym map to create or update. </param>
+        /// <param name="synonymMap"> The definition of the synonym map to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SynonymMap>> CreateAsync(Guid? xMsClientRequestId, SynonymMap synonymMap, CancellationToken cancellationToken = default)
         {
@@ -124,7 +124,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new synonym map. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="synonymMap"> The definition of the synonym map to create or update. </param>
+        /// <param name="synonymMap"> The definition of the synonym map to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SynonymMap> Create(Guid? xMsClientRequestId, SynonymMap synonymMap, CancellationToken cancellationToken = default)
         {

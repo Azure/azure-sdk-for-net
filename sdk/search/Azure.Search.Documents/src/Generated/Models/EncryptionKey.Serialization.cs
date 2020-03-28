@@ -31,22 +31,25 @@ namespace Azure.Search.Documents.Models
 
         internal static EncryptionKey DeserializeEncryptionKey(JsonElement element)
         {
-            EncryptionKey result = new EncryptionKey();
+            string keyVaultKeyName = default;
+            string keyVaultKeyVersion = default;
+            string keyVaultUri = default;
+            AzureActiveDirectoryApplicationCredentials accessCredentials = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultKeyName"))
                 {
-                    result.KeyVaultKeyName = property.Value.GetString();
+                    keyVaultKeyName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultKeyVersion"))
                 {
-                    result.KeyVaultKeyVersion = property.Value.GetString();
+                    keyVaultKeyVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyVaultUri"))
                 {
-                    result.KeyVaultUri = property.Value.GetString();
+                    keyVaultUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("accessCredentials"))
@@ -55,11 +58,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.AccessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(property.Value);
+                    accessCredentials = AzureActiveDirectoryApplicationCredentials.DeserializeAzureActiveDirectoryApplicationCredentials(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new EncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials);
         }
     }
 }

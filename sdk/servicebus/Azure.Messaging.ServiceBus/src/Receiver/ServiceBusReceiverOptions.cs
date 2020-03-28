@@ -9,7 +9,7 @@ using Azure.Messaging.ServiceBus.Primitives;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiver"/> or <see cref="ServiceBusProcessor" />
+    /// The set of options that can be specified when creating a <see cref="ServiceBusReceiver"/>
     /// to configure its behavior.
     /// </summary>
     public class ServiceBusReceiverOptions

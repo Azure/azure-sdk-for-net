@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,8 +14,14 @@ namespace Azure.Search.Documents.Models
     public partial class NGramTokenizer : Tokenizer
     {
         /// <summary> Initializes a new instance of NGramTokenizer. </summary>
-        public NGramTokenizer()
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public NGramTokenizer(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.NGramTokenizer";
         }
 
@@ -29,7 +36,7 @@ namespace Azure.Search.Documents.Models
             MinGram = minGram;
             MaxGram = maxGram;
             TokenChars = tokenChars;
-            ODataType = "#Microsoft.Azure.Search.NGramTokenizer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.NGramTokenizer";
         }
 
         /// <summary> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </summary>

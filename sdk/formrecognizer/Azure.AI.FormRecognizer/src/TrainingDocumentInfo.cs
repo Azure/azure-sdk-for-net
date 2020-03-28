@@ -10,10 +10,6 @@ namespace Azure.AI.FormRecognizer.Training
     [CodeGenSchema("TrainingDocumentInfo")]
     public partial class TrainingDocumentInfo
     {
-        internal TrainingDocumentInfo()
-        {
-        }
-
         /// <summary>
         /// </summary>
         [CodeGenSchemaMember("pages")]

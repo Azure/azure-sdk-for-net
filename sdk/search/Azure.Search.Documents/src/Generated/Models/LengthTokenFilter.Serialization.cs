@@ -34,7 +34,10 @@ namespace Azure.Search.Documents.Models
 
         internal static LengthTokenFilter DeserializeLengthTokenFilter(JsonElement element)
         {
-            LengthTokenFilter result = new LengthTokenFilter();
+            int? min = default;
+            int? max = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"))
@@ -43,7 +46,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Min = property.Value.GetInt32();
+                    min = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("max"))
@@ -52,21 +55,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Max = property.Value.GetInt32();
+                    max = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new LengthTokenFilter(min, max, odatatype, name);
         }
     }
 }

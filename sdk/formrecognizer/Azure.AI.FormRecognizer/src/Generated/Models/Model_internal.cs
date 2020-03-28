@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.AI.FormRecognizer;
 using Azure.AI.FormRecognizer.Models;
 
@@ -14,8 +15,15 @@ namespace Azure.AI.FormRecognizer.Training
     internal partial class Model_internal
     {
         /// <summary> Initializes a new instance of Model_internal. </summary>
-        internal Model_internal()
+        /// <param name="modelInfo"> Basic custom model information. </param>
+        internal Model_internal(ModelInfo_internal modelInfo)
         {
+            if (modelInfo == null)
+            {
+                throw new ArgumentNullException(nameof(modelInfo));
+            }
+
+            ModelInfo = modelInfo;
         }
 
         /// <summary> Initializes a new instance of Model_internal. </summary>
@@ -30,10 +38,10 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary> Basic custom model information. </summary>
-        public ModelInfo_internal ModelInfo { get; internal set; } = new ModelInfo_internal();
+        public ModelInfo_internal ModelInfo { get; }
         /// <summary> Keys extracted by the custom model. </summary>
-        public KeysResult_internal Keys { get; internal set; }
+        public KeysResult_internal Keys { get; }
         /// <summary> Custom model training result. </summary>
-        public TrainResult_internal TrainResult { get; internal set; }
+        public TrainResult_internal TrainResult { get; }
     }
 }

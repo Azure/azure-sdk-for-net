@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -27,12 +28,13 @@ namespace Azure.Search.Documents.Models
 
         internal static IndexingSchedule DeserializeIndexingSchedule(JsonElement element)
         {
-            IndexingSchedule result = new IndexingSchedule();
+            TimeSpan interval = default;
+            DateTimeOffset? startTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("interval"))
                 {
-                    result.Interval = property.Value.GetTimeSpan("P");
+                    interval = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -41,11 +43,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.StartTime = property.Value.GetDateTimeOffset("S");
+                    startTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
             }
-            return result;
+            return new IndexingSchedule(interval, startTime);
         }
     }
 }

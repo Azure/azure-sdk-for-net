@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -13,8 +15,21 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class AnalyzeResult_internal
     {
         /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
-        internal AnalyzeResult_internal()
+        /// <param name="version"> Version of schema used for this result. </param>
+        /// <param name="readResults"> Text extracted from the input. </param>
+        internal AnalyzeResult_internal(string version, IEnumerable<ReadResult_internal> readResults)
         {
+            if (version == null)
+            {
+                throw new ArgumentNullException(nameof(version));
+            }
+            if (readResults == null)
+            {
+                throw new ArgumentNullException(nameof(readResults));
+            }
+
+            Version = version;
+            ReadResults = readResults.ToArray();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
@@ -23,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="pageResults"> Page-level information extracted from the input. </param>
         /// <param name="documentResults"> Document-level information extracted from the input. </param>
         /// <param name="errors"> List of errors reported during the analyze operation. </param>
-        internal AnalyzeResult_internal(string version, IList<ReadResult_internal> readResults, IList<PageResult_internal> pageResults, IList<DocumentResult_internal> documentResults, IList<FormRecognizerError> errors)
+        internal AnalyzeResult_internal(string version, IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<FormRecognizerError> errors)
         {
             Version = version;
             ReadResults = readResults;
@@ -33,14 +48,14 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Version of schema used for this result. </summary>
-        public string Version { get; internal set; }
+        public string Version { get; }
         /// <summary> Text extracted from the input. </summary>
-        public IList<ReadResult_internal> ReadResults { get; internal set; } = new List<ReadResult_internal>();
+        public IReadOnlyList<ReadResult_internal> ReadResults { get; }
         /// <summary> Page-level information extracted from the input. </summary>
-        public IList<PageResult_internal> PageResults { get; internal set; }
+        public IReadOnlyList<PageResult_internal> PageResults { get; }
         /// <summary> Document-level information extracted from the input. </summary>
-        public IList<DocumentResult_internal> DocumentResults { get; internal set; }
+        public IReadOnlyList<DocumentResult_internal> DocumentResults { get; }
         /// <summary> List of errors reported during the analyze operation. </summary>
-        public IList<FormRecognizerError> Errors { get; internal set; }
+        public IReadOnlyList<FormRecognizerError> Errors { get; }
     }
 }

@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Blueprint</PackageId>
     <Description>Provides Microsoft Azure Blueprint management operations including the ability to create, update and delete Blueprint definition and assignment.</Description>
-    <Version>0.20.5-preview</Version>
+    <Version>0.20.6-preview</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Blueprint Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Blueprint</AssemblyName>
@@ -14,7 +14,7 @@
     <PackageReleaseNotes>
 <![CDATA[This is a preview release sdk for Azure Blueprints, allows you to do Blueprint definition and assignment CRUD.
 
- - This version has addition of excludedActions property to support excluded actions from a blueprint lock. It also has the documentation updates.
+ - This version adds support for management group level Blueprint assignment.
 
 ]]>
 </PackageReleaseNotes>
@@ -22,9 +22,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Customizations\Extensions\" />
-  </ItemGroup>
   <!-- Please do not move/edit code below this line -->
   <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
   <!-- Please do not move/edit code above this line -->

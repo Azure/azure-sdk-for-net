@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,8 +14,19 @@ namespace Azure.Search.Documents.Models
     public partial class KeyPhraseExtractionSkill : Skill
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionSkill. </summary>
-        public KeyPhraseExtractionSkill()
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        public KeyPhraseExtractionSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base(inputs, outputs)
         {
+            if (inputs == null)
+            {
+                throw new ArgumentNullException(nameof(inputs));
+            }
+            if (outputs == null)
+            {
+                throw new ArgumentNullException(nameof(outputs));
+            }
+
             ODataType = "#Microsoft.Skills.Text.KeyPhraseExtractionSkill";
         }
 
@@ -31,7 +43,7 @@ namespace Azure.Search.Documents.Models
         {
             DefaultLanguageCode = defaultLanguageCode;
             MaxKeyPhraseCount = maxKeyPhraseCount;
-            ODataType = "#Microsoft.Skills.Text.KeyPhraseExtractionSkill";
+            ODataType = oDataType ?? "#Microsoft.Skills.Text.KeyPhraseExtractionSkill";
         }
 
         /// <summary> A value indicating which language code to use. Default is en. </summary>

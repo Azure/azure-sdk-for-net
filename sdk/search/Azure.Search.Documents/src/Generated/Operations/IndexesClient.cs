@@ -24,9 +24,9 @@ namespace Azure.Search.Documents
         {
         }
         /// <summary> Initializes a new instance of IndexesClient. </summary>
-        internal IndexesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        internal IndexesClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
-            RestClient = new IndexesRestClient(clientDiagnostics, pipeline, endpoint, ApiVersion);
+            RestClient = new IndexesRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the index definitions to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ListIndexesResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -59,7 +59,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the index definitions to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ListIndexesResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="index"> The definition of the index to create. </param>
+        /// <param name="index"> The definition of the index to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, bool? allowIndexDowntime, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, SearchIndex index, CancellationToken cancellationToken = default)
         {
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="index"> The definition of the index to create. </param>
+        /// <param name="index"> The definition of the index to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndex> CreateOrUpdate(string indexName, bool? allowIndexDowntime, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, SearchIndex index, CancellationToken cancellationToken = default)
         {
@@ -94,7 +94,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a search index and all the documents it contains. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a search index and all the documents it contains. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -116,7 +116,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves an index definition. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndex>> GetAsync(string indexName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -125,7 +125,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves an index definition. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndex> Get(string indexName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -134,7 +134,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GetIndexStatisticsResult>> GetStatisticsAsync(string indexName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -143,7 +143,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GetIndexStatisticsResult> GetStatistics(string indexName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -152,23 +152,23 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Shows how an analyzer breaks text into tokens. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="requestTodo"> The text and analyzer or analysis components to test. </param>
+        /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnalyzeResult>> AnalyzeAsync(string indexName, Guid? xMsClientRequestId, AnalyzeRequest requestTodo, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeResult>> AnalyzeAsync(string indexName, Guid? xMsClientRequestId, AnalyzeRequest request, CancellationToken cancellationToken = default)
         {
-            return await RestClient.AnalyzeAsync(indexName, xMsClientRequestId, requestTodo, cancellationToken).ConfigureAwait(false);
+            return await RestClient.AnalyzeAsync(indexName, xMsClientRequestId, request, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Shows how an analyzer breaks text into tokens. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="requestTodo"> The text and analyzer or analysis components to test. </param>
+        /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnalyzeResult> Analyze(string indexName, Guid? xMsClientRequestId, AnalyzeRequest requestTodo, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeResult> Analyze(string indexName, Guid? xMsClientRequestId, AnalyzeRequest request, CancellationToken cancellationToken = default)
         {
-            return RestClient.Analyze(indexName, xMsClientRequestId, requestTodo, cancellationToken);
+            return RestClient.Analyze(indexName, xMsClientRequestId, request, cancellationToken);
         }
     }
 }

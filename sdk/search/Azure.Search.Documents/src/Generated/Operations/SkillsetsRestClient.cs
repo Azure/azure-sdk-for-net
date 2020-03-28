@@ -19,24 +19,24 @@ namespace Azure.Search.Documents
     internal partial class SkillsetsRestClient
     {
         private string endpoint;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of SkillsetsRestClient. </summary>
-        public SkillsetsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        public SkillsetsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.endpoint = endpoint;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/skillsets('", false);
             uri.AppendPath(skillsetName, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -101,8 +101,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            Skillset value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Skillset.DeserializeSkillset(document.RootElement);
+                            value = Skillset.DeserializeSkillset(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -144,8 +145,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            Skillset value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Skillset.DeserializeSkillset(document.RootElement);
+                            value = Skillset.DeserializeSkillset(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -169,7 +171,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/skillsets('", false);
             uri.AppendPath(skillsetName, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -187,7 +189,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillsetName"> The name of the skillset to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -221,7 +223,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillsetName"> The name of the skillset to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -264,7 +266,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/skillsets('", false);
             uri.AppendPath(skillsetName, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -274,7 +276,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Skillset>> GetAsync(string skillsetName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -294,8 +296,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            Skillset value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Skillset.DeserializeSkillset(document.RootElement);
+                            value = Skillset.DeserializeSkillset(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -310,7 +313,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves a skillset in a search service. </summary>
-        /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Skillset> Get(string skillsetName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -330,8 +333,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            Skillset value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Skillset.DeserializeSkillset(document.RootElement);
+                            value = Skillset.DeserializeSkillset(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -357,7 +361,7 @@ namespace Azure.Search.Documents
             {
                 uri.AppendQuery("$select", select, true);
             }
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -367,12 +371,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> List all skillsets in a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ListSkillsetsResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("SkillsetsClient.List");
             scope.Start();
             try
@@ -383,8 +386,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            ListSkillsetsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
+                            value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -399,12 +403,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> List all skillsets in a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListSkillsetsResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("SkillsetsClient.List");
             scope.Start();
             try
@@ -415,8 +418,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            ListSkillsetsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
+                            value = ListSkillsetsResult.DeserializeListSkillsetsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -438,7 +442,7 @@ namespace Azure.Search.Documents
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/skillsets", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -453,7 +457,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new skillset in a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
+        /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Skillset>> CreateAsync(Guid? xMsClientRequestId, Skillset skillset, CancellationToken cancellationToken = default)
         {
@@ -472,8 +476,9 @@ namespace Azure.Search.Documents
                 {
                     case 201:
                         {
+                            Skillset value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Skillset.DeserializeSkillset(document.RootElement);
+                            value = Skillset.DeserializeSkillset(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -489,7 +494,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new skillset in a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
+        /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Skillset> Create(Guid? xMsClientRequestId, Skillset skillset, CancellationToken cancellationToken = default)
         {
@@ -508,8 +513,9 @@ namespace Azure.Search.Documents
                 {
                     case 201:
                         {
+                            Skillset value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Skillset.DeserializeSkillset(document.RootElement);
+                            value = Skillset.DeserializeSkillset(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

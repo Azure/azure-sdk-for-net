@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,8 +14,14 @@ namespace Azure.Search.Documents.Models
     public partial class PatternAnalyzer : Analyzer
     {
         /// <summary> Initializes a new instance of PatternAnalyzer. </summary>
-        public PatternAnalyzer()
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public PatternAnalyzer(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 
@@ -31,7 +38,7 @@ namespace Azure.Search.Documents.Models
             Pattern = pattern;
             Flags = flags;
             Stopwords = stopwords;
-            ODataType = "#Microsoft.Azure.Search.PatternAnalyzer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 
         /// <summary> A value indicating whether terms should be lower-cased. Default is true. </summary>

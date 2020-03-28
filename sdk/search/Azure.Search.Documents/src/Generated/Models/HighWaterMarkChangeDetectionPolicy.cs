@@ -5,14 +5,23 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Defines a data change detection policy that captures changes based on the value of a high water mark column. </summary>
     public partial class HighWaterMarkChangeDetectionPolicy : DataChangeDetectionPolicy
     {
         /// <summary> Initializes a new instance of HighWaterMarkChangeDetectionPolicy. </summary>
-        public HighWaterMarkChangeDetectionPolicy()
+        /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
+        public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName)
         {
+            if (highWaterMarkColumnName == null)
+            {
+                throw new ArgumentNullException(nameof(highWaterMarkColumnName));
+            }
+
+            HighWaterMarkColumnName = highWaterMarkColumnName;
             ODataType = "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
         }
 
@@ -22,10 +31,10 @@ namespace Azure.Search.Documents.Models
         internal HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName, string oDataType) : base(oDataType)
         {
             HighWaterMarkColumnName = highWaterMarkColumnName;
-            ODataType = "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
         }
 
         /// <summary> The name of the high water mark column. </summary>
-        public string HighWaterMarkColumnName { get; set; }
+        public string HighWaterMarkColumnName { get; }
     }
 }

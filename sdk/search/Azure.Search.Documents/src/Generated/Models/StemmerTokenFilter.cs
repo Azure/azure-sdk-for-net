@@ -5,14 +5,24 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Language specific stemming filter. This token filter is implemented using Apache Lucene. </summary>
     public partial class StemmerTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of StemmerTokenFilter. </summary>
-        public StemmerTokenFilter()
+        /// <param name="language"> The language to use. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public StemmerTokenFilter(StemmerTokenFilterLanguage language, string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Language = language;
             ODataType = "#Microsoft.Azure.Search.StemmerTokenFilter";
         }
 
@@ -23,10 +33,10 @@ namespace Azure.Search.Documents.Models
         internal StemmerTokenFilter(StemmerTokenFilterLanguage language, string oDataType, string name) : base(oDataType, name)
         {
             Language = language;
-            ODataType = "#Microsoft.Azure.Search.StemmerTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.StemmerTokenFilter";
         }
 
         /// <summary> The language to use. </summary>
-        public StemmerTokenFilterLanguage Language { get; set; }
+        public StemmerTokenFilterLanguage Language { get; }
     }
 }

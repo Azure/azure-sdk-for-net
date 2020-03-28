@@ -11,8 +11,10 @@ namespace Azure.Search.Documents.Models
     public partial class SearchResourceCounter
     {
         /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
-        internal SearchResourceCounter()
+        /// <param name="usage"> The resource usage amount. </param>
+        internal SearchResourceCounter(long usage)
         {
+            Usage = usage;
         }
 
         /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
@@ -25,8 +27,8 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The resource usage amount. </summary>
-        public long Usage { get; internal set; }
+        public long Usage { get; }
         /// <summary> The resource amount quota. </summary>
-        public long? Quota { get; internal set; }
+        public long? Quota { get; }
     }
 }

@@ -140,7 +140,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Models_internal>> GetCustomModelsAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
             scope.Start();
             try
@@ -151,8 +150,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            Models_internal value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            value = Models_internal.DeserializeModels_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -171,7 +171,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Models_internal> GetCustomModels(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
             scope.Start();
             try
@@ -182,8 +181,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            Models_internal value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            value = Models_internal.DeserializeModels_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -221,7 +221,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Model_internal>> GetCustomModelAsync(Guid modelId, bool? includeKeys, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetCustomModel");
             scope.Start();
             try
@@ -232,8 +231,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            Model_internal value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Model_internal.DeserializeModel_internal(document.RootElement);
+                            value = Model_internal.DeserializeModel_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -253,7 +253,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Model_internal> GetCustomModel(Guid modelId, bool? includeKeys, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetCustomModel");
             scope.Start();
             try
@@ -264,8 +263,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            Model_internal value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Model_internal.DeserializeModel_internal(document.RootElement);
+                            value = Model_internal.DeserializeModel_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -298,7 +298,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response> DeleteCustomModelAsync(Guid modelId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.DeleteCustomModel");
             scope.Start();
             try
@@ -325,7 +324,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response DeleteCustomModel(Guid modelId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.DeleteCustomModel");
             scope.Start();
             try
@@ -347,7 +345,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, ContentType? contentType, Stream fileStream)
+        internal HttpMessage CreateAnalyzeWithCustomModelRequest(Guid modelId, bool? includeTextDetails, ContentType contentType, Stream fileStream)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -363,10 +361,7 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/pdf");
-            request.Headers.Add("Content-Type", "image/jpeg");
-            request.Headers.Add("Content-Type", "image/png");
-            request.Headers.Add("Content-Type", "image/tiff");
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -377,8 +372,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
 
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeWithCustomModel");
             scope.Start();
@@ -408,8 +407,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
 
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeWithCustomModel");
             scope.Start();
@@ -463,7 +466,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<ResponseWithHeaders<AnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails, SourcePath_internal fileStream, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeWithCustomModel");
             scope.Start();
             try
@@ -493,7 +495,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<AnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails, SourcePath_internal fileStream, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeWithCustomModel");
             scope.Start();
             try
@@ -538,7 +539,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeFormResultAsync(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetAnalyzeFormResult");
             scope.Start();
             try
@@ -549,8 +549,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            AnalyzeOperationResult_internal value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                            value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -570,7 +571,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<AnalyzeOperationResult_internal> GetAnalyzeFormResult(Guid modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetAnalyzeFormResult");
             scope.Start();
             try
@@ -581,8 +581,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            AnalyzeOperationResult_internal value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                            value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -596,7 +597,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, ContentType? contentType, Stream fileStream)
+        internal HttpMessage CreateAnalyzeReceiptAsyncRequest(bool? includeTextDetails, ContentType contentType, Stream fileStream)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -610,10 +611,7 @@ namespace Azure.AI.FormRecognizer
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/pdf");
-            request.Headers.Add("Content-Type", "image/jpeg");
-            request.Headers.Add("Content-Type", "image/png");
-            request.Headers.Add("Content-Type", "image/tiff");
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -623,8 +621,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
 
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeReceiptAsync");
             scope.Start();
@@ -653,8 +655,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
 
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeReceiptAsync");
             scope.Start();
@@ -705,7 +711,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<ResponseWithHeaders<AnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails, SourcePath_internal fileStream, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeReceiptAsync");
             scope.Start();
             try
@@ -734,7 +739,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails, SourcePath_internal fileStream, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeReceiptAsync");
             scope.Start();
             try
@@ -776,7 +780,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeReceiptResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetAnalyzeReceiptResult");
             scope.Start();
             try
@@ -787,8 +790,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            AnalyzeOperationResult_internal value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                            value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -807,7 +811,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<AnalyzeOperationResult_internal> GetAnalyzeReceiptResult(Guid resultId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetAnalyzeReceiptResult");
             scope.Start();
             try
@@ -818,8 +821,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            AnalyzeOperationResult_internal value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                            value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -833,7 +837,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(ContentType? contentType, Stream fileStream)
+        internal HttpMessage CreateAnalyzeLayoutAsyncRequest(ContentType contentType, Stream fileStream)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -843,10 +847,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/v2.0-preview", false);
             uri.AppendPath("/layout/analyze", false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/pdf");
-            request.Headers.Add("Content-Type", "image/jpeg");
-            request.Headers.Add("Content-Type", "image/png");
-            request.Headers.Add("Content-Type", "image/tiff");
+            request.Headers.Add("Content-Type", contentType.ToSerialString());
             request.Content = RequestContent.Create(fileStream);
             return message;
         }
@@ -855,8 +856,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
 
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeLayoutAsync");
             scope.Start();
@@ -884,8 +889,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType? contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
+            if (fileStream == null)
+            {
+                throw new ArgumentNullException(nameof(fileStream));
+            }
 
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeLayoutAsync");
             scope.Start();
@@ -931,7 +940,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<ResponseWithHeaders<AnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(SourcePath_internal fileStream, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeLayoutAsync");
             scope.Start();
             try
@@ -959,7 +967,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(SourcePath_internal fileStream, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.AnalyzeLayoutAsync");
             scope.Start();
             try
@@ -1001,7 +1008,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<AnalyzeOperationResult_internal>> GetAnalyzeLayoutResultAsync(Guid resultId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetAnalyzeLayoutResult");
             scope.Start();
             try
@@ -1012,8 +1018,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            AnalyzeOperationResult_internal value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                            value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -1032,7 +1039,6 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<AnalyzeOperationResult_internal> GetAnalyzeLayoutResult(Guid resultId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetAnalyzeLayoutResult");
             scope.Start();
             try
@@ -1043,8 +1049,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            AnalyzeOperationResult_internal value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
+                            value = AnalyzeOperationResult_internal.DeserializeAnalyzeOperationResult_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -1089,8 +1096,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            Models_internal value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            value = Models_internal.DeserializeModels_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -1124,8 +1132,9 @@ namespace Azure.AI.FormRecognizer
                 {
                     case 200:
                         {
+                            Models_internal value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            value = Models_internal.DeserializeModels_internal(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

@@ -45,8 +45,7 @@ param (
     [int] $DeleteAfterHours,
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
-    [string] $Location = 'westus2',
+    [string] $Location = '',
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]
@@ -121,6 +120,25 @@ Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
 if (!$templateFiles) {
     Write-Warning -Message "No template files found under '$root'"
     exit
+}
+
+# If no location is specified use safe default locations for the given
+# environment. If no matching environment is found $Location remains an empty
+# string.
+if (!$Location) {
+    $defaultLocations = @{
+        'AzureCloud' = 'westus2';
+        'AzureUSGovernment' = 'usgovvirginia';
+        'AzureChinaCloud' = 'chinaeast2';
+    }
+
+    if ($defaultLocations.ContainsKey($Environment)) {
+        $Location = $defaultLocations[$Environment]
+    } else {
+        Write-Error "Location cannot be empty and there is no default location for Environment: '$Environment'"
+    }
+
+    Write-Verbose "Location was not set. Using default location for environment: '$Location'"
 }
 
 # Log in if requested; otherwise, the user is expected to already be authenticated via Connect-AzAccount.

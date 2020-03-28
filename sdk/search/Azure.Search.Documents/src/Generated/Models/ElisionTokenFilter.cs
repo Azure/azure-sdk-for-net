@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,8 +14,14 @@ namespace Azure.Search.Documents.Models
     public partial class ElisionTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of ElisionTokenFilter. </summary>
-        public ElisionTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public ElisionTokenFilter(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
 
@@ -25,7 +32,7 @@ namespace Azure.Search.Documents.Models
         internal ElisionTokenFilter(IList<string> articles, string oDataType, string name) : base(oDataType, name)
         {
             Articles = articles;
-            ODataType = "#Microsoft.Azure.Search.ElisionTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
 
         /// <summary> The set of articles to remove. </summary>

@@ -55,7 +55,6 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<Model>> OperationAsync(Model body, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
@@ -66,8 +65,9 @@ namespace Azure.Template
                 {
                     case 200:
                         {
+                            Model value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            value = Model.DeserializeModel(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -85,7 +85,6 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<Model> Operation(Model body, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
@@ -96,8 +95,9 @@ namespace Azure.Template
                 {
                     case 200:
                         {
+                            Model value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            value = Model.DeserializeModel(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

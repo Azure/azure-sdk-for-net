@@ -24,21 +24,22 @@ namespace Azure.Search.Documents.Models
 
         internal static HighWaterMarkChangeDetectionPolicy DeserializeHighWaterMarkChangeDetectionPolicy(JsonElement element)
         {
-            HighWaterMarkChangeDetectionPolicy result = new HighWaterMarkChangeDetectionPolicy();
+            string highWaterMarkColumnName = default;
+            string odatatype = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("highWaterMarkColumnName"))
                 {
-                    result.HighWaterMarkColumnName = property.Value.GetString();
+                    highWaterMarkColumnName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new HighWaterMarkChangeDetectionPolicy(highWaterMarkColumnName, odatatype);
         }
     }
 }

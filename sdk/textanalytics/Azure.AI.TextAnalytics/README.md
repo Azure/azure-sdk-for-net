@@ -4,7 +4,6 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Sentiment Analysis
 * Key Phrase Extraction
 * Named Entity Recognition
-* Recognition of Personally Identifiable Information 
 * Linked Entity Recognition
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
@@ -124,7 +123,6 @@ The following section provides several code snippets using the `client` [created
 * [Analyze Sentiment](#analyze-sentiment)
 * [Extract Key Phrases](#extract-key-phrases)
 * [Recognize Entities](#recognize-entities)
-* [Recognize PII Entities](#recognize-pii-entities)
 * [Recognize Linked Entities](#recognize-linked-entities)
 
 ### Async examples
@@ -197,23 +195,6 @@ foreach (CategorizedEntity entity in entities)
 For samples on using the production recommended option `RecognizeEntitiesBatch` see [here](#recognize-entities-1).
 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
-
-### Recognize PII Entities
-Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in document or batch of documents, and categorize those entities into categories such as US social security number, drivers license number, or credit card number.
-
-```C# Snippet:RecognizePiiEntities
-string document = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
-
-IReadOnlyCollection<PiiEntity> entities = client.RecognizePiiEntities(document).Value;
-
-Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
-foreach (PiiEntity entity in entities)
-{
-    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
-}
-```
-
-For samples on using the production recommended option `RecognizePiiEntitiesBatch` see [here](#recognize-pii-entities-1).
 
 ### Recognize Linked Entities
 Run a predictive model to identify a collection of entities found in the passed-in document or batch of documents, and include information linking the entities to their corresponding entries in a well-known knowledge base.
@@ -340,11 +321,6 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Sample4_RecognizeEntitiesBatch.cs][recognize_entities_sample2] - Recognize entities of a collection of documents in different languages.
 * [Sample4_RecognizeEntitiesAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to recognize entities in a document.
 
-### Recognize PII Entities
-* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing Personally Identifiable Information in a document.
-* [Sample5_RecognizePiiEntitiesBatchConvenience.cs][recognize_pii_entities_sample2] - Recognize entities containing Personally Identifiable Information in each document in a collection of documents.
-* [Sample5_RecognizePiiEntitiesBatch.cs][recognize_pii_entities_sample1] - Recognize entities containing Personally Identifiable Information of a collection of documents in different languages.
-
 ### Recognize Linked Entities
 * [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a document.
 * [Sample6_RecognizeLinkedEntitiesBatchConvenience.cs][recognize_linked_entities_sample1] - Recognize linked entities in each document in a collection of documents.
@@ -401,9 +377,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [recognize_entities_sample1]: tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs
 [recognize_entities_sample2]: tests/samples/Sample4_RecognizeEntitiesBatch.cs
 [recognize_entities_sample_async]: tests/samples/Sample4_RecognizeEntitiesAsync.cs
-[recognize_pii_entities_sample0]: tests/samples/Sample5_RecognizePiiEntities.cs
-[recognize_pii_entities_sample1]: tests/samples/Sample5_RecognizePiiEntitiesBatch.cs
-[recognize_pii_entities_sample2]: tests/samples/Sample5_RecognizePiiEntitiesBatchConvenience.cs
 [recognize_linked_entities_sample0]: tests/samples/Sample6_RecognizeLinkedEntities.cs
 [recognize_linked_entities_sample1]: tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs
 [recognize_linked_entities_sample2]: tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenience.cs

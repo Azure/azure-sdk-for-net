@@ -4,6 +4,7 @@
 namespace Management.Blueprint.Tests.ScenarioTests
 {
     using Microsoft.Azure.Management.Blueprint;
+    using Microsoft.Azure.Management.Blueprint.Customizations.Extensions;
     using Microsoft.Azure.Management.Blueprint.Models;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -246,7 +247,108 @@ namespace Management.Blueprint.Tests.ScenarioTests
         }
 
         [Fact]
-        public async Task AssignBlueprint()
+        public async Task ManagementGroupAssignmentCRUD()
+        {
+            string managementGroupName = "AzBlueprintWebScout",
+                blueprintName = "AssignBlueprintAtMg",
+                templateArtifactName = "vNicTemplate",
+                policyArtifactName = "costCenterPolicy",
+                rbacArtifactName = "ownerRBAC",
+                assignmentName = "testAssignmentAtMg",
+                subscriptionId = "7e2bacd2-6c4b-444c-9331-2e76799cbfc9";
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                using (var testFixture = new BlueprintTestBase(context))
+                {
+                    // cleanup
+                    await testFixture.BlueprintClient.Assignments.DeleteInManagementGroupAsync(managementGroupName, assignmentName);
+                    await testFixture.BlueprintClient.Blueprints.DeleteInManagementGroupAsync(managementGroupName, blueprintName);
+                    // create blueprint
+                    var blueprint = CreateSimpleBlueprint();
+                    await testFixture.BlueprintClient.Blueprints.CreateOrUpdateInManagementGroupAsync(managementGroupName, blueprintName, blueprint);
+
+                    // create template artifact
+                    var templateArtifact = CreateTemplateArtifact();
+                    await testFixture.BlueprintClient.Artifacts.CreateOrUpdateInManagementGroupAsync(managementGroupName, blueprintName, templateArtifactName, templateArtifact);
+
+                    // create policyAssignment artifact
+                    var policyArtifact = CreatePolicyArtifact();
+                    await testFixture.BlueprintClient.Artifacts.CreateOrUpdateInManagementGroupAsync(managementGroupName, blueprintName, policyArtifactName, policyArtifact);
+
+                    // create roleAssignment artifact
+                    var rbacArtifact = CreateRBACArtifact();
+                    await testFixture.BlueprintClient.Artifacts.CreateOrUpdateInManagementGroupAsync(managementGroupName, blueprintName, rbacArtifactName, rbacArtifact);
+
+                    // publish
+                    await testFixture.BlueprintClient.PublishedBlueprints.CreateInManagementGroupAsync(managementGroupName, blueprintName, "v1.0");
+
+                    // fix costCenter and publish new version
+                    templateArtifact.Parameters["tagValue"] = new ParameterValue { Value = "[parameters('defaultCostCenter')]" };
+                    await testFixture.BlueprintClient.PublishedBlueprints.CreateInManagementGroupAsync(managementGroupName, blueprintName, "v1.1");
+                    var latestSealed = await testFixture.BlueprintClient.PublishedBlueprints.GetInManagementGroupAsync(managementGroupName, blueprintName, "v1.1");
+
+                    // list versions
+                    var sealedBlueprints = await testFixture.BlueprintClient.PublishedBlueprints.ListInManagementGroupAsync(managementGroupName, blueprintName);
+                    Assert.Equal(2, sealedBlueprints.Count());
+
+                    // create assignment
+                    var assignment = CreateBlueprintAssignment(latestSealed, subscriptionId);
+                    await testFixture.BlueprintClient.Assignments.CreateOrUpdateInManagementGroupAsync(managementGroupName, assignmentName, assignment);
+                    var assignmentGet = await testFixture.BlueprintClient.Assignments.GetInManagementGroupAsync(managementGroupName, assignmentName);
+                    Assert.Equal(assignmentName, assignmentGet.Name);
+                    Assert.Equal("Microsoft.Blueprint/blueprintAssignments", assignmentGet.Type);
+                    Assert.Equal(string.Format(Constants.ResourceScopes.SubscriptionScope, subscriptionId), assignmentGet.Scope);
+                    Assert.Equal(1, assignment.ResourceGroups.Count);
+                    Assert.Single(assignment.ResourceGroups.Keys.Where(k => k.Equals("vNicResourceGroup")));
+                    Assert.Equal(3, assignment.Parameters.Count);
+                    Assert.Single(assignment.Parameters.Keys.Where(k => k.Equals("vNetName")));
+                    Assert.Single(assignment.Parameters.Keys.Where(k => k.Equals("defaultLocation")));
+                    Assert.Single(assignment.Parameters.Keys.Where(k => k.Equals("defaultCostCenter")));
+
+                    // list assignment
+                    var assignmentsList = await testFixture.BlueprintClient.Assignments.ListInManagementGroupAsync(managementGroupName);
+                    Assert.Single(assignmentsList.Where(a => String.Equals(a.Name, assignmentName, StringComparison.InvariantCultureIgnoreCase)));
+
+                    // wait for assignment to finish
+                    CancellationTokenSource waitTillFinish = new CancellationTokenSource(TimeSpan.FromMinutes(10));
+                    assignmentGet = await WaitForCondition(
+                        () => testFixture.BlueprintClient.Assignments.GetInManagementGroupAsync(managementGroupName, assignmentName),
+                        (Assignment assign) => assign.IsTerminalState(),
+                        waitTillFinish.Token);
+
+                    // validate we have assignmentOperation for detail deployment steps.
+                    var assignmentOperationList = await testFixture.BlueprintClient.AssignmentOperations.ListInManagementGroupAsync(managementGroupName, assignmentGet.Name);
+                    var assignmentOperation = Assert.Single(assignmentOperationList);
+                    var assignmentOperationGet = await testFixture.BlueprintClient.AssignmentOperations.GetInManagementGroupAsync(managementGroupName, assignmentGet.Name, assignmentOperation.Name);
+                    Assert.Equal(assignmentGet.ProvisioningState, assignmentOperationGet.AssignmentState);
+
+                    // cleanup
+                    await testFixture.BlueprintClient.Assignments.DeleteInManagementGroupAsync(managementGroupName, assignmentName);
+                    // assignment delete is async operation
+                    CancellationTokenSource waitTillDeleted = new CancellationTokenSource(TimeSpan.FromMinutes(10));
+                    await WaitForCondition(
+                        () => testFixture.BlueprintClient.Assignments.GetInManagementGroupAsync(managementGroupName, assignmentName),
+                        (Assignment assign) => assign.IsTerminalState(),
+                        waitTillFinish.Token,
+                        (Exception ex) =>
+                        {
+                            if (ex is CloudException && (ex as CloudException).Response.StatusCode == HttpStatusCode.NotFound)
+                            {
+                                return true;
+                            }
+                            throw ex;
+                        });
+
+                    await testFixture.BlueprintClient.PublishedBlueprints.DeleteInManagementGroupAsync(managementGroupName, blueprintName, "v1.0");
+                    await testFixture.BlueprintClient.PublishedBlueprints.DeleteInManagementGroupAsync(managementGroupName, blueprintName, "v1.1");
+                    await testFixture.BlueprintClient.Blueprints.DeleteInManagementGroupAsync(managementGroupName, blueprintName);
+                }
+            }
+        }
+
+        [Fact]
+        public async Task SubscriptionAssignmentCRUD()
         {
             string managementGroupName = "AzBlueprint",
                 blueprintName = "AssignBlueprint",
@@ -382,13 +484,18 @@ namespace Management.Blueprint.Tests.ScenarioTests
             throw new TimeoutException();
         }
 
-        private Assignment CreateBlueprintAssignment(PublishedBlueprint sealedBlueprint)
+        private Assignment CreateBlueprintAssignment(PublishedBlueprint sealedBlueprint, string subscriptionId = null)
         {
+            string scope = !string.IsNullOrEmpty(subscriptionId)
+                ? string.Format(Constants.ResourceScopes.SubscriptionScope, subscriptionId)
+                : null;
+
             return new Assignment
             {
                 BlueprintId = sealedBlueprint.Id,
                 Identity = new ManagedServiceIdentity { Type = Constants.ManagedServiceIdentityType.SystemAssigned },
                 Location = "EastUS",
+                Scope = scope,
                 ResourceGroups = new OrdinalStringDictionary<ResourceGroupValue>
                 {
                     { "vNicResourceGroup", new ResourceGroupValue { Name="default-virtual-networks", Location = "EastUS" } },

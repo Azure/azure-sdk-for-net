@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -97,6 +99,31 @@ namespace Azure.Messaging.ServiceBus.Tests
             return new ServiceBusClient(
                 TestEnvironment.ServiceBusConnectionString,
                 options);
+        }
+
+        internal ServiceBusConnection GetMockedConnection()
+        {
+            var mockConnection = new Mock<ServiceBusConnection>();
+
+            mockConnection
+                .Setup(connection => connection.RetryOptions)
+                .Returns(new ServiceBusRetryOptions());
+            return mockConnection.Object;
+        }
+
+        protected ServiceBusClient GetClient(int tryTimeout = 10)
+        {
+            var retryOptions = new ServiceBusRetryOptions();
+            if (tryTimeout != default)
+            {
+                retryOptions.TryTimeout = TimeSpan.FromSeconds(tryTimeout);
+            }
+            return new ServiceBusClient(
+                TestEnvironment.ServiceBusConnectionString,
+                new ServiceBusClientOptions
+                {
+                    RetryOptions = retryOptions
+                });
         }
     }
 }

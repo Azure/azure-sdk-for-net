@@ -5,14 +5,22 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Emits the entire input as a single token. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class KeywordTokenizerV2 : Tokenizer
     {
         /// <summary> Initializes a new instance of KeywordTokenizerV2. </summary>
-        public KeywordTokenizerV2()
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public KeywordTokenizerV2(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.KeywordTokenizerV2";
         }
 
@@ -23,7 +31,7 @@ namespace Azure.Search.Documents.Models
         internal KeywordTokenizerV2(int? maxTokenLength, string oDataType, string name) : base(oDataType, name)
         {
             MaxTokenLength = maxTokenLength;
-            ODataType = "#Microsoft.Azure.Search.KeywordTokenizerV2";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.KeywordTokenizerV2";
         }
 
         /// <summary> The maximum token length. Default is 256. Tokens longer than the maximum length are split. The maximum token length that can be used is 300 characters. </summary>

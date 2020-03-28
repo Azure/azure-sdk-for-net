@@ -5,14 +5,22 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Emits the entire input as a single token. This tokenizer is implemented using Apache Lucene. </summary>
     public partial class KeywordTokenizer : Tokenizer
     {
         /// <summary> Initializes a new instance of KeywordTokenizer. </summary>
-        public KeywordTokenizer()
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public KeywordTokenizer(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.KeywordTokenizer";
         }
 
@@ -23,7 +31,7 @@ namespace Azure.Search.Documents.Models
         internal KeywordTokenizer(int? bufferSize, string oDataType, string name) : base(oDataType, name)
         {
             BufferSize = bufferSize;
-            ODataType = "#Microsoft.Azure.Search.KeywordTokenizer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.KeywordTokenizer";
         }
 
         /// <summary> The read buffer size in bytes. Default is 256. </summary>

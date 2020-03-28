@@ -19,24 +19,24 @@ namespace Azure.Search.Documents
     internal partial class IndexersRestClient
     {
         private string endpoint;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of IndexersRestClient. </summary>
-        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.endpoint = endpoint;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexers('", false);
             uri.AppendPath(indexerName, true);
             uri.AppendPath("')/search.reset", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -134,7 +134,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexers('", false);
             uri.AppendPath(indexerName, true);
             uri.AppendPath("')/search.run", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Runs an indexer on-demand. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to run. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response> RunAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -176,7 +176,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Runs an indexer on-demand. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to run. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response Run(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -217,7 +217,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexers('", false);
             uri.AppendPath(indexerName, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -240,7 +240,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to create or update. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -267,8 +267,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchIndexer value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -283,7 +284,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to create or update. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -310,8 +311,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchIndexer value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -335,7 +337,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexers('", false);
             uri.AppendPath(indexerName, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -353,7 +355,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -387,7 +389,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -430,7 +432,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexers('", false);
             uri.AppendPath(indexerName, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -440,7 +442,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves an indexer definition. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<SearchIndexer>> GetAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -460,8 +462,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchIndexer value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -476,7 +479,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves an indexer definition. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SearchIndexer> Get(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -496,8 +499,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchIndexer value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -523,7 +527,7 @@ namespace Azure.Search.Documents
             {
                 uri.AppendQuery("$select", select, true);
             }
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -533,12 +537,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ListIndexersResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("IndexersClient.List");
             scope.Start();
             try
@@ -549,8 +552,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            ListIndexersResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
+                            value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -565,12 +569,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListIndexersResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("IndexersClient.List");
             scope.Start();
             try
@@ -581,8 +584,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            ListIndexersResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
+                            value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -604,7 +608,7 @@ namespace Azure.Search.Documents
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/indexers", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -619,7 +623,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new indexer. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="indexer"> The definition of the indexer to create or update. </param>
+        /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<SearchIndexer>> CreateAsync(Guid? xMsClientRequestId, SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
@@ -638,8 +642,9 @@ namespace Azure.Search.Documents
                 {
                     case 201:
                         {
+                            SearchIndexer value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -655,7 +660,7 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new indexer. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="indexer"> The definition of the indexer to create or update. </param>
+        /// <param name="indexer"> The definition of the indexer to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SearchIndexer> Create(Guid? xMsClientRequestId, SearchIndexer indexer, CancellationToken cancellationToken = default)
         {
@@ -674,8 +679,9 @@ namespace Azure.Search.Documents
                 {
                     case 201:
                         {
+                            SearchIndexer value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -699,7 +705,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexers('", false);
             uri.AppendPath(indexerName, true);
             uri.AppendPath("')/search.status", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -709,7 +715,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<IndexerExecutionInfo>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -729,8 +735,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            IndexerExecutionInfo value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
+                            value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -745,7 +752,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
-        /// <param name="indexerName"> The name of the indexer to reset. </param>
+        /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<IndexerExecutionInfo> GetStatus(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -765,8 +772,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            IndexerExecutionInfo value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
+                            value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

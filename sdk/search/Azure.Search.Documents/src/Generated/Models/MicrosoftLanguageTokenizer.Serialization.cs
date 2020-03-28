@@ -39,7 +39,11 @@ namespace Azure.Search.Documents.Models
 
         internal static MicrosoftLanguageTokenizer DeserializeMicrosoftLanguageTokenizer(JsonElement element)
         {
-            MicrosoftLanguageTokenizer result = new MicrosoftLanguageTokenizer();
+            int? maxTokenLength = default;
+            bool? isSearchTokenizer = default;
+            MicrosoftTokenizerLanguage? language = default;
+            string odatatype = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTokenLength"))
@@ -48,7 +52,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxTokenLength = property.Value.GetInt32();
+                    maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("isSearchTokenizer"))
@@ -57,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.IsSearchTokenizer = property.Value.GetBoolean();
+                    isSearchTokenizer = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("language"))
@@ -66,21 +70,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Language = property.Value.GetString().ToMicrosoftTokenizerLanguage();
+                    language = property.Value.GetString().ToMicrosoftTokenizerLanguage();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odatatype = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new MicrosoftLanguageTokenizer(maxTokenLength, isSearchTokenizer, language, odatatype, name);
         }
     }
 }

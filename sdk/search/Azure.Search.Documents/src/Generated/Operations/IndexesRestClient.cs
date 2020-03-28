@@ -19,24 +19,24 @@ namespace Azure.Search.Documents
     internal partial class IndexesRestClient
     {
         private string endpoint;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of IndexesRestClient. </summary>
-        public IndexesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        public IndexesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.endpoint = endpoint;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/indexes", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -83,8 +83,9 @@ namespace Azure.Search.Documents
                 {
                     case 201:
                         {
+                            SearchIndex value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchIndex.DeserializeSearchIndex(document.RootElement);
+                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -119,8 +120,9 @@ namespace Azure.Search.Documents
                 {
                     case 201:
                         {
+                            SearchIndex value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchIndex.DeserializeSearchIndex(document.RootElement);
+                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -146,7 +148,7 @@ namespace Azure.Search.Documents
             {
                 uri.AppendQuery("$select", select, true);
             }
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -156,12 +158,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the index definitions to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ListIndexesResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("IndexesClient.List");
             scope.Start();
             try
@@ -172,8 +173,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            ListIndexesResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
+                            value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -188,12 +190,11 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the index definitions to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListIndexesResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("IndexesClient.List");
             scope.Start();
             try
@@ -204,8 +205,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            ListIndexesResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
+                            value = ListIndexesResult.DeserializeListIndexesResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -233,7 +235,7 @@ namespace Azure.Search.Documents
             {
                 uri.AppendQuery("allowIndexDowntime", allowIndexDowntime.Value, true);
             }
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -261,7 +263,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="index"> The definition of the index to create. </param>
+        /// <param name="index"> The definition of the index to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, bool? allowIndexDowntime, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, SearchIndex index, CancellationToken cancellationToken = default)
         {
@@ -284,8 +286,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchIndex value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchIndex.DeserializeSearchIndex(document.RootElement);
+                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -305,7 +308,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="index"> The definition of the index to create. </param>
+        /// <param name="index"> The definition of the index to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SearchIndex> CreateOrUpdate(string indexName, bool? allowIndexDowntime, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, SearchIndex index, CancellationToken cancellationToken = default)
         {
@@ -328,8 +331,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchIndex value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchIndex.DeserializeSearchIndex(document.RootElement);
+                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -353,7 +357,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(indexName, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -371,7 +375,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a search index and all the documents it contains. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -405,7 +409,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Deletes a search index and all the documents it contains. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index to delete. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
@@ -448,7 +452,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(indexName, true);
             uri.AppendPath("')", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -458,7 +462,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves an index definition. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<SearchIndex>> GetAsync(string indexName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -478,8 +482,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchIndex value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchIndex.DeserializeSearchIndex(document.RootElement);
+                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -494,7 +499,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Retrieves an index definition. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<SearchIndex> Get(string indexName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -514,8 +519,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchIndex value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchIndex.DeserializeSearchIndex(document.RootElement);
+                            value = SearchIndex.DeserializeSearchIndex(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -539,7 +545,7 @@ namespace Azure.Search.Documents
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(indexName, true);
             uri.AppendPath("')/search.stats", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -549,7 +555,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<GetIndexStatisticsResult>> GetStatisticsAsync(string indexName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -569,8 +575,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            GetIndexStatisticsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = GetIndexStatisticsResult.DeserializeGetIndexStatisticsResult(document.RootElement);
+                            value = GetIndexStatisticsResult.DeserializeGetIndexStatisticsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -585,7 +592,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<GetIndexStatisticsResult> GetStatistics(string indexName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
@@ -605,8 +612,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            GetIndexStatisticsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = GetIndexStatisticsResult.DeserializeGetIndexStatisticsResult(document.RootElement);
+                            value = GetIndexStatisticsResult.DeserializeGetIndexStatisticsResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -620,57 +628,58 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateAnalyzeRequest(string indexName, Guid? xMsClientRequestId, AnalyzeRequest requestTodo)
+        internal HttpMessage CreateAnalyzeRequest(string indexName, Guid? xMsClientRequestId, AnalyzeRequest request)
         {
             var message = pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
+            var request0 = message.Request;
+            request0.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/indexes('", false);
             uri.AppendPath(indexName, true);
             uri.AppendPath("')/search.analyze", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
-            request.Uri = uri;
+            uri.AppendQuery("api-version", apiVersion, true);
+            request0.Uri = uri;
             if (xMsClientRequestId != null)
             {
-                request.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
+                request0.Headers.Add("x-ms-client-request-id", xMsClientRequestId.Value);
             }
-            request.Headers.Add("Content-Type", "application/json");
+            request0.Headers.Add("Content-Type", "application/json");
             using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(requestTodo);
-            request.Content = content;
+            content.JsonWriter.WriteObjectValue(request);
+            request0.Content = content;
             return message;
         }
 
         /// <summary> Shows how an analyzer breaks text into tokens. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="requestTodo"> The text and analyzer or analysis components to test. </param>
+        /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AnalyzeResult>> AnalyzeAsync(string indexName, Guid? xMsClientRequestId, AnalyzeRequest requestTodo, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<AnalyzeResult>> AnalyzeAsync(string indexName, Guid? xMsClientRequestId, AnalyzeRequest request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
-            if (requestTodo == null)
+            if (request == null)
             {
-                throw new ArgumentNullException(nameof(requestTodo));
+                throw new ArgumentNullException(nameof(request));
             }
 
             using var scope = clientDiagnostics.CreateScope("IndexesClient.Analyze");
             scope.Start();
             try
             {
-                using var message = CreateAnalyzeRequest(indexName, xMsClientRequestId, requestTodo);
+                using var message = CreateAnalyzeRequest(indexName, xMsClientRequestId, request);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            AnalyzeResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
+                            value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -685,33 +694,34 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Shows how an analyzer breaks text into tokens. </summary>
-        /// <param name="indexName"> The definition of the index to create or update. </param>
+        /// <param name="indexName"> The name of the index for which to test an analyzer. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
-        /// <param name="requestTodo"> The text and analyzer or analysis components to test. </param>
+        /// <param name="request"> The text and analyzer or analysis components to test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AnalyzeResult> Analyze(string indexName, Guid? xMsClientRequestId, AnalyzeRequest requestTodo, CancellationToken cancellationToken = default)
+        public Response<AnalyzeResult> Analyze(string indexName, Guid? xMsClientRequestId, AnalyzeRequest request, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
                 throw new ArgumentNullException(nameof(indexName));
             }
-            if (requestTodo == null)
+            if (request == null)
             {
-                throw new ArgumentNullException(nameof(requestTodo));
+                throw new ArgumentNullException(nameof(request));
             }
 
             using var scope = clientDiagnostics.CreateScope("IndexesClient.Analyze");
             scope.Start();
             try
             {
-                using var message = CreateAnalyzeRequest(indexName, xMsClientRequestId, requestTodo);
+                using var message = CreateAnalyzeRequest(indexName, xMsClientRequestId, request);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            AnalyzeResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
+                            value = AnalyzeResult.DeserializeAnalyzeResult(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
