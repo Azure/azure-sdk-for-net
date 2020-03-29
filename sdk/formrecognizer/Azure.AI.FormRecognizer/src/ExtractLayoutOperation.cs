@@ -60,12 +60,12 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Initializes a new <see cref="RecognizeContentOperation"/> instance.
         /// </summary>
-        /// <param name="id">The ID of this operation.</param>
+        /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="cancellationToken"></param>
-        public RecognizeContentOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public RecognizeContentOperation(string operationId, FormRecognizerClient client, CancellationToken cancellationToken = default)
         {
-            Id = id;
+            Id = operationId;
             _serviceClient = client.ServiceClient;
             _cancellationToken = cancellationToken;
         }

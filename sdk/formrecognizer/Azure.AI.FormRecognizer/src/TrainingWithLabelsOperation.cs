@@ -75,12 +75,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Initializes a new <see cref="TrainingWithLabelsOperation"/> instance.
         /// </summary>
-        /// <param name="id">The ID of this operation.</param>
+        /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="cancellationToken"></param>
-        public TrainingWithLabelsOperation(string id, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public TrainingWithLabelsOperation(string operationId, CustomTrainingClient client, CancellationToken cancellationToken = default)
         {
-            Id = id;
+            Id = operationId;
             _serviceClient = client.ServiceClient;
             _cancellationToken = cancellationToken;
         }

@@ -11,7 +11,9 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class RecognizeOptions
     {
-        internal RecognizeOptions()
+        /// <summary>
+        /// </summary>
+        public RecognizeOptions()
         {
         }
 

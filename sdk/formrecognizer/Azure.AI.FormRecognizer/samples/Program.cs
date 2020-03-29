@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Models.Receipts;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
@@ -119,38 +120,38 @@ namespace Azure.AI.FormRecognizer.Samples
                     IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
-                        foreach (var table in form.Tables)
+                        foreach (var page in form.Pages)
                         {
-                            table.WriteAscii(Console.Out);
-
+                            foreach (var table in page.Tables)
+                            {
+                                table.WriteAscii(Console.Out);
+                            }
                         }
 
                         FormField invoiceField;
                         if (form.TryGetFieldValue("Invoice Number:", out invoiceField))
                         {
-                            Console.WriteLine($"Name: {invoiceField.Name.Text}, Value: {invoiceField.ValueText.Text}");
+                            Console.WriteLine($"FieldLabel: {invoiceField.FieldLabel.Text}, Value: {invoiceField.ValueText.Text}");
                         }
 
-                        if (form.TextElements != null)
+                        foreach (var field in form.Fields)
                         {
-                            foreach (var field in form.Fields)
+                            Console.WriteLine($"Field \"{field.Name}\" is made of the following Raw Extracted Words:");
+
+                            if (field.FieldLabel.TextContent != null)
                             {
-                                Console.WriteLine($"Field \"{field.Name.Text}\" is made of the following Raw Extracted Words:");
-
-                                if (field.Name.TextContent != null)
-                                {
-                                    foreach (var word in field.Name.TextContent)
-                                    {
-                                        Console.WriteLine($"Word is: {word.Text}");
-                                    }
-                                }
-
-                                foreach (var word in field.ValueText.TextContent)
+                                foreach (var word in field.FieldLabel.TextContent)
                                 {
                                     Console.WriteLine($"Word is: {word.Text}");
                                 }
                             }
+
+                            foreach (var word in field.ValueText.TextContent)
+                            {
+                                Console.WriteLine($"Word is: {word.Text}");
+                            }
                         }
+
                     }
                 }
             }
@@ -172,12 +173,15 @@ namespace Azure.AI.FormRecognizer.Samples
             await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractFormOperation.HasValue)
             {
-                IReadOnlyList<RecognizedForm> pages = extractFormOperation.Value;
-                foreach (var page in pages)
+                IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
+                foreach (var form in forms)
                 {
-                    foreach (var table in page.Tables)
+                    foreach (var page in form.Pages)
                     {
-                        table.WriteAscii(Console.Out);
+                        foreach (var table in page.Tables)
+                        {
+                            table.WriteAscii(Console.Out);
+                        }
                     }
                 }
             }
@@ -194,7 +198,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeCustomForms(modelId, stream, includeTextElements: true);
+                var extractFormOperation = client.StartRecognizeCustomForms(modelId, stream, new RecognizeOptions() { IncludeTextContent = true });
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -202,29 +206,29 @@ namespace Azure.AI.FormRecognizer.Samples
                     IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
-                        foreach (var table in form.Tables)
+                        foreach (var page in form.Pages)
                         {
-                            table.WriteAscii(Console.Out);
+                            foreach (var table in page.Tables)
+                            {
+                                table.WriteAscii(Console.Out);
+                            }
                         }
 
-                        if (form.TextElements != null)
+                        foreach (var field in form.Fields)
                         {
-                            foreach (var field in form.Fields)
+                            Console.WriteLine($"Field \"{field.Name}\" is made of the following Text Elements:");
+
+                            if (field.FieldLabel.TextContent != null)
                             {
-                                Console.WriteLine($"Field \"{field.Name}\" is made of the following Text Elements:");
-
-                                if (field.Name.TextContent != null)
-                                {
-                                    foreach (var extractedItem in field.Name.TextContent)
-                                    {
-                                        Console.WriteLine(extractedItem.Text);
-                                    }
-                                }
-
-                                foreach (var extractedItem in field.ValueText.TextContent)
+                                foreach (var extractedItem in field.FieldLabel.TextContent)
                                 {
                                     Console.WriteLine(extractedItem.Text);
                                 }
+                            }
+
+                            foreach (var extractedItem in field.ValueText.TextContent)
+                            {
+                                Console.WriteLine(extractedItem.Text);
                             }
                         }
                     }
@@ -254,15 +258,18 @@ namespace Azure.AI.FormRecognizer.Samples
                     IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
-                        foreach (var table in form.Tables)
+                        foreach (var page in form.Pages)
                         {
-                            table.WriteAscii(Console.Out);
+                            foreach (var table in page.Tables)
+                            {
+                                table.WriteAscii(Console.Out);
+                            }
                         }
 
                         FormField field;
                         if (form.TryGetFieldValue("Charges", out field))
                         {
-                            Console.WriteLine($"Name: {field.Name.Text}, ValueText: {field.ValueText.Text}, Value: {field.Value.AsFloat()}");
+                            Console.WriteLine($"Name: {field.FieldLabel.Text}, ValueText: {field.ValueText.Text}, Value: {field.Value.AsFloat()}");
                         }
                     }
                 }
@@ -290,9 +297,12 @@ namespace Azure.AI.FormRecognizer.Samples
                 IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                 foreach (var form in forms)
                 {
-                    foreach (var table in form.Tables)
+                    foreach (var page in form.Pages)
                     {
-                        table.WriteAscii(Console.Out);
+                        foreach (var table in page.Tables)
+                        {
+                            table.WriteAscii(Console.Out);
+                        }
                     }
                 }
             }
@@ -312,7 +322,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(pdfFormFile, FileMode.Open))
             {
-                var extractFormOperation = client.StartRecognizeCustomForms(modelId, stream, includeTextElements: true);
+                var extractFormOperation = client.StartRecognizeCustomForms(modelId, stream, new RecognizeOptions() { IncludeTextContent = true });
 
                 await extractFormOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractFormOperation.HasValue)
@@ -320,14 +330,17 @@ namespace Azure.AI.FormRecognizer.Samples
                     IReadOnlyList<RecognizedForm> forms = extractFormOperation.Value;
                     foreach (var form in forms)
                     {
-                        foreach (var table in form.Tables)
+                        foreach (var page in form.Pages)
                         {
-                            table.WriteAscii(Console.Out);
+                            foreach (var table in page.Tables)
+                            {
+                                table.WriteAscii(Console.Out);
+                            }
                         }
 
                         foreach (var field in form.Fields)
                         {
-                            Console.WriteLine($"Field \"{field.Label}\" is made of the following Raw Extracted Words:");
+                            Console.WriteLine($"Field \"{field.FieldLabel}\" is made of the following Raw Extracted Words:");
 
                             if (field.ValueText.TextContent != null)
                             {
@@ -355,21 +368,31 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractReceiptOperation = await client.StartRecognizeReceiptsAsync(stream, "en-us", includeTextElements: false);
+                //var extractReceiptOperation = await client.StartRecognizeReceiptsAsync(stream, "en-us", new RecognizeOptions() { IncludeTextContent = true });
 
-                await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
-                if (extractReceiptOperation.HasValue)
+                //await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
+                //if (extractReceiptOperation.HasValue)
+                //{
+                //    IReadOnlyList<RecognizedReceipt> result = extractReceiptOperation.Value;
+
+                //    foreach (var receipt in result)
+                //    {
+                //        var usReceipt = receipt.AsUSReceipt();
+
+                //        // Extract merchant value with confidence for visual highlighting.
+                //        string merchantStr = usReceipt.MerchantName.Value;
+                //        float merchantConfidence = usReceipt.MerchantName.Confidence ?? 0;
+                //    }
+                //}
+
+                var result = await client.StartRecognizeReceiptsAsync(stream, "en-us", new RecognizeOptions() { IncludeTextContent = true }).WaitForCompletionAsync();
+                foreach (var receipt in result.Value)
                 {
-                    IReadOnlyList<RecognizedReceipt> result = extractReceiptOperation.Value;
+                    var usReceipt = receipt.AsUSReceipt();
 
-                    foreach (var receipt in result)
-                    {
-                        var usReceipt = receipt.AsUnitedStatesReceipt();
-
-                        // Extract merchant value with confidence for visual highlighting.
-                        string merchantStr = usReceipt.MerchantName.Value;
-                        float merchantConfidence = usReceipt.MerchantName.Confidence ?? 0;
-                    }
+                    // Extract merchant value with confidence for visual highlighting.
+                    string merchantStr = usReceipt.MerchantName.Value;
+                    float merchantConfidence = usReceipt.MerchantName.Confidence ?? 0;
                 }
             }
         }
@@ -401,7 +424,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
                 if (extractLayoutOperation.HasValue)
                 {
-                    IReadOnlyList<RecognizedPageContent> result = extractLayoutOperation.Value;
+                    var result = extractLayoutOperation.Value;
                     foreach (var page in result)
                     {
                         foreach (var table in page.Tables)
@@ -427,7 +450,7 @@ namespace Azure.AI.FormRecognizer.Samples
             await extractLayoutOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
             if (extractLayoutOperation.HasValue)
             {
-                IReadOnlyList<RecognizedPageContent> result = extractLayoutOperation.Value;
+                var result = extractLayoutOperation.Value;
                 foreach (var page in result)
                 {
                     foreach (var table in page.Tables)
@@ -476,7 +499,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             using (FileStream stream = new FileStream(contosoReceipt, FileMode.Open))
             {
-                var extractReceiptOperation = await client.StartRecognizeReceiptsAsync(stream, "en-us", includeTextElements: false);
+                var extractReceiptOperation = await client.StartRecognizeReceiptsAsync(stream, "en-us", new RecognizeOptions() { IncludeTextContent = true });
                 operationId = extractReceiptOperation.Id;
 
                 await extractReceiptOperation.WaitForCompletionAsync(TimeSpan.FromSeconds(1), default);
