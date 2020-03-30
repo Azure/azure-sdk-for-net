@@ -245,6 +245,68 @@ ServiceBusReceiver dlqReceiver = client.GetDeadLetterReceiver(queueName);
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
 ```
 
+### Using the Processor
+```C# Snippet:ServiceBusProcessMessages
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message batch that we can send
+ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
+messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+
+// send the message batch
+await sender.SendBatchAsync(messageBatch);
+
+// get the options to use for configuring the processor
+var options = new ServiceBusProcessorOptions
+{
+    // By default after the message handler returns, the processor will complete the message
+    // If I want more fine-grained control over settlement, I can set this to false.
+    AutoComplete = false,
+
+    // I can also allow for multi-threading
+    MaxConcurrentCalls = 2
+};
+
+// get a processor that we can use to process the messages
+ServiceBusProcessor processor = client.GetProcessor(queueName, options);
+
+// since the message handler will run in a background thread, in order to prevent
+// this sample from terminating immediately, we can use a task completion sources that
+// we complete from within the message handler.
+TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+processor.ProcessMessageAsync += MessageHandler;
+processor.ProcessErrorAsync += ErrorHandler;
+
+async Task MessageHandler(ProcessMessageEventArgs args)
+{
+    string body = Encoding.Default.GetString(args.Message.Body.ToArray());
+    Console.WriteLine(body);
+
+    // we can evaluate application logic and use that to determine how to settle the message.
+    await args.CompleteAsync(args.Message);
+    tcs.SetResult(true);
+}
+
+Task ErrorHandler(ProcessErrorEventArgs args)
+{
+    // the error source tells me at what point in the processing an error occurred
+    Console.WriteLine(args.ErrorSource);
+    Console.WriteLine(args.Exception.ToString());
+    return Task.CompletedTask;
+}
+await processor.StartProcessingAsync();
+// await our task completion source task so that the message handler will be invoked at least once.
+await tcs.Task;
+// stop processing once the task completion source was completed.
+await processor.StopProcessingAsync();
+```
+
 ## Troubleshooting
 
 ### Service Bus Exception
@@ -283,16 +345,17 @@ For detailed information about the failures represented by the `ServiceBusExcept
 
 ## Next steps
 
-* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
-* If appropriate, point users to other packages that might be useful.
-* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
+Beyond the introductory scenarios discussed, the Azure Service Bus client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Service Bus service. In order to help explore some of these scenarios, the Service Bus client library offers a project of samples to serve as an illustration for common scenarios. Please see the samples [README](./samples/README.md) for details.
 
-## Contributing
+## Contributing  
 
-This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
-<!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
-[style-guide-cloud]: https://worldready.cloudapp.net/Styleguide/Read?id=2696&topicid=25357
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+Please see our [contributing guide](./CONTRIBUTING.md) for more information.
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2FREADME.png)
+
