@@ -9,7 +9,7 @@ name: Azure.Messaging.ServiceBus samples for .NET
 description: Samples for the Azure.Messaging.ServiceBus client library
 ---
 
-# Azure.Storage.ServiceBus Samples
+# Azure.Messaging.ServiceBus Samples
 
 - [Send and receive messages from a queue](Sample01_HelloWorld.cs).
 - [Complete, abandon, defer, and deadletter messages](Sample02_MessageSettlement.cs).
