@@ -4,9 +4,9 @@ languages:
 - csharp
 products:
 - azure
-- azure-storage
+- azure-service-bus
 name: Azure.Messaging.ServiceBus samples for .NET
-description: Samples for the Azure.Messaging.ServieBus client library
+description: Samples for the Azure.Messaging.ServiceBus client library
 ---
 
 # Azure.Storage.ServiceBus Samples
