@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// </summary>
         /// <param name="name">The name of the SKU. Possible values include:
         /// 'Free', 'Standard', 'Premium', 'PerNode', 'PerGB2018',
-        /// 'Standalone'</param>
+        /// 'Standalone', 'CapacityReservation'</param>
         public Sku(string name)
         {
             Name = name;
@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
 
         /// <summary>
         /// Gets or sets the name of the SKU. Possible values include: 'Free',
-        /// 'Standard', 'Premium', 'PerNode', 'PerGB2018', 'Standalone'
+        /// 'Standard', 'Premium', 'PerNode', 'PerGB2018', 'Standalone',
+        /// 'CapacityReservation'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
