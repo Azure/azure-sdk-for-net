@@ -49,7 +49,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="ReceiptClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform operations.
         /// </summary>
-        ///
         [Test]
         [TestCase(true)]
         [TestCase(false)]
