@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
+using Microsoft.Azure.Services.AppAuthentication.Unit.Tests.Mocks;
 using Xunit;
 
 namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
@@ -312,6 +313,28 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         public void RemainMockable()
         {
             MockUtil.AssertPublicMethodsAreVirtual<AzureServiceTokenProvider>();
+        }
+
+        /// <summary>
+        /// Injects an HTTP factory.
+        /// </summary>
+        [Fact]
+        public void InjectHttpFactory()
+        {
+            var factory = new MockHttpClientFactory();
+            var provider = new AzureServiceTokenProvider(httpClientFactory: factory);
+            //todo: How to assert that the factory is passed into the underlying?
+        }
+
+        /// <summary>
+        /// Side load an HTTP factory.
+        /// </summary>
+        [Fact]
+        public void SideLoadHttpFactory()
+        {
+            AzureServiceTokenProvider.HttpClientFactory = new MockHttpClientFactory();
+            var provider = new AzureServiceTokenProvider();
+            //todo: How to assert that the factory is passed into the underlying?
         }
     }
 }
