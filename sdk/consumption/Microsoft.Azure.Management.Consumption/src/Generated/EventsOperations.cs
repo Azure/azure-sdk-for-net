@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.Consumption
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using Newtonsoft.Json;
     using System.Collections;
@@ -24,12 +23,12 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// MarketplacesOperations operations.
+    /// EventsOperations operations.
     /// </summary>
-    internal partial class MarketplacesOperations : IServiceOperations<ConsumptionManagementClient>, IMarketplacesOperations
+    internal partial class EventsOperations : IServiceOperations<ConsumptionManagementClient>, IEventsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the MarketplacesOperations class.
+        /// Initializes a new instance of the EventsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal MarketplacesOperations(ConsumptionManagementClient client)
+        internal EventsOperations(ConsumptionManagementClient client)
         {
             if (client == null)
             {
@@ -52,35 +51,21 @@ namespace Microsoft.Azure.Management.Consumption
         public ConsumptionManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the marketplaces for a scope at the defined scope. Marketplaces are
-        /// available via this API only for May 1, 2014 or later.
+        /// Lists the events by billingAccountId and billingProfileId for given start
+        /// and end date.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='scope'>
-        /// The scope associated with marketplace operations. This includes
-        /// '/subscriptions/{subscriptionId}/' for subscription scope,
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
-        /// Billing Account scope,
-        /// '/providers/Microsoft.Billing/departments/{departmentId}' for Department
-        /// scope,
-        /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for
-        /// EnrollmentAccount scope and
-        /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
-        /// Management Group scope. For subscription, billing account, department,
-        /// enrollment account and ManagementGroup, you can also add billing period to
-        /// the scope using
-        /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g.
-        /// to specify billing period at department scope use
-        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+        /// <param name='billingAccountId'>
+        /// BillingAccount ID
         /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// <param name='billingProfileId'>
+        /// Azure Billing Profile ID.
         /// </param>
-        /// <param name='skiptoken'>
-        /// Skiptoken is only used if a previous operation returned a partial result.
-        /// If a previous response contains a nextLink element, the value of the
-        /// nextLink element will include a skiptoken parameter that specifies a
-        /// starting point to use for subsequent calls.
+        /// <param name='startDate'>
+        /// Start date
+        /// </param>
+        /// <param name='endDate'>
+        /// End date
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -103,15 +88,27 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Marketplace>>> ListWithHttpMessagesAsync(string scope, ODataQuery<Marketplace> odataQuery = default(ODataQuery<Marketplace>), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<EventSummary>>> ListWithHttpMessagesAsync(string billingAccountId, string billingProfileId, string startDate, string endDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (scope == null)
+            if (billingAccountId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+            }
+            if (billingProfileId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileId");
             }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (startDate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "startDate");
+            }
+            if (endDate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "endDate");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -120,32 +117,30 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("odataQuery", odataQuery);
-                tracingParameters.Add("skiptoken", skiptoken);
-                tracingParameters.Add("scope", scope);
+                tracingParameters.Add("billingAccountId", billingAccountId);
+                tracingParameters.Add("billingProfileId", billingProfileId);
+                tracingParameters.Add("startDate", startDate);
+                tracingParameters.Add("endDate", endDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Consumption/marketplaces").ToString();
-            _url = _url.Replace("{scope}", scope);
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/events").ToString();
+            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
+            _url = _url.Replace("{billingProfileId}", System.Uri.EscapeDataString(billingProfileId));
             List<string> _queryParameters = new List<string>();
-            if (odataQuery != null)
-            {
-                var _odataFilter = odataQuery.ToString();
-                if (!string.IsNullOrEmpty(_odataFilter))
-                {
-                    _queryParameters.Add(_odataFilter);
-                }
-            }
-            if (skiptoken != null)
-            {
-                _queryParameters.Add(string.Format("$skiptoken={0}", System.Uri.EscapeDataString(skiptoken)));
-            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (startDate != null)
+            {
+                _queryParameters.Add(string.Format("startDate={0}", System.Uri.EscapeDataString(startDate)));
+            }
+            if (endDate != null)
+            {
+                _queryParameters.Add(string.Format("endDate={0}", System.Uri.EscapeDataString(endDate)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -235,7 +230,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Marketplace>>();
+            var _result = new AzureOperationResponse<IPage<EventSummary>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -248,7 +243,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Marketplace>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EventSummary>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -268,8 +263,8 @@ namespace Microsoft.Azure.Management.Consumption
         }
 
         /// <summary>
-        /// Lists the marketplaces for a scope at the defined scope. Marketplaces are
-        /// available via this API only for May 1, 2014 or later.
+        /// Lists the events by billingAccountId and billingProfileId for given start
+        /// and end date.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='nextPageLink'>
@@ -296,7 +291,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Marketplace>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<EventSummary>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -405,7 +400,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Marketplace>>();
+            var _result = new AzureOperationResponse<IPage<EventSummary>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -418,7 +413,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Marketplace>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<EventSummary>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
