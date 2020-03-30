@@ -11,13 +11,9 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormCheckBox : FormContent
     {
         internal FormCheckBox()
-            : base("", new BoundingBox() /* TODO */)
+            : base("", new BoundingBox(), 0 /* TODO */)
         {
         }
-
-        /// <summary>
-        /// </summary>
-        public int PageNumber { get; }
 
         /// <summary>
         /// </summary>

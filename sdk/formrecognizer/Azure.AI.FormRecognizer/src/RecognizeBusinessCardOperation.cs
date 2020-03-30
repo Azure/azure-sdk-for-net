@@ -13,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RecognizeBusinessCardsOperation : Operation<IReadOnlyList<BusinessCard>>
+    public class RecognizeBusinessCardsOperation : Operation<IReadOnlyList<RecognizedBusinessCard>>
     {
         private Response _response;
-        private IReadOnlyList<BusinessCard> _value;
+        private IReadOnlyList<RecognizedBusinessCard> _value;
         private bool _hasCompleted;
 
         // TODO: use this.
@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<BusinessCard> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<RecognizedBusinessCard> Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -40,11 +40,11 @@ namespace Azure.AI.FormRecognizer.Models
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<BusinessCard>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedBusinessCard>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<BusinessCard>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedBusinessCard>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         internal RecognizeBusinessCardsOperation(ServiceClient operations, string operationLocation)
@@ -110,12 +110,12 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
 
-        private static IReadOnlyList<BusinessCard> ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults)
+        private static IReadOnlyList<RecognizedBusinessCard> ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults)
         {
-            List<BusinessCard> receipts = new List<BusinessCard>();
+            List<RecognizedBusinessCard> receipts = new List<RecognizedBusinessCard>();
             for (int i = 0; i < documentResults.Count; i++)
             {
-                receipts.Add(new BusinessCard());
+                receipts.Add(new RecognizedBusinessCard());
             }
             return receipts;
         }

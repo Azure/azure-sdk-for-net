@@ -7,14 +7,14 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class BusinessCard
+    public class RecognizedBusinessCard
     {
-        internal BusinessCard()
+        internal RecognizedBusinessCard()
         {
         }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormPage> Pages { get; }
+        public RecognizedForm RecognizedForm { get; internal set; }
     }
 }

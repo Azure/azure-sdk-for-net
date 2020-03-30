@@ -8,7 +8,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormWord : FormContent
     {
         internal FormWord(TextWord_internal textWord)
-            : base(textWord.Text, new BoundingBox(textWord.BoundingBox))
+            : base(textWord.Text, new BoundingBox(textWord.BoundingBox), 0 /* "TODO" */)
         {
             Confidence = textWord.Confidence;
         }

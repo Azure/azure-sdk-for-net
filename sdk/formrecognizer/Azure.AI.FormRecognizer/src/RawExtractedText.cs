@@ -7,7 +7,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public readonly struct FieldText
+    public class FieldText : FormContent
     {
         /// <summary>
         /// </summary>
@@ -15,23 +15,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="boundingBox"></param>
         /// <param name="text"></param>
         internal FieldText(string text, BoundingBox boundingBox, IReadOnlyList<FormContent> textElements)
+            : base(text, boundingBox, 0 /* TODO */)
         {
-            BoundingBox = boundingBox;
-            Text = text;
             TextContent = textElements;
         }
 
         /// <summary>
         /// </summary>
         public IReadOnlyList<FormContent> TextContent { get; }
-
-        /// <summary>
-        /// </summary>
-        public BoundingBox BoundingBox { get; }
-
-        /// <summary>
-        /// </summary>
-        public string Text { get; }
 
         /// <summary>
         /// </summary>

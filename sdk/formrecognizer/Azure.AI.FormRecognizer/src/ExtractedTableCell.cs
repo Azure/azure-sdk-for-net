@@ -7,13 +7,13 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormTableCell
+    public class FormTableCell : FormContent
     {
 #pragma warning disable CA1801
         internal FormTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, ICollection<string> references)
+            : base(dataTableCell.Text, new BoundingBox(dataTableCell.BoundingBox), 0  /* TODO */)
 #pragma warning restore CA1801
         {
-            BoundingBox = new BoundingBox(dataTableCell.BoundingBox);
             ColumnIndex = dataTableCell.ColumnIndex;
             ColumnSpan = dataTableCell.ColumnSpan ?? 1;
             Confidence = dataTableCell.Confidence;
@@ -21,17 +21,12 @@ namespace Azure.AI.FormRecognizer.Models
             IsHeader = dataTableCell.IsHeader ?? false;
             RowIndex = dataTableCell.RowIndex;
             RowSpan = dataTableCell.RowSpan ?? 1;
-            Text = dataTableCell.Text;
 
             if (references != null)
             {
                 //TextElements = FormField.ConvertTextReferences(readResult, references);
             }
         }
-
-        /// <summary>
-        /// </summary>
-        public BoundingBox BoundingBox { get; }
 
         /// <summary>
         /// </summary>
@@ -60,10 +55,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         public int RowSpan { get; }
-
-        /// <summary>
-        /// </summary>
-        public string Text { get; }
 
         /// <summary>
         /// </summary>

@@ -10,9 +10,8 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormPage : FormContent
     {
         internal FormPage(ReadResult_internal readResult)
-            : base("<TODO>", new BoundingBox() /* TODO */ )
+            : base("<TODO>", new BoundingBox(), readResult.Page /* TODO */ )
         {
-            PageNumber = readResult.Page;
             TextAngle = readResult.Angle;
             Width = readResult.Width;
             Height = readResult.Height;
@@ -23,9 +22,6 @@ namespace Azure.AI.FormRecognizer.Models
                 //Lines = ConvertLines(readResult.Lines);
             }
         }
-
-        /// <summary> The 1-based page number in the input document. </summary>
-        public int PageNumber { get; set; }
 
         /// <summary> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </summary>
         public float TextAngle { get; set; }

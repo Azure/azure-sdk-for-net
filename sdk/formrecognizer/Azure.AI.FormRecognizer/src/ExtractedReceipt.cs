@@ -6,17 +6,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Azure.AI.FormRecognizer.Models.Receipts
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
     public class USReceipt : RecognizedReceipt
     {
-        internal USReceipt(RecognizedReceipt receipt)
-            : base(receipt)
+        internal USReceipt(DocumentResult_internal documentResult_internal, IList<ReadResult_internal> readResults)
+            : base(documentResult_internal, readResults)
         {
         }
-
         //internal USReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
         //{
         //    PageRange = new FormPageRange(documentResult.PageRange);

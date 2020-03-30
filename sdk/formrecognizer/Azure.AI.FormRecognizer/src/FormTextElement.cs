@@ -11,10 +11,11 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public abstract class FormContent
     {
-        internal FormContent(string text, BoundingBox boundingBox)
+        internal FormContent(string text, BoundingBox boundingBox, int pageNumber)
         {
             BoundingBox = boundingBox;
             Text = text;
+            PageNumber = pageNumber;
         }
 
         /// <summary>
@@ -24,5 +25,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         public string Text { get; }
+
+        /// <summary>
+        /// </summary>
+        public int PageNumber { get; }
     }
 }

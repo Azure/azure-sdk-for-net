@@ -7,7 +7,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.AI.FormRecognizer.Models;
-using Azure.AI.FormRecognizer.Models.Receipts;
 
 namespace Azure.AI.FormRecognizer.Samples
 {

@@ -10,7 +10,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormLine : FormContent
     {
         internal FormLine(TextLine_internal textLine)
-            : base(textLine.Text, new BoundingBox(textLine.BoundingBox))
+            : base(textLine.Text, new BoundingBox(textLine.BoundingBox), 0  /* TODO */)
         {
             //Words = ConvertWords(textLine.Words);
         }

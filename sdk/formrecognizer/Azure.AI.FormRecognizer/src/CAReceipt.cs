@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace Azure.AI.FormRecognizer.Models.Receipts
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
     public class CAReceipt : RecognizedReceipt
     {
-        internal CAReceipt(RecognizedReceipt receipt)
-            : base(receipt)
+        internal CAReceipt(DocumentResult_internal documentResult_internal, IList<ReadResult_internal> readResults) : base(documentResult_internal, readResults)
         {
         }
 

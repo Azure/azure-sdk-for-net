@@ -11,16 +11,12 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormTable : FormContent
     {
         internal FormTable(DataTable_internal table /*, ReadResult_internal readResult*/)
-            : base("<TODO>", new BoundingBox() /* TODO */)
+            : base("<TODO>", new BoundingBox(), 0 /* TODO */)
         {
             ColumnCount = table.Columns;
             RowCount = table.Rows;
             //Cells = ConvertCells(table.Cells, readResult);
         }
-
-        /// <summary>
-        /// </summary>
-        public int PageNumber { get; }
 
         /// <summary>
         /// </summary>
