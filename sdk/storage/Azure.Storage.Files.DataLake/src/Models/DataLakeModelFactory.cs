@@ -36,13 +36,13 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         /// <returns></returns>
         public static AccessControlChanges AccessControlChanges(
-            AccessControlChangeCounters cumulativeCounters,
+            AccessControlChangeCounters aggregateCounters,
             AccessControlChangeCounters batchCounters,
             IEnumerable<AccessControlChangeFailure> batchFailures,
             string continuationToken
             ) => new AccessControlChanges()
             {
-                CumulativeCounters = cumulativeCounters,
+                AggregateCounters = aggregateCounters,
                 BatchCounters= batchCounters,
                 BatchFailures = batchFailures,
                 ContinuationToken = continuationToken,

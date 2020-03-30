@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// A <see cref="AccessControlChangeCounters"/> that contains counts of paths changed from start of the operation.
         /// </summary>
-        public AccessControlChangeCounters CumulativeCounters { get; internal set; }
+        public AccessControlChangeCounters AggregateCounters { get; internal set; }
 
         /// <summary>
         /// Optional continuation token. Value is present when operation is split into multiple batches and can be used to resume progress.

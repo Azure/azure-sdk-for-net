@@ -105,7 +105,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 Failures.AddRange(response.Value.BatchFailures);
                 BatchCounters.Add(response.Value.BatchCounters);
-                CummulativeCounters.Add(response.Value.CumulativeCounters);
+                CummulativeCounters.Add(response.Value.AggregateCounters);
             }
         }
     }

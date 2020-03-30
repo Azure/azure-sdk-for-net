@@ -2028,7 +2028,7 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="continuationToken">
-        /// Optional continuation tokane that can be used to resume previously stopped operation.
+        /// Optional continuation token that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2077,7 +2077,7 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="continuationToken">
-        /// Optional continuation tokane that can be used to resume previously stopped operation.
+        /// Optional continuation token that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2126,7 +2126,7 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="continuationToken">
-        /// Optional continuation tokane that can be used to resume previously stopped operation.
+        /// Optional continuation token that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2175,7 +2175,7 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="continuationToken">
-        /// Optional continuation tokane that can be used to resume previously stopped operation.
+        /// Optional continuation token that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2224,7 +2224,7 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="continuationToken">
-        /// Optional continuation tokane that can be used to resume previously stopped operation.
+        /// Optional continuation token that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2273,7 +2273,7 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="AccessControlChangeOptions"/> with additional controls.
         /// </param>
         /// <param name="continuationToken">
-        /// Optional continuation tokane that can be used to resume previously stopped operation.
+        /// Optional continuation token that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2333,7 +2333,7 @@ namespace Azure.Storage.Files.DataLake
         /// Whether to invoke the operation asynchronously.
         /// </param>
         /// <param name="continuationToken">
-        /// Optional continuation tokane that can be used to resume previously stopped operation.
+        /// Optional continuation token that can be used to resume previously stopped operation.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2425,7 +2425,7 @@ namespace Azure.Storage.Files.DataLake
                                             ChangedFilesCount = currentFilesSuccessfulCount,
                                             FailedChangesCount = currentFailureCount,
                                         },
-                                        CumulativeCounters = new AccessControlChangeCounters()
+                                        AggregateCounters = new AccessControlChangeCounters()
                                         {
                                             ChangedDirectoriesCount = directoriesSuccessfulCount,
                                             ChangedFilesCount = filesSuccessfulCount,
