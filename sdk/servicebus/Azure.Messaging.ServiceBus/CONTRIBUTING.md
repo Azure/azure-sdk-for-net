@@ -25,14 +25,14 @@ The Service Bus client library tests may be executed using the `dotnet` CLI, or 
 
 Tests in the Service Bus client library are split into two categories:
 
-- **Unit tests** have no special considerations; these are self-contained and execute locally without any reliance on external resources.  Unit tests are considered the default test type in the Event Hubs client library and, thus, have no explicit category trait attached to them.
+- **Unit tests** have no special considerations; these are self-contained and execute locally without any reliance on external resources.  Unit tests are considered the default test type in the Service Bus client library and, thus, have no explicit category trait attached to them.
 
-- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "Live".  To run them, an Azure resource group and Azure Service Principal with "contributor" rights to that resource group are required.  For each test run, the Live tests will use the service principal to dynamically create an Event Hubs namespace within the resource group and remove it once the test run is complete.
+- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "Live".  To run them, an Azure resource group and Azure Service Principal with "contributor" rights to that resource group are required.  For each test run, the Live tests will use the service principal to dynamically create a Service Bus namespace within the resource group and remove it once the test run is complete.
 
 The Live tests read information from the following environment variables:
 
 `SERVICE_BUS_RESOURCEGROUP`  
- The name of the Azure resource group that contains the Event Hubs namespace
+ The name of the Azure resource group that contains the Service Bus namespace
 
 `SERVICE_BUS_SUBSCRIPTION`  
  The identifier (GUID) of the Azure subscription to which the service principal belongs
@@ -46,7 +46,7 @@ The Live tests read information from the following environment variables:
 `SERVICE_BUS_SECRET`  
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
 
-To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
+To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
 
 The simplest way to get started is to execute the script with your subscription name and then follow the prompts:
 
@@ -62,13 +62,13 @@ Help for the full set of parameters and additional information is available by s
 
 ### Samples
 
-In order to run the samples, you'll need a Service Bus namespace and a queue.  Each sample will take a connection string and Event Hub name as parameters when executing, which can either be supplied directly as part of development or can be specified to the console application host in the `Samples` project, either using command line arguments or entered in response to prompts.
+In order to run the samples, you'll need a Service Bus namespace and a queue. For the session samples, you will need a session-enabled queue.
 
 ### Azure Identity Samples
 
-In order to run [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) samples, you'll also need to have a service principal set up on the Azure Active Directory mapped to your subscription. The service principal will need to have the role `Azure Event Hubs Data Owner` associated with your Event Hubs namespace. 
+In order to run [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) samples, you'll also need to have a service principal set up on the Azure Active Directory mapped to your subscription. The service principal will need to have the role `Azure Service Bus Data Owner` associated with your Service Bus namespace. 
 
-A [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-samples-azure-setup.ps1) can be used to create the service principal.
+A [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/assets/live-tests-azure-setup.ps1) can be used to create the service principal.
 
 To run the script:
 
@@ -84,4 +84,4 @@ Help for the full set of parameters and additional information is available by s
 
 ## Development history
 
-For additional insight and context, the development, release, and issue history for the Azure Event Hubs client library is available in read-only form, in its previous location, the [Azure Event Hubs .NET repository](https://github.com/Azure/azure-event-hubs-dotnet).
+For additional insight and context, the development, release, and issue history for the Azure Service Bus client library is available in read-only form, in its previous location, the [Azure Service Bus .NET repository](https://github.com/Azure/azure-service-bus-dotnet).

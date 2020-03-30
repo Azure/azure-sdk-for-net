@@ -101,7 +101,7 @@ function DisplayHelp
   Write-Host ""
 
   Write-Host "$($indent)-ServicePrincipalName`tRequired.  The name to use for the service principal that will"
-  Write-Host "$($indent)`t`t`t`tbe created to manage the Event Hub instances dynamically for the tests.  This"
+  Write-Host "$($indent)`t`t`t`tbe created to manage the Service Bus instances dynamically for the tests.  This"
   Write-Host "$($indent)`t`t`t`tprincipal must not already exist."
   Write-Host ""
 
