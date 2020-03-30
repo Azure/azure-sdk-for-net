@@ -22,18 +22,6 @@ namespace Azure.AI.FormRecognizer.Tests
     [LiveOnly]
     public class FormLayoutClientLiveTests : ClientTestBase
     {
-        /// <summary>The name of the folder in which test assets are stored.</summary>
-        private const string AssetsFolderName = "Assets";
-
-        /// <summary>The name of the image file which contains the receipt to be used for tests.</summary>
-        private const string ReceiptFilename = "Invoice_1.pdf";
-
-        /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the tests.</summary>
-        private const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
-
-        /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the tests.</summary>
-        private const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FormLayoutClientLiveTests"/> class.
         /// </summary>
@@ -47,14 +35,23 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and perform operations.
         /// </summary>
         [Test]
-        public async Task StartExtractLayoutsPopulatesExtractedLayoutPage()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartExtractLayoutsPopulatesExtractedLayoutPage(bool useStream)
         {
             var client = CreateInstrumentedClient();
             Operation<IReadOnlyList<ExtractedLayoutPage>> operation;
 
-            var path = Path.Combine(AssetsFolderName, ReceiptFilename);
-            using var stream = new FileStream(path, FileMode.Open);
-            operation = await client.StartExtractLayoutsAsync(stream, ContentType.Jpeg);
+            if (useStream)
+            {
+                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
+                operation = await client.StartExtractLayoutsAsync(stream, ContentType.Jpeg);
+            }
+            else
+            {
+                var uri = new Uri(TestEnvironment.RetrieveInvoiceUri(1));
+                operation = await client.StartExtractLayoutsAsync(uri);
+            }
 
             await operation.WaitForCompletionAsync();
 
@@ -135,8 +132,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormLayoutClient" />.</returns>
         private FormLayoutClient CreateInstrumentedClient()
         {
-            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(EndpointEnvironmentVariableName);
-            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(ApiKeyEnvironmentVariableName);
+            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.EndpointEnvironmentVariableName);
+            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.ApiKeyEnvironmentVariableName);
 
             Assert.NotNull(endpointEnvironmentVariable);
             Assert.NotNull(keyEnvironmentVariable);
