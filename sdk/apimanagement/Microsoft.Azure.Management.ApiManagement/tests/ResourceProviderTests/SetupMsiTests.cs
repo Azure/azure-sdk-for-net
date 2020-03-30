@@ -95,9 +95,9 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 testBase.serviceProperties.Sku = new ApiManagementServiceSkuProperties(SkuType.Consumption, capacity: 0);
                 testBase.serviceProperties.Identity = new ApiManagementServiceIdentity("UserAssigned")
                 {
-                    UserAssignedIdentities = new Dictionary<string, Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties>()
+                    UserAssignedIdentities = new Dictionary<string, UserIdentityProperties>()
                     {
-                        { userAssignedResponse.Body.Id, new Components16nk615schemasapimanagementserviceidentitypropertiesuserassignedidentitiesadditionalproperties(userAssigned.PrincipalId.ToString(), userAssigned.ClientId.ToString()) }
+                        { userAssignedResponse.Body.Id, new UserIdentityProperties() }
                     }
                 };
                 var createdService = testBase.client.ApiManagementService.CreateOrUpdate(
