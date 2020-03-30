@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         [Test]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "The Invoice_1.pdf hasn't been uploaded to GitHub yet.")]
         public async Task StartExtractLayoutsPopulatesExtractedLayoutPage(bool useStream)
         {
             var client = CreateInstrumentedClient();
