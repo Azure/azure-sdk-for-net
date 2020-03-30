@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new DistanceScoringFunction(distance, type, fieldName, boost, interpolation);
+            return new DistanceScoringFunction(type, fieldName, boost, interpolation, distance);
         }
     }
 }

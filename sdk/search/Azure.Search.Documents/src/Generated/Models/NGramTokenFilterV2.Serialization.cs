@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new NGramTokenFilterV2(minGram, maxGram, odatatype, name);
+            return new NGramTokenFilterV2(odatatype, name, minGram, maxGram);
         }
     }
 }

@@ -26,10 +26,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of StopAnalyzer. </summary>
-        /// <param name="stopwords"> A list of stopwords. </param>
         /// <param name="oDataType"> The model type. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal StopAnalyzer(IList<string> stopwords, string oDataType, string name) : base(oDataType, name)
+        /// <param name="stopwords"> A list of stopwords. </param>
+        internal StopAnalyzer(string oDataType, string name, IList<string> stopwords) : base(oDataType, name)
         {
             Stopwords = stopwords;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StopAnalyzer";

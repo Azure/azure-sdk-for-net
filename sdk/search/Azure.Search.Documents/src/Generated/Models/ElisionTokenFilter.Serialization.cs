@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new ElisionTokenFilter(articles, odatatype, name);
+            return new ElisionTokenFilter(odatatype, name, articles);
         }
     }
 }

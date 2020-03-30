@@ -13,9 +13,9 @@ namespace Azure.Search.Documents.Models
     public partial class SnowballTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of SnowballTokenFilter. </summary>
-        /// <param name="language"> The language to use. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public SnowballTokenFilter(SnowballTokenFilterLanguage language, string name) : base(name)
+        /// <param name="language"> The language to use. </param>
+        public SnowballTokenFilter(string name, SnowballTokenFilterLanguage language) : base(name)
         {
             if (name == null)
             {
@@ -27,10 +27,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of SnowballTokenFilter. </summary>
-        /// <param name="language"> The language to use. </param>
         /// <param name="oDataType"> The model type. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal SnowballTokenFilter(SnowballTokenFilterLanguage language, string oDataType, string name) : base(oDataType, name)
+        /// <param name="language"> The language to use. </param>
+        internal SnowballTokenFilter(string oDataType, string name, SnowballTokenFilterLanguage language) : base(oDataType, name)
         {
             Language = language;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.SnowballTokenFilter";

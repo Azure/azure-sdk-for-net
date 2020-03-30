@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new StandardTokenizerV2(maxTokenLength, odatatype, name);
+            return new StandardTokenizerV2(odatatype, name, maxTokenLength);
         }
     }
 }

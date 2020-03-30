@@ -70,10 +70,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateTrainCustomModelAsyncRequest(trainRequest);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                var headers = new TrainCustomModelAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 201:
-                        var headers = new TrainCustomModelAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -102,10 +102,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateTrainCustomModelAsyncRequest(trainRequest);
                 pipeline.Send(message, cancellationToken);
+                var headers = new TrainCustomModelAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 201:
-                        var headers = new TrainCustomModelAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -385,10 +385,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, contentType, fileStream);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                var headers = new AnalyzeWithCustomModelHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeWithCustomModelHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -420,10 +420,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, contentType, fileStream);
                 pipeline.Send(message, cancellationToken);
+                var headers = new AnalyzeWithCustomModelHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeWithCustomModelHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -453,9 +453,12 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fileStream);
-            request.Content = content;
+            if (fileStream != null)
+            {
+                using var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(fileStream);
+                request.Content = content;
+            }
             return message;
         }
 
@@ -472,10 +475,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                var headers = new AnalyzeWithCustomModelHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeWithCustomModelHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -501,10 +504,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
                 pipeline.Send(message, cancellationToken);
+                var headers = new AnalyzeWithCustomModelHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeWithCustomModelHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -634,10 +637,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, contentType, fileStream);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -668,10 +671,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, contentType, fileStream);
                 pipeline.Send(message, cancellationToken);
+                var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -699,9 +702,12 @@ namespace Azure.AI.FormRecognizer
             }
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fileStream);
-            request.Content = content;
+            if (fileStream != null)
+            {
+                using var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(fileStream);
+                request.Content = content;
+            }
             return message;
         }
 
@@ -717,10 +723,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -745,10 +751,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
                 pipeline.Send(message, cancellationToken);
+                var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeReceiptAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -869,10 +875,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -902,10 +908,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
                 pipeline.Send(message, cancellationToken);
+                var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -929,9 +935,12 @@ namespace Azure.AI.FormRecognizer
             uri.AppendPath("/layout/analyze", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(fileStream);
-            request.Content = content;
+            if (fileStream != null)
+            {
+                using var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(fileStream);
+                request.Content = content;
+            }
             return message;
         }
 
@@ -946,10 +955,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -973,10 +982,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
                 pipeline.Send(message, cancellationToken);
+                var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        var headers = new AnalyzeLayoutAsyncHeaders(message.Response);
                         return ResponseWithHeaders.FromValue(headers, message.Response);
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -1065,7 +1074,7 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateGetCustomModelsNextPageRequest(string nextLink)
+        internal HttpMessage CreateGetCustomModelsNextPageRequest(string nextLink, GetModelOptions? op)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -1078,8 +1087,9 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models_internal>> GetCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<Models_internal>> GetCustomModelsNextPageAsync(string nextLink, GetModelOptions? op, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1090,7 +1100,7 @@ namespace Azure.AI.FormRecognizer
             scope.Start();
             try
             {
-                using var message = CreateGetCustomModelsNextPageRequest(nextLink);
+                using var message = CreateGetCustomModelsNextPageRequest(nextLink, op);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -1114,8 +1124,9 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models_internal> GetCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<Models_internal> GetCustomModelsNextPage(string nextLink, GetModelOptions? op, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -1126,7 +1137,7 @@ namespace Azure.AI.FormRecognizer
             scope.Start();
             try
             {
-                using var message = CreateGetCustomModelsNextPageRequest(nextLink);
+                using var message = CreateGetCustomModelsNextPageRequest(nextLink, op);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {

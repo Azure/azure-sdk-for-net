@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     // Hide the untyped SuggestResult
-    [CodeGenSchema("SuggestResult")]
+    [CodeGenModel("SuggestResult")]
     internal partial class SuggestResult { }
 
     /// <summary>

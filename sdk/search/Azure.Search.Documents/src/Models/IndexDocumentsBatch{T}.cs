@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     // Hide the untyped IndexBatch
-    [CodeGenSchema("IndexBatch")]
+    [CodeGenModel("IndexBatch")]
     internal partial class IndexBatch { }
 
     /// <summary>

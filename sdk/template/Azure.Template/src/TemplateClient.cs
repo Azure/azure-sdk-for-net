@@ -14,7 +14,7 @@ namespace Azure.Template
     /// <summary>
     /// The sample client.
     /// </summary>
-    [CodeGenClient("")]
+    [CodeGenClient("ServiceClient")]
     public partial class TemplateClient
     {
         /// <summary>

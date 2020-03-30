@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    [CodeGenSchema("ModelInfo")]
+    [CodeGenModel("ModelInfo")]
     internal partial class ModelInfo_internal
     {
         // TODO: Once CodeGenSchemaMembers is available, use it to rename members and we

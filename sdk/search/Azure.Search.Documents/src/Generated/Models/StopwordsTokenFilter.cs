@@ -26,13 +26,13 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of StopwordsTokenFilter. </summary>
+        /// <param name="oDataType"> The model type. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="stopwords"> The list of stopwords. This property and the stopwords list property cannot both be set. </param>
         /// <param name="stopwordsList"> A predefined list of stopwords to use. This property and the stopwords property cannot both be set. Default is English. </param>
         /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
         /// <param name="removeTrailingStopWords"> A value indicating whether to ignore the last search term if it&apos;s a stop word. Default is true. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal StopwordsTokenFilter(IList<string> stopwords, StopwordsList? stopwordsList, bool? ignoreCase, bool? removeTrailingStopWords, string oDataType, string name) : base(oDataType, name)
+        internal StopwordsTokenFilter(string oDataType, string name, IList<string> stopwords, StopwordsList? stopwordsList, bool? ignoreCase, bool? removeTrailingStopWords) : base(oDataType, name)
         {
             Stopwords = stopwords;
             StopwordsList = stopwordsList;

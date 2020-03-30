@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Custom
 {
-    [CodeGenSchema("TrainSourceFilter")]
+    [CodeGenModel("TrainSourceFilter")]
     public partial class TrainingFileFilter
     {
         internal TrainingFileFilter()

@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PhoneticTokenFilter(encoder, replace, odatatype, name);
+            return new PhoneticTokenFilter(odatatype, name, encoder, replace);
         }
     }
 }
