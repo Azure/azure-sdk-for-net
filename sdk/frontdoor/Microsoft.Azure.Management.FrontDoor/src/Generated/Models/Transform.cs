@@ -12,13 +12,15 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for FrontDoorQuery.
+    /// Defines values for Transform.
     /// </summary>
-    public static class FrontDoorQuery
+    public static class Transform
     {
-        public const string StripNone = "StripNone";
-        public const string StripAll = "StripAll";
-        public const string StripOnly = "StripOnly";
-        public const string StripAllExcept = "StripAllExcept";
+        public const string Lowercase = "Lowercase";
+        public const string Uppercase = "Uppercase";
+        public const string Trim = "Trim";
+        public const string UrlDecode = "UrlDecode";
+        public const string UrlEncode = "UrlEncode";
+        public const string RemoveNulls = "RemoveNulls";
     }
 }
