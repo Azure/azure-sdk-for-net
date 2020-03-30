@@ -60,7 +60,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var layoutPage = operation.Value.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
-            // values present in the receipt. We are not testing the service here, but the SDK.
+            // values present in the form. We are not testing the service here, but the SDK.
 
             Assert.AreEqual(1, layoutPage.PageNumber);
 
