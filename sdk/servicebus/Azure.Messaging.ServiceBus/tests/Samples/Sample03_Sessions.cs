@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
-    public class Sample03_Sessions
+    public class Sample03_Sessions : ServiceBusLiveTestBase
     {
         [Test]
         public async Task SendAndReceiveSessionMessage()

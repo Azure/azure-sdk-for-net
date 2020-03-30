@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
-    public class Sample01_HelloWorld
+    public class Sample01_HelloWorld : ServiceBusLiveTestBase
     {
         [Test]
         public async Task SendAndReceiveMessage()
