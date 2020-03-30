@@ -23,11 +23,13 @@ Use the client library for Azure Service Bus to:
 
 - **Service Bus namespace:** To interact with Azure Service Bus, you'll also need to have a namespace available. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating a Service Bus namespace using the Azure portal](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-create-namespace-portal). There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a Service bus entity.
 
+- **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  You can still use the library with older versions of C#, but some of its functionality won't be available.  In order to enable these features, you need to [target .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/standard/frameworks#how-to-specify-target-frameworks) or [specify the language version](https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/configure-language-version#override-a-default) you want to use (8.0 or above).  If you are using Visual Studio, versions prior to Visual Studio 2019 are not compatible with the tools needed to build C# 8.0 projects.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com/vs/).
+
+  **Important Note:** The use of C# 8.0 is mandatory to run the [examples](#examples) and the [samples](#next-steps) without modification.  You can still run the samples if you decide to tweak them.
+
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
 [![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
-
-If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity), you'll also need a service principal with the correct roles. To make configuration for the identity samples easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/assets/live-tests-azure-setup.ps1) script is available. Please see the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/CONTRIBUTING.md#Azure-Identity-Samples) for more details about the script.
 
 ### Install the package
 
@@ -257,7 +259,7 @@ A `ServiceBusException` is triggered when an operation specific to Service Bus h
 
   - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Service Bus service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.  
 
-  - **MessageLockLost** : This can occur if the processing takes longer than the lock duration specified at the entity level for a message. If this error occurs consistently, it may be worth increasing the message lock duration. Otherwise, callers can renew the message lock while they are processing the message to ensure that this error doesn't occur.
+  - **Message Lock Lost** : This can occur if the processing takes longer than the lock duration specified at the entity level for a message. If this error occurs consistently, it may be worth increasing the message lock duration. Otherwise, callers can renew the message lock while they are processing the message to ensure that this error doesn't occur.
   
   - **Messagine Entity Not Found**: A Service Bus resource, such as a queue, topic, or subscription could not be found by the Service Bus service. This may indicate that it has been deleted from the service or that there is an issue with the Service Bus service itself.
   

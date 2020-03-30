@@ -46,41 +46,9 @@ The Live tests read information from the following environment variables:
 `SERVICE_BUS_SECRET`  
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
 
-To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
-
-The simplest way to get started is to execute the script with your subscription name and then follow the prompts:
-
-```powershell
-./live-tests-azure-setup -SubscriptionName "<< YOUR SUBSCRIPTION NAME >>"
-```
-
-Help for the full set of parameters and additional information is available by specifying the `-Help` flag.
-
-```powershell
-./live-tests-azure-setup -Help
-```
-
 ### Samples
 
 In order to run the samples, you'll need a Service Bus namespace and a queue. For the session samples, you will need a session-enabled queue.
-
-### Azure Identity Samples
-
-In order to run [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity) samples, you'll also need to have a service principal set up on the Azure Active Directory mapped to your subscription. The service principal will need to have the role `Azure Service Bus Data Owner` associated with your Service Bus namespace. 
-
-A [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/assets/live-tests-azure-setup.ps1) can be used to create the service principal.
-
-To run the script:
-
-```powershell
-./identity-tests-azure-setup -SubscriptionName "<< YOUR SUBSCRIPTION NAME >>"
-```
-
-Help for the full set of parameters and additional information is available by specifying the `-Help` flag.
-
-```powershell
-./identity-tests-azure-setup -Help
-```
 
 ## Development history
 
