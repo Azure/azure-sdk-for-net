@@ -1,46 +1,65 @@
-# README.md template
+# Service Bus client library for .NET
 
-Use the guidelines in each section of this template to ensure consistency and readability of your README. The README resides in your package's GitHub repository at the root of its directory within the repo. It's also used as the package distribution page (NuGet, PyPi, npm, etc.) and as a Quickstart on docs.microsoft.com. See [README-EXAMPLE.md](README-EXAMPLE.md) for an example following this template.
+Azure Service Bus allows you to build applications that take advantage of asynchronous messaging patterns using a highly-reliable service to broker messages between producers and consumers. Azure Service Bus provides flexible, brokered messaging between client and server, along with structured first-in, first-out (FIFO) messaging, and publish/subscribe capabilities with complex routing. If you would like to know more about Azure Service Bus, you may wish to review: [What is Azure Service Bus]
+https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview
 
-**Title**: The H1 of your README should be in the format: `# [Product Name] client library for [Language]`
+Use the client library for Azure Service Bus to:
 
-* All headings, including the H1, should use **sentence-style capitalization**. Refer to the [Microsoft Style Guide][style-guide-msft] and [Microsoft Cloud Style Guide][style-guide-cloud] for more information.
-* Example: `# Azure Batch client library for Python`
+- Transfer business data: leverage messaging for durable exchange of information, such as sales or purchase orders, journals, or inventory movements.
 
-# Azure Template client library for .NET
+- Decouple applications: improve reliability and scalability of applications and services, relieving senders and receivers of the need to be online at the same time.
 
-**Introduction**: The introduction appears directly under the title (H1) of your README.
+- Control how messages are processed: support traditional competing consumers for messages using queues or allow each consumer their own instance of a message using topics and subscriptions.
 
-* **DO NOT** use an "Introduction" or "Overview" heading (H2) for this section.
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
-* Include this single line of links targeting your product's content at the bottom of the introduction, making any adjustments as necessary (for example, NuGet instead of PyPi):
+- Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-  [Source code](https://github.com/Azure/azure-sdk-for-python/tree/master/azure-batch) | [Package (PyPi)](https://pypi.org/project/azure-batch/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/batch?view=azure-python) | [Product documentation](https://docs.microsoft.com/azure/batch/)
-
-> TIP: Your README should be as **brief** as possible but **no more brief** than necessary to get a developer new to Azure, the service, or the package up and running quickly. Keep it brief, but include everything a developer needs to make their first API call successfully.
+[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://aka.ms/azsdk-dotnet-servicebus-docs) | [Product documentation](https://docs.microsoft.com/en-us/azure/service-bus/)
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
+### Prerequisites
+
+- **Microsoft Azure Subscription:** To use Azure services, including Azure Service Bus, you'll need a subscription. If you do not have an existing Azure account, you may sign up for a free trial or use your MSDN subscriber benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+
+- **Service Bus namespace:** To interact with Azure Service Bus, you'll also need to have a namespace available. If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating a Service Bus namespace using the Azure portal](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-create-namespace-portal). There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create a Service bus entity.
+
+- **C# 8.0:** The Azure Service Bus client library makes use of new features that were introduced in C# 8.0.  You can still use the library with older versions of C#, but some of its functionality won't be available.  In order to enable these features, you need to [target .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/standard/frameworks#how-to-specify-target-frameworks) or [specify the language version](https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/configure-language-version#override-a-default) you want to use (8.0 or above).  If you are using Visual Studio, versions prior to Visual Studio 2019 are not compatible with the tools needed to build C# 8.0 projects.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com/vs/).
+
+  **Important Note:** The use of C# 8.0 is mandatory to run the [examples](#examples) and the [samples](#next-steps) without modification.  You can still run the samples if you decide to tweak them.
+
+To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
+
+[![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FAzure.Messaging.ServiceBus%2Fassets%2Fsamples-azure-deploy.json)
+
+If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity), you'll also need a service principal with the correct roles. To make configuration for the identity samples easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/assets/live-tests-azure-setup.ps1) script is available. Please see the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/CONTRIBUTING.md#Azure-Identity-Samples) for more details about the script.
 
 ### Install the package
 
-First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `pip install package-name`, but should enable a developer to successfully install the package from NuGet, pip, npm, Maven, or even cloning a GitHub repository.
+Install the Azure Service Bus client library for .NET with [NuGet](https://www.nuget.org/):
 
-Include a **Prerequisites** line after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+```PowerShell
+dotnet add package Azure.Messaging.ServiceBus
+```
 
-**Prerequisites**: You must have an [Azure subscription](https://azure.microsoft.com/free/), [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API), and [Python 3.6+](https://www.python.org/downloads/) to use this package.
+### Obtain a connection string
 
-### Authenticate the client
-
-If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
-
-For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+For the Service Bus client library to interact with a queue or topic, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating a Service Bus namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get a Service Bus connection string](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#get-the-connection-string).
 
 ## Key concepts
 
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+- A **Service Bus client** is the primary interface for developers interacting with the Service Bus client library. It serves as the gateway from which all interaction with the library will occur.
+
+- A **Service Bus sender** is scoped to a particular queue or topic, and is retrieved off of the Service Bus client. The sender allows you to send messages to a queue or topic. It also allows for scheduling messages to be available for delivery at a specified date.
+
+- A **Service Bus receiver** is scoped to a particular queue or subscription, and is retrieved off of the Service Bus client. The receiver allows you to receive messages from a queue or subscription. It also allows the messages to be settled. There are four ways of  settling messages:
+  1. Complete - causes the message to be deleted from the queue or topic.
+  2. Abandon - releases the receiver's lock on the message allowing for the message to be received by other receivers.
+  3. Defer - defers the message from being received by normal means. In order to receive deferred messages, the sequence number of the message needs to be retained.
+  4. DeadLetter - moves the message to the Dead Letter queue. This will prevent the message from being received again. In order to receive messages from the Dead Letter queue, a receiver scoped to the Dead Letter queue is needed.
+
+- A **Service Bus processor** is scoped to a particular queue or subscription, and is retrieved off of the Service Bus client. The processor allows you to configure an event handler to run for every message that is received. It also allows for specifying an exception handler that will run any time an exception is thrown while a message is being received and processed by the processor. The event handler args will provide the ability to settle a received message.
+
+For more concepts and deeper discussion, see: [Service Bus Advanced Features](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#advanced-features).
 
 ## Examples
 
@@ -54,38 +73,225 @@ Each example in the *Examples* section starts with an H3 that describes the exam
 * [Get the thing](#get-the-thing)
 * [List the things](#list-the-things)
 
-### Create the thing
+### Sending and receiving a message
 
-Use the [create_thing](not-valid-link) method to create a Thing reference; this method does not make a network call. To persist the Thing in the service, call [Thing.save](not-valid-link).
+```C# Snippet:ServiceBusSendAndReceive
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
 
-```Python
-thing = client.create_thing(id, name)
-thing.save()
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message that we can send
+ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+
+// send the message
+await sender.SendAsync(message);
+
+// get a receiver that we can use to receive the message
+ServiceBusReceiver receiver = client.GetReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+
+// get the message body as a string
+string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+Console.WriteLine(body);
 ```
 
-### Get the thing
+### Sending and receiving a batch of messages
 
-The [get_thing](not-valid-link) method retrieves a Thing from the service. The `id` parameter is the unique ID of the Thing, not its "name" property.
+```C# Snippet:ServiceBusSendAndReceiveBatch
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
 
-```Python
-thing = client.get_thing(id)
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message batch that we can send
+ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
+messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+
+// send the message batch
+await sender.SendBatchAsync(messageBatch);
+
+// get a receiver that we can use to receive the messages
+ServiceBusReceiver receiver = client.GetReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
+
+foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
+{
+    // get the message body as a string
+    string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+    Console.WriteLine(body);
+}
 ```
 
-### List the things
+### Complete a message
 
-Use [list_things](not-valid-link) to get one or more Thing objects from the service. If there are no Things available, a `404` exception is thrown (see [Troubleshooting](#troubleshooting) for details on handling exceptions).
+```C# Snippet:ServiceBusCompleteMessage
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
 
-```Python
-things = client.list_things()
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message that we can send
+ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+
+// send the message
+await sender.SendAsync(message);
+
+// get a receiver that we can use to receive and settle the message
+ServiceBusReceiver receiver = client.GetReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+
+// complete the message, thereby deleting it from the service
+await receiver.CompleteAsync(receivedMessage);
+```
+
+### Abandon a message
+
+```C# Snippet:ServiceBusAbandonMessage
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message that we can send
+ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+
+// send the message
+await sender.SendAsync(message);
+
+// get a receiver that we can use to receive and settle the message
+ServiceBusReceiver receiver = client.GetReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+
+// abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
+await receiver.AbandonAsync(receivedMessage);
+```
+
+### Defer a message
+
+```C# Snippet:ServiceBusDeferMessage
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message that we can send
+ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+
+// send the message
+await sender.SendAsync(message);
+
+// get a receiver that we can use to receive and settle the message
+ServiceBusReceiver receiver = client.GetReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+
+// store off the sequence number as we will need this to
+long sequenceNumber = receivedMessage.SequenceNumber;
+
+// defer the message, thereby preventing the message from being received again without using
+// the received deferred message API.
+await receiver.DeferAsync(receivedMessage);
+
+// receive the deferred message by specifying the service set sequence number of the original
+// received message
+ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessageAsync(receivedMessage.SequenceNumber);
+```
+
+### Dead letter a message
+
+```C# Snippet:ServiceBusDeadLetterMessage
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message that we can send
+ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+
+// send the message
+await sender.SendAsync(message);
+
+// get a receiver that we can use to receive and settle the message
+ServiceBusReceiver receiver = client.GetReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+
+// store off the sequence number as we will need this to
+long sequenceNumber = receivedMessage.SequenceNumber;
+
+// deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
+await receiver.DeadLetterAsync(receivedMessage);
+
+// receive the dead lettered message with receiver scoped to the dead letter queue.
+ServiceBusReceiver dlqReceiver = client.GetDeadLetterReceiver(queueName);
+ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
 ```
 
 ## Troubleshooting
 
-Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+### Service Bus Exception
 
-Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+A `ServiceBusException` is triggered when an operation specific to Service Bus has encountered an issue, including both errors within the service and specific to the client.  The exception includes some contextual information to assist in understanding the context of the error and its relative severity.  These are:
 
-If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
+- `IsTransient` : This identifies whether or not the exception is considered recoverable.  In the case where it was deemed transient, the appropriate retry policy has already been applied and retries were unsuccessful.
+
+- `Reason` : Provides a set of well-known reasons for the failure that help to categorize and clarify the root cause.  These are intended to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal.   Some key failure reasons are:
+
+  - **Client Closed** : This occurs when an operation has been requested on a Service Bus client that has already been closed or disposed of. It is recommended to check the application code and ensure that objects from the Service Bus client library are created and closed/disposed in the intended scope.  
+
+  - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Service Bus service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.  
+
+  - **MessageLockLost** : This can occur if the processing takes longer than the lock duration specified at the entity level for a message. If this error occurs consistently, it may be worth increasing the message lock duration. Otherwise, callers can renew the message lock while they are processing the message to ensure that this error doesn't occur.
+  
+  - **Messagine Entity Not Found**: A Service Bus resource, such as a queue, topic, or subscription could not be found by the Service Bus service. This may indicate that it has been deleted from the service or that there is an issue with the Service Bus service itself.
+  
+Reacting to a specific failure reason for the `ServiceBusException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
+```csharp
+try
+{
+    // Receive messages using the receiver client
+}
+catch (ServiceBusExceptions ex) where 
+    (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
+{
+    // Take action based on a service timeout
+}
+```
+  
+### Other exceptions
+
+For detailed information about the failures represented by the `ServiceBusException` and other exceptions that may occur, please refer to [Service Bus messaging exceptions](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-exceptions).
+
 
 ## Next steps
 

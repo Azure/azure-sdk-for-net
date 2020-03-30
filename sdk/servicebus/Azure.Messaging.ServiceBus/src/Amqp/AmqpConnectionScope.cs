@@ -461,13 +461,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
-            catch
+            catch (Exception exception)
             {
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 session?.Abort();
-                throw;
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    null,
+                    session.GetInnerException(),
+                    connection.IsClosing());
             }
         }
 
@@ -570,13 +574,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
-            catch
+            catch (Exception exception)
             {
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 session?.Abort();
-                throw;
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    null,
+                    session.GetInnerException(),
+                    connection.IsClosing());
             }
         }
 
@@ -664,13 +672,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
-            catch
+            catch (Exception exception)
             {
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 session?.Abort();
-                throw;
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    null,
+                    session.GetInnerException(),
+                    connection.IsClosing());
             }
         }
 
@@ -825,8 +837,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="target">The target AMQP object to open.</param>
         /// <param name="timeout">The timeout to apply when opening the link.</param>
         ///
-        protected virtual Task OpenAmqpObjectAsync(AmqpObject target,
-                                                   TimeSpan timeout) => target.OpenAsync(timeout);
+        protected virtual Task OpenAmqpObjectAsync(
+            AmqpObject target,
+            TimeSpan timeout) =>
+            target.OpenAsync(timeout);
 
         /// <summary>
         ///   Requests authorization for a connection or link using a connection via the CBS mechanism.
