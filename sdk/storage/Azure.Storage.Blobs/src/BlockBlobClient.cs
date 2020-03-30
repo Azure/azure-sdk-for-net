@@ -1293,7 +1293,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    var blocks = new BlockLookupList() { Uncommitted = base64BlockIds.ToList() };
+                    var blocks = new BlockLookupList() { Latest = base64BlockIds.ToList() };
                     return await BlobRestClient.BlockBlob.CommitBlockListAsync(
                         ClientDiagnostics,
                         Pipeline,
