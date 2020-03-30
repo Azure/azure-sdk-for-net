@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
 
         /// <summary>
         /// The version of the Service Fabric resource provider API. This is a required
-        /// parameter and it's value must be "2019-03-01" for this specification.
+        /// parameter and it's value must be "2020-03-01" for this specification.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -359,7 +359,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             Applications = new ApplicationsOperations(this);
             Services = new ServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-03-01";
+            ApiVersion = "2020-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -391,8 +391,8 @@ namespace Microsoft.Azure.Management.ServiceFabric
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PartitionSchemeDescription>("partitionScheme"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PartitionSchemeDescription>("partitionScheme"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServicePlacementPolicyDescription>("Type"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServicePlacementPolicyDescription>("Type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServicePlacementPolicyDescription>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServicePlacementPolicyDescription>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServiceResourceProperties>("serviceKind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ServiceResourceProperties>("serviceKind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ServiceResourceUpdateProperties>("serviceKind"));
