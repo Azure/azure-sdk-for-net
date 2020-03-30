@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
 {
 
     /// <summary>
-    /// Defines values for TimeGrainType.
+    /// Defines values for LotSource.
     /// </summary>
-    public static class TimeGrainType
+    public static class LotSource
     {
-        public const string Monthly = "Monthly";
-        public const string Quarterly = "Quarterly";
-        public const string Annually = "Annually";
-        public const string BillingMonth = "BillingMonth";
-        public const string BillingQuarter = "BillingQuarter";
-        public const string BillingAnnual = "BillingAnnual";
+        public const string PurchasedCredit = "PurchasedCredit";
+        public const string PromotionalCredit = "PromotionalCredit";
     }
 }
