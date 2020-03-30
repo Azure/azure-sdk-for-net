@@ -1,4 +1,4 @@
-# Service Bus client library for .NET
+# Azure Service Bus client library for .NET
 
 Azure Service Bus allows you to build applications that take advantage of asynchronous messaging patterns using a highly-reliable service to broker messages between producers and consumers. Azure Service Bus provides flexible, brokered messaging between client and server, along with structured first-in, first-out (FIFO) messaging, and publish/subscribe capabilities with complex routing. If you would like to know more about Azure Service Bus, you may wish to review: [What is Azure Service Bus]
 https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview
