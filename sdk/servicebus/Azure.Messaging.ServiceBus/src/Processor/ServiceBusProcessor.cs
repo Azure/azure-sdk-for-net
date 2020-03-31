@@ -243,7 +243,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processMessage != default)
                 {
-                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _processMessage = value);
 
@@ -255,7 +255,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processMessage != value)
                 {
-                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processMessage = default);
@@ -277,7 +277,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processSessionMessage != default)
                 {
-                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _processSessionMessage = value);
 
@@ -289,7 +289,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processSessionMessage != value)
                 {
-                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processSessionMessage = default);
@@ -311,7 +311,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processErrorAsync != default)
                 {
-                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
@@ -323,7 +323,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processErrorAsync != value)
                 {
-                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
@@ -417,7 +417,7 @@ namespace Azure.Messaging.ServiceBus
             }
             else
             {
-                throw new InvalidOperationException(Resources1.RunningMessageProcessorCannotPerformOperation);
+                throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
             }
         }
 
@@ -425,7 +425,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (_processErrorAsync == null)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessErrorAsync)));
             }
         }
 
@@ -435,12 +435,12 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (_processSessionMessage == null)
                 {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessMessageAsync)));
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
                 }
             }
             else if (_processMessage == null)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessMessageAsync)));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
             }
         }
 
@@ -907,7 +907,7 @@ namespace Azure.Messaging.ServiceBus
                     }
                     else
                     {
-                        throw new InvalidOperationException(Resources1.RunningMessageProcessorCannotPerformOperation);
+                        throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
                     }
                 }
                 finally
@@ -917,7 +917,7 @@ namespace Azure.Messaging.ServiceBus
             }
             else
             {
-                throw new InvalidOperationException(Resources1.RunningMessageProcessorCannotPerformOperation);
+                throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
             }
         }
 

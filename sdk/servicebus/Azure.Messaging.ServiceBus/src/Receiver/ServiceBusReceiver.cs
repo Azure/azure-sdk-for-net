@@ -419,7 +419,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Abandons a <see cref="ServiceBusReceivedMessage"/>. This will make the message available again for processing.
+        /// Abandons a <see cref="ServiceBusReceivedMessage"/>.This will make the message available again for immediate processing as the lock on the message held by the receiver will be released.
         /// </summary>
         ///
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to abandon.</param>
@@ -497,11 +497,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// In order to receive a message from the deadletter queue, you will need a new
-        /// <see cref="ServiceBusReceiver"/> with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// In order to receive a message from the deadletter queue, you can call
+        /// <see cref="ServiceBusClient.GetDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
+        /// or <see cref="ServiceBusClient.GetDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
+        /// to get a receiver for the queue or subscription.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
@@ -524,11 +524,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// In order to receive a message from the deadletter queue, you will need a new
-        /// <see cref="ServiceBusReceiver"/> with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// In order to receive a message from the deadletter queue, you can call
+        /// <see cref="ServiceBusClient.GetDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
+        /// or <see cref="ServiceBusClient.GetDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
+        /// to get a receiver for the queue or subscription.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task DeadLetterAsync(
             string lockToken,
@@ -724,7 +724,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (ReceiveMode != ReceiveMode.PeekLock)
             {
-                throw new InvalidOperationException(Resources1.OperationNotSupported);
+                throw new InvalidOperationException(Resources.OperationNotSupported);
             }
         }
 

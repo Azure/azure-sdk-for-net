@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 ServiceBusRetryMode.Fixed => CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
                 ServiceBusRetryMode.Exponential => CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
-                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources1.UnknownRetryMode, Options.Mode.ToString())),
+                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
             };
 
             // Adjust the delay, if needed, to keep within the maximum
