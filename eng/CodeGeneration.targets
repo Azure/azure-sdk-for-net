@@ -10,7 +10,7 @@
     <AutorestConfiguration Condition="'$(AutorestConfiguration)' == '' AND '$(AutorestInput)' != '$(_DefaultInputName)'">$(_DefaultInputName)</AutorestConfiguration>
     <!--
       Allows passing additional AutoRest command line arguments, for example to run in interactive mode 
-      use the following command line: dotnet msbuild /t:GenerateCode /p:AutorestAdditionalParameters="--interactive"
+      use the following command line (remove the space between minus minus): dotnet msbuild /t:GenerateCode /p:AutorestAdditionalParameters="- -interactive"
     -->
     <AutorestAdditionalParameters></AutorestAdditionalParameters>
     <_SharedCodeDirectory>$(MSBuildThisFileDirectory)../sdk/core/Azure.Core/src/Shared/</_SharedCodeDirectory>
