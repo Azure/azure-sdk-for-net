@@ -205,7 +205,7 @@ More on mocking in [mocking samples](samples/Mocking.md)
 
 ## Troubleshooting
 
-Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#Enabling exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](samples/Response.md#handling-exceptions)
+Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#handling-exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](Diagnostics.md#Distributed-tracing)
 
 ## Next steps
 
