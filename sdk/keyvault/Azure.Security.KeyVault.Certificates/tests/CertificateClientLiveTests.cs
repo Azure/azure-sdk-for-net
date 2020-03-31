@@ -563,7 +563,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string issuerName = Recording.GenerateId();
 
-            string providerName = "SSLAdmin";
+            string providerName = "ssladmin";
 
             CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
 
@@ -577,7 +577,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(getIssuer.Id);
             Assert.AreEqual(issuer.Provider, getIssuer.Provider);
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10908
-            // https://github.com/Azure/azure-sdk-for-net/issues/10910
             // https://github.com/Azure/azure-sdk-for-net/issues/10905
             // Assert.AreEqual(issuer.Name, getIssuer.Name);
         }
@@ -587,7 +586,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             string issuerName = Recording.GenerateId();
 
-            string providerName = "SSLAdmin";
+            string providerName = "ssladmin";
 
             CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
 
@@ -595,7 +594,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await Client.CreateIssuerAsync(issuer);
 
-            string updateProvider = "OneCert";
+            string updateProvider = "onecert";
             issuer = new CertificateIssuer(issuerName, updateProvider);
             Assert.NotNull(issuer);
 
@@ -612,8 +611,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             string issuerName = Recording.GenerateId();
             string issuerName1 = Recording.GenerateId();
 
-            string providerName = "SSLAdmin";
-            string providerName1 = "OneCert";
+            string providerName = "ssladmin";
+            string providerName1 = "onecert";
 
             CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
             CertificateIssuer issuer1 = new CertificateIssuer(issuerName1, providerName1);
@@ -632,7 +631,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 IssuerProperties returnPropertie = issuerProperties.Single(s => s.Id == issuerPropertie.Id);
                 Assert.AreEqual(issuerPropertie.Provider, returnPropertie.Provider);
                 // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10908
-                // https://github.com/Azure/azure-sdk-for-net/issues/10910
                 // https://github.com/Azure/azure-sdk-for-net/issues/10905
                 // Assert.AreEqual(issuerPropertie.Name, returnPropertie.Name);
             }
