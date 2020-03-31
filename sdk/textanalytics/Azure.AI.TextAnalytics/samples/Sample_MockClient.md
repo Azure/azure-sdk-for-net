@@ -2,8 +2,25 @@
 
 This sample illustrates how to use [Moq][moq] to create a unit test that mocks the response from a `TextAnalyticsClient` method. For more examples of mocking, see [Moq samples][moq_samples].
 
+## Define method that uses TextAnalyticsClient
+To show the usage of mocks, define a method that will be tested with mocked objects. For this case, we are going to create a method that will verify if a document is writen in Spanish.
+
+```C# Snippet:MethodToTest
+private static async Task<bool> IsSpanishAsync(string document, TextAnalyticsClient client, CancellationToken cancellationToken)
+{
+    while (!cancellationToken.IsCancellationRequested)
+    {
+        DetectedLanguage language = await client.DetectLanguageAsync(document);
+        return language.Iso6391Name == "es";
+    }
+
+    cancellationToken.ThrowIfCancellationRequested();
+    return false;
+}
+```
+
 ## Create and setup mocks
-For this test, create a mock for the `TextAnalyticsClient` and `Response`.
+To start, create a mock for the `TextAnalyticsClient` and `Response`.
 
 ```C# Snippet:CreateMocks
 var mockResponse = new Mock<Response>();
@@ -20,14 +37,12 @@ mockClient.Setup(c => c.DetectLanguageAsync("Este documento está en español.",
 ```
 
 ## Use mocks
-Now, to validate the detected language of the document without making a network call, use `TextAnalyticsClient` mock.
+Now, to validate if the document is in Spanish without making a network call, use `TextAnalyticsClient` mock.
 
 ```C# Snippet:UseMocks
 TextAnalyticsClient client = mockClient.Object;
-DetectedLanguage language = await client.DetectLanguageAsync("Este documento está en español.");
-Assert.AreEqual("Spanish", language.Name);
-Assert.AreEqual("es", language.Iso6391Name);
-Assert.AreEqual(1.00, language.Score);
+bool result = await IsSpanishAsync("Este documento está en español.", client, default);
+Assert.IsTrue(result);
 ```
 
 [moq]: https://github.com/Moq/moq4/

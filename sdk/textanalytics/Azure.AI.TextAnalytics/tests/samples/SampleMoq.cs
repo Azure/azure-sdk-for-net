@@ -30,12 +30,24 @@ namespace Azure.AI.TextAnalytics.Samples
 
             #region Snippet:UseMocks
             TextAnalyticsClient client = mockClient.Object;
-            DetectedLanguage language = await client.DetectLanguageAsync("Este documento está en español.");
-            Assert.AreEqual("Spanish", language.Name);
-            Assert.AreEqual("es", language.Iso6391Name);
-            Assert.AreEqual(1.00, language.Score);
+            bool result = await IsSpanishAsync("Este documento está en español.", client, default);
+            Assert.IsTrue(result);
             #endregion
         }
+
+        #region Snippet:MethodToTest
+        private static async Task<bool> IsSpanishAsync(string document, TextAnalyticsClient client, CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                DetectedLanguage language = await client.DetectLanguageAsync(document);
+                return language.Iso6391Name == "es";
+            }
+
+            cancellationToken.ThrowIfCancellationRequested();
+            return false;
+        }
+        #endregion Snippet:MethodToTest
 
         [Test]
         public async Task DetectLanguageBatchAsync()
