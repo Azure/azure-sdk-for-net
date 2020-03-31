@@ -25,6 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 //@@ await using var client = new ServiceBusClient(connectionString);
+
                 // get the sender
                 ServiceBusSender sender = client.GetSender(queueName);
 
@@ -75,8 +76,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     return Task.CompletedTask;
                 }
                 await processor.StartProcessingAsync();
+
                 // await our task completion source task so that the message handler will be invoked at least once.
                 await tcs.Task;
+
                 // stop processing once the task completion source was completed.
                 await processor.StopProcessingAsync();
                 #endregion

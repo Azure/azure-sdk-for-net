@@ -12,7 +12,7 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://aka.ms/azsdk-dotnet-servicebus-docs) | [Product documentation](https://docs.microsoft.com/en-us/azure/service-bus/)
+[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/servicebus.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/service-bus/)
 
 ## Getting started
 
@@ -304,6 +304,10 @@ await processor.StartProcessingAsync();
 await tcs.Task;
 // stop processing once the task completion source was completed.
 await processor.StopProcessingAsync();
+```
+
+### Working with Sessions
+```C# Snippet:ServiceBusReceiveFromSpecificSession
 ```
 
 ## Troubleshooting

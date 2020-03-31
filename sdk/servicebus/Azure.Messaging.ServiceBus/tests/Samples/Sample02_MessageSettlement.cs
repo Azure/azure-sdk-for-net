@@ -109,9 +109,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
-                // store off the sequence number as we will need this to
-                long sequenceNumber = receivedMessage.SequenceNumber;
-
                 // defer the message, thereby preventing the message from being received again without using
                 // the received deferred message API.
                 await receiver.DeferAsync(receivedMessage);
@@ -151,9 +148,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
-
-                // store off the sequence number as we will need this to
-                long sequenceNumber = receivedMessage.SequenceNumber;
 
                 // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
                 await receiver.DeadLetterAsync(receivedMessage);
