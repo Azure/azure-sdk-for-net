@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (value < TimeSpan.Zero)
                 {
-                    throw new ArgumentException(Resources1.TimeoutMustBePositive, nameof(TryTimeout));
+                    throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(TryTimeout));
                 }
 
                 Argument.AssertInRange(value, TimeSpan.Zero, TimeSpan.FromHours(1), nameof(TryTimeout));

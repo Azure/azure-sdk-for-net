@@ -711,7 +711,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (!ActiveLinks.TryAdd(link, authorizationRefreshTimer))
             {
-                throw new ServiceBusException(true, entityPath, Resources1.CouldNotCreateLink);
+                throw new ServiceBusException(true, entityPath, Resources.CouldNotCreateLink);
             }
 
             // When the link is closed, stop refreshing authorization and remove it from the
@@ -993,7 +993,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if ((transport != ServiceBusTransportType.AmqpTcp) && (transport != ServiceBusTransportType.AmqpWebSockets))
             {
-                throw new ArgumentException(nameof(transport), string.Format(CultureInfo.CurrentCulture, Resources1.UnknownConnectionType, transport));
+                throw new ArgumentException(nameof(transport), string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport));
             }
         }
     }

@@ -724,7 +724,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (ReceiveMode != ReceiveMode.PeekLock)
             {
-                throw new InvalidOperationException(Resources1.OperationNotSupported);
+                throw new InvalidOperationException(Resources.OperationNotSupported);
             }
         }
 

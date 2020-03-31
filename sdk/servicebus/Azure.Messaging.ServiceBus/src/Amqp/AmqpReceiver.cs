@@ -542,12 +542,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if (deadLetterReason != null && deadLetterReason.Length > Constants.MaxDeadLetterReasonLength)
             {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterReason), string.Format(Resources1.MaxPermittedLength, Constants.MaxDeadLetterReasonLength));
+                throw new ArgumentOutOfRangeException(nameof(deadLetterReason), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
             }
 
             if (deadLetterErrorDescription != null && deadLetterErrorDescription.Length > Constants.MaxDeadLetterReasonLength)
             {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), string.Format(Resources1.MaxPermittedLength, Constants.MaxDeadLetterReasonLength));
+                throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
             }
 
             var lockTokens = new[] { new Guid(lockToken) };

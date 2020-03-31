@@ -513,7 +513,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified);
+                throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
             }
         }
 
