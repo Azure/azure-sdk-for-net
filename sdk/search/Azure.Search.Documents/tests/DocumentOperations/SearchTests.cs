@@ -116,6 +116,7 @@ namespace Azure.Search.Documents.Tests
         #endregion Utilities
 
         [Test]
+        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task DynamicDocuments()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -139,6 +140,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task StaticDocuments()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -270,6 +272,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task OrderByProgressivelyBreaksTies()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
