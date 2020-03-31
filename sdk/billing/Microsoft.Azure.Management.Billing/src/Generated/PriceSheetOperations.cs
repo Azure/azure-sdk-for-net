@@ -51,16 +51,18 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Download price sheet for an invoice.
+        /// Gets a URL to download the pricesheet for an invoice. The operation is
+        /// supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceName'>
-        /// Invoice Id.
+        /// The ID that uniquely identifies an invoice.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,13 +78,15 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Download price sheet for a billing profile.
+        /// Gets a URL to download the current month's pricesheet for a billing
+        /// profile. The operation is supported for billing accounts with agreement
+        /// type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -98,16 +102,18 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Download price sheet for an invoice.
+        /// Gets a URL to download the pricesheet for an invoice. The operation is
+        /// supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceName'>
-        /// Invoice Id.
+        /// The ID that uniquely identifies an invoice.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -306,13 +312,15 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Download price sheet for a billing profile.
+        /// Gets a URL to download the current month's pricesheet for a billing
+        /// profile. The operation is supported for billing accounts with agreement
+        /// type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

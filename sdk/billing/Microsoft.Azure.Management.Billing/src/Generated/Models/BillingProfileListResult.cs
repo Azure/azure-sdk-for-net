@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing billing profiles.
+    /// The list of billing profiles.
     /// </summary>
     public partial class BillingProfileListResult
     {

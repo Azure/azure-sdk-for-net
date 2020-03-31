@@ -51,16 +51,20 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List of invoices for a billing account.
+        /// Lists the invoices for a billing account for a given start date and end
+        /// date. The operation is supported for billing accounts with agreement type
+        /// Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='periodStartDate'>
-        /// Invoice period start date.
+        /// The start date to fetch the invoices. The date should be specified in
+        /// MM-DD-YYYY format.
         /// </param>
         /// <param name='periodEndDate'>
-        /// Invoice period end date.
+        /// The end date to fetch the invoices. The date should be specified in
+        /// MM-DD-YYYY format.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -252,19 +256,23 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// List of invoices for a billing profile.
+        /// Lists the invoices for a billing profile for a given start date and end
+        /// date. The operation is supported for billing accounts with agreement type
+        /// Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='periodStartDate'>
-        /// Invoice period start date.
+        /// The start date to fetch the invoices. The date should be specified in
+        /// MM-DD-YYYY format.
         /// </param>
         /// <param name='periodEndDate'>
-        /// Invoice period end date.
+        /// The end date to fetch the invoices. The date should be specified in
+        /// MM-DD-YYYY format.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -462,16 +470,17 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the invoice by name.
+        /// Gets an invoice by ID. The operation is supported for billing accounts with
+        /// agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceName'>
-        /// Invoice Id.
+        /// The ID that uniquely identifies an invoice.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -657,14 +666,14 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists invoices by billing subscriptions name.
+        /// Lists the invoices for a subscription.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingSubscriptionName'>
-        /// Billing Subscription Id.
+        /// The ID that uniquely identifies a subscription.
         /// </param>
         /// <param name='periodStartDate'>
         /// Invoice period start date.
@@ -868,17 +877,17 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Gets the invoice by name.
+        /// Gets an invoice by ID.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingSubscriptionName'>
-        /// Billing Subscription Id.
+        /// The ID that uniquely identifies a subscription.
         /// </param>
         /// <param name='invoiceName'>
-        /// Invoice Id.
+        /// The ID that uniquely identifies an invoice.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1064,7 +1073,7 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists invoices by billing subscriptions name.
+        /// Lists the invoices for a subscription.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='nextPageLink'>

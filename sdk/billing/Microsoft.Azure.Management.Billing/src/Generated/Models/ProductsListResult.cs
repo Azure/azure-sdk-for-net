@@ -16,8 +16,8 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing products. It contains a list of available products
-    /// summaries in reverse chronological order by purchase date.
+    /// The list of products. It contains a list of available product summaries
+    /// in reverse chronological order by purchase date.
     /// </summary>
     public partial class ProductsListResult
     {

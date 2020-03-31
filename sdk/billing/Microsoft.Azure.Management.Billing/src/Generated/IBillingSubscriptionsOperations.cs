@@ -24,14 +24,16 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IBillingSubscriptionsOperations
     {
         /// <summary>
-        /// Lists billing subscription by customer id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// Lists the subscriptions for a customer. The operation is supported
+        /// only for billing accounts with agreement type Microsoft Partner
+        /// Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customerName'>
-        /// Customer name.
+        /// The ID that uniquely identifies a customer.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,17 +52,18 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<BillingSubscription>>> ListByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a single billing subscription by id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// Gets a subscription by its ID. The operation is supported only for
+        /// billing accounts with agreement type Microsoft Partner Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customerName'>
-        /// Customer name.
+        /// The ID that uniquely identifies a customer.
         /// </param>
         /// <param name='billingSubscriptionName'>
-        /// Billing Subscription Id.
+        /// The ID that uniquely identifies a subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -79,11 +82,13 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingSubscription>> GetByCustomerWithHttpMessagesAsync(string billingAccountName, string customerName, string billingSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists billing subscriptions by billing account name.
+        /// Lists the subscriptions for a billing account. The operation is
+        /// supported for billing accounts with agreement type Microsoft
+        /// Customer Agreement or Microsoft Partner Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -102,14 +107,16 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<BillingSubscription>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists billing subscriptions by billing profile name.
+        /// Lists the subscriptions that are billed to a billing profile. The
+        /// operation is supported for billing accounts with agreement type
+        /// Microsoft Customer Agreement or Microsoft Partner Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -128,17 +135,19 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingSubscriptionsListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists billing subscription by invoice section name.
+        /// Lists the subscriptions that are billed to an invoice section. The
+        /// operation is supported only for billing accounts with agreement
+        /// type Microsoft Customer Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -157,20 +166,21 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingSubscriptionsListResult>> ListByInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a single billing subscription by name.
+        /// Gets a subscription by its ID. The operation is supported only for
+        /// billing accounts with agreement type Microsoft Customer Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='billingSubscriptionName'>
-        /// Billing Subscription Id.
+        /// The ID that uniquely identifies a subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -189,23 +199,26 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingSubscription>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string billingSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Transfers the subscription from one invoice section to another
-        /// within a billing account.
+        /// Moves a subscription's charges to a new invoice section. The new
+        /// invoice section must belong to the same billing profile as the
+        /// existing invoice section. This operation is supported only for
+        /// products that are purchased with a recurring charge and for billing
+        /// accounts with agreement type Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='billingSubscriptionName'>
-        /// Billing Subscription Id.
+        /// The ID that uniquely identifies a subscription.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters supplied to the Transfer Billing Subscription
+        /// Request parameters that are provided to the transfer product
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -225,23 +238,26 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<TransferBillingSubscriptionResult,BillingSubscriptionsTransferHeaders>> TransferWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Validates the transfer of billing subscriptions across invoice
-        /// sections.
+        /// Validates if a subscription's charges can be moved to a new invoice
+        /// section. This operation is supported only for products that are
+        /// purchased with a recurring charge and for billing accounts with
+        /// agreement type Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='billingSubscriptionName'>
-        /// Billing Subscription Id.
+        /// The ID that uniquely identifies a subscription.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Transfer Billing Subscription operation.
+        /// Request parameters that are provided to the validate transfer
+        /// eligibility operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -260,23 +276,26 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<ValidateSubscriptionTransferEligibilityResult>> ValidateTransferWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Transfers the subscription from one invoice section to another
-        /// within a billing account.
+        /// Moves a subscription's charges to a new invoice section. The new
+        /// invoice section must belong to the same billing profile as the
+        /// existing invoice section. This operation is supported only for
+        /// products that are purchased with a recurring charge and for billing
+        /// accounts with agreement type Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='billingSubscriptionName'>
-        /// Billing Subscription Id.
+        /// The ID that uniquely identifies a subscription.
         /// </param>
         /// <param name='parameters'>
-        /// Request parameters supplied to the Transfer Billing Subscription
+        /// Request parameters that are provided to the transfer product
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -296,8 +315,10 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<TransferBillingSubscriptionResult,BillingSubscriptionsTransferHeaders>> BeginTransferWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists billing subscription by customer id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// Lists the subscriptions for a customer. The operation is supported
+        /// only for billing accounts with agreement type Microsoft Partner
+        /// Agreement.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -319,7 +340,9 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<BillingSubscription>>> ListByCustomerNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists billing subscriptions by billing account name.
+        /// Lists the subscriptions for a billing account. The operation is
+        /// supported for billing accounts with agreement type Microsoft
+        /// Customer Agreement or Microsoft Partner Agreement.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='nextPageLink'>

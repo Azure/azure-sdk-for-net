@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// An InvoiceSection resource.
+    /// An invoice section.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class InvoiceSection : Resource
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="displayName">The name of the InvoiceSection.</param>
+        /// <param name="displayName">The name of the invoice section.</param>
         public InvoiceSection(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string))
             : base(id, name, type)
         {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the InvoiceSection.
+        /// Gets or sets the name of the invoice section.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }

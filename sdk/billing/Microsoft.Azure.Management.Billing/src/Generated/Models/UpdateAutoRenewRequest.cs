@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Request parameters to update auto renew for support product.
+    /// Request parameters to update auto renew settings for a product.
     /// </summary>
     public partial class UpdateAutoRenewRequest
     {
@@ -29,8 +29,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the UpdateAutoRenewRequest class.
         /// </summary>
-        /// <param name="autoRenew">Request parameters to update auto renew
-        /// policy a product. Possible values include: 'true', 'false'</param>
+        /// <param name="autoRenew">The flag that determines the auto-renew
+        /// settings for a product. Possible values include: 'true',
+        /// 'false'</param>
         public UpdateAutoRenewRequest(string autoRenew = default(string))
         {
             AutoRenew = autoRenew;
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets request parameters to update auto renew policy a
+        /// Gets or sets the flag that determines the auto-renew settings for a
         /// product. Possible values include: 'true', 'false'
         /// </summary>
         [JsonProperty(PropertyName = "autoRenew")]

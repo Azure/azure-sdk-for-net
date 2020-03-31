@@ -22,14 +22,15 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class PaymentMethodsOperationsExtensions
     {
             /// <summary>
-            /// Lists the Payment Methods by billing account Id.
+            /// Lists the payment Methods for a billing account. The operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2019-10-01-preview/paymentmethods" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             public static IPage<PaymentMethod> ListByBillingAccount(this IPaymentMethodsOperations operations, string billingAccountName)
             {
@@ -37,14 +38,15 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the Payment Methods by billing account Id.
+            /// Lists the payment Methods for a billing account. The operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2019-10-01-preview/paymentmethods" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -58,17 +60,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the Payment Methods by billing profile Id.
+            /// Lists the payment Methods for a billing profile. The operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             public static IPage<PaymentMethod> ListByBillingProfile(this IPaymentMethodsOperations operations, string billingAccountName, string billingProfileName)
             {
@@ -76,17 +79,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the Payment Methods by billing profile Id.
+            /// Lists the payment Methods for a billing profile. The operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -100,7 +104,8 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the Payment Methods by billing account Id.
+            /// Lists the payment Methods for a billing account. The operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2019-10-01-preview/paymentmethods" />
             /// </summary>
             /// <param name='operations'>
@@ -115,7 +120,8 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the Payment Methods by billing account Id.
+            /// Lists the payment Methods for a billing account. The operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2019-10-01-preview/paymentmethods" />
             /// </summary>
             /// <param name='operations'>
@@ -136,7 +142,8 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the Payment Methods by billing profile Id.
+            /// Lists the payment Methods for a billing profile. The operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -151,7 +158,8 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the Payment Methods by billing profile Id.
+            /// Lists the payment Methods for a billing profile. The operation is supported
+            /// only for billing accounts with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>

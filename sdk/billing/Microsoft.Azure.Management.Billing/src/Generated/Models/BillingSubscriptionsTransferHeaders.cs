@@ -32,8 +32,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// BillingSubscriptionsTransferHeaders class.
         /// </summary>
         /// <param name="location">Location URI to poll for result.</param>
-        /// <param name="retryAfter">Recommends the retryable time after
-        /// receiving this.</param>
+        /// <param name="retryAfter">Recommended time to wait before making
+        /// another request to check the status of the operation. The time is
+        /// specified in seconds.</param>
         public BillingSubscriptionsTransferHeaders(string location = default(string), int? retryAfter = default(int?))
         {
             Location = location;
@@ -53,7 +54,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets recommends the retryable time after receiving this.
+        /// Gets or sets recommended time to wait before making another request
+        /// to check the status of the operation. The time is specified in
+        /// seconds.
         /// </summary>
         [JsonProperty(PropertyName = "Retry-After")]
         public int? RetryAfter { get; set; }

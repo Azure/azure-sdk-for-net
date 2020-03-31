@@ -51,13 +51,15 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get the role assignment for the caller
+        /// Gets a role assignment for the caller on a billing account. The operation
+        /// is supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingRoleAssignmentName'>
-        /// role assignment id.
+        /// The ID that uniquely identifies a role assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -237,13 +239,15 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Delete the role assignment on this billing account
+        /// Deletes a role assignment for the caller on a billing account. The
+        /// operation is supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingRoleAssignmentName'>
-        /// role assignment id.
+        /// The ID that uniquely identifies a role assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -423,19 +427,21 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the role assignment for the caller on the invoice Section
+        /// Gets a role assignment for the caller on an invoice section. The operation
+        /// is supported for billing accounts with agreement type Microsoft Customer
+        /// Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='billingRoleAssignmentName'>
-        /// role assignment id.
+        /// The ID that uniquely identifies a role assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -627,19 +633,21 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Delete the role assignment on the invoice Section
+        /// Deletes a role assignment for the caller on an invoice section. The
+        /// operation is supported for billing accounts with agreement type Microsoft
+        /// Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='billingRoleAssignmentName'>
-        /// role assignment id.
+        /// The ID that uniquely identifies a role assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -831,16 +839,18 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the role assignment for the caller on the Billing Profile
+        /// Gets a role assignment for the caller on a billing profile. The operation
+        /// is supported for billing accounts with agreement type Microsoft Partner
+        /// Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='billingRoleAssignmentName'>
-        /// role assignment id.
+        /// The ID that uniquely identifies a role assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1026,16 +1036,18 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Delete the role assignment on this Billing Profile
+        /// Deletes a role assignment for the caller on a billing profile. The
+        /// operation is supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='billingRoleAssignmentName'>
-        /// role assignment id.
+        /// The ID that uniquely identifies a role assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1221,10 +1233,12 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the role assignments on the Billing Account
+        /// Lists the role assignments for the caller on a billing account. The
+        /// operation is supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1398,13 +1412,15 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// The operation to add a role assignment to a billing account.
+        /// Adds a role assignment on a billing account. The operation is supported for
+        /// billing accounts with agreement type Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to add a role assignment.
+        /// Request parameters that are provided to the create billing role assignment
+        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1589,16 +1605,18 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the role assignments on the invoice Section
+        /// Lists the role assignments for the caller on an invoice section. The
+        /// operation is supported for billing accounts with agreement type Microsoft
+        /// Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1784,19 +1802,21 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// The operation to add a role assignment to a invoice Section.
+        /// Adds a role assignment on an invoice section. The operation is supported
+        /// for billing accounts with agreement type Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to add a role assignment.
+        /// Request parameters that are provided to the create billing role assignment
+        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1993,13 +2013,15 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the role assignments on the Billing Profile
+        /// Lists the role assignments for the caller on a billing profile. The
+        /// operation is supported for billing accounts with agreement type Microsoft
+        /// Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2179,16 +2201,18 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// The operation to add a role assignment to a billing profile.
+        /// Adds a role assignment on a billing profile. The operation is supported for
+        /// billing accounts with agreement type Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to add a role assignment.
+        /// Request parameters that are provided to the create billing role assignment
+        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

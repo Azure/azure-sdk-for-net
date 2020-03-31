@@ -24,16 +24,18 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IPriceSheetOperations
     {
         /// <summary>
-        /// Download price sheet for an invoice.
+        /// Gets a URL to download the pricesheet for an invoice. The operation
+        /// is supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceName'>
-        /// Invoice Id.
+        /// The ID that uniquely identifies an invoice.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,13 +54,16 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<DownloadUrl,PriceSheetDownloadHeaders>> DownloadWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Download price sheet for a billing profile.
+        /// Gets a URL to download the current month's pricesheet for a billing
+        /// profile. The operation is supported for billing accounts with
+        /// agreement type Microsoft Partner Agreement or Microsoft Customer
+        /// Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,16 +82,18 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<DownloadUrl,PriceSheetDownloadByBillingProfileHeaders>> DownloadByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Download price sheet for an invoice.
+        /// Gets a URL to download the pricesheet for an invoice. The operation
+        /// is supported for billing accounts with agreement type Microsoft
+        /// Partner Agreement or Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceName'>
-        /// Invoice Id.
+        /// The ID that uniquely identifies an invoice.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -105,13 +112,16 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<DownloadUrl,PriceSheetDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Download price sheet for a billing profile.
+        /// Gets a URL to download the current month's pricesheet for a billing
+        /// profile. The operation is supported for billing accounts with
+        /// agreement type Microsoft Partner Agreement or Microsoft Customer
+        /// Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

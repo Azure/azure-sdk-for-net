@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Validates the address.
+        /// Validates an address. Use the operation to validate an address before using
+        /// it as a billing account or a billing profile address.
         /// </summary>
         /// <param name='address'>
         /// </param>

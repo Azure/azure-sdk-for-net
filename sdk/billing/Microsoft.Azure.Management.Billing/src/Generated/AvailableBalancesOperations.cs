@@ -51,14 +51,16 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The latest available credit balance for a given billingAccountName and
-        /// billingProfileName.
+        /// The available credit balance for a billing profile. This is the balance
+        /// that can be used for pay now to settle due or past due invoices. The
+        /// operation is supported only for billing accounts with agreement type
+        /// Microsoft Customer Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// list the role definitions.
+    /// The list of role definitions.
     /// </summary>
     public partial class BillingRoleDefinitionListResult
     {
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the BillingRoleDefinitionListResult
         /// class.
         /// </summary>
-        /// <param name="value">The list of role definitions.</param>
+        /// <param name="value">The role definitions.</param>
         public BillingRoleDefinitionListResult(IList<BillingRoleDefinition> value = default(IList<BillingRoleDefinition>))
         {
             Value = value;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the list of role definitions.
+        /// Gets the role definitions.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<BillingRoleDefinition> Value { get; private set; }

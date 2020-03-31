@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing billing subscriptions.
+    /// The list of billing subscriptions.
     /// </summary>
     public partial class BillingSubscriptionsListResult
     {

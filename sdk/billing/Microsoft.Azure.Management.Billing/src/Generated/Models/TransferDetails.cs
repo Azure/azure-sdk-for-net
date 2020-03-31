@@ -34,26 +34,37 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the TransferDetails class.
         /// </summary>
-        /// <param name="creationTime">Transfer creation time.</param>
-        /// <param name="expirationTime">Transfer expiration time.</param>
-        /// <param name="invoiceSectionId">Target invoice section Id.</param>
-        /// <param name="billingAccountId">Target billing account Id.</param>
-        /// <param name="resellerId">Reseller Id for transfer.</param>
-        /// <param name="resellerName">Reseller name for transfer.</param>
-        /// <param name="initiatorCustomerType">Customer type of the
-        /// initiator.</param>
-        /// <param name="billingProfileId">Target billing profile Id.</param>
+        /// <param name="creationTime">The time at which the transfer request
+        /// was created.</param>
+        /// <param name="expirationTime">The time at which the transfer request
+        /// expires.</param>
+        /// <param name="invoiceSectionId">The ID of the invoice section to
+        /// which the product is billed after the transfer request is
+        /// completed.</param>
+        /// <param name="billingAccountId">The ID of the billing account to
+        /// which the product is billed after the transfer request is
+        /// completed.</param>
+        /// <param name="resellerId">Optional MPN ID of the reseller for
+        /// transfer requests that are sent from a Microsoft Partner Agreement
+        /// billing account.</param>
+        /// <param name="resellerName">Optional name of the reseller for
+        /// transfer requests that are sent from Microsoft Partner Agreement
+        /// billing account.</param>
+        /// <param name="initiatorCustomerType">The type of customer who sent
+        /// the transfer request.</param>
+        /// <param name="billingProfileId">The ID of the billing profile to
+        /// which the product will be billed after the transfer.</param>
         /// <param name="transferStatus">Overall transfer status. Possible
         /// values include: 'Pending', 'InProgress', 'Completed',
         /// 'CompletedWithErrors', 'Failed', 'Canceled', 'Declined'</param>
-        /// <param name="recipientEmailId">Email Id of recipient of
-        /// transfer.</param>
-        /// <param name="initiatorEmailId">Email Id of initiator of
-        /// transfer.</param>
-        /// <param name="canceledBy">Email Id who user canceled the
-        /// transfer.</param>
-        /// <param name="lastModifiedTime">Transfer last modification
-        /// time.</param>
+        /// <param name="recipientEmailId">The email ID of the user to whom the
+        /// transfer request was sent.</param>
+        /// <param name="initiatorEmailId">The email ID of the user who sent
+        /// the transfer request.</param>
+        /// <param name="canceledBy">The email ID of the user who canceled the
+        /// transfer request.</param>
+        /// <param name="lastModifiedTime">The time at which the transfer
+        /// request was last modified.</param>
         /// <param name="detailedTransferStatus">Detailed transfer
         /// status.</param>
         public TransferDetails(System.DateTime? creationTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), string invoiceSectionId = default(string), string billingAccountId = default(string), string resellerId = default(string), string resellerName = default(string), string initiatorCustomerType = default(string), string billingProfileId = default(string), string transferStatus = default(string), string recipientEmailId = default(string), string initiatorEmailId = default(string), string canceledBy = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IList<DetailedTransferStatus> detailedTransferStatus = default(IList<DetailedTransferStatus>))
@@ -81,49 +92,54 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets transfer creation time.
+        /// Gets the time at which the transfer request was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]
         public System.DateTime? CreationTime { get; private set; }
 
         /// <summary>
-        /// Gets transfer expiration time.
+        /// Gets the time at which the transfer request expires.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expirationTime")]
         public System.DateTime? ExpirationTime { get; private set; }
 
         /// <summary>
-        /// Gets target invoice section Id.
+        /// Gets the ID of the invoice section to which the product is billed
+        /// after the transfer request is completed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceSectionId")]
         public string InvoiceSectionId { get; private set; }
 
         /// <summary>
-        /// Gets target billing account Id.
+        /// Gets the ID of the billing account to which the product is billed
+        /// after the transfer request is completed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingAccountId")]
         public string BillingAccountId { get; private set; }
 
         /// <summary>
-        /// Gets reseller Id for transfer.
+        /// Gets optional MPN ID of the reseller for transfer requests that are
+        /// sent from a Microsoft Partner Agreement billing account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resellerId")]
         public string ResellerId { get; private set; }
 
         /// <summary>
-        /// Gets reseller name for transfer.
+        /// Gets optional name of the reseller for transfer requests that are
+        /// sent from Microsoft Partner Agreement billing account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resellerName")]
         public string ResellerName { get; private set; }
 
         /// <summary>
-        /// Gets customer type of the initiator.
+        /// Gets the type of customer who sent the transfer request.
         /// </summary>
         [JsonProperty(PropertyName = "properties.initiatorCustomerType")]
         public string InitiatorCustomerType { get; private set; }
 
         /// <summary>
-        /// Gets target billing profile Id.
+        /// Gets the ID of the billing profile to which the product will be
+        /// billed after the transfer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfileId")]
         public string BillingProfileId { get; private set; }
@@ -137,25 +153,26 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string TransferStatus { get; private set; }
 
         /// <summary>
-        /// Gets email Id of recipient of transfer.
+        /// Gets the email ID of the user to whom the transfer request was
+        /// sent.
         /// </summary>
         [JsonProperty(PropertyName = "properties.recipientEmailId")]
         public string RecipientEmailId { get; private set; }
 
         /// <summary>
-        /// Gets email Id of initiator of transfer.
+        /// Gets the email ID of the user who sent the transfer request.
         /// </summary>
         [JsonProperty(PropertyName = "properties.initiatorEmailId")]
         public string InitiatorEmailId { get; private set; }
 
         /// <summary>
-        /// Gets email Id who user canceled the transfer.
+        /// Gets the email ID of the user who canceled the transfer request.
         /// </summary>
         [JsonProperty(PropertyName = "properties.canceledBy")]
         public string CanceledBy { get; private set; }
 
         /// <summary>
-        /// Gets transfer last modification time.
+        /// Gets the time at which the transfer request was last modified.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedTime")]
         public System.DateTime? LastModifiedTime { get; private set; }

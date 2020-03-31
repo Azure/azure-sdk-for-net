@@ -32,9 +32,11 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the InitiateTransferRequest class.
         /// </summary>
-        /// <param name="recipientEmailId">Email Id of recipient for
-        /// transfer.</param>
-        /// <param name="resellerId">Optional reseller Id for transfer.</param>
+        /// <param name="recipientEmailId">The email ID of the recipient to
+        /// whom the transfer request is sent.</param>
+        /// <param name="resellerId">Optional MPN ID of the reseller for
+        /// transfer requests that are sent from a Microsoft Partner Agreement
+        /// billing account.</param>
         public InitiateTransferRequest(string recipientEmailId = default(string), string resellerId = default(string))
         {
             RecipientEmailId = recipientEmailId;
@@ -48,13 +50,15 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets email Id of recipient for transfer.
+        /// Gets or sets the email ID of the recipient to whom the transfer
+        /// request is sent.
         /// </summary>
         [JsonProperty(PropertyName = "properties.recipientEmailId")]
         public string RecipientEmailId { get; set; }
 
         /// <summary>
-        /// Gets or sets optional reseller Id for transfer.
+        /// Gets or sets optional MPN ID of the reseller for transfer requests
+        /// that are sent from a Microsoft Partner Agreement billing account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resellerId")]
         public string ResellerId { get; set; }

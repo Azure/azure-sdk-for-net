@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all agreements for a billing account.
+        /// Lists the agreements for a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='expand'>
         /// May be used to expand the participants.
@@ -236,13 +236,13 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the agreement by name.
+        /// Gets an agreement by ID.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='agreementName'>
-        /// Agreement Id.
+        /// The ID that uniquely identifies an agreement.
         /// </param>
         /// <param name='expand'>
         /// May be used to expand the participants.

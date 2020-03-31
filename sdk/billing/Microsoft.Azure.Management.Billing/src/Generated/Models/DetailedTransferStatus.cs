@@ -29,10 +29,11 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the DetailedTransferStatus class.
         /// </summary>
-        /// <param name="productType">Type of product being transferred.
+        /// <param name="productType">Type of product that is transferred.
         /// Possible values include: 'AzureSubscription',
         /// 'AzureReservation'</param>
-        /// <param name="productId">Id of product being transferred.</param>
+        /// <param name="productId">The ID of the product that is
+        /// transferred.</param>
         /// <param name="transferStatus">Transfer status. Possible values
         /// include: 'NotStarted', 'InProgress', 'Completed', 'Failed'</param>
         /// <param name="errorDetails">Error details for transfer
@@ -52,14 +53,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets type of product being transferred. Possible values include:
+        /// Gets type of product that is transferred. Possible values include:
         /// 'AzureSubscription', 'AzureReservation'
         /// </summary>
         [JsonProperty(PropertyName = "productType")]
         public string ProductType { get; private set; }
 
         /// <summary>
-        /// Gets id of product being transferred.
+        /// Gets the ID of the product that is transferred.
         /// </summary>
         [JsonProperty(PropertyName = "productId")]
         public string ProductId { get; private set; }

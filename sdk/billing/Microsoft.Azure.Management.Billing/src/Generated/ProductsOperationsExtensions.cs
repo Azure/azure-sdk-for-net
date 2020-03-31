@@ -22,22 +22,24 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class ProductsOperationsExtensions
     {
             /// <summary>
-            /// Lists products by customer id.
+            /// Lists the products for a customer. These don't include products billed
+            /// based on usage.The operation is supported only for billing accounts with
+            /// agreement type Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             public static ProductsListResult ListByCustomer(this IProductsOperations operations, string billingAccountName, string customerName, string filter = default(string))
@@ -46,22 +48,24 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by customer id.
+            /// Lists the products for a customer. These don't include products billed
+            /// based on usage.The operation is supported only for billing accounts with
+            /// agreement type Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
@@ -76,20 +80,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a customer's product by name.
+            /// Gets a product by ID. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             public static Product GetByCustomer(this IProductsOperations operations, string billingAccountName, string customerName, string productName)
             {
@@ -97,20 +102,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a customer's product by name.
+            /// Gets a product by ID. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -124,19 +130,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by billing account name.
+            /// Lists the products for a billing account. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             public static IPage<Product> ListByBillingAccount(this IProductsOperations operations, string billingAccountName, string filter = default(string))
@@ -145,19 +153,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by billing account name.
+            /// Lists the products for a billing account. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
@@ -172,25 +182,27 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by invoice section name.
+            /// Lists the products for an invoice section. These don't include products
+            /// billed based on usage. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             public static ProductsListResult ListByInvoiceSection(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string filter = default(string))
@@ -199,25 +211,27 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by invoice section name.
+            /// Lists the products for an invoice section. These don't include products
+            /// billed based on usage. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='filter'>
             /// May be used to filter by product type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
@@ -232,23 +246,24 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a single product by name.
+            /// Gets a product by ID. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             public static Product Get(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName)
             {
@@ -256,23 +271,24 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get a single product by name.
+            /// Gets a product by ID. The operation is supported only for billing accounts
+            /// with agreement type Microsoft Customer Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -286,25 +302,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The operation to transfer a Product to another invoice section.
+            /// Moves a product's charges to a new invoice section. The new invoice section
+            /// must belong to the same billing profile as the existing invoice section.
+            /// This operation is supported only for products that are purchased with a
+            /// recurring charge and for billing accounts with agreement type Microsoft
+            /// Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Product operation.
+            /// Request parameters that are provided to the transfer product operation.
             /// </param>
             public static Product Transfer(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters)
             {
@@ -312,25 +332,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// The operation to transfer a Product to another invoice section.
+            /// Moves a product's charges to a new invoice section. The new invoice section
+            /// must belong to the same billing profile as the existing invoice section.
+            /// This operation is supported only for products that are purchased with a
+            /// recurring charge and for billing accounts with agreement type Microsoft
+            /// Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Product operation.
+            /// Request parameters that are provided to the transfer product operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -344,25 +368,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Validates the transfer of products across invoice sections.
+            /// Validates if a product's charges can be moved to a new invoice section.
+            /// This operation is supported only for products that are purchased with a
+            /// recurring charge and for billing accounts with agreement type Microsoft
+            /// Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Products operation.
+            /// Request parameters that are provided to the validate transfer eligibility
+            /// operation.
             /// </param>
             public static ValidateProductTransferEligibilityResult ValidateTransfer(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters)
             {
@@ -370,25 +398,29 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Validates the transfer of products across invoice sections.
+            /// Validates if a product's charges can be moved to a new invoice section.
+            /// This operation is supported only for products that are purchased with a
+            /// recurring charge and for billing accounts with agreement type Microsoft
+            /// Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Transfer Products operation.
+            /// Request parameters that are provided to the validate transfer eligibility
+            /// operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -408,19 +440,19 @@ namespace Microsoft.Azure.Management.Billing
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='body'>
-            /// Update auto renew request parameters.
+            /// Request parameters that are provided to the update auto renew operation.
             /// </param>
             public static UpdateAutoRenewOperation UpdateAutoRenewByInvoiceSection(this IProductsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body)
             {
@@ -434,19 +466,19 @@ namespace Microsoft.Azure.Management.Billing
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='productName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies a product.
             /// </param>
             /// <param name='body'>
-            /// Update auto renew request parameters.
+            /// Request parameters that are provided to the update auto renew operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -460,7 +492,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by billing account name.
+            /// Lists the products for a billing account. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -475,7 +509,9 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists products by billing account name.
+            /// Lists the products for a billing account. These don't include products
+            /// billed based on usage. The operation is supported for billing accounts with
+            /// agreement type Microsoft Customer Agreement or Microsoft Partner Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>

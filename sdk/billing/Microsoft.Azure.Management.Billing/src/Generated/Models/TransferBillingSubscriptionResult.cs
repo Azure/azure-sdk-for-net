@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Request parameters to transfer billing subscription.
+    /// Result of the transfer billing subscription operation.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class TransferBillingSubscriptionResult

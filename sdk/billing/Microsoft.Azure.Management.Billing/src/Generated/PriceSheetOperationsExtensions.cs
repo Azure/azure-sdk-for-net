@@ -22,19 +22,21 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class PriceSheetOperationsExtensions
     {
             /// <summary>
-            /// Download price sheet for an invoice.
+            /// Gets a URL to download the pricesheet for an invoice. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             public static DownloadUrl Download(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
             {
@@ -42,19 +44,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Download price sheet for an invoice.
+            /// Gets a URL to download the pricesheet for an invoice. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -68,16 +72,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Download price sheet for a billing profile.
+            /// Gets a URL to download the current month's pricesheet for a billing
+            /// profile. The operation is supported for billing accounts with agreement
+            /// type Microsoft Partner Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             public static DownloadUrl DownloadByBillingProfile(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName)
             {
@@ -85,16 +91,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Download price sheet for a billing profile.
+            /// Gets a URL to download the current month's pricesheet for a billing
+            /// profile. The operation is supported for billing accounts with agreement
+            /// type Microsoft Partner Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -108,19 +116,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Download price sheet for an invoice.
+            /// Gets a URL to download the pricesheet for an invoice. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             public static DownloadUrl BeginDownload(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
             {
@@ -128,19 +138,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Download price sheet for an invoice.
+            /// Gets a URL to download the pricesheet for an invoice. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoice Id.
+            /// The ID that uniquely identifies an invoice.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -154,16 +166,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Download price sheet for a billing profile.
+            /// Gets a URL to download the current month's pricesheet for a billing
+            /// profile. The operation is supported for billing accounts with agreement
+            /// type Microsoft Partner Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             public static DownloadUrl BeginDownloadByBillingProfile(this IPriceSheetOperations operations, string billingAccountName, string billingProfileName)
             {
@@ -171,16 +185,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Download price sheet for a billing profile.
+            /// Gets a URL to download the current month's pricesheet for a billing
+            /// profile. The operation is supported for billing accounts with agreement
+            /// type Microsoft Partner Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

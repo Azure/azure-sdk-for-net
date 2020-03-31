@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="displayName">The name of the customer.</param>
-        /// <param name="enabledAzurePlans">Information about the
-        /// product.</param>
-        /// <param name="resellers">The resellers which are allowed to provide
-        /// service to this customer.</param>
+        /// <param name="enabledAzurePlans">Azure plans enabled for the
+        /// customer.</param>
+        /// <param name="resellers">The list of resellers for which an Azure
+        /// plan is enabled for the customer.</param>
         public Customer(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>), IList<Reseller> resellers = default(IList<Reseller>))
             : base(id, name, type)
         {
@@ -63,14 +63,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets information about the product.
+        /// Gets or sets azure plans enabled for the customer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabledAzurePlans")]
         public IList<AzurePlan> EnabledAzurePlans { get; set; }
 
         /// <summary>
-        /// Gets or sets the resellers which are allowed to provide service to
-        /// this customer.
+        /// Gets or sets the list of resellers for which an Azure plan is
+        /// enabled for the customer.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resellers")]
         public IList<Reseller> Resellers { get; set; }

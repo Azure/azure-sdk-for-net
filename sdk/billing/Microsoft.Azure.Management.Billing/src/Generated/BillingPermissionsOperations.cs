@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all billing permissions the caller has for a customer.
+        /// Lists the billing permissions the caller has for a customer.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customerName'>
-        /// Customer name.
+        /// The ID that uniquely identifies a customer.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -237,10 +237,10 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists all billing permissions for the caller under a billing account.
+        /// Lists the billing permissions the caller has on a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -414,16 +414,16 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists all billing permissions for the caller under invoice section.
+        /// Lists the billing permissions the caller has on an invoice section.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// The ID that uniquely identifies an invoice section.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -609,13 +609,13 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Lists all billing permissions the caller has for a billing account.
+        /// Lists the billing permissions the caller has on a billing profile.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

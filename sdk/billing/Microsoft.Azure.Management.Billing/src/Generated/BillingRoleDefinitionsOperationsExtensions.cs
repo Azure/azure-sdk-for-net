@@ -22,16 +22,18 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class BillingRoleDefinitionsOperationsExtensions
     {
             /// <summary>
-            /// Gets the role definition for a role
+            /// Gets the definition for a role on a billing account. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingRoleDefinitionName'>
-            /// role definition id.
+            /// The ID that uniquely identifies a role definition.
             /// </param>
             public static BillingRoleDefinition GetByBillingAccount(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingRoleDefinitionName)
             {
@@ -39,16 +41,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets the role definition for a role
+            /// Gets the definition for a role on a billing account. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingRoleDefinitionName'>
-            /// role definition id.
+            /// The ID that uniquely identifies a role definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -62,22 +66,24 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets the role definition for a role
+            /// Gets the definition for a role on an invoice section. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Customer
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingRoleDefinitionName'>
-            /// role definition id.
+            /// The ID that uniquely identifies a role definition.
             /// </param>
             public static BillingRoleDefinition GetByInvoiceSection(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string billingRoleDefinitionName)
             {
@@ -85,22 +91,24 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets the role definition for a role
+            /// Gets the definition for a role on an invoice section. The operation is
+            /// supported only for billing accounts with agreement type Microsoft Customer
+            /// Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='billingRoleDefinitionName'>
-            /// role definition id.
+            /// The ID that uniquely identifies a role definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -114,19 +122,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets the role definition for a role
+            /// Gets the definition for a role on a billing profile. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='billingRoleDefinitionName'>
-            /// role definition id.
+            /// The ID that uniquely identifies a role definition.
             /// </param>
             public static BillingRoleDefinition GetByBillingProfile(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingProfileName, string billingRoleDefinitionName)
             {
@@ -134,19 +144,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Gets the role definition for a role
+            /// Gets the definition for a role on a billing profile. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='billingRoleDefinitionName'>
-            /// role definition id.
+            /// The ID that uniquely identifies a role definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,13 +172,15 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the role definition for a billing account
+            /// Lists the role definitions for a billing account. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             public static BillingRoleDefinitionListResult ListByBillingAccount(this IBillingRoleDefinitionsOperations operations, string billingAccountName)
             {
@@ -174,13 +188,15 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the role definition for a billing account
+            /// Lists the role definitions for a billing account. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -194,19 +210,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the role definition for an invoice Section
+            /// Lists the role definitions for an invoice section. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             public static BillingRoleDefinitionListResult ListByInvoiceSection(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName)
             {
@@ -214,19 +232,21 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the role definition for an invoice Section
+            /// Lists the role definitions for an invoice section. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -240,16 +260,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the role definition for a Billing Profile
+            /// Lists the role definitions for a billing profile. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             public static BillingRoleDefinitionListResult ListByBillingProfile(this IBillingRoleDefinitionsOperations operations, string billingAccountName, string billingProfileName)
             {
@@ -257,16 +279,18 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the role definition for a Billing Profile
+            /// Lists the role definitions for a billing profile. The operation is
+            /// supported for billing accounts with agreement type Microsoft Partner
+            /// Agreement or Microsoft Customer Agreement.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

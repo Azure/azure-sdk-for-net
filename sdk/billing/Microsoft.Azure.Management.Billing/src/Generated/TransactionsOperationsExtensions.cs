@@ -22,28 +22,33 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class TransactionsOperationsExtensions
     {
             /// <summary>
-            /// Lists the transactions by customer id for given start date and end date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Lists the billed and unbilled transactions by customer id for given start
+            /// date and end date. Transactions include purchases, refunds and Azure usage
+            /// charges. Unbilled transactions are listed under pending invoice Id and do
+            /// not include tax. Tax is added to the amount once an invoice is generated.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='filter'>
-            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// May be used to filter by transaction type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             public static IPage<Transaction> ListByCustomer(this ITransactionsOperations operations, string billingAccountName, string customerName, string periodStartDate, string periodEndDate, string filter = default(string))
@@ -52,28 +57,33 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by customer id for given start date and end date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Lists the billed and unbilled transactions by customer id for given start
+            /// date and end date. Transactions include purchases, refunds and Azure usage
+            /// charges. Unbilled transactions are listed under pending invoice Id and do
+            /// not include tax. Tax is added to the amount once an invoice is generated.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='filter'>
-            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// May be used to filter by transaction type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
@@ -88,26 +98,31 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing account name for
+            /// given start and end date. Transactions include purchases, refunds and Azure
+            /// usage charges. Unbilled transactions are listed under pending invoice ID
+            /// and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='filter'>
-            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// May be used to filter by transaction type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             public static IPage<Transaction> ListByBillingAccount(this ITransactionsOperations operations, string billingAccountName, string periodStartDate, string periodEndDate, string filter = default(string))
@@ -116,26 +131,31 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing account name for
+            /// given start and end date. Transactions include purchases, refunds and Azure
+            /// usage charges. Unbilled transactions are listed under pending invoice ID
+            /// and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='filter'>
-            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// May be used to filter by transaction type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
@@ -150,29 +170,34 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing profile name for given start date and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing profile name for
+            /// given start date and end date. Transactions include purchases, refunds and
+            /// Azure usage charges. Unbilled transactions are listed under pending invoice
+            /// Id and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='filter'>
-            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// May be used to filter by transaction type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             public static TransactionListResult ListByBillingProfile(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, string filter = default(string))
@@ -181,29 +206,34 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing profile name for given start date and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing profile name for
+            /// given start date and end date. Transactions include purchases, refunds and
+            /// Azure usage charges. Unbilled transactions are listed under pending invoice
+            /// Id and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='filter'>
-            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// May be used to filter by transaction type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
@@ -218,32 +248,37 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by invoice section name for given start date and end
-            /// date.
+            /// Lists the billed and unbilled transactions by invoice section name for
+            /// given start date and end date. Transactions include purchases, refunds and
+            /// Azure usage charges. Unbilled transactions are listed under pending invoice
+            /// Id and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='filter'>
-            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// May be used to filter by transaction type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             public static TransactionListResult ListByInvoiceSection(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, string periodStartDate, string periodEndDate, string filter = default(string))
@@ -252,32 +287,37 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by invoice section name for given start date and end
-            /// date.
+            /// Lists the billed and unbilled transactions by invoice section name for
+            /// given start date and end date. Transactions include purchases, refunds and
+            /// Azure usage charges. Unbilled transactions are listed under pending invoice
+            /// Id and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='filter'>
-            /// May be used to filter by transaction kind. The filter supports 'eq', 'lt',
+            /// May be used to filter by transaction type. The filter supports 'eq', 'lt',
             /// 'gt', 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or
-            /// 'not'. Tag filter is a key value pair string where key and value is
+            /// 'not'. Tag filter is a key value pair string where key and value are
             /// separated by a colon (:).
             /// </param>
             /// <param name='cancellationToken'>
@@ -292,26 +332,80 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the transaction.
+            /// Lists the transactions for an invoice. Transactions include purchases,
+            /// refunds and Azure usage charges.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            public static IPage<Transaction> ListByInvoice(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
+            {
+                return operations.ListByInvoiceAsync(billingAccountName, billingProfileName, invoiceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the transactions for an invoice. Transactions include purchases,
+            /// refunds and Azure usage charges.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// The ID that uniquely identifies a billing profile.
+            /// </param>
+            /// <param name='invoiceName'>
+            /// The ID that uniquely identifies an invoice.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Transaction>> ListByInvoiceAsync(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByInvoiceWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a transaction by ID. The operation is supported for billing accounts
+            /// with agreement type Microsoft Customer Agreement or Microsoft Partner
+            /// Agreement.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The ID that uniquely identifies a billing account.
+            /// </param>
+            /// <param name='billingProfileName'>
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='transactionName'>
-            /// Transaction name.
+            /// The ID that uniquely identifies a transaction.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             public static Transaction Get(this ITransactionsOperations operations, string billingAccountName, string billingProfileName, string transactionName, string periodStartDate, string periodEndDate)
             {
@@ -319,26 +413,30 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the transaction.
+            /// Gets a transaction by ID. The operation is supported for billing accounts
+            /// with agreement type Microsoft Customer Agreement or Microsoft Partner
+            /// Agreement.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='transactionName'>
-            /// Transaction name.
+            /// The ID that uniquely identifies a transaction.
             /// </param>
             /// <param name='periodStartDate'>
-            /// Start date
+            /// The start date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='periodEndDate'>
-            /// End date
+            /// The end date to fetch the transactions. The date should be specified in
+            /// MM-DD-YYYY format.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -352,8 +450,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by customer id for given start date and end date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Lists the billed and unbilled transactions by customer id for given start
+            /// date and end date. Transactions include purchases, refunds and Azure usage
+            /// charges. Unbilled transactions are listed under pending invoice Id and do
+            /// not include tax. Tax is added to the amount once an invoice is generated.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -367,8 +468,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by customer id for given start date and end date.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+            /// Lists the billed and unbilled transactions by customer id for given start
+            /// date and end date. Transactions include purchases, refunds and Azure usage
+            /// charges. Unbilled transactions are listed under pending invoice Id and do
+            /// not include tax. Tax is added to the amount once an invoice is generated.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -388,8 +492,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing account name for
+            /// given start and end date. Transactions include purchases, refunds and Azure
+            /// usage charges. Unbilled transactions are listed under pending invoice ID
+            /// and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -404,8 +511,11 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists the transactions by billing account name for given start and end
-            /// date.
+            /// Lists the billed and unbilled transactions by billing account name for
+            /// given start and end date. Transactions include purchases, refunds and Azure
+            /// usage charges. Unbilled transactions are listed under pending invoice ID
+            /// and do not include tax. Tax is added to the amount once an invoice is
+            /// generated.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
             /// </summary>
             /// <param name='operations'>
@@ -420,6 +530,44 @@ namespace Microsoft.Azure.Management.Billing
             public static async Task<IPage<Transaction>> ListByBillingAccountNextAsync(this ITransactionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByBillingAccountNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists the transactions for an invoice. Transactions include purchases,
+            /// refunds and Azure usage charges.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Transaction> ListByInvoiceNext(this ITransactionsOperations operations, string nextPageLink)
+            {
+                return operations.ListByInvoiceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the transactions for an invoice. Transactions include purchases,
+            /// refunds and Azure usage charges.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Transaction>> ListByInvoiceNextAsync(this ITransactionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByInvoiceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.Billing
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. The current
-        /// version is 2019-10-01-preview.
+        /// The version of the API to be used with the client request. The
+        /// current version is 2019-10-01-preview.
         /// </summary>
         string ApiVersion { get; }
 
         /// <summary>
-        /// Azure Subscription ID.
+        /// The ID that uniquely identifies an Azure subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.Billing
         IAvailableBalancesOperations AvailableBalances { get; }
 
         /// <summary>
+        /// Gets the IInstructionsOperations.
+        /// </summary>
+        IInstructionsOperations Instructions { get; }
+
+        /// <summary>
         /// Gets the IBillingProfilesOperations.
         /// </summary>
         IBillingProfilesOperations BillingProfiles { get; }
@@ -125,7 +130,17 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the ITransactionsOperations.
         /// </summary>
         ITransactionsOperations Transactions { get; }
-        
+
+        /// <summary>
+        /// Gets the IDepartmentsOperations.
+        /// </summary>
+        IDepartmentsOperations Departments { get; }
+
+        /// <summary>
+        /// Gets the IEnrollmentAccountsOperations.
+        /// </summary>
+        IEnrollmentAccountsOperations EnrollmentAccounts { get; }
+
         /// <summary>
         /// Gets the IInvoicesOperations.
         /// </summary>
@@ -145,6 +160,21 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IBillingPropertyOperations.
         /// </summary>
         IBillingPropertyOperations BillingProperty { get; }
+
+        /// <summary>
+        /// Gets the ITransfersOperations.
+        /// </summary>
+        ITransfersOperations Transfers { get; }
+
+        /// <summary>
+        /// Gets the IPartnerTransfersOperations.
+        /// </summary>
+        IPartnerTransfersOperations PartnerTransfers { get; }
+
+        /// <summary>
+        /// Gets the IRecipientTransfersOperations.
+        /// </summary>
+        IRecipientTransfersOperations RecipientTransfers { get; }
 
         /// <summary>
         /// Gets the IOperations.

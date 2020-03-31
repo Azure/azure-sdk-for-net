@@ -24,14 +24,15 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface ICustomersOperations
     {
         /// <summary>
-        /// Lists customers by billing profile which the current user can work
-        /// with on-behalf of a partner.
+        /// Lists the customers that are billed to a billing profile. The
+        /// operation is supported only for billing accounts with agreement
+        /// type Microsoft Partner Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// The ID that uniquely identifies a billing profile.
         /// </param>
         /// <param name='filter'>
         /// May be used to filter the list of customers.
@@ -59,11 +60,12 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<Customer>>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string filter = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists customers which the current user can work with on-behalf of a
-        /// partner.
+        /// Lists the customers that are billed to a billing account. The
+        /// operation is supported only for billing accounts with agreement
+        /// type Microsoft Partner Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='filter'>
         /// May be used to filter the list of customers.
@@ -91,16 +93,17 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<Customer>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, string filter = default(string), string skiptoken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a customer by its id.
+        /// Gets a customer by its ID. The operation is supported only for
+        /// billing accounts with agreement type Microsoft Partner Agreement.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// The ID that uniquely identifies a billing account.
         /// </param>
         /// <param name='customerName'>
-        /// Customer name.
+        /// The ID that uniquely identifies a customer.
         /// </param>
         /// <param name='expand'>
-        /// May be used to expand enabledAzurePlans, resellers.
+        /// May be used to expand enabledAzurePlans and resellers
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -119,8 +122,9 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<Customer>> GetWithHttpMessagesAsync(string billingAccountName, string customerName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists customers by billing profile which the current user can work
-        /// with on-behalf of a partner.
+        /// Lists the customers that are billed to a billing profile. The
+        /// operation is supported only for billing accounts with agreement
+        /// type Microsoft Partner Agreement.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -142,8 +146,9 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<IPage<Customer>>> ListByBillingProfileNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists customers which the current user can work with on-behalf of a
-        /// partner.
+        /// Lists the customers that are billed to a billing account. The
+        /// operation is supported only for billing accounts with agreement
+        /// type Microsoft Partner Agreement.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

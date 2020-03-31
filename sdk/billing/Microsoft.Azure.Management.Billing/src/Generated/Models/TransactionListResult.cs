@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing reservation transactions.
+    /// The list of transactions.
     /// </summary>
     public partial class TransactionListResult
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the TransactionListResult class.
         /// </summary>
-        /// <param name="value">The list of reservation transactions.</param>
+        /// <param name="value">The list of transactions.</param>
         /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
         public TransactionListResult(IList<Transaction> value = default(IList<Transaction>), string nextLink = default(string))
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the list of reservation transactions.
+        /// Gets the list of transactions.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<Transaction> Value { get; private set; }

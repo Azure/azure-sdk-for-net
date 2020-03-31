@@ -22,16 +22,16 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class BillingPermissionsOperationsExtensions
     {
             /// <summary>
-            /// Lists all billing permissions the caller has for a customer.
+            /// Lists the billing permissions the caller has for a customer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             public static BillingPermissionsListResult ListByCustomer(this IBillingPermissionsOperations operations, string billingAccountName, string customerName)
             {
@@ -39,16 +39,16 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all billing permissions the caller has for a customer.
+            /// Lists the billing permissions the caller has for a customer.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='customerName'>
-            /// Customer name.
+            /// The ID that uniquely identifies a customer.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -62,13 +62,13 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all billing permissions for the caller under a billing account.
+            /// Lists the billing permissions the caller has on a billing account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             public static BillingPermissionsListResult ListByBillingAccount(this IBillingPermissionsOperations operations, string billingAccountName)
             {
@@ -76,13 +76,13 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all billing permissions for the caller under a billing account.
+            /// Lists the billing permissions the caller has on a billing account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -96,19 +96,19 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all billing permissions for the caller under invoice section.
+            /// Lists the billing permissions the caller has on an invoice section.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             public static BillingPermissionsListResult ListByInvoiceSections(this IBillingPermissionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName)
             {
@@ -116,19 +116,19 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all billing permissions for the caller under invoice section.
+            /// Lists the billing permissions the caller has on an invoice section.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='invoiceSectionName'>
-            /// InvoiceSection Id.
+            /// The ID that uniquely identifies an invoice section.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -142,16 +142,16 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all billing permissions the caller has for a billing account.
+            /// Lists the billing permissions the caller has on a billing profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             public static BillingPermissionsListResult ListByBillingProfile(this IBillingPermissionsOperations operations, string billingAccountName, string billingProfileName)
             {
@@ -159,16 +159,16 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all billing permissions the caller has for a billing account.
+            /// Lists the billing permissions the caller has on a billing profile.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// The ID that uniquely identifies a billing account.
             /// </param>
             /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// The ID that uniquely identifies a billing profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
