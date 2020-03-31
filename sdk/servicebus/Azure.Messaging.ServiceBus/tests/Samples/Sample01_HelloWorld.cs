@@ -49,6 +49,36 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
+        public async Task SendAndPeekMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string queueName = scope.QueueName;
+                await using var client = new ServiceBusClient(connectionString);
+
+                // get the sender
+                ServiceBusSender sender = client.GetSender(queueName);
+
+                // create a message that we can send
+                ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+
+                // send the message
+                await sender.SendAsync(message);
+
+                // get a receiver that we can use to receive the message
+                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+
+                // the received message is a different type as it contains some service set properties
+                ServiceBusReceivedMessage peekedMessage = await receiver.PeekAsync();
+
+                // get the message body as a string
+                string body = Encoding.Default.GetString(peekedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.Default.GetBytes("Hello world!"), peekedMessage.Body.ToArray());
+            }
+        }
+
+        [Test]
         public async Task SendAndReceiveMessageBatch()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
