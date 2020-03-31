@@ -5,7 +5,7 @@
     <_AutoRestCoreVersion>3.0.6257</_AutoRestCoreVersion>
     <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200325.2/autorest-csharp-v3-3.0.0-dev.20200325.2.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
-    <_DefaultInputName Condition="Exists('$(_DefaultInputName)')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
+    <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
     <AutorestInput Condition="'$(AutorestInput)' == ''">$(_DefaultInputName)</AutorestInput>
     <AutorestConfiguration Condition="'$(AutorestConfiguration)' == '' AND '$(AutorestInput)' != '$(_DefaultInputName)'">$(_DefaultInputName)</AutorestConfiguration>
     <AutorestAdditionalParameters></AutorestAdditionalParameters>
