@@ -24,7 +24,7 @@
         "storageEndpointSuffix": {
             "type": "string"
         },
-        "authorityHostAlias": {
+        "azureCloud": {
             "type": "string"
         }
     },
@@ -284,7 +284,7 @@
         },
         "AZURE_CLOUD": {
             "type": "string",
-            "value": "[parameters('authorityHostAlias')]"
+            "value": "[parameters('azureCloud')]"
         },
         "KEY_VAULT_URI": {
             "type": "string",

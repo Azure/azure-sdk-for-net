@@ -85,10 +85,10 @@ namespace SmokeTest
             Console.WriteLine("\tdone");
         }
 
-        private static Uri GetAuthorityHost(string authorityHostAlias, Uri defaultAuthorityHost)
+        private static Uri GetAuthorityHost(string cloudName, Uri defaultAuthorityHost)
         {
             Uri output;
-            if (authorityHostMap.TryGetValue(authorityHostAlias, out output))
+            if (authorityHostMap.TryGetValue(cloudName, out output))
             {
                 return output;
             }
