@@ -54,7 +54,11 @@ For the Service Bus client library to interact with a queue or topic, it will ne
   3. Defer - defers the message from being received by normal means. In order to receive deferred messages, the sequence number of the message needs to be retained.
   4. DeadLetter - moves the message to the Dead Letter queue. This will prevent the message from being received again. In order to receive messages from the Dead Letter queue, a receiver scoped to the Dead Letter queue is needed.
 
+- A **Service Bus session receiver** is scoped to a particular session-enabled queue or subscription, and is retrieved off of the Service Bus client. The session receiver is almost identical to the standard receiver, with the difference being that session management operations are exposed which only apply to session-enabled entities. These operations include getting and setting session state, as well as renewing session locks.
+
 - A **Service Bus processor** is scoped to a particular queue or subscription, and is retrieved off of the Service Bus client. The processor allows you to configure an event handler to run for every message that is received. It also allows for specifying an exception handler that will run any time an exception is thrown while a message is being received and processed by the processor. The event handler args will provide the ability to settle a received message.
+
+- A **Service Bus session processor** is scoped to a particular session-enabled queue or subscription, and is retrieved off of the Service Bus client. The session processor is almost identical to the standard processor, with the difference being that session management operations are exposed which only apply to session-enabled entities.
 
 For more concepts and deeper discussion, see: [Service Bus Advanced Features](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#advanced-features).
 
@@ -151,23 +155,6 @@ await receiver.CompleteAsync(receivedMessage);
 ### Abandon a message
 
 ```C# Snippet:ServiceBusAbandonMessage
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
-
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
-
-// create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
-
-// send the message
-await sender.SendAsync(message);
-
-// get a receiver that we can use to receive and settle the message
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
-
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
@@ -178,28 +165,8 @@ await receiver.AbandonAsync(receivedMessage);
 ### Defer a message
 
 ```C# Snippet:ServiceBusDeferMessage
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
-
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
-
-// create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
-
-// send the message
-await sender.SendAsync(message);
-
-// get a receiver that we can use to receive and settle the message
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
-
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
-
-// store off the sequence number as we will need this to
-long sequenceNumber = receivedMessage.SequenceNumber;
 
 // defer the message, thereby preventing the message from being received again without using
 // the received deferred message API.
@@ -213,28 +180,8 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 ### Dead letter a message
 
 ```C# Snippet:ServiceBusDeadLetterMessage
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
-
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
-
-// create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
-
-// send the message
-await sender.SendAsync(message);
-
-// get a receiver that we can use to receive and settle the message
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
-
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
-
-// store off the sequence number as we will need this to
-long sequenceNumber = receivedMessage.SequenceNumber;
 
 // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
 await receiver.DeadLetterAsync(receivedMessage);
@@ -244,12 +191,50 @@ ServiceBusReceiver dlqReceiver = client.GetDeadLetterReceiver(queueName);
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
 ```
 
+### Sending and receiving session messages
+
+```C# Snippet:ServiceBusSendAndReceiveSessionMessage
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a session message that we can send
+ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"))
+{
+    SessionId = "mySessionId"
+};
+
+// send the message
+await sender.SendAsync(message);
+
+// Get a session receiver that we can use to receive the message. Since we don't specify a
+// particular session, we will get the next available session from the service.
+ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(queueName);
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+Console.WriteLine(receivedMessage.SessionId);
+
+// we can also set arbitrary session state using this receiver
+// the state is specific to the session, and not any particular message
+await receiver.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
+
+// the state can be retrieved for the session as well
+byte[] state = await receiver.GetSessionStateAsync();
+```
+
 ### Using the Processor
+
 ```C# Snippet:ServiceBusProcessMessages
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
+
 // get the sender
 ServiceBusSender sender = client.GetSender(queueName);
 
@@ -276,7 +261,7 @@ var options = new ServiceBusProcessorOptions
 ServiceBusProcessor processor = client.GetProcessor(queueName, options);
 
 // since the message handler will run in a background thread, in order to prevent
-// this sample from terminating immediately, we can use a task completion sources that
+// this sample from terminating immediately, we can use a task completion source that
 // we complete from within the message handler.
 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 processor.ProcessMessageAsync += MessageHandler;
@@ -296,18 +281,148 @@ Task ErrorHandler(ProcessErrorEventArgs args)
 {
     // the error source tells me at what point in the processing an error occurred
     Console.WriteLine(args.ErrorSource);
+    // the fully qualified namespace is available
+    Console.WriteLine(args.FullyQualifiedNamespace);
+    // as well as the entity path
+    Console.WriteLine(args.EntityPath);
     Console.WriteLine(args.Exception.ToString());
     return Task.CompletedTask;
 }
 await processor.StartProcessingAsync();
+
 // await our task completion source task so that the message handler will be invoked at least once.
 await tcs.Task;
+
 // stop processing once the task completion source was completed.
 await processor.StopProcessingAsync();
 ```
 
 ### Working with Sessions
+
 ```C# Snippet:ServiceBusReceiveFromSpecificSession
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message batch that we can send
+ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
+messageBatch.TryAdd(
+    new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
+    {
+        SessionId = "Session1"
+    });
+messageBatch.TryAdd(
+    new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
+    {
+        SessionId = "Session2"
+    });
+
+// send the message batch
+await sender.SendBatchAsync(messageBatch);
+
+// Get a receiver specifying a particular session
+ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(
+    queueName,
+    sessionId: "Session2");
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+Console.WriteLine(receivedMessage.SessionId);
+```
+
+### Using the Processor with Sessions
+
+```C# Snippet:ServiceBusProcessSessionMessages
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+// get the sender
+ServiceBusSender sender = client.GetSender(queueName);
+
+// create a message batch that we can send
+ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
+messageBatch.TryAdd(
+    new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
+    {
+        SessionId = "Session1"
+    });
+messageBatch.TryAdd(
+    new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
+    {
+        SessionId = "Session2"
+    });
+
+// send the message batch
+await sender.SendBatchAsync(messageBatch);
+
+// get the options to use for configuring the processor
+var options = new ServiceBusProcessorOptions
+{
+    // By default after the message handler returns, the processor will complete the message
+    // If I want more fine-grained control over settlement, I can set this to false.
+    AutoComplete = false,
+
+    // I can also allow for multi-threading
+    MaxConcurrentCalls = 2
+};
+
+// get a session processor that we can use to process the messages
+ServiceBusSessionProcessor processor = client.GetSessionProcessor(queueName, options);
+
+// since the message handler will run in a background thread, in order to prevent
+// this sample from terminating immediately, we can use a task completion source that
+// we complete from within the message handler.
+TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+processor.ProcessMessageAsync += MessageHandler;
+processor.ProcessErrorAsync += ErrorHandler;
+
+async Task MessageHandler(ProcessSessionMessageEventArgs args)
+{
+    string body = Encoding.Default.GetString(args.Message.Body.ToArray());
+    Console.WriteLine(body);
+
+    // we can evaluate application logic and use that to determine how to settle the message.
+    await args.CompleteAsync(args.Message);
+
+    // we can also set arbitrary session state using this receiver
+    // the state is specific to the session, and not any particular message
+    await args.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
+    tcs.SetResult(true);
+}
+
+Task ErrorHandler(ProcessErrorEventArgs args)
+{
+    // the error source tells me at what point in the processing an error occurred
+    Console.WriteLine(args.ErrorSource);
+    // the fully qualified namespace is available
+    Console.WriteLine(args.FullyQualifiedNamespace);
+    // as well as the entity path
+    Console.WriteLine(args.EntityPath);
+    Console.WriteLine(args.Exception.ToString());
+    return Task.CompletedTask;
+}
+await processor.StartProcessingAsync();
+
+// await our task completion source task so that the message handler will be invoked at least once.
+await tcs.Task;
+
+// stop processing once the task completion source was completed.
+await processor.StopProcessingAsync();
+```
+
+### Authenticating with Azure.Identity
+
+The [Azure Identity library][https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md] provides easy Azure Active Directory support for authentication.
+```C# Snippet:ServiceBusAuth
+// Create a BlobServiceClient that will authenticate through Active Directory
+string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 ## Troubleshooting

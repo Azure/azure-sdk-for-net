@@ -53,9 +53,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                #region Snippet:ServiceBusAbandonMessage
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -71,6 +68,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // get a receiver that we can use to receive and settle the message
                 ServiceBusReceiver receiver = client.GetReceiver(queueName);
 
+                #region Snippet:ServiceBusAbandonMessage
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
@@ -88,9 +86,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                #region Snippet:ServiceBusDeferMessage
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -106,6 +101,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // get a receiver that we can use to receive and settle the message
                 ServiceBusReceiver receiver = client.GetReceiver(queueName);
 
+                #region Snippet:ServiceBusDeferMessage
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
@@ -128,9 +124,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                #region Snippet:ServiceBusDeadLetterMessage
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -145,6 +138,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // get a receiver that we can use to receive and settle the message
                 ServiceBusReceiver receiver = client.GetReceiver(queueName);
+
+                #region Snippet:ServiceBusDeadLetterMessage
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();

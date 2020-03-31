@@ -224,9 +224,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
+        ///
         /// <param name="message">The message to schedule.</param>
         /// <param name="scheduledEnqueueTime">The UTC time at which the message should be available for processing</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.</remarks>
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public virtual async Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,

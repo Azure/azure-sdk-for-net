@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -91,6 +92,50 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     Assert.AreEqual(sentMessagesEnum.Current.Body.ToArray(), receivedMessage.Body.ToArray());
                 }
             }
+        }
+
+        [Test]
+        public async Task ScheduleMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string queueName = scope.QueueName;
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using var client = new ServiceBusClient(connectionString);
+
+                // get the sender
+                ServiceBusSender sender = client.GetSender(queueName);
+
+                // create a message that we can send
+                ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+
+                // schedule the message for tomorrow
+                // this prevents the message from being enqueued until tomorrow, but it can still be peeked
+                long seq = await sender.ScheduleMessageAsync(
+                    message,
+                    DateTimeOffset.Now.AddDays(1));
+
+                // get a receiver that we can use to peek the message
+                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                Assert.IsNotNull(await receiver.PeekAsync());
+
+                // cancel the scheduled messaged, thereby deleting from the service
+                await sender.CancelScheduledMessageAsync(seq);
+                Assert.IsNull(await receiver.PeekAsync());
+            }
+        }
+
+        /// <summary>
+        /// Authenticate with <see cref="DefaultAzureCredential"/>.
+        /// </summary>
+        public void Authenticate()
+        {
+            #region Snippet:ServiceBusAuth
+            // Create a BlobServiceClient that will authenticate through Active Directory
+            string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
+            ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+            #endregion
         }
     }
 }

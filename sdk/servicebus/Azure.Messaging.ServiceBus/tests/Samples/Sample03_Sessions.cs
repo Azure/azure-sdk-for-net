@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // get the sender
                 ServiceBusSender sender = client.GetSender(queueName);
 
-                // create a message that we can send
+                // create a session message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"))
                 {
                     SessionId = "mySessionId"
