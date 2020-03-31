@@ -277,6 +277,7 @@ namespace Azure.Search.Documents
         /// </param>
         /// <returns>
         /// The <see cref="SearchIndex"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back fields set to their default values depending on the field type and other properties.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="index"/> is null.
@@ -309,6 +310,7 @@ namespace Azure.Search.Documents
         /// </param>
         /// <returns>
         /// The <see cref="SearchIndex"/> that was created.
+        /// This may differ slightly from what was passed in since the service may return back fields set to their default values depending on the field type and other properties.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="index"/> is null.

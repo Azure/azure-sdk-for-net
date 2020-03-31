@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Models
         /// Gets or sets a value indicating whether the field can be referenced in <c>$filter</c> queries. The default is false.
         /// </summary>
         /// <remarks>
-        /// Filterable differs from searchable in how strings are handled. Fields of type <see cref="DataType.String"/> or "Collection(DataTime.String)" that are filterable do not undergo word-breaking, so comparisons are for exact matches only.
+        /// Filterable differs from searchable in how strings are handled. Fields of type <see cref="DataType.String"/> or "Collection(DataType.String)" that are filterable do not undergo word-breaking, so comparisons are for exact matches only.
         /// For example, if you set such a field <c>f</c> to "sunny day", <c>$filter=f eq 'sunny'</c> will find no matches, but <c>$filter=f eq 'sunny day'</c> will.
         /// </remarks>
         public bool IsFilterable { get; set; }

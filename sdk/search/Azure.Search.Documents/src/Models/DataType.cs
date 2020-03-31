@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
@@ -8,6 +9,8 @@ namespace Azure.Search.Documents.Models
     [CodeGenModel("DataType")]
     public readonly partial struct DataType
     {
+        private const string CollectionPrefix = "Collection(";
+
 #pragma warning disable CA1720 // Identifier contains type name
         /// <summary>A <see cref="string"/> type.</summary>
         [CodeGenMember("EdmString")]
@@ -47,6 +50,11 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         /// <param name="type">The type of collection.</param>
         /// <returns>A <see cref="DataType"/> representing a collection of <paramref name="type"/>.</returns>
-        public static DataType Collection(DataType type) => $"Collection({type})";
+        public static DataType Collection(DataType type) => type.IsCollection ? type : new DataType(string.Concat(CollectionPrefix, type._value, ")"));
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="DataType"/> represents a collection.
+        /// </summary>
+        public bool IsCollection => _value.StartsWith(CollectionPrefix, StringComparison.InvariantCultureIgnoreCase);
     }
 }

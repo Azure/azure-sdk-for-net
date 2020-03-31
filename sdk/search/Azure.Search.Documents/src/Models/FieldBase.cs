@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Models
         public string Name { get; }
 
         /// <summary>
-        /// Ge the data type of the field.
+        /// Gets the data type of the field.
         /// </summary>
         public DataType Type { get; }
 

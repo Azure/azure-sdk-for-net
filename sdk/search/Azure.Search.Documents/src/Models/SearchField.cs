@@ -8,9 +8,11 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     /// <summary>
-    /// Represents a field in an index definition, which describes the name, data type, and search behavior of a field.
     /// <para>
-    /// When creating an index, instead use the <see cref="SimpleField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+    /// Represents a field in an index definition, which describes the name, data type, and search behavior of a field.
+    /// </para>
+    /// <para>
+    /// When creating an index, instead use the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
     /// </para>
     /// </summary>
     [CodeGenModel("Field")]
@@ -33,11 +35,6 @@ namespace Azure.Search.Documents.Models
             Type = type;
         }
 
-        // TODO: Remove when https://github.com/Azure/autorest.csharp/issues/582 is fixed.
-        private SearchField()
-        {
-        }
-
         /// <summary>
         /// Gets the name of the field.
         /// </summary>
@@ -55,10 +52,16 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Gets or sets a value indicating whether the field is full-text searchable. The default is null.
         /// This means it will undergo analysis such as word-breaking during indexing.
-        /// This property can be true only for <see cref="DataType.String"/> or "Collection(DataTime.String)". It must be false for non-string simple fields, and null for complex fields.
+        /// This property can be true only for <see cref="DataType.String"/> or "Collection(DataType.String)". It must be false for non-string simple fields, and null for complex fields.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// Full-text searches enable the field value "sunny day" to be split into individual terms "sunny" and "day". This will increase the size of your index.
+        /// </para>
+        /// <para>
+        /// This field must be set according to constraints described in the summary, or the server may respond with an error.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// </para>
         /// </remarks>
         [CodeGenMember("searchable")]
         public bool? IsSearchable { get; set; }
@@ -68,19 +71,31 @@ namespace Azure.Search.Documents.Models
         /// This property must be null for complex fields, but can be set on simple fields within a complex field.
         /// </summary>
         /// <remarks>
-        /// Filterable differs from searchable in how strings are handled. Fields of type <see cref="DataType.String"/> or "Collection(DataTime.String)" that are filterable do not undergo word-breaking, so comparisons are for exact matches only.
+        /// <para>
+        /// Filterable differs from searchable in how strings are handled. Fields of type <see cref="DataType.String"/> or "Collection(DataType.String)" that are filterable do not undergo word-breaking, so comparisons are for exact matches only.
         /// For example, if you set such a field <c>f</c> to "sunny day", <c>$filter=f eq 'sunny'</c> will find no matches, but <c>$filter=f eq 'sunny day'</c> will.
+        /// </para>
+        /// <para>
+        /// This field must be set according to constraints described in the summary, or the server may respond with an error.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// </para>
         /// </remarks>
         [CodeGenMember("filterable")]
         public bool? IsFilterable { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the field will be returned in a search result. The default is null.
+        /// This property must be true for key fields, and must be null for complex fields.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// You can hide a field from search results if you want to use it only as a filter, for sorting, or for scoring.
-        /// This property must be true for key fields, and must be null for complex fields.
         /// This property can also be changed on existing fields and enabling it does not cause an increase in index storage requirements.
+        /// </para>
+        /// <para>
+        /// This field must be set according to constraints described in the summary, or the server may respond with an error.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// </para>
         /// </remarks>
         public bool? IsHidden
         {
@@ -95,6 +110,10 @@ namespace Azure.Search.Documents.Models
         /// Gets or sets a value indicating whether the field can be referenced in a <c>$orderby</c> expression. The default is null.
         /// A simple field can be sortable only if it is a single-valued type such as <see cref="DataType.String"/> or <see cref="DataType.Int32"/>.
         /// </summary>
+        /// <remarks>
+        /// This field must be set according to constraints described in the summary, or the server may respond with an error.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// </remarks>
         [CodeGenMember("sortable")]
         public bool? IsSortable { get; set; }
 
@@ -103,8 +122,14 @@ namespace Azure.Search.Documents.Models
         /// This property must be null for complex fields, but can be set on simple fields within a complex field.
         /// </summary>
         /// <remarks>
+        /// <para>
         /// Facets are used in presentation of search results that include hit counts by categories.
         /// For example, in a search for digital cameras, facets might include branch, megapixels, price, etc.
+        /// </para>
+        /// <para>
+        /// This field must be set according to constraints described in the summary, or the server may respond with an error.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// </para>
         /// </remarks>
         [CodeGenMember("facetable")]
         public bool? IsFacetable { get; set; }
@@ -113,6 +138,10 @@ namespace Azure.Search.Documents.Models
         /// Gets or sets whether the field is the key field. The default is null.
         /// A <see cref="SearchIndex"/> must have exactly one key field of type <see cref="DataType.String"/>.
         /// </summary>
+        /// <remarks>
+        /// This field must be set according to constraints described in the summary, or the server may respond with an error.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// </remarks>
         [CodeGenMember("key")]
         public bool? IsKey { get; set; }
 
@@ -132,6 +161,9 @@ namespace Azure.Search.Documents.Models
 
 
         /// <inheritdoc/>
+        /// <remarks>
+        /// This always returns "<see cref="Name"/> : <see cref="Type"/>" and is meant for debugging purposes.
+        /// </remarks>
         public override string ToString() => $"{Name} : {Type}";
     }
 }
