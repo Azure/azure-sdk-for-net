@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new EdgeNGramTokenFilterV2(minGram, maxGram, side, odatatype, name);
+            return new EdgeNGramTokenFilterV2(odatatype, name, minGram, maxGram, side);
         }
     }
 }

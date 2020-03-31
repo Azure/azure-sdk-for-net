@@ -8,13 +8,13 @@ using System;
 namespace Azure.Core
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
-    internal class CodeGenSchemaAttribute : Attribute
+    internal class CodeGenModelAttribute : Attribute
     {
-        public string SchemaName { get; }
+        public string OriginalName { get; }
 
-        public CodeGenSchemaAttribute(string schemaName)
+        public CodeGenModelAttribute(string originalName)
         {
-            SchemaName = schemaName;
+            OriginalName = originalName;
         }
     }
 }

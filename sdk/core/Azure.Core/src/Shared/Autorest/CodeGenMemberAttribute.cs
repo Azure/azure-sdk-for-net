@@ -6,13 +6,13 @@ using System;
 namespace Azure.Core
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    internal class CodeGenSchemaMemberAttribute : Attribute
+    internal class CodeGenMemberAttribute : Attribute
     {
-        public string SchemaName { get; }
+        public string OriginalName { get; }
 
-        public CodeGenSchemaMemberAttribute(string schemaName)
+        public CodeGenMemberAttribute(string originalName)
         {
-            SchemaName = schemaName;
+            OriginalName = originalName;
         }
     }
 }

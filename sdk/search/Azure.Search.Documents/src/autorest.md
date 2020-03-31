@@ -95,3 +95,12 @@ modelerfour:
     override:
       "@odata.type": ODataType
 ```
+
+### Disable parameter grouping
+
+AutoRest C# supports parameter grouping now, temporary disabling to reduce the change size. 
+
+``` yaml
+modelerfour:
+  group-parameters: false
+```

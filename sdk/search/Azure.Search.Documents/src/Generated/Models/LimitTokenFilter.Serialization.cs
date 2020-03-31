@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new LimitTokenFilter(maxTokenCount, consumeAllTokens, odatatype, name);
+            return new LimitTokenFilter(odatatype, name, maxTokenCount, consumeAllTokens);
         }
     }
 }

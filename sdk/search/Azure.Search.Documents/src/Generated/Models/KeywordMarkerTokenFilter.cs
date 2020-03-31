@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Models
     public partial class KeywordMarkerTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of KeywordMarkerTokenFilter. </summary>
-        /// <param name="keywords"> A list of words to mark as keywords. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public KeywordMarkerTokenFilter(IEnumerable<string> keywords, string name) : base(name)
+        /// <param name="keywords"> A list of words to mark as keywords. </param>
+        public KeywordMarkerTokenFilter(string name, IEnumerable<string> keywords) : base(name)
         {
-            if (keywords == null)
-            {
-                throw new ArgumentNullException(nameof(keywords));
-            }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
+            }
+            if (keywords == null)
+            {
+                throw new ArgumentNullException(nameof(keywords));
             }
 
             Keywords = keywords.ToArray();
@@ -33,11 +33,11 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of KeywordMarkerTokenFilter. </summary>
-        /// <param name="keywords"> A list of words to mark as keywords. </param>
-        /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
         /// <param name="oDataType"> The model type. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal KeywordMarkerTokenFilter(IList<string> keywords, bool? ignoreCase, string oDataType, string name) : base(oDataType, name)
+        /// <param name="keywords"> A list of words to mark as keywords. </param>
+        /// <param name="ignoreCase"> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </param>
+        internal KeywordMarkerTokenFilter(string oDataType, string name, IList<string> keywords, bool? ignoreCase) : base(oDataType, name)
         {
             Keywords = keywords;
             IgnoreCase = ignoreCase;

@@ -26,10 +26,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountKey. </summary>
-        /// <param name="key"> The key used to provision a cognitive resource attached to a skillset. </param>
         /// <param name="oDataType"> The model type. </param>
         /// <param name="description"> Description of the cognitive resource attached to a skillset. </param>
-        internal CognitiveServicesAccountKey(string key, string oDataType, string description) : base(oDataType, description)
+        /// <param name="key"> The key used to provision a cognitive resource attached to a skillset. </param>
+        internal CognitiveServicesAccountKey(string oDataType, string description, string key) : base(oDataType, description)
         {
             Key = key;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CognitiveServicesByKey";

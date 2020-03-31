@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenSchema("ServiceLimits")]
+    [CodeGenModel("ServiceLimits")]
     public partial class SearchServiceLimits
     {
     }

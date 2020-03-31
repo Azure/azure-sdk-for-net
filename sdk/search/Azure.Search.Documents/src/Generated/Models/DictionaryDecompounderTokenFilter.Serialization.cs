@@ -118,7 +118,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new DictionaryDecompounderTokenFilter(wordList, minWordSize, minSubwordSize, maxSubwordSize, onlyLongestMatch, odatatype, name);
+            return new DictionaryDecompounderTokenFilter(odatatype, name, wordList, minWordSize, minSubwordSize, maxSubwordSize, onlyLongestMatch);
         }
     }
 }

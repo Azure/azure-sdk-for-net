@@ -25,10 +25,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of AsciiFoldingTokenFilter. </summary>
-        /// <param name="preserveOriginal"> A value indicating whether the original token will be kept. Default is false. </param>
         /// <param name="oDataType"> The model type. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal AsciiFoldingTokenFilter(bool? preserveOriginal, string oDataType, string name) : base(oDataType, name)
+        /// <param name="preserveOriginal"> A value indicating whether the original token will be kept. Default is false. </param>
+        internal AsciiFoldingTokenFilter(string oDataType, string name, bool? preserveOriginal) : base(oDataType, name)
         {
             PreserveOriginal = preserveOriginal;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.AsciiFoldingTokenFilter";

@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Models
     public partial class MappingCharFilter : CharFilter
     {
         /// <summary> Initializes a new instance of MappingCharFilter. </summary>
-        /// <param name="mappings"> A list of mappings of the following format: &quot;a=&gt;b&quot; (all occurrences of the character &quot;a&quot; will be replaced with character &quot;b&quot;). </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public MappingCharFilter(IEnumerable<string> mappings, string name) : base(name)
+        /// <param name="mappings"> A list of mappings of the following format: &quot;a=&gt;b&quot; (all occurrences of the character &quot;a&quot; will be replaced with character &quot;b&quot;). </param>
+        public MappingCharFilter(string name, IEnumerable<string> mappings) : base(name)
         {
-            if (mappings == null)
-            {
-                throw new ArgumentNullException(nameof(mappings));
-            }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
+            }
+            if (mappings == null)
+            {
+                throw new ArgumentNullException(nameof(mappings));
             }
 
             Mappings = mappings.ToArray();
@@ -33,10 +33,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of MappingCharFilter. </summary>
-        /// <param name="mappings"> A list of mappings of the following format: &quot;a=&gt;b&quot; (all occurrences of the character &quot;a&quot; will be replaced with character &quot;b&quot;). </param>
         /// <param name="oDataType"> The model type. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal MappingCharFilter(IList<string> mappings, string oDataType, string name) : base(oDataType, name)
+        /// <param name="mappings"> A list of mappings of the following format: &quot;a=&gt;b&quot; (all occurrences of the character &quot;a&quot; will be replaced with character &quot;b&quot;). </param>
+        internal MappingCharFilter(string oDataType, string name, IList<string> mappings) : base(oDataType, name)
         {
             Mappings = mappings;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.MappingCharFilter";

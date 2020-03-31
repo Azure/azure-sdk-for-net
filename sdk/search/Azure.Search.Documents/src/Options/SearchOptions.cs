@@ -12,14 +12,14 @@ namespace Azure.Search.Documents
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
-    [CodeGenSchema("SearchRequest")]
+    [CodeGenModel("SearchRequest")]
     public partial class SearchOptions : SearchRequestOptions
     {
         /// <summary>
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.
         /// </summary>
-        [CodeGenSchemaMember("search")]
+        [CodeGenMember("search")]
         internal string SearchText { get; set; }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents
         /// use <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
-        [CodeGenSchemaMember("filter")]
+        [CodeGenMember("filter")]
         public string Filter { get; set; }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join HighlightFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("highlight")]
+        [CodeGenMember("HighlightFields")]
         internal string HighlightFieldsRaw
         {
             get => HighlightFields.CommaJoin();
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("searchFields")]
+        [CodeGenMember("searchFields")]
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join Select so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("select")]
+        [CodeGenMember("select")]
         internal string SelectRaw
         {
             get => Select.CommaJoin();
@@ -94,7 +94,7 @@ namespace Azure.Search.Documents
         /// that can be used to issue another Search request for the next page
         /// of results.
         /// </summary>
-        [CodeGenSchemaMember("top")]
+        [CodeGenMember("top")]
         public int? Size { get; set; }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join OrderBy so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("orderby")]
+        [CodeGenMember("orderby")]
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
@@ -128,7 +128,7 @@ namespace Azure.Search.Documents
         /// performance impact.  Note that the count returned is an
         /// approximation.
         /// </summary>
-        [CodeGenSchemaMember("count")]
+        [CodeGenMember("IncludeTotalResultCount")]
         public bool? IncludeTotalCount { get; set; }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.Search.Documents
         /// facet expression contains a field name, optionally followed by a
         /// comma-separated list of name:value pairs.
         /// </summary>
-        [CodeGenSchemaMember("facets")]
+        [CodeGenMember("facets")]
         public IList<string> Facets { get; internal set; } = new List<string>();
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents
         /// called &apos;mylocation&apos; the parameter string would be
         /// &quot;mylocation--122.2,44.8&quot; (without the quotes).
         /// </summary>
-        [CodeGenSchemaMember("scoringParameters")]
+        [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
     }
 }

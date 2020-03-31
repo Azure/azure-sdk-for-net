@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new StopwordsTokenFilter(stopwords, stopwordsList, ignoreCase, removeTrailing, odatatype, name);
+            return new StopwordsTokenFilter(odatatype, name, stopwords, stopwordsList, ignoreCase, removeTrailing);
         }
     }
 }

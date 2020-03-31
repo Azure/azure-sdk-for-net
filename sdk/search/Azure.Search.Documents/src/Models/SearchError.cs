@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     // Hide SearchError
-    [CodeGenSchema("SearchError")]
+    [CodeGenModel("SearchError")]
     internal partial class SearchError
     {
     }

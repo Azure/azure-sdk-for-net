@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenSchema("Field")]
+    [CodeGenModel("Field")]
     public partial class SearchField
     {
     }

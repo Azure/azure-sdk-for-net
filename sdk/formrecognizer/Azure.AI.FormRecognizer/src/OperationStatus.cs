@@ -8,7 +8,7 @@ using System.Text;
 using Azure.Core;
 namespace Azure.AI.FormRecognizer
 {
-    [CodeGenSchema("OperationStatus")]
+    [CodeGenModel("OperationStatus")]
     internal enum OperationStatus
     {
         /// <summary> notStarted. </summary>

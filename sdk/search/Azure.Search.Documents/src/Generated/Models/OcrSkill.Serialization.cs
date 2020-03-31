@@ -158,7 +158,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new OcrSkill(textExtractionAlgorithm, defaultLanguageCode, detectOrientation, odatatype, name, description, context, inputs, outputs);
+            return new OcrSkill(odatatype, name, description, context, inputs, outputs, textExtractionAlgorithm, defaultLanguageCode, detectOrientation);
         }
     }
 }

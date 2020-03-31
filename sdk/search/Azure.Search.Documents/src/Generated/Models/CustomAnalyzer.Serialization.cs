@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new CustomAnalyzer(tokenizer, tokenFilters, charFilters, odatatype, name);
+            return new CustomAnalyzer(odatatype, name, tokenizer, tokenFilters, charFilters);
         }
     }
 }

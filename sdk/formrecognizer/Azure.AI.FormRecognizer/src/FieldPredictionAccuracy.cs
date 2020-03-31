@@ -6,12 +6,12 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Custom
 {
 
-    [CodeGenSchema("FormFieldsReport")]
+    [CodeGenModel("FormFieldsReport")]
     public partial class FieldPredictionAccuracy
     {
         /// <summary>
         /// </summary>
-        [CodeGenSchemaMember("FieldName")]
+        [CodeGenMember("FieldName")]
         public string Label { get; internal set; }
     }
 }

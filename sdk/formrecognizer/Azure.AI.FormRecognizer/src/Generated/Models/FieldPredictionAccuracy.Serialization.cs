@@ -20,6 +20,10 @@ namespace Azure.AI.FormRecognizer.Custom
             {
                 if (property.NameEquals("fieldName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     fieldName = property.Value.GetString();
                     continue;
                 }

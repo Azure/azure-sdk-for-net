@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenSchema("Index")]
+    [CodeGenModel("Index")]
     public partial class SearchIndex
     {
     }

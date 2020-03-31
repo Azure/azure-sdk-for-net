@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternTokenizer(pattern, flags, group, odatatype, name);
+            return new PatternTokenizer(odatatype, name, pattern, flags, group);
         }
     }
 }

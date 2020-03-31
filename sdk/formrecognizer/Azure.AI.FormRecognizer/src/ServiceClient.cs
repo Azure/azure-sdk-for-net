@@ -12,7 +12,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    [CodeGenClient("")]
     internal partial class ServiceClient
     {
         /// <summary> Get information about all custom models. </summary>
@@ -27,7 +26,7 @@ namespace Azure.AI.FormRecognizer
             }
             Page<CustomModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = RestClient.GetCustomModelsNextPage(nextLink, cancellationToken);
+                var response = RestClient.GetCustomModelsNextPage(nextLink, op, cancellationToken);
                 return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
@@ -46,7 +45,7 @@ namespace Azure.AI.FormRecognizer
             }
             async Task<Page<CustomModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await RestClient.GetCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.GetCustomModelsNextPageAsync(nextLink, op, cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);

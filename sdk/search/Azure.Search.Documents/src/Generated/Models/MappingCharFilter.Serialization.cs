@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new MappingCharFilter(mappings, odatatype, name);
+            return new MappingCharFilter(odatatype, name, mappings);
         }
     }
 }

@@ -200,7 +200,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new WordDelimiterTokenFilter(generateWordParts, generateNumberParts, catenateWords, catenateNumbers, catenateAll, splitOnCaseChange, preserveOriginal, splitOnNumerics, stemEnglishPossessive, protectedWords, odatatype, name);
+            return new WordDelimiterTokenFilter(odatatype, name, generateWordParts, generateNumberParts, catenateWords, catenateNumbers, catenateAll, splitOnCaseChange, preserveOriginal, splitOnNumerics, stemEnglishPossessive, protectedWords);
         }
     }
 }

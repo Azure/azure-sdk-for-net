@@ -25,7 +25,6 @@ namespace Azure.AI.FormRecognizer.Custom
             Label = label;
             Accuracy = accuracy;
         }
-
         /// <summary> Estimated extraction accuracy for this field. </summary>
         public float Accuracy { get; }
     }

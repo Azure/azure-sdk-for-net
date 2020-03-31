@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternReplaceTokenFilter(pattern, replacement, odatatype, name);
+            return new PatternReplaceTokenFilter(odatatype, name, pattern, replacement);
         }
     }
 }
