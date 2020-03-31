@@ -5,8 +5,8 @@
     <_AutoRestCoreVersion>3.0.6257</_AutoRestCoreVersion>
     <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200325.2/autorest-csharp-v3-3.0.0-dev.20200325.2.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
-    <_DefaultInputName>$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
-    <AutorestInput Condition="'$(AutorestInput)' == '' AND Exists('$(_DefaultInputName)')">$(_DefaultInputName)</AutorestInput>
+    <_DefaultInputName Condition="Exists('$(_DefaultInputName)')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
+    <AutorestInput Condition="'$(AutorestInput)' == ''">$(_DefaultInputName)</AutorestInput>
     <AutorestConfiguration Condition="'$(AutorestConfiguration)' == '' AND '$(AutorestInput)' != '$(_DefaultInputName)'">$(_DefaultInputName)</AutorestConfiguration>
     <AutorestAdditionalParameters></AutorestAdditionalParameters>
     <_SharedCodeDirectory>$(MSBuildThisFileDirectory)../sdk/core/Azure.Core/src/Shared/</_SharedCodeDirectory>
@@ -17,8 +17,11 @@
   </PropertyGroup>
 
   <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
+    <PropertyGroup>
+      <_RequireConfigurationArgument Condition="'$(AutorestConfiguration)' != ''">--require=$(AutorestConfiguration)</_RequireConfigurationArgument>
+    </PropertyGroup>
     <RemoveDir Directories="$(MSBuildProjectDirectory)/Generated"/>
-    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutorestInput) --require=$(AutorestConfiguration) $(AutorestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory) --verbose" />
+    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutorestInput) $(_RequireConfigurationArgument) $(AutorestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory) --verbose" />
   </Target>
 
   <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
