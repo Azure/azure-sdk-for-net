@@ -413,7 +413,7 @@ namespace Azure.Search.Documents.Tests
                 await client.CreateIndexAsync(GetHotelIndex(IndexName));
 
                 // Give the index time to stabilize before running tests.
-                await WaitForIndexingAsync();
+                await WaitForIndexCreationAsync();
             }
 
             return this;
@@ -440,6 +440,27 @@ namespace Azure.Search.Documents.Tests
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Wait for the index to stabilize.
+        /// </summary>
+        /// <remarks>
+        /// The default delay is 20s, but can be configured by setting the <c>AZURE_SEARCH_CREATE_DELAY</c>
+        /// environment variable to the number of seconds you want to wait otherwise.
+        /// </remarks>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForIndexCreationAsync()
+        {
+            TimeSpan delay = TimeSpan.FromSeconds(20);
+
+            string value = Environment.GetEnvironmentVariable("AZURE_SEARCH_CREATE_DELAY");
+            if (int.TryParse(value, out int numValue))
+            {
+                delay = TimeSpan.FromSeconds(numValue);
+            }
+
+            await TestFixture.DelayAsync(delay);
         }
 
         /// <summary>
