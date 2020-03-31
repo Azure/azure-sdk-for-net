@@ -1,5 +1,5 @@
 # Azure Cognitive Services Text Analytics client library for .NET
-Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes six main functions: 
+Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes the following main functions: 
 * Language Detection
 * Sentiment Analysis
 * Key Phrase Extraction
@@ -304,6 +304,7 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Extract Key Phrases][extract_key_phrases_sample]
 - [Recognize Entities][recognize_entities_sample]
 - [Recognize Linked Entities][recognize_linked_entities_sample]
+- [Create a mock client][mock_client_sample] for testing using the [Moq][moq] library.
 
 ## Contributing
 See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
@@ -349,11 +350,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [extract_key_phrases_sample]: samples/Sample3_ExtractKeyPhrases.md
 [recognize_entities_sample]: samples/Sample4_RecognizeEntities.md
 [recognize_linked_entities_sample]: samples/Sample6_RecognizeLinkedEntities.md
+[mock_client_sample]: samples/Sample_MockClient.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
+[moq]: https://github.com/Moq/moq4/
 
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
