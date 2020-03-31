@@ -69,7 +69,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceiver receiver = client.GetReceiver(queueName);
 
                 #region Snippet:ServiceBusAbandonMessage
-                // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
@@ -102,7 +101,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceiver receiver = client.GetReceiver(queueName);
 
                 #region Snippet:ServiceBusDeferMessage
-                // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 // defer the message, thereby preventing the message from being received again without using
@@ -140,8 +138,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceiver receiver = client.GetReceiver(queueName);
 
                 #region Snippet:ServiceBusDeadLetterMessage
-
-                // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.

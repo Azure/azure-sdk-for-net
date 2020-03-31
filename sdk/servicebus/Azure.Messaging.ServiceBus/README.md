@@ -155,7 +155,6 @@ await receiver.CompleteAsync(receivedMessage);
 ### Abandon a message
 
 ```C# Snippet:ServiceBusAbandonMessage
-// the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
@@ -165,7 +164,6 @@ await receiver.AbandonAsync(receivedMessage);
 ### Defer a message
 
 ```C# Snippet:ServiceBusDeferMessage
-// the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
 // defer the message, thereby preventing the message from being received again without using
@@ -180,7 +178,6 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 ### Dead letter a message
 
 ```C# Snippet:ServiceBusDeadLetterMessage
-// the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
 // deadletter the message, thereby preventing the message from being received again without receiving from the dead letter queue.
