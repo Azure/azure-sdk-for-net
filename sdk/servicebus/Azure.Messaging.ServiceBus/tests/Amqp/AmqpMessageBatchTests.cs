@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void ConstructorValidatesTheMaximumSize()
         {
-            Assert.That(() => new AmqpMessageBatch(new CreateBatchOptions { MaximumSizeInBytes = null }), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpMessageBatch(new CreateBatchOptions { MaxSizeInBytes = null }), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -46,10 +46,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void ConstructorSetsTheMaximumSize()
         {
             var maximumSize = 9943;
-            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var options = new CreateBatchOptions { MaxSizeInBytes = maximumSize };
 
             var batch = new AmqpMessageBatch(options);
-            Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(maximumSize));
+            Assert.That(batch.MaxSizeInBytes, Is.EqualTo(maximumSize));
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void TryAddValidatesTheMessage()
         {
-            var batch = new AmqpMessageBatch(new CreateBatchOptions { MaximumSizeInBytes = 25 });
+            var batch = new AmqpMessageBatch(new CreateBatchOptions { MaxSizeInBytes = 25 });
             Assert.That(() => batch.TryAdd(null), Throws.ArgumentNullException);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void TryAddValidatesNotDisposed()
         {
-            var batch = new AmqpMessageBatch(new CreateBatchOptions { MaximumSizeInBytes = 25 });
+            var batch = new AmqpMessageBatch(new CreateBatchOptions { MaxSizeInBytes = 25 });
             batch.Dispose();
 
             Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[0])), Throws.InstanceOf<ObjectDisposedException>());
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void TryAddDoesNotAcceptAMessageBiggerThanTheMaximumSize()
         {
             var maximumSize = 50;
-            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var options = new CreateBatchOptions { MaxSizeInBytes = maximumSize };
             var batch = new AmqpMessageBatch(options);
 
             Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[50])), Is.False, "A message of the maximum size is too large due to the reserved overhead.");
@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void TryAddAcceptsAMessageSmallerThanTheMaximumSize()
         {
             var maximumSize = 50;
-            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var options = new CreateBatchOptions { MaxSizeInBytes = maximumSize };
 
             var batch = new AmqpMessageBatch(options);
 
@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void TryAddAcceptMessagesUntilTheMaximumSizeIsReached()
         {
             var maximumSize = 100;
-            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var options = new CreateBatchOptions { MaxSizeInBytes = maximumSize };
             var messages = new AmqpMessage[3];
 
             var batch = new AmqpMessageBatch(options);
@@ -144,7 +144,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void TryAddSetsTheCount()
         {
-            var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
+            var options = new CreateBatchOptions { MaxSizeInBytes = 5000 };
             var messages = new AmqpMessage[5];
 
             for (var index = 0; index < messages.Length; ++index)
@@ -172,7 +172,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void AsEnumerableValidatesTheTypeParameter()
         {
-            var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
+            var options = new CreateBatchOptions { MaxSizeInBytes = 5000 };
 
             var batch = new AmqpMessageBatch(options);
             Assert.That(() => batch.AsEnumerable<AmqpMessage>(), Throws.InstanceOf<FormatException>());
@@ -187,7 +187,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         public void AsEnumerableReturnsTheMessages()
         {
             var maximumSize = 5000;
-            var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
+            var options = new CreateBatchOptions { MaxSizeInBytes = maximumSize };
             var batchMessages = new ServiceBusMessage[5];
 
             var batch = new AmqpMessageBatch(options);
@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void DisposeClearsTheCount()
         {
-            var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
+            var options = new CreateBatchOptions { MaxSizeInBytes = 5000 };
             var messages = new AmqpMessage[5];
 
             // Add the messages to the batch; all should be accepted.
@@ -244,7 +244,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void DisposeClearsTheSize()
         {
-            var batch = new AmqpMessageBatch(new CreateBatchOptions { MaximumSizeInBytes = 99 });
+            var batch = new AmqpMessageBatch(new CreateBatchOptions { MaxSizeInBytes = 99 });
             Assert.That(batch.TryAdd(new ServiceBusMessage(new byte[10])), Is.True);
 
             batch.Dispose();

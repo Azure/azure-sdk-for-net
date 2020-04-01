@@ -37,7 +37,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    AutoComplete = autoComplete
+                    AutoComplete = autoComplete,
+                    MaxReceiveWaitTime = TimeSpan.FromSeconds(30)
                 };
                 var processor = client.GetProcessor(scope.QueueName, options);
                 int messageCt = 0;
