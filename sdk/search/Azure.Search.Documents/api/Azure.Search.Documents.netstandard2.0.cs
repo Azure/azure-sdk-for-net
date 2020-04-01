@@ -406,6 +406,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.DataType GeographyPoint { get { throw null; } }
         public static Azure.Search.Documents.Models.DataType Int32 { get { throw null; } }
         public static Azure.Search.Documents.Models.DataType Int64 { get { throw null; } }
+        public bool IsCollection { get { throw null; } }
         public static Azure.Search.Documents.Models.DataType String { get { throw null; } }
         public static Azure.Search.Documents.Models.DataType Collection(Azure.Search.Documents.Models.DataType type) { throw null; }
         public bool Equals(Azure.Search.Documents.Models.DataType other) { throw null; }
