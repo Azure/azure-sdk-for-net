@@ -16,19 +16,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// <summary>
     /// Domain availability check result.
     /// </summary>
-    public partial class DomainAvailablilityCheckResult
+    public partial class DomainAvailabilityCheckResult
     {
         /// <summary>
-        /// Initializes a new instance of the DomainAvailablilityCheckResult
+        /// Initializes a new instance of the DomainAvailabilityCheckResult
         /// class.
         /// </summary>
-        public DomainAvailablilityCheckResult()
+        public DomainAvailabilityCheckResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DomainAvailablilityCheckResult
+        /// Initializes a new instance of the DomainAvailabilityCheckResult
         /// class.
         /// </summary>
         /// <param name="name">Name of the domain.</param>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Purchasing this domain will simply restore it and this operation
         /// will not cost anything. Possible values include: 'Regular',
         /// 'SoftDeleted'</param>
-        public DomainAvailablilityCheckResult(string name = default(string), bool? available = default(bool?), DomainType? domainType = default(DomainType?))
+        public DomainAvailabilityCheckResult(string name = default(string), bool? available = default(bool?), DomainType? domainType = default(DomainType?))
         {
             Name = name;
             Available = available;

@@ -13,28 +13,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Resource metric property.
-    /// </summary>
-    public partial class ResourceMetricProperty
+    public partial class ContainerMemoryStatistics
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceMetricProperty class.
+        /// Initializes a new instance of the ContainerMemoryStatistics class.
         /// </summary>
-        public ResourceMetricProperty()
+        public ContainerMemoryStatistics()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceMetricProperty class.
+        /// Initializes a new instance of the ContainerMemoryStatistics class.
         /// </summary>
-        /// <param name="key">Key for resource metric property.</param>
-        /// <param name="value">Value of pair.</param>
-        public ResourceMetricProperty(string key = default(string), string value = default(string))
+        public ContainerMemoryStatistics(long? usage = default(long?), long? maxUsage = default(long?), long? limit = default(long?))
         {
-            Key = key;
-            Value = value;
+            Usage = usage;
+            MaxUsage = maxUsage;
+            Limit = limit;
             CustomInit();
         }
 
@@ -44,16 +40,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets key for resource metric property.
         /// </summary>
-        [JsonProperty(PropertyName = "key")]
-        public string Key { get; set; }
+        [JsonProperty(PropertyName = "usage")]
+        public long? Usage { get; set; }
 
         /// <summary>
-        /// Gets or sets value of pair.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "maxUsage")]
+        public long? MaxUsage { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "limit")]
+        public long? Limit { get; set; }
 
     }
 }
