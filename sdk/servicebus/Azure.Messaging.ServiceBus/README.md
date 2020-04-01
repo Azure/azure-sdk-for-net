@@ -42,6 +42,13 @@ dotnet add package Azure.Messaging.ServiceBus
 
 For the Service Bus client library to interact with a queue or topic, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating a Service Bus namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get a Service Bus connection string](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#get-the-connection-string).
 
+Once you have a connection string, you can authenticate your client with it.
+```C# Snippet:ServiceBusAuthConnString
+// Create a ServiceBusClient that will authenticate using a connection string
+string connectionString = "<connection_string>";
+ServiceBusClient client = new ServiceBusClient(connectionString);
+```
+
 To see how to authenticate using Azure.Identity, view this [example](#authenticating-with-azureidentity).
 
 ## Key concepts
@@ -67,6 +74,9 @@ For more concepts and deeper discussion, see: [Service Bus Advanced Features](ht
 ## Examples
 
 ### Sending and receiving a message
+
+Message sending is performed using the `ServiceBusSender`. Receiving is performed using the 
+`ServiceBusReceiver`.
 
 ```C# Snippet:ServiceBusSendAndReceive
 string connectionString = "<connection_string>";
@@ -95,6 +105,8 @@ Console.WriteLine(body);
 ```
 
 ### Sending and receiving a batch of messages
+
+We can send several messages at once using a `ServiceBusMessageBatch`. 
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
 string connectionString = "<connection_string>";
@@ -228,6 +240,8 @@ byte[] state = await receiver.GetSessionStateAsync();
 
 ### Using the Processor
 
+The `ServiceBusProcessor` offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers.
+
 ```C# Snippet:ServiceBusProcessMessages
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
@@ -299,8 +313,8 @@ await processor.StopProcessingAsync();
 ### Authenticating with Azure.Identity
 
 The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md) provides easy Azure Active Directory support for authentication.
-```C# Snippet:ServiceBusAuth
-// Create a BlobServiceClient that will authenticate through Active Directory
+```C# Snippet:ServiceBusAuthAAD
+// Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```

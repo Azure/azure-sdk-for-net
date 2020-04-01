@@ -369,7 +369,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     // The link state is lost, We need to return a non-retriable error.
                     ServiceBusEventSource.Log.LinkStateLost(
-                        "ClientId",
+                        _identifier,
                         receiveLink.Name,
                         receiveLink.State,
                         _isSessionReceiver,
