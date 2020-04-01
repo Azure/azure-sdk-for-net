@@ -16,95 +16,66 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using data from Visual Studio Code
     /// </summary>
-    public class VisualStudioCodeCredential : TokenCredential, IExtendedTokenCredential
+    internal class VisualStudioCodeCredential : TokenCredential
     {
         private const string CredentialsSection = "VS Code Azure";
         private const string ClientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
         private readonly IVisualStudioCodeAdapter _vscAdapter;
+        private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
 
-        /// <inheritdoc />
-        public VisualStudioCodeCredential() : this(default, default) {}
+        /// <summary>
+        /// Protected constructor for mocking
+        /// </summary>
+        protected VisualStudioCodeCredential() : this(default, default) {}
 
         /// <inheritdoc />
-        public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options)
+        public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
+
+        internal VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
         {
             _tenantId = tenantId ?? "common";
             _pipeline = CredentialPipeline.GetInstance(options);
-            _vscAdapter = GetVscAdapter();
+            _fileSystem = fileSystem ?? FileSystemService.Default;
+            _vscAdapter = vscAdapter ?? GetVscAdapter();
         }
 
         /// <inheritdoc />
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            => (await GetTokenImplAsync(requestContext, true, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
+            => await GetTokenImplAsync(requestContext, true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            => GetTokenImpl(requestContext, cancellationToken).GetTokenOrThrow();
+            => GetTokenImplAsync(requestContext, false, cancellationToken).EnsureCompleted();
 
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            => GetTokenImpl(requestContext, cancellationToken);
-
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            => await GetTokenImplAsync(requestContext, true, cancellationToken).ConfigureAwait(false);
-
-        private ExtendedAccessToken GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return GetTokenImplAsync(requestContext, false, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("VisualStudioCodeCredential.GetToken", requestContext);
 
             try
             {
-                var userSettings = GetUserSettings();
-                var tenant = userSettings.TryGetProperty("azure.tenant", out JsonElement tenantProperty)
-                    ? tenantProperty.GetString()
-                    :  _tenantId;
+                GetUserSettings(out var tenant, out var environmentName);
 
-                var environmentName = userSettings.TryGetProperty("azure.cloud", out JsonElement environmentProperty)
-                    ? environmentProperty.GetString()
-                    : null;
-
-                var environment = Environment.FromName(environmentName);
-
-                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environment.Name);
-                AuthenticationResult result;
+                var cloudInstance = GetAzureCloudInstance(environmentName);
+                var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
 
                 try
                 {
-                    JsonElement parsedCredentials = JsonDocument.Parse(storedCredentials).RootElement;
-                    var redirectUri = parsedCredentials.GetProperty("redirectionUrl").GetString();
-                    var authorizationCode = parsedCredentials.GetProperty("code").GetString();
-                    var client =  ConfidentialClientApplicationBuilder.Create(ClientId)
-                        .WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline))
-                        .WithAuthority(environment.CloudInstance, tenant)
-                        .WithRedirectUri(redirectUri).Build();
-
-                    var parameterBuilder = client.AcquireTokenByAuthorizationCode(requestContext.Scopes, authorizationCode);
-
-                    result = async
-                        ? await parameterBuilder.ExecuteAsync(cancellationToken).ConfigureAwait(false)
-                        : parameterBuilder.ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
+                    JsonDocument.Parse(storedCredentials);
+                    throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
                 }
                 catch (JsonException)
                 {
-                    var client = (IByRefreshToken)PublicClientApplicationBuilder.Create(ClientId)
+                    var publicClient = (IByRefreshToken)PublicClientApplicationBuilder.Create(ClientId)
                         .WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline))
-                        .WithAuthority(environment.CloudInstance, tenant)
+                        .WithAuthority(cloudInstance, tenant)
                         .Build();
 
-                    var parameterBuilder = client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials);
+                    var result = await publicClient.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
-                    result = async
-                        ? await parameterBuilder.ExecuteAsync(cancellationToken).ConfigureAwait(false)
-                        : parameterBuilder.ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
+                    return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                 }
-
-                return new ExtendedAccessToken(scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn)));
             }
             catch (OperationCanceledException e)
             {
@@ -113,23 +84,33 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                return new ExtendedAccessToken(scope.Failed(e));
+                throw scope.FailAndWrap(e);
             }
         }
 
-
-        private JsonElement GetUserSettings()
+        private void GetUserSettings(out string tenant, out string environmentName)
         {
             var path = _vscAdapter.GetUserSettingsPath();
+            tenant = _tenantId;
+            environmentName = "Azure";
+
             try
             {
-                var content = File.ReadAllText(path);
-                return JsonDocument.Parse(content).RootElement;
+                var content = _fileSystem.ReadAllText(path);
+                var root = JsonDocument.Parse(content).RootElement;
+
+                if (root.TryGetProperty("azure.tenant", out JsonElement tenantProperty))
+                {
+                    tenant = tenantProperty.GetString();
+                }
+
+                if (root.TryGetProperty("azure.cloud", out JsonElement environmentProperty))
+                {
+                    environmentName = environmentProperty.GetString();
+                }
             }
-            catch (Exception)
-            {
-                return default;
-            }
+            catch (IOException) { }
+            catch (JsonException) { }
         }
 
         private static IVisualStudioCodeAdapter GetVscAdapter()
@@ -152,23 +133,14 @@ namespace Azure.Identity
             throw new PlatformNotSupportedException();
         }
 
-        private readonly struct Environment
-        {
-            public string Name { get; }
-            public AzureCloudInstance CloudInstance { get; }
-
-            public Environment(string name, AzureCloudInstance cloudInstance)
+        private static AzureCloudInstance GetAzureCloudInstance(string name) =>
+            name switch
             {
-                Name = name;
-                CloudInstance = cloudInstance;
-            }
-
-            public static Environment FromName(string name) =>
-                name switch
-                {
-                    "Azure" => new Environment("Azure", AzureCloudInstance.AzurePublic),
-                    _ => new Environment("Azure", AzureCloudInstance.AzurePublic)
-                };
-        }
+                "Azure" => AzureCloudInstance.AzurePublic,
+                "AzureChina" => AzureCloudInstance.AzureChina,
+                "AzureGermanCloud" => AzureCloudInstance.AzureGermany,
+                "AzureUSGovernment" => AzureCloudInstance.AzureUsGovernment,
+                _ => AzureCloudInstance.AzurePublic
+            };
     }
 }

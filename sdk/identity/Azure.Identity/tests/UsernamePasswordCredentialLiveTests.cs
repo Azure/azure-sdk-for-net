@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -55,11 +56,7 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void ClearDiscoveryCache()
         {
-            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.StaticMetadataProvider", true);
-
-            var staticMetadataProvider = Activator.CreateInstance(staticMetadataProviderType);
-
-            staticMetadataProvider.GetType().GetMethod("Clear", BindingFlags.Public | BindingFlags.Instance).Invoke(staticMetadataProvider, null);
+            StaticCachesUtilities.ClearStaticMetadataProviderCache();
         }
 
         // !!!!!! WARNING !!!!!

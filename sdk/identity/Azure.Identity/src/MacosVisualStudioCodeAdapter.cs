@@ -22,81 +22,23 @@ namespace Azure.Identity
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            byte[] serviceNameBytes = Encoding.UTF8.GetBytes(serviceName);
-            byte[] accountNameBytes = Encoding.UTF8.GetBytes(accountName);
-
             IntPtr credentialsPtr = IntPtr.Zero;
-            int code, freeCode;
-            string result = null;
+            IntPtr itemRef = IntPtr.Zero;
 
             try
             {
-                code = MacosNativeMethods.SecKeychainFindGenericPassword(
-                    IntPtr.Zero, serviceNameBytes.Length, serviceNameBytes, accountNameBytes.Length, accountNameBytes, out int passwordLength, out credentialsPtr, IntPtr.Zero);
-
-                if (code == MacosNativeMethods.SecStatusCodeSuccess && passwordLength > 0)
-                {
-                    result =  Marshal.PtrToStringAnsi(credentialsPtr, passwordLength);
-                }
+                MacosNativeMethods.SecKeychainFindGenericPassword(IntPtr.Zero, serviceName, accountName, out int passwordLength, out credentialsPtr, out itemRef);
+                return passwordLength > 0 ? Marshal.PtrToStringAnsi(credentialsPtr, passwordLength) : throw new InvalidOperationException("No password found");
             }
             finally
             {
-                freeCode = credentialsPtr != IntPtr.Zero
-                    ? MacosNativeMethods.SecKeychainItemFreeContent(IntPtr.Zero, credentialsPtr)
-                    : MacosNativeMethods.SecStatusCodeSuccess;
-            }
-
-            return code != MacosNativeMethods.SecStatusCodeSuccess
-                ? throw new InvalidOperationException(GetErrorMessageString(code))
-                : freeCode != MacosNativeMethods.SecStatusCodeSuccess
-                    ? throw new InvalidOperationException(GetErrorMessageString(freeCode))
-                    : result ?? throw new InvalidOperationException("Unknown error");
-        }
-
-        private static string GetErrorMessageString(int status)
-        {
-            IntPtr messagePtr = IntPtr.Zero;
-            try
-            {
-                messagePtr = MacosNativeMethods.SecCopyErrorMessageString(status, IntPtr.Zero);
-                return GetStringFromCFStringPtr(messagePtr);
-            }
-            catch
-            {
-                return status.ToString(CultureInfo.InvariantCulture);
-            }
-            finally
-            {
-                if (messagePtr != IntPtr.Zero)
+                try
                 {
-                    MacosNativeMethods.CFRelease(messagePtr);
+                    MacosNativeMethods.SecKeychainItemFreeContent(IntPtr.Zero, credentialsPtr);
                 }
-            }
-        }
-
-        private static string GetStringFromCFStringPtr (IntPtr handle)
-        {
-            IntPtr stringPtr = IntPtr.Zero;
-            try
-            {
-                stringPtr = MacosNativeMethods.CFStringGetCharactersPtr(handle);
-
-                if (stringPtr == IntPtr.Zero)
+                finally
                 {
-                    int length = MacosNativeMethods.CFStringGetLength (handle);
-                    var range = new MacosNativeMethods.CFRange(0, length);
-                    stringPtr = Marshal.AllocCoTaskMem(length * 2);
-                    MacosNativeMethods.CFStringGetCharacters(handle, range, stringPtr);
-                }
-
-                return Marshal.PtrToStringAuto(stringPtr, 0);
-
-            }
-            finally
-            {
-                if (stringPtr != IntPtr.Zero)
-                {
-                    Marshal.FreeCoTaskMem (stringPtr);
+                    MacosNativeMethods.CFRelease(itemRef);
                 }
             }
         }
