@@ -128,6 +128,11 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        /// <summary>
+        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public TimeSpan? MaxReceiveWaitTime { get; }
+
         private int _maxConcurrentCalls;
         private int _maxConcurrentAcceptSessions;
         private const int DefaultMaxConcurrentCalls = 1;
@@ -186,6 +191,7 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = options.PrefetchCount;
             MaxAutoLockRenewalDuration = options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = options.MaxConcurrentCalls;
+            MaxReceiveWaitTime = options.MaxReceiveWaitTime;
             AutoComplete = options.AutoComplete;
 
             EntityPath = entityPath;
@@ -585,6 +591,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = ServiceBusErrorSource.Receive;
                     ServiceBusReceivedMessage message = await receiver.ReceiveAsync(
+                        MaxReceiveWaitTime,
                         cancellationToken).ConfigureAwait(false);
                     if (message == null)
                     {

@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   well as any overhead for the batch itself when sent to the Queue/Topic.
         /// </summary>
         ///
-        public override long MaximumSizeInBytes { get; }
+        public override long MaxSizeInBytes { get; }
 
         /// <summary>
         ///   The size of the batch, in bytes, as it will be sent to the Queue/Topic
@@ -74,10 +74,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpMessageBatch(CreateBatchOptions options)
         {
             Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(options.MaximumSizeInBytes, nameof(options.MaximumSizeInBytes));
+            Argument.AssertNotNull(options.MaxSizeInBytes, nameof(options.MaxSizeInBytes));
 
             Options = options;
-            MaximumSizeInBytes = options.MaximumSizeInBytes.Value;
+            MaxSizeInBytes = options.MaxSizeInBytes.Value;
 
             // Initialize the size by reserving space for the batch envelope.
 
@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         ? OverheadBytesSmallMessage
                         : OverheadBytesLargeMessage);
 
-                if (size > MaximumSizeInBytes)
+                if (size > MaxSizeInBytes)
                 {
                     return false;
                 }

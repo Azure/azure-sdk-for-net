@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus
     public class CreateBatchOptions
     {
         /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
-        private long? _maximumSizeInBytes = null;
+        private long? _maxSizeInBytes = null;
 
         /// <summary>
         ///   The maximum size to allow for a single batch of messages, in bytes.
@@ -26,18 +26,18 @@ namespace Azure.Messaging.ServiceBus
         ///   the maximum size allowed by the active transport will be used.
         /// </value>
         ///
-        public long? MaximumSizeInBytes
+        public long? MaxSizeInBytes
         {
-            get => _maximumSizeInBytes;
+            get => _maxSizeInBytes;
 
             set
             {
                 if (value.HasValue)
                 {
-                    Argument.AssertAtLeast(value.Value, ServiceBusSender.MinimumBatchSizeLimit, nameof(MaximumSizeInBytes));
+                    Argument.AssertAtLeast(value.Value, ServiceBusSender.MinimumBatchSizeLimit, nameof(MaxSizeInBytes));
                 }
 
-                _maximumSizeInBytes = value;
+                _maxSizeInBytes = value;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Messaging.ServiceBus
         internal CreateBatchOptions Clone() =>
             new CreateBatchOptions
             {
-                _maximumSizeInBytes = MaximumSizeInBytes
+                _maxSizeInBytes = MaxSizeInBytes
             };
     }
 }
