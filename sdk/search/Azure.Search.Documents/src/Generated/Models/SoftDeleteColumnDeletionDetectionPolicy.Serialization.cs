@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SoftDeleteColumnDeletionDetectionPolicy(softDeleteColumnName, softDeleteMarkerValue, odatatype);
+            return new SoftDeleteColumnDeletionDetectionPolicy(odatatype, softDeleteColumnName, softDeleteMarkerValue);
         }
     }
 }

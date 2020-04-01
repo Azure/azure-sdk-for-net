@@ -1,0 +1,140 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://dotnetkeyvaulttest.vault.azure.net/certificates/issuers/1572635698?api-version=7.1-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "traceparent": "00-e49938a0cc119042b40548a53a327a82-3d71e29597369147-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.1.0-dev.20200331.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.17134 )"
+        ],
+        "x-ms-client-request-id": "88633d5b8caec76f9ed5e12b742c6452",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 31 Mar 2020 03:42:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=167.220.233.249;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "eastus",
+        "x-ms-keyvault-service-version": "1.1.0.898",
+        "x-ms-request-id": "9f1417ba-b5bb-4c95-bb99-7a6516835903",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is missing a Bearer or PoP token."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://dotnetkeyvaulttest.vault.azure.net/certificates/issuers/1572635698?api-version=7.1-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "23",
+        "Content-Type": "application/json",
+        "traceparent": "00-e49938a0cc119042b40548a53a327a82-3d71e29597369147-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.1.0-dev.20200331.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.17134 )"
+        ],
+        "x-ms-client-request-id": "88633d5b8caec76f9ed5e12b742c6452",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "provider": "ssladmin"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "177",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 31 Mar 2020 03:42:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=167.220.233.249;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "eastus",
+        "x-ms-keyvault-service-version": "1.1.0.898",
+        "x-ms-request-id": "e66cb476-8082-4a9c-8dfc-9deb96620f63",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "https://dotnetkeyvaulttest.vault.azure.net/certificates/issuers/1572635698",
+        "provider": "ssladmin",
+        "attributes": {
+          "enabled": true,
+          "created": 1585626175,
+          "updated": 1585626175
+        }
+      }
+    },
+    {
+      "RequestUri": "https://dotnetkeyvaulttest.vault.azure.net/certificates/issuers/1572635698?api-version=7.1-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Type": "application/json",
+        "traceparent": "00-a24ef4df697711428853de876e1ceb66-9eca4d5ef3b5ce45-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.1.0-dev.20200331.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.17134 )"
+        ],
+        "x-ms-client-request-id": "d018aab1e37db2547ac4fbbbda58428e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "177",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 31 Mar 2020 03:42:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=167.220.233.249;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "eastus",
+        "x-ms-keyvault-service-version": "1.1.0.898",
+        "x-ms-request-id": "8ac8a848-a91f-41e1-928e-71f7a3707c93",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "https://dotnetkeyvaulttest.vault.azure.net/certificates/issuers/1572635698",
+        "provider": "ssladmin",
+        "attributes": {
+          "enabled": true,
+          "created": 1585626175,
+          "updated": 1585626175
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_KEYVAULT_URL": "https://dotnetkeyvaulttest.vault.azure.net/",
+    "RandomSeed": "485315631"
+  }
+}

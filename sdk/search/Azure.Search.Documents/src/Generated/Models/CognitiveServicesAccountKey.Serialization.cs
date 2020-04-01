@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new CognitiveServicesAccountKey(key, odatatype, description);
+            return new CognitiveServicesAccountKey(odatatype, description, key);
         }
     }
 }

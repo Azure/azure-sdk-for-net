@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new KeywordMarkerTokenFilter(keywords, ignoreCase, odatatype, name);
+            return new KeywordMarkerTokenFilter(odatatype, name, keywords, ignoreCase);
         }
     }
 }

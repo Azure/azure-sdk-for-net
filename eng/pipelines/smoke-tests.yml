@@ -59,9 +59,9 @@ jobs:
       vmImage: $(OSVmImage)
 
     variables:
-      azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; authorityHost = 'https://login.microsoftonline.com'; }"
-      azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; authorityHost = 'https://login.microsoftonline.us/'; }"
-      azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; authorityHost = 'https://login.chinacloudapi.cn'; }"
+      azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureCloud = 'AzureCloud'; }"
+      azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureCloud = 'AzureUSGovernment'; }"
+      azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureCloud = 'AzureChinaCloud'; }"
 
     steps:
       - task: DotNetCoreInstaller@2

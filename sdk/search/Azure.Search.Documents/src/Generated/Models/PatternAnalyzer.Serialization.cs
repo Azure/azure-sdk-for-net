@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(lowercase, pattern, flags, stopwords, odatatype, name);
+            return new PatternAnalyzer(odatatype, name, lowercase, pattern, flags, stopwords);
         }
     }
 }

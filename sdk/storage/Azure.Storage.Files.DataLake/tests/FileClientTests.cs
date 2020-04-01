@@ -1859,7 +1859,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(data.Length, response.Value.ContentLength);
-            Assert.IsNotNull(response.Value.Properties.ContentRange);
             Assert.IsNotNull(response.Value.Properties.LastModified);
             Assert.IsNotNull(response.Value.Properties.AcceptRanges);
             Assert.IsNotNull(response.Value.Properties.ETag);

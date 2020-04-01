@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for character filters. </summary>
+    /// <summary> Base type for character filters. </summary>
     public partial class CharFilter
     {
         /// <summary> Initializes a new instance of CharFilter. </summary>
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of CharFilter. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the char filter. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal CharFilter(string oDataType, string name)
         {
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Models
             Name = name;
         }
 
-        /// <summary> The model type. </summary>
+        /// <summary> Identifies the concrete type of the char filter. </summary>
         internal string ODataType { get; set; }
         /// <summary> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </summary>
         public string Name { get; }

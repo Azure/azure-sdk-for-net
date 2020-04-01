@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new AsciiFoldingTokenFilter(preserveOriginal, odatatype, name);
+            return new AsciiFoldingTokenFilter(odatatype, name, preserveOriginal);
         }
     }
 }

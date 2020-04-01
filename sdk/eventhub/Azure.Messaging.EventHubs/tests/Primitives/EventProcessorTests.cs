@@ -154,8 +154,8 @@ namespace Azure.Messaging.EventHubs.Tests
         internal class SettableTransportConsumer : TransportConsumer
         {
             public void SetLastEvent(EventData lastEvent) => LastReceivedEvent = lastEvent;
-            public override Task CloseAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
-            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken) => throw new NotImplementedException();
+            public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken) => Task.FromResult<IReadOnlyList<EventData>>(new List<EventData>(0));
         }
     }
 }

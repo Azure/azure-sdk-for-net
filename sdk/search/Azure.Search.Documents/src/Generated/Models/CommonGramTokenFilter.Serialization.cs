@@ -88,7 +88,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new CommonGramTokenFilter(commonWords, ignoreCase, queryMode, odatatype, name);
+            return new CommonGramTokenFilter(odatatype, name, commonWords, ignoreCase, queryMode);
         }
     }
 }

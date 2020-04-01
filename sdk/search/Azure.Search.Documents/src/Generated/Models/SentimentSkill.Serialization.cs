@@ -128,7 +128,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SentimentSkill(defaultLanguageCode, odatatype, name, description, context, inputs, outputs);
+            return new SentimentSkill(odatatype, name, description, context, inputs, outputs, defaultLanguageCode);
         }
     }
 }

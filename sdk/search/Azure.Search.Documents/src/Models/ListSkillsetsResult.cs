@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenSchema("ListSkillsetsResult")]
+    [CodeGenModel("ListSkillsetsResult")]
     internal partial class ListSkillsetsResult
     {
     }

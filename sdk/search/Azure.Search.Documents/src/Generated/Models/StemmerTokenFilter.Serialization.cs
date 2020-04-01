@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new StemmerTokenFilter(language, odatatype, name);
+            return new StemmerTokenFilter(odatatype, name, language);
         }
     }
 }

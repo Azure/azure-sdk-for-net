@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     // Hide the untyped SearchResult
-    [CodeGenSchema("SearchResult")]
+    [CodeGenModel("SearchResult")]
     internal partial class SearchResult { }
 
     /// <summary>

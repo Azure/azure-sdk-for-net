@@ -139,7 +139,7 @@ DetectedLanguage language = client.DetectLanguage(document);
 
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
 ```
-For samples on using the production recommended option `DetectLanguageBatch` see [here](#detect-language-1).
+For samples on using the production recommended option `DetectLanguageBatch` see [here][detect_language_sample].
 
 Please refer to the service documentation for a conceptual discussion of [language detection][language_detection].
 
@@ -156,7 +156,7 @@ Console.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScore
 Console.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
 Console.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
 ```
-For samples on using the production recommended option `AnalyzeSentimentBatch` see [here](#analyze-sentiment-1).
+For samples on using the production recommended option `AnalyzeSentimentBatch` see [here][analyze_sentiment_sample].
 
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
 
@@ -174,7 +174,7 @@ foreach (string keyPhrase in keyPhrases)
     Console.WriteLine(keyPhrase);
 }
 ```
-For samples on using the production recommended option `ExtractKeyPhrasesBatch` see [here](#extract-key-phrases-1).
+For samples on using the production recommended option `ExtractKeyPhrasesBatch` see [here][extract_key_phrases_sample].
 
 Please refer to the service documentation for a conceptual discussion of [key phrase extraction][key_phrase_extraction].
 
@@ -192,7 +192,7 @@ foreach (CategorizedEntity entity in entities)
     Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Confidence score: {entity.ConfidenceScore}");
 }
 ```
-For samples on using the production recommended option `RecognizeEntitiesBatch` see [here](#recognize-entities-1).
+For samples on using the production recommended option `RecognizeEntitiesBatch` see [here][recognize_entities_sample].
 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
 
@@ -214,7 +214,7 @@ foreach (LinkedEntity linkedEntity in linkedEntities)
     }
 }
 ```
-For samples on using the production recommended option `RecognizeLinkedEntitiesBatch` see [here](#recognize-linked-entities-1).
+For samples on using the production recommended option `RecognizeLinkedEntitiesBatch` see [here][recognize_linked_entities_sample].
 
 Please refer to the service documentation for a conceptual discussion of [entity linking][named_entity_recognition].
 
@@ -297,34 +297,13 @@ To learn more about other logging mechanisms see [here][logging].
 ## Next steps
 
 Samples showing how to use the Cognitive Services Text Analytics library are available in this GitHub repository.
-Samples are provided for each main functional area, and for each area, samples are provided for analyzing a single document, and a collection of documents.
+Samples are provided for each main functional area, and for each area, samples are provided for analyzing a single document, and a collection of documents in both sync and async mode.
 
-### Detect Language
-* [Sample1_DetectLanguage.cs][detect_language_sample0] - Detect the language of a document.
-* [Sample1_DetectLanguageBatchConvenience.cs][detect_language_sample1] - Detect the language of each document in a collection of documents.
-* [Sample1_DetectLanguageBatch.cs][detect_language_sample2] - Detect the language of each document in a collection of documents. This method allows to provide more information about each document.
-* [Sample1_DetectLanguageAsync.cs][detect_language_sample_async] - Make an asynchronous call to detect the language of a document.
-
-### Analyze Sentiment
-* [Sample2_AnalyzeSentiment.cs][analyze_sentiment_sample0] - Analyze sentiment in a document.
-* [Sample2_AnalyzeSentimentBatchConvenience.cs][analyze_sentiment_sample1] - Analyze sentiment in a collection of documents.
-* [Sample2_AnalyzeSentimentBatch.cs][analyze_sentiment_sample2] - Analyze the sentiment of a collection of documents in different languages.
-
-### Extract Key Phrases
-* [Sample3_ExtractKeyPhrases.cs][extract_key_phrases_sample0] - Extract key phrases from a document.
-* [Sample3_ExtractKeyPhrasesBatchConvenience.cs][extract_key_phrases_sample1] - Extract key phrases from each document in a collection of documents.
-* [Sample3_ExtractKeyPhrasesBatch.cs][extract_key_phrases_sample2] - Extract the key phrases of a collection of documents in different languages.
-
-### Recognize Entities
-* [Sample4_RecognizeEntities.cs][recognize_entities_sample0] - Recognize entities in a document.
-* [Sample4_RecognizeEntitiesBatchConvenience.cs][recognize_entities_sample1] - Recognize entities in each document in a collection of documents.
-* [Sample4_RecognizeEntitiesBatch.cs][recognize_entities_sample2] - Recognize entities of a collection of documents in different languages.
-* [Sample4_RecognizeEntitiesAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to recognize entities in a document.
-
-### Recognize Linked Entities
-* [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a document.
-* [Sample6_RecognizeLinkedEntitiesBatchConvenience.cs][recognize_linked_entities_sample1] - Recognize linked entities in each document in a collection of documents.
-* [Sample6_RecognizeLinkedEntitiesBatch.cs][recognize_linked_entities_sample2] - Recognize linked entities of a collection of documents in different languages.
+- [Detect Language][detect_language_sample]
+- [Analyze Sentiment][analyze_sentiment_sample]
+- [Extract Key Phrases][extract_key_phrases_sample]
+- [Recognize Entities][recognize_entities_sample]
+- [Recognize Linked Entities][recognize_linked_entities_sample]
 
 ## Contributing
 
@@ -363,23 +342,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
 
-[detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
-[detect_language_sample1]: tests/samples/Sample1_DetectLanguageBatchConvenience.cs
-[detect_language_sample2]: tests/samples/Sample1_DetectLanguageBatch.cs
-[detect_language_sample_async]: tests/samples/Sample1_DetectLanguageAsync.cs
-[analyze_sentiment_sample0]: tests/samples/Sample2_AnalyzeSentiment.cs
-[analyze_sentiment_sample1]: tests/samples/Sample2_AnalyzeSentimentBatchConvenience.cs
-[analyze_sentiment_sample2]: tests/samples/Sample2_AnalyzeSentimentBatch.cs
-[extract_key_phrases_sample0]: tests/samples/Sample3_ExtractKeyPhrases.cs
-[extract_key_phrases_sample1]: tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs
-[extract_key_phrases_sample2]: tests/samples/Sample3_ExtractKeyPhrasesBatch.cs
-[recognize_entities_sample0]: tests/samples/Sample4_RecognizeEntities.cs
-[recognize_entities_sample1]: tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs
-[recognize_entities_sample2]: tests/samples/Sample4_RecognizeEntitiesBatch.cs
-[recognize_entities_sample_async]: tests/samples/Sample4_RecognizeEntitiesAsync.cs
-[recognize_linked_entities_sample0]: tests/samples/Sample6_RecognizeLinkedEntities.cs
-[recognize_linked_entities_sample1]: tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs
-[recognize_linked_entities_sample2]: tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenience.cs
+[detect_language_sample]: samples/Sample1_DetectLanguage.md
+[analyze_sentiment_sample]: samples/Sample2_AnalyzeSentiment.md
+[extract_key_phrases_sample]: samples/Sample3_ExtractKeyPhrases.md
+[recognize_entities_sample]: samples/Sample4_RecognizeEntities.md
+[recognize_linked_entities_sample]: samples/Sample6_RecognizeLinkedEntities.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

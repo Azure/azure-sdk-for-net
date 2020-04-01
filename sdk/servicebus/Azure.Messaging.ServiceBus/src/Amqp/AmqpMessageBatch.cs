@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if (typeof(T) != typeof(ServiceBusMessage))
             {
-                throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources1.UnsupportedTransportEventType, typeof(T).Name));
+                throw new FormatException(string.Format(CultureInfo.CurrentCulture, Resources.UnsupportedTransportEventType, typeof(T).Name));
             }
 
             return (IEnumerable<T>)BatchMessages;

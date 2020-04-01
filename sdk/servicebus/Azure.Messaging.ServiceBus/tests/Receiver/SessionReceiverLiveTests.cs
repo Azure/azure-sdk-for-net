@@ -628,5 +628,50 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     Throws.InstanceOf<InvalidOperationException>());
             }
         }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetAndSetSessionStateTest(bool isSessionSpecified)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                var sessionId = "test-sessionId";
+                ServiceBusMessage message = GetMessage(sessionId);
+                await sender.SendAsync(message);
+
+                ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(
+                    scope.QueueName,
+                    sessionId: isSessionSpecified ? sessionId : null);
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+                Assert.AreEqual(message.MessageId, receivedMessage.MessageId);
+                Assert.AreEqual(message.SessionId, receivedMessage.SessionId);
+
+                var sessionStateString = "Received Message From Session!";
+                var sessionState = Encoding.UTF8.GetBytes(sessionStateString);
+                await receiver.SetSessionStateAsync(sessionState);
+
+                var returnedSessionState = await receiver.GetSessionStateAsync();
+                var returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                Assert.AreEqual(sessionStateString, returnedSessionStateString);
+
+                // Complete message using Session Receiver
+                await receiver.CompleteAsync(receivedMessage);
+
+                var peekedMessage = receiver.PeekAsync();
+                Assert.IsNull(peekedMessage.Result);
+
+                sessionStateString = "Completed Message On Session!";
+                sessionState = Encoding.UTF8.GetBytes(sessionStateString);
+                await receiver.SetSessionStateAsync(sessionState);
+
+                returnedSessionState = await receiver.GetSessionStateAsync();
+                returnedSessionStateString = Encoding.UTF8.GetString(returnedSessionState);
+                Assert.AreEqual(sessionStateString, returnedSessionStateString);
+            }
+        }
     }
 }

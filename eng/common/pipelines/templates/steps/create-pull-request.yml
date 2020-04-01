@@ -2,7 +2,7 @@
 # Expects the buildtools to be cloned
 
 parameters:
-  BaseBranchName: master
+  BaseBranchName: $(Build.SourceBranch)
   PRBranchName: not-specified
   PROwner: azure-sdk
   CommitMsg: not-specified
@@ -11,6 +11,7 @@ parameters:
   PushArgs:
   WorkingDirectory: $(System.DefaultWorkingDirectory)
   PRTitle: not-specified
+  ScriptDirectory: eng/common/scripts
 
 steps:
 
@@ -35,7 +36,7 @@ steps:
   ignoreLASTEXITCODE: true
 
 - pwsh: |
-    eng/common/scripts/git-branch-push.ps1 `
+    ${{ parameters.ScriptDirectory }}/git-branch-push.ps1 `
       -PRBranchName "${{ parameters.PRBranchName }}" `
       -CommitMsg "${{ parameters.CommitMsg }}" `
       -GitUrl "https://$(azuresdk-github-pat)@github.com/${{ parameters.PROwner }}/${{ parameters.RepoName }}.git" `
@@ -46,7 +47,7 @@ steps:
   condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
 
 - pwsh: |
-    eng/common/scripts/Submit-PullRequest.ps1 `
+    ${{ parameters.ScriptDirectory }}/Submit-PullRequest.ps1 `
       -RepoOwner "${{ parameters.RepoOwner }}" `
       -RepoName "${{ parameters.RepoName }}" `
       -BaseBranch "${{ parameters.BaseBranchName }}" `
