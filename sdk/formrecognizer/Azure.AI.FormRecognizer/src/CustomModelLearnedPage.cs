@@ -8,9 +8,9 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class CustomModel
+    public class CustomFormSubModel
     {
-        internal CustomModel()
+        internal CustomFormSubModel()
         {
         }
 
@@ -20,13 +20,20 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<string> Fields { get; internal set; }
+        public float? Accuracy { get; internal set; }
 
+        /// <summary>
+        /// </summary>
+        public IReadOnlyDictionary<string, CustomFormModelField> Fields { get; internal set; }
 
         /// <summary>
         /// Information about the trained model, including model ID and training completion status.
         /// </summary>
-        public CustomModelInfo ModelInfo { get; }
+        public CustomFormModelInfo ModelInfo { get; }
+
+        /// <summary>
+        /// </summary>
+        public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; internal set; }
 
         /// <summary>
         /// Errors returned during the training operation.

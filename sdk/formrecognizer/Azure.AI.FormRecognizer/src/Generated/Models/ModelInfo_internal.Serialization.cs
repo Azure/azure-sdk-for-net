@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Training
         internal static ModelInfo_internal DeserializeModelInfo_internal(JsonElement element)
         {
             Guid modelId = default;
-            CustomModelStatus status = default;
+            CustomFormModelStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("status"))
                 {
-                    status = property.Value.GetString().ToCustomModelStatus();
+                    status = property.Value.GetString().ToCustomFormModelStatus();
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"))

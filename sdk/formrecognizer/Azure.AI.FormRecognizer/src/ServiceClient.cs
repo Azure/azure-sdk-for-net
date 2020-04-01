@@ -18,17 +18,17 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Pageable<CustomModelInfo> GetCustomModelsPageableModelInfo(GetModelOptions? op, CancellationToken cancellationToken = default)
+        public Pageable<CustomFormModelInfo> GetCustomModelsPageableModelInfo(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
-            Page<CustomModelInfo> FirstPageFunc(int? pageSizeHint)
+            Page<CustomFormModelInfo> FirstPageFunc(int? pageSizeHint)
             {
                 var response =  RestClient.GetCustomModels(op, cancellationToken);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
-            Page<CustomModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CustomFormModelInfo> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var response = RestClient.GetCustomModelsNextPage(nextLink, cancellationToken);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
@@ -36,18 +36,18 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Get information about all custom models. </summary>
         /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public AsyncPageable<CustomModelInfo> GetCustomModelsPageableModelInfoAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
+        public AsyncPageable<CustomFormModelInfo> GetCustomModelsPageableModelInfoAsync(GetModelOptions? op, CancellationToken cancellationToken = default)
         {
 
-            async Task<Page<CustomModelInfo>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CustomFormModelInfo>> FirstPageFunc(int? pageSizeHint)
             {
                 var response = await RestClient.GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
-            async Task<Page<CustomModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CustomFormModelInfo>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 var response = await RestClient.GetCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                return Page.FromValues(response.Value.ModelList.Select(info => new CustomModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
+                return Page.FromValues(response.Value.ModelList.Select(info => new CustomFormModelInfo(info)), response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }

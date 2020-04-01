@@ -54,11 +54,12 @@ namespace Azure.AI.FormRecognizer.Training
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
         /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="useLabels"></param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
-        public virtual TrainingOperation StartTraining(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual TrainingOperation StartTraining(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -82,13 +83,13 @@ namespace Azure.AI.FormRecognizer.Training
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
         /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
+        /// <param name="useLabels"></param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
-        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
 
@@ -105,55 +106,65 @@ namespace Azure.AI.FormRecognizer.Training
             //return new TrainingOperation(ServiceClient, response.Headers.Location);
         }
 
+        ///// <summary>
+        ///// Trains a model from a collection of custom forms and a label file in a blob storage container.
+        ///// </summary>
+        ///// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
+        ///// <param name="filter">Filter to apply to the documents in the source path for training.</param>
+        ///// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        ///// <returns>A <see cref="TrainingWithLabelsOperation"/> to wait on this long-running operation.  Its <see cref="TrainingWithLabelsOperation"/>.Value upon successful
+        ///// completion will contain meta-data about the trained model.</returns>
+        //public virtual TrainingWithLabelsOperation StartTrainingWithLabels(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        //{
+        //    throw new NotImplementedException();
+
+        //    //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
+
+        //    //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+        //    //// https://github.com/Azure/azure-sdk-for-net/issues/10359
+        //    //if (filter != default)
+        //    //{
+        //    //    trainRequest.SourceFilter = filter;
+        //    //}
+
+        //    //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+        //    //return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
+        //}
+
+        ///// <summary>
+        ///// Trains a model from a collection of custom forms and a label file in a blob storage container.
+        ///// </summary>
+        ///// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
+        ///// <param name="filter">Filter to apply to the documents in the source path for training.</param>
+        ///// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        ///// <returns>A <see cref="TrainingWithLabelsOperation"/> to wait on this long-running operation.  Its <see cref="TrainingWithLabelsOperation"/>.Value upon successful
+        ///// completion will contain meta-data about the trained model.</returns>
+        //public virtual async Task<TrainingWithLabelsOperation> StartTrainingWithLabelsAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        //{
+        //    await Task.Run(() => { }).ConfigureAwait(false);
+        //    throw new NotImplementedException();
+
+        //    //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
+
+        //    //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+        //    //// https://github.com/Azure/azure-sdk-for-net/issues/10359
+        //    //if (filter != default)
+        //    //{
+        //    //    trainRequest.SourceFilter = filter;
+        //    //}
+
+        //    //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+        //    //return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
+        //}
+
         /// <summary>
-        /// Trains a model from a collection of custom forms and a label file in a blob storage container.
         /// </summary>
-        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="TrainingWithLabelsOperation"/> to wait on this long-running operation.  Its <see cref="TrainingWithLabelsOperation"/>.Value upon successful
-        /// completion will contain meta-data about the trained model.</returns>
-        public virtual TrainingWithLabelsOperation StartTrainingWithLabels(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
+        /// <param name="modelId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<CustomFormModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
-
-            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
-
-            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            //// https://github.com/Azure/azure-sdk-for-net/issues/10359
-            //if (filter != default)
-            //{
-            //    trainRequest.SourceFilter = filter;
-            //}
-
-            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
-            //return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
-        }
-
-        /// <summary>
-        /// Trains a model from a collection of custom forms and a label file in a blob storage container.
-        /// </summary>
-        /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="TrainingWithLabelsOperation"/> to wait on this long-running operation.  Its <see cref="TrainingWithLabelsOperation"/>.Value upon successful
-        /// completion will contain meta-data about the trained model.</returns>
-        public virtual async Task<TrainingWithLabelsOperation> StartTrainingWithLabelsAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
-            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
-
-            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            //// https://github.com/Azure/azure-sdk-for-net/issues/10359
-            //if (filter != default)
-            //{
-            //    trainRequest.SourceFilter = filter;
-            //}
-
-            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-            //return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
         }
 
         /// <summary>
@@ -161,17 +172,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<CustomModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response<CustomModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomFormModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -198,26 +199,26 @@ namespace Azure.AI.FormRecognizer.Training
         //    throw new NotImplementedException();
         //}
 
-        /// <summary>
-        /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual CustomCompoundModel GetCustomCompoundModel(string modelId, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="modelId"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual CustomFormModel GetCustomCompoundModel(string modelId, CancellationToken cancellationToken = default)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        /// <summary>
-        /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response<CustomCompoundModel>> GetCustomCompoundModelAsync(string modelId, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-        }
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="modelId"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual async Task<Response<CustomFormModel>> GetCustomCompoundModelAsync(string modelId, CancellationToken cancellationToken = default)
+        //{
+        //    await Task.Run(() => { }).ConfigureAwait(false);
+        //    throw new NotImplementedException();
+        //}
 
         #endregion
 
@@ -245,23 +246,23 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this Cognitive Services Account
+        /// Get a collection of <see cref="CustomFormModelInfo"/> items describing the models trained on this Cognitive Services Account
         /// and their training status.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Pageable<CustomModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
+        public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
         {
             return ServiceClient.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
         }
 
         /// <summary>
-        /// Get a collection of <see cref="CustomModelInfo"/> items describing the models trained on this Cognitive Services Account
+        /// Get a collection of <see cref="CustomFormModelInfo"/> items describing the models trained on this Cognitive Services Account
         /// and their training status.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual AsyncPageable<CustomModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
         {
             return ServiceClient.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
         }
@@ -324,7 +325,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="targetCredential"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual CopyModelToOperation StartCopyModelTo(string sourceModelId, Uri targetEndpoint, FormRecognizerApiKeyCredential targetCredential, CancellationToken cancellationToken = default)
+        public virtual CopyModelOperation StartCopyModel(string sourceModelId, Uri targetEndpoint, FormRecognizerApiKeyCredential targetCredential, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
 
@@ -344,7 +345,6 @@ namespace Azure.AI.FormRecognizer.Training
             //return new TrainingOperation(ServiceClient, response.Headers.Location);
         }
 
-
         /// <summary>
         /// </summary>
         /// <param name="sourceModelId"></param>
@@ -352,7 +352,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="targetCredential"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<CopyModelToOperation> StartCopyModelToAsync(string sourceModelId, Uri targetEndpoint, FormRecognizerApiKeyCredential targetCredential, CancellationToken cancellationToken = default)
+        public virtual async Task<CopyModelOperation> StartCopyModelAsync(string sourceModelId, Uri targetEndpoint, FormRecognizerApiKeyCredential targetCredential, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();

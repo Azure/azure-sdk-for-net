@@ -7,9 +7,9 @@ using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-    internal class CustomModels
+    internal class CustomFormModels
     {
-        internal CustomModels(Models_internal models)
+        internal CustomFormModels(Models_internal models)
         {
             AccountProperties = new AccountProperties(models.Summary);
             ModelInfos = ConvertModelList(models.ModelList);
@@ -20,14 +20,14 @@ namespace Azure.AI.FormRecognizer.Training
         public AccountProperties AccountProperties { get; }
 
         /// <summary> Collection of trained custom models. </summary>
-        public IReadOnlyList<CustomModelInfo> ModelInfos { get; }
+        public IReadOnlyList<CustomFormModelInfo> ModelInfos { get; }
 
         /// <summary> Link to the next page of custom models. </summary>
         internal string NextLink { get; }
 
-        private static IReadOnlyList<CustomModelInfo> ConvertModelList(IReadOnlyList<ModelInfo_internal> modelInfos)
+        private static IReadOnlyList<CustomFormModelInfo> ConvertModelList(IReadOnlyList<ModelInfo_internal> modelInfos)
         {
-            return modelInfos.Select(mi => new CustomModelInfo(mi)).ToList();
+            return modelInfos.Select(mi => new CustomFormModelInfo(mi)).ToList();
         }
     }
 }

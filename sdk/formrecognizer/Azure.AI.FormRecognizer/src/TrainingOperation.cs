@@ -13,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary>
     /// Represents a long-running training operation.
     /// </summary>
-    public class TrainingOperation : Operation<CustomModel>
+    public class TrainingOperation : Operation<CustomFormSubModel>
     {
         private Response _response;
-        private CustomModel _value;
+        private CustomFormSubModel _value;
         private bool _hasCompleted;
 
         // TODO: use this.
@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// The final result of the training operation, if the operation completed successfully.
         /// </summary>
-        public override CustomModel Value => OperationHelpers.GetValue(ref _value);
+        public override CustomFormSubModel Value => OperationHelpers.GetValue(ref _value);
 
         /// <summary>
         /// True if the training operation completed.
@@ -50,11 +50,11 @@ namespace Azure.AI.FormRecognizer.Training
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<CustomModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomFormSubModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<CustomModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomFormSubModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.Training
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
-                if (update.Value.ModelInfo.Status != CustomModelStatus.Training)
+                if (update.Value.ModelInfo.Status != CustomFormModelStatus.Training)
                 {
                     _hasCompleted = true;
                     //_value = new CustomModel(update.Value);

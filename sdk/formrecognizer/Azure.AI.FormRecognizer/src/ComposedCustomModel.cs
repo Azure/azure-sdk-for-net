@@ -10,20 +10,20 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class CustomCompoundModel
+    public class CustomFormModel
     {
-        internal CustomCompoundModel()
+        internal CustomFormModel()
         {
         }
 
         /// <summary>
         /// Information about the trained model, including model ID and training completion status.
         /// </summary>
-        public CustomModelInfo ModelInfo { get; }
+        public CustomFormModelInfo ModelInfo { get; }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<CustomModel> Models { get; }
+        public IReadOnlyList<CustomFormSubModel> Models { get; }
 
         /// <summary>
         /// Errors returned during the training operation.

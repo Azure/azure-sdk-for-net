@@ -7,9 +7,9 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class CustomModelInfo
+    public class CustomFormModelInfo
     {
-        internal CustomModelInfo(ModelInfo_internal modelInfo)
+        internal CustomFormModelInfo(ModelInfo_internal modelInfo)
         {
             ModelId = modelInfo.ModelId.ToString();
             CreatedOn = new DateTime(modelInfo.CreatedDateTime.Ticks, DateTimeKind.Utc);
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
-        public CustomModelStatus Status { get; }
+        public CustomFormModelStatus Status { get; }
 
         /// <summary>
         /// </summary>
