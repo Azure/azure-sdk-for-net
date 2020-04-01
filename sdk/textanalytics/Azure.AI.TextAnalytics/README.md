@@ -306,6 +306,7 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Recognize Linked Entities][recognize_linked_entities_sample]
 
 ## Contributing
+See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
@@ -341,6 +342,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
+[contributing]: ../../../CONTRIBUTING.md
 
 [detect_language_sample]: samples/Sample1_DetectLanguage.md
 [analyze_sentiment_sample]: samples/Sample2_AnalyzeSentiment.md
