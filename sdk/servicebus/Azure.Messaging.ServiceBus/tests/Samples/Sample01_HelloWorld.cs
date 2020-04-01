@@ -162,12 +162,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         /// <summary>
         /// Authenticate with <see cref="DefaultAzureCredential"/>.
         /// </summary>
-        public void Authenticate()
+        public void AuthenticateWithAAD()
         {
-            #region Snippet:ServiceBusAuth
+            #region Snippet:ServiceBusAuthAAD
             // Create a BlobServiceClient that will authenticate through Active Directory
             string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
             ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+            #endregion
+        }
+
+        /// <summary>
+        /// Authenticate with <see cref="DefaultAzureCredential"/>.
+        /// </summary>
+        public void AuthenticateWithConnectionString()
+        {
+            #region Snippet:ServiceBusAuthConnString
+            // Create a BlobServiceClient that will authenticate through Active Directory
+            string connectionString = "<connection_string>";
+            ServiceBusClient client = new ServiceBusClient(connectionString);
             #endregion
         }
     }

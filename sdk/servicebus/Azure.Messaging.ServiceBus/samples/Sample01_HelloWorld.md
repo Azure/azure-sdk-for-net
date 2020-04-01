@@ -4,6 +4,9 @@ This sample demonstrates how to send and receive messages from a Service Bus que
 
 ## Sending and receiving a message
 
+Message sending is performed using the `ServiceBusSender`. Receiving is performed using the 
+`ServiceBusReceiver`.
+
 ```C# Snippet:ServiceBusSendAndReceive
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
@@ -31,6 +34,8 @@ Console.WriteLine(body);
 ```
 
 ### Sending and receiving a batch of messages
+
+We can send several messages at once using a `ServiceBusMessageBatch`. 
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
 string connectionString = "<connection_string>";
@@ -66,6 +71,7 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 ## Peeking a message
 
 It's also possible to simply peek a message. Peeking a message does not require the message to be locked.
+
 ```C# Snippet:ServiceBusPeek
 ServiceBusReceivedMessage peekedMessage = await receiver.PeekAsync();
 ```

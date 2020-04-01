@@ -74,6 +74,9 @@ await processor.StopProcessingAsync();
 
 ### Processing messages from a session-enabled queue
 
+Processing session messages is performed with a `ServiceBusSessionProcessor`. This type
+derives from `ServiceBusProcessor` and exposes session-related functionality.
+
 ```C# Snippet:ServiceBusProcessSessionMessages
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
@@ -158,4 +161,4 @@ await processor.StopProcessingAsync();
 
 To see the full example source, see:
 
-* [Sample04_Processor.cs](../tests/Samples/Sample03_Sessions.cs)
+* [Sample04_Processor.cs](../tests/Samples/Sample04_Processor.cs)
