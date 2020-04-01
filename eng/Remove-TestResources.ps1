@@ -26,6 +26,7 @@ param (
     [string] $TenantId,
 
     [Parameter(ParameterSetName = 'Default+Provisioner')]
+    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner')]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $SubscriptionId,
 
