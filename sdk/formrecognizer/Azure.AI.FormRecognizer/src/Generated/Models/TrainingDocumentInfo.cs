@@ -8,19 +8,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Report for a custom model training document. </summary>
     public partial class TrainingDocumentInfo
     {
         /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
         /// <param name="documentName"> Training document name. </param>
-        /// <param name="pageCount"> Total number of pages trained. </param>
+        /// <param name="pages"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>
         /// <param name="status"> Status of the training operation. </param>
-        internal TrainingDocumentInfo(string documentName, int pageCount, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
+        internal TrainingDocumentInfo(string documentName, int pages, IEnumerable<FormRecognizerError> errors, TrainingStatus status)
         {
             if (documentName == null)
             {
@@ -32,26 +32,28 @@ namespace Azure.AI.FormRecognizer.Training
             }
 
             DocumentName = documentName;
-            PageCount = pageCount;
+            Pages = pages;
             Errors = errors.ToArray();
             Status = status;
         }
 
         /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
         /// <param name="documentName"> Training document name. </param>
-        /// <param name="pageCount"> Total number of pages trained. </param>
+        /// <param name="pages"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>
         /// <param name="status"> Status of the training operation. </param>
-        internal TrainingDocumentInfo(string documentName, int pageCount, IReadOnlyList<FormRecognizerError> errors, TrainingStatus status)
+        internal TrainingDocumentInfo(string documentName, int pages, IReadOnlyList<FormRecognizerError> errors, TrainingStatus status)
         {
             DocumentName = documentName;
-            PageCount = pageCount;
+            Pages = pages;
             Errors = errors;
             Status = status;
         }
 
         /// <summary> Training document name. </summary>
         public string DocumentName { get; }
+        /// <summary> Total number of pages trained. </summary>
+        public int Pages { get; }
         /// <summary> List of errors. </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; }
         /// <summary> Status of the training operation. </summary>

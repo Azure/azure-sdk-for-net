@@ -4,14 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class CustomComposedModel
+    public class CustomCompoundModel
     {
-        internal CustomComposedModel()
+        internal CustomCompoundModel()
         {
         }
 
@@ -22,6 +23,11 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<CustomLabeledModel> Models { get; }
+        public IReadOnlyList<CustomModel> Models { get; }
+
+        /// <summary>
+        /// Errors returned during the training operation.
+        /// </summary>
+        public IReadOnlyList<FormRecognizerError> Errors { get; internal set; }
     }
 }

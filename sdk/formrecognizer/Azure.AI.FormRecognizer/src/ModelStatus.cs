@@ -24,6 +24,10 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
+        Copying,
+
+        /// <summary>
+        /// </summary>
         Ready,
 
         /// <summary>

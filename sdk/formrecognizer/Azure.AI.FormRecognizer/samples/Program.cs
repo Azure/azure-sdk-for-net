@@ -63,7 +63,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new CustomModelClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var trainingOperation = client.StartTrainingWithLabels(sasUrl);
             var operation = client.StartTrainingWithLabels(sasUrl);
@@ -84,7 +84,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new CustomModelClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var trainingOperation = client.StartTraining(sasUrl);
 
@@ -465,7 +465,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new CustomModelClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var modelCount = client.GetAccountProperties();
             Console.WriteLine($"CustomModelCount: {modelCount.Value.CustomModelCount}");
@@ -476,7 +476,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_SUBSCRIPTION_KEY");
             string formRecognizerEndpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
 
-            var client = new CustomTrainingClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
+            var client = new CustomModelClient(new Uri(formRecognizerEndpoint), new FormRecognizerApiKeyCredential(subscriptionKey));
 
             var models = client.GetModelInfos();
             foreach (var model in models)

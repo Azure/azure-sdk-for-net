@@ -2,14 +2,15 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class CustomModelLearnedForm
+    public class CustomModel
     {
-        internal CustomModelLearnedForm()
+        internal CustomModel()
         {
         }
 
@@ -19,6 +20,17 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<string> LearnedFields { get; internal set; }
+        public IReadOnlyList<string> Fields { get; internal set; }
+
+
+        /// <summary>
+        /// Information about the trained model, including model ID and training completion status.
+        /// </summary>
+        public CustomModelInfo ModelInfo { get; }
+
+        /// <summary>
+        /// Errors returned during the training operation.
+        /// </summary>
+        public IReadOnlyList<FormRecognizerError> Errors { get; internal set; }
     }
 }

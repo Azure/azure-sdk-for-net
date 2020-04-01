@@ -3,11 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer.Training
@@ -179,12 +177,33 @@ namespace Azure.AI.FormRecognizer.Training
             throw new NotImplementedException();
         }
 
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="modelId"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual CustomLabeledModel GetCustomLabeledModel(string modelId, CancellationToken cancellationToken = default)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        ///// <summary>
+        ///// </summary>
+        ///// <param name="modelId"></param>
+        ///// <param name="cancellationToken"></param>
+        ///// <returns></returns>
+        //public virtual async Task<Response<CustomLabeledModel>> GetCustomLabeledModelAsync(string modelId, CancellationToken cancellationToken = default)
+        //{
+        //    await Task.Run(() => { }).ConfigureAwait(false);
+        //    throw new NotImplementedException();
+        //}
+
         /// <summary>
         /// </summary>
         /// <param name="modelId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual CustomLabeledModel GetCustomLabeledModel(string modelId, CancellationToken cancellationToken = default)
+        public virtual CustomCompoundModel GetCustomCompoundModel(string modelId, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -194,28 +213,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<CustomLabeledModel>> GetCustomLabeledModelAsync(string modelId, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual CustomComposedModel GetCustomComposedModel(string modelId, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response<CustomComposedModel>> GetCustomComposedModelAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomCompoundModel>> GetCustomCompoundModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
@@ -316,5 +314,65 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         #endregion
+
+        #region
+
+        /// <summary>
+        /// </summary>
+        /// <param name="sourceModelId"></param>
+        /// <param name="targetEndpoint"></param>
+        /// <param name="targetCredential"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual CopyModelToOperation StartCopyModelTo(string sourceModelId, Uri targetEndpoint, FormRecognizerApiKeyCredential targetCredential, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+
+            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
+
+            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            //// https://github.com/Azure/autorest.csharp/issues/467
+            //// When this is complete, we will be able to default filter.Path to "".
+            //// Decision to make, do we always send filter, or only if needed?
+            //// Tracking with https://github.com/Azure/azure-sdk-for-net/issues/10359
+            //if (filter != default)
+            //{
+            //    trainRequest.SourceFilter = filter;
+            //}
+
+            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            //return new TrainingOperation(ServiceClient, response.Headers.Location);
+        }
+
+
+        /// <summary>
+        /// </summary>
+        /// <param name="sourceModelId"></param>
+        /// <param name="targetEndpoint"></param>
+        /// <param name="targetCredential"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<CopyModelToOperation> StartCopyModelToAsync(string sourceModelId, Uri targetEndpoint, FormRecognizerApiKeyCredential targetCredential, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
+
+            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
+            //// https://github.com/Azure/autorest.csharp/issues/467
+            //// When this is complete, we will be able to default filter.Path to "".
+            //// Decision to make, do we always send filter, or only if needed?
+            //// Tracking with https://github.com/Azure/azure-sdk-for-net/issues/10359
+            //if (filter != default)
+            //{
+            //    trainRequest.SourceFilter = filter;
+            //}
+
+            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            //return new TrainingOperation(ServiceClient, response.Headers.Location);
+        }
+        #endregion
+
     }
 }

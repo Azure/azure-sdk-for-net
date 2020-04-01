@@ -108,7 +108,7 @@ namespace Azure.AI.FormRecognizer.Training
                 if (update.Value.ModelInfo.Status != CustomModelStatus.Training)
                 {
                     _hasCompleted = true;
-                    _value = new CustomModel(update.Value);
+                    //_value = new CustomModel(update.Value);
                 }
 
                 _response = update.GetRawResponse();

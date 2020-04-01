@@ -14,10 +14,10 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class ComposeModelOperation : Operation<CustomComposedModel>
+    public class ComposeModelOperation : Operation<CustomCompoundModel>
     {
         private Response _response;
-        private CustomComposedModel _value;
+        private CustomCompoundModel _value;
         private bool _hasCompleted;
 
         // TODO: use this.
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Training
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override CustomComposedModel Value => OperationHelpers.GetValue(ref _value);
+        public override CustomCompoundModel Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
@@ -41,11 +41,11 @@ namespace Azure.AI.FormRecognizer.Training
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<CustomComposedModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomCompoundModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<CustomComposedModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomCompoundModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         internal ComposeModelOperation(ServiceClient operations, string operationLocation)
@@ -106,10 +106,10 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
 #pragma warning disable CA1801 // Remove unused parameter
-        private static CustomComposedModel ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
+        private static CustomCompoundModel ConvertToExtractedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
 #pragma warning restore CA1801 // Remove unused parameter
         {
-            return new CustomComposedModel();
+            return new CustomCompoundModel();
             //List<UnitedStatesReceipt> receipts = new List<UnitedStatesReceipt>();
             //for (int i = 0; i < documentResults.Count; i++)
             //{
