@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.EventGrid.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -20,7 +19,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     /// a derived class. Currently, StorageBlobDeadLetterDestination is the
     /// only class that derives from this class.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DeadLetterDestination")]
     public partial class DeadLetterDestination
     {
         /// <summary>
