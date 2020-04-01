@@ -180,7 +180,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Intermittent failures in CI; investigation required.")]
         public async Task CreatePartitionProcessorReadsEmptyLastEventPropertiesWithNoOption()
         {
             using var cancellationSource = new CancellationTokenSource();
@@ -194,20 +193,29 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer.Object.SetLastEvent(default(EventData));
 
+            mockConsumer
+                .SetupGet(consumer => consumer.IsClosed)
+                .Returns(false);
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(EmptyBatch)
+                .Callback(() => completionSource.TrySetResult(true));
+
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
                 .Returns(mockConnection);
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>()))
-                .Returns(mockConsumer.Object)
-                .Callback(() => completionSource.TrySetResult(true));
+                .Returns(mockConsumer.Object);
 
             var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), EventPosition.Earliest, cancellationSource);
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
 
             var lastEventProperties = partitionProcessor.ReadLastEnqueuedEventProperties();
             Assert.That(lastEventProperties, Is.EqualTo(new LastEnqueuedEventProperties(mockConsumer.Object.LastReceivedEvent)));
+
             cancellationSource.Cancel();
         }
 
@@ -266,9 +274,13 @@ namespace Azure.Messaging.EventHubs.Tests
             mockConsumer.Object.SetLastEvent(lastEvent);
 
             mockConsumer
+                .SetupGet(consumer => consumer.IsClosed)
+                .Returns(false);
+
+            mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Callback(() => completionSource.TrySetResult(true))
-                .ReturnsAsync(EmptyBatch);
+                .ReturnsAsync(EmptyBatch)
+                .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -312,9 +324,17 @@ namespace Azure.Messaging.EventHubs.Tests
             mockConsumer.Object.SetLastEvent(lastEvent);
 
             mockConsumer
+                .SetupGet(consumer => consumer.IsClosed)
+                .Returns(false);
+
+            mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Callback(() => completionSource.TrySetResult(true))
-                .ReturnsAsync(EmptyBatch);
+                .ReturnsAsync(EmptyBatch)
+                .Callback(() => completionSource.TrySetResult(true));
+
+            badMockConsumer
+                .SetupGet(consumer => consumer.IsClosed)
+                .Returns(false);
 
             badMockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))

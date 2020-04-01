@@ -58,12 +58,12 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   The activity name associated with EventProcessor processing a list of events.
         /// </summary>
         ///
-        public static string EventProcessorProcessingActivityName { get; } = "EventProcessorClient.Process";
+        public static string EventProcessorProcessingActivityName { get; } = "EventProcessor.Process";
 
         /// <summary>
         ///   The activity name associated with EventProcessor creating a checkpoint.
         /// </summary>
         ///
-        public static string EventProcessorCheckpointActivityName { get; } = "EventProcessorClient.Checkpoint";
+        public static string EventProcessorCheckpointActivityName { get; } = "EventProcessor.Checkpoint";
     }
 }
