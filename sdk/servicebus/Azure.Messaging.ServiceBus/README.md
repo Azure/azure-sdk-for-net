@@ -44,7 +44,7 @@ For the Service Bus client library to interact with a queue or topic, it will ne
 
 Once you have a connection string, you can authenticate your client with it.
 ```C# Snippet:ServiceBusAuthConnString
-// Create a BlobServiceClient that will authenticate through Active Directory
+// Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
 ServiceBusClient client = new ServiceBusClient(connectionString);
 ```
@@ -240,6 +240,8 @@ byte[] state = await receiver.GetSessionStateAsync();
 
 ### Using the Processor
 
+The `ServiceBusProcessor` offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers.
+
 ```C# Snippet:ServiceBusProcessMessages
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
@@ -312,7 +314,7 @@ await processor.StopProcessingAsync();
 
 The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md) provides easy Azure Active Directory support for authentication.
 ```C# Snippet:ServiceBusAuthAAD
-// Create a BlobServiceClient that will authenticate through Active Directory
+// Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
@@ -357,7 +359,7 @@ deeper into the requests you're making against the service.
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the Azure Service Bus client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Service Bus service. In order to help explore some of these scenarios, the Service Bus client library offers a project of samples to serve as an illustration for common scenarios. Please see the samples [README](/samples/README.md) for details.
+Beyond the introductory scenarios discussed, the Azure Service Bus client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Service Bus service. In order to help explore some of these scenarios, the Service Bus client library offers a project of samples to serve as an illustration for common scenarios. Please see the samples [README](./samples/README.md) for details.
 
 ## Contributing  
 
