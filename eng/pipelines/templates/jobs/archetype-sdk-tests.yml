@@ -47,13 +47,13 @@ jobs:
         parameters:
           OSName: $(OSName)
 
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
         inputs:
           packageType: runtime
           version: "$(DotNetCoreRuntimeVersion)"
 
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           packageType: sdk
