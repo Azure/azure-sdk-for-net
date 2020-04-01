@@ -21,31 +21,14 @@ namespace Azure.Search.Documents.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EdmStringValue = "Edm.String";
-        private const string EdmInt32Value = "Edm.Int32";
-        private const string EdmInt64Value = "Edm.Int64";
-        private const string EdmDoubleValue = "Edm.Double";
-        private const string EdmBooleanValue = "Edm.Boolean";
-        private const string EdmDateTimeOffsetValue = "Edm.DateTimeOffset";
-        private const string EdmGeographyPointValue = "Edm.GeographyPoint";
-        private const string EdmComplexTypeValue = "Edm.ComplexType";
-
-        /// <summary> Edm.String. </summary>
-        public static DataType EdmString { get; } = new DataType(EdmStringValue);
-        /// <summary> Edm.Int32. </summary>
-        public static DataType EdmInt32 { get; } = new DataType(EdmInt32Value);
-        /// <summary> Edm.Int64. </summary>
-        public static DataType EdmInt64 { get; } = new DataType(EdmInt64Value);
-        /// <summary> Edm.Double. </summary>
-        public static DataType EdmDouble { get; } = new DataType(EdmDoubleValue);
-        /// <summary> Edm.Boolean. </summary>
-        public static DataType EdmBoolean { get; } = new DataType(EdmBooleanValue);
-        /// <summary> Edm.DateTimeOffset. </summary>
-        public static DataType EdmDateTimeOffset { get; } = new DataType(EdmDateTimeOffsetValue);
-        /// <summary> Edm.GeographyPoint. </summary>
-        public static DataType EdmGeographyPoint { get; } = new DataType(EdmGeographyPointValue);
-        /// <summary> Edm.ComplexType. </summary>
-        public static DataType EdmComplexType { get; } = new DataType(EdmComplexTypeValue);
+        private const string StringValue = "Edm.String";
+        private const string Int32Value = "Edm.Int32";
+        private const string Int64Value = "Edm.Int64";
+        private const string DoubleValue = "Edm.Double";
+        private const string BooleanValue = "Edm.Boolean";
+        private const string DateTimeOffsetValue = "Edm.DateTimeOffset";
+        private const string GeographyPointValue = "Edm.GeographyPoint";
+        private const string ComplexValue = "Edm.ComplexType";
         /// <summary> Determines if two <see cref="DataType"/> values are the same. </summary>
         public static bool operator ==(DataType left, DataType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataType"/> values are not the same. </summary>

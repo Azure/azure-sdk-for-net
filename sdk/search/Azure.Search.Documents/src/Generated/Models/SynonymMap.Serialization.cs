@@ -15,12 +15,21 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("format");
-            writer.WriteStringValue(Format);
-            writer.WritePropertyName("synonyms");
-            writer.WriteStringValue(Synonyms);
+            if (Name != null)
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Format != null)
+            {
+                writer.WritePropertyName("format");
+                writer.WriteStringValue(Format);
+            }
+            if (Synonyms != null)
+            {
+                writer.WritePropertyName("synonyms");
+                writer.WriteStringValue(Synonyms);
+            }
             if (EncryptionKey != null)
             {
                 writer.WritePropertyName("encryptionKey");
@@ -45,16 +54,28 @@ namespace Azure.Search.Documents.Models
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("format"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     format = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("synonyms"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     synonyms = property.Value.GetString();
                     continue;
                 }

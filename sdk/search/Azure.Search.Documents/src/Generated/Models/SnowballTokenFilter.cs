@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of SnowballTokenFilter. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="language"> The language to use. </param>
         internal SnowballTokenFilter(string oDataType, string name, SnowballTokenFilterLanguage language) : base(oDataType, name)

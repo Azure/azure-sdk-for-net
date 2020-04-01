@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of DictionaryDecompounderTokenFilter. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="wordList"> The list of words to match against. </param>
         /// <param name="minWordSize"> The minimum word size. Only words longer than this get processed. Default is 5. Maximum is 300. </param>

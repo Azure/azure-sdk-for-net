@@ -16,22 +16,28 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("fields");
-            writer.WriteStartArray();
-            foreach (var item in Fields)
+            if (Name != null)
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
-            writer.WriteEndArray();
+            if (Fields != null)
+            {
+                writer.WritePropertyName("fields");
+                writer.WriteStartArray();
+                foreach (var item in Fields)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (ScoringProfiles != null)
             {
                 writer.WritePropertyName("scoringProfiles");
                 writer.WriteStartArray();
-                foreach (var item0 in ScoringProfiles)
+                foreach (var item in ScoringProfiles)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -49,9 +55,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("suggesters");
                 writer.WriteStartArray();
-                foreach (var item0 in Suggesters)
+                foreach (var item in Suggesters)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -59,9 +65,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("analyzers");
                 writer.WriteStartArray();
-                foreach (var item0 in Analyzers)
+                foreach (var item in Analyzers)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -69,9 +75,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("tokenizers");
                 writer.WriteStartArray();
-                foreach (var item0 in Tokenizers)
+                foreach (var item in Tokenizers)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -79,9 +85,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("tokenFilters");
                 writer.WriteStartArray();
-                foreach (var item0 in TokenFilters)
+                foreach (var item in TokenFilters)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -89,9 +95,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("charFilters");
                 writer.WriteStartArray();
-                foreach (var item0 in CharFilters)
+                foreach (var item in CharFilters)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -126,11 +132,19 @@ namespace Azure.Search.Documents.Models
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fields"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<SearchField> array = new List<SearchField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

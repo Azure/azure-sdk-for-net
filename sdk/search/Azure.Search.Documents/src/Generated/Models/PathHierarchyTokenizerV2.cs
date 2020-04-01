@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of PathHierarchyTokenizerV2. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="delimiter"> The delimiter character to use. Default is &quot;/&quot;. </param>
         /// <param name="replacement"> A value that, if set, replaces the delimiter character. Default is &quot;/&quot;. </param>

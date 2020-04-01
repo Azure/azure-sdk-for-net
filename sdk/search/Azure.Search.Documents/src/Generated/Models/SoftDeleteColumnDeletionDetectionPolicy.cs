@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of SoftDeleteColumnDeletionDetectionPolicy. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
         /// <param name="softDeleteColumnName"> The name of the column to use for soft-deletion detection. </param>
         /// <param name="softDeleteMarkerValue"> The marker value that identifies an item as deleted. </param>
         internal SoftDeleteColumnDeletionDetectionPolicy(string oDataType, string softDeleteColumnName, string softDeleteMarkerValue) : base(oDataType)

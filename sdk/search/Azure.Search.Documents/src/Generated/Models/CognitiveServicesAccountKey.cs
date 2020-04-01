@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Models
     public partial class CognitiveServicesAccountKey : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of CognitiveServicesAccountKey. </summary>
-        /// <param name="key"> The key used to provision a cognitive resource attached to a skillset. </param>
+        /// <param name="key"> The key used to provision the cognitive service resource attached to a skillset. </param>
         public CognitiveServicesAccountKey(string key)
         {
             if (key == null)
@@ -26,16 +26,16 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountKey. </summary>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="description"> Description of the cognitive resource attached to a skillset. </param>
-        /// <param name="key"> The key used to provision a cognitive resource attached to a skillset. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the cognitive service resource attached to a skillset. </param>
+        /// <param name="description"> Description of the cognitive service resource attached to a skillset. </param>
+        /// <param name="key"> The key used to provision the cognitive service resource attached to a skillset. </param>
         internal CognitiveServicesAccountKey(string oDataType, string description, string key) : base(oDataType, description)
         {
             Key = key;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CognitiveServicesByKey";
         }
 
-        /// <summary> The key used to provision a cognitive resource attached to a skillset. </summary>
+        /// <summary> The key used to provision the cognitive service resource attached to a skillset. </summary>
         public string Key { get; }
     }
 }

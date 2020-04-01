@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of KeywordTokenizer. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="bufferSize"> The read buffer size in bytes. Default is 256. </param>
         internal KeywordTokenizer(string oDataType, string name, int? bufferSize) : base(oDataType, name)
