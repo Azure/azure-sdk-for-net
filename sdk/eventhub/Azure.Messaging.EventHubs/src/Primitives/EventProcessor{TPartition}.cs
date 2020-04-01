@@ -693,7 +693,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             return new PartitionProcessor
             (
-                Task.Run(performProcessing, cancellationSource.Token),
+                Task.Run(performProcessing),
                 partition,
                 readLastEnquedEventInformation,
                 cancellationSource

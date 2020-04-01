@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventHubs.Tests
     ///   store the checkpoints and partition ownership to a persistent store instead.
     /// </summary>
     ///
-    internal class MockCheckPointStorage : StorageManager
+    internal class InMemoryStorageManager : StorageManager
     {
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object _ownershipLock = new object();
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="logger">Logs activities performed by this storage manager.</param>
         ///
-        public MockCheckPointStorage(Action<string> logger = null)
+        public InMemoryStorageManager(Action<string> logger = null)
         {
             _logger = logger;
 
