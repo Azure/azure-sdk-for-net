@@ -1,0 +1,176 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/Notebooks?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Development/1.0.0-dev.20200525.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "a353c8c84d48d750254927b42874ee69",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "1224",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 May 2020 09:53:02 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-ms-client-request-id": "a353c8c84d48d750254927b42874ee69",
+        "x-ms-request-id": "9dd1dba6-979c-444e-9da8-38096092b576"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/Notebook 1",
+            "name": "Notebook 1",
+            "type": "Microsoft.Synapse/workspaces/notebooks",
+            "etag": "10003327-0000-0100-0000-5e031adb0000",
+            "properties": {
+              "nbformat": 4,
+              "nbformat_minor": 2,
+              "bigDataPool": {
+                "referenceName": "testsparkpool",
+                "type": "BigDataPoolReference"
+              },
+              "sessionProperties": {
+                "driverMemory": "28g",
+                "driverCores": 4,
+                "executorMemory": "28g",
+                "executorCores": 4,
+                "numExecutors": 1
+              },
+              "metadata": {
+                "language_info": {
+                  "name": "python"
+                },
+                "a365ComputeOptions": {
+                  "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testsparkpool",
+                  "name": "testsparkpool",
+                  "type": "Spark",
+                  "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool",
+                  "auth": {
+                    "type": "AAD",
+                    "authResource": "https://dev.azuresynapse.net"
+                  },
+                  "sparkVersion": "2.4",
+                  "nodeCount": 41,
+                  "cores": 8,
+                  "memory": 56,
+                  "extraHeader": {}
+                }
+              },
+              "cells": [
+                {
+                  "cell_type": "code",
+                  "metadata": {},
+                  "source": [
+                    "print(\u0022hello from portal\u0022)"
+                  ],
+                  "attachments": {},
+                  "outputs": [],
+                  "execution_count": null
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/Notebooks/Notebook%201?api-version=2019-06-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-386a0d0279957f4e8602343c82e25d4a-975b7eab762f7c4d-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Development/1.0.0-dev.20200525.1",
+          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+        ],
+        "x-ms-client-request-id": "4a0bc19ed1af8774eec1dd87ae8fc195",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1212",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 25 May 2020 09:53:02 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": [
+          "Microsoft-IIS/10.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "4a0bc19ed1af8774eec1dd87ae8fc195",
+        "x-ms-correlation-request-id": "3d742572-e4d8-4651-8111-4969cc32e9d1",
+        "x-ms-request-id": "a22a2fa2-9739-4e0f-94d3-4fbb5fc249bd",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/notebooks/Notebook 1",
+        "name": "Notebook 1",
+        "type": "Microsoft.Synapse/workspaces/notebooks",
+        "properties": {
+          "nbformat": 4,
+          "nbformat_minor": 2,
+          "bigDataPool": {
+            "referenceName": "testsparkpool",
+            "type": "BigDataPoolReference"
+          },
+          "sessionProperties": {
+            "driverMemory": "28g",
+            "driverCores": 4,
+            "executorMemory": "28g",
+            "executorCores": 4,
+            "numExecutors": 1
+          },
+          "metadata": {
+            "language_info": {
+              "name": "python"
+            },
+            "a365ComputeOptions": {
+              "id": "/subscriptions/051ddeca-1ed6-4d8b-ba6f-1ff561e5f3b3/resourceGroups/zzy-test-rg/providers/Microsoft.Synapse/workspaces/testsynapseworkspace/bigDataPools/testsparkpool",
+              "name": "testsparkpool",
+              "type": "Spark",
+              "endpoint": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool",
+              "auth": {
+                "type": "AAD",
+                "authResource": "https://dev.azuresynapse.net"
+              },
+              "sparkVersion": "2.4",
+              "nodeCount": 41,
+              "cores": 8,
+              "memory": 56,
+              "extraHeader": {}
+            }
+          },
+          "cells": [
+            {
+              "cell_type": "code",
+              "metadata": {},
+              "source": [
+                "print(\u0022hello from portal\u0022)"
+              ],
+              "attachments": {},
+              "outputs": [],
+              "execution_count": null
+            }
+          ]
+        },
+        "etag": "10003327-0000-0100-0000-5e031adb0000"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
+    "RandomSeed": "1257903385"
+  }
+}
