@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Azure.AI.TextAnalytics
@@ -123,9 +124,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="AnalyzeSentimentResultCollection.Statistics"/> property.</param>
         /// <param name="modelVersion">Sets the <see cref="AnalyzeSentimentResultCollection.ModelVersion"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.AnalyzeSentimentResultCollection"/> for mocking purposes.</returns>
-        public static AnalyzeSentimentResultCollection AnalyzeSentimentResultCollection(IList<AnalyzeSentimentResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        public static AnalyzeSentimentResultCollection AnalyzeSentimentResultCollection(IEnumerable<AnalyzeSentimentResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
         {
-            return new AnalyzeSentimentResultCollection(list, statistics, modelVersion);
+            return new AnalyzeSentimentResultCollection(list.ToList(), statistics, modelVersion);
         }
 
         #endregion Analyze Sentiment
@@ -173,9 +174,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="DetectLanguageResultCollection.Statistics"/> property.</param>
         /// <param name="modelVersion">Sets the <see cref="DetectLanguageResultCollection.ModelVersion"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DetectLanguageResultCollection"/> for mocking purposes.</returns>
-        public static DetectLanguageResultCollection DetectLanguageResultCollection(IList<DetectLanguageResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        public static DetectLanguageResultCollection DetectLanguageResultCollection(IEnumerable<DetectLanguageResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
         {
-            return new DetectLanguageResultCollection(list, statistics, modelVersion);
+            return new DetectLanguageResultCollection(list.ToList(), statistics, modelVersion);
         }
 
         #endregion Detect Language
@@ -226,9 +227,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="RecognizeEntitiesResultCollection.Statistics"/> property.</param>
         /// <param name="modelVersion">Sets the <see cref="RecognizeEntitiesResultCollection.ModelVersion"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeEntitiesResultCollection"/> for mocking purposes.</returns>
-        public static RecognizeEntitiesResultCollection RecognizeEntitiesResultCollection(IList<RecognizeEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        public static RecognizeEntitiesResultCollection RecognizeEntitiesResultCollection(IEnumerable<RecognizeEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
         {
-            return new RecognizeEntitiesResultCollection(list, statistics, modelVersion);
+            return new RecognizeEntitiesResultCollection(list.ToList(), statistics, modelVersion);
         }
 
         #endregion Recognize Entities
@@ -264,9 +265,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="ExtractKeyPhrasesResultCollection.Statistics"/> property.</param>
         /// <param name="modelVersion">Sets the <see cref="ExtractKeyPhrasesResultCollection.ModelVersion"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.ExtractKeyPhrasesResultCollection"/> for mocking purposes.</returns>
-        public static ExtractKeyPhrasesResultCollection ExtractKeyPhrasesResultCollection(IList<ExtractKeyPhrasesResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        public static ExtractKeyPhrasesResultCollection ExtractKeyPhrasesResultCollection(IEnumerable<ExtractKeyPhrasesResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
         {
-            return new ExtractKeyPhrasesResultCollection(list, statistics, modelVersion);
+            return new ExtractKeyPhrasesResultCollection(list.ToList(), statistics, modelVersion);
         }
 
         #endregion Extract KeyPhrase
@@ -330,9 +331,9 @@ namespace Azure.AI.TextAnalytics
         /// <param name="statistics">Sets the <see cref="RecognizeLinkedEntitiesResultCollection.Statistics"/> property.</param>
         /// <param name="modelVersion">Sets the <see cref="RecognizeLinkedEntitiesResultCollection.ModelVersion"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.RecognizeLinkedEntitiesResultCollection"/> for mocking purposes.</returns>
-        public static RecognizeLinkedEntitiesResultCollection RecognizeLinkedEntitiesResultCollection(IList<RecognizeLinkedEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
+        public static RecognizeLinkedEntitiesResultCollection RecognizeLinkedEntitiesResultCollection(IEnumerable<RecognizeLinkedEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion)
         {
-            return new RecognizeLinkedEntitiesResultCollection(list, statistics, modelVersion);
+            return new RecognizeLinkedEntitiesResultCollection(list.ToList(), statistics, modelVersion);
         }
 
         #endregion Linked Entities
