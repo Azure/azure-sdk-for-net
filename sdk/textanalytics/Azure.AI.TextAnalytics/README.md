@@ -10,11 +10,18 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 
 ## Getting started
 
+### Install the package
+Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
+
+```PowerShell
+Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.3
+```
+
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * An existing Cognitive Services or Text Analytics resource.
 
-### Create a Cognitive Services or Text Analytics resource
+#### Create a Cognitive Services or Text Analytics resource
 Text Analytics supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Text Analytics access only, create a Text Analytics resource.
 
 You can create either resource using: 
@@ -42,13 +49,6 @@ az cognitiveservices account create \
     --yes
 ```
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
-
-### Install the package
-Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
-
-```PowerShell
-Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.3
-```
 
 ### Authenticate the client
 In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
