@@ -8,6 +8,7 @@
 
 ### Added
 - Refactor common properties from `DetectLanguageInput` and `TextDocumentInput` into it's own type `TextAnalyticsInput`.
+- Mock support for the Text Analytics client with respective samples.
 
 ## 1.0.0-preview.3 (2020-03-10)
 ### Breaking changes
