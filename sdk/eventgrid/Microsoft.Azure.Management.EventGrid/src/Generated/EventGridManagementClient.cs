@@ -446,10 +446,10 @@ namespace Microsoft.Azure.Management.EventGrid
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<InputSchemaMapping>("inputSchemaMappingType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdvancedFilter>("operatorType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdvancedFilter>("operatorType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<EventSubscriptionDestination>("endpointType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeadLetterDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeadLetterDestination>("endpointType"));
             CustomInitialize();
