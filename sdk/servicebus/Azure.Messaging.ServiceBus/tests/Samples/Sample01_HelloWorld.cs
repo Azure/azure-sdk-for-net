@@ -69,8 +69,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // get a receiver that we can use to receive the message
                 ServiceBusReceiver receiver = client.GetReceiver(queueName);
 
-                // the received message is a different type as it contains some service set properties
+                #region Snippet:ServiceBusPeek
                 ServiceBusReceivedMessage peekedMessage = await receiver.PeekAsync();
+                #endregion
 
                 // get the message body as a string
                 string body = Encoding.Default.GetString(peekedMessage.Body.ToArray());
@@ -140,18 +141,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // create a message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
 
-                // schedule the message for tomorrow
-                // this prevents the message from being enqueued until tomorrow, but it can still be peeked
+                #region Snippet:ServiceBusSchedule
                 long seq = await sender.ScheduleMessageAsync(
                     message,
                     DateTimeOffset.Now.AddDays(1));
+                #endregion
 
                 // get a receiver that we can use to peek the message
                 ServiceBusReceiver receiver = client.GetReceiver(queueName);
                 Assert.IsNotNull(await receiver.PeekAsync());
 
                 // cancel the scheduled messaged, thereby deleting from the service
+                #region Snippet:ServiceBusCancelScheduled
                 await sender.CancelScheduledMessageAsync(seq);
+                #endregion
                 Assert.IsNull(await receiver.PeekAsync());
             }
         }
