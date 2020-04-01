@@ -16,31 +16,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Delimited text read settings.
+    /// Binary read settings.
     /// </summary>
-    public partial class DelimitedTextReadSettings : FormatReadSettings
+    public partial class BinaryReadSettings : FormatReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the DelimitedTextReadSettings class.
+        /// Initializes a new instance of the BinaryReadSettings class.
         /// </summary>
-        public DelimitedTextReadSettings()
+        public BinaryReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DelimitedTextReadSettings class.
+        /// Initializes a new instance of the BinaryReadSettings class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="skipLineCount">Indicates the number of non-empty rows
-        /// to skip when reading data from input files. Type: integer (or
-        /// Expression with resultType integer).</param>
         /// <param name="compressionProperties">Compression settings.</param>
-        public DelimitedTextReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object), CompressionReadSettings compressionProperties = default(CompressionReadSettings))
+        public BinaryReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), CompressionReadSettings compressionProperties = default(CompressionReadSettings))
             : base(additionalProperties)
         {
-            SkipLineCount = skipLineCount;
             CompressionProperties = compressionProperties;
             CustomInit();
         }
@@ -49,14 +45,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets indicates the number of non-empty rows to skip when
-        /// reading data from input files. Type: integer (or Expression with
-        /// resultType integer).
-        /// </summary>
-        [JsonProperty(PropertyName = "skipLineCount")]
-        public object SkipLineCount { get; set; }
 
         /// <summary>
         /// Gets or sets compression settings.
