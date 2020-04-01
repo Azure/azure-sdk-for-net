@@ -6,7 +6,8 @@ param (
   $SASKey,
   $Language,
   $BlobName,
-  $ExitOnError=1
+  $ExitOnError=1,
+  $UploadLatest=1
 )
 $Language = $Language.ToLower()
 
@@ -82,7 +83,7 @@ function Sort-Versions
         return $versionsObject 
     }
 
-    $versionsObject.SortedVersionArray = SortSemVersions -versions ($VersionArray | % { ToSemVer $_})
+    $versionsObject.SortedVersionArray = @(SortSemVersions -versions ($VersionArray | % { ToSemVer $_}))
     $versionsObject.RawVersionsList = $versionsObject.SortedVersionArray | % { $_.RawVersion }
 
     # handle latest and preview
@@ -175,6 +176,8 @@ function Update-Existing-Versions
     & $($AzCopy) cp "$($DocLocation)/versions" "$($DocDest)/$($PkgName)/versioning/versions$($SASKey)"
     & $($AzCopy) cp "$($DocLocation)/latest-preview" "$($DocDest)/$($PkgName)/versioning/latest-preview$($SASKey)"
     & $($AzCopy) cp "$($DocLocation)/latest-ga" "$($DocDest)/$($PkgName)/versioning/latest-ga$($SASKey)"
+
+    return $sortedVersionObj
 }
 
 function Upload-Blobs
@@ -197,7 +200,16 @@ function Upload-Blobs
     & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/$($DocVersion)$($SASKey)" --recursive=true
 
     Write-Host "Handling versioning files under $($DocDest)/$($PkgName)/versioning/"
-    Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest
+    $versionsObj = (Update-Existing-Versions -PkgName $PkgName -PkgVersion $DocVersion -DocDest $DocDest)
+
+    # we can safely assume we have AT LEAST one version here. Reason being we just completed Update-Existing-Versions
+    $latestVersion = ($versionsObj.SortedVersionArray | Select-Object -First 1).RawVersion
+
+    if ($UploadLatest -and ($latestVersion -eq $DocVersion)) 
+    {
+        Write-Host "Uploading $($PkgName) to latest folder in $($DocDest)..."
+        & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true
+    }
 }
 
 
