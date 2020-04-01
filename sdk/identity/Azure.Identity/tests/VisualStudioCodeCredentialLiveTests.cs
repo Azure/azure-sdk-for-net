@@ -110,12 +110,11 @@ namespace Azure.Identity.Tests
         public void AuthenticateWithVscCredential_NoRefreshToken()
         {
             var tenantId = GetTenantId();
-            var cloudName = Guid.NewGuid().ToString();
-
-            var fileSystem = CreateTestFileSystemService(cloudName: cloudName);
+            var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", null);
+            var fileSystem = CreateTestFileSystemService();
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, options, fileSystem, default));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, options, fileSystem, vscAdapter));
 
             Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
         }
@@ -407,7 +406,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.AreEqual(_expectedServiceName, serviceName);
                 Assert.AreEqual(_expectedAccountName, accountName);
-                return _refreshToken;
+                return _refreshToken ?? throw new InvalidOperationException("No token found");
             }
         }
     }
