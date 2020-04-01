@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Search.Documents.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.Search;
@@ -99,7 +100,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// The name of the Search Service.
+        /// The name of the Search service.
         /// </summary>
         public string SearchServiceName
         {
@@ -127,7 +128,7 @@ namespace Azure.Search.Documents.Tests
         private string _indexName = null;
 
         /// <summary>
-        /// The URI of the Search Service.
+        /// The URI of the Search service.
         /// </summary>
         public Uri Endpoint => new Uri($"https://{SearchServiceName}.search.windows.net");
 
@@ -224,7 +225,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>The shared TestResources context.</returns>
         public static async Task<SearchResources> GetSharedHotelsIndexAsync(SearchTestBase fixture)
         {
-            SharedSearchResources.Search ??= await CreateWithHotelsIndexAsync(fixture);
+            await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture));
 
             // Clone it for the current fixture (note that setting these values
             // will create the recording ServiceName/IndexName/etc. variables)
@@ -408,16 +409,11 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random Index Name
                 IndexName = Settings.Random.GetName(8);
 
-                // Create a Track 1 client as a temporary work around until we
-                // have support for managing indexes in Track 2
-                Microsoft.Azure.Search.SearchServiceClient client =
-                    new Microsoft.Azure.Search.SearchServiceClient(
-                        SearchServiceName,
-                        new Microsoft.Azure.Search.SearchCredentials(PrimaryApiKey));
-                await client.Indexes.CreateWithHttpMessagesAsync(GetHotelIndex(IndexName));
+                SearchServiceClient client = new SearchServiceClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
+                await client.CreateIndexAsync(GetHotelIndex(IndexName));
 
                 // Give the index time to stabilize before running tests.
-                await Task.Delay(TimeSpan.FromSeconds(20));
+                await WaitForIndexCreationAsync();
             }
 
             return this;
@@ -436,19 +432,35 @@ namespace Azure.Search.Documents.Tests
             // Upload the documents
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
-                // Create a Track 1 client as a temporary work around until we
-                // have support for populating indexes in Track 2
-                Microsoft.Azure.Search.SearchIndexClient client =
-                    new Microsoft.Azure.Search.SearchIndexClient(
-                        SearchServiceName,
-                        IndexName,
-                        new Microsoft.Azure.Search.SearchCredentials(PrimaryApiKey));
-                var batch = Microsoft.Azure.Search.Models.IndexBatch.Upload(TestDocuments);
-                await client.Documents.IndexWithHttpMessagesAsync(batch);
+                SearchIndexClient client = new SearchIndexClient(Endpoint, IndexName, new AzureKeyCredential(PrimaryApiKey));
+                IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Upload(TestDocuments);
+                await client.IndexDocumentsAsync(batch);
+
                 await WaitForIndexingAsync();
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Wait for the index to stabilize.
+        /// </summary>
+        /// <remarks>
+        /// The default delay is 20s, but can be configured by setting the <c>AZURE_SEARCH_CREATE_DELAY</c>
+        /// environment variable to the number of seconds you want to wait otherwise.
+        /// </remarks>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForIndexCreationAsync()
+        {
+            TimeSpan delay = TimeSpan.FromSeconds(20);
+
+            string value = Environment.GetEnvironmentVariable("AZURE_SEARCH_CREATE_DELAY");
+            if (int.TryParse(value, out int numValue))
+            {
+                delay = TimeSpan.FromSeconds(numValue);
+            }
+
+            await TestFixture.DelayAsync(delay);
         }
 
         /// <summary>
@@ -469,8 +481,8 @@ namespace Azure.Search.Documents.Tests
         /// Wait for the Search Service to be provisioned.
         /// </summary>
         /// <returns>A Task to wait.</returns>
-        private static async Task WaitForServiceProvisioningAsync() =>
-            await Task.Delay(TimeSpan.FromSeconds(10));
+        public async Task WaitForServiceProvisioningAsync() =>
+            await TestFixture.DelayAsync(TimeSpan.FromSeconds(10));
 
         /// <summary>
         /// Wait for DNS to propagate.
