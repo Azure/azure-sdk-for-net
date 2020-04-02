@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal class AnalyzeWithCustomModelHeaders
+    internal class ServiceTrainCustomModelAsyncHeaders
     {
         private readonly Response _response;
-        public AnalyzeWithCustomModelHeaders(Response response)
+        public ServiceTrainCustomModelAsyncHeaders(Response response)
         {
             _response = response;
         }
-        public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
+        public string Location => _response.Headers.TryGetValue("Location", out string value) ? value : null;
     }
 }
