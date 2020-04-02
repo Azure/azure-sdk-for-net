@@ -10,14 +10,14 @@ namespace LUIS.Authoring.Tests.Luis
 
     public abstract class BaseTest
     {
-        private const HttpRecorderMode mode = HttpRecorderMode.Playback;
+        private const HttpRecorderMode mode = HttpRecorderMode.Record;
 
-        protected readonly Guid GlobalAppId = new Guid("6c859d36-47a0-4dd9-a2ab-7817e211646b");
+        protected readonly Guid GlobalAppId = new Guid("4a696805-d784-4040-a0ba-043cc831b779");
         protected const string GlobalVersionId = "0.1";
         protected readonly Guid GlobalAppIdError = new Guid("86226c53-b7a6-416f-876b-226b2b5ab07d");
         protected readonly Guid GlobalNoneId = new Guid("731e7ac1-b1d4-4e4e-bc1b-d79f67e2b890");
-        protected const string AuthoringKey = "00000000000000000000000000000000";
-        protected readonly string OwnerEmail = "a-nebadr@microsoft.com";
+        protected const string AuthoringKey = "0000";
+        protected readonly string OwnerEmail = "a-nofari@microsoft.com";
 
 
         private Type TypeName => GetType();
