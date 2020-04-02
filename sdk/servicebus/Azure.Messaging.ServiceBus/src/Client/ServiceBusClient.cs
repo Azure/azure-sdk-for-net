@@ -12,10 +12,9 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// The ServiceBusClient is the top-level client through which all Service Bus entities can
-    /// be interacted with. Any lower level types retrieved from here, such as <see cref="ServiceBusSender"/> and
-    /// <see cref="ServiceBusReceiver"/> will share the same AMQP connection. Disposing the ServiceBusClient will
-    /// cause the AMQP connection to close.
-    ///
+    /// be interacted with. Any lower level types retrieved from here, such
+    /// as <see cref="ServiceBusSender"/> and <see cref="ServiceBusReceiver"/> will share the
+    /// same AMQP connection. Disposing the ServiceBusClient will cause the AMQP connection to close.
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
@@ -33,7 +32,6 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the client is disposed; otherwise, <c>false</c>.
         /// </value>
-        ///
         public bool IsDisposed { get; private set; } = false;
 
         /// <summary>
@@ -44,7 +42,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   A unique name used to identify this <see cref="ServiceBusClient"/>.
         /// </summary>
-        ///
         internal string Identifier { get; }
 
         /// <summary>
@@ -59,7 +56,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
@@ -95,8 +91,10 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
+        ///
         /// <param name="connectionString">The connection string to use for connecting to the
         /// Service Bus namespace.</param>
+        ///
         /// <remarks>
         /// If the connection string specifies a specific entity name, any subsequent calls to
         /// GetSender/GetReceiver/etc., must specify the same entity name.
@@ -109,10 +107,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
+        ///
         /// <param name="connectionString">The connection string to use for connecting to the
         /// Service Bus namespace.
         /// </param>
         /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
+        ///
         /// <remarks>
         /// If the connection string specifies a specific entity name, any subsequent calls to
         /// GetSender/GetReceiver/etc., must specify the same entity name.
@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential) :
             this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
         {
@@ -142,7 +142,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
         /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
         public ServiceBusClient(
         string fullyQualifiedNamespace,
@@ -162,7 +162,9 @@ namespace Azure.Messaging.ServiceBus
         /// queue or topic.
         /// </summary>
         ///
-        /// <param name="queueOrTopicName">The queue or topic to get a <see cref="ServiceBusSender"/> for.</param>
+        /// <param name="queueOrTopicName">The queue or topic to get a <see cref="ServiceBusSender"/>
+        /// for.</param>
+        ///
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
         public ServiceBusSender GetSender(string queueOrTopicName)
         {

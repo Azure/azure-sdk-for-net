@@ -15,7 +15,8 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity (queue or topic).
+    ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
+    ///   (Queue or Topic). It is constructed by calling <see cref="ServiceBusClient.GetSender(string)"/>.
     /// </summary>
     ///
     public class ServiceBusSender : IAsyncDisposable
