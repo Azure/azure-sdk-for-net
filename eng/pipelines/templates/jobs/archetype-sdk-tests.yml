@@ -70,6 +70,7 @@ jobs:
           -BaseName 'Generated'
           -ServiceDirectory '${{ parameters.ServiceDirectory }}'
           -TenantId '$(aad-azure-sdk-test-tenant-id)'
+          -SubscriptionId '$(azure-subscription-id)'
           -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
           -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
           -TestApplicationId '$(aad-azure-sdk-test-client-id)'
@@ -102,6 +103,7 @@ jobs:
           eng/Remove-TestResources.ps1
           -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
           -TenantId '$(aad-azure-sdk-test-tenant-id)'
+          -SubscriptionId '$(azure-subscription-id)'
           -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
           -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
           -Force

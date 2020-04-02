@@ -33,6 +33,10 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
+    [Parameter(ParameterSetName = 'Provisioner')]
+    [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
+    [string] $SubscriptionId,
+
     [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationId,
@@ -130,8 +134,13 @@ if ($ProvisionerApplicationId) {
     $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
 
+    # Use the given subscription ID if provided.
+    $subscriptionArgs = if ($SubscriptionId) {
+        @{SubscriptionId = $SubscriptionId}
+    }
+
     $provisionerAccount = Retry {
-        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal @subscriptionArgs
     }
 
     $exitActions += {
@@ -319,6 +328,9 @@ Optional service principal secret (password) to authenticate the test runner aga
 
 .PARAMETER TenantId
 The tenant ID of a service principal when a provisioner is specified.
+
+.PARAMETER SubscriptionId
+Optional subscription ID to use for new resources when logging in as a provisioner. You can also use Set-AzContext if not provisioning.
 
 .PARAMETER ProvisionerApplicationId
 A service principal ID to provision test resources when a provisioner is specified.
