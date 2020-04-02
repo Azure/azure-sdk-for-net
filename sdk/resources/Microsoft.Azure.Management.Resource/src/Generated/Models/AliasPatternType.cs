@@ -16,58 +16,49 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AliasType.
+    /// Defines values for AliasPatternType.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AliasType
+    public enum AliasPatternType
     {
         /// <summary>
-        /// Alias type is unknown (same as not providing alias type).
+        /// NotSpecified is not allowed.
         /// </summary>
         [EnumMember(Value = "NotSpecified")]
         NotSpecified,
         /// <summary>
-        /// Alias value is not secret.
+        /// Extract is the only allowed value.
         /// </summary>
-        [EnumMember(Value = "PlainText")]
-        PlainText,
-        /// <summary>
-        /// Alias value is secret.
-        /// </summary>
-        [EnumMember(Value = "Mask")]
-        Mask
+        [EnumMember(Value = "Extract")]
+        Extract
     }
-    internal static class AliasTypeEnumExtension
+    internal static class AliasPatternTypeEnumExtension
     {
-        internal static string ToSerializedValue(this AliasType? value)
+        internal static string ToSerializedValue(this AliasPatternType? value)
         {
-            return value == null ? null : ((AliasType)value).ToSerializedValue();
+            return value == null ? null : ((AliasPatternType)value).ToSerializedValue();
         }
 
-        internal static string ToSerializedValue(this AliasType value)
+        internal static string ToSerializedValue(this AliasPatternType value)
         {
             switch( value )
             {
-                case AliasType.NotSpecified:
+                case AliasPatternType.NotSpecified:
                     return "NotSpecified";
-                case AliasType.PlainText:
-                    return "PlainText";
-                case AliasType.Mask:
-                    return "Mask";
+                case AliasPatternType.Extract:
+                    return "Extract";
             }
             return null;
         }
 
-        internal static AliasType? ParseAliasType(this string value)
+        internal static AliasPatternType? ParseAliasPatternType(this string value)
         {
             switch( value )
             {
                 case "NotSpecified":
-                    return AliasType.NotSpecified;
-                case "PlainText":
-                    return AliasType.PlainText;
-                case "Mask":
-                    return AliasType.Mask;
+                    return AliasPatternType.NotSpecified;
+                case "Extract":
+                    return AliasPatternType.Extract;
             }
             return null;
         }
