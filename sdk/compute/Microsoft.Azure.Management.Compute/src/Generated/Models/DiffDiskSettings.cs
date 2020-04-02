@@ -35,8 +35,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// operating system disk. Possible values include: 'Local'</param>
         /// <param name="placement">Specifies the ephemeral disk placement for
         /// operating system disk. This property is used to specify Cache disk
-        /// or Resource disk for ephemeral OS disk provisioning. Possible
-        /// values include: 'CacheDisk', 'ResourceDisk'</param>
+        /// or Resource disk for ephemeral OS disk provisioning. By default if
+        /// customer does not specify this placement property in the request,
+        /// the Ephemeral OS disk will be provisioned using Cache disk.
+        /// Possible values include: 'CacheDisk', 'ResourceDisk'</param>
         public DiffDiskSettings(string option = default(string), string placement = default(string))
         {
             Option = option;
@@ -59,8 +61,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the ephemeral disk placement for operating
         /// system disk. This property is used to specify Cache disk or
-        /// Resource disk for ephemeral OS disk provisioning. Possible values
-        /// include: 'CacheDisk', 'ResourceDisk'
+        /// Resource disk for ephemeral OS disk provisioning. By default if
+        /// customer does not specify this placement property in the request,
+        /// the Ephemeral OS disk will be provisioned using Cache disk.
+        /// Possible values include: 'CacheDisk', 'ResourceDisk'
         /// </summary>
         [JsonProperty(PropertyName = "placement")]
         public string Placement { get; set; }
