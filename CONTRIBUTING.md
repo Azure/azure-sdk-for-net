@@ -258,7 +258,7 @@ input-file:
 ```
 
 3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13).
-4. Add a `*ManagementClientOptions` type that inherits from `ClientOptions` and has a service version enum:
+4. Add a `*ManagementClientOptions` or `*ClientOptions` (depending if the library is management library) type that inherits from `ClientOptions` and has a service version enum:
 
 ``` C#
 namespace Azure.Management.Storage
