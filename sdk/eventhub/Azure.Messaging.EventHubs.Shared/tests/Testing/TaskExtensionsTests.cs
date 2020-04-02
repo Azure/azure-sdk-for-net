@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -21,6 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///  method.
         /// </summary>
         ///
+        [Test]
         public void IgnoreExceptionDoesNotSurfaceExceptions()
         {
             var exceptionTask = Task.Run(() => throw new DllNotFoundException());
@@ -32,6 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///  method.
         /// </summary>
         ///
+        [Test]
         public void IgnoreExceptionDoesNotInterfereWithSuccessfulTasks()
         {
             var successfulTask = Task.Delay(250);

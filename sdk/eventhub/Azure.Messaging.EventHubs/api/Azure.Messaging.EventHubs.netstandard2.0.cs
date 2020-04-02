@@ -274,7 +274,7 @@ namespace Azure.Messaging.EventHubs.Primitives
     public partial class EventProcessorPartition
     {
         public EventProcessorPartition() { }
-        public string PartitionId { get { throw null; } }
+        public string PartitionId { get { throw null; } protected internal set { } }
     }
     public partial class EventProcessorPartitionOwnership
     {
@@ -298,7 +298,9 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string FullyQualifiedNamespace { get { throw null; } }
         public string Identifier { get { throw null; } }
         public bool IsRunning { get { throw null; } protected set { } }
+        protected Azure.Messaging.EventHubs.EventHubsRetryPolicy RetryPolicy { get { throw null; } }
         protected abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken);
+        protected internal virtual Azure.Messaging.EventHubs.EventHubConnection CreateConnection() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

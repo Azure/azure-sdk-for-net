@@ -417,6 +417,7 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     protected abstract Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken);
     
     // Infrastructure
+    protected internal virtual CreateConnection();
     protected virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties(string partitionId);
 }
 

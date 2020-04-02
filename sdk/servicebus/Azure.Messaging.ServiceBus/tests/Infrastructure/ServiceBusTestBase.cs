@@ -93,7 +93,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     RetryOptions = new ServiceBusRetryOptions
                     {
                         TryTimeout = TimeSpan.FromSeconds(5),
-                        MaximumRetries = 0
+                        MaxRetries = 0
                     }
                 };
             return new ServiceBusClient(

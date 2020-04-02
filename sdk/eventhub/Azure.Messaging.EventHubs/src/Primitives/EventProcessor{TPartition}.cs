@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private const int MaximumFailedConsumerCount = 1;
 
         /// <summary>The primitive for synchronizing access when starting and stopping the processor.</summary>
-        private readonly SemaphoreSlim ProcessorRunningSync = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim ProcessorRunningGuard = new SemaphoreSlim(1, 1);
 
         /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
         private bool? _isRunningOverride;
@@ -119,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     try
                     {
-                        if (!ProcessorRunningSync.Wait(100))
+                        if (!ProcessorRunningGuard.Wait(100))
                         {
                             return (_statusOverride ?? EventProcessorStatus.NotRunning);
                         }
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                     finally
                     {
-                        ProcessorRunningSync.Release();
+                        ProcessorRunningGuard.Release();
                     }
                 }
                 else
@@ -160,6 +160,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         internal EventHubsEventSource Logger { get; set; } = EventHubsEventSource.Log;
+
+        /// <summary>
+        ///   The active policy which governs retry attempts for the processor.
+        /// </summary>
+        ///
+        protected EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
         ///   The set of currently active partition processing tasks issued by this event processor and their associated
@@ -225,6 +231,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
+            RetryPolicy = options.RetryOptions.ToRetryPolicy();
             Options = options;
             EventBatchMaximumCount = eventBatchMaximumCount;
             LoadBalancer = loadBalancer ?? CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
@@ -294,6 +301,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
             Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
+            RetryPolicy = options.RetryOptions.ToRetryPolicy();
             Options = options;
             EventBatchMaximumCount = eventBatchMaximumCount;
             LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
@@ -397,14 +405,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         public override string ToString() => $"Event Processor<{ typeof(TPartition).Name }>: { Identifier }";
 
         /// <summary>
-        ///   Creates an <see cref="EventHubConnection" /> to use for communicating with the Event Hubs service.
-        /// </summary>
-        ///
-        /// <returns>The requested <see cref="EventHubConnection" />.</returns>
-        ///
-        internal virtual EventHubConnection CreateConnection() => ConnectionFactory();
-
-        /// <summary>
         ///   Creates an <see cref="TransportConsumer" /> to use for processing.
         /// </summary>
         ///
@@ -451,6 +451,70 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                            string eventHubName,
                                                                            TimeSpan ownershipExpiration) =>
             new PartitionLoadBalancer(storageManager, identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, ownershipExpiration);
+
+        /// <summary>
+        ///   Performs the tasks needed to process a batch of events.
+        /// </summary>
+        ///
+        /// <param name="partition">The Event Hub partition whose processing should be started.</param>
+        /// <param name="eventBatch">The batch of events to process.</param>
+        /// <param name="dispatchEmptyBatches"><c>true</c> if empty batches should be dispatched to the handler; otherwise, <c>false</c>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.</param>
+        ///
+        internal virtual async Task ProcessEventBatchAsync(TPartition partition,
+                                                           IReadOnlyList<EventData> eventBatch,
+                                                           bool dispatchEmptyBatches,
+                                                           CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            // If there were no events in the batch and empty batches should not be emitted,
+            // take no further action.
+
+            if (((eventBatch == null) || (eventBatch.Count <= 0)) && (!dispatchEmptyBatches))
+            {
+                return;
+            }
+
+            // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
+
+            using var diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
+            diagnosticScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind);
+            diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
+            diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
+
+            if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
+            {
+                foreach (var eventData in eventBatch)
+                {
+                    if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
+                    {
+                        var attributes = new Dictionary<string, string>(1)
+                        {
+                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString() }
+                        };
+
+                        diagnosticScope.AddLink(diagnosticId, attributes);
+                    }
+                }
+            }
+
+            diagnosticScope.Start();
+
+            // Dispatch the batch to the handler for processing.  Exceptions in the handler code are intended to be
+            // unhandled by the processor; explicitly signal that the exception was observed in developer-provided
+            // code.
+
+            try
+            {
+                await OnProcessingEventBatchAsync(eventBatch, partition, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                diagnosticScope.Failed(ex);
+                throw new DeveloperCodeException(ex);
+            }
+        }
 
         /// <summary>
         ///   Creates the infrastructure for tracking the processing of a partition and begins processing the
@@ -501,7 +565,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var connection = CreateConnection();
                 await using var connectionAwaiter = connection.ConfigureAwait(false);
 
-                var retryPolicy = Options.RetryOptions.ToRetryPolicy();
                 var retryDelay = default(TimeSpan?);
                 var capturedException = default(Exception);
                 var eventBatch = default(IReadOnlyList<EventData>);
@@ -560,7 +623,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                 _ = InvokeOnProcessingErrorAsync(ex, partition, Resources.OperationReadEvents, CancellationToken.None);
 
                                 Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
-                                retryDelay = retryPolicy.CalculateRetryDelay(ex, ++failedAttemptCount);
+                                retryDelay = RetryPolicy.CalculateRetryDelay(ex, ++failedAttemptCount);
 
                                 if (!retryDelay.HasValue)
                                 {
@@ -638,68 +701,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         }
 
         /// <summary>
-        ///   Performs the tasks needed to process a batch of events.
+        ///   Creates an <see cref="EventHubConnection" /> to use for communicating with the Event Hubs service.
         /// </summary>
         ///
-        /// <param name="partition">The Event Hub partition whose processing should be started.</param>
-        /// <param name="eventBatch">The batch of events to process.</param>
-        /// <param name="dispatchEmptyBatches"><c>true</c> if empty batches should be dispatched to the handler; otherwise, <c>false</c>.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.</param>
+        /// <returns>The requested <see cref="EventHubConnection" />.</returns>
         ///
-        internal virtual async Task ProcessEventBatchAsync(TPartition partition,
-                                                           IReadOnlyList<EventData> eventBatch,
-                                                           bool dispatchEmptyBatches,
-                                                           CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            // If there were no events in the batch and empty batches should not be emitted,
-            // take no further action.
-
-            if (((eventBatch == null) || (eventBatch.Count <= 0)) && (!dispatchEmptyBatches))
-            {
-                return;
-            }
-
-            // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
-
-            using var diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
-            diagnosticScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind);
-            diagnosticScope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
-            diagnosticScope.AddAttribute(DiagnosticProperty.EndpointAttribute, FullyQualifiedNamespace);
-
-            if ((diagnosticScope.IsEnabled) && (eventBatch.Any()))
-            {
-                foreach (var eventData in eventBatch)
-                {
-                    if (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId))
-                    {
-                        var attributes = new Dictionary<string, string>(1)
-                        {
-                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString() }
-                        };
-
-                        diagnosticScope.AddLink(diagnosticId, attributes);
-                    }
-                }
-            }
-
-            diagnosticScope.Start();
-
-            // Dispatch the batch to the handler for processing.  Exceptions in the handler code are intended to be
-            // unhandled by the processor; explicitly signal that the exception was observed in developer-provided
-            // code.
-
-            try
-            {
-                await OnProcessingEventBatchAsync(eventBatch, partition, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                diagnosticScope.Failed(ex);
-                throw new DeveloperCodeException(ex);
-            }
-        }
+        protected internal virtual EventHubConnection CreateConnection() => ConnectionFactory();
 
         /// <summary>
         ///   Produces a list of the available checkpoints for the Event Hub and consumer group associated with the
@@ -724,7 +731,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>
         ///   Produces a list of the ownership assignments for partitions between each of the cooperating event processor
         ///   instances for a given Event Hub and consumer group pairing.  This method is used when load balancing to allow
-        ///   the processor to discover other active collaborators and to made decisions about how to best balance work
+        ///   the processor to discover other active collaborators and to make decisions about how to best balance work
         ///   between them.
         /// </summary>
         ///
@@ -772,7 +779,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   <para>Should an exception occur within the code for this method, the event processor will allow it to bubble and will not surface to the error handler or attempt to handle
         ///   it in any way.  Developers are strongly encouraged to take exception scenarios into account and guard against them using try/catch blocks and other means as appropriate.</para>
         ///
-        ///   <para>It is not recommended to that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
+        ///   <para>It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.</para>
         /// </remarks>
         ///
@@ -821,7 +828,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the initialization.  This is most likely to occur if the partition is claimed by another event processor instance or the processor is shutting down.</param>
         ///
         /// <remarks>
-        ///   It is not recommended to that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
+        ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
         /// </remarks>
         ///
@@ -838,7 +845,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is not expected to signal under normal circumstances and will only occur if the processor encounters an unrecoverable error.</param>
         ///
         /// <remarks>
-        ///   It is not recommended to that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
+        ///   It is not recommended that the state of the processor be managed directly from within this method; requesting to start or stop the processor may result in
         ///   a deadlock scenario, especially if using the synchronous form of the call.
         /// </remarks>
         ///
@@ -888,7 +895,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.EventProcessorStart(Identifier, EventHubName, ConsumerGroup);
 
-            var releaseSync = false;
+            var releaseGuard = false;
 
             try
             {
@@ -897,16 +904,15 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (async)
                 {
-                    await ProcessorRunningSync.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    await ProcessorRunningGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    ProcessorRunningSync.Wait();
+                    ProcessorRunningGuard.Wait(cancellationToken);
                 }
 
-                releaseSync = true;
+                releaseGuard = true;
                 _statusOverride = EventProcessorStatus.Starting;
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If the processor is already running, then it was started before the
                 // semaphore was acquired; there is no work to be done.
@@ -928,6 +934,11 @@ namespace Azure.Messaging.EventHubs.Primitives
                 ActivePartitionProcessors.Clear();
                 _runningProcessorTask = RunProcessingAsync(_runningProcessorCancellationSource.Token);
             }
+            catch (OperationCanceledException ex)
+            {
+                Logger.EventProcessorStartError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                throw new TaskCanceledException();
+            }
             catch (Exception ex)
             {
                 Logger.EventProcessorStartError(Identifier, EventHubName, ConsumerGroup, ex.Message);
@@ -941,9 +952,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // If the cancellation token was signaled during the attempt to acquire the
                 // semaphore, it cannot be safely released; ensure that it is held.
 
-                if (releaseSync)
+                if (releaseGuard)
                 {
-                    ProcessorRunningSync.Release();
+                    ProcessorRunningGuard.Release();
                 }
             }
         }
@@ -962,7 +973,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             Logger.EventProcessorStop(Identifier, EventHubName, ConsumerGroup);
 
             var processingException = default(Exception);
-            var releaseSync = false;
+            var releaseGuard = false;
 
             try
             {
@@ -971,16 +982,15 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 if (async)
                 {
-                    await ProcessorRunningSync.WaitAsync(cancellationToken).ConfigureAwait(false);
+                    await ProcessorRunningGuard.WaitAsync(cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    ProcessorRunningSync.Wait();
+                    ProcessorRunningGuard.Wait(cancellationToken);
                 }
 
-                releaseSync = true;
+                releaseGuard = true;
                 _statusOverride = EventProcessorStatus.Stopping;
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If the processor is not running, then it was never started or has been stopped
                 // before the semaphore was acquired; there is no work to be done.
@@ -1054,6 +1064,11 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _runningProcessorTask.Dispose();
                 _runningProcessorTask = null;
             }
+            catch (OperationCanceledException ex)
+            {
+                Logger.EventProcessorStopError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                throw new TaskCanceledException();
+            }
             catch (Exception ex)
             {
                 Logger.EventProcessorStopError(Identifier, EventHubName, ConsumerGroup, ex.Message);
@@ -1067,9 +1082,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // If the cancellation token was signaled during the attempt to acquire the
                 // semaphore, it cannot be safely released; ensure that it is held.
 
-                if (releaseSync)
+                if (releaseGuard)
                 {
-                    ProcessorRunningSync.Release();
+                    ProcessorRunningGuard.Release();
                 }
             }
 
@@ -1098,7 +1113,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var connection = CreateConnection();
                 await using var connectionAwaiter = connection.ConfigureAwait(false);
 
-                var retryPolicy = Options.RetryOptions.ToRetryPolicy();
                 var cycleDuration = new Stopwatch();
                 var partitionIds = default(string[]);
 
@@ -1108,7 +1122,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                     try
                     {
-                        partitionIds = await connection.GetPartitionIdsAsync(retryPolicy, cancellationToken).ConfigureAwait(false);
+                        partitionIds = await connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())
                     {

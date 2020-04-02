@@ -381,5 +381,38 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.IsNull(peekedMessage.Result);
             }
         }
+
+        [Test]
+        public async Task MaxWaitTimeRespected()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    new ServiceBusClientOptions
+                    {
+                        RetryOptions = new ServiceBusRetryOptions
+                        {
+                            TryTimeout = TimeSpan.FromSeconds(20)
+                        }
+                    });
+
+                var receiver = client.GetReceiver(scope.QueueName);
+                var start = DateTimeOffset.UtcNow;
+                var receivedMessage = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                var end = DateTimeOffset.UtcNow;
+                Assert.IsNull(receivedMessage);
+                var diff = end - start;
+                Assert.IsTrue(diff.TotalSeconds < 10);
+
+                start = DateTimeOffset.UtcNow;
+                // no wait time specified => should default to TryTimeout
+                receivedMessage = await receiver.ReceiveAsync();
+                end = DateTimeOffset.UtcNow;
+                Assert.IsNull(receivedMessage);
+                diff = end - start;
+                Assert.IsTrue(diff.TotalSeconds > 10);
+            }
+        }
     }
 }
