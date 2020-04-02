@@ -19,11 +19,10 @@ namespace Azure.Identity
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            IntPtr schemaPtr = IntPtr.Zero;
+            IntPtr schemaPtr = GetLibsecretSchema();
 
             try
             {
-                schemaPtr = GetLibsecretSchema();
                 return LookupPassword(schemaPtr, serviceName, accountName);
             }
             finally

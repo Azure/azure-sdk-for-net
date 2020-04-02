@@ -16,7 +16,6 @@ namespace Azure.Identity
 
         public string GetUserSettingsPath() => s_userSettingsJsonPath;
 
-
         public string GetCredentials(string serviceName, string accountName)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));

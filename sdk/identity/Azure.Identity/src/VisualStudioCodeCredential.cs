@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
@@ -60,22 +61,19 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
 
-                try
+                if (!IsBase64String(storedCredentials))
                 {
-                    JsonDocument.Parse(storedCredentials);
                     throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
                 }
-                catch (JsonException)
-                {
-                    var publicClient = (IByRefreshToken)PublicClientApplicationBuilder.Create(ClientId)
-                        .WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline))
-                        .WithAuthority(cloudInstance, tenant)
-                        .Build();
 
-                    var result = await publicClient.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+                var publicClient = (IByRefreshToken)PublicClientApplicationBuilder.Create(ClientId)
+                    .WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline))
+                    .WithAuthority(cloudInstance, tenant)
+                    .Build();
 
-                    return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
-                }
+                var result = await publicClient.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+
+                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (OperationCanceledException e)
             {
@@ -87,6 +85,9 @@ namespace Azure.Identity
                 throw scope.FailAndWrap(e);
             }
         }
+
+        private static bool IsBase64String(string str)
+            => str.Select(t => (uint)t).All(ch => ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'Z' || ch >= 'a' && ch <= 'z' || ch == '_' || ch == '-');
 
         private void GetUserSettings(out string tenant, out string environmentName)
         {

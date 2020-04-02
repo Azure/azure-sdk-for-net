@@ -344,11 +344,10 @@ namespace Azure.Identity.Tests
 
             public static IDisposable Create(string cloudName, string refreshToken)
             {
-                IntPtr schemaPtr = IntPtr.Zero;
+                IntPtr schemaPtr = GetLibsecretSchema();
 
                 try
                 {
-                    schemaPtr = GetLibsecretSchema();
                     LinuxNativeMethods.secret_password_store_sync(schemaPtr, "default", $"{ExpectedServiceName}/{cloudName}", refreshToken, IntPtr.Zero, "service", ExpectedServiceName, "account", cloudName);
                 }
                 finally
@@ -366,11 +365,10 @@ namespace Azure.Identity.Tests
 
             public void Dispose()
             {
-                IntPtr schemaPtr = IntPtr.Zero;
+                IntPtr schemaPtr = GetLibsecretSchema();
 
                 try
                 {
-                    schemaPtr = GetLibsecretSchema();
                     LinuxNativeMethods.secret_password_clear_sync(schemaPtr, IntPtr.Zero, "service", ExpectedServiceName, "account", _cloudName);
                 }
                 finally
