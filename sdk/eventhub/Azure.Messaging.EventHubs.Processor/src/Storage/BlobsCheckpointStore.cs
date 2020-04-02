@@ -131,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                Logger.ListOwnershipError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.ToString());
+                Logger.ListOwnershipError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.Message);
                 throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
             }
             finally

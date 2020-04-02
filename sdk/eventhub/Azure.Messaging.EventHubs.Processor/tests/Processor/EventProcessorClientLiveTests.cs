@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
@@ -57,59 +58,25 @@ namespace Azure.Messaging.EventHubs.Tests
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-            // Test the scenario.
-
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
 
-            var sentCount = 0;
-            var processCount = 0L;
-            var sourceEvents = CreateEvents(50).ToList();
-            var processedEvents = new Dictionary<string, EventData>();
-
             // Send a set of events.
 
-            await using (var producer = new EventHubProducerClient(connectionString))
-            {
-                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationSource.Token)))
-                {
-                    await producer.SendAsync(batch, cancellationSource.Token);
-
-                    sentCount += batch.Count;
-                    batch.Dispose();
-                }
-            }
+            var sourceEvents = CreateEvents(50).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
             // Attempt to read back the events.
 
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
             var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
 
-            processor.ProcessErrorAsync += args =>
-            {
-                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
-                return Task.CompletedTask;
-            };
-
-            processor.ProcessEventAsync += args =>
-            {
-                if (args.HasEvent)
-                {
-                    var eventId = args.Data.Properties[CustomIdProperty].ToString();
-
-                    // Guard against duplicates; Event Hubs has an at-least-once guarantee.
-
-                    if ((TryAdd(processedEvents, eventId, args.Data)) && (Interlocked.Increment(ref processCount) >= sentCount))
-                    {
-                        completionSource.TrySetResult(true);
-                    }
-                }
-
-                return Task.CompletedTask;
-            };
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
 
             await processor.StartProcessingAsync(cancellationSource.Token);
 
@@ -124,12 +91,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
-
-                if (!processedEvents.TryGetValue(sourceId, out var processedEvent))
-                {
-                    Assert.Fail($"The event with custom identifier [{ sourceId }] was not processed.");
-                }
-
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -146,59 +108,25 @@ namespace Azure.Messaging.EventHubs.Tests
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-            // Test the scenario.
-
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
 
-            var sentCount = 0;
-            var processCount = 0L;
-            var sourceEvents = CreateEvents(50).ToList();
-            var processedEvents = new Dictionary<string, EventData>();
-
             // Send a set of events.
 
-            await using (var producer = new EventHubProducerClient(connectionString))
-            {
-                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationSource.Token)))
-                {
-                    await producer.SendAsync(batch, cancellationSource.Token);
-
-                    sentCount += batch.Count;
-                    batch.Dispose();
-                }
-            }
+            var sourceEvents = CreateEvents(50).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
             // Attempt to read back the events.
 
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
             var processor = CreateProcessorWithIdentity(scope.ConsumerGroups.First(), scope.EventHubName, options: options);
 
-            processor.ProcessErrorAsync += args =>
-            {
-                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
-                return Task.CompletedTask;
-            };
-
-            processor.ProcessEventAsync += args =>
-            {
-                if (args.HasEvent)
-                {
-                    var eventId = args.Data.Properties[CustomIdProperty].ToString();
-
-                    // Guard against duplicates; Event Hubs has an at-least-once guarantee.
-
-                    if ((TryAdd(processedEvents, eventId, args.Data)) && (Interlocked.Increment(ref processCount) >= sentCount))
-                    {
-                        completionSource.TrySetResult(true);
-                    }
-                }
-
-                return Task.CompletedTask;
-            };
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
 
             await processor.StartProcessingAsync(cancellationSource.Token);
 
@@ -213,12 +141,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
-
-                if (!processedEvents.TryGetValue(sourceId, out var processedEvent))
-                {
-                    Assert.Fail($"The event with custom identifier [{ sourceId }] was not processed.");
-                }
-
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -235,34 +158,19 @@ namespace Azure.Messaging.EventHubs.Tests
             await using EventHubScope scope = await EventHubScope.CreateAsync(4);
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-            // Test the scenario.
-
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
 
-            var sentCount = 0;
-            var processCount = 0L;
-            var sourceEvents = CreateEvents(500).ToList();
-            var processedEvents = new ConcurrentDictionary<string, EventData>();
-
-
             // Send a set of events.
 
-            await using (var producer = new EventHubProducerClient(connectionString))
-            {
-                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationSource.Token)))
-                {
-                    await producer.SendAsync(batch, cancellationSource.Token);
-
-                    sentCount += batch.Count;
-                    batch.Dispose();
-                }
-            }
+            var sourceEvents = CreateEvents(500).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
             // Attempt to read back the events.
 
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             // Create multiple processors using the same handlers; events may not appear in the same order, but each event
@@ -278,28 +186,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var processor in processors)
             {
-                processor.ProcessErrorAsync += args =>
-                {
-                    Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
-                    return Task.CompletedTask;
-                };
-
-                processor.ProcessEventAsync += args =>
-                {
-                    if (args.HasEvent)
-                    {
-                        var eventId = args.Data.Properties[CustomIdProperty].ToString();
-
-                        // Guard against duplicates; Event Hubs has an at-least-once guarantee.
-
-                        if ((processedEvents.TryAdd(eventId, args.Data)) && (Interlocked.Increment(ref processCount) >= sentCount))
-                        {
-                            completionSource.TrySetResult(true);
-                        }
-                    }
-
-                    return Task.CompletedTask;
-                };
+                processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+                processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
             }
 
             await Task.WhenAll(processors.Select(processor => processor.StartProcessingAsync(cancellationSource.Token)));
@@ -317,12 +205,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
-
-                if (!processedEvents.TryGetValue(sourceId, out var processedEvent))
-                {
-                    Assert.Fail($"The event with custom identifier [{ sourceId }] was not processed.");
-                }
-
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -342,65 +225,36 @@ namespace Azure.Messaging.EventHubs.Tests
             await using EventHubScope scope = await EventHubScope.CreateAsync(partitionCount);
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-            // Test the scenario.
-
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
 
-            var sentCount = 0;
-            var processCount = 0L;
-            var sourceEvents = CreateEvents(200).ToList();
-            var processedEvents = new HashSet<string>();
-
-            // Send a set of events.
+            // Discover the partitions.
 
             await using (var producer = new EventHubProducerClient(connectionString))
             {
-                foreach (var partition in (await producer.GetPartitionIdsAsync(cancellationSource.Token)))
+                foreach (var partitionId in (await producer.GetPartitionIdsAsync()))
                 {
-                    partitionIds.Add(partition);
-                }
-
-                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationSource.Token)))
-                {
-                    await producer.SendAsync(batch, cancellationSource.Token);
-
-                    sentCount += batch.Count;
-                    batch.Dispose();
+                    partitionIds.Add(partitionId);
                 }
             }
+
+            // Send a set of events.
+
+            var sourceEvents = CreateEvents(200).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
             // Attempt to read back the events.
 
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var storageManager = new InMemoryStorageManager(_ => {});
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
             var processor = CreateProcessorWithIdentity(scope.ConsumerGroups.First(), scope.EventHubName, storageManager, options);
 
-            processor.ProcessErrorAsync += args =>
-            {
-                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
-                return Task.CompletedTask;
-            };
-
-            processor.ProcessEventAsync += args =>
-            {
-                if (args.HasEvent)
-                {
-                    var eventId = args.Data.Properties[CustomIdProperty].ToString();
-
-                    // Guard against duplicates; Event Hubs has an at-least-once guarantee.
-
-                    if ((!processedEvents.Contains(eventId)) && (Interlocked.Increment(ref processCount) >= sentCount))
-                    {
-                        completionSource.TrySetResult(true);
-                    }
-                }
-
-                return Task.CompletedTask;
-            };
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
 
             await processor.StartProcessingAsync(cancellationSource.Token);
 
@@ -422,7 +276,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(partitionIds.Contains(partitionOwnership.PartitionId), Is.True, $"The partition `{ partitionOwnership.PartitionId }` is not valid for the Event Hub.");
                 Assert.That(partitionOwnership.OwnerIdentifier, Is.Empty, "Ownership should have bee relinquished when the processor was stopped.");
             }
-
         }
 
         /// <summary>
@@ -437,27 +290,14 @@ namespace Azure.Messaging.EventHubs.Tests
             await using EventHubScope scope = await EventHubScope.CreateAsync(1);
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-            // Test the scenario.
-
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
-            var sentCount = 0;
-            var sourceEvents = CreateEvents(20).ToList();
+            // Send a set of events.
+
+            var sourceEvents = CreateEvents(25).ToList();
             var lastSourceEvent = sourceEvents.Last();
-
-            // Send an initial set of events to populate the partition.
-
-            await using (var producer = new EventHubProducerClient(connectionString))
-            {
-                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationSource.Token)))
-                {
-                    await producer.SendAsync(batch, cancellationSource.Token);
-
-                    sentCount += batch.Count;
-                    batch.Dispose();
-                }
-            }
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
@@ -482,28 +322,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Send the second set of events to be read by the processor.
 
-            sentCount = 0;
             sourceEvents = CreateEvents(20, (startingCustomSequence + 1)).ToList();
-
-            // Send an initial set of events to populate the partition.
-
-            await using (var producer = new EventHubProducerClient(connectionString))
-            {
-                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationSource.Token)))
-                {
-                    await producer.SendAsync(batch, cancellationSource.Token);
-
-                    sentCount += batch.Count;
-                    batch.Dispose();
-                }
-            }
+            sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
             // Attempt to read back the second set of events.
 
-            var processCount = 0L;
-            var processedEvents = new Dictionary<string, EventData>();
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
             var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
@@ -514,28 +340,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.CompletedTask;
             };
 
-            processor.ProcessErrorAsync += args =>
-            {
-                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
-                return Task.CompletedTask;
-            };
-
-            processor.ProcessEventAsync += args =>
-            {
-                if (args.HasEvent)
-                {
-                    var eventId = args.Data.Properties[CustomIdProperty].ToString();
-
-                    // Guard against duplicates; Event Hubs has an at-least-once guarantee.
-
-                    if ((TryAdd(processedEvents, eventId, args.Data)) && (Interlocked.Increment(ref processCount) >= sentCount))
-                    {
-                        completionSource.TrySetResult(true);
-                    }
-                }
-
-                return Task.CompletedTask;
-            };
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
 
             await processor.StartProcessingAsync(cancellationSource.Token);
 
@@ -550,12 +356,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
-
-                if (!processedEvents.TryGetValue(sourceId, out var processedEvent))
-                {
-                    Assert.Fail($"The event with custom identifier [{ sourceId }] was not processed.");
-                }
-
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -572,67 +373,39 @@ namespace Azure.Messaging.EventHubs.Tests
             await using EventHubScope scope = await EventHubScope.CreateAsync(1);
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-            // Test the scenario.
-
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
-            var sentCount = 0;
+            // Send a set of events.
+
             var segmentEventCount = 25;
             var beforeCheckpointEvents = CreateEvents(segmentEventCount).ToList();
             var afterCheckpointEvents = CreateEvents(segmentEventCount, segmentEventCount).ToList();
             var sourceEvents = Enumerable.Concat(beforeCheckpointEvents, afterCheckpointEvents).ToList();
             var checkpointEvent = beforeCheckpointEvents.Last();
-
-            // Send the full set of events.
-
-            await using (var producer = new EventHubProducerClient(connectionString))
-            {
-                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationSource.Token)))
-                {
-                    await producer.SendAsync(batch, cancellationSource.Token);
-
-                    sentCount += batch.Count;
-                    batch.Dispose();
-                }
-            }
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
             // Attempt to read back the first half of the events and checkpoint.
 
-            var processCount = 0L;
-            var processedEvents = new Dictionary<string, EventData>();
+            Func<ProcessEventArgs, Task> processedEventCallback = async args =>
+            {
+                if (args.Data.IsEquivalentTo(checkpointEvent))
+                {
+                    await args.UpdateCheckpointAsync(cancellationSource.Token);
+                }
+            };
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var beforeCheckpointProcessHandler = CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token, processedEventCallback);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
             var storageManager = new InMemoryStorageManager(_ => {});
             var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, storageManager, options);
 
-            processor.ProcessErrorAsync += args =>
-            {
-                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
-                return Task.CompletedTask;
-            };
-
-            processor.ProcessEventAsync += async args =>
-            {
-                if (args.HasEvent)
-                {
-                    var eventId = args.Data.Properties[CustomIdProperty].ToString();
-
-                    if (args.Data.IsEquivalentTo(checkpointEvent))
-                    {
-                        await args.UpdateCheckpointAsync(cancellationSource.Token);
-                    }
-
-                    // Guard against duplicates; Event Hubs has an at-least-once guarantee.
-
-                    if ((TryAdd(processedEvents, eventId, args.Data)) && (Interlocked.Increment(ref processCount) >= segmentEventCount))
-                    {
-                        completionSource.TrySetResult(true);
-                    }
-                }
-            };
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += beforeCheckpointProcessHandler;
 
             await processor.StartProcessingAsync(cancellationSource.Token);
 
@@ -646,14 +419,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoints = (await storageManager.ListCheckpointsAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token))?.ToList();
             Assert.That(checkpoints, Is.Not.Null, "A checkpoint should have been created.");
             Assert.That(checkpoints.Count, Is.EqualTo(1), "A single checkpoint should exist.");
-            Assert.That(processCount, Is.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
+            Assert.That(processedEvents.Count, Is.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
 
             // Reset state and start the processor again; it should resume from the event following the checkpoint.
 
             processedEvents.Clear();
-
-            processCount = 0;
             completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            processor.ProcessEventAsync -= beforeCheckpointProcessHandler;
+            processor.ProcessEventAsync += CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token);
 
             await processor.StartProcessingAsync(cancellationSource.Token);
 
@@ -666,12 +439,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in afterCheckpointEvents)
             {
                 var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
-
-                if (!processedEvents.TryGetValue(sourceId, out var processedEvent))
-                {
-                    Assert.Fail($"The event with custom identifier [{ sourceId }] was not processed.");
-                }
-
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -722,6 +490,96 @@ namespace Azure.Messaging.EventHubs.Tests
             storageManager ??= new InMemoryStorageManager(_=> {});
             return new TestEventProcessorClient(storageManager, consumerGroup, TestEnvironment.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
         }
+
+        /// <summary>
+        ///   Sends a set of events using a new producer to do so.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string to use when creating the producer.</param>
+        /// <param name="sourceEvents">The set of events to send.</param>
+        /// <param name="cancellationToken">The token used to signal a cancellation request.</param>
+        ///
+        /// <returns>The count of events that were sent.</returns>
+        ///
+        private async Task<int> SendEvents(string connectionString,
+                                           IEnumerable<EventData> sourceEvents,
+                                           CancellationToken cancellationToken)
+        {
+            var sentCount = 0;
+
+            await using (var producer = new EventHubProducerClient(connectionString))
+            {
+                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationToken)))
+                {
+                    await producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
+
+                    sentCount += batch.Count;
+                    batch.Dispose();
+                }
+            }
+
+            return sentCount;
+        }
+
+        /// <summary>
+        ///  Creates an event handler for the <see cref="EventProcessorClient.ProcessEventsAsync" />
+        ///  event which tracks events against a target count, guarding against duplicates and
+        ///  capturing accepted events.
+        /// </summary>
+        ///
+        /// <param name="targetCount">The desired count of events.  Once the number of processed events reaches this count, the <paramref name="completionSource" /> will be signaled.</param>
+        /// <param name="processedEvents">The set of events that were accepted and marked as processed.</param>
+        /// <param name="completionSource">The completion source to signal when the number of events processed reaches the <paramref name="targetCount" />.</param>
+        /// <param name="cancellationToken">The token used to signal a request for cancellation.</param>
+        /// <param name="acceptedEventCallback">An optional callback function that </param>
+        ///
+        /// <returns>A delegate suitable for use with the <see cref="EventProcessorClient.ProcessEventsAsync" /> event.</returns>
+        ///
+        private Func<ProcessEventArgs, Task> CreateEventTrackingHandler(int targetCount,
+                                                                        ConcurrentDictionary<string, EventData> processedEvents,
+                                                                        TaskCompletionSource<bool> completionSource,
+                                                                        CancellationToken cancellationToken,
+                                                                        Func<ProcessEventArgs, Task> acceptedEventCallback = default) =>
+            async args =>
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                // Guard against empty arguments with no event and duplicates; Event Hubs has an
+                // at-least-once guarantee and may send the same event more than once.
+
+                if (args.HasEvent)
+                {
+                    var eventId = args.Data.Properties[CustomIdProperty].ToString();
+
+                    if (processedEvents.TryAdd(eventId, args.Data))
+                    {
+                        if (acceptedEventCallback != default)
+                        {
+                            await acceptedEventCallback(args).ConfigureAwait(false);
+                        }
+
+                        if (processedEvents.Count >= targetCount)
+                        {
+                           completionSource.TrySetResult(true);
+                        }
+                    }
+                }
+            };
+
+        /// <summary>
+        ///  Creates an event handler for the <see cref="EventProcessorClient.ProcessErrorAsync" />
+        ///  event which performs an <see cref="Assert.Fail" /> when an error is handled.
+        /// </summary>
+        ///
+        /// <returns>A delegate suitable for use with the <see cref="EventProcessorClient.ProcessErrorAsync" /> event.</returns>
+        ///
+        private Func<ProcessErrorEventArgs, Task> CreateAssertingErrorHandler() =>
+            args =>
+            {
+                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
+                return Task.CompletedTask;
+            };
+
 
         /// <summary>
         ///   Creates a set of events with random data and random body size.
@@ -811,33 +669,6 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             return batches;
-        }
-
-        /// <summary>
-        ///   Attempts to add an item to the <paramref name="dictionary" /> if it does not
-        ///   already exist.
-        /// </summary>
-        ///
-        /// <typeparam name="TKey">The type of the key.</typeparam>
-        /// <typeparam name="TValue">The type of the value.</typeparam>
-        ///
-        /// <param name="dictionary">The dictionary to attempt to add the item to.</param>
-        /// <param name="key">The key to assign the item.</param>
-        /// <param name="value">The value of the item.</param>
-        ///
-        /// <returns><c>true</c> if the item was added; otherwise, <c>false</c>.</returns>
-        ///
-        private static bool TryAdd<TKey, TValue>(Dictionary<TKey, TValue> dictionary,
-                                                 TKey key,
-                                                 TValue value)
-        {
-            if (dictionary.ContainsKey(key))
-            {
-                return false;
-            }
-
-            dictionary.Add(key, value);
-            return true;
         }
 
         /// <summary>

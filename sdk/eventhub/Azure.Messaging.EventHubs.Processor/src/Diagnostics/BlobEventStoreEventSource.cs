@@ -44,15 +44,15 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// </summary>
         ///
         /// <param name="accountName">The Storage account name corresponding to the associated container client.</param>
-        /// <param name="name">The name of the associated container client.</param>
+        /// <param name="containerName">The name of the associated container client.</param>
         ///
         [Event(20, Level = EventLevel.Verbose, Message = "{0} created. AccountName: '{1}'; ContainerName: '{2}'.")]
         public virtual void BlobsCheckpointStoreCreated(string accountName,
-                                                        string name)
+                                                        string containerName)
         {
             if (IsEnabled())
             {
-                WriteEvent(20, nameof(BlobsCheckpointStore), accountName ?? string.Empty, name ?? string.Empty);
+                WriteEvent(20, nameof(BlobsCheckpointStore), accountName ?? string.Empty, containerName ?? string.Empty);
             }
         }
 
