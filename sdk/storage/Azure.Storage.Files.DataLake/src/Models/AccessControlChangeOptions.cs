@@ -13,5 +13,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Batch size should be between 1 and 2000. The default when unspecified is 2000.
         /// </summary>
         public int? BatchSize { get; set; }
+
+        /// <summary>
+        /// Optional. Defines maximum number of batches that single change Access Control operation can execute.
+        /// If maximum is reached before all subpaths are processed then continuation token can be used to resume operation.
+        /// Empty value indicates that maximum number of batches in unbound and operation continues till end.
+        /// </summary>
+        public int? MaxBatches { get; set; }
     }
 }
