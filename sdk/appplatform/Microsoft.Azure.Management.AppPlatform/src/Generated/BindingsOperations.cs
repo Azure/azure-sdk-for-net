@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BindingResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BindingResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -323,6 +323,10 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bindingName");
             }
+            if (bindingResource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "bindingResource");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -330,11 +334,11 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("bindingResource", bindingResource);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("appName", appName);
                 tracingParameters.Add("bindingName", bindingName);
+                tracingParameters.Add("bindingResource", bindingResource);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -712,7 +716,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<BindingResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BindingResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -734,6 +738,10 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bindingName");
             }
+            if (bindingResource == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "bindingResource");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -741,11 +749,11 @@ namespace Microsoft.Azure.Management.AppPlatform
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("bindingResource", bindingResource);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("appName", appName);
                 tracingParameters.Add("bindingName", bindingName);
+                tracingParameters.Add("bindingResource", bindingResource);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }

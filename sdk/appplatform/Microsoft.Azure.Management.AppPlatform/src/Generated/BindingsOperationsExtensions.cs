@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='bindingResource'>
             /// Parameters for the create or update operation
             /// </param>
-            public static BindingResource CreateOrUpdate(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource))
+            public static BindingResource CreateOrUpdate(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource).GetAwaiter().GetResult();
             }
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BindingResource> CreateOrUpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BindingResource> CreateOrUpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='bindingResource'>
             /// Parameters for the update operation
             /// </param>
-            public static BindingResource Update(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource))
+            public static BindingResource Update(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource)
             {
                 return operations.UpdateAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource).GetAwaiter().GetResult();
             }
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.AppPlatform
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BindingResource> UpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource = default(BindingResource), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BindingResource> UpdateAsync(this IBindingsOperations operations, string resourceGroupName, string serviceName, string appName, string bindingName, BindingResource bindingResource, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, appName, bindingName, bindingResource, null, cancellationToken).ConfigureAwait(false))
                 {

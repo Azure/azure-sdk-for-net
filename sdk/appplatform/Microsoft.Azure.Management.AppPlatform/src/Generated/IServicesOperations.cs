@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ServiceResource resource = default(ServiceResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServiceResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ServiceResource resource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Operation to delete a Service.
         /// </summary>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ServiceResource resource = default(ServiceResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServiceResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ServiceResource resource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List test keys for a Service.
         /// </summary>
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TestKeys>> RegenerateTestKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, RegenerateTestKeyRequestPayload regenerateTestKeyRequest = default(RegenerateTestKeyRequestPayload), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TestKeys>> RegenerateTestKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, RegenerateTestKeyRequestPayload regenerateTestKeyRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the resource. You can
         /// obtain this value from the Azure Resource Manager API or the
@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ServiceResource resource = default(ServiceResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServiceResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ServiceResource resource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Operation to delete a Service.
         /// </summary>
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ServiceResource resource = default(ServiceResource), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServiceResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ServiceResource resource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// </summary>
