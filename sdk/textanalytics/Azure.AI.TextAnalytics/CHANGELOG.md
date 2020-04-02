@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.4 (2020-04-07)
 ### Breaking changes
 - Replaced `TextAnalyticsApiKeyCredential` with `AzureKeyCredential`.
 - Renamed all input parameters `inputText` to `document`, and `inputs` to `documents`.
