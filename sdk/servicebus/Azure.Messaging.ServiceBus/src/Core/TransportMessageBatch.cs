@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   well as any overhead for the batch itself when sent to the Queue/Topic.
         /// </summary>
         ///
-        public abstract long MaximumSizeInBytes { get; }
+        public abstract long MaxSizeInBytes { get; }
 
         /// <summary>
         ///   The size of the batch, in bytes, as it will be sent to the Queue/Topic

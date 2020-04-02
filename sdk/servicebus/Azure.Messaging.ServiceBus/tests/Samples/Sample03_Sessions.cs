@@ -64,9 +64,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                #region Snippet:ServiceBusReceiveFromSpecificSession
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -89,6 +86,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message batch
                 await sender.SendBatchAsync(messageBatch);
 
+                #region Snippet:ServiceBusReceiveFromSpecificSession
                 // Get a receiver specifying a particular session
                 ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(
                     queueName,
