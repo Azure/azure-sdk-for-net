@@ -291,8 +291,8 @@ namespace Azure.Search.Documents
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             IndexesClient.Create(
-                options?.ClientRequestId,
                 index,
+                options?.ClientRequestId,
                 cancellationToken);
 
         /// <summary>
@@ -324,8 +324,8 @@ namespace Azure.Search.Documents
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             await IndexesClient.CreateAsync(
-                options?.ClientRequestId,
                 index,
+                options?.ClientRequestId,
                 cancellationToken)
                 .ConfigureAwait(false);
 
