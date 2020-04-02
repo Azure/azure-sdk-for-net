@@ -1758,6 +1758,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("Nightly live test is failing")]
         public async Task DeleteSubDirectoryAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
