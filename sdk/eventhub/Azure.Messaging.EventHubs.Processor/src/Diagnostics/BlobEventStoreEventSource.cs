@@ -371,7 +371,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the specific Event Hub the data is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the data is associated with.</param>
         ///
-        [Event(35, Level = EventLevel.Informational, Message = "An invalid checkpoint was found for partition: '{0}' of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.  This checkpoint is not valid and will be ignored.")]
+        [Event(35, Level = EventLevel.Warning, Message = "An invalid checkpoint was found for partition: '{0}' of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.  This checkpoint is not valid and will be ignored.")]
         public virtual void InvalidCheckpointFound(string partitionId,
                                                    string fullyQualifiedNamespace,
                                                    string eventHubName,
