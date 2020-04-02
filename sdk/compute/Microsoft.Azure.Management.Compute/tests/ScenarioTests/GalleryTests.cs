@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Compute.Tests.DiskRPTests;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.ResourceManager;
@@ -62,7 +63,7 @@ namespace Compute.Tests
                 string galleryName2 = galleryName + "New";
                 m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName2, new ResourceGroup { Location = galleryHomeLocation });
                 Trace.TraceInformation("Created the resource group: " + rgName2);
-                Thread.Sleep(1000);
+                ComputeManagementTestUtilities.WaitSeconds(10);
                 m_CrpClient.Galleries.CreateOrUpdate(rgName2, galleryName2, galleryIn);
                 Trace.TraceInformation(string.Format("Created the gallery: {0} in resource group: {1}", galleryName2, rgName2));
                 IPage<Gallery> listGalleriesInRgResult = m_CrpClient.Galleries.ListByResourceGroup(rgName);
@@ -202,7 +203,7 @@ namespace Compute.Tests
                     Trace.TraceInformation(string.Format("Deleted the gallery image version: {0} in gallery image: {1}",
                         galleryImageVersionName, galleryImageName));
 
-                    ComputeManagementTestUtilities.WaitMinutes(1);
+                    ComputeManagementTestUtilities.WaitMinutes(5);
                     m_CrpClient.Images.Delete(rgName, imageName);
                     Trace.TraceInformation("Deleted the CRP image.");
                     m_CrpClient.VirtualMachines.Delete(rgName, vm.Name);
@@ -455,7 +456,11 @@ namespace Compute.Tests
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
-                        new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
+                        new TargetRegion {
+                            Name = galleryHomeLocation,
+                            RegionalReplicaCount = 1,
+                            StorageAccountType = StorageAccountType.StandardLRS
+                        }
                     },
                     EndOfLifeDate = DateTime.Today.AddDays(10).Date
                 },

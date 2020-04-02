@@ -47,12 +47,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// will use gateways of remote virtual network for transit. Only one
         /// peering can have this flag set to true. This flag cannot be set if
         /// virtual network already has a gateway.</param>
-        /// <param name="remoteVirtualNetwork">The reference of the remote
+        /// <param name="remoteVirtualNetwork">The reference to the remote
         /// virtual network. The remote virtual network can be in the same or
         /// different region (preview). See here to register for the preview
         /// and learn more
         /// (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).</param>
-        /// <param name="remoteAddressSpace">The reference of the remote
+        /// <param name="remoteAddressSpace">The reference to the remote
         /// virtual network address space.</param>
         /// <param name="peeringState">The status of the virtual network
         /// peering. Possible values include: 'Initiated', 'Connected',
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? UseRemoteGateways { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the remote virtual network. The
+        /// Gets or sets the reference to the remote virtual network. The
         /// remote virtual network can be in the same or different region
         /// (preview). See here to register for the preview and learn more
         /// (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the remote virtual network address
+        /// Gets or sets the reference to the remote virtual network address
         /// space.
         /// </summary>
         [JsonProperty(PropertyName = "properties.remoteAddressSpace")]

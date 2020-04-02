@@ -7,8 +7,11 @@ param (
 
 $generatorProject = "$PSScriptRoot/SnippetGenerator/SnippetGenerator.csproj";
 $root = "$PSScriptRoot/../sdk"
-if ($ServiceDirectory) {
+
+# special casing * here because single invocation of SnippetGenerator is much faster than
+# running it per service directory
+if ($ServiceDirectory -and ($ServiceDirectory -ne "*")) {
     $root += '/' + $ServiceDirectory
 }
 
-dotnet run -p $generatorProject -b "$root"
+Resolve-Path "$root" | %{ dotnet run -p $generatorProject -b "$_" }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Errors;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -125,7 +125,14 @@ namespace Azure.Messaging.EventHubs.Amqp
             RetryPolicy = retryPolicy;
             ConnectionScope = connectionScope;
             MessageConverter = messageConverter;
-            SendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, timeout, CancellationToken.None), link => link.SafeClose());
+
+            SendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
+                timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, timeout, CancellationToken.None),
+                link =>
+                {
+                    link.Session?.SafeClose();
+                    link.SafeClose();
+                });
         }
 
         /// <summary>
@@ -168,10 +175,9 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
 
-            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromMessages(
-                eventBatch.AsEnumerable<AmqpMessage>(),
-                eventBatch.SendOptions?.PartitionKey);
+            // Make a defensive copy of the messages in the batch.
 
+            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(eventBatch.AsEnumerable<EventData>(), eventBatch.SendOptions?.PartitionKey);
             await SendAsync(messageFactory, eventBatch.SendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
         }
 
@@ -193,13 +199,59 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                               CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             // Ensure that maximum message size has been determined; this depends on the underlying
             // AMQP link, so if not set, requesting the link will ensure that it is populated.
 
             if (!MaximumMessageSize.HasValue)
             {
-                await SendLink.GetOrCreateAsync(RetryPolicy.CalculateTryTimeout(0)).ConfigureAwait(false);
+                var failedAttemptCount = 0;
+                var retryDelay = default(TimeSpan?);
+                var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
+
+                while ((!cancellationToken.IsCancellationRequested) && (!_closed))
+                {
+                    try
+                    {
+                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Exception activeEx = ex.TranslateServiceException(EventHubName);
+
+                        // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
+                        // Otherwise, bubble the exception.
+
+                        ++failedAttemptCount;
+                        retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
+
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        {
+                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
+                            tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            throw activeEx;
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+
+                // If MaximumMessageSize has not been populated nor exception thrown
+                // by this point, then cancellation has been requested.
+
+                if (!MaximumMessageSize.HasValue)
+                {
+                    throw new TaskCanceledException();
+                }
             }
 
             // Ensure that there was a maximum size populated; if none was provided,
@@ -297,7 +349,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                         {
-                            throw new MessageSizeExceededException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize));
+                            throw new EventHubsException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
                         }
 
                         // Attempt to send the message batch.
@@ -316,25 +368,27 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         return;
                     }
-                    catch (AmqpException amqpException)
-                    {
-                        throw AmqpError.CreateExceptionForError(amqpException.Error, EventHubName);
-                    }
                     catch (Exception ex)
                     {
+                        Exception activeEx = ex.TranslateServiceException(EventHubName);
+
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, bubble the exception.
 
                         ++failedAttemptCount;
-                        retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+                        retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, ex.Message);
+                            EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
                             stopWatch.Reset();
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            throw activeEx;
                         }
                         else
                         {

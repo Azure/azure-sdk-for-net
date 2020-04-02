@@ -19,28 +19,28 @@ namespace Microsoft.Azure.Management.DataShare
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DataShare", "Accounts", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "ConsumerInvitations", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "ConsumerSourceDataSets", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "DataSetMappings", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "DataSets", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "Invitations", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "Operations", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "ProviderShareSubscriptions", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "ShareSubscriptions", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "Shares", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "SynchronizationSettings", "2018-11-01-preview"),
-                new Tuple<string, string, string>("DataShare", "Triggers", "2018-11-01-preview"),
+                new Tuple<string, string, string>("DataShare", "Accounts", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "ConsumerInvitations", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "ConsumerSourceDataSets", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "DataSetMappings", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "DataSets", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "Invitations", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "Operations", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "ProviderShareSubscriptions", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "ShareSubscriptions", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "Shares", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "SynchronizationSettings", "2019-11-01"),
+                new Tuple<string, string, string>("DataShare", "Triggers", "2019-11-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datashare/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-11-01-preview --csharp-sdks-folder=F:\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4413";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/datashare/resource-manager/readme.md --csharp --version=2.0.4413 --reflect-api-versions --tag=package-2019-11-01 --csharp-sdks-folder=F:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "e0996d4f6dbca40ebf2fa4abf9a1cba45ada94d8";
+      public static readonly String GithubCommidId = "9505236faa86b99b6dc58b5655d8e1c4a758d89c";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

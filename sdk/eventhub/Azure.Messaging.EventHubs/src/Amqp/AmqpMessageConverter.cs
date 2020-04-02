@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -158,7 +157,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(response, nameof(response));
 
-
             if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
@@ -221,7 +219,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual PartitionProperties CreatePartitionPropertiesFromResponse(AmqpMessage response)
         {
             Argument.AssertNotNull(response, nameof(response));
-
 
             if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
@@ -367,9 +364,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                 eventBody: body,
                 properties: properties,
                 systemProperties: systemAnnotations.ServiceAnnotations,
-                sequenceNumber: systemAnnotations.SequenceNumber,
-                offset: systemAnnotations.Offset,
-                enqueuedTime: systemAnnotations.EnqueuedTime,
+                sequenceNumber: systemAnnotations.SequenceNumber ?? long.MinValue,
+                offset: systemAnnotations.Offset ?? long.MinValue,
+                enqueuedTime: systemAnnotations.EnqueuedTime ?? default,
                 partitionKey: systemAnnotations.PartitionKey,
                 lastPartitionSequenceNumber: systemAnnotations.LastSequenceNumber,
                 lastPartitionOffset: systemAnnotations.LastOffset,

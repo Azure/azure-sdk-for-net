@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-wvqysflr.search.windows.net/indexes(\u0027bapsfvkb\u0027)/docs/search.post.suggest?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "80",
+        "Content-Type": "application/json",
+        "traceparent": "00-0c0413275a356247b35aab27000181ab-8c7ad372711f404b-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200309.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "1cd2d2b1034fc6dee7c6001c8d1088ce",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "orderby": "This is not a valid orderby.",
+        "search": "hotel",
+        "suggesterName": "sg"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Language": "en",
+        "Content-Length": "143",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Mon, 09 Mar 2020 09:47:48 GMT",
+        "elapsed-time": "3",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "1cd2d2b1-034f-c6de-e7c6-001c8d1088ce",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "",
+          "message": "Invalid expression: Syntax error at position 7 in \u0027This is not a valid orderby.\u0027.\r\nParameter name: $orderby"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1402415131",
+    "SearchIndexName": "bapsfvkb",
+    "SearchServiceName": "azs-net-wvqysflr"
+  }
+}

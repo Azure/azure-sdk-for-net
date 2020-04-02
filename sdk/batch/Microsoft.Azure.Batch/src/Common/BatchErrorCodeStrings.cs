@@ -726,9 +726,84 @@ namespace Microsoft.Azure.Batch.Common
         public const string ResourceFileWriteFailed = "ResourceFileWriteFailed";
 
         /// <summary>
+        /// The task process exited with a nonzero exit code.
+        /// </summary>
+        public const string FailureExitCode = "FailureExitCode";
+
+        /// <summary>
         /// The task ended.
         /// </summary>
         public const string TaskEnded = "TaskEnded";
+
+        /// <summary>
+        /// The container image was invalid.
+        /// </summary>
+        public const string ContainerInvalidImage = "ContainerInvalidImage";
+
+        /// <summary>
+        /// The specified container registry was invalid.
+        /// </summary>
+        public const string ContainerInvalidRegistry = "ContainerInvalidRegistry";
+
+        /// <summary>
+        /// At least one value of the specified Task container settings is invalid.
+        /// </summary>
+        public const string ContainerInvalidSettings = "ContainerInvalidSettings";
+
+        /// <summary>
+        /// There was an unknown error encountered while attempting to run a Task in a container.
+        /// </summary>
+        public const string ContainerMiscError = "ContainerMiscError";
+
+        /// <summary>
+        /// Access to the Azure Storage resource file Container was denied.
+        /// </summary>
+        public const string ResourceContainerAccessDenied = "ResourceContainerAccessDenied";
+
+        /// <summary>
+        /// The Azure Storage Container was not found.
+        /// </summary>
+        public const string ResourceContainerNotFound = "ResourceContainerNotFound";
+
+        /// <summary>
+        /// The compute node was unable to list blobs from the specified Azure Storage Container.
+        /// </summary>
+        public const string ResourceContainerListTimedOut = "ResourceContainerListTimedOut";
+
+        /// <summary>
+        /// The compute node hit an unexpected error when attempting to list blobs from the specified Azure Storage Container.
+        /// </summary>
+        public const string ResourceContainerListMiscError = "ResourceContainerListMiscError";
+
+        /// <summary>
+        /// There was an error attempting to configure the specified mounts.
+        /// </summary>
+        public const string MountConfigurationError = "MountConfigurationError";
+
+        /// <summary>
+        /// Access to the Azure Storage Container for uploading Output Files was denied.
+        /// </summary>
+        public const string FileUploadAccessDenied = "FileUploadAccessDenied";
+
+        /// <summary>
+        /// The Azure Storage Container for uploading Output Files was not found.
+        /// </summary>
+        public const string FileUploadContainerNotFound = "FileUploadContainerNotFound";
+
+        /// <summary>
+        /// There was a conflict encountered when uploading Output Files.
+        /// </summary>
+        public const string FileUploadConflict = "FileUploadConflict";
+
+        /// <summary>
+        /// The compute node timed out while uploading Output Files.
+        /// </summary>
+        public const string FileUploadTimedOut = "FileUploadTimedOut";
+
+        /// <summary>
+        /// The compute node hit an unexpected error when uploading Output Files.
+        /// </summary>
+        public const string FileUploadMiscError = "FileUploadMiscError";
 
         /// <summary>
         /// The reason for the scheduling error is unknown.

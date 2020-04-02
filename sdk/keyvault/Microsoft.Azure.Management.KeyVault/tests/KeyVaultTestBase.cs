@@ -106,7 +106,7 @@ namespace KeyVault.Management.Tests
             };
 
             IList < IPRule > ipRules = new List<IPRule>();
-            ipRules.Add(new IPRule() { Value = "10.0.0.0/24" });
+            ipRules.Add(new IPRule() { Value = "1.2.3.4/32" });
             ipRules.Add(new IPRule() { Value = "1.0.0.0/25" });
 
             vaultProperties = new VaultProperties

@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-gjxdhkdl.search.windows.net/indexes(\u0027grurisvf\u0027)/docs/search.post.autocomplete?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "85",
+        "Content-Type": "application/json",
+        "traceparent": "00-134c44ffa84fad469d8a0c123a1226bf-8b6950ed928c4c49-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200308.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d7c46533c9974e93ea4923442227c276",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "search": "very po",
+        "autocompleteMode": "oneTerm",
+        "suggesterName": "Invalid suggester"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Language": "en",
+        "Content-Length": "147",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Sun, 08 Mar 2020 23:05:18 GMT",
+        "elapsed-time": "2",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "d7c46533-c997-4e93-ea49-23442227c276",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "",
+          "message": "The specified suggester name \u0027Invalid suggester\u0027 does not exist in this index definition.\r\nParameter name: name"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1535184382",
+    "SearchIndexName": "grurisvf",
+    "SearchServiceName": "azs-net-gjxdhkdl"
+  }
+}

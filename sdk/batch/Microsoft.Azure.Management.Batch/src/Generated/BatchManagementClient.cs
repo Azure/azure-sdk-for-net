@@ -103,6 +103,16 @@ namespace Microsoft.Azure.Management.Batch
         public virtual ICertificateOperations Certificate { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourceOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourceOperations PrivateLinkResource { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; private set; }
+
+        /// <summary>
         /// Gets the IPoolOperations.
         /// </summary>
         public virtual IPoolOperations Pool { get; private set; }
@@ -354,9 +364,11 @@ namespace Microsoft.Azure.Management.Batch
             Location = new LocationOperations(this);
             Operations = new Operations(this);
             Certificate = new CertificateOperations(this);
+            PrivateLinkResource = new PrivateLinkResourceOperations(this);
+            PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
             Pool = new PoolOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-08-01";
+            ApiVersion = "2020-03-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

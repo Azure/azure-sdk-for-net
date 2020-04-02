@@ -51,20 +51,22 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Generation2'</param>
         /// <param name="enableBgp">Whether BGP is enabled for this virtual
         /// network gateway or not.</param>
+        /// <param name="enablePrivateIpAddress">Whether private IP needs to be
+        /// enabled on this gateway for connections or not.</param>
         /// <param name="activeActive">ActiveActive flag.</param>
-        /// <param name="gatewayDefaultSite">The reference of the
+        /// <param name="gatewayDefaultSite">The reference to the
         /// LocalNetworkGateway resource which represents local network site
         /// having default routes. Assign Null value in case of removing
         /// existing default site setting.</param>
-        /// <param name="sku">The reference of the VirtualNetworkGatewaySku
+        /// <param name="sku">The reference to the VirtualNetworkGatewaySku
         /// resource which represents the SKU selected for Virtual network
         /// gateway.</param>
-        /// <param name="vpnClientConfiguration">The reference of the
+        /// <param name="vpnClientConfiguration">The reference to the
         /// VpnClientConfiguration resource which represents the P2S VpnClient
         /// configurations.</param>
         /// <param name="bgpSettings">Virtual network gateway's BGP speaker
         /// settings.</param>
-        /// <param name="customRoutes">The reference of the address space
+        /// <param name="customRoutes">The reference to the address space
         /// resource which represents the custom routes address space specified
         /// by the customer for virtual network gateway and VpnClient.</param>
         /// <param name="resourceGuid">The resource GUID property of the
@@ -78,7 +80,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// by the gateway to which dns requests can be sent.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), string vpnGatewayGeneration = default(string), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), AddressSpace customRoutes = default(AddressSpace), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDnsForwarding = default(bool?), string inboundDnsForwardingEndpoint = default(string), string etag = default(string))
+        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), string vpnGatewayGeneration = default(string), bool? enableBgp = default(bool?), bool? enablePrivateIpAddress = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), AddressSpace customRoutes = default(AddressSpace), string resourceGuid = default(string), string provisioningState = default(string), bool? enableDnsForwarding = default(bool?), string inboundDnsForwardingEndpoint = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
@@ -86,6 +88,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VpnType = vpnType;
             VpnGatewayGeneration = vpnGatewayGeneration;
             EnableBgp = enableBgp;
+            EnablePrivateIpAddress = enablePrivateIpAddress;
             ActiveActive = activeActive;
             GatewayDefaultSite = gatewayDefaultSite;
             Sku = sku;
@@ -141,13 +144,20 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? EnableBgp { get; set; }
 
         /// <summary>
+        /// Gets or sets whether private IP needs to be enabled on this gateway
+        /// for connections or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enablePrivateIpAddress")]
+        public bool? EnablePrivateIpAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets activeActive flag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeActive")]
         public bool? ActiveActive { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the LocalNetworkGateway resource
+        /// Gets or sets the reference to the LocalNetworkGateway resource
         /// which represents local network site having default routes. Assign
         /// Null value in case of removing existing default site setting.
         /// </summary>
@@ -155,14 +165,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource GatewayDefaultSite { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the VirtualNetworkGatewaySku resource
+        /// Gets or sets the reference to the VirtualNetworkGatewaySku resource
         /// which represents the SKU selected for Virtual network gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
         public VirtualNetworkGatewaySku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the VpnClientConfiguration resource
+        /// Gets or sets the reference to the VpnClientConfiguration resource
         /// which represents the P2S VpnClient configurations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnClientConfiguration")]
@@ -175,7 +185,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the address space resource which
+        /// Gets or sets the reference to the address space resource which
         /// represents the custom routes address space specified by the
         /// customer for virtual network gateway and VpnClient.
         /// </summary>

@@ -1,6 +1,6 @@
 # Azure Storage Common client library for .NET
 
-> Server Version: 2019-02-02
+> Server Version: 2019-07-07 and 2019-02-02
 
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
@@ -20,9 +20,9 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.Common` client library will be included:
 
 ```Powershell
-dotnet add package Azure.Storage.Blobs --version 12.0.0-preview.4
-dotnet add package Azure.Storage.Queues --version 12.0.0-preview.4
-dotnet add package Azure.Storage.Files.Shares --version 12.0.0-preview.4
+dotnet add package Azure.Storage.Blobs
+dotnet add package Azure.Storage.Queues
+dotnet add package Azure.Storage.Files.Shares
 ```
 
 ### Prerequisites
@@ -76,22 +76,22 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Common/
-[docs]: https://docs.microsoft.com/en-us/dotnet/api/azure.storage
-[rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/
-[product_docs]: https://docs.microsoft.com/en-us/azure/storage/
+[docs]: https://docs.microsoft.com/dotnet/api/azure.storage
+[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/
+[product_docs]: https://docs.microsoft.com/azure/storage/
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[auth_credentials]: src/SharedKeyCredential.cs
+[auth_credentials]: src/StorageSharedKeyCredential.cs
 [blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#Examples
 [files_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/README.md#Examples
 [queues_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#Examples
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/en-us/rest/api/storageservices/common-rest-api-error-codes
+[error_codes]: https://docs.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
 [samples]: samples/
 [blobs_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#next-steps
 [files_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/README.md#next-steps

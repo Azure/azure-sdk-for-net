@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            string apiVersion = "2017-08-01-preview";
+            string apiVersion = "2019-01-01";
             string settingName = "current";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            string apiVersion = "2017-08-01-preview";
+            string apiVersion = "2019-01-01";
             string settingName = "current";
             AdvancedThreatProtectionSetting advancedThreatProtectionSetting = new AdvancedThreatProtectionSetting();
             if (isEnabled != null)

@@ -640,5 +640,18 @@ namespace Management.HDInsight.Tests
             gatewaySettings = HDInsightClient.Clusters.GetGatewaySettings(CommonData.ResourceGroupName, clusterName);
             ValidateGatewaySettings(expectedUserName, newExpectedPassword, gatewaySettings);
         }
+
+        [Fact]
+        public void TestCreateClusterWithTLS12()
+        {
+            TestInitialize();
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-tls12");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Properties.MinSupportedTlsVersion = "1.2";
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            Assert.Equal("1.2", cluster.Properties.MinSupportedTlsVersion);
+            ValidateCluster(clusterName, createParams, cluster);
+        }
     }
 }

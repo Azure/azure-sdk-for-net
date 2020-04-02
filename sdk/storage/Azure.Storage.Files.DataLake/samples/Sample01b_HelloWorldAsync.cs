@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.DataLake.Samples
         }
 
         /// <summary>
-        /// Upload file by appending each part to a DataLake File.
+        /// Upload file by created a file, and then appending each part to a DataLake File.
         /// </summary>
         [Test]
         public async Task AppendAsync()
@@ -203,7 +203,8 @@ namespace Azure.Storage.Files.DataLake.Samples
                 IList<PathItem> paths = await response.ToListAsync();
                 Assert.AreEqual(1, paths.Count);
 
-                // Append data to the DataLake File
+                // Append data to an existing DataLake File.  Append is currently limited to 100MB per call.
+                // To upload a large file all at once, consider using UploadAsync() instead.
                 await file.AppendAsync(File.OpenRead(sampleFileContentPart1), 0);
                 await file.AppendAsync(File.OpenRead(sampleFileContentPart2), contentLength);
                 await file.AppendAsync(File.OpenRead(sampleFileContentPart3), contentLength * 2);
@@ -212,6 +213,50 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // Verify the contents of the file
                 PathProperties properties = await file.GetPropertiesAsync();
                 Assert.AreEqual(contentLength * 3, properties.ContentLength);
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                await filesystem.DeleteAsync();
+            }
+        }
+
+        /// <summary>
+        /// Upload file by calling the UploadAsync API.
+        /// </summary>
+        [Test]
+        public async Task UploadAsync()
+        {
+            // Create three temporary Lorem Ipsum files on disk that we can upload
+            int contentLength = 10;
+            string sampleFileContent = CreateTempFile(SampleFileContent.Substring(0, contentLength));
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Get a reference to a FileSystemClient
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-appendasync" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-append"));
+            await filesystem.CreateAsync();
+            try
+            {
+                // Get a reference to a file named "sample-file" in a filesystem
+                DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+
+                // Upload content to the file.  When using the Upload API, you don't need to create the file first.
+                // If the file already exists, it will be overwritten.
+                // For larger files, Upload() will upload the file in multiple parallel requests.
+                await file.UploadAsync(File.OpenRead(sampleFileContent));
+
+                // Verify the contents of the file
+                PathProperties properties = await file.GetPropertiesAsync();
+                Assert.AreEqual(contentLength, properties.ContentLength);
             }
             finally
             {
@@ -250,16 +295,62 @@ namespace Azure.Storage.Files.DataLake.Samples
                 DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
 
                 // First upload something the DataLake file so we have something to download
-                await file.CreateAsync();
-                await file.AppendAsync(File.OpenRead(originalPath), 0);
-                await file.FlushAsync(SampleFileContent.Length);
+                await file.UploadAsync(File.OpenRead(originalPath));
 
                 // Download the DataLake file's contents and save it to a file
+                // The ReadAsync() API downloads a file in a single requests.
+                // For large files, it may be faster to call ReadToAsync()
                 Response<FileDownloadInfo> fileContents = await file.ReadAsync();
                 using (FileStream stream = File.OpenWrite(downloadPath))
                 {
                     fileContents.Value.Content.CopyTo(stream);
                 }
+
+                // Verify the contents
+                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                await filesystem.DeleteAsync();
+            }
+        }
+
+        /// <summary>
+        /// Download a DataLake File directly to file.
+        /// </summary>
+        [Test]
+        public async Task ReadToAsync()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-readasync" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient(Randomize("sample-filesystem-read"));
+            await filesystem.CreateAsync();
+            try
+            {
+                // Get a reference to a file named "sample-file" in a filesystem
+                DataLakeFileClient file = filesystem.GetFileClient(Randomize("sample-file"));
+
+                // First upload something the DataLake file so we have something to download
+                await file.UploadAsync(File.OpenRead(originalPath));
+
+                // Download the DataLake file's contents directly to a file.
+                // For larger files, ReadToAsync() will download the file in multiple parallel requests.
+                await file.ReadToAsync(downloadPath);
 
                 // Verify the contents
                 Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));

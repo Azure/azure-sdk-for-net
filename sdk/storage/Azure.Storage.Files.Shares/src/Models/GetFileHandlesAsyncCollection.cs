@@ -20,17 +20,15 @@ namespace Azure.Storage.Files.Shares.Models
         public override async ValueTask<Page<ShareFileHandle>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken)
         {
-            Task<Response<StorageHandlesSegment>> task = _client.GetHandlesInternal(
+            Response<StorageHandlesSegment> response = await _client.GetHandlesInternal(
                 continuationToken,
                 pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<StorageHandlesSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+                async,
+                cancellationToken).ConfigureAwait(false);
+
             return Page<ShareFileHandle>.FromValues(
                 response.Value.Handles.ToArray(),
                 response.Value.NextMarker,

@@ -1,17 +1,58 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskv.vault.azure.net/certificates/157345095/create?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/certificates/157345095/create?api-version=7.1-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "traceparent": "00-5c64a19286827241b27412260169e29e-363542403150be4d-00",
+        "User-Agent": [
+          "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200214.1",
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "c80e04a82cc618bca6426d0fe4752fc5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sat, 15 Feb 2020 02:42:16 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+        "WWW-Authenticate": "Bearer authorization=\u0022https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47\u0022, resource=\u0022https://vault.azure.net\u0022",
+        "X-AspNet-Version": "4.0.30319",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-keyvault-network-info": "addr=131.107.147.65;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-region": "westus",
+        "x-ms-keyvault-service-version": "1.1.0.893",
+        "x-ms-request-id": "e6d1d923-bb37-4428-bf0e-5f31ca86f152",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "Unauthorized",
+          "message": "Request is missing a Bearer or PoP token."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://heathskv.vault.azure.net/certificates/157345095/create?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "96",
         "Content-Type": "application/json",
-        "traceparent": "00-b7ae0ccbd766944c9e338fa1f0dfff9a-1cd03cd7e6248d40-00",
+        "traceparent": "00-5c64a19286827241b27412260169e29e-363542403150be4d-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.0.0-dev.20191115.1\u002B63bac595741f5f60cfe5ab223ea4a18b53f12a32",
-          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Security.KeyVault.Certificates/4.0.1-dev.20200214.1",
+          "(.NET Core 4.6.27817.1-preview1; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c80e04a82cc618bca6426d0fe4752fc5",
         "x-ms-return-client-request-id": "true"
@@ -19,13 +60,13 @@
       "RequestBody": {
         "policy": {
           "x509_props": {
-            "subject": "invalid",
+            "subject": "Self",
             "key_usage": [
               "invalid"
             ]
           },
           "issuer": {
-            "name": "Self"
+            "name": "invalid"
           }
         }
       },
@@ -34,17 +75,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "128",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 15 Nov 2019 21:35:51 GMT",
+        "Date": "Sat, 15 Feb 2020 02:42:16 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-keyvault-network-info": "addr=131.107.147.193;act_addr_fam=InterNetwork;",
+        "x-ms-keyvault-network-info": "addr=131.107.147.65;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus",
-        "x-ms-keyvault-service-version": "1.1.0.882",
-        "x-ms-request-id": "4e8a0d04-baf9-450d-8eb4-7cf7392f4d86",
+        "x-ms-keyvault-service-version": "1.1.0.893",
+        "x-ms-request-id": "82703707-a57f-4af9-982a-50218f14f08e",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {

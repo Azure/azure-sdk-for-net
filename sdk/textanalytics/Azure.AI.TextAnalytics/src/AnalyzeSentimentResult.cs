@@ -2,35 +2,41 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// The result of the analyze sentiment operation on a single document,
+    /// containing the predicted sentiment for each sentence as well as for
+    /// the full document.
     /// </summary>
     public class AnalyzeSentimentResult : TextAnalyticsResult
     {
-        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, TextSentiment documentSentiment, IList<TextSentiment> sentenceSentiments)
+        private readonly DocumentSentiment _documentSentiment;
+
+        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
             : base(id, statistics)
         {
-            DocumentSentiment = documentSentiment;
-            SentenceSentiments = new ReadOnlyCollection<TextSentiment>(sentenceSentiments);
+            _documentSentiment = documentSentiment;
         }
 
-        internal AnalyzeSentimentResult(string id, string errorMessage)
-            : base(id, errorMessage)
+        internal AnalyzeSentimentResult(string id, TextAnalyticsError error) : base(id, error) { }
+
+        /// <summary>
+        /// Gets the predicted sentiment for the full document.
+        /// </summary>
+        public DocumentSentiment DocumentSentiment
         {
-            SentenceSentiments = Array.Empty<TextSentiment>();
+            get
+            {
+                if (HasError)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.Code}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _documentSentiment;
+            }
         }
-
-        // TODO: set DocumentSentiment.Length
-        /// <summary>
-        /// </summary>
-        public TextSentiment DocumentSentiment { get; }
-
-        /// <summary>
-        /// </summary>
-        public IReadOnlyCollection<TextSentiment> SentenceSentiments { get; }
     }
 }

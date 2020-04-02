@@ -39,12 +39,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// indexing</param>
         /// <param name="excludedPaths">List of paths to exclude from
         /// indexing</param>
-        public IndexingPolicy(bool? automatic = default(bool?), string indexingMode = default(string), IList<IncludedPath> includedPaths = default(IList<IncludedPath>), IList<ExcludedPath> excludedPaths = default(IList<ExcludedPath>))
+        /// <param name="compositeIndexes">List of composite path list</param>
+        /// <param name="spatialIndexes">List of spatial specifics</param>
+        public IndexingPolicy(bool? automatic = default(bool?), string indexingMode = default(string), IList<IncludedPath> includedPaths = default(IList<IncludedPath>), IList<ExcludedPath> excludedPaths = default(IList<ExcludedPath>), IList<IList<CompositePath>> compositeIndexes = default(IList<IList<CompositePath>>), IList<SpatialSpec> spatialIndexes = default(IList<SpatialSpec>))
         {
             Automatic = automatic;
             IndexingMode = indexingMode;
             IncludedPaths = includedPaths;
             ExcludedPaths = excludedPaths;
+            CompositeIndexes = compositeIndexes;
+            SpatialIndexes = spatialIndexes;
             CustomInit();
         }
 
@@ -77,6 +81,18 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "excludedPaths")]
         public IList<ExcludedPath> ExcludedPaths { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of composite path list
+        /// </summary>
+        [JsonProperty(PropertyName = "compositeIndexes")]
+        public IList<IList<CompositePath>> CompositeIndexes { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of spatial specifics
+        /// </summary>
+        [JsonProperty(PropertyName = "spatialIndexes")]
+        public IList<SpatialSpec> SpatialIndexes { get; set; }
 
     }
 }

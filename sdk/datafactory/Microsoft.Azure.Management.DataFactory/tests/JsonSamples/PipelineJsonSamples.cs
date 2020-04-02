@@ -500,7 +500,8 @@ namespace DataFactory.Tests.JsonSamples
                         storedProcedureParameters: {
                             ""stringData"": { value: ""test"", type: ""String""},
                             ""id"": { value: ""3"", type: ""Int""}
-                        }
+                        },
+                        isolationLevel: ""ReadCommitted""
                     },
                     sink:
                     {
@@ -2435,7 +2436,8 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {
                         type: ""SapCloudForCustomerSource"",
-                        query: ""$select=Column0""
+                        query: ""$select=Column0"",
+                        httpRequestTimeout: ""00:05:00""
                     },
                     sink:
                     {
@@ -3401,7 +3403,8 @@ namespace DataFactory.Tests.JsonSamples
                   sink: {
                     type: ""SapCloudForCustomerSink"",
                     writeBehavior: ""Insert"",
-                    writeBatchSize: 50
+                    writeBatchSize: 50,
+                    httpRequestTimeout: ""00:05:00""
                   },
                   enableSkipIncompatibleRow: true,
                   parallelCopies: 32,
@@ -3450,7 +3453,8 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {
                         type: ""SapEccSource"",
-                        query: ""$top=1""
+                        query: ""$top=1"",
+                        httpRequestTimeout: ""00:05:00""
                     },
                     sink:
                     {
@@ -3481,6 +3485,58 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyDynamicsAXToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from DynamicsAX to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""DynamicsAXSource"",
+                        query: ""$top=1"",
+                        httpRequestTimeout: ""00:05:00""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputDynamicsAX"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample(version: "Copy")]
         public const string CopyNetezzaToBlob = @"
 {
@@ -4186,7 +4242,13 @@ namespace DataFactory.Tests.JsonSamples
               ""type"": ""DelimitedTextReadSettings"",
               ""skipLineCount"": 10,
               ""additionalNullValues"": [ ""\\N"", ""NULL"" ]
-}
+            },
+            ""additionalColumns"": [
+              {
+                ""name"": ""clmn"",
+                ""value"": ""$$FILEPATH""
+              }
+            ]
           },
           ""sink"": {
             ""type"": ""DelimitedTextSink"",
@@ -4200,6 +4262,18 @@ namespace DataFactory.Tests.JsonSamples
               ""quoteAllText"": true,
               ""fileExtension"": "".csv""
             }
+          },
+          ""validateDataConsistency"": true,
+          ""skipErrorFile"": {
+            ""fileMissing"": true,
+            ""dataInconsistency"": true
+          },
+          ""logStorageSettings"": {
+            ""linkedServiceName"": {
+              ""referenceName"": ""exampleLinkedService"",
+              ""type"": ""LinkedServiceReference""
+            },
+            ""path"": ""test""
           }
         },
         ""inputs"": [
@@ -4757,7 +4831,8 @@ namespace DataFactory.Tests.JsonSamples
             ""storeSettings"": {
               ""type"": ""AzureDataLakeStoreReadSettings"",
               ""recursive"": true,
-              ""enablePartitionDiscovery"": true
+              ""enablePartitionDiscovery"": true,
+              ""fileListPath"": ""test.txt""
             }
           },
           ""sink"": {
@@ -4765,7 +4840,8 @@ namespace DataFactory.Tests.JsonSamples
             ""storeSettings"": {
               ""type"": ""AzureDataLakeStoreWriteSettings"",
               ""maxConcurrentConnections"": 3,
-              ""copyBehavior"": ""PreserveHierarchy""
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""expiryDateTime"": ""2018-12-01T05:00:00Z""
             }
           }
         },
@@ -5367,7 +5443,8 @@ namespace DataFactory.Tests.JsonSamples
                     source:
                     {                               
                         type: ""ODataSource"",
-                        query: ""$top=1""
+                        query: ""$top=1"",
+                        httpRequestTimeout: ""00:05:00""
                     },
                     sink:
                     {
@@ -5718,6 +5795,10 @@ namespace DataFactory.Tests.JsonSamples
                     integrationRuntime: {
                         referenceName: ""dataflowIR10minTTL"",
                         type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
                     }
                 }
             }
@@ -6039,7 +6120,8 @@ namespace DataFactory.Tests.JsonSamples
                         ""type"": ""SftpWriteSettings"",
                         ""maxConcurrentConnections"": 3,
                         ""copyBehavior"": ""PreserveHierarchy"",
-                        ""operationTimeout"": ""01:00:00""
+                        ""operationTimeout"": ""01:00:00"",
+                        ""useTempFileRename"": true
                       }
                     }
                   },
@@ -6057,6 +6139,45 @@ namespace DataFactory.Tests.JsonSamples
                   ],
                   ""name"": ""ExampleCopyActivity""
                 }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string SharePointOnlineListPipeline = @"
+{
+    name: ""DataPipeline_SharePointOnlineListSample"",
+    properties:
+    {
+        activities:
+        [
+            {
+                name: ""SharePointOnlineListToblobCopyActivity"",
+                inputs: [ {referenceName: ""DA_Input"", type: ""DatasetReference""} ],
+                outputs: [ {referenceName: ""DA_Output"", type: ""DatasetReference""} ],
+                type: ""Copy"",
+                typeProperties:
+                {
+                    source:
+                    {                               
+                        type: ""SharePointOnlineListSource"",
+                        query: ""$top=1"",
+                        httpRequestTimeout: ""00:05:00""
+                    },
+                    sink:
+                    {
+                        type: ""BlobSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00""
+                    }
+                },
+                policy:
+                {
+                    retry: 2,
+                    timeout: ""01:00:00""
+                }
+            }
         ]
     }
 }

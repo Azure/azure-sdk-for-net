@@ -17,7 +17,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_02_02;
+        internal const ServiceVersion LatestVersion = StorageVersionExtensions.LatestVersion;
 
         /// <summary>
         /// The versions of Azure Blob Storage supported by this client
@@ -31,7 +31,12 @@ namespace Azure.Storage.Blobs
             /// The 2019-02-02 service version described at
             /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/versioning-for-the-azure-storage-services#version-2019-02-02" />
             /// </summary>
-            V2019_02_02 = 1
+            V2019_02_02 = 1,
+
+            /// <summary>
+            /// The 2019-07-07 service version.
+            /// </summary>
+            V2019_07_07 = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -46,6 +51,11 @@ namespace Azure.Storage.Blobs
         /// Gets the <see cref="CustomerProvidedKey"/> to be used when making requests.
         /// </summary>
         public CustomerProvidedKey? CustomerProvidedKey { get; set; }
+
+        /// <summary>
+        /// Gets the <see cref="EncryptionScope"/> to be used when making requests.
+        /// </summary>
+        public string EncryptionScope { get; set; }
 
         /// <summary>
         /// Gets or sets the secondary storage <see cref="Uri"/> that can be read from for the storage account if the
@@ -69,7 +79,16 @@ namespace Azure.Storage.Blobs
         /// </param>
         public BlobClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version == ServiceVersion.V2019_02_02 ? version : throw Errors.VersionNotSupported(nameof(version));
+            if (ServiceVersion.V2019_02_02 <= version
+                && version <= LatestVersion)
+            {
+                Version = version;
+            }
+            else
+            {
+                throw Errors.VersionNotSupported(nameof(version));
+            }
+
             this.Initialize();
             AddHeadersAndQueryParameters();
         }

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes network resource usage.
+    /// The network resource usage.
     /// </summary>
     public partial class Usage
     {

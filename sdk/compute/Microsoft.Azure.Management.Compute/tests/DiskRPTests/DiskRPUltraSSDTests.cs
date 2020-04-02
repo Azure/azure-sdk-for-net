@@ -12,13 +12,21 @@ namespace Compute.Tests.DiskRPTests
 {
     public class DiskRPUltraSSDTests : DiskRPTestsBase
     {
-        //direct drive is only enabled in eastus2euap
-        private static string DiskRPLocation = "eastus2";
+        [Fact]
+        public void UltraSSD_CRUD_EmptyDiskZones()
+        {
+            UltraSSD_CRUD_Helper(location: "eastus", methodName: "UltraSSD_CRUD_EmptyDiskZones", useZones: true);
+        }
 
         [Fact]
-        public void UltraSSD_CRUD_EmptyDisk()
+        public void UltraSSD_CRUD_EmptyDiskShared()
         {
-            using (MockContext context = MockContext.Start(this.GetType()))
+            UltraSSD_CRUD_Helper(location: "eastus2euap", methodName: "UltraSSD_CRUD_EmptyDiskShared", sharedDisks: true);
+        }
+
+        private void UltraSSD_CRUD_Helper(string location, string methodName, bool useZones = false, bool sharedDisks = false)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
 
@@ -27,23 +35,31 @@ namespace Compute.Tests.DiskRPTests
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateBaseDisk("Empty");
                 disk.Sku = new DiskSku(DiskStorageAccountTypes.UltraSSDLRS, "Ultra");
-                disk.DiskSizeGB = 256;
-                disk.Zones = new List<string> { "1" };
+                disk.DiskSizeGB = 32;
+                if (useZones)
+                {
+                    disk.Zones = new List<string> { "1" };
+                }
                 disk.DiskMBpsReadWrite = 8;
                 disk.DiskIOPSReadWrite = 512;
-                disk.Location = DiskRPLocation;
-
+                disk.Location = location;
+                if (sharedDisks)
+                {
+                    disk.DiskIOPSReadOnly = 512;
+                    disk.DiskMBpsReadOnly = 8;
+                    disk.MaxShares = 2;
+                }
                 try
                 {
-                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
-                    
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+
                     // Put
                     Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
-                    Validate(disk, diskOut, DiskRPLocation);
+                    Validate(disk, diskOut, location);
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
-                    Validate(disk, diskOut, DiskRPLocation);
+                    Validate(disk, diskOut, location);
 
                     // Patch
                     const string tagKey = "tagKey";
@@ -51,16 +67,35 @@ namespace Compute.Tests.DiskRPTests
                     updatedisk.Tags = new Dictionary<string, string>() { { tagKey, "tagValue" } };
                     updatedisk.DiskMBpsReadWrite = 9;
                     updatedisk.DiskIOPSReadWrite = 600;
+                    if (sharedDisks)
+                    {
+                        updatedisk.DiskMBpsReadOnly = 9;
+                        updatedisk.DiskIOPSReadOnly = 600;
+                        updatedisk.MaxShares = 3;
+                    }
+                    updatedisk.Sku = new DiskSku(DiskStorageAccountTypes.UltraSSDLRS, "Ultra");
                     diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
-                    Validate(disk, diskOut, DiskRPLocation, update : true);
+                    Validate(disk, diskOut, location, update: true);
                     Assert.Equal(updatedisk.DiskIOPSReadWrite, diskOut.DiskIOPSReadWrite);
                     Assert.Equal(updatedisk.DiskMBpsReadWrite, diskOut.DiskMBpsReadWrite);
+                    if (sharedDisks)
+                    {
+                        Assert.Equal(updatedisk.DiskIOPSReadOnly, diskOut.DiskIOPSReadOnly);
+                        Assert.Equal(updatedisk.DiskMBpsReadOnly, diskOut.DiskMBpsReadOnly);
+                        Assert.Equal(updatedisk.MaxShares, diskOut.MaxShares);
+                    }
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
-                    Validate(disk, diskOut, DiskRPLocation, update: true);
+                    Validate(disk, diskOut, location, update: true);
                     Assert.Equal(updatedisk.DiskIOPSReadWrite, diskOut.DiskIOPSReadWrite);
                     Assert.Equal(updatedisk.DiskMBpsReadWrite, diskOut.DiskMBpsReadWrite);
+                    if (sharedDisks)
+                    {
+                        Assert.Equal(updatedisk.DiskIOPSReadOnly, diskOut.DiskIOPSReadOnly);
+                        Assert.Equal(updatedisk.DiskMBpsReadOnly, diskOut.DiskMBpsReadOnly);
+                        Assert.Equal(updatedisk.MaxShares, diskOut.MaxShares);
+                    }
 
                     // Delete
                     m_CrpClient.Disks.Delete(rgName, diskName);
@@ -83,6 +118,7 @@ namespace Compute.Tests.DiskRPTests
                 }
             }
         }
+
     }
 }
 

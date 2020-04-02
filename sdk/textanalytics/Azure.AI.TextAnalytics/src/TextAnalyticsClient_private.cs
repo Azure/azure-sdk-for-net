@@ -15,13 +15,14 @@ namespace Azure.AI.TextAnalytics
 
         private const string LanguagesRoute = "/languages";
         private const string EntitiesRoute = "/entities/recognition/general";
-        private const string PiiEntitiesRoute = "/entities/recognition/pii";
         private const string SentimentRoute = "/sentiment";
         private const string KeyPhrasesRoute = "/keyPhrases";
         private const string EntityLinkingRoute = "/entities/linking";
 
         private const string ShowStatistics = "showStats";
         private const string ModelVersion = "model-version";
+
+        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
 
         #region Detect Language
         private static async Task<Response<DetectLanguageResultCollection>> CreateDetectLanguageResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
@@ -83,20 +84,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-
-        #region Recognize Entities
-        private static async Task<Response<RecognizePiiEntitiesResultCollection>> CreateRecognizePiiEntitiesResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
-        {
-            RecognizePiiEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeRecognizePiiEntitiesResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
-            return Response.FromValue(result, response);
-        }
-
-        private static Response<RecognizePiiEntitiesResultCollection> CreateRecognizePiiEntitiesResponse(Response response, IDictionary<string, int> idToIndexMap) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizePiiEntitiesResponse(response.ContentStream, idToIndexMap), response);
-
-        #endregion
-
-        private void BuildUriForRoute(string route, RequestUriBuilder builder, TextAnalyticsOptions options)
+        private void BuildUriForRoute(string route, RequestUriBuilder builder, TextAnalyticsRequestOptions options)
         {
             builder.Reset(_baseUri);
             builder.AppendPath(TextAnalyticsRoute, escape: false);
@@ -116,20 +104,20 @@ namespace Azure.AI.TextAnalytics
 
         #region nobody wants to see these
         /// <summary>
-        /// Check if two ConfigurationSetting instances are equal.
+        /// Check if two TextAnalyticsClient instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the ConfigurationSetting
+        /// Get a hash code for the TextAnalyticsClient.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
         /// <summary>
-        /// Creates a Key Value string in reference to the ConfigurationSetting.
+        /// TextAnalyticsClient ToString.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();

@@ -69,7 +69,7 @@ namespace Azure.Identity
                 return Response.FromValue(result, response);
             }
 
-            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+            throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
         }
 
         private AccessToken SendAuthRequest(Request request, CancellationToken cancellationToken)
@@ -83,7 +83,7 @@ namespace Azure.Identity
                 return Response.FromValue(result, response);
             }
 
-            throw response.CreateRequestFailedException();
+            throw _pipeline.Diagnostics.CreateRequestFailedException(response);
         }
 
         private Request CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)

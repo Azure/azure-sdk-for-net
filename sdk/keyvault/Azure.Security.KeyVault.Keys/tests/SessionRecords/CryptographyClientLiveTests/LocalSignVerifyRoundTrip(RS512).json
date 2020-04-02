@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/390837597?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/390837597?api-version=7.1-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/390837597?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/390837597?api-version=7.1-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -120,7 +120,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/390837597/e104c01544684d3d9555279871d96ff1/verify?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/390837597/e104c01544684d3d9555279871d96ff1/verify?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -163,7 +163,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/keys/390837597?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/keys/390837597?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -223,7 +223,7 @@
       }
     },
     {
-      "RequestUri": "https://heathskv.vault.azure.net/deletedkeys/390837597?api-version=7.0",
+      "RequestUri": "https://heathskv.vault.azure.net/deletedkeys/390837597?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",

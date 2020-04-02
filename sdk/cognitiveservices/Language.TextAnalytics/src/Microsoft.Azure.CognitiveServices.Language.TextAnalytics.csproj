@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Language Text Analytics Client Library</AssemblyTitle>
     <Description>Provides API functions for consuming Microsoft Azure Cognitive Services Language Text Analytics APIs.</Description>
-    <Version>4.1.0-preview.1</Version>
+    <Version>4.1.0-preview.2</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Text Analytics API;Text Analytics;REST HTTP client;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[

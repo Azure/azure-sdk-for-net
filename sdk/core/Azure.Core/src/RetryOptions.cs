@@ -35,5 +35,10 @@ namespace Azure.Core
         /// The approach to use for calculating retry delays.
         /// </summary>
         public RetryMode Mode { get; set; } = RetryMode.Exponential;
+
+        /// <summary>
+        /// The timeout applied to an individual network operations.
+        /// </summary>
+        public TimeSpan NetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
     }
 }

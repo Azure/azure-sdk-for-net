@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Updates a deployment script.
+            /// Updates deployment script tags with specified values.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Name of the deployment script.
             /// </param>
             /// <param name='deploymentScript'>
-            /// Updated deployment script supplied to the operation.
+            /// Deployment script resource with the tags to be updated.
             /// </param>
             public static DeploymentScript Update(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript = default(DeploymentScriptUpdateParameter))
             {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Updates a deployment script.
+            /// Updates deployment script tags with specified values.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Name of the deployment script.
             /// </param>
             /// <param name='deploymentScript'>
-            /// Updated deployment script supplied to the operation.
+            /// Deployment script resource with the tags to be updated.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -272,9 +272,14 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='scriptName'>
             /// Name of the deployment script.
             /// </param>
-            public static ScriptLog GetLogsDefault(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName)
+            /// <param name='tail'>
+            /// The number of lines to show from the tail of the deployment script log.
+            /// Valid value is a positive number up to 1000. If 'tail' is not provided, all
+            /// available logs are shown up to container instance log capacity of 4mb.
+            /// </param>
+            public static ScriptLog GetLogsDefault(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, int? tail = default(int?))
             {
-                return operations.GetLogsDefaultAsync(resourceGroupName, scriptName).GetAwaiter().GetResult();
+                return operations.GetLogsDefaultAsync(resourceGroupName, scriptName, tail).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -289,12 +294,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='scriptName'>
             /// Name of the deployment script.
             /// </param>
+            /// <param name='tail'>
+            /// The number of lines to show from the tail of the deployment script log.
+            /// Valid value is a positive number up to 1000. If 'tail' is not provided, all
+            /// available logs are shown up to container instance log capacity of 4mb.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ScriptLog> GetLogsDefaultAsync(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ScriptLog> GetLogsDefaultAsync(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, int? tail = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetLogsDefaultWithHttpMessagesAsync(resourceGroupName, scriptName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetLogsDefaultWithHttpMessagesAsync(resourceGroupName, scriptName, tail, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -329,6 +339,52 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<DeploymentScript>> ListByResourceGroupAsync(this IDeploymentScriptsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates a deployment script.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='scriptName'>
+            /// Name of the deployment script.
+            /// </param>
+            /// <param name='deploymentScript'>
+            /// Deployment script supplied to the operation.
+            /// </param>
+            public static DeploymentScript BeginCreate(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, DeploymentScript deploymentScript)
+            {
+                return operations.BeginCreateAsync(resourceGroupName, scriptName, deploymentScript).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a deployment script.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='scriptName'>
+            /// Name of the deployment script.
+            /// </param>
+            /// <param name='deploymentScript'>
+            /// Deployment script supplied to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentScript> BeginCreateAsync(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, scriptName, deploymentScript, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

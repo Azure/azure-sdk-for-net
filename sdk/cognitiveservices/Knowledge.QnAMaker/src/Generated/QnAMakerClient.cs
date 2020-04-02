@@ -51,6 +51,11 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Gets the IEndpointSettings.
+        /// </summary>
+        public virtual IEndpointSettings EndpointSettings { get; private set; }
+
+        /// <summary>
         /// Gets the IEndpointKeys.
         /// </summary>
         public virtual IEndpointKeys EndpointKeys { get; private set; }
@@ -197,6 +202,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// </summary>
         private void Initialize()
         {
+            EndpointSettings = new EndpointSettings(this);
             EndpointKeys = new EndpointKeys(this);
             Alterations = new Alterations(this);
             Knowledgebase = new Knowledgebase(this);

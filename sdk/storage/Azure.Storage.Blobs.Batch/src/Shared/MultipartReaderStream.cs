@@ -143,7 +143,7 @@ namespace Azure.Core.Http.Multipart
 
         public override void Flush()
         {
-            throw new NotSupportedException();
+            // Flush is allowed on read-only stream
         }
 
         private void PositionInnerStream()

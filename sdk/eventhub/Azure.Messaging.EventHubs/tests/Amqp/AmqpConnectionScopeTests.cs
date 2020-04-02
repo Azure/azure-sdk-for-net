@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 using Microsoft.Azure.Amqp.Transport;
@@ -1373,6 +1374,48 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenProducerLinkAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task AuthorizationTimerCallbackToleratesDisposal()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var endpoint = new Uri("amqp://test.service.gov");
+            var eventHub = "myHub";
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var transport = EventHubsTransportType.AmqpTcp;
+            var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
+            var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
+            var mockScope = new DisposeOnAuthorizationTimerCallbackMockScope(endpoint, eventHub, credential.Object, transport, null);
+
+            var link = await mockScope.OpenProducerLinkAsync(null, TimeSpan.FromDays(1), cancellationSource.Token);
+            Assert.That(link, Is.Not.Null, "The link produced was null");
+
+            var activeLinks = GetActiveLinks(mockScope);
+            Assert.That(activeLinks.ContainsKey(link), Is.True, "The producer link should be tracked as active.");
+
+            activeLinks.TryGetValue(link, out var refreshTimer);
+            Assert.That(refreshTimer, Is.Not.Null, "The link should have a non-null timer.");
+
+            // Reset the timer so that it fires immediately and validate that authorization was
+            // requested.  Since opening of the link requests an initial authorization and the expiration
+            // was set way in the future, there should be exactly two calls.
+            //
+            // Because the timer runs in the background, await the callback completion source, but using a
+            // timed cancellation to ensure that the test does not hang.
+
+            refreshTimer.Change(0, Timeout.Infinite);
+
+            await Task.WhenAny(mockScope.CallbackCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(mockScope.IsDisposed, Is.True, "The scope should have been disposed.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpConnectionScope.Dispose" />
         ///   method.
         /// </summary>
@@ -1665,6 +1708,61 @@ namespace Azure.Messaging.EventHubs.Tests
             public override bool WriteAsync(TransportAsyncCallbackArgs args) => throw new NotImplementedException();
             protected override void AbortInternal() => throw new NotImplementedException();
             protected override bool CloseInternal() => throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Provides a mock which disposes the scope before invoking the default timer callback for authorization.
+        /// </summary>
+        ///
+        private class DisposeOnAuthorizationTimerCallbackMockScope : AmqpConnectionScope
+        {
+            public TaskCompletionSource<bool> CallbackCompletionSource = new TaskCompletionSource<bool>();
+            private readonly AmqpConnection _mockConnection;
+
+            public DisposeOnAuthorizationTimerCallbackMockScope(Uri serviceEndpoint,
+                                                                string eventHubName,
+                                                                EventHubTokenCredential credential,
+                                                                EventHubsTransportType transport,
+                                                                IWebProxy proxy) : base(serviceEndpoint, eventHubName, credential, transport, proxy)
+            {
+                _mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
+            }
+
+            protected override Task<AmqpConnection> CreateAndOpenConnectionAsync(Version amqpVersion,
+                                                                                 Uri serviceEndpoint,
+                                                                                 EventHubsTransportType transportType,
+                                                                                 IWebProxy proxy,
+                                                                                 string scopeIdentifier,
+                                                                                 TimeSpan timeout) => Task.FromResult(_mockConnection);
+
+            protected override Task OpenAmqpObjectAsync(AmqpObject target, TimeSpan timeout) => Task.CompletedTask;
+
+            protected override TimerCallback CreateAuthorizationRefreshHandler(AmqpConnection connection,
+                                                                               AmqpObject amqpLink,
+                                                                               CbsTokenProvider tokenProvider,
+                                                                               Uri endpoint,
+                                                                               string audience,
+                                                                               string resource,
+                                                                               string[] requiredClaims,
+                                                                               TimeSpan refreshTimeout,
+                                                                               Func<Timer> refreshTimerFactory)
+            {
+                Action baseImplementation = () => base.CreateAuthorizationRefreshHandler(connection, amqpLink, tokenProvider, endpoint, audience, resource, requiredClaims, refreshTimeout, refreshTimerFactory);
+
+                return state =>
+                {
+                    Dispose();
+                    baseImplementation();
+                    CallbackCompletionSource.TrySetResult(true);
+                };
+            }
+            protected override Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,
+                                                                                CbsTokenProvider tokenProvider,
+                                                                                Uri endpoint,
+                                                                                string audience,
+                                                                                string resource,
+                                                                                string[] requiredClaims,
+                                                                                TimeSpan timeout) => Task.FromResult(DateTime.Now.AddMinutes(60));
         }
     }
 }

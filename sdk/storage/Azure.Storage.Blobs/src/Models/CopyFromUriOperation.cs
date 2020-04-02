@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// An <see cref="Operation{Int64}"/> for tracking the status of a
     /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
-    /// request.  Its <see cref="Operation{Int64}.Value"/> upon succesful
+    /// request.  Its <see cref="Operation{Int64}.Value"/> upon successful
     /// completion will be the number of bytes copied.
     /// </summary>
     public class CopyFromUriOperation : Operation<long>
@@ -46,7 +47,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Gets a value indicating whether the operation completed and
-        /// succesfully produced a value.  The <see cref="Operation{Int64}.Value"/>
+        /// successfully produced a value.  The <see cref="Operation{Int64}.Value"/>
         /// property is the number of bytes copied by the operation.
         /// </summary>
         public override bool HasValue => _value.HasValue;
@@ -167,10 +168,9 @@ namespace Azure.Storage.Blobs.Models
             }
 
             // Get the latest status
-            Task<Response<BlobProperties>> task = _client.GetPropertiesAsync(cancellationToken: cancellationToken);
-            Response<BlobProperties> update = async ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+            Response<BlobProperties> update = async
+                ? await _client.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)
+                : _client.GetProperties(cancellationToken: cancellationToken);
 
             // Check if the operation is no longer running
             if (Id != update.Value.CopyId ||

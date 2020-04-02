@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -48,6 +49,16 @@ namespace Azure.Storage.Queues
         /// Gets the HttpPipeline used to send REST requests.
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly QueueClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual QueueClientOptions.ServiceVersion Version => _version;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
@@ -165,6 +176,7 @@ namespace Azure.Storage.Queues
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -255,6 +267,7 @@ namespace Azure.Storage.Queues
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -270,12 +283,19 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal QueueClient(Uri queueUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal QueueClient(Uri queueUri, HttpPipeline pipeline, QueueClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
@@ -354,13 +374,17 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
         private async Task<Response> CreateInternal(
             Metadata metadata,
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -373,8 +397,10 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
+                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -390,6 +416,348 @@ namespace Azure.Storage.Queues
             }
         }
         #endregion Create
+
+        #region CreateIfNotExists
+        /// <summary>
+        /// The <see cref="CreateIfNotExists"/>
+        /// operation creates a new queue under the specified account.  If the queue already exists, it is
+        /// not changed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this queue.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the queue does not already exist, a <see cref="Response"/>
+        /// describing the newly created queue. If the queue already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response CreateIfNotExists(
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            CreateIfNotExistsInternal(
+                metadata,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync"/>
+        /// operation creates a new queue under the specified account.  If the queue already exists, it is
+        /// not changed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this queue.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the queue does not already exist, a <see cref="Response"/>
+        /// describing the newly created queue. If the queue already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> CreateIfNotExistsAsync(
+            Metadata metadata = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                metadata,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsInternal"/>
+        /// operation creates a new queue under the specified account.  If the queue already exists, it is
+        /// not changed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-queue4"/>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this queue.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the queue does not already exist, a <see cref="Response"/>
+        /// describing the newly created queue. If the queue already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response> CreateIfNotExistsInternal(
+            Metadata metadata,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(QueueClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(metadata)}: {metadata}");
+                Response response;
+                try
+                {
+                    response = await CreateInternal(
+                        metadata,
+                        async,
+                        cancellationToken,
+                        $"{nameof(QueueClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+
+                    if (response.Status == Constants.Queue.StatusCodeNoContent)
+                    {
+                        response = default;
+                    }
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueAlreadyExists)
+                {
+                    response = default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(QueueClient));
+                }
+                return response;
+            }
+        }
+        #endregion CreateIfNotExists
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="QueueClient"/> to see if the associated queue
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the queue exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="QueueClient"/> to see if the associated queue
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the queue exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="QueueClient"/> to see if the associated queue
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the queue exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(QueueClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<QueueProperties> response = await GetPropertiesInternal(
+                        async: async,
+                        operationName: $"{nameof(QueueClient)}.{nameof(Exists)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(QueueClient));
+                }
+            }
+        }
+        #endregion Exists
+
+        #region DeleteIfExists
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation deletes the specified
+        /// queue if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3" />.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> Returns true if queue exists and was
+        /// deleted, return false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync"/> operation deletes the specified
+        /// queue if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3" />.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> Returns true if queue exists and was
+        /// deleted, return false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsInternal"/> operation deletes the specified
+        /// queue if it exists.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-queue3" />.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> Returns true if queue exists and was
+        /// deleted, return false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> DeleteIfExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(QueueClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        async,
+                        cancellationToken,
+                        $"{nameof(QueueClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == QueueErrorCode.QueueNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(QueueClient));
+                }
+            }
+        }
+        #endregion DeleteIfExists
 
         #region Delete
         /// <summary>
@@ -436,12 +804,16 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
         private async Task<Response> DeleteInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -454,7 +826,9 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
+                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -519,12 +893,16 @@ namespace Azure.Storage.Queues
         /// <param name="cancellationToken">
         /// <see cref="CancellationToken"/>
         /// </param>
+        /// <param name="operationName">
+        /// Optional. To indicate if the name of the operation.
+        /// </param>
         /// <returns>
         /// <see cref="Response{QueueProperties}"/>
         /// </returns>
         private async Task<Response<QueueProperties>> GetPropertiesInternal(
             bool async,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string operationName = default)
         {
             using (Pipeline.BeginLoggingScope(nameof(QueueClient)))
             {
@@ -537,7 +915,9 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
+                        operationName: operationName ?? $"{nameof(QueueClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -631,6 +1011,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -715,6 +1096,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -809,6 +1191,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         permissions: permissions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -890,8 +1273,9 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
+                        version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.ClearMessagesOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(ClearMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -909,7 +1293,6 @@ namespace Azure.Storage.Queues
         #endregion ClearMessages
 
         #region SendMessage
-        #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
         /// to Dequeue and Peek operations. The message content must be a UTF-8 encoded string that is up to 64KB in size.
@@ -942,7 +1325,6 @@ namespace Azure.Storage.Queues
                 messageText,
                 null) // Pass anything else so we don't recurse on this overload
             .ConfigureAwait(false);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// Adds a new message to the back of a queue. The visibility timeout specifies how long the message should be invisible
@@ -1096,10 +1478,11 @@ namespace Azure.Storage.Queues
                             Pipeline,
                             MessagesUri,
                             message: new QueueSendMessage { MessageText = messageText },
+                            version: Version.ToVersionString(),
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
-                            operationName: Constants.Queue.SendMessageOperationName,
+                            operationName: $"{nameof(QueueClient)}.{nameof(SendMessage)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -1120,7 +1503,6 @@ namespace Azure.Storage.Queues
         #endregion SendMessage
 
         #region ReceiveMessages
-#pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         /// <summary>
         /// Receives one or more messages from the front of the queue.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages"/>.
@@ -1140,7 +1522,6 @@ namespace Azure.Storage.Queues
         public virtual async Task<Response<QueueMessage[]>> ReceiveMessagesAsync() =>
             await ReceiveMessagesAsync(null)  // Pass anything else so we don't recurse on this overload
             .ConfigureAwait(false);
-        #pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// Receives one or more messages from the front of the queue.
@@ -1269,10 +1650,11 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
+                        version: Version.ToVersionString(),
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
-                        operationName: Constants.Queue.ReceiveMessagesOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1376,9 +1758,10 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
+                        version: Version.ToVersionString(),
                         numberOfMessages: maxMessages,
                         async: async,
-                        operationName: Constants.Queue.PeekMessagesOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1497,8 +1880,9 @@ namespace Azure.Storage.Queues
                         Pipeline,
                         uri,
                         popReceipt: popReceipt,
+                        version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.DeleteMessageOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(DeleteMessage)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1641,8 +2025,9 @@ namespace Azure.Storage.Queues
                         message: new QueueSendMessage { MessageText = messageText },
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
+                        version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.UpdateMessageOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(UpdateMessage)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

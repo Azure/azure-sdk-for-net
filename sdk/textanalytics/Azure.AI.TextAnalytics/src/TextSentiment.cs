@@ -4,48 +4,28 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// The predicted sentiment for a given document.
     /// </summary>
-    public readonly struct TextSentiment
+    public enum TextSentiment
     {
-        internal TextSentiment(TextSentimentClass sentimentClass, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
-        {
-            SentimentClass = sentimentClass;
-            PositiveScore = positiveScore;
-            NeutralScore = neutralScore;
-            NegativeScore = negativeScore;
-            Offset = offset;
-            Length = length;
-        }
+        /// <summary>
+        /// Indicates that the sentiment is positive.
+        /// </summary>
+        Positive,
 
         /// <summary>
-        /// Gets redicted sentiment for document.
+        /// Indicates that the sentiment is neutral.
         /// </summary>
-        public TextSentimentClass SentimentClass { get; }
+        Neutral,
 
         /// <summary>
+        /// Indicates that the sentiment is negative.
         /// </summary>
-        public double PositiveScore { get; }
+        Negative,
 
         /// <summary>
+        /// Indicates that the document contains mixed sentiments.
         /// </summary>
-        public double NeutralScore { get; }
-
-        /// <summary>
-        /// </summary>
-        public double NegativeScore { get; }
-
-        /// <summary>
-        /// Gets start position (in Unicode characters) for the entity
-        /// match text.
-        /// Start position (in Unicode characters) for the entity text.
-        /// </summary>
-        public int Offset { get; }
-
-        /// <summary>
-        /// Gets length (in Unicode characters) for the entity match
-        /// text.
-        /// Length (in Unicode characters) for the entity text.
-        /// </summary>
-        public int Length { get; }
+        Mixed,
     }
 }

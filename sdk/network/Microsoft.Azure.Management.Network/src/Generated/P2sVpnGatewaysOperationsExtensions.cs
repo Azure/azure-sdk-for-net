@@ -395,6 +395,51 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='p2sVpnGatewayName'>
+            /// The name of the P2S Vpn Gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect p2s vpn connections.
+            /// </param>
+            public static void DisconnectP2sVpnConnections(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string p2sVpnGatewayName, P2SVpnConnectionRequest request)
+            {
+                operations.DisconnectP2sVpnConnectionsAsync(resourceGroupName, p2sVpnGatewayName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='p2sVpnGatewayName'>
+            /// The name of the P2S Vpn Gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect p2s vpn connections.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisconnectP2sVpnConnectionsAsync(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string p2sVpnGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisconnectP2sVpnConnectionsWithHttpMessagesAsync(resourceGroupName, p2sVpnGatewayName, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates a virtual wan p2s vpn gateway if it doesn't exist else updates the
             /// existing gateway.
             /// </summary>
@@ -617,6 +662,51 @@ namespace Microsoft.Azure.Management.Network
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='p2sVpnGatewayName'>
+            /// The name of the P2S Vpn Gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect p2s vpn connections.
+            /// </param>
+            public static void BeginDisconnectP2sVpnConnections(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string p2sVpnGatewayName, P2SVpnConnectionRequest request)
+            {
+                operations.BeginDisconnectP2sVpnConnectionsAsync(resourceGroupName, p2sVpnGatewayName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disconnect P2S vpn connections of the virtual wan P2SVpnGateway in the
+            /// specified resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='p2sVpnGatewayName'>
+            /// The name of the P2S Vpn Gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect p2s vpn connections.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDisconnectP2sVpnConnectionsAsync(this IP2sVpnGatewaysOperations operations, string resourceGroupName, string p2sVpnGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDisconnectP2sVpnConnectionsWithHttpMessagesAsync(resourceGroupName, p2sVpnGatewayName, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

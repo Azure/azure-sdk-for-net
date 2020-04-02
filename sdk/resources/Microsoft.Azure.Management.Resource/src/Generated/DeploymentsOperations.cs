@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// the Location header returns an error-level status code.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Checks whether the deployment exists.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// to JSON files.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets a deployment.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// template deployment and leaves the resources partially deployed.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -701,7 +701,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// be accepted by Azure Resource Manager..
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -944,7 +944,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Exports the template used for specified deployment.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -1150,7 +1150,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Get all the deployments at the given scope.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -1566,7 +1566,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DeploymentExtended>> CreateOrUpdateAtTenantScopeWithHttpMessagesAsync(string deploymentName, Deployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentExtended>> CreateOrUpdateAtTenantScopeWithHttpMessagesAsync(string deploymentName, ScopedDeployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<DeploymentExtended> _response = await BeginCreateOrUpdateAtTenantScopeWithHttpMessagesAsync(deploymentName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -1983,7 +1983,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DeploymentValidateResult>> ValidateAtTenantScopeWithHttpMessagesAsync(string deploymentName, Deployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentValidateResult>> ValidateAtTenantScopeWithHttpMessagesAsync(string deploymentName, ScopedDeployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (deploymentName == null)
             {
@@ -2077,7 +2077,8 @@ namespace Microsoft.Azure.Management.ResourceManager
             string _requestContent = null;
             if(parameters != null)
             {
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                // This will be overwrote by AutoRest after regeneration. Don't forget to change it back.
+                _requestContent = SafeJsonConvertWrapper.SerializeScopeDeployment(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -2820,7 +2821,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DeploymentExtended>> CreateOrUpdateAtManagementGroupScopeWithHttpMessagesAsync(string groupId, string deploymentName, Deployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentExtended>> CreateOrUpdateAtManagementGroupScopeWithHttpMessagesAsync(string groupId, string deploymentName, ScopedDeployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<DeploymentExtended> _response = await BeginCreateOrUpdateAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
@@ -3280,7 +3281,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DeploymentValidateResult>> ValidateAtManagementGroupScopeWithHttpMessagesAsync(string groupId, string deploymentName, Deployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentValidateResult>> ValidateAtManagementGroupScopeWithHttpMessagesAsync(string groupId, string deploymentName, ScopedDeployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (groupId == null)
             {
@@ -3392,7 +3393,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             if(parameters != null)
             {
                 // This will be overwrote by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = SafeJsonConvertWrapper.SerializeScopeDeployment(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -6849,7 +6850,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// the Location header returns an error-level status code.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -7038,7 +7039,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// to JSON files.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -7498,7 +7499,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DeploymentExtended>> BeginCreateOrUpdateAtTenantScopeWithHttpMessagesAsync(string deploymentName, Deployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentExtended>> BeginCreateOrUpdateAtTenantScopeWithHttpMessagesAsync(string deploymentName, ScopedDeployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (deploymentName == null)
             {
@@ -7593,7 +7594,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             if(parameters != null)
             {
                 // This will be overwrote by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = SafeJsonConvertWrapper.SerializeScopeDeployment(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -7946,7 +7947,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DeploymentExtended>> BeginCreateOrUpdateAtManagementGroupScopeWithHttpMessagesAsync(string groupId, string deploymentName, Deployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeploymentExtended>> BeginCreateOrUpdateAtManagementGroupScopeWithHttpMessagesAsync(string groupId, string deploymentName, ScopedDeployment parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (groupId == null)
             {
@@ -8058,7 +8059,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             if(parameters != null)
             {
                 // This will be overwrote by AutoRest after regeneration. Don't forget to change it back.
-                _requestContent = SafeJsonConvertWrapper.SerializeDeployment(parameters, Client.SerializationSettings);
+                _requestContent = SafeJsonConvertWrapper.SerializeScopeDeployment(parameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

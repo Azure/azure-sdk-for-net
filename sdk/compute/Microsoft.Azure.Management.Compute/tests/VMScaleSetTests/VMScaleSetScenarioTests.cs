@@ -240,7 +240,7 @@ namespace Compute.Tests
         public void TestVMScaleSetScenarioOperations_AutomaticRepairsPolicyTest()
         {
             string environmentVariable = "AZURE_VM_TEST_LOCATION";
-            string region = "westcentralus";
+            string region = "centraluseuap";
             string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
 
             try
@@ -296,8 +296,8 @@ namespace Compute.Tests
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
                         {
                             Enabled = true,
-                            GracePeriod = "PT2M",
-                            MaxInstanceRepairsPercent = 50
+
+                            GracePeriod = "PT35M"
                         };
                         UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
@@ -313,8 +313,8 @@ namespace Compute.Tests
                         ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
                         Assert.NotNull(getResponse.AutomaticRepairsPolicy);
                         Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
-                        Assert.Equal("PT2M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
-                        Assert.Equal(50, getResponse.AutomaticRepairsPolicy.MaxInstanceRepairsPercent);
+
+                        Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
 
                         // Disable Automatic Repairs
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
@@ -326,6 +326,87 @@ namespace Compute.Tests
                         getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
                         Assert.NotNull(getResponse.AutomaticRepairsPolicy);
                         Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == false);
+                    }
+                    finally
+                    {
+                        //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                        //of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                        m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    }
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_OrchestrationService")]
+        public void TestVMScaleSetScenarioOperations_OrchestrationService()
+        {
+            string environmentVariable = "AZURE_VM_TEST_LOCATION";
+            string region = "northeurope";
+            string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
+
+            try
+            {
+                using (MockContext context = MockContext.Start(this.GetType()))
+                {
+                    Environment.SetEnvironmentVariable(environmentVariable, region);
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                    // Create resource group
+                    var rgName = TestUtilities.GenerateName(TestPrefix);
+                    var vmssName = TestUtilities.GenerateName("vmss");
+                    string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                    VirtualMachineScaleSet inputVMScaleSet;
+
+                    try
+                    {
+                        var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                        m_CrpClient.VirtualMachineScaleSets.Delete(rgName, "VMScaleSetDoesNotExist");
+
+                        AutomaticRepairsPolicy automaticRepairsPolicy = new AutomaticRepairsPolicy()
+                        {
+                            Enabled = true
+                        };
+                        var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                            rgName,
+                            vmssName,
+                            storageAccountOutput,
+                            imageRef,
+                            out inputVMScaleSet,
+                            null,
+                            (vmScaleSet) =>
+                            {
+                                vmScaleSet.Overprovision = false;
+                            },
+                            createWithManagedDisks: true,
+                            createWithPublicIpAddress: false,
+                            createWithHealthProbe: true,
+                            automaticRepairsPolicy: automaticRepairsPolicy);
+
+                        ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                        var getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
+
+                        Assert.True(getInstanceViewResponse.OrchestrationServices.Count == 1);
+                        Assert.Equal("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState);
+                        Assert.Equal("AutomaticRepairs", getInstanceViewResponse.OrchestrationServices[0].ServiceName);
+
+                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, "Suspend");
+
+                        getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
+                        Assert.Equal("Suspended", getInstanceViewResponse.OrchestrationServices[0].ServiceState);
+
+                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, "Resume");
+                        getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
+                        Assert.Equal("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState);
+
+                        m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
                     }
                     finally
                     {

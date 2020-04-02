@@ -1,5 +1,6 @@
 variables:
-  DotNetCoreSDKVersion: '3.0.100'
+  DocWardenVersion: '0.5.0'
+  DotNetCoreSDKVersion: '3.1.100'
   DotNetCoreRuntimeVersion: '2.1.10'
   OfficialBuildId: $(Build.BuildNumber)
   ConvertToProjectReferenceOption: ''

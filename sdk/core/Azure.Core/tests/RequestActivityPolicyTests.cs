@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        private static readonly RequestActivityPolicy s_enabledPolicy = new RequestActivityPolicy(true);
+        private static readonly RequestActivityPolicy s_enabledPolicy = new RequestActivityPolicy(true, "Microsoft.Azure.Core.Cool.Tests");
 
         [Test]
         [NonParallelizable]
@@ -61,8 +61,41 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("requestId", clientRequestId));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("serviceRequestId", "server request id"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("kind", "client"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
         }
 
+
+        [Test]
+        [NonParallelizable]
+        public void ActivityShouldBeStoppedWhenTransportThrows()
+        {
+            Activity activity = null;
+            (string Key, object Value, DiagnosticListener) startEvent = default;
+            using var testListener = new TestDiagnosticListener("Azure.Core");
+
+            MockTransport mockTransport = CreateMockTransport(_ =>
+            {
+                activity = Activity.Current;
+                startEvent = testListener.Events.Dequeue();
+                throw new Exception();
+            });
+
+            string clientRequestId = null;
+            Assert.ThrowsAsync<Exception>(async () => await SendRequestAsync(mockTransport, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("http://example.com"));
+                request.Headers.Add("User-Agent", "agent");
+                clientRequestId = request.ClientRequestId;
+            }, s_enabledPolicy));
+
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
+
+            Assert.AreEqual("Azure.Core.Http.Request.Start", startEvent.Key);
+            Assert.AreEqual("Azure.Core.Http.Request.Stop", stopEvent.Key);
+
+            Assert.AreEqual("Azure.Core.Http.Request", activity.OperationName);
+        }
 
         [Test]
         [NonParallelizable]
@@ -180,7 +213,7 @@ namespace Azure.Core.Tests
 
             var transport = new MockTransport(new MockResponse(200));
 
-            await SendGetRequest(transport, new RequestActivityPolicy(isDistributedTracingEnabled: false));
+            await SendGetRequest(transport, new RequestActivityPolicy(isDistributedTracingEnabled: false, "Microsoft.Azure.Core.Cool.Tests"));
 
             Assert.AreEqual(0, testListener.Events.Count);
         }

@@ -26,12 +26,10 @@ namespace Compute.Tests
         [Trait("Name", "TestProximityPlacementGroupsOperations")]
         public void TestProximityPlacementGroupsOperations()
         {
-            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                     EnsureClientsInitialized(context);
                     Initialize(context);
 
@@ -45,10 +43,11 @@ namespace Compute.Tests
                     // Make sure proximityPlacementGroup across resource groups are listed successfully and 
                     // proximityPlacementGroups in a resource groups are listed successfully
                     VerifyListProximityPlacementGroups();
+
+                    VerifyProximityPlacementGroupColocationStatusView();
                 }
                 finally
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     m_ResourcesClient.ResourceGroups.Delete(m_resourceGroup1Name);
                 }
             }
@@ -239,6 +238,70 @@ namespace Compute.Tests
             m_CrpClient.ProximityPlacementGroups.Delete(m_resourceGroup1Name, ProximityPlacementGroupName);
         }
 
+        private void VerifyProximityPlacementGroupColocationStatusView()
+        {
+            var ppgName = ComputeManagementTestUtilities.GenerateName("testppg");
+            string asName = ComputeManagementTestUtilities.GenerateName("testas");
+            string vmssName = ComputeManagementTestUtilities.GenerateName("testvmss");
+            string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+            var inputProximityPlacementGroup = new ProximityPlacementGroup
+            {
+                Location = m_location,
+                Tags = new Dictionary<string, string>()
+                {
+                    {"RG", "rg"},
+                    {"testTag", "1"},
+                },
+                ProximityPlacementGroupType = ProximityPlacementGroupType.Standard
+            };
+
+            var expectedProximityPlacementGroup = new ProximityPlacementGroup
+            {
+                Location = m_location,
+                Tags = new Dictionary<string, string>()
+                {
+                    {"RG", "rg"},
+                    {"testTag", "1"},
+                },
+                ProximityPlacementGroupType = ProximityPlacementGroupType.Standard
+            };
+
+            // Create and expect success.
+            ProximityPlacementGroup outProximityPlacementGroup = m_CrpClient.ProximityPlacementGroups.CreateOrUpdate(m_resourceGroup1Name, ppgName, inputProximityPlacementGroup);
+
+            ValidateProximityPlacementGroup(expectedProximityPlacementGroup, outProximityPlacementGroup, ppgName);
+
+            VirtualMachine inputVM;
+            VirtualMachine outVM = CreateVM(m_resourceGroup1Name, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: true, hasDiffDisks: false, vmSize: "Standard_A0",
+                osDiskStorageAccountType: "Standard_LRS", dataDiskStorageAccountType: "Standard_LRS", writeAcceleratorEnabled: false, zones: null, ppgName: ppgName, diskEncryptionSetId: null);
+
+            // Get and expect success.
+            outProximityPlacementGroup = m_CrpClient.ProximityPlacementGroups.Get(m_resourceGroup1Name, ppgName, includeColocationStatus : "true");
+            InstanceViewStatus expectedInstanceViewStatus = new InstanceViewStatus
+            {
+                Code = "ColocationStatus/Aligned",
+                Level = StatusLevelTypes.Info,
+                DisplayStatus = "Aligned",
+                Message = "All resources in the proximity placement group are aligned."
+            };
+
+            expectedProximityPlacementGroup = new ProximityPlacementGroup(
+                m_location,
+                tags: new Dictionary<string, string>()
+                {
+                    {"RG", "rg"},
+                    {"testTag", "1"},
+                },
+                proximityPlacementGroupType: ProximityPlacementGroupType.Standard,
+                virtualMachines: new List<SubResourceWithColocationStatus> { new SubResourceWithColocationStatus(outVM.Id) },
+                availabilitySets: new List<SubResourceWithColocationStatus> { new SubResourceWithColocationStatus(outVM.AvailabilitySet.Id) });
+
+            ValidateProximityPlacementGroup(expectedProximityPlacementGroup, outProximityPlacementGroup, ppgName);
+            ValidateColocationStatus(expectedInstanceViewStatus, outProximityPlacementGroup.ColocationStatus);
+        }
+
         // Make sure proximityPlacementGroup across resource groups are listed successfully and proximityPlacementGroups in a resource groups are listed successfully
         private void VerifyListProximityPlacementGroups()
         {
@@ -358,8 +421,8 @@ namespace Compute.Tests
                 expectedProximityPlacementGroup.ProximityPlacementGroupType == outputProximityPlacementGroup.ProximityPlacementGroupType,
                 "ProximityPlacementGroup.ProximityPlacementGroupType in response mismatch with expected value.");
 
-            void VerifySubResource(IList<Microsoft.Azure.Management.Compute.Models.SubResource> inResource, 
-                IList<Microsoft.Azure.Management.Compute.Models.SubResource> outResource, string subResourceTypeName)
+            void VerifySubResource(IList<Microsoft.Azure.Management.Compute.Models.SubResourceWithColocationStatus> inResource, 
+                IList<Microsoft.Azure.Management.Compute.Models.SubResourceWithColocationStatus> outResource, string subResourceTypeName)
             {
                 if (inResource == null)
                 {
@@ -387,6 +450,14 @@ namespace Compute.Tests
                 string key = tag.Key;
                 Assert.True(expectedProximityPlacementGroup.Tags[key] == outputProximityPlacementGroup.Tags[key], "Unexpected ProximityPlacementGroup tag is found in response.");
             }
+        }
+
+        void ValidateColocationStatus(InstanceViewStatus expectedColocationStatus, InstanceViewStatus actualColocationStatus)
+        {
+            Assert.True(expectedColocationStatus.Code == actualColocationStatus.Code, "ColocationStatus code do not match with expected value.");
+            Assert.True(expectedColocationStatus.Level == actualColocationStatus.Level, "ColocationStatus level do not match with expected value.");
+            Assert.True(expectedColocationStatus.DisplayStatus == actualColocationStatus.DisplayStatus, "ColocationStatus display status do not match with expected value.");
+            Assert.True(expectedColocationStatus.Message == actualColocationStatus.Message, "ColocationStatus message do not match with expected value.");
         }
     }
 }

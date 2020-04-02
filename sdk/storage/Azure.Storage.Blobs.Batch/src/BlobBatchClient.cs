@@ -32,6 +32,11 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version { get; }
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -64,6 +69,7 @@ namespace Azure.Storage.Blobs.Specialized
             Uri = client.Uri;
             Pipeline = BlobServiceClientInternals.GetHttpPipeline(client);
             BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(client);
+            Version = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options);
 
             // Construct a dummy pipeline for processing batch sub-operations
@@ -71,7 +77,7 @@ namespace Azure.Storage.Blobs.Specialized
             BatchOperationPipeline = CreateBatchPipeline(
                 Pipeline,
                 BlobServiceClientInternals.GetAuthenticationPolicy(client),
-                options.Version);
+                Version);
         }
 
         /// <summary>
@@ -296,8 +302,9 @@ namespace Azure.Storage.Blobs.Specialized
                     body: content,
                     contentLength: content.Length,
                     multipartContentType: contentType,
+                    version: Version.ToVersionString(),
                     async: async,
-                    operationName: BatchConstants.BatchOperationName,
+                    operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -392,7 +399,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// that the operation should be cancelled.
         /// </param>
         /// <returns>A Task representing the update operation.</returns>
-        private static async Task UpdateOperationResponses(
+        private async Task UpdateOperationResponses(
             IList<HttpMessage> messages,
             Response rawResponse,
             Stream responseContent,
@@ -421,7 +428,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (responses.Length == 1 && responses[0].Status == 400)
                     {
                         // We'll re-process this response as a batch result
-                        BatchRestClient.Service.SubmitBatchAsync_CreateResponse(responses[0]);
+                        BatchRestClient.Service.SubmitBatchAsync_CreateResponse(ClientDiagnostics, responses[0]);
                     }
                     else
                     {
@@ -432,7 +439,7 @@ namespace Azure.Storage.Blobs.Specialized
             catch (InvalidOperationException ex)
             {
                 // Wrap any parsing errors in a RequestFailedException
-                throw BatchErrors.InvalidResponse(rawResponse, ex);
+                throw BatchErrors.InvalidResponse(ClientDiagnostics, rawResponse, ex);
             }
 
             // Update the delayed responses
@@ -658,7 +665,6 @@ namespace Azure.Storage.Blobs.Specialized
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
-#pragma warning restore AZC0002 // Client method should have cancellationToken as the last optional parameter
 
         /// <summary>
         /// The SetBlobsAccessTierAsync operation sets the tier on blobs.  The

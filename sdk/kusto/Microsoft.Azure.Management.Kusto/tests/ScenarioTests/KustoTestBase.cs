@@ -22,6 +22,7 @@ namespace Kusto.Tests.ScenarioTests
         public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest";
         public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest";
         public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Devices/IotHubs/ofertestiot";
+        public string clientIdForPrincipal = "713c3475-5021-4f3b-a650-eaa9a83f25a4";
         public string dBprincipalMail = "oflipman@microsoft.com";
         public string consumerGroupName = "$Default";
         public readonly string tableName = "MyTest";
@@ -130,8 +131,8 @@ namespace Kusto.Tests.ScenarioTests
 
             defaultPrincipalsModificationKind = "Replace";
 
-            cluster = new Cluster(sku: new AzureSku(name: "D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
-            followerCluster = new Cluster(sku: new AzureSku(name: "D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
+            cluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
+            followerCluster = new Cluster(sku: new AzureSku(name: "Standard_D13_v2", "Standard", 2), location: this.location, trustedExternalTenants: trustedExternalTenants);
             database = new ReadWriteDatabase(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
             eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
             eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName, dataFormat, location: location);
