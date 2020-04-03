@@ -348,7 +348,7 @@ namespace Azure.Identity.Tests
 
                 try
                 {
-                    LinuxNativeMethods.secret_password_store_sync(schemaPtr, "default", $"{ExpectedServiceName}/{cloudName}", refreshToken, IntPtr.Zero, "service", ExpectedServiceName, "account", cloudName);
+                    LinuxNativeMethods.secret_password_store_sync(schemaPtr, LinuxNativeMethods.SECRET_COLLECTION_SESSION, $"{ExpectedServiceName}/{cloudName}", refreshToken, IntPtr.Zero, "service", ExpectedServiceName, "account", cloudName);
                 }
                 finally
                 {
