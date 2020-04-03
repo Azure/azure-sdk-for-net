@@ -76,27 +76,18 @@ namespace Azure.Identity
             }
             catch
             {
-                switch (status)
+                return status switch
                 {
-                    case SecStatusCodeNoSuchKeychain:
-                        return $"The keychain does not exist. [0x{status:x}]";
-                    case SecStatusCodeInvalidKeychain:
-                        return $"The keychain is not valid. [0x{status:x}]";
-                    case SecStatusCodeAuthFailed:
-                        return $"Authorization/Authentication failed. [0x{status:x}]";
-                    case SecStatusCodeDuplicateItem:
-                        return $"The item already exists. [0x{status:x}]";
-                    case SecStatusCodeItemNotFound:
-                        return $"The item cannot be found. [0x{status:x}]";
-                    case SecStatusCodeInteractionNotAllowed:
-                        return $"Interaction with the Security Server is not allowed. [0x{status:x}]";
-                    case SecStatusCodeInteractionRequired:
-                        return $"User interaction is required. [0x{status:x}]";
-                    case SecStatusCodeNoSuchAttr:
-                        return $"The attribute does not exist. [0x{status:x}]";
-                    default:
-                        return $"Unknown error. [0x{status:x}]";
-                }
+                    SecStatusCodeNoSuchKeychain => $"The keychain does not exist. [0x{status:x}]",
+                    SecStatusCodeInvalidKeychain => $"The keychain is not valid. [0x{status:x}]",
+                    SecStatusCodeAuthFailed => $"Authorization/Authentication failed. [0x{status:x}]",
+                    SecStatusCodeDuplicateItem => $"The item already exists. [0x{status:x}]",
+                    SecStatusCodeItemNotFound => $"The item cannot be found. [0x{status:x}]",
+                    SecStatusCodeInteractionNotAllowed => $"Interaction with the Security Server is not allowed. [0x{status:x}]",
+                    SecStatusCodeInteractionRequired => $"User interaction is required. [0x{status:x}]",
+                    SecStatusCodeNoSuchAttr => $"The attribute does not exist. [0x{status:x}]",
+                    _ => $"Unknown error. [0x{status:x}]",
+                };
             }
             finally
             {
@@ -109,17 +100,17 @@ namespace Azure.Identity
             IntPtr stringPtr = IntPtr.Zero;
             try
             {
+                int length = Imports.CFStringGetLength (handle);
                 stringPtr = Imports.CFStringGetCharactersPtr(handle);
 
                 if (stringPtr == IntPtr.Zero)
                 {
-                    int length = Imports.CFStringGetLength (handle);
-                    var range = new MacosNativeMethods.CFRange(0, length);
+                    var range = new CFRange(0, length);
                     stringPtr = Marshal.AllocCoTaskMem(length * 2);
                     Imports.CFStringGetCharacters(handle, range, stringPtr);
                 }
 
-                return Marshal.PtrToStringAuto(stringPtr, 0);
+                return Marshal.PtrToStringAuto(stringPtr, length);
             }
             finally
             {

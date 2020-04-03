@@ -8,7 +8,6 @@ namespace Azure.Identity
 {
     internal static class LinuxNativeMethods
     {
-        public const string SECRET_COLLECTION_DEFAULT = "default";
         public const string SECRET_COLLECTION_SESSION = "session";
 
         public enum SecretSchemaAttributeType
@@ -38,20 +37,20 @@ namespace Azure.Identity
 
         public static string secret_password_lookup_sync(IntPtr schemaPtr, IntPtr cancellable, string attribute1Type, string attribute1Value, string attribute2Type, string attribute2Value)
         {
-            IntPtr passwordPtr = Imports.secret_password_lookup_sync(schemaPtr, cancellable, out var errorPtr, attribute1Type, attribute1Value, attribute2Type, attribute2Value, IntPtr.Zero);
+            IntPtr passwordPtr = Imports.secret_password_lookup_sync(schemaPtr, cancellable, out IntPtr errorPtr, attribute1Type, attribute1Value, attribute2Type, attribute2Value, IntPtr.Zero);
             HandleError(errorPtr, "An error was encountered while reading secret from keyring");
             return passwordPtr != IntPtr.Zero ? Marshal.PtrToStringAnsi(passwordPtr) : null;
         }
 
         public static void secret_password_store_sync(IntPtr schemaPtr, string collection, string label, string password, IntPtr cancellable, string attribute1Type, string attribute1Value, string attribute2Type, string attribute2Value)
         {
-            _ = Imports.secret_password_store_sync(schemaPtr, collection, label, password, cancellable, out var errorPtr, attribute1Type, attribute1Value, attribute2Type, attribute2Value, IntPtr.Zero);
+            _ = Imports.secret_password_store_sync(schemaPtr, collection, label, password, cancellable, out IntPtr errorPtr, attribute1Type, attribute1Value, attribute2Type, attribute2Value, IntPtr.Zero);
             HandleError(errorPtr, "An error was encountered while writing secret to keyring");
         }
 
         public static void secret_password_clear_sync(IntPtr schemaPtr, IntPtr cancellable, string attribute1Type, string attribute1Value, string attribute2Type, string attribute2Value)
         {
-            _ = Imports.secret_password_clear_sync(schemaPtr, cancellable, out var errorPtr, attribute1Type, attribute1Value, attribute2Type, attribute2Value, IntPtr.Zero);
+            _ = Imports.secret_password_clear_sync(schemaPtr, cancellable, out IntPtr errorPtr, attribute1Type, attribute1Value, attribute2Type, attribute2Value, IntPtr.Zero);
             HandleError(errorPtr, "An error was encountered while clearing secret from keyring ");
         }
 
@@ -85,7 +84,7 @@ namespace Azure.Identity
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"An exception was encountered while processing libsecret error: {ex}");
+                throw new InvalidOperationException($"An exception was encountered while processing libsecret error: {ex}", ex);
             }
 
             throw new InvalidOperationException($"{errorMessage}, domain:'{error.Domain}', code:'{error.Code}', message:'{error.Message}'");

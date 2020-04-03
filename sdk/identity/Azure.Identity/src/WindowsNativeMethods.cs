@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Azure.Identity
@@ -66,7 +67,7 @@ namespace Azure.Identity
             }
         }
 
-        private static void ThrowIfFailed(bool isSucceeded)
+        private static void ThrowIfFailed(bool isSucceeded, [CallerMemberName] string methodName = default)
         {
             if (isSucceeded)
             {
@@ -74,33 +75,35 @@ namespace Azure.Identity
             }
 
             var error = Marshal.GetLastWin32Error();
-            if (error != ERROR_NOT_FOUND)
-            {
-                throw new InvalidOperationException();
-            }
-
-            throw new InvalidOperationException(MessageFromErrorCode(error));
+            var message = error == ERROR_NOT_FOUND ? $"{methodName} has failed but error is unknown." : MessageFromErrorCode(error);
+            throw new InvalidOperationException(message);
         }
 
         private static string MessageFromErrorCode(int errorCode)
         {
             // Twy Win32 first
             uint flags = FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS;
+
             IntPtr messageBuffer = IntPtr.Zero;
-
-            var length = Imports.FormatMessage(flags, IntPtr.Zero, errorCode, 0, ref messageBuffer, 0, IntPtr.Zero);
-            if (length == 0)
-            {
-                // If failed, try to convert NTSTATUS to Win32 error
-                int code = Imports.RtlNtStatusToDosError(errorCode);
-                return new Win32Exception(code).Message;
-            }
-
             string message = null;
-            if (messageBuffer != IntPtr.Zero)
+
+            try
             {
-                message = Marshal.PtrToStringUni(messageBuffer);
-                Marshal.FreeHGlobal(messageBuffer);
+                var length = Imports.FormatMessage(flags, IntPtr.Zero, errorCode, 0, ref messageBuffer, 0, IntPtr.Zero);
+                if (length == 0)
+                {
+                    // If failed, try to convert NTSTATUS to Win32 error
+                    int code = Imports.RtlNtStatusToDosError(errorCode);
+                    return new Win32Exception(code).Message;
+                }
+            }
+            finally
+            {
+                if (messageBuffer != IntPtr.Zero)
+                {
+                    message = Marshal.PtrToStringUni(messageBuffer);
+                    Marshal.FreeHGlobal(messageBuffer);
+                }
             }
 
             return message ?? string.Empty;

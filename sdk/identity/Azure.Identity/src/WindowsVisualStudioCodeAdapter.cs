@@ -16,10 +16,9 @@ namespace Azure.Identity
 
         public string GetCredentials(string serviceName, string accountName)
         {
-            IntPtr credentials = IntPtr.Zero;
+            IntPtr credentials = WindowsNativeMethods.CredRead($"{serviceName}/{accountName}", WindowsNativeMethods.CRED_TYPE.GENERIC);
             try
             {
-                credentials = WindowsNativeMethods.CredRead($"{serviceName}/{accountName}", WindowsNativeMethods.CRED_TYPE.GENERIC);
                 WindowsNativeMethods.CredentialData credData = Marshal.PtrToStructure<WindowsNativeMethods.CredentialData>(credentials);
                 return Marshal.PtrToStringAnsi(credData.CredentialBlob, (int) credData.CredentialBlobSize);
             }
