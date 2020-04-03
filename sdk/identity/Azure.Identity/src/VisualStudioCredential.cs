@@ -72,7 +72,8 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException("No installed instance of Visual Studio was found");
                 }
 
-                return await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
+                var accessToken = await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(accessToken);
             }
             catch (OperationCanceledException e)
             {
