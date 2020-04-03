@@ -287,7 +287,7 @@ ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new Defa
 
 [Sessions](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-sessions) provide a mechanism for grouping related messages. In order to use sessions, you need to be working with a session-enabled entity.
 
-- [Sending and receiving session messages](./samples/Sample03_Sessions.md)
+- [Sending and receiving session messages](./samples/Sample03_SendReceiveSessions.md)
 - [Using the session processor](./samples/Sample05_SessionProcessor.md)
 
 ## Troubleshooting
