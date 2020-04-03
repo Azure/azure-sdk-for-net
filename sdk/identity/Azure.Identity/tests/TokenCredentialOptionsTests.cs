@@ -13,6 +13,7 @@ namespace Azure.Identity.Tests
         {
         }
 
+        [NonParallelizable]
         [Test]
         public void InvalidEnvAuthorityHost()
         {
@@ -24,6 +25,7 @@ namespace Azure.Identity.Tests
             }
         }
 
+        [NonParallelizable]
         [Test]
         public void EnvAuthorityHost()
         {
@@ -38,6 +40,7 @@ namespace Azure.Identity.Tests
             }
         }
 
+        [NonParallelizable]
         [Test]
         public void CustomAuthorityHost()
         {
@@ -55,6 +58,7 @@ namespace Azure.Identity.Tests
             }
         }
 
+        [NonParallelizable]
         [Test]
         public void DefaultAuthorityHost()
         {
