@@ -9,7 +9,6 @@
     
     <NoWarn>
       $(NoWarn);
-      SA1649;
       CA1812;
     </NoWarn>
     
