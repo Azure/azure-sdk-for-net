@@ -5,6 +5,7 @@
 ### Added
 
 - Added models and methods to `SearchServiceClient` to create and manage indexes.
+- Added support for continuation tokens to resume server-side paging.
 
 ### Breaking Changes
 
