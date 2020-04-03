@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Ignore("Argument validation not implemented yet.")]
         public void ConstructorRequiresTheEndpoint()
         {
-            var credential = new FormRecognizerApiKeyCredential("key");
+            var credential = new AzureKeyCredential("key");
 
             Assert.Throws<ArgumentNullException>(() => new ReceiptClient(null, credential));
             Assert.Throws<ArgumentNullException>(() => new ReceiptClient(null, credential, new FormRecognizerClientOptions()));
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public void ConstructorRequiresTheOptions()
         {
             var endpoint = new Uri("http://localhost");
-            var credential = new FormRecognizerApiKeyCredential("key");
+            var credential = new AzureKeyCredential("key");
 
             Assert.Throws<ArgumentNullException>(() => new ReceiptClient(endpoint, credential, null));
         }
@@ -127,7 +127,7 @@ namespace Azure.AI.FormRecognizer.Tests
         private ReceiptClient CreateInstrumentedClient()
         {
             var fakeEndpoint = new Uri("http://localhost");
-            var fakeCredential = new FormRecognizerApiKeyCredential("fakeKey");
+            var fakeCredential = new AzureKeyCredential("fakeKey");
             var client = new ReceiptClient(fakeEndpoint, fakeCredential);
 
             return InstrumentClient(client);
