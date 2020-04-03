@@ -13,5 +13,6 @@ description: Samples for the Azure.Messaging.ServiceBus client library
 
 - [Sending and Receiving Messages](Sample01_HelloWorld.md)
 - [Settling Messages](Sample02_MessageSettlement.md)
-- [Sending and Receiving Session Messages](Sample03_Sessions.md)
+- [Sending and Receiving Session Messages](Sample03_SendReceiveSessions.md)
 - [Using the Processor](Sample04_Processor.md)
+- [Using the Session Processor](Sample05_SessionProcessor.md)

@@ -24,8 +24,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
-                // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                // create the sender
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -33,8 +33,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message
                 await sender.SendAsync(message);
 
-                // get a receiver that we can use to receive and settle the message
-                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                // create a receiver that we can use to receive and settle the message
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // complete the message, thereby deleting it from the service
                 await receiver.CompleteAsync(receivedMessage);
                 #endregion
-                Assert.IsNull(await GetNoRetryClient().GetReceiver(queueName).ReceiveAsync());
+                Assert.IsNull(await GetNoRetryClient().CreateReceiver(queueName).ReceiveAsync());
             }
         }
 
@@ -56,8 +56,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
-                // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                // create the sender
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -65,8 +65,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message
                 await sender.SendAsync(message);
 
-                // get a receiver that we can use to receive and settle the message
-                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                // create a receiver that we can use to receive and settle the message
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 #region Snippet:ServiceBusAbandonMessage
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
                 await receiver.AbandonAsync(receivedMessage);
                 #endregion
-                Assert.IsNotNull(GetNoRetryClient().GetReceiver(queueName).ReceiveAsync());
+                Assert.IsNotNull(GetNoRetryClient().CreateReceiver(queueName).ReceiveAsync());
             }
         }
 
@@ -88,8 +88,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
-                // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                // create the sender
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -97,8 +97,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message
                 await sender.SendAsync(message);
 
-                // get a receiver that we can use to receive and settle the message
-                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                // create a receiver that we can use to receive and settle the message
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 #region Snippet:ServiceBusDeferMessage
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -125,8 +125,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
-                // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                // create the sender
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -134,8 +134,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message
                 await sender.SendAsync(message);
 
-                // get a receiver that we can use to receive and settle the message
-                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                // create a receiver that we can use to receive and settle the message
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 #region Snippet:ServiceBusDeadLetterMessage
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -144,7 +144,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await receiver.DeadLetterAsync(receivedMessage);
 
                 // receive the dead lettered message with receiver scoped to the dead letter queue.
-                ServiceBusReceiver dlqReceiver = client.GetDeadLetterReceiver(queueName);
+                ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
                 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
                 #endregion
                 Assert.IsNotNull(dlqMessage);

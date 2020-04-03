@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
                 MaxReceiveWaitTime = TimeSpan.FromSeconds(10)
             };
-            var processor = client.GetProcessor("queueName", options);
+            var processor = client.CreateProcessor("queueName", options);
             Assert.AreEqual(options.AutoComplete, processor.AutoComplete);
             Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
