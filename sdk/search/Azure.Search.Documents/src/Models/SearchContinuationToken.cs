@@ -36,12 +36,8 @@ namespace Azure.Search.Documents.Models
         /// <see cref="SearchOptions"/> for additional results when making POST
         /// requests.
         /// </param>
-        /// <param name="apiVersion">Versioning discriminator.</param>
         /// <returns>A continuation token.</returns>
-        public static string Serialize(
-            Uri nextPageUri,
-            SearchOptions nextPageOptions,
-            SearchClientOptions.ServiceVersion apiVersion = SearchClientOptions.ContinuationTokenVersion)
+        public static string Serialize(Uri nextPageUri, SearchOptions nextPageOptions)
         {
             // There's no continuation token if there's no next page
             if (nextPageUri == null || nextPageOptions == null)
@@ -52,7 +48,7 @@ namespace Azure.Search.Documents.Models
             using (Utf8JsonWriter writer = new Utf8JsonWriter(buffer))
             {
                 writer.WriteStartObject();
-                writer.WriteString(s_apiVersionEncodedName, apiVersion.ToVersionString());
+                writer.WriteString(s_apiVersionEncodedName, SearchClientOptions.ContinuationTokenVersion.ToVersionString());
                 writer.WriteString(s_nextLinkEncodedName, nextPageUri.ToString());
                 writer.WritePropertyName(s_nextPageParametersEncodedName);
                 writer.WriteObjectValue(nextPageOptions);
@@ -87,7 +83,8 @@ namespace Azure.Search.Documents.Models
                         apiVersion.GetString(),
                         SearchClientOptions.ContinuationTokenVersion.ToVersionString(),
                         StringComparison.OrdinalIgnoreCase) &&
-                    json.RootElement.TryGetProperty(NextPageParametersName, out JsonElement nextPageParams))
+                    json.RootElement.TryGetProperty(NextPageParametersName, out JsonElement nextPageParams) &&
+                    nextPageParams.ValueKind == JsonValueKind.Object)
                 {
                     // We only use the nextPageParameters because we do all of
                     // our searching via HTTP POST requests
