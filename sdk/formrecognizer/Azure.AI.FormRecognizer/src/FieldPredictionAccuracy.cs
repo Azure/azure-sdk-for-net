@@ -6,16 +6,16 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Training
 {
 
-    [CodeGenSchema("FormFieldsReport")]
+    [CodeGenModel("FormFieldsReport")]
     public partial class CustomFormModelField
     {
         /// <summary>
         /// </summary>
-        [CodeGenSchemaMember("FieldName")]
+        [CodeGenMember("FieldName")]
         public string Label { get; internal set; }
 
         /// <summary> Estimated extraction accuracy for this field. </summary>
-        [CodeGenSchemaMember("Accuracy")]
+        [CodeGenMember("Accuracy")]
         public float? Accuracy { get; }
     }
 }

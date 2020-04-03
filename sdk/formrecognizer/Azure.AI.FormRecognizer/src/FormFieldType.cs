@@ -11,32 +11,32 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    [CodeGenSchema("FieldValueType")]
+    [CodeGenModel("FieldValueType")]
     public enum FieldValueType
     {
         /// <summary> string. </summary>
-        [CodeGenSchemaMember("String")]
+        [CodeGenMember("String")]
         StringType,
         /// <summary> date. </summary>
-        [CodeGenSchemaMember("Date")]
+        [CodeGenMember("Date")]
         DateType,
         /// <summary> time. </summary>
-        [CodeGenSchemaMember("Time")]
+        [CodeGenMember("Time")]
         TimeType,
         /// <summary> phoneNumber. </summary>
-        [CodeGenSchemaMember("PhoneNumber")]
+        [CodeGenMember("PhoneNumber")]
         PhoneNumberType,
         /// <summary> number. </summary>
-        [CodeGenSchemaMember("Number")]
+        [CodeGenMember("Number")]
         FloatType,
         /// <summary> integer. </summary>
-        [CodeGenSchemaMember("Integer")]
+        [CodeGenMember("Integer")]
         IntegerType,
         /// <summary> array. </summary>
-        [CodeGenSchemaMember("Array")]
+        [CodeGenMember("Array")]
         ListType,
         /// <summary> object. </summary>
-        [CodeGenSchemaMember("Object")]
+        [CodeGenMember("Object")]
         DictionaryType
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Training
         internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element)
         {
             string fieldName = default;
-            float accuracy = default;
+            float? accuracy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"))
@@ -29,6 +29,10 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("accuracy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     accuracy = property.Value.GetSingle();
                     continue;
                 }

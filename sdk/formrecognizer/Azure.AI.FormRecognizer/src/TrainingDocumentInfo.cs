@@ -7,12 +7,12 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    [CodeGenSchema("TrainingDocumentInfo")]
+    [CodeGenModel("TrainingDocumentInfo")]
     public partial class TrainingDocumentInfo
     {
         /// <summary>
         /// </summary>
-        [CodeGenSchemaMember("pages")]
+        [CodeGenMember("pages")]
         public int PageCount { get; internal set; }
     }
 }
