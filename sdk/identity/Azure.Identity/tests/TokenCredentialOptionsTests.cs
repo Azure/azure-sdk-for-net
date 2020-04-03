@@ -20,7 +20,7 @@ namespace Azure.Identity.Tests
             {
                 TokenCredentialOptions option = new TokenCredentialOptions();
 
-                Assert.Throws<UriFormatException>(() => { Uri finalUri = option.AuthorityHost; });
+                Assert.Throws<UriFormatException>(() => { Uri authHost = option.AuthorityHost; });
             }
         }
 
@@ -32,9 +32,9 @@ namespace Azure.Identity.Tests
             using (new TestEnvVar("AZURE_AUTHORITY_HOST", envHostValue))
             {
                 TokenCredentialOptions option = new TokenCredentialOptions();
-                Uri finalUri = option.AuthorityHost;
+                Uri authHost = option.AuthorityHost;
 
-                Assert.AreEqual(finalUri, new Uri(envHostValue));
+                Assert.AreEqual(authHost, new Uri(envHostValue));
             }
         }
 
@@ -48,10 +48,10 @@ namespace Azure.Identity.Tests
                 Uri customUri = KnownAuthorityHosts.AzureChinaCloud;
 
                 TokenCredentialOptions option = new TokenCredentialOptions() { AuthorityHost = customUri };
-                Uri finalUri = option.AuthorityHost;
+                Uri authHost = option.AuthorityHost;
 
-                Assert.AreNotEqual(finalUri, new Uri(envHostValue));
-                Assert.AreEqual(finalUri, customUri);
+                Assert.AreNotEqual(authHost, new Uri(envHostValue));
+                Assert.AreEqual(authHost, customUri);
             }
         }
 
