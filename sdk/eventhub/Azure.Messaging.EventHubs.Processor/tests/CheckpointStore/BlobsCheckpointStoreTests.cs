@@ -118,9 +118,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()));
+            Assert.That(async () => await target.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()), Throws.InstanceOf<RequestFailedException>());
 
-            mockLog.Verify(m => m.ListOwnershipError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, It.Is<string>(e => e.Contains("RequestFailedException"))));
+            mockLog.Verify(m => m.ListOwnershipError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, ex.Message));
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken()));
+            Assert.That(async () => await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken()), Throws.InstanceOf<RequestFailedException>());
         }
 
         /// <summary>
@@ -490,7 +490,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()));
+            Assert.That(async () => await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()), Throws.InstanceOf<RequestFailedException>());
             mockLog.Verify(m => m.ListCheckpointsError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, ex.Message));
         }
 
@@ -574,9 +574,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), new CancellationToken()));
+            Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), new CancellationToken()), Throws.InstanceOf<RequestFailedException>());
 
-            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, It.Is<string>(s => s.Contains(BlobErrorCode.ContainerNotFound.ToString()))));
+            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, ex.Message));
         }
 
         /// <summary>
