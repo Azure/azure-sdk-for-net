@@ -1,7 +1,8 @@
 # Release History
 
 ## 1.2.0-preview.2 (Unreleased)
-
+- Updating `DefaultAzureCredential` to enable authenticating through Visual Studio
+- Updating `DefaultAzureCredential` to enable authentication through Visual Studio Code
 
 ## 1.2.0-preview.1
 
