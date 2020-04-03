@@ -15,8 +15,9 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The <see cref="ServiceBusReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
-    ///  and settling messages from Queues and Subscriptions.
+    /// The <see cref="ServiceBusReceiver" /> is responsible for receiving
+    /// <see cref="ServiceBusReceivedMessage" /> and settling messages from Queues and Subscriptions.
+    /// It is constructed by calling <see cref="ServiceBusClient.GetReceiver(string, ServiceBusReceiverOptions)"/>.
     /// </summary>
     public class ServiceBusReceiver : IAsyncDisposable
     {
