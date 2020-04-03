@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
-    public class Sample03_Sessions : ServiceBusLiveTestBase
+    public class Sample03_SendReceiveSessions : ServiceBusLiveTestBase
     {
         [Test]
         public async Task SendAndReceiveSessionMessage()
@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the message
                 await sender.SendAsync(message);
 
-                // Get a session receiver that we can use to receive the message. Since we don't specify a
+                // create a session receiver that we can use to receive the message. Since we don't specify a
                 // particular session, we will get the next available session from the service.
                 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
 

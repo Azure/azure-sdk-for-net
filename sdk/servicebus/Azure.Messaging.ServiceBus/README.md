@@ -202,42 +202,6 @@ ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
 ```
 
-### Sending and receiving session messages
-
-```C# Snippet:ServiceBusSendAndReceiveSessionMessage
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
-
-// create the sender
-ServiceBusSender sender = client.CreateSender(queueName);
-
-// create a session message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"))
-{
-    SessionId = "mySessionId"
-};
-
-// send the message
-await sender.SendAsync(message);
-
-// Get a session receiver that we can use to receive the message. Since we don't specify a
-// particular session, we will get the next available session from the service.
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
-
-// the received message is a different type as it contains some service set properties
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
-Console.WriteLine(receivedMessage.SessionId);
-
-// we can also set arbitrary session state using this receiver
-// the state is specific to the session, and not any particular message
-await receiver.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
-
-// the state can be retrieved for the session as well
-byte[] state = await receiver.GetSessionStateAsync();
-```
-
 ### Using the Processor
 
 The `ServiceBusProcessor` offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers.
@@ -270,7 +234,7 @@ var options = new ServiceBusProcessorOptions
     MaxConcurrentCalls = 2
 };
 
-// get a processor that we can use to process the messages
+// create a processor that we can use to process the messages
 ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
 
 // since the message handler will run in a background thread, in order to prevent
@@ -319,6 +283,13 @@ string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
+### Working with Sessions
+
+[Sessions](https://docs.microsoft.com/en-us/azure/service-bus-messaging/message-sessions) provide a mechanism for grouping related messages. In order to use sessions, you need to be working with a session-enabled entity.
+
+- [Sending and receiving session messages](./samples/Sample03_Sessions.md)
+- [Using the session processor](./samples/Sample05_SessionProcessor.md)
+
 ## Troubleshooting
 
 ### Service Bus Exception
@@ -335,7 +306,7 @@ A `ServiceBusException` is triggered when an operation specific to Service Bus h
 
   - **Message Lock Lost** : This can occur if the processing takes longer than the lock duration specified at the entity level for a message. If this error occurs consistently, it may be worth increasing the message lock duration. Otherwise, callers can renew the message lock while they are processing the message to ensure that this error doesn't occur.
   
-  - **Messagine Entity Not Found**: A Service Bus resource, such as a queue, topic, or subscription could not be found by the Service Bus service. This may indicate that it has been deleted from the service or that there is an issue with the Service Bus service itself.
+  - **Messaging Entity Not Found**: A Service Bus resource, such as a queue, topic, or subscription could not be found by the Service Bus service. This may indicate that it has been deleted from the service or that there is an issue with the Service Bus service itself.
   
 Reacting to a specific failure reason for the `ServiceBusException` can be accomplished in several ways, such as by applying an exception filter clause as part of the `catch` block:
 ```csharp

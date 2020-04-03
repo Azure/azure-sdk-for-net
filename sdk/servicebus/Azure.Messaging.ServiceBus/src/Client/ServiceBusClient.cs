@@ -219,8 +219,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
-        /// from a specific subscription.
+        /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and
+        /// settling messages from a specific subscription.
         /// </summary>
         ///
         /// <param name="topicName">The topic to get a <see cref="ServiceBusReceiver"/> for.</param>
@@ -242,8 +242,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
-        /// from a specific subscription.
+        /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for
+        /// receiving and settling messages from a specific subscription.
         /// </summary>
         ///
         /// <param name="topicName">The topic to get a <see cref="ServiceBusReceiver"/> for.</param>
@@ -268,7 +268,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving and settling messages from a specific session-enabled queue.
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled queue.
         /// </summary>
         ///
         /// <param name="queueName">The session-enabled queue to get a <see cref="ServiceBusSessionReceiver"/> for.</param>
@@ -301,7 +302,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving and settling messages from a specific session-enabled subscription.
+        /// Creates a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving
+        /// and settling messages from a specific session-enabled subscription.
         /// </summary>
         ///
         /// <param name="topicName">The topic to get a <see cref="ServiceBusSessionReceiver"/> for.</param>
@@ -336,7 +338,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving from the
+        /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for receiving from the
         /// dead letter queue for the specified queue.
         /// </summary>
         ///
@@ -360,7 +362,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving from the
+        /// Creates a <see cref="ServiceBusReceiver"/> instance that can be used for receiving from the
         /// dead letter queue for the specified subscription.
         /// </summary>
         ///
@@ -389,7 +391,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// Creates a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
         /// event handlers that are set on the processor.
         /// </summary>
         ///
@@ -408,7 +410,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// Creates a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
         /// event handlers that are set on the processor.
         /// </summary>
         ///
@@ -431,7 +433,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// Creates a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
         /// event handlers that are set on the processor.
         /// </summary>
         ///
@@ -453,7 +455,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// Creates a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
         /// event handlers that are set on the processor.
         /// </summary>
         ///
@@ -478,7 +480,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusSessionProcessor"/> instance that can be used to process session messages using
+        /// Creates a <see cref="ServiceBusSessionProcessor"/> instance that can be used to process session messages using
         /// event handlers that are set on the processor.
         /// </summary>
         ///
@@ -506,8 +508,8 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets a <see cref="ServiceBusSessionProcessor"/> instance that can be used to process messages using
-        /// event handlers that are set on the processor.
+        /// Creates a <see cref="ServiceBusSessionProcessor"/> instance that can be used to process
+        /// messages using event handlers that are set on the processor.
         /// </summary>
         ///
         /// <param name="topicName">The topic to get a <see cref="ServiceBusSessionProcessor"/> for.</param>

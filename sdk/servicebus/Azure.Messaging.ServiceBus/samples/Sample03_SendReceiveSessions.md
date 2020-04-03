@@ -25,7 +25,7 @@ ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hel
 // send the message
 await sender.SendAsync(message);
 
-// Get a session receiver that we can use to receive the message. Since we don't specify a
+// create a session receiver that we can use to receive the message. Since we don't specify a
 // particular session, we will get the next available session from the service.
 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
 
@@ -58,4 +58,4 @@ Console.WriteLine(receivedMessage.SessionId);
 
 To see the full example source, see:
 
-* [Sample03_Sessions.cs](../tests/Samples/Sample03_Sessions.cs)
+* [Sample03_SendReceiveSessions.cs](../tests/Samples/Sample03_SendReceiveSessions.cs)
