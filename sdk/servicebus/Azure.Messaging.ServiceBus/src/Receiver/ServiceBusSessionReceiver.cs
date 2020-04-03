@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The session state as byte array.</returns>
-        public virtual async Task<byte[]> GetStateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<byte[]> GetSessionStateAsync(CancellationToken cancellationToken = default)
         {
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
+        /// Set a custom state on the session which can be later retrieved using <see cref="GetSessionStateAsync"/>
         /// </summary>
         ///
         /// <param name="sessionState">A byte array of session state</param>
@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task SetStateAsync(
+        public virtual async Task SetSessionStateAsync(
             byte[] sessionState,
             CancellationToken cancellationToken = default)
         {

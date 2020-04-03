@@ -97,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         [Test]
         [Ignore("Argument validation not implemented yet.")]
-        public void StartExtractReceiptsWithEndpointRequiresTheUri()
+        public void StartExtractReceiptsWithUriRequiresTheUri()
         {
             var client = CreateInstrumentedClient();
             Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartExtractReceiptsAsync(null));
@@ -108,15 +108,15 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        public void StartExtractReceiptsWithEndpointRespectsTheCancellationToken()
+        public void StartExtractReceiptsWithUriRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
-            var fakeEndpoint = new Uri("http://localhost");
+            var fakeUri = new Uri("http://localhost");
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartExtractReceiptsAsync(fakeEndpoint, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartExtractReceiptsAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>

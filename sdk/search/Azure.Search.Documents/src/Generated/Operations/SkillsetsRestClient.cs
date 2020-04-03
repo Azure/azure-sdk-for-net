@@ -41,7 +41,7 @@ namespace Azure.Search.Documents
             this.pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string skillsetName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, Skillset skillset)
+        internal HttpMessage CreateCreateOrUpdateRequest(string skillsetName, Skillset skillset, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -75,12 +75,12 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new skillset in a search service or updates the skillset if it already exists. </summary>
         /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Skillset>> CreateOrUpdateAsync(string skillsetName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, Skillset skillset, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<Skillset>> CreateOrUpdateAsync(string skillsetName, Skillset skillset, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -95,11 +95,12 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using var message = CreateCreateOrUpdateRequest(skillsetName, xMsClientRequestId, ifMatch, ifNoneMatch, skillset);
+                using var message = CreateCreateOrUpdateRequest(skillsetName, skillset, xMsClientRequestId, ifMatch, ifNoneMatch);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
+                    case 201:
                         {
                             Skillset value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -119,12 +120,12 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new skillset in a search service or updates the skillset if it already exists. </summary>
         /// <param name="skillsetName"> The name of the skillset to create or update. </param>
+        /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="skillset"> The skillset containing one or more skills to create or update in a search service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Skillset> CreateOrUpdate(string skillsetName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, Skillset skillset, CancellationToken cancellationToken = default)
+        public Response<Skillset> CreateOrUpdate(string skillsetName, Skillset skillset, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -139,11 +140,12 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using var message = CreateCreateOrUpdateRequest(skillsetName, xMsClientRequestId, ifMatch, ifNoneMatch, skillset);
+                using var message = CreateCreateOrUpdateRequest(skillsetName, skillset, xMsClientRequestId, ifMatch, ifNoneMatch);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
+                    case 201:
                         {
                             Skillset value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -194,7 +196,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string skillsetName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+        public async ValueTask<Response> DeleteAsync(string skillsetName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -210,6 +212,7 @@ namespace Azure.Search.Documents
                 switch (message.Response.Status)
                 {
                     case 204:
+                    case 404:
                         return message.Response;
                     default:
                         throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -228,7 +231,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(string skillsetName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+        public Response Delete(string skillsetName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -244,6 +247,7 @@ namespace Azure.Search.Documents
                 switch (message.Response.Status)
                 {
                     case 204:
+                    case 404:
                         return message.Response;
                     default:
                         throw clientDiagnostics.CreateRequestFailedException(message.Response);
@@ -279,7 +283,7 @@ namespace Azure.Search.Documents
         /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Skillset>> GetAsync(string skillsetName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<Skillset>> GetAsync(string skillsetName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -316,7 +320,7 @@ namespace Azure.Search.Documents
         /// <param name="skillsetName"> The name of the skillset to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Skillset> Get(string skillsetName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<Skillset> Get(string skillsetName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (skillsetName == null)
             {
@@ -374,7 +378,7 @@ namespace Azure.Search.Documents
         /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListSkillsetsResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<ListSkillsetsResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("SkillsetsClient.List");
             scope.Start();
@@ -406,7 +410,7 @@ namespace Azure.Search.Documents
         /// <param name="select"> Selects which top-level properties of the skillsets to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListSkillsetsResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<ListSkillsetsResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("SkillsetsClient.List");
             scope.Start();
@@ -434,7 +438,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateRequest(Guid? xMsClientRequestId, Skillset skillset)
+        internal HttpMessage CreateCreateRequest(Skillset skillset, Guid? xMsClientRequestId)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -456,10 +460,10 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new skillset in a search service. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Skillset>> CreateAsync(Guid? xMsClientRequestId, Skillset skillset, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<Skillset>> CreateAsync(Skillset skillset, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (skillset == null)
             {
@@ -470,7 +474,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using var message = CreateCreateRequest(xMsClientRequestId, skillset);
+                using var message = CreateCreateRequest(skillset, xMsClientRequestId);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -493,10 +497,10 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new skillset in a search service. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="skillset"> The skillset containing one or more skills to create in a search service. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Skillset> Create(Guid? xMsClientRequestId, Skillset skillset, CancellationToken cancellationToken = default)
+        public Response<Skillset> Create(Skillset skillset, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (skillset == null)
             {
@@ -507,7 +511,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using var message = CreateCreateRequest(xMsClientRequestId, skillset);
+                using var message = CreateCreateRequest(skillset, xMsClientRequestId);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {

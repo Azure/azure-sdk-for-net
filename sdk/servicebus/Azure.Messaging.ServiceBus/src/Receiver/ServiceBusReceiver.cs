@@ -15,8 +15,9 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// The <see cref="ServiceBusReceiver" /> is responsible for receiving <see cref="ServiceBusReceivedMessage" />
-    ///  and settling messages from Queues and Subscriptions.
+    /// The <see cref="ServiceBusReceiver" /> is responsible for receiving
+    /// <see cref="ServiceBusReceivedMessage" /> and settling messages from Queues and Subscriptions.
+    /// It is constructed by calling <see cref="ServiceBusClient.GetReceiver(string, ServiceBusReceiverOptions)"/>.
     /// </summary>
     public class ServiceBusReceiver : IAsyncDisposable
     {
@@ -134,11 +135,14 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
+        /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public virtual async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
            int maxMessages,
+           TimeSpan? maxWaitTime = default,
            CancellationToken cancellationToken = default)
         {
             Argument.AssertAtLeast(maxMessages, 1, nameof(maxMessages));
@@ -149,7 +153,10 @@ namespace Azure.Messaging.ServiceBus
 
             try
             {
-                messages = await InnerReceiver.ReceiveBatchAsync(maxMessages, cancellationToken).ConfigureAwait(false);
+                messages = await InnerReceiver.ReceiveBatchAsync(
+                    maxMessages,
+                    maxWaitTime,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -165,13 +172,20 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Receives a <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
         /// </summary>
-        ///
+        /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for a message before returning a null if no messages are available.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The message received. Returns null if no message is found.</returns>
-        public virtual async Task<ServiceBusReceivedMessage> ReceiveAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ServiceBusReceivedMessage> ReceiveAsync(
+            TimeSpan? maxWaitTime = default,
+            CancellationToken cancellationToken = default)
         {
-            IEnumerable<ServiceBusReceivedMessage> result = await ReceiveBatchAsync(maxMessages: 1).ConfigureAwait(false);
+            IEnumerable<ServiceBusReceivedMessage> result = await ReceiveBatchAsync(
+                maxMessages: 1,
+                maxWaitTime: maxWaitTime)
+                .ConfigureAwait(false);
+
             foreach (ServiceBusReceivedMessage message in result)
             {
                 return message;
@@ -188,7 +202,7 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>
         /// The first call to <see cref="PeekAsync(CancellationToken)"/> fetches the first active message for this receiver. Each subsequent call fetches the subsequent message in the entity.
         /// Unlike a received message, peeked message will not have a lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
-        /// Also, unlike <see cref="ReceiveAsync(CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message).
+        /// Also, unlike <see cref="ReceiveAsync(TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message).
         /// </remarks>
         ///
         /// <returns>The <see cref="ServiceBusReceivedMessage" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
@@ -242,7 +256,7 @@ namespace Azure.Messaging.ServiceBus
         /// The first call to <see cref="PeekBatchAsync(int, CancellationToken)"/> fetches the first active message for this receiver. Each subsequent call
         /// fetches the subsequent message in the entity.
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
-        /// Also, unlike <see cref="ReceiveAsync(CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
+        /// Also, unlike <see cref="ReceiveAsync(TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered messages).
         /// </remarks>
         ///
         /// <returns>An <see cref="IList{ServiceBusReceivedMessage}" /> of messages that were peeked.</returns>
@@ -419,7 +433,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Abandons a <see cref="ServiceBusReceivedMessage"/>. This will make the message available again for processing.
+        /// Abandons a <see cref="ServiceBusReceivedMessage"/>.This will make the message available again for immediate processing as the lock on the message held by the receiver will be released.
         /// </summary>
         ///
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to abandon.</param>
@@ -497,11 +511,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// In order to receive a message from the deadletter queue, you will need a new
-        /// <see cref="ServiceBusReceiver"/> with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// In order to receive a message from the deadletter queue, you can call
+        /// <see cref="ServiceBusClient.GetDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
+        /// or <see cref="ServiceBusClient.GetDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
+        /// to get a receiver for the queue or subscription.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
@@ -524,11 +538,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
-        /// In order to receive a message from the deadletter queue, you will need a new
-        /// <see cref="ServiceBusReceiver"/> with the corresponding path.
-        /// You can use EntityNameHelper.FormatDeadLetterPath(string)"/> to help with this.
-        /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// In order to receive a message from the deadletter queue, you can call
+        /// <see cref="ServiceBusClient.GetDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
+        /// or <see cref="ServiceBusClient.GetDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
+        /// to get a receiver for the queue or subscription.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task DeadLetterAsync(
             string lockToken,
@@ -724,7 +738,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (ReceiveMode != ReceiveMode.PeekLock)
             {
-                throw new InvalidOperationException(Resources1.OperationNotSupported);
+                throw new InvalidOperationException(Resources.OperationNotSupported);
             }
         }
 

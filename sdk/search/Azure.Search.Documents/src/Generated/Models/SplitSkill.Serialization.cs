@@ -158,7 +158,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SplitSkill(defaultLanguageCode, textSplitMode, maximumPageLength, odatatype, name, description, context, inputs, outputs);
+            return new SplitSkill(odatatype, name, description, context, inputs, outputs, defaultLanguageCode, textSplitMode, maximumPageLength);
         }
     }
 }

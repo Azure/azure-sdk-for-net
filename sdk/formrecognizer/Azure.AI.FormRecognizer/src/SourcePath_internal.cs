@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("SourcePath")]
+    [CodeGenModel("SourcePath")]
     internal partial class SourcePath_internal
     {
     }

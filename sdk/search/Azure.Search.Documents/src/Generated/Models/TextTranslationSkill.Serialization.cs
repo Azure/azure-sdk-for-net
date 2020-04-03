@@ -151,7 +151,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new TextTranslationSkill(defaultToLanguageCode, defaultFromLanguageCode, suggestedFrom, odatatype, name, description, context, inputs, outputs);
+            return new TextTranslationSkill(odatatype, name, description, context, inputs, outputs, defaultToLanguageCode, defaultFromLanguageCode, suggestedFrom);
         }
     }
 }

@@ -13,18 +13,18 @@ namespace Azure.Search.Documents.Models
     public partial class MagnitudeScoringFunction : ScoringFunction
     {
         /// <summary> Initializes a new instance of MagnitudeScoringFunction. </summary>
-        /// <param name="parameters"> Parameter values for the magnitude scoring function. </param>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
-        public MagnitudeScoringFunction(MagnitudeScoringParameters parameters, string fieldName, double boost) : base(fieldName, boost)
+        /// <param name="parameters"> Parameter values for the magnitude scoring function. </param>
+        public MagnitudeScoringFunction(string fieldName, double boost, MagnitudeScoringParameters parameters) : base(fieldName, boost)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
             if (fieldName == null)
             {
                 throw new ArgumentNullException(nameof(fieldName));
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
             }
 
             Parameters = parameters;
@@ -32,12 +32,12 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of MagnitudeScoringFunction. </summary>
-        /// <param name="parameters"> Parameter values for the magnitude scoring function. </param>
-        /// <param name="type"> Required for scoring functions. Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. You can include more than one function in each scoring profile. The function name must be lower case. </param>
+        /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
-        internal MagnitudeScoringFunction(MagnitudeScoringParameters parameters, string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation) : base(type, fieldName, boost, interpolation)
+        /// <param name="parameters"> Parameter values for the magnitude scoring function. </param>
+        internal MagnitudeScoringFunction(string type, string fieldName, double boost, ScoringFunctionInterpolation? interpolation, MagnitudeScoringParameters parameters) : base(type, fieldName, boost, interpolation)
         {
             Parameters = parameters;
             Type = type ?? "magnitude";

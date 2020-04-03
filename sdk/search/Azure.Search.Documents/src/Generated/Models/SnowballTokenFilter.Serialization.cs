@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new SnowballTokenFilter(language, odatatype, name);
+            return new SnowballTokenFilter(odatatype, name, language);
         }
     }
 }

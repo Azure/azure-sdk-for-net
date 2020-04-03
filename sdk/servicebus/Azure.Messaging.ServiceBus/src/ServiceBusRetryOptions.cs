@@ -14,13 +14,13 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusRetryOptions
     {
         /// <summary>The maximum number of retry attempts before considering the associated operation to have failed.</summary>
-        private int _maximumRetries = 3;
+        private int _maxRetries = 3;
 
         /// <summary>The delay or back-off factor to apply between retry attempts.</summary>
         private TimeSpan _delay = TimeSpan.FromSeconds(0.8);
 
         /// <summary>The maximum delay to allow between retry attempts.</summary>
-        private TimeSpan _maximumDelay = TimeSpan.FromMinutes(1);
+        private TimeSpan _maxDelay = TimeSpan.FromMinutes(1);
 
         /// <summary>The maximum duration to wait for an operation, per attempt.</summary>
         private TimeSpan _tryTimeout = TimeSpan.FromMinutes(1);
@@ -36,14 +36,14 @@ namespace Azure.Messaging.ServiceBus
         ///   to have failed.
         /// </summary>
         ///
-        public int MaximumRetries
+        public int MaxRetries
         {
-            get => _maximumRetries;
+            get => _maxRetries;
 
             set
             {
-                Argument.AssertInRange(value, 0, 100, nameof(MaximumRetries));
-                _maximumRetries = value;
+                Argument.AssertInRange(value, 0, 100, nameof(MaxRetries));
+                _maxRetries = value;
             }
         }
 
@@ -67,14 +67,14 @@ namespace Azure.Messaging.ServiceBus
         ///   The maximum permissible delay between retry attempts.
         /// </summary>
         ///
-        public TimeSpan MaximumDelay
+        public TimeSpan MaxDelay
         {
-            get => _maximumDelay;
+            get => _maxDelay;
 
             set
             {
-                Argument.AssertNotNegative(value, nameof(MaximumDelay));
-                _maximumDelay = value;
+                Argument.AssertNotNegative(value, nameof(MaxDelay));
+                _maxDelay = value;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (value < TimeSpan.Zero)
                 {
-                    throw new ArgumentException(Resources1.TimeoutMustBePositive, nameof(TryTimeout));
+                    throw new ArgumentException(Resources.TimeoutMustBePositive, nameof(TryTimeout));
                 }
 
                 Argument.AssertInRange(value, TimeSpan.Zero, TimeSpan.FromHours(1), nameof(TryTimeout));

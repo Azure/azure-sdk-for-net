@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var mockBatch = new MockTransportBatch();
             var batch = new ServiceBusMessageBatch(mockBatch);
 
-            Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(mockBatch.MaximumSizeInBytes), "The maximum size should have been delegated.");
+            Assert.That(batch.MaxSizeInBytes, Is.EqualTo(mockBatch.MaxSizeInBytes), "The maximum size should have been delegated.");
             Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
             Assert.That(batch.Count, Is.EqualTo(mockBatch.Count), "The count should have been delegated.");
         }
@@ -129,7 +129,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             public Type AsEnumerableCalledWith = null;
             public ServiceBusMessage TryAddCalledWith = null;
 
-            public override long MaximumSizeInBytes { get; } = 200;
+            public override long MaxSizeInBytes { get; } = 200;
             public override long SizeInBytes { get; } = 100;
             public override int Count { get; } = 300;
 

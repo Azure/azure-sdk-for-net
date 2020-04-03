@@ -6,17 +6,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     /// The ServiceBusClient is the top-level client through which all Service Bus entities can
-    /// be interacted with. Any lower level types retrieved from here, such as <see cref="ServiceBusSender"/> and
-    /// <see cref="ServiceBusReceiver"/> will share the same AMQP connection. Disposing the ServiceBusClient will
-    /// cause the AMQP connection to close.
-    ///
+    /// be interacted with. Any lower level types retrieved from here, such
+    /// as <see cref="ServiceBusSender"/> and <see cref="ServiceBusReceiver"/> will share the
+    /// same AMQP connection. Disposing the ServiceBusClient will cause the AMQP connection to close.
     /// </summary>
     public class ServiceBusClient : IAsyncDisposable
     {
@@ -34,7 +32,6 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the client is disposed; otherwise, <c>false</c>.
         /// </value>
-        ///
         public bool IsDisposed { get; private set; } = false;
 
         /// <summary>
@@ -45,7 +42,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   A unique name used to identify this <see cref="ServiceBusClient"/>.
         /// </summary>
-        ///
         internal string Identifier { get; }
 
         /// <summary>
@@ -60,7 +56,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
@@ -89,24 +84,39 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// The connection that is used for the client.
         /// </summary>
         internal ServiceBusConnection Connection { get; }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
-        /// <param name="connectionString"></param>
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the
+        /// Service Bus namespace.</param>
+        ///
+        /// <remarks>
+        /// If the connection string specifies a specific entity name, any subsequent calls to
+        /// GetSender/GetReceiver/etc., must specify the same entity name.
+        /// </remarks>
         public ServiceBusClient(string connectionString) :
             this(connectionString, new ServiceBusClientOptions())
         {
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
-        /// <param name="connectionString"></param>
-        /// <param name="options"></param>
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the
+        /// Service Bus namespace.
+        /// </param>
+        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
+        ///
+        /// <remarks>
+        /// If the connection string specifies a specific entity name, any subsequent calls to
+        /// GetSender/GetReceiver/etc., must specify the same entity name.
+        /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
         {
             Connection = new ServiceBusConnection(connectionString, options);
@@ -115,22 +125,29 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
-        /// <param name="fullyQualifiedNamespace"></param>
-        /// <param name="credential"></param>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential) :
             this(fullyQualifiedNamespace, credential, new ServiceBusClientOptions())
         {
         }
 
         /// <summary>
-        ///
+        /// Initializes a new instance of the <see cref="ServiceBusClient"/> class.
         /// </summary>
-        /// <param name="fullyQualifiedNamespace"></param>
-        /// <param name="credential"></param>
-        /// <param name="options"></param>
-        public ServiceBusClient(string fullyQualifiedNamespace, TokenCredential credential, ServiceBusClientOptions options)
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.
+        /// This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
+        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
+        public ServiceBusClient(
+        string fullyQualifiedNamespace,
+            TokenCredential credential,
+            ServiceBusClientOptions options)
         {
             Identifier = DiagnosticUtilities.GenerateIdentifier(fullyQualifiedNamespace);
             Connection = new ServiceBusConnection(
@@ -141,10 +158,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
+        /// queue or topic.
         /// </summary>
-        /// <param name="queueOrTopicName"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="queueOrTopicName">The queue or topic to get a <see cref="ServiceBusSender"/>
+        /// for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
         public ServiceBusSender GetSender(string queueOrTopicName)
         {
             ValidateEntityName(queueOrTopicName);
@@ -155,10 +176,12 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
+        /// from a specific queue.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="queueName">The queue to get a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified queue.</returns>
         public ServiceBusReceiver GetReceiver(string queueName)
         {
             ValidateEntityName(queueName);
@@ -171,11 +194,15 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
+        /// from a specific queue.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="queueName">The queue to get a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusReceiver"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified queue.</returns>
         public ServiceBusReceiver GetReceiver(
             string queueName,
             ServiceBusReceiverOptions options)
@@ -190,11 +217,15 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
+        /// from a specific subscription.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="topicName">The topic to get a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="subscriptionName">The subscription specific to the specified topic to get
+        /// a <see cref="ServiceBusReceiver"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified subscription and topic.</returns>
         public ServiceBusReceiver GetReceiver(
             string topicName,
             string subscriptionName)
@@ -209,12 +240,17 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving and settling messages
+        /// from a specific subscription.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="topicName">The topic to get a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="subscriptionName">The subscription specific to the specified topic to get
+        /// a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusReceiver"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the specified subscription and topic.</returns>
         public ServiceBusReceiver GetReceiver(
             string topicName,
             string subscriptionName,
@@ -230,9 +266,22 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving and settling messages from a specific session-enabled queue.
         /// </summary>
-        /// <returns></returns>
+        ///
+        /// <param name="queueName">The session-enabled queue to get a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
+        /// the next available session returned from the service will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
+        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusException.FailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A ServiceBusSessionReceiver scoped to the specified queue and a specific session.</returns>
         public virtual async Task<ServiceBusSessionReceiver> GetSessionReceiverAsync(
             string queueName,
             ServiceBusReceiverOptions options = default,
@@ -250,9 +299,23 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusSessionReceiver"/> instance that can be used for receiving and settling messages from a specific session-enabled subscription.
         /// </summary>
-        /// <returns></returns>
+        ///
+        /// <param name="topicName">The topic to get a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="subscriptionName">The session-enabled subscription to get a <see cref="ServiceBusSessionReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionReceiver"/>.</param>
+        /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionReceiver"/> to. If left blank,
+        /// the next available session returned from the service will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Because this is establishing a session lock, this method performs a service call. If the
+        /// sessionId parameter is not specified, and there are no available messages in the queue, this will
+        /// throw a <see cref="ServiceBusException"/> with <see cref="ServiceBusException.Reason"/> of <see cref="ServiceBusException.FailureReason.ServiceTimeout"/>.
+        /// </remarks>
+        ///
+        /// <returns>A ServiceBusSessionReceiver scoped to the specified queue and a specific session.</returns>
         public virtual async Task<ServiceBusSessionReceiver> GetSessionReceiverAsync(
             string topicName,
             string subscriptionName,
@@ -271,11 +334,16 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving from the
+        /// dead letter queue for the specified queue.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="queueName">The queue to get a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusReceiver"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the dead letter queue of the specified
+        /// queue.</returns>
         public ServiceBusReceiver GetDeadLetterReceiver(
             string queueName,
             ServiceBusReceiverOptions options = default)
@@ -290,12 +358,17 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusReceiver"/> instance that can be used for receiving from the
+        /// dead letter queue for the specified subscription.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="topicName">The topic to get a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="subscriptionName">The subscription to get a <see cref="ServiceBusReceiver"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusReceiverOptions"/> to use for configuring the
+        /// <see cref="ServiceBusReceiver"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusReceiver"/> scoped to the dead letter queue of the specified
+        /// queue.</returns>
         public ServiceBusReceiver GetDeadLetterReceiver(
             string topicName,
             string subscriptionName,
@@ -314,10 +387,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="queueName">The queue to get a <see cref="ServiceBusProcessor"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified queue.</returns>
         public ServiceBusProcessor GetProcessor(string queueName)
         {
             ValidateEntityName(queueName);
@@ -330,11 +406,15 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor.
         /// </summary>
-        /// <param name="queueName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="queueName">The queue to get a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
+        /// <see cref="ServiceBusProcessor"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified queue.</returns>
         public ServiceBusProcessor GetProcessor(
             string queueName,
             ServiceBusProcessorOptions options)
@@ -349,11 +429,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="topicName">The topic to get a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subcription to get a <see cref="ServiceBusProcessor"/> for.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         public ServiceBusProcessor GetProcessor(
             string topicName,
             string subscriptionName)
@@ -368,12 +451,16 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor.
         /// </summary>
-        /// <param name="topicName"></param>
-        /// <param name="subscriptionName"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        ///
+        /// <param name="topicName">The topic to get a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subcription to get a <see cref="ServiceBusProcessor"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
+        /// <see cref="ServiceBusProcessor"/>.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         public ServiceBusProcessor GetProcessor(
             string topicName,
             string subscriptionName,
@@ -389,9 +476,18 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusSessionProcessor"/> instance that can be used to process session messages using
+        /// event handlers that are set on the processor.
         /// </summary>
-        /// <returns></returns>
+        ///
+        /// <param name="queueName">The queue to get a <see cref="ServiceBusSessionProcessor"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
+        /// <see cref="ServiceBusSessionProcessor"/>.</param>
+        /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionProcessor"/> to.
+        /// If left blank, the next available session returned from the service will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
         public ServiceBusSessionProcessor GetSessionProcessor(
             string queueName,
             ServiceBusProcessorOptions options = default,
@@ -408,9 +504,19 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///
+        /// Gets a <see cref="ServiceBusSessionProcessor"/> instance that can be used to process messages using
+        /// event handlers that are set on the processor.
         /// </summary>
-        /// <returns></returns>
+        ///
+        /// <param name="topicName">The topic to get a <see cref="ServiceBusSessionProcessor"/> for.</param>
+        /// <param name="subscriptionName">The subcription to get a <see cref="ServiceBusSessionProcessor"/> for.</param>
+        /// <param name="options">The set of <see cref="ServiceBusSessionProcessor"/> to use for configuring the
+        /// <see cref="ServiceBusSessionProcessor"/>.</param>
+        /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionProcessor"/> to.
+        /// If left blank, the next available session returned from the service will be used.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         public ServiceBusSessionProcessor GetSessionProcessor(
             string topicName,
             string subscriptionName,
@@ -427,6 +533,12 @@ namespace Azure.Messaging.ServiceBus
                 options: options ?? new ServiceBusProcessorOptions());
         }
 
+        /// <summary>
+        /// Validates that the specified entity name matches the entity path in the Connection,
+        /// if an entity path is specified in the connection.
+        /// </summary>
+        ///
+        /// <param name="entityName">Entity name to validate</param>
         private void ValidateEntityName(string entityName)
         {
             // The entity name may only be specified in one of the possible forms, either as part of the
@@ -435,7 +547,7 @@ namespace Azure.Messaging.ServiceBus
 
             if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new ArgumentException(Resources1.OnlyOneEntityNameMayBeSpecified);
+                throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
             }
         }
 

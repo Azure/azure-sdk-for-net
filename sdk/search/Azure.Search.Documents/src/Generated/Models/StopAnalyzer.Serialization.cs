@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new StopAnalyzer(stopwords, odatatype, name);
+            return new StopAnalyzer(odatatype, name, stopwords);
         }
     }
 }

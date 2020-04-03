@@ -25,14 +25,14 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of PathHierarchyTokenizerV2. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="delimiter"> The delimiter character to use. Default is &quot;/&quot;. </param>
         /// <param name="replacement"> A value that, if set, replaces the delimiter character. Default is &quot;/&quot;. </param>
         /// <param name="maxTokenLength"> The maximum token length. Default and maximum is 300. </param>
         /// <param name="reverseTokenOrder"> A value indicating whether to generate tokens in reverse order. Default is false. </param>
         /// <param name="numberOfTokensToSkip"> The number of initial tokens to skip. Default is 0. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal PathHierarchyTokenizerV2(char? delimiter, char? replacement, int? maxTokenLength, bool? reverseTokenOrder, int? numberOfTokensToSkip, string oDataType, string name) : base(oDataType, name)
+        internal PathHierarchyTokenizerV2(string oDataType, string name, char? delimiter, char? replacement, int? maxTokenLength, bool? reverseTokenOrder, int? numberOfTokensToSkip) : base(oDataType, name)
         {
             Delimiter = delimiter;
             Replacement = replacement;

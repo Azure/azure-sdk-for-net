@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new LengthTokenFilter(min, max, odatatype, name);
+            return new LengthTokenFilter(odatatype, name, min, max);
         }
     }
 }

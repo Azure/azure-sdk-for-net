@@ -196,7 +196,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
             if (string.IsNullOrEmpty(SharedAccessKey))
             {
-                throw new InvalidOperationException(Resources1.SharedAccessKeyIsRequired);
+                throw new InvalidOperationException(Resources.SharedAccessKeyIsRequired);
             }
 
             return new SharedAccessSignature(Resource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration);
@@ -276,7 +276,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
                     if (string.IsNullOrEmpty(value))
                     {
-                        throw new ArgumentException(Resources1.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
+                        throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
                     }
 
                     // Compare the token against the known signature properties and capture the
@@ -294,7 +294,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
                     {
                         if (!long.TryParse(WebUtility.UrlDecode(value), out var unixTime))
                         {
-                            throw new ArgumentException(Resources1.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
+                            throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
                         }
 
                         parsedValues.ExpirationTime = ConvertFromUnixTime(unixTime);
@@ -305,7 +305,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
                     // This wasn't a legal pair and it is not simply a trailing delimiter; consider
                     // the signature to be malformed.
 
-                    throw new ArgumentException(Resources1.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
+                    throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
                 }
 
                 tokenPositionModifier = 0;
@@ -319,7 +319,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
                 || (string.IsNullOrEmpty(parsedValues.KeyName))
                 || (parsedValues.ExpirationTime == default))
             {
-                throw new ArgumentException(Resources1.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
+                throw new ArgumentException(Resources.InvalidSharedAccessSignature, nameof(sharedAccessSignature));
             }
 
             return parsedValues;

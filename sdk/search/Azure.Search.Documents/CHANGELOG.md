@@ -2,9 +2,15 @@
 
 ## 1.0.0-preview.2 (Unreleased)
 
+### Added
+
+- Added models and methods to `SearchServiceClient` to create and manage indexes.
+
 ### Breaking Changes
+
 - Renamed to Azure.Search.Documents (assembly, namespace, and package)
 - Replaced SearchApiKeyCredential with AzureKeyCredential
+- Renamed `SearchServiceClient.GetStatistics` and `SearchServiceClient.GetStatisticsAsync` to `SearchServiceClient.GetServiceStatistics` and `SearchServiceClient.GetServiceStatisticsAsync`
 
 ## 11.0.0-preview.1 (2020-03-13)
 

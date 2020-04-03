@@ -681,5 +681,16 @@ namespace Azure.Messaging.EventHubs
                 return ResourceManager.GetString("CannotReadLastEnqueuedEventPropertiesWithoutEvent", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to One or more exceptions occured during event processing.  Please see the inner exceptions for more detail..
+        /// </summary>
+        internal static string AggregateEventProcessingExceptionMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("AggregateEventProcessingExceptionMessage", resourceCulture);
+            }
+        }
     }
 }

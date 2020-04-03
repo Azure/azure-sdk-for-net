@@ -12,14 +12,14 @@ namespace Azure.AI.FormRecognizer.Training
 
     /// <summary>
     /// </summary>
-    [CodeGenSchema("ModelStatus")]
+    [CodeGenModel("ModelStatus")]
 #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum CustomFormModelStatus
 #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {
         /// <summary>
         /// </summary>
-        [CodeGenSchemaMember("creating")]
+        [CodeGenMember("creating")]
         Training,
 
         /// <summary>

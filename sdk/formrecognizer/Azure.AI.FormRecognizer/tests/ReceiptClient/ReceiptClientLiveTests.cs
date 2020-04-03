@@ -22,18 +22,6 @@ namespace Azure.AI.FormRecognizer.Tests
     [LiveOnly]
     public class ReceiptClientLiveTests : ClientTestBase
     {
-        /// <summary>The name of the folder in which test assets are stored.</summary>
-        private const string AssetsFolderName = "Assets";
-
-        /// <summary>The name of the image file which contains the receipt to be used for tests.</summary>
-        private const string ReceiptFilename = "contoso-receipt.jpg";
-
-        /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the tests.</summary>
-        private const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
-
-        /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the tests.</summary>
-        private const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ReceiptClientLiveTests"/> class.
         /// </summary>
@@ -46,10 +34,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="ReceiptClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform operations.
         /// </summary>
-        ///
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore="The receipt file has not been uploaded to GitHub yet.")]
+        [TestCase(false)]
         public async Task StartExtractReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();
@@ -57,14 +44,13 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                var path = Path.Combine(AssetsFolderName, ReceiptFilename);
-                using var stream = new FileStream(path, FileMode.Open);
+                using var stream = new FileStream(TestEnvironment.ReceiptPath, FileMode.Open);
                 operation = await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg);
             }
             else
             {
-                var endpoint = new Uri("");
-                operation = await client.StartExtractReceiptsAsync(endpoint);
+                var uri = new Uri(TestEnvironment.ReceiptUri);
+                operation = await client.StartExtractReceiptsAsync(uri);
             }
 
             await operation.WaitForCompletionAsync();
@@ -131,8 +117,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="ReceiptClient" />.</returns>
         private ReceiptClient CreateInstrumentedClient()
         {
-            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(EndpointEnvironmentVariableName);
-            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(ApiKeyEnvironmentVariableName);
+            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.EndpointEnvironmentVariableName);
+            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.ApiKeyEnvironmentVariableName);
 
             Assert.NotNull(endpointEnvironmentVariable);
             Assert.NotNull(keyEnvironmentVariable);

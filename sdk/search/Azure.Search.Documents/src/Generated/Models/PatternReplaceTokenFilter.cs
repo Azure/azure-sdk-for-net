@@ -13,11 +13,15 @@ namespace Azure.Search.Documents.Models
     public partial class PatternReplaceTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of PatternReplaceTokenFilter. </summary>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="pattern"> A regular expression pattern. </param>
         /// <param name="replacement"> The replacement text. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public PatternReplaceTokenFilter(string pattern, string replacement, string name) : base(name)
+        public PatternReplaceTokenFilter(string name, string pattern, string replacement) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             if (pattern == null)
             {
                 throw new ArgumentNullException(nameof(pattern));
@@ -26,10 +30,6 @@ namespace Azure.Search.Documents.Models
             {
                 throw new ArgumentNullException(nameof(replacement));
             }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
 
             Pattern = pattern;
             Replacement = replacement;
@@ -37,11 +37,11 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of PatternReplaceTokenFilter. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="pattern"> A regular expression pattern. </param>
         /// <param name="replacement"> The replacement text. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal PatternReplaceTokenFilter(string pattern, string replacement, string oDataType, string name) : base(oDataType, name)
+        internal PatternReplaceTokenFilter(string oDataType, string name, string pattern, string replacement) : base(oDataType, name)
         {
             Pattern = pattern;
             Replacement = replacement;

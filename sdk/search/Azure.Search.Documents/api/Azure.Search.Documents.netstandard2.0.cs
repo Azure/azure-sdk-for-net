@@ -97,9 +97,13 @@ namespace Azure.Search.Documents
         public SearchServiceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
+        public virtual Azure.Response<Azure.Search.Documents.Models.SearchIndex> CreateIndex(Azure.Search.Documents.Models.SearchIndex index, Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchIndex>> CreateIndexAsync(Azure.Search.Documents.Models.SearchIndex index, Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Models.SearchIndex> GetIndex(string indexName, Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchIndex>> GetIndexAsync(string indexName, Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Search.Documents.SearchIndexClient GetSearchIndexClient(string indexName) { throw null; }
-        public virtual Azure.Response<Azure.Search.Documents.Models.SearchServiceStatistics> GetStatistics(Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchServiceStatistics>> GetStatisticsAsync(Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Models.SearchServiceStatistics> GetServiceStatistics(Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchServiceStatistics>> GetServiceStatisticsAsync(Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SuggestOptions : Azure.Search.Documents.SearchRequestOptions
     {
@@ -203,8 +207,8 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.AnalyzerName Pattern { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName PlLucene { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName PlMicrosoft { get { throw null; } }
-        public static Azure.Search.Documents.Models.AnalyzerName PtBRLucene { get { throw null; } }
-        public static Azure.Search.Documents.Models.AnalyzerName PtBRMicrosoft { get { throw null; } }
+        public static Azure.Search.Documents.Models.AnalyzerName PtBrLucene { get { throw null; } }
+        public static Azure.Search.Documents.Models.AnalyzerName PtBrMicrosoft { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName PtLucene { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName PtMicrosoft { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName RoLucene { get { throw null; } }
@@ -216,7 +220,7 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Models.AnalyzerName SlMicrosoft { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName SrCyrillicMicrosoft { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName SrLatinMicrosoft { get { throw null; } }
-        public static Azure.Search.Documents.Models.AnalyzerName StandardasciifoldingLucene { get { throw null; } }
+        public static Azure.Search.Documents.Models.AnalyzerName StandardAsciiFoldingLucene { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName StandardLucene { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName Stop { get { throw null; } }
         public static Azure.Search.Documents.Models.AnalyzerName SvLucene { get { throw null; } }
@@ -309,10 +313,16 @@ namespace Azure.Search.Documents.Models
     }
     public partial class CommonGramTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public CommonGramTokenFilter(System.Collections.Generic.IEnumerable<string> commonWords, string name) : base (default(string)) { }
+        public CommonGramTokenFilter(string name, System.Collections.Generic.IEnumerable<string> commonWords) : base (default(string)) { }
         public System.Collections.Generic.IList<string> CommonWords { get { throw null; } }
         public bool? IgnoreCase { get { throw null; } set { } }
         public bool? UseQueryMode { get { throw null; } set { } }
+    }
+    public partial class ComplexField : Azure.Search.Documents.Models.FieldBase
+    {
+        public ComplexField(string name, bool collection = false) : base (default(string), default(Azure.Search.Documents.Models.DataType)) { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.FieldBase> Fields { get { throw null; } }
+        protected override void Save(Azure.Search.Documents.Models.SearchField field) { }
     }
     public partial class ConditionalSkill : Azure.Search.Documents.Models.Skill
     {
@@ -326,7 +336,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class CustomAnalyzer : Azure.Search.Documents.Models.Analyzer
     {
-        public CustomAnalyzer(Azure.Search.Documents.Models.TokenizerName tokenizer, string name) : base (default(string)) { }
+        public CustomAnalyzer(string name, Azure.Search.Documents.Models.TokenizerName tokenizer) : base (default(string)) { }
         public System.Collections.Generic.IList<string> CharFilters { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.TokenFilterName> TokenFilters { get { throw null; } set { } }
         public Azure.Search.Documents.Models.TokenizerName Tokenizer { get { throw null; } }
@@ -389,14 +399,16 @@ namespace Azure.Search.Documents.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataType(string value) { throw null; }
-        public static Azure.Search.Documents.Models.DataType EdmBoolean { get { throw null; } }
-        public static Azure.Search.Documents.Models.DataType EdmComplexType { get { throw null; } }
-        public static Azure.Search.Documents.Models.DataType EdmDateTimeOffset { get { throw null; } }
-        public static Azure.Search.Documents.Models.DataType EdmDouble { get { throw null; } }
-        public static Azure.Search.Documents.Models.DataType EdmGeographyPoint { get { throw null; } }
-        public static Azure.Search.Documents.Models.DataType EdmInt32 { get { throw null; } }
-        public static Azure.Search.Documents.Models.DataType EdmInt64 { get { throw null; } }
-        public static Azure.Search.Documents.Models.DataType EdmString { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType Boolean { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType Complex { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType DateTimeOffset { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType Double { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType GeographyPoint { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType Int32 { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType Int64 { get { throw null; } }
+        public bool IsCollection { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType String { get { throw null; } }
+        public static Azure.Search.Documents.Models.DataType Collection(Azure.Search.Documents.Models.DataType type) { throw null; }
         public bool Equals(Azure.Search.Documents.Models.DataType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -413,7 +425,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class DictionaryDecompounderTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public DictionaryDecompounderTokenFilter(System.Collections.Generic.IEnumerable<string> wordList, string name) : base (default(string)) { }
+        public DictionaryDecompounderTokenFilter(string name, System.Collections.Generic.IEnumerable<string> wordList) : base (default(string)) { }
         public int? MaxSubwordSize { get { throw null; } set { } }
         public int? MinSubwordSize { get { throw null; } set { } }
         public int? MinWordSize { get { throw null; } set { } }
@@ -422,7 +434,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class DistanceScoringFunction : Azure.Search.Documents.Models.ScoringFunction
     {
-        public DistanceScoringFunction(Azure.Search.Documents.Models.DistanceScoringParameters parameters, string fieldName, double boost) : base (default(string), default(double)) { }
+        public DistanceScoringFunction(string fieldName, double boost, Azure.Search.Documents.Models.DistanceScoringParameters parameters) : base (default(string), default(double)) { }
         public Azure.Search.Documents.Models.DistanceScoringParameters Parameters { get { throw null; } }
     }
     public partial class DistanceScoringParameters
@@ -540,6 +552,14 @@ namespace Azure.Search.Documents.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
+    public abstract partial class FieldBase
+    {
+        public FieldBase(string name, Azure.Search.Documents.Models.DataType type) { }
+        public string Name { get { throw null; } }
+        public Azure.Search.Documents.Models.DataType Type { get { throw null; } }
+        public static implicit operator Azure.Search.Documents.Models.SearchField (Azure.Search.Documents.Models.FieldBase value) { throw null; }
+        protected abstract void Save(Azure.Search.Documents.Models.SearchField field);
+    }
     public partial class FieldMapping
     {
         public FieldMapping(string sourceFieldName) { }
@@ -555,7 +575,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class FreshnessScoringFunction : Azure.Search.Documents.Models.ScoringFunction
     {
-        public FreshnessScoringFunction(Azure.Search.Documents.Models.FreshnessScoringParameters parameters, string fieldName, double boost) : base (default(string), default(double)) { }
+        public FreshnessScoringFunction(string fieldName, double boost, Azure.Search.Documents.Models.FreshnessScoringParameters parameters) : base (default(string), default(double)) { }
         public Azure.Search.Documents.Models.FreshnessScoringParameters Parameters { get { throw null; } }
     }
     public partial class FreshnessScoringParameters
@@ -748,7 +768,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class KeepTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public KeepTokenFilter(System.Collections.Generic.IEnumerable<string> keepWords, string name) : base (default(string)) { }
+        public KeepTokenFilter(string name, System.Collections.Generic.IEnumerable<string> keepWords) : base (default(string)) { }
         public System.Collections.Generic.IList<string> KeepWords { get { throw null; } }
         public bool? LowerCaseKeepWords { get { throw null; } set { } }
     }
@@ -792,7 +812,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class KeywordMarkerTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public KeywordMarkerTokenFilter(System.Collections.Generic.IEnumerable<string> keywords, string name) : base (default(string)) { }
+        public KeywordMarkerTokenFilter(string name, System.Collections.Generic.IEnumerable<string> keywords) : base (default(string)) { }
         public bool? IgnoreCase { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Keywords { get { throw null; } }
     }
@@ -829,7 +849,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class MagnitudeScoringFunction : Azure.Search.Documents.Models.ScoringFunction
     {
-        public MagnitudeScoringFunction(Azure.Search.Documents.Models.MagnitudeScoringParameters parameters, string fieldName, double boost) : base (default(string), default(double)) { }
+        public MagnitudeScoringFunction(string fieldName, double boost, Azure.Search.Documents.Models.MagnitudeScoringParameters parameters) : base (default(string), default(double)) { }
         public Azure.Search.Documents.Models.MagnitudeScoringParameters Parameters { get { throw null; } }
     }
     public partial class MagnitudeScoringParameters
@@ -841,7 +861,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class MappingCharFilter : Azure.Search.Documents.Models.CharFilter
     {
-        public MappingCharFilter(System.Collections.Generic.IEnumerable<string> mappings, string name) : base (default(string)) { }
+        public MappingCharFilter(string name, System.Collections.Generic.IEnumerable<string> mappings) : base (default(string)) { }
         public System.Collections.Generic.IList<string> Mappings { get { throw null; } }
     }
     public partial class MergeSkill : Azure.Search.Documents.Models.Skill
@@ -1050,19 +1070,19 @@ namespace Azure.Search.Documents.Models
     }
     public partial class PatternCaptureTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public PatternCaptureTokenFilter(System.Collections.Generic.IEnumerable<string> patterns, string name) : base (default(string)) { }
+        public PatternCaptureTokenFilter(string name, System.Collections.Generic.IEnumerable<string> patterns) : base (default(string)) { }
         public System.Collections.Generic.IList<string> Patterns { get { throw null; } }
         public bool? PreserveOriginal { get { throw null; } set { } }
     }
     public partial class PatternReplaceCharFilter : Azure.Search.Documents.Models.CharFilter
     {
-        public PatternReplaceCharFilter(string pattern, string replacement, string name) : base (default(string)) { }
+        public PatternReplaceCharFilter(string name, string pattern, string replacement) : base (default(string)) { }
         public string Pattern { get { throw null; } }
         public string Replacement { get { throw null; } }
     }
     public partial class PatternReplaceTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public PatternReplaceTokenFilter(string pattern, string replacement, string name) : base (default(string)) { }
+        public PatternReplaceTokenFilter(string name, string pattern, string replacement) : base (default(string)) { }
         public string Pattern { get { throw null; } }
         public string Replacement { get { throw null; } }
     }
@@ -1147,6 +1167,15 @@ namespace Azure.Search.Documents.Models
         public string Name { get { throw null; } }
         public Azure.Search.Documents.Models.TextWeights TextWeights { get { throw null; } set { } }
     }
+    public partial class SearchableField : Azure.Search.Documents.Models.SimpleField
+    {
+        public SearchableField(string name, bool collection = false) : base (default(string), default(Azure.Search.Documents.Models.DataType)) { }
+        public Azure.Search.Documents.Models.AnalyzerName? Analyzer { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.AnalyzerName? IndexAnalyzer { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.AnalyzerName? SearchAnalyzer { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SynonymMaps { get { throw null; } }
+        protected override void Save(Azure.Search.Documents.Models.SearchField field) { }
+    }
     public partial class SearchDocument : System.Dynamic.DynamicObject, System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public SearchDocument() { }
@@ -1175,21 +1204,23 @@ namespace Azure.Search.Documents.Models
     {
         public SearchField(string name, Azure.Search.Documents.Models.DataType type) { }
         public Azure.Search.Documents.Models.AnalyzerName? Analyzer { get { throw null; } set { } }
-        public bool? Facetable { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchField> Fields { get { throw null; } set { } }
-        public bool? Filterable { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchField> Fields { get { throw null; } }
         public Azure.Search.Documents.Models.AnalyzerName? IndexAnalyzer { get { throw null; } set { } }
-        public bool? Key { get { throw null; } set { } }
+        public bool? IsFacetable { get { throw null; } set { } }
+        public bool? IsFilterable { get { throw null; } set { } }
+        public bool? IsHidden { get { throw null; } set { } }
+        public bool? IsKey { get { throw null; } set { } }
+        public bool? IsSearchable { get { throw null; } set { } }
+        public bool? IsSortable { get { throw null; } set { } }
         public string Name { get { throw null; } }
-        public bool? Retrievable { get { throw null; } set { } }
-        public bool? Searchable { get { throw null; } set { } }
         public Azure.Search.Documents.Models.AnalyzerName? SearchAnalyzer { get { throw null; } set { } }
-        public bool? Sortable { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> SynonymMaps { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> SynonymMaps { get { throw null; } }
         public Azure.Search.Documents.Models.DataType Type { get { throw null; } }
+        public override string ToString() { throw null; }
     }
     public partial class SearchIndex
     {
+        public SearchIndex(string name) { }
         public SearchIndex(string name, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchField> fields) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.Analyzer> Analyzers { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.CharFilter> CharFilters { get { throw null; } set { } }
@@ -1223,7 +1254,6 @@ namespace Azure.Search.Documents.Models
     {
         Any = 0,
         All = 1,
-        AnalyzingInfixMatching = 2,
     }
     public enum SearchQueryType
     {
@@ -1343,6 +1373,16 @@ namespace Azure.Search.Documents.Models
         public bool? OutputUnigramsIfNoShingles { get { throw null; } set { } }
         public string TokenSeparator { get { throw null; } set { } }
     }
+    public partial class SimpleField : Azure.Search.Documents.Models.FieldBase
+    {
+        public SimpleField(string name, Azure.Search.Documents.Models.DataType type) : base (default(string), default(Azure.Search.Documents.Models.DataType)) { }
+        public bool IsFacetable { get { throw null; } set { } }
+        public bool IsFilterable { get { throw null; } set { } }
+        public bool IsHidden { get { throw null; } set { } }
+        public bool IsKey { get { throw null; } set { } }
+        public bool IsSortable { get { throw null; } set { } }
+        protected override void Save(Azure.Search.Documents.Models.SearchField field) { }
+    }
     public partial class Skill
     {
         public Skill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) { }
@@ -1363,7 +1403,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SnowballTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public SnowballTokenFilter(Azure.Search.Documents.Models.SnowballTokenFilterLanguage language, string name) : base (default(string)) { }
+        public SnowballTokenFilter(string name, Azure.Search.Documents.Models.SnowballTokenFilterLanguage language) : base (default(string)) { }
         public Azure.Search.Documents.Models.SnowballTokenFilterLanguage Language { get { throw null; } }
     }
     public enum SnowballTokenFilterLanguage
@@ -1451,12 +1491,12 @@ namespace Azure.Search.Documents.Models
     }
     public partial class StemmerOverrideTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public StemmerOverrideTokenFilter(System.Collections.Generic.IEnumerable<string> rules, string name) : base (default(string)) { }
+        public StemmerOverrideTokenFilter(string name, System.Collections.Generic.IEnumerable<string> rules) : base (default(string)) { }
         public System.Collections.Generic.IList<string> Rules { get { throw null; } }
     }
     public partial class StemmerTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public StemmerTokenFilter(Azure.Search.Documents.Models.StemmerTokenFilterLanguage language, string name) : base (default(string)) { }
+        public StemmerTokenFilter(string name, Azure.Search.Documents.Models.StemmerTokenFilterLanguage language) : base (default(string)) { }
         public Azure.Search.Documents.Models.StemmerTokenFilterLanguage Language { get { throw null; } }
     }
     public enum StemmerTokenFilterLanguage
@@ -1565,9 +1605,9 @@ namespace Azure.Search.Documents.Models
     }
     public partial class Suggester
     {
-        public Suggester(string name, Azure.Search.Documents.Models.SearchMode searchMode, System.Collections.Generic.IEnumerable<string> sourceFields) { }
+        public Suggester(string name, System.Collections.Generic.IEnumerable<string> sourceFields) { }
+        public Suggester(string name, params string[] sourceFields) { }
         public string Name { get { throw null; } }
-        public Azure.Search.Documents.Models.SearchMode SearchMode { get { throw null; } }
         public System.Collections.Generic.IList<string> SourceFields { get { throw null; } }
     }
     public partial class SuggestResults<T>
@@ -1578,7 +1618,8 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SynonymMap
     {
-        public SynonymMap(string name, string synonyms) { }
+        public SynonymMap(string name, System.Collections.Generic.IEnumerable<string> synonyms, string format = "soln") { }
+        public SynonymMap(string name, string synonym, string format = "soln") { }
         public Azure.Search.Documents.Models.EncryptionKey EncryptionKey { get { throw null; } set { } }
         public string ETag { get { throw null; } set { } }
         public string Format { get { throw null; } }
@@ -1587,14 +1628,14 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SynonymTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
-        public SynonymTokenFilter(System.Collections.Generic.IEnumerable<string> synonyms, string name) : base (default(string)) { }
+        public SynonymTokenFilter(string name, System.Collections.Generic.IEnumerable<string> synonyms) : base (default(string)) { }
         public bool? Expand { get { throw null; } set { } }
         public bool? IgnoreCase { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Synonyms { get { throw null; } }
     }
     public partial class TagScoringFunction : Azure.Search.Documents.Models.ScoringFunction
     {
-        public TagScoringFunction(Azure.Search.Documents.Models.TagScoringParameters parameters, string fieldName, double boost) : base (default(string), default(double)) { }
+        public TagScoringFunction(string fieldName, double boost, Azure.Search.Documents.Models.TagScoringParameters parameters) : base (default(string), default(double)) { }
         public Azure.Search.Documents.Models.TagScoringParameters Parameters { get { throw null; } }
     }
     public partial class TagScoringParameters
@@ -1614,7 +1655,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class TextTranslationSkill : Azure.Search.Documents.Models.Skill
     {
-        public TextTranslationSkill(Azure.Search.Documents.Models.TextTranslationSkillLanguage defaultToLanguageCode, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public TextTranslationSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs, Azure.Search.Documents.Models.TextTranslationSkillLanguage defaultToLanguageCode) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public Azure.Search.Documents.Models.TextTranslationSkillLanguage? DefaultFromLanguageCode { get { throw null; } set { } }
         public Azure.Search.Documents.Models.TextTranslationSkillLanguage DefaultToLanguageCode { get { throw null; } }
         public Azure.Search.Documents.Models.TextTranslationSkillLanguage? SuggestedFrom { get { throw null; } set { } }
@@ -1835,7 +1876,7 @@ namespace Azure.Search.Documents.Models
     }
     public partial class WebApiSkill : Azure.Search.Documents.Models.Skill
     {
-        public WebApiSkill(string uri, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
+        public WebApiSkill(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry> inputs, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry> outputs, string uri) : base (default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.InputFieldMappingEntry>), default(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.OutputFieldMappingEntry>)) { }
         public int? BatchSize { get { throw null; } set { } }
         public int? DegreeOfParallelism { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> HttpHeaders { get { throw null; } set { } }

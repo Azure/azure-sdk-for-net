@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new KeywordTokenizer(bufferSize, odatatype, name);
+            return new KeywordTokenizer(odatatype, name, bufferSize);
         }
     }
 }

@@ -143,7 +143,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new KeyPhraseExtractionSkill(defaultLanguageCode, maxKeyPhraseCount, odatatype, name, description, context, inputs, outputs);
+            return new KeyPhraseExtractionSkill(odatatype, name, description, context, inputs, outputs, defaultLanguageCode, maxKeyPhraseCount);
         }
     }
 }

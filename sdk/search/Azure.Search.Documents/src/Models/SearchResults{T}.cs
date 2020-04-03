@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Search.Documents.Models
 {
     // Hide the untyped SearchDocumentsResult
-    [CodeGenSchema("SearchDocumentsResult")]
+    [CodeGenModel("SearchDocumentsResult")]
     internal partial class SearchDocumentsResult { }
 
     /// <summary>

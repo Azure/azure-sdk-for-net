@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Models
     public partial class StemmerOverrideTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of StemmerOverrideTokenFilter. </summary>
-        /// <param name="rules"> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public StemmerOverrideTokenFilter(IEnumerable<string> rules, string name) : base(name)
+        /// <param name="rules"> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </param>
+        public StemmerOverrideTokenFilter(string name, IEnumerable<string> rules) : base(name)
         {
-            if (rules == null)
-            {
-                throw new ArgumentNullException(nameof(rules));
-            }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
+            }
+            if (rules == null)
+            {
+                throw new ArgumentNullException(nameof(rules));
             }
 
             Rules = rules.ToArray();
@@ -33,10 +33,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of StemmerOverrideTokenFilter. </summary>
-        /// <param name="rules"> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </param>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal StemmerOverrideTokenFilter(IList<string> rules, string oDataType, string name) : base(oDataType, name)
+        /// <param name="rules"> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </param>
+        internal StemmerOverrideTokenFilter(string oDataType, string name, IList<string> rules) : base(oDataType, name)
         {
             Rules = rules;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.StemmerOverrideTokenFilter";

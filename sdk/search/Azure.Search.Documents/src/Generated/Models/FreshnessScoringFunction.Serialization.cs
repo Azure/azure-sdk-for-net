@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new FreshnessScoringFunction(freshness, type, fieldName, boost, interpolation);
+            return new FreshnessScoringFunction(type, fieldName, boost, interpolation, freshness);
         }
     }
 }

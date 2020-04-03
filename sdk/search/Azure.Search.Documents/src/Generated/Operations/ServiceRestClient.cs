@@ -61,7 +61,7 @@ namespace Azure.Search.Documents
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();

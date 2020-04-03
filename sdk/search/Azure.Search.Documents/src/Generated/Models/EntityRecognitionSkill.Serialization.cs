@@ -183,7 +183,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new EntityRecognitionSkill(categories, defaultLanguageCode, includeTypelessEntities, minimumPrecision, odatatype, name, description, context, inputs, outputs);
+            return new EntityRecognitionSkill(odatatype, name, description, context, inputs, outputs, categories, defaultLanguageCode, includeTypelessEntities, minimumPrecision);
         }
     }
 }

@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer
 {
-    [CodeGenSchema("ModelsSummary")]
+    [CodeGenModel("ModelsSummary")]
     internal partial class ModelsSummary_internal
     {
     }

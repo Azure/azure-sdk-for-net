@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new ImageAnalysisSkill(defaultLanguageCode, visualFeatures, details, odatatype, name, description, context, inputs, outputs);
+            return new ImageAnalysisSkill(odatatype, name, description, context, inputs, outputs, defaultLanguageCode, visualFeatures, details);
         }
     }
 }
