@@ -40,10 +40,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormCheckBox> CheckBoxes { get; }
-
-        /// <summary>
-        /// </summary>
         public IReadOnlyList<FormTable> Tables { get; }
 
         private static ICollection<FormLine> ConvertLines(ICollection<TextLine_internal> textLines)

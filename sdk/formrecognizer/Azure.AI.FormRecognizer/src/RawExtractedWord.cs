@@ -17,9 +17,5 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public float? Confidence { get; }
 
-        /// <summary>
-        /// </summary>
-        public FormTextStyle Style { get; internal set; }
-
     }
 }

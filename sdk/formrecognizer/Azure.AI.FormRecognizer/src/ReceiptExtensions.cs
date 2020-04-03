@@ -19,12 +19,5 @@ namespace Azure.AI.FormRecognizer.Models
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
-        public static CAReceipt AsCAReceipt(this RecognizedReceipt receipt)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

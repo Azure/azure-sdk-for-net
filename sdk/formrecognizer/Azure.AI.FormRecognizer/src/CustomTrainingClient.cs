@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -106,57 +105,6 @@ namespace Azure.AI.FormRecognizer.Training
             //return new TrainingOperation(ServiceClient, response.Headers.Location);
         }
 
-        ///// <summary>
-        ///// Trains a model from a collection of custom forms and a label file in a blob storage container.
-        ///// </summary>
-        ///// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        ///// <param name="filter">Filter to apply to the documents in the source path for training.</param>
-        ///// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        ///// <returns>A <see cref="TrainingWithLabelsOperation"/> to wait on this long-running operation.  Its <see cref="TrainingWithLabelsOperation"/>.Value upon successful
-        ///// completion will contain meta-data about the trained model.</returns>
-        //public virtual TrainingWithLabelsOperation StartTrainingWithLabels(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
-        //{
-        //    throw new NotImplementedException();
-
-        //    //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
-
-        //    //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-        //    //// https://github.com/Azure/azure-sdk-for-net/issues/10359
-        //    //if (filter != default)
-        //    //{
-        //    //    trainRequest.SourceFilter = filter;
-        //    //}
-
-        //    //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
-        //    //return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
-        //}
-
-        ///// <summary>
-        ///// Trains a model from a collection of custom forms and a label file in a blob storage container.
-        ///// </summary>
-        ///// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        ///// <param name="filter">Filter to apply to the documents in the source path for training.</param>
-        ///// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        ///// <returns>A <see cref="TrainingWithLabelsOperation"/> to wait on this long-running operation.  Its <see cref="TrainingWithLabelsOperation"/>.Value upon successful
-        ///// completion will contain meta-data about the trained model.</returns>
-        //public virtual async Task<TrainingWithLabelsOperation> StartTrainingWithLabelsAsync(Uri trainingFiles, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
-        //{
-        //    await Task.Run(() => { }).ConfigureAwait(false);
-        //    throw new NotImplementedException();
-
-        //    //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri, UseLabelFile = true };
-
-        //    //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-        //    //// https://github.com/Azure/azure-sdk-for-net/issues/10359
-        //    //if (filter != default)
-        //    //{
-        //    //    trainRequest.SourceFilter = filter;
-        //    //}
-
-        //    //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-        //    //return new TrainingWithLabelsOperation(ServiceClient, response.Headers.Location);
-        //}
-
         /// <summary>
         /// </summary>
         /// <param name="modelId"></param>
@@ -177,48 +125,6 @@ namespace Azure.AI.FormRecognizer.Training
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
         }
-
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="modelId"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual CustomLabeledModel GetCustomLabeledModel(string modelId, CancellationToken cancellationToken = default)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="modelId"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual async Task<Response<CustomLabeledModel>> GetCustomLabeledModelAsync(string modelId, CancellationToken cancellationToken = default)
-        //{
-        //    await Task.Run(() => { }).ConfigureAwait(false);
-        //    throw new NotImplementedException();
-        //}
-
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="modelId"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual CustomFormModel GetCustomCompoundModel(string modelId, CancellationToken cancellationToken = default)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        ///// <summary>
-        ///// </summary>
-        ///// <param name="modelId"></param>
-        ///// <param name="cancellationToken"></param>
-        ///// <returns></returns>
-        //public virtual async Task<Response<CustomFormModel>> GetCustomCompoundModelAsync(string modelId, CancellationToken cancellationToken = default)
-        //{
-        //    await Task.Run(() => { }).ConfigureAwait(false);
-        //    throw new NotImplementedException();
-        //}
 
         #endregion
 
@@ -289,89 +195,6 @@ namespace Azure.AI.FormRecognizer.Training
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
-        #endregion
-
-        #region Compose Model
-
-        /// <summary>
-        /// </summary>
-        /// <param name="modelIds"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual ComposeModelOperation StartComposeModel(IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="modelIds"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<ComposeModelOperation> StartComposeModelAsync(IEnumerable<string> modelIds, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-        }
-
-        #endregion
-
-        #region
-
-        /// <summary>
-        /// </summary>
-        /// <param name="sourceModelId"></param>
-        /// <param name="targetEndpoint"></param>
-        /// <param name="targetCredential"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual CopyModelOperation StartCopyModel(string sourceModelId, Uri targetEndpoint, FormRecognizerApiKeyCredential targetCredential, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-
-            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
-
-            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            //// https://github.com/Azure/autorest.csharp/issues/467
-            //// When this is complete, we will be able to default filter.Path to "".
-            //// Decision to make, do we always send filter, or only if needed?
-            //// Tracking with https://github.com/Azure/azure-sdk-for-net/issues/10359
-            //if (filter != default)
-            //{
-            //    trainRequest.SourceFilter = filter;
-            //}
-
-            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
-            //return new TrainingOperation(ServiceClient, response.Headers.Location);
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="sourceModelId"></param>
-        /// <param name="targetEndpoint"></param>
-        /// <param name="targetCredential"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<CopyModelOperation> StartCopyModelAsync(string sourceModelId, Uri targetEndpoint, FormRecognizerApiKeyCredential targetCredential, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
-            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
-
-            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            //// https://github.com/Azure/autorest.csharp/issues/467
-            //// When this is complete, we will be able to default filter.Path to "".
-            //// Decision to make, do we always send filter, or only if needed?
-            //// Tracking with https://github.com/Azure/azure-sdk-for-net/issues/10359
-            //if (filter != default)
-            //{
-            //    trainRequest.SourceFilter = filter;
-            //}
-
-            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
-            //return new TrainingOperation(ServiceClient, response.Headers.Location);
-        }
         #endregion
 
     }

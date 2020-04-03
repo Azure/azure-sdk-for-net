@@ -21,16 +21,5 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public bool IncludeTextContent { get; set; } = false;
 
-        /// <summary>
-        /// </summary>
-        public bool IncludeCheckboxes { get; set; } = true;
-
-        /// <summary>
-        /// </summary>
-        public bool IncludeTables { get; set; } = true;
-
-        /// <summary>
-        /// </summary>
-        public string ModelVersion { get; set; }
     }
 }

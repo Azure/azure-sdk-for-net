@@ -277,61 +277,6 @@ namespace Azure.AI.FormRecognizer
         }
         #endregion
 
-        #region Business Cards
-        /// <summary>
-        /// Extracts values from one or more receipts.
-        /// </summary>
-        /// <param name="businessCardFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
-        /// completion will contain the extracted business card.</returns>
-        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCards(Stream businessCardFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Extracts values from one or more receipts.
-        /// </summary>
-        /// <param name="businessCardFileUri">The absolute URI of the remote file to extract values from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
-        /// completion will contain the extracted business card.</returns>
-        public virtual RecognizeBusinessCardsOperation StartRecognizeBusinessCardsFromUri(Uri businessCardFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Extracts values from one or more receipts.
-        /// </summary>
-        /// <param name="businessCardFileStream">The stream containing the one or more receipts to extract values from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
-        /// completion will contain the extracted business card.</returns>
-        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsAsync(Stream businessCardFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Extracts values from one or more receipts.
-        /// </summary>
-        /// <param name="businessCardFileUri">The absolute URI of the remote file to extract values from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeBusinessCardsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeBusinessCardsOperation"/>.Value upon successful
-        /// completion will contain the extracted business card.</returns>
-        public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsFromUriAsync(Uri businessCardFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
-        {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// </summary>
         /// <returns></returns>
@@ -340,6 +285,5 @@ namespace Azure.AI.FormRecognizer
             throw new NotImplementedException();
         }
 
-        #endregion
     }
 }
