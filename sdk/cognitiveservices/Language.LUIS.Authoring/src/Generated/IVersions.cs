@@ -308,6 +308,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='versionId'>
         /// The version ID.
         /// </param>
+        /// <param name='format'>
+        /// Lu format extension. Possible values include: 'lu'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -323,6 +326,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<string>> ExportLuFormatWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<string>> ExportLuFormatWithHttpMessagesAsync(System.Guid appId, string versionId, string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
