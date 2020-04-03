@@ -53,6 +53,18 @@ To see how to authenticate using Azure.Identity, view this [example](#authentica
 
 ## Key concepts
 
+Once you've initialized a `ServiceBusClient`, you can interact with the primary resource types within a Service Bus Namespace, of which multiple can exist and on which actual message transmission takes place, the namespace often serving as an application container:
+
+* [Queue](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#queues): Allows for Sending and Receiving of messages, ordered first-in-first-out.  Often used for point-to-point communication.
+
+* [Topic](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#topics): As opposed to Queues, Topics are better suited to publish/subscribe scenarios.  A topic can be sent to, but requires a subscription, of which there can be multiple in parallel, to consume from.
+
+* [Subscription](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions#topics-and-subscriptions): The mechanism to consume from a Topic.  Each subscription is independent, and receaves a copy of each message sent to the topic.  Rules and Filters can be used to tailor which messages are received by a specific subscription.
+
+For more information about these resources, see [What is Azure Service Bus?](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview).
+
+To interact with these resources, one should be familiar with the following SDK concepts:
+
 - A **Service Bus client** is the primary interface for developers interacting with the Service Bus client library. It serves as the gateway from which all interaction with the library will occur.
 
 - A **Service Bus sender** is scoped to a particular queue or topic, and is created using the Service Bus client. The sender allows you to send messages to a queue or topic. It also allows for scheduling messages to be available for delivery at a specified date.
