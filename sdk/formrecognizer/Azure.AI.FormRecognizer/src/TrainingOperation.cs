@@ -13,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary>
     /// Represents a long-running training operation.
     /// </summary>
-    public class TrainingOperation : Operation<CustomFormSubModel>
+    public class TrainingOperation : Operation<CustomFormModel>
     {
         private Response _response;
-        private CustomFormSubModel _value;
+        private CustomFormModel _value;
         private bool _hasCompleted;
 
         // TODO: use this.
@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// The final result of the training operation, if the operation completed successfully.
         /// </summary>
-        public override CustomFormSubModel Value => OperationHelpers.GetValue(ref _value);
+        public override CustomFormModel Value => OperationHelpers.GetValue(ref _value);
 
         /// <summary>
         /// True if the training operation completed.
@@ -50,11 +50,11 @@ namespace Azure.AI.FormRecognizer.Training
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<CustomFormSubModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<CustomFormSubModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>

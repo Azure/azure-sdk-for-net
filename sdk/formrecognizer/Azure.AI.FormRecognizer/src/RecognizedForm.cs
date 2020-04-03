@@ -36,32 +36,15 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public float? FormTypeConfidence { get; }
-
-        /// <summary>
-        /// </summary>
         public FormPageRange PageRange { get; }
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<FormField> Fields { get; }
+        public IReadOnlyDictionary<string, FormField> Fields { get; }
 
         /// <summary>
         /// </summary>
         public IReadOnlyList<FormPage> Pages { get; }
-
-        /// <summary>
-        /// Return the first field of the given name.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="field"></param>
-        /// <returns></returns>
-        public bool TryGetFieldValue(string name, out FormField field)
-        {
-            field = Fields.Where(f => f.Name == name).FirstOrDefault();
-
-            return field != default;
-        }
 
         //private static IReadOnlyList<LabeledFormField> ConvertFields(IDictionary<string, FieldValue_internal> fields, IList<ReadResult_internal> readResults)
         //{
