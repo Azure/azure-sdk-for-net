@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await using var client = new ServiceBusClient(connectionString);
 
                 // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a session message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"))
@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // Get a session receiver that we can use to receive the message. Since we don't specify a
                 // particular session, we will get the next available session from the service.
-                ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(queueName);
+                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await using var client = new ServiceBusClient(connectionString);
 
                 // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message batch that we can send
                 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #region Snippet:ServiceBusReceiveFromSpecificSession
                 // Get a receiver specifying a particular session
-                ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(
+                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
                     queueName,
                     sessionId: "Session2");
 

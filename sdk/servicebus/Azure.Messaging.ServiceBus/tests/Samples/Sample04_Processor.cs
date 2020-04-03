@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 //@@ await using var client = new ServiceBusClient(connectionString);
 
                 // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message batch that we can send
                 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 };
 
                 // get a processor that we can use to process the messages
-                ServiceBusProcessor processor = client.GetProcessor(queueName, options);
+                ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
 
                 // since the message handler will run in a background thread, in order to prevent
                 // this sample from terminating immediately, we can use a task completion source that
@@ -106,7 +106,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 //@@ await using var client = new ServiceBusClient(connectionString);
 
                 // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message batch that we can send
                 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 };
 
                 // get a session processor that we can use to process the messages
-                ServiceBusSessionProcessor processor = client.GetSessionProcessor(queueName, options);
+                ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
 
                 // since the message handler will run in a background thread, in order to prevent
                 // this sample from terminating immediately, we can use a task completion source that

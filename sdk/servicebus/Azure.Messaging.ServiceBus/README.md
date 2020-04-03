@@ -85,7 +85,7 @@ string queueName = "<queue_name>";
 await using var client = new ServiceBusClient(connectionString);
 
 // get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -94,7 +94,7 @@ ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hel
 await sender.SendAsync(message);
 
 // get a receiver that we can use to receive the message
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -115,7 +115,7 @@ string queueName = "<queue_name>";
 await using var client = new ServiceBusClient(connectionString);
 
 // get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
@@ -126,7 +126,7 @@ messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 await sender.SendBatchAsync(messageBatch);
 
 // get a receiver that we can use to receive the messages
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
 IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
@@ -148,7 +148,7 @@ string queueName = "<queue_name>";
 await using var client = new ServiceBusClient(connectionString);
 
 // get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -157,7 +157,7 @@ ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hel
 await sender.SendAsync(message);
 
 // get a receiver that we can use to receive and settle the message
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -198,7 +198,7 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 await receiver.DeadLetterAsync(receivedMessage);
 
 // receive the dead lettered message with receiver scoped to the dead letter queue.
-ServiceBusReceiver dlqReceiver = client.GetDeadLetterReceiver(queueName);
+ServiceBusReceiver dlqReceiver = client.CreateDeadLetterReceiver(queueName);
 ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
 ```
 
@@ -211,7 +211,7 @@ string queueName = "<queue_name>";
 await using var client = new ServiceBusClient(connectionString);
 
 // get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a session message that we can send
 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"))
@@ -224,7 +224,7 @@ await sender.SendAsync(message);
 
 // Get a session receiver that we can use to receive the message. Since we don't specify a
 // particular session, we will get the next available session from the service.
-ServiceBusSessionReceiver receiver = await client.GetSessionReceiverAsync(queueName);
+ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -249,7 +249,7 @@ string queueName = "<queue_name>";
 await using var client = new ServiceBusClient(connectionString);
 
 // get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
@@ -271,7 +271,7 @@ var options = new ServiceBusProcessorOptions
 };
 
 // get a processor that we can use to process the messages
-ServiceBusProcessor processor = client.GetProcessor(queueName, options);
+ServiceBusProcessor processor = client.CreateProcessor(queueName, options);
 
 // since the message handler will run in a background thread, in order to prevent
 // this sample from terminating immediately, we can use a task completion source that

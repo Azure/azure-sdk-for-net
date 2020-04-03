@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await using var client = new ServiceBusClient(connectionString);
 
                 // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await sender.SendAsync(message);
 
                 // get a receiver that we can use to receive the message
-                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await using var client = new ServiceBusClient(connectionString);
 
                 // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await sender.SendAsync(message);
 
                 // get a receiver that we can use to receive the message
-                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 #region Snippet:ServiceBusPeek
                 ServiceBusReceivedMessage peekedMessage = await receiver.PeekAsync();
@@ -93,7 +93,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await using var client = new ServiceBusClient(connectionString);
 
                 // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message batch that we can send
                 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
@@ -104,7 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await sender.SendBatchAsync(messageBatch);
 
                 // get a receiver that we can use to receive the messages
-                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 // the received message is a different type as it contains some service set properties
                 IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await using var client = new ServiceBusClient(connectionString);
 
                 // get the sender
-                ServiceBusSender sender = client.GetSender(queueName);
+                ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
                 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
 
                 // get a receiver that we can use to peek the message
-                ServiceBusReceiver receiver = client.GetReceiver(queueName);
+                ServiceBusReceiver receiver = client.CreateReceiver(queueName);
                 Assert.IsNotNull(await receiver.PeekAsync());
 
                 // cancel the scheduled messaged, thereby deleting from the service
