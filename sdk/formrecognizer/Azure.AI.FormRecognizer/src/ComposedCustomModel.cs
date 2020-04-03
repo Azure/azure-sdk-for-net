@@ -17,17 +17,28 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Information about the trained model, including model ID and training completion status.
         /// </summary>
-        public CustomFormModelInfo ModelInfo { get; }
+        public string ModelId { get; }
+
+        /// <summary>
+        /// </summary>
+        public CustomFormModelStatus Status { get; }
+
+        /// <summary>
+        /// </summary>
+        public DateTime CreatedOn { get; }
+
+        /// <summary>
+        /// </summary>
+        public DateTime LastUpdatedOn { get; }
 
         /// <summary>
         /// </summary>
         public IReadOnlyList<CustomFormSubModel> Models { get; }
 
         /// <summary>
-        /// Errors returned during the training operation.
         /// </summary>
-        public IReadOnlyList<FormRecognizerError> Errors { get; internal set; }
+        // TODO: for composed models, union what comes back on submodels into this single list.
+        public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; }
     }
 }

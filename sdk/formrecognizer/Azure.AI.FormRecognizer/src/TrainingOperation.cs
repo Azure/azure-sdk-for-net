@@ -79,7 +79,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
         /// <param name="cancellationToken"></param>
-        public TrainingOperation(string operationId, CustomTrainingClient client, CancellationToken cancellationToken = default)
+        public TrainingOperation(string operationId, FormTrainingClient client, CancellationToken cancellationToken = default)
         {
             Id = operationId;
             _serviceClient = client.ServiceClient;

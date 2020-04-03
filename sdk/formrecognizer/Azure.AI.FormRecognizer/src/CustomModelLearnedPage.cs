@@ -27,15 +27,6 @@ namespace Azure.AI.FormRecognizer.Training
         public IReadOnlyDictionary<string, CustomFormModelField> Fields { get; internal set; }
 
         /// <summary>
-        /// Information about the trained model, including model ID and training completion status.
-        /// </summary>
-        public CustomFormModelInfo ModelInfo { get; }
-
-        /// <summary>
-        /// </summary>
-        public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; internal set; }
-
-        /// <summary>
         /// Errors returned during the training operation.
         /// </summary>
         public IReadOnlyList<FormRecognizerError> Errors { get; internal set; }

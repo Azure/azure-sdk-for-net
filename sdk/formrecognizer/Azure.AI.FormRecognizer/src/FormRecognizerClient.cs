@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -328,6 +329,14 @@ namespace Azure.AI.FormRecognizer
         public virtual async Task<RecognizeBusinessCardsOperation> StartRecognizeBusinessCardsFromUriAsync(Uri businessCardFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public virtual FormTrainingClient GetFormTrainingClient()
+        {
             throw new NotImplementedException();
         }
 

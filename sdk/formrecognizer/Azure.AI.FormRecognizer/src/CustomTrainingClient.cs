@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class CustomTrainingClient
+    public class FormTrainingClient
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly HttpPipeline _pipeline;
@@ -23,24 +23,24 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
-        protected CustomTrainingClient()
+        protected FormTrainingClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CustomTrainingClient"/>.
+        /// Initializes a new instance of the <see cref="FormTrainingClient"/>.
         /// </summary>
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public CustomTrainingClient(Uri endpoint, FormRecognizerApiKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
+        public FormTrainingClient(Uri endpoint, FormRecognizerApiKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CustomTrainingClient"/>.
+        /// Initializes a new instance of the <see cref="FormTrainingClient"/>.
         /// </summary>
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public CustomTrainingClient(Uri endpoint, FormRecognizerApiKeyCredential credential, FormRecognizerClientOptions options)
+        public FormTrainingClient(Uri endpoint, FormRecognizerApiKeyCredential credential, FormRecognizerClientOptions options)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
             _diagnostics = new ClientDiagnostics(options);

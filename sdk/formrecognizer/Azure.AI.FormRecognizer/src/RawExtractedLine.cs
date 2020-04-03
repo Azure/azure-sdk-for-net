@@ -15,9 +15,9 @@ namespace Azure.AI.FormRecognizer.Models
             //Words = ConvertWords(textLine.Words);
         }
 
-        /// <summary>
-        /// </summary>
-        public int LineIndex { get; internal set; }
+        ///// <summary>
+        ///// </summary>
+        //public int LineIndex { get; internal set; }
 
         /// <summary> List of words in the text line. </summary>
         public IReadOnlyList<FormWord> Words { get; internal set; }

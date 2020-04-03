@@ -13,10 +13,6 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary>
         /// </summary>
-        None,
-
-        /// <summary>
-        /// </summary>
         Unchecked,
 
         /// <summary>
