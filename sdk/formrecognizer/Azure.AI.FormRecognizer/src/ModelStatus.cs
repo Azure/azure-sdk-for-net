@@ -19,12 +19,7 @@ namespace Azure.AI.FormRecognizer.Training
     {
         /// <summary>
         /// </summary>
-        [CodeGenMember("creating")]
-        Training,
-
-        /// <summary>
-        /// </summary>
-        Copying,
+        Invalid,
 
         /// <summary>
         /// </summary>
@@ -32,6 +27,7 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
-        Invalid
+        [CodeGenMember("creating")]
+        Training,
     }
 }
