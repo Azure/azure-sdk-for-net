@@ -13,6 +13,8 @@ namespace Azure.Core.Testing
 {
     public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
     {
+        public static readonly string SyncOnlyKey = "SyncOnly";
+
         private readonly object[] _serviceVersions;
         private readonly int? _maxServiceVersion;
 
@@ -91,6 +93,16 @@ namespace Azure.Core.Testing
 
         private void ProcessTest(object serviceVersion, bool isAsync, int serviceVersionNumber, Test test)
         {
+            if (test.GetCustomAttributes<SyncOnlyAttribute>(true).Any())
+            {
+                test.Properties.Set(SyncOnlyKey, true);
+                if (isAsync)
+                {
+                    test.RunState = RunState.Ignored;
+                    test.Properties.Set("_SKIPREASON", $"Test ignored in async run because it's marked with {nameof(SyncOnlyAttribute)}");
+                }
+            }
+
             if (!isAsync && test.GetCustomAttributes<AsyncOnlyAttribute>(true).Any())
             {
                 test.RunState = RunState.Ignored;
