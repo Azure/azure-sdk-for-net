@@ -21,8 +21,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        //TODO change this to 2019-12-12 when 73 goes to stage.
-        public const string DefaultSasVersion = "2019-10-10";
+        public const string DefaultSasVersion = "2019-12-12";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
