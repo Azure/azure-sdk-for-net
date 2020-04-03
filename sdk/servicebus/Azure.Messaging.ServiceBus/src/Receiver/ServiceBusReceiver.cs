@@ -515,7 +515,7 @@ namespace Azure.Messaging.ServiceBus
         /// In order to receive a message from the deadletter queue, you can call
         /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
         /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
-        /// to get a receiver for the queue or subscription.
+        /// to create a receiver for the queue or subscription.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task DeadLetterAsync(
@@ -542,7 +542,7 @@ namespace Azure.Messaging.ServiceBus
         /// In order to receive a message from the deadletter queue, you can call
         /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
         /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
-        /// to get a receiver for the queue or subscription.
+        /// to create a receiver for the queue or subscription.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// </remarks>
         public virtual async Task DeadLetterAsync(

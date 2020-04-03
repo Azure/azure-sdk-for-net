@@ -13,7 +13,7 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
+// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
@@ -22,7 +22,7 @@ ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hel
 // send the message
 await sender.SendAsync(message);
 
-// get a receiver that we can use to receive the message
+// create a receiver that we can use to receive the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
@@ -43,7 +43,7 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
+// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
@@ -54,7 +54,7 @@ messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 // send the message batch
 await sender.SendBatchAsync(messageBatch);
 
-// get a receiver that we can use to receive the messages
+// create a receiver that we can use to receive the messages
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties

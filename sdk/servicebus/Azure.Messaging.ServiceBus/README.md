@@ -55,19 +55,19 @@ To see how to authenticate using Azure.Identity, view this [example](#authentica
 
 - A **Service Bus client** is the primary interface for developers interacting with the Service Bus client library. It serves as the gateway from which all interaction with the library will occur.
 
-- A **Service Bus sender** is scoped to a particular queue or topic, and is retrieved off of the Service Bus client. The sender allows you to send messages to a queue or topic. It also allows for scheduling messages to be available for delivery at a specified date.
+- A **Service Bus sender** is scoped to a particular queue or topic, and is created from the Service Bus client. The sender allows you to send messages to a queue or topic. It also allows for scheduling messages to be available for delivery at a specified date.
 
-- A **Service Bus receiver** is scoped to a particular queue or subscription, and is retrieved off of the Service Bus client. The receiver allows you to receive messages from a queue or subscription. It also allows the messages to be settled. There are four ways of  settling messages:
+- A **Service Bus receiver** is scoped to a particular queue or subscription, and is created from the Service Bus client. The receiver allows you to receive messages from a queue or subscription. It also allows the messages to be settled. There are four ways of  settling messages:
   * Complete - causes the message to be deleted from the queue or topic.
   * Abandon - releases the receiver's lock on the message allowing for the message to be received by other receivers.
   * Defer - defers the message from being received by normal means. In order to receive deferred messages, the sequence number of the message needs to be retained.
   * DeadLetter - moves the message to the Dead Letter queue. This will prevent the message from being received again. In order to receive messages from the Dead Letter queue, a receiver scoped to the Dead Letter queue is needed.
 
-- A **Service Bus session receiver** is scoped to a particular session-enabled queue or subscription, and is retrieved off of the Service Bus client. The session receiver is almost identical to the standard receiver, with the difference being that session management operations are exposed which only apply to session-enabled entities. These operations include getting and setting session state, as well as renewing session locks.
+- A **Service Bus session receiver** is scoped to a particular session-enabled queue or subscription, and is created from the Service Bus client. The session receiver is almost identical to the standard receiver, with the difference being that session management operations are exposed which only apply to session-enabled entities. These operations include getting and setting session state, as well as renewing session locks.
 
-- A **Service Bus processor** is scoped to a particular queue or subscription, and is retrieved off of the Service Bus client. The processor allows you to configure an event handler to run for every message that is received. It also allows for specifying an exception handler that will run any time an exception is thrown while a message is being received and processed by the processor. The event handler args will provide the ability to settle a received message.
+- A **Service Bus processor** is scoped to a particular queue or subscription, and is created from the Service Bus client. The processor allows you to configure an event handler to run for every message that is received. It also allows for specifying an exception handler that will run any time an exception is thrown while a message is being received and processed by the processor. The event handler args will provide the ability to settle a received message.
 
-- A **Service Bus session processor** is scoped to a particular session-enabled queue or subscription, and is retrieved off of the Service Bus client. The session processor is almost identical to the standard processor, with the difference being that session management operations are exposed which only apply to session-enabled entities.
+- A **Service Bus session processor** is scoped to a particular session-enabled queue or subscription, and is created from the Service Bus client. The session processor is almost identical to the standard processor, with the difference being that session management operations are exposed which only apply to session-enabled entities.
 
 For more concepts and deeper discussion, see: [Service Bus Advanced Features](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#advanced-features).
 
@@ -84,7 +84,7 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
+// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
@@ -93,7 +93,7 @@ ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hel
 // send the message
 await sender.SendAsync(message);
 
-// get a receiver that we can use to receive the message
+// create a receiver that we can use to receive the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
@@ -114,7 +114,7 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
+// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
@@ -125,7 +125,7 @@ messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 // send the message batch
 await sender.SendBatchAsync(messageBatch);
 
-// get a receiver that we can use to receive the messages
+// create a receiver that we can use to receive the messages
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
@@ -147,7 +147,7 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
+// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
@@ -156,7 +156,7 @@ ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hel
 // send the message
 await sender.SendAsync(message);
 
-// get a receiver that we can use to receive and settle the message
+// create a receiver that we can use to receive and settle the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
@@ -210,7 +210,7 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
+// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a session message that we can send
@@ -248,7 +248,7 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
+// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send

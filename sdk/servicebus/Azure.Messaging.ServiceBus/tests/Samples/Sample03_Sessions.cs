@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
-                // get the sender
+                // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a session message that we can send
@@ -67,7 +67,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);
 
-                // get the sender
+                // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message batch that we can send
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await sender.SendBatchAsync(messageBatch);
 
                 #region Snippet:ServiceBusReceiveFromSpecificSession
-                // Get a receiver specifying a particular session
+                // create a receiver specifying a particular session
                 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
                     queueName,
                     sessionId: "Session2");

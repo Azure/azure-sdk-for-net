@@ -13,7 +13,7 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
+// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a session message that we can send
@@ -44,7 +44,7 @@ byte[] state = await receiver.GetSessionStateAsync();
 ### Receive from a specific session
 
 ```C# Snippet:ServiceBusReceiveFromSpecificSession
-// Get a receiver specifying a particular session
+// create a receiver specifying a particular session
 ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
     queueName,
     sessionId: "Session2");
