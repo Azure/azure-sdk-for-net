@@ -10,33 +10,29 @@
 
 namespace Microsoft.Azure.Management.NetApp.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Snapshot patch
+    /// revert a volume to the snapshot
     /// </summary>
-    public partial class SnapshotPatch : IResource
+    public partial class VolumeRevert
     {
         /// <summary>
-        /// Initializes a new instance of the SnapshotPatch class.
+        /// Initializes a new instance of the VolumeRevert class.
         /// </summary>
-        public SnapshotPatch()
+        public VolumeRevert()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SnapshotPatch class.
+        /// Initializes a new instance of the VolumeRevert class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
-        public SnapshotPatch(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="snapshotId">Resource id of the snapshot</param>
+        public VolumeRevert(string snapshotId = default(string))
         {
-            Tags = tags;
+            SnapshotId = snapshotId;
             CustomInit();
         }
 
@@ -46,10 +42,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource tags
+        /// Gets or sets resource id of the snapshot
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "snapshotId")]
+        public string SnapshotId { get; set; }
 
     }
 }

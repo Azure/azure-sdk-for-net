@@ -11,29 +11,30 @@
 namespace Microsoft.Azure.Management.NetApp.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Authorize request
+    /// List of Mount Targets
     /// </summary>
-    public partial class AuthorizeRequest
+    public partial class MountTargetList
     {
         /// <summary>
-        /// Initializes a new instance of the AuthorizeRequest class.
+        /// Initializes a new instance of the MountTargetList class.
         /// </summary>
-        public AuthorizeRequest()
+        public MountTargetList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthorizeRequest class.
+        /// Initializes a new instance of the MountTargetList class.
         /// </summary>
-        /// <param name="remoteVolumeResourceId">Resource id of the remote
-        /// volume</param>
-        public AuthorizeRequest(string remoteVolumeResourceId = default(string))
+        /// <param name="value">A list of Mount targets</param>
+        public MountTargetList(IList<MountTarget> value = default(IList<MountTarget>))
         {
-            RemoteVolumeResourceId = remoteVolumeResourceId;
+            Value = value;
             CustomInit();
         }
 
@@ -43,10 +44,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource id of the remote volume
+        /// Gets or sets a list of Mount targets
         /// </summary>
-        [JsonProperty(PropertyName = "remoteVolumeResourceId")]
-        public string RemoteVolumeResourceId { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<MountTarget> Value { get; set; }
 
     }
 }
