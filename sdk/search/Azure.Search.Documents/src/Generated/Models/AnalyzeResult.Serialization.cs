@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class AnalyzeResult
+    internal partial class AnalyzeResult
     {
         internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {

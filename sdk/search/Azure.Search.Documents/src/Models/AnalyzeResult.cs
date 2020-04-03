@@ -3,8 +3,7 @@
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide SearchError
-    internal partial class SearchError
+    internal partial class AnalyzeResult
     {
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class GetIndexStatisticsResult
+    public partial class SearchIndexStatistics
     {
-        internal static GetIndexStatisticsResult DeserializeGetIndexStatisticsResult(JsonElement element)
+        internal static SearchIndexStatistics DeserializeSearchIndexStatistics(JsonElement element)
         {
             long documentCount = default;
             long storageSize = default;
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new GetIndexStatisticsResult(documentCount, storageSize);
+            return new SearchIndexStatistics(documentCount, storageSize);
         }
     }
 }

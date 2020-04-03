@@ -237,13 +237,7 @@ namespace Azure.Search.Documents.Tests
             ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.GetIndex(null));
             Assert.AreEqual("indexName", ex.ParamName);
 
-            ex = Assert.Throws<ArgumentException>(() => service.GetIndex(string.Empty));
-            Assert.AreEqual("indexName", ex.ParamName);
-
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.GetIndexAsync(null));
-            Assert.AreEqual("indexName", ex.ParamName);
-
-            ex = Assert.ThrowsAsync<ArgumentException>(() => service.GetIndexAsync(string.Empty));
             Assert.AreEqual("indexName", ex.ParamName);
         }
 
