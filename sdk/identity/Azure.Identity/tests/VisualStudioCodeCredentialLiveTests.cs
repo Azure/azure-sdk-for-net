@@ -32,6 +32,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true)] // Comment this attribute to run this tests on Linux with Libsecret enabled
         public async Task AuthenticateWithVscCredential()
         {
             var tenantId = GetTenantId();
@@ -91,6 +92,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [RunOnlyOnPlatforms(Windows = true, OSX = true)] // Comment this attribute to run this tests on Linux with Libsecret enabled
         public async Task AuthenticateWithVscCredential_TenantInSettings()
         {
             var tenantId = GetTenantId();
