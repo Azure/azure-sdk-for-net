@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// The request parameters for a scheduling run against a task file.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FileTaskRunRequest")]
     public partial class FileTaskRunRequest : RunRequest
     {
         /// <summary>

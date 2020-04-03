@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// The parameters for a docker quick build.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DockerBuildRequest")]
     public partial class DockerBuildRequest : RunRequest
     {
         /// <summary>

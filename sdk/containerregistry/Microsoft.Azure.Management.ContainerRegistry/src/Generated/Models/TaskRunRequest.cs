@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// The parameters for a task run request.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("TaskRunRequest")]
     public partial class TaskRunRequest : RunRequest
     {
         /// <summary>
