@@ -25,6 +25,7 @@ namespace Azure.Identity
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
         private readonly string _tenantId;
+        private readonly MsalPublicClient _client;
 
         /// <summary>
         /// Protected constructor for mocking
@@ -35,9 +36,20 @@ namespace Azure.Identity
         public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
 
         internal VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
+            : this(tenantId, CredentialPipeline.GetInstance(options), fileSystem, vscAdapter)
+        {
+        }
+
+        internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
+            : this(tenantId, pipeline, pipeline.CreateMsalPublicClient(ClientId), fileSystem, vscAdapter)
+        {
+        }
+
+        internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
         {
             _tenantId = tenantId ?? "common";
-            _pipeline = CredentialPipeline.GetInstance(options);
+            _pipeline = pipeline;
+            _client = client;
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
         }
@@ -66,13 +78,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
                 }
 
-                var publicClient = (IByRefreshToken)PublicClientApplicationBuilder.Create(ClientId)
-                    .WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline))
-                    .WithAuthority(cloudInstance, tenant)
-                    .Build();
-
-                var result = await publicClient.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
-
+                var result = await _client.AcquireTokenWithDeviceCodeAsync(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (OperationCanceledException e)
