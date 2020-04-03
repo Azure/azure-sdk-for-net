@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "hybriddatamanager/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "hybriddatamanager/resource-manager" -AutoRestVersion "2.0.4413"
