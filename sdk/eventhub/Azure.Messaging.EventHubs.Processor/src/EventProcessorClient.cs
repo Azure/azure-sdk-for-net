@@ -831,7 +831,7 @@ namespace Azure.Messaging.EventHubs
                                                              string operationDescription,
                                                              CancellationToken cancellationToken)
         {
-            var eventArgs = new ProcessErrorEventArgs(partition.PartitionId, operationDescription, exception, cancellationToken);
+            var eventArgs = new ProcessErrorEventArgs(partition?.PartitionId, operationDescription, exception, cancellationToken);
             await _processErrorAsync(eventArgs).ConfigureAwait(false);
         }
 
