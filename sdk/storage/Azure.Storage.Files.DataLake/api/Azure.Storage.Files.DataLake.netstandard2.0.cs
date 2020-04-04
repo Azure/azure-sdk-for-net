@@ -563,6 +563,7 @@ namespace Azure.Storage.Files.DataLake.Models
         Flush = 1,
         SetProperties = 2,
         SetAccessControl = 3,
+        SetAccessControlRecursive = 4,
     }
     public enum PublicAccessType
     {
