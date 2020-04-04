@@ -505,6 +505,10 @@ namespace Azure.AI.FormRecognizer.Samples
                 if (extractReceiptOperation.HasValue)
                 {
                     IReadOnlyList<RecognizedReceipt> result = extractReceiptOperation.Value;
+                    var usReceipt = result[0].AsUSReceipt();
+                    var conf = usReceipt.MerchantAddress.Confidence;
+                    var bb = usReceipt.MerchantAddress.ValueText.BoundingBox;
+                    
                 }
             }
 

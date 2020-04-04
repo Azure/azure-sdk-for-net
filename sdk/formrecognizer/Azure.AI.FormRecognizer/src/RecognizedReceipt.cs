@@ -29,21 +29,5 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public RecognizedForm RecognizedForm { get; internal set; }
 
-        ///// <summary>
-        ///// </summary>
-        ///// <returns></returns>
-        //public USReceipt AsUSReceipt()
-        //{
-        //    return new USReceipt(_documentResult_internal, _readResults);
-        //}
-
-        ///// <summary>
-        ///// </summary>
-        ///// <returns></returns>
-        //public CAReceipt AsCAReceipt()
-        //{
-        //    return new CAReceipt(_documentResult_internal, _readResults);
-        //}
-
     }
 }
