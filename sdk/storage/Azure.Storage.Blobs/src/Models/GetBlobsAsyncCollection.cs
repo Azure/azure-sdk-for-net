@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Models
                 cancellationToken).ConfigureAwait(false);
 
             return Page<BlobItem>.FromValues(
-                response.Value.BlobItems.ToArray(),
+                response.Value.BlobItems.ToBlobItems().ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

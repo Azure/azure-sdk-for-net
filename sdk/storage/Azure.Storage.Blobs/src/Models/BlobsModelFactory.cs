@@ -284,6 +284,32 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobItem instance for mocking.
         /// </summary>
+        public static BlobItem BlobItem(
+           string name,
+           bool deleted,
+           BlobItemProperties properties,
+           string snapshot = default,
+           string versionId = default,
+           bool? isCurrentVersion = default,
+           IDictionary<string, string> metadata = default,
+           IDictionary<string, string> tags = default)
+        {
+            return new BlobItem()
+            {
+                Name = name,
+                Deleted = deleted,
+                Properties = properties,
+                Snapshot = snapshot,
+                VersionId = versionId,
+                IsCurrentVersion = isCurrentVersion,
+                Metadata = metadata,
+                Tags = tags
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobItem instance for mocking.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobItem BlobItem(
             string name,
