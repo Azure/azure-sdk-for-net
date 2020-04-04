@@ -9,6 +9,12 @@
 
 - Add `RecoverableDays` property to `CertificateProperties`.
 
+## 4.0.2 (2020-03-18)
+
+### Fixed
+
+- Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
 ## 4.0.1 (2020-03-03)
 
 ### Fixed
