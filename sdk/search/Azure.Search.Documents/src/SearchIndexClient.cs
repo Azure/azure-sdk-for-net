@@ -911,10 +911,31 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken = default)
         {
-            options ??= new SearchOptions();
-            options.SearchText = searchText;
+            if (options != null && searchText != null)
+            {
+                options = options.Clone();
+                options.SearchText = searchText;
+            }
+            else if (options == null)
+            {
+                options = new SearchOptions() { SearchText = searchText };
+            }
+            return await SearchInternal<T>(
+                options,
+                $"{nameof(SearchIndexClient)}.{nameof(Search)}",
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(Search)}");
+        private async Task<Response<SearchResults<T>>> SearchInternal<T>(
+            SearchOptions options,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken = default)
+        {
+            Debug.Assert(options != null);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
             scope.Start();
             try
             {
@@ -1178,8 +1199,7 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken = default)
         {
-            options ??= new SuggestOptions();
-            // TODO: This is not thread safe
+            options = options != null ? options.Clone() : new SuggestOptions();
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 
@@ -1303,8 +1323,7 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken)
         {
-            options ??= new AutocompleteOptions();
-            // TODO: Not thread safe
+            options = options != null ? options.Clone() : new AutocompleteOptions();
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 
