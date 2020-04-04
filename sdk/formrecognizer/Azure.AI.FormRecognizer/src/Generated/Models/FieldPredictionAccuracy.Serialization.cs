@@ -14,21 +14,26 @@ namespace Azure.AI.FormRecognizer.Custom
     {
         internal static FieldPredictionAccuracy DeserializeFieldPredictionAccuracy(JsonElement element)
         {
-            FieldPredictionAccuracy result = new FieldPredictionAccuracy();
+            string fieldName = default;
+            float accuracy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"))
                 {
-                    result.Label = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fieldName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("accuracy"))
                 {
-                    result.Accuracy = property.Value.GetSingle();
+                    accuracy = property.Value.GetSingle();
                     continue;
                 }
             }
-            return result;
+            return new FieldPredictionAccuracy(fieldName, accuracy);
         }
     }
 }

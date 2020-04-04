@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// Correlation filter matching can be reduced to a hashtable lookup, which aggregates the complexity of the set of defined correlation filters to O(1).
     /// </para>
     /// </remarks>
-    public sealed class CorrelationFilter : Filter
+    internal sealed class CorrelationFilter : Filter
     {
         internal PropertyDictionary properties;
 

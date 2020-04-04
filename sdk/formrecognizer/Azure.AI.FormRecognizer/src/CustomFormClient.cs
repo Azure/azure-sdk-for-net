@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// completion will contain meta-data about the trained model.</returns>
         public virtual Operation<CustomModel> StartTraining(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
+            TrainRequest_internal trainRequest = new TrainRequest_internal(source);
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/autorest.csharp/issues/467
@@ -77,7 +77,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// completion will contain meta-data about the trained model.</returns>
         public virtual async Task<Operation<CustomModel>> StartTrainingAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source };
+            TrainRequest_internal trainRequest = new TrainRequest_internal(source);
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
         public virtual Operation<CustomLabeledModel> StartTrainingWithLabels(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
+            TrainRequest_internal trainRequest = new TrainRequest_internal(source) { UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359
@@ -122,7 +122,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <returns>A <see cref="Operation{T}"/> to wait on this long-running operation.</returns>
         public virtual async Task<Operation<CustomLabeledModel>> StartTrainingWithLabelsAsync(string source, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = source, UseLabelFile = true };
+            TrainRequest_internal trainRequest = new TrainRequest_internal(source) { UseLabelFile = true };
 
             // TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
             // https://github.com/Azure/azure-sdk-for-net/issues/10359
@@ -144,7 +144,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
@@ -168,7 +168,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), contentType, stream, includeTextDetails: includeRawPageExtractions, cancellationToken);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -184,7 +184,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractFormPages(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -202,7 +202,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), contentType, stream, includeTextDetails: includeRawPageExtractions, cancellationToken).ConfigureAwait(false);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -219,7 +219,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractFormPagesAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
         #endregion
@@ -240,7 +240,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), contentType, stream, includeTextDetails: includeRawPageExtractions, cancellationToken);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -256,7 +256,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual Operation<IReadOnlyList<ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -274,7 +274,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, stream, contentType, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), contentType, stream, includeTextDetails: includeRawPageExtractions, cancellationToken).ConfigureAwait(false);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual async Task<Operation<IReadOnlyList<ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
         #endregion

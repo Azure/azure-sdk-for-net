@@ -5,16 +5,13 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters
     {
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
-        internal SearchServiceCounters()
-        {
-        }
-
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>
@@ -25,6 +22,35 @@ namespace Azure.Search.Documents.Models
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         internal SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter)
         {
+            if (documentCounter == null)
+            {
+                throw new ArgumentNullException(nameof(documentCounter));
+            }
+            if (indexCounter == null)
+            {
+                throw new ArgumentNullException(nameof(indexCounter));
+            }
+            if (indexerCounter == null)
+            {
+                throw new ArgumentNullException(nameof(indexerCounter));
+            }
+            if (dataSourceCounter == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceCounter));
+            }
+            if (storageSizeCounter == null)
+            {
+                throw new ArgumentNullException(nameof(storageSizeCounter));
+            }
+            if (synonymMapCounter == null)
+            {
+                throw new ArgumentNullException(nameof(synonymMapCounter));
+            }
+            if (skillsetCounter == null)
+            {
+                throw new ArgumentNullException(nameof(skillsetCounter));
+            }
+
             DocumentCounter = documentCounter;
             IndexCounter = indexCounter;
             IndexerCounter = indexerCounter;
@@ -35,18 +61,18 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Total number of documents across all indexes in the service. </summary>
-        public SearchResourceCounter DocumentCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter DocumentCounter { get; }
         /// <summary> Total number of indexes. </summary>
-        public SearchResourceCounter IndexCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter IndexCounter { get; }
         /// <summary> Total number of indexers. </summary>
-        public SearchResourceCounter IndexerCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter IndexerCounter { get; }
         /// <summary> Total number of data sources. </summary>
-        public SearchResourceCounter DataSourceCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter DataSourceCounter { get; }
         /// <summary> Total size of used storage in bytes. </summary>
-        public SearchResourceCounter StorageSizeCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter StorageSizeCounter { get; }
         /// <summary> Total number of synonym maps. </summary>
-        public SearchResourceCounter SynonymMapCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter SynonymMapCounter { get; }
         /// <summary> Total number of skillsets. </summary>
-        public SearchResourceCounter SkillsetCounter { get; internal set; } = new SearchResourceCounter();
+        public SearchResourceCounter SkillsetCounter { get; }
     }
 }

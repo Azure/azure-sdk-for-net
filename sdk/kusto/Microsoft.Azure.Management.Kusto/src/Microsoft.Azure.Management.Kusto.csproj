@@ -5,16 +5,16 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Kusto</PackageId>
-    <Version>4.0.0</Version>
+    <Version>5.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Kusto</AssemblyName>
     <PackageTags>management;kusto</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         The C# client provides management capabilities for Azure Data Explorer (Kusto) entities. The following capabilities are included with this release:
-        - Add principal assignments resource for managing cluster principals.
-        - Add principal assignments resource for managing database principals.
-		- Support GZip compression in EventHub.
-		- Support Parquet & ORC in all Data-connection kinds (Blob Storage, EventHub, IoThub).
+        - Add EnablePurge property to cluster.
+				- Add LanguageExtensions property to cluster.
+				- Add Language Extensions resource for managing (list, add or remove) cluster language extensions.
+        - Add new SKUs: 'Standard_E2a_v4', 'Standard_E4a_v4', 'Standard_E8a_v4', 'Standard_E16a_v4', 'Standard_E8as_v4+1TB_PS', 'Standard_E8as_v4+2TB_PS', 'Standard_E16as_v4+3TB_PS', 'Standard_E16as_v4+4TB_PS and 'Dev(No SLA)_Standard_E2a_v4'. 
       ]]>
   </PackageReleaseNotes>
   </PropertyGroup>

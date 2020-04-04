@@ -14,12 +14,13 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchResourceCounter DeserializeSearchResourceCounter(JsonElement element)
         {
-            SearchResourceCounter result = new SearchResourceCounter();
+            long usage = default;
+            long? quota = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usage"))
                 {
-                    result.Usage = property.Value.GetInt64();
+                    usage = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("quota"))
@@ -28,11 +29,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Quota = property.Value.GetInt64();
+                    quota = property.Value.GetInt64();
                     continue;
                 }
             }
-            return result;
+            return new SearchResourceCounter(usage, quota);
         }
     }
 }

@@ -15,12 +15,15 @@ namespace Azure.Search.Documents.Models
     {
         internal static SearchResult DeserializeSearchResult(JsonElement element)
         {
-            SearchResult result = new SearchResult();
+            double searchscore = default;
+            IReadOnlyDictionary<string, IList<string>> searchhighlights = default;
+            IReadOnlyDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@search.score"))
                 {
-                    result.Score = property.Value.GetDouble();
+                    searchscore = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.highlights"))
@@ -29,21 +32,23 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Highlights = new Dictionary<string, IList<string>>();
+                    Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        IList<string> value = new List<string>();
+                        List<string> array = new List<string>();
                         foreach (var item in property0.Value.EnumerateArray())
                         {
-                            value.Add(item.GetString());
+                            array.Add(item.GetString());
                         }
-                        result.Highlights.Add(property0.Name, value);
+                        dictionary.Add(property0.Name, array);
                     }
+                    searchhighlights = dictionary;
                     continue;
                 }
-                result.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
-            return result;
+            additionalProperties = additionalPropertiesDictionary;
+            return new SearchResult(searchscore, searchhighlights, additionalProperties);
         }
     }
 }

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -13,25 +15,37 @@ namespace Azure.Search.Documents.Models
     public partial class PatternCaptureTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of PatternCaptureTokenFilter. </summary>
-        public PatternCaptureTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="patterns"> A list of patterns to match against each token. </param>
+        public PatternCaptureTokenFilter(string name, IEnumerable<string> patterns) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (patterns == null)
+            {
+                throw new ArgumentNullException(nameof(patterns));
+            }
+
+            Patterns = patterns.ToArray();
             ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
         /// <summary> Initializes a new instance of PatternCaptureTokenFilter. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="patterns"> A list of patterns to match against each token. </param>
         /// <param name="preserveOriginal"> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal PatternCaptureTokenFilter(IList<string> patterns, bool? preserveOriginal, string oDataType, string name) : base(oDataType, name)
+        internal PatternCaptureTokenFilter(string oDataType, string name, IList<string> patterns, bool? preserveOriginal) : base(oDataType, name)
         {
             Patterns = patterns;
             PreserveOriginal = preserveOriginal;
-            ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
         /// <summary> A list of patterns to match against each token. </summary>
-        public IList<string> Patterns { get; set; } = new List<string>();
+        public IList<string> Patterns { get; }
         /// <summary> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </summary>
         public bool? PreserveOriginal { get; set; }
     }

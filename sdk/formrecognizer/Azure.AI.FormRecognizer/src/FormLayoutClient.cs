@@ -59,11 +59,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
+        [ForwardsClientCalls]
         public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayouts(Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.AnalyzeLayoutAsync(stream, contentType, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = _operations.RestClient.AnalyzeLayoutAsync(contentType, stream, cancellationToken);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
@@ -75,11 +76,12 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutsAsync(Stream stream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.AnalyzeLayoutAsyncAsync(stream, contentType, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await _operations.RestClient.AnalyzeLayoutAsyncAsync(contentType, stream, cancellationToken).ConfigureAwait(false);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
@@ -90,10 +92,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"></param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
+        [ForwardsClientCalls]
         public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartExtractLayouts(Uri uri, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = _operations.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = _operations.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
 
@@ -104,10 +107,11 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken"></param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartExtractLayoutsAsync(Uri uri, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeLayoutAsyncHeaders> response = await _operations.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await _operations.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
             return new ExtractLayoutOperation(_operations, response.Headers.OperationLocation);
         }
     }

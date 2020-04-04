@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <value>The maximum message size, in bytes.</value>
         ///
-        private long? MaximumMessageSize { get; set; }
+        private long? MaxMessageSize { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpSender"/> class.
@@ -161,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // Ensure that maximum message size has been determined; this depends on the underlying
             // AMQP link, so if not set, requesting the link will ensure that it is populated.
 
-            if (!MaximumMessageSize.HasValue)
+            if (!MaxMessageSize.HasValue)
             {
                 await _sendLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
             }
@@ -169,9 +169,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // Ensure that there was a maximum size populated; if none was provided,
             // default to the maximum size allowed by the link.
 
-            options.MaximumSizeInBytes ??= MaximumMessageSize;
+            options.MaxSizeInBytes ??= MaxMessageSize;
 
-            Argument.AssertInRange(options.MaximumSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, MaximumMessageSize.Value, nameof(options.MaximumSizeInBytes));
+            Argument.AssertInRange(options.MaxSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, MaxMessageSize.Value, nameof(options.MaxSizeInBytes));
             return new AmqpMessageBatch(options);
         }
 
@@ -224,9 +224,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // Validate that the message is not too large to send.  This is done after the link is created to ensure
                 // that the maximum message size is known, as it is dictated by the service using the link.
 
-                if (batchMessage.SerializedMessageSize > MaximumMessageSize)
+                if (batchMessage.SerializedMessageSize > MaxMessageSize)
                 {
-                    throw new ServiceBusException(string.Format(Resources1.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
+                    throw new ServiceBusException(string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
                 }
 
                 // Attempt to send the message batch.
@@ -237,7 +237,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (outcome.DescriptorCode != Accepted.Code)
                 {
-                    (outcome as Rejected)?.Error.ToMessagingContractException();
+                    throw (outcome as Rejected)?.Error.ToMessagingContractException();
                 }
 
                 //ServiceBusEventSource.Log.SendStop(Entityname, messageHash);
@@ -510,7 +510,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 timeout,
                 cancellationToken).ConfigureAwait(false);
 
-            if (!MaximumMessageSize.HasValue)
+            if (!MaxMessageSize.HasValue)
             {
                 // This delay is necessary to prevent the link from causing issues for subsequent
                 // operations after creating a batch.  Without it, operations using the link consistently
@@ -521,7 +521,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // used here.
 
                 await Task.Delay(15, cancellationToken).ConfigureAwait(false);
-                MaximumMessageSize = (long)link.Settings.MaxMessageSize;
+                MaxMessageSize = (long)link.Settings.MaxMessageSize;
             }
 
             return link;

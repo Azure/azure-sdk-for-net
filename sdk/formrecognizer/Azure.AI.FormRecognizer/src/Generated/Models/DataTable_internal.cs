@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -13,15 +15,26 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class DataTable_internal
     {
         /// <summary> Initializes a new instance of DataTable_internal. </summary>
-        internal DataTable_internal()
+        /// <param name="rows"> Number of rows. </param>
+        /// <param name="columns"> Number of columns. </param>
+        /// <param name="cells"> List of cells contained in the table. </param>
+        internal DataTable_internal(int rows, int columns, IEnumerable<DataTableCell_internal> cells)
         {
+            if (cells == null)
+            {
+                throw new ArgumentNullException(nameof(cells));
+            }
+
+            Rows = rows;
+            Columns = columns;
+            Cells = cells.ToArray();
         }
 
         /// <summary> Initializes a new instance of DataTable_internal. </summary>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="cells"> List of cells contained in the table. </param>
-        internal DataTable_internal(int rows, int columns, IList<DataTableCell_internal> cells)
+        internal DataTable_internal(int rows, int columns, IReadOnlyList<DataTableCell_internal> cells)
         {
             Rows = rows;
             Columns = columns;
@@ -29,10 +42,10 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Number of rows. </summary>
-        public int Rows { get; internal set; }
+        public int Rows { get; }
         /// <summary> Number of columns. </summary>
-        public int Columns { get; internal set; }
+        public int Columns { get; }
         /// <summary> List of cells contained in the table. </summary>
-        public IList<DataTableCell_internal> Cells { get; internal set; } = new List<DataTableCell_internal>();
+        public IReadOnlyList<DataTableCell_internal> Cells { get; }
     }
 }

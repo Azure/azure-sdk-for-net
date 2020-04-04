@@ -50,6 +50,13 @@ namespace Azure.Core.Tests
             Assert.IsTrue(IsAsync);
         }
 
+        [Test]
+        [SyncOnly]
+        public void SyncOnlyWorks()
+        {
+            Assert.IsFalse(IsAsync);
+        }
+
         public enum FakeClientVersion
         {
             V1 = 1,

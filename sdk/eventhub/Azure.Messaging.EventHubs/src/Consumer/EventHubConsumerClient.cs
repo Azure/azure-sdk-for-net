@@ -895,10 +895,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                         activeException = ex;
                         break;
                     }
-                    catch (Exception ex) when
-                        (ex is OutOfMemoryException
-                        || ex is StackOverflowException
-                        || ex is ThreadAbortException)
+                    catch (Exception ex) when (ex.IsFatalException())
                     {
                         channel.Writer.TryComplete(ex);
                         throw;

@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <seealso cref="TrueFilter"/>
     /// <seealso cref="CorrelationFilter "/>
     /// <seealso cref="FalseFilter"/>
-    public abstract class Filter : IEquatable<Filter>
+    internal abstract class Filter : IEquatable<Filter>
     {
         internal Filter()
         {

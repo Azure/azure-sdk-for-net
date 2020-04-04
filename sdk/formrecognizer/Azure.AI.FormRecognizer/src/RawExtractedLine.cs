@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public static implicit operator string(RawExtractedLine line) => line.Text;
 
-        private static IReadOnlyList<RawExtractedWord> ConvertWords(ICollection<TextWord_internal> textWords)
+        private static IReadOnlyList<RawExtractedWord> ConvertWords(IReadOnlyList<TextWord_internal> textWords)
         {
             List<RawExtractedWord> rawWords = new List<RawExtractedWord>();
 

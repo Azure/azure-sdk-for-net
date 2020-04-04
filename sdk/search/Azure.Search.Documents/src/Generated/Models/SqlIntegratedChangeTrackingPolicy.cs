@@ -17,10 +17,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of SqlIntegratedChangeTrackingPolicy. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
         internal SqlIntegratedChangeTrackingPolicy(string oDataType) : base(oDataType)
         {
-            ODataType = "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy";
         }
     }
 }

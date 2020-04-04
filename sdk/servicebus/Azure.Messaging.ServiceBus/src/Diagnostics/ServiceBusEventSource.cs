@@ -467,8 +467,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
         [Event(44, Level = EventLevel.Verbose, Message = "Closing an {0} (Identifier '{1}').")]
-        public void ClientCloseStart(Type clientType,
-                                     string identifier)
+        public void ClientDisposeStart(
+            Type clientType,
+            string identifier)
         {
             if (IsEnabled())
             {
@@ -485,8 +486,9 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="identifier">An identifier to associate with the client.</param>
         ///
         [Event(45, Level = EventLevel.Verbose, Message = "An {0} has been closed (Identifier '{1}').")]
-        public void ClientCloseComplete(Type clientType,
-                                        string identifier)
+        public void ClientDisposeComplete(
+            Type clientType,
+            string identifier)
         {
             if (IsEnabled())
             {
@@ -504,9 +506,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
         [Event(46, Level = EventLevel.Error, Message = "An exception occurred while closing an {0} (Identifier '{2}'). Error Message: '{3}'")]
-        public void ClientCloseException(Type clientType,
-                                     string identifier,
-                                     Exception exception)
+        public void ClientDisposeException(
+            Type clientType,
+            string identifier,
+            Exception exception)
         {
             if (IsEnabled())
             {
@@ -595,5 +598,112 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             }
         }
 
+        [Event(56, Level = EventLevel.Informational, Message = "{0}: Processor RenewMessageLock start. MessageCount = {1}, LockToken = {2}")]
+        public void ProcessorRenewMessageLockStart(string identifier, int messageCount, string lockToken)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(56, identifier, messageCount, lockToken);
+            }
+        }
+
+        [Event(57, Level = EventLevel.Informational, Message = "{0}: Processor RenewMessageLock complete.")]
+        public void ProcessorRenewMessageLockComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(57, identifier);
+            }
+        }
+
+        [Event(58, Level = EventLevel.Error, Message = "{0}: Processor RenewMessageLock Exception: {1}.")]
+        public void ProcesserRenewMessageLockException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(58, identifier, exception.ToString());
+            }
+        }
+
+        [Event(59, Level = EventLevel.Informational, Message = "{0}: Processor RenewSessionLock start. SessionId = {1}")]
+        public void ProcessorRenewSessionLockStart(string identifier, string sessionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(59, identifier, sessionId);
+            }
+        }
+
+        [Event(60, Level = EventLevel.Informational, Message = "{0}: Processor RenewSessionLock complete.")]
+        public void ProcessorRenewSessionLockComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(60, identifier);
+            }
+        }
+
+        [Event(61, Level = EventLevel.Error, Message = "{0}: Processor RenewSessionLock Exception: {1}.")]
+        public void ProcessorRenewSessionLockException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(61, identifier, exception.ToString());
+            }
+        }
+
+        [Event(62, Level = EventLevel.Informational, Message = "{0}: Session GetStateAsync start. SessionId = {1}")]
+        public void GetSessionStateStart(string identifiers, string sessionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(47, identifiers, sessionId);
+            }
+        }
+
+        [Event(63, Level = EventLevel.Informational, Message = "{0}: Session GetStateAsync done.")]
+        public void GetSessionStateComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(48, identifier);
+            }
+        }
+
+        [Event(64, Level = EventLevel.Error, Message = "{0}: Session GetStateAsync Exception: {1}.")]
+        public void GetSessionStateException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(49, identifier, exception.ToString());
+            }
+        }
+
+        [Event(65, Level = EventLevel.Informational, Message = "{0}: Session SetStateAsync start. SessionId = {1}")]
+        public void SetSessionStateStart(string identifiers, string sessionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(47, identifiers, sessionId);
+            }
+        }
+
+        [Event(66, Level = EventLevel.Informational, Message = "{0}: Session SetStateAsync done.")]
+        public void SetSessionStateComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(48, identifier);
+            }
+        }
+
+        [Event(67, Level = EventLevel.Error, Message = "{0}: Session SetStateAsync Exception: {1}.")]
+        public void SetSessionStateException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(49, identifier, exception.ToString());
+            }
+        }
     }
 }

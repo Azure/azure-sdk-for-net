@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Models
 {
     // Hide the untyped IndexAction
-    [CodeGenSchema("IndexAction")]
+    [CodeGenModel("IndexAction")]
     internal partial class IndexAction { }
 
     /// <summary>

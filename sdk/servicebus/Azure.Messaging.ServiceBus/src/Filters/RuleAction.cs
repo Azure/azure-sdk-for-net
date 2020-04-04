@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// for example assigning a group ID based on the correlation ID of a message.
     /// </remarks>
     /// <seealso cref="SqlRuleAction"/>
-    public abstract class RuleAction : IEquatable<RuleAction>
+    internal abstract class RuleAction : IEquatable<RuleAction>
     {
         internal RuleAction()
         {

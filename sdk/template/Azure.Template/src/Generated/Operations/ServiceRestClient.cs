@@ -45,17 +45,19 @@ namespace Azure.Template
             uri.AppendPath("/Operation/", false);
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
-            using var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            if (body != null)
+            {
+                using var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(body);
+                request.Content = content;
+            }
             return message;
         }
 
         /// <param name="body"> The Model to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Model>> OperationAsync(Model body, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<Model>> OperationAsync(Model body = null, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
@@ -66,8 +68,9 @@ namespace Azure.Template
                 {
                     case 200:
                         {
+                            Model value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            value = Model.DeserializeModel(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -83,9 +86,8 @@ namespace Azure.Template
 
         /// <param name="body"> The Model to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Model> Operation(Model body, CancellationToken cancellationToken = default)
+        public Response<Model> Operation(Model body = null, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
@@ -96,8 +98,9 @@ namespace Azure.Template
                 {
                     case 200:
                         {
+                            Model value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = Model.DeserializeModel(document.RootElement);
+                            value = Model.DeserializeModel(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

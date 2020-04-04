@@ -29,10 +29,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The maximum duration that the indexer is permitted to run for one execution. </summary>
-        public TimeSpan? MaxRunTime { get; internal set; }
+        public TimeSpan? MaxRunTime { get; }
         /// <summary> The maximum size of a document, in bytes, which will be considered valid for indexing. </summary>
-        public long? MaxDocumentExtractionSize { get; internal set; }
+        public long? MaxDocumentExtractionSize { get; }
         /// <summary> The maximum number of characters that will be extracted from a document picked up for indexing. </summary>
-        public long? MaxDocumentContentCharactersToExtract { get; internal set; }
+        public long? MaxDocumentContentCharactersToExtract { get; }
     }
 }

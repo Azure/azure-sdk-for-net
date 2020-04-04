@@ -114,18 +114,7 @@ namespace Azure.Core.Testing
             Type methodReturnType = invocation.Method.ReturnType;
             if (methodReturnType.IsGenericType)
             {
-                // If the sync method returned Response<Model> and the async
-                // method's return type is still an open Response<U>, we need
-                // to close it to Response<Model> as well.  We don't care about
-                // this if Response<> has already been closed.
-                if (returnType.IsGenericType &&
-                    returnType.GetGenericTypeDefinition() == typeof(Response<>) &&
-                    returnType.ContainsGenericParameters)
-                {
-                    Type modelType = methodReturnType.GetGenericArguments()[0].GetGenericArguments()[0];
-                    returnType = returnType.GetGenericTypeDefinition().MakeGenericType(modelType);
-                }
-
+                returnType = CloseResponseType(returnType, methodReturnType);
                 if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                 {
                     invocation.ReturnValue = _taskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
@@ -146,6 +135,7 @@ namespace Azure.Core.Testing
             Type methodReturnType = invocation.Method.ReturnType;
             if (methodReturnType.IsGenericType)
             {
+                returnType = CloseResponseType(returnType, methodReturnType);
                 if (methodReturnType.GetGenericTypeDefinition() == typeof(Task<>))
                 {
                     invocation.ReturnValue = _taskFromExceptionMethod.MakeGenericMethod(returnType).Invoke(null, new[] { result });
@@ -161,6 +151,27 @@ namespace Azure.Core.Testing
             }
 
             throw new NotSupportedException();
+        }
+
+        /// <summary>
+        /// If the sync method returned Response{Model} and the async method's
+        /// return type is still an open Response{U}, we need to close it to
+        /// Response{Model} as well.  We don't care about this if Response{}
+        /// has already been closed.
+        /// </summary>
+        /// <param name="returnType">The sync method's return type.</param>
+        /// <param name="methodReturnType">The async method's return type.</param>
+        /// <returns>A return type with Response{U} closed.</returns>
+        private static Type CloseResponseType(Type returnType, Type methodReturnType)
+        {
+            if (returnType.IsGenericType &&
+                returnType.GetGenericTypeDefinition() == typeof(Response<>) &&
+                returnType.ContainsGenericParameters)
+            {
+                Type modelType = methodReturnType.GetGenericArguments()[0].GetGenericArguments()[0];
+                returnType = returnType.GetGenericTypeDefinition().MakeGenericType(modelType);
+            }
+            return returnType;
         }
 
         private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)

@@ -502,12 +502,17 @@ namespace Azure.Messaging.EventHubs.Producer
 
             try
             {
+                eventBatch.Lock();
                 await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
+            }
+            finally
+            {
+                eventBatch.Unlock();
             }
         }
 

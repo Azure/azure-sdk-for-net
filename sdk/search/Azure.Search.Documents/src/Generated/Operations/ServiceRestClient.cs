@@ -19,24 +19,24 @@ namespace Azure.Search.Documents
     internal partial class ServiceRestClient
     {
         private string endpoint;
-        private string ApiVersion;
+        private string apiVersion;
         private ClientDiagnostics clientDiagnostics;
         private HttpPipeline pipeline;
 
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.endpoint = endpoint;
-            this.ApiVersion = ApiVersion;
+            this.apiVersion = apiVersion;
             this.clientDiagnostics = clientDiagnostics;
             this.pipeline = pipeline;
         }
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/servicestats", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -61,9 +61,8 @@ namespace Azure.Search.Documents
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
             try
@@ -74,8 +73,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchServiceStatistics value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
+                            value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -92,9 +92,8 @@ namespace Azure.Search.Documents
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-
             using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
             try
@@ -105,8 +104,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
+                            SearchServiceStatistics value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
+                            value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

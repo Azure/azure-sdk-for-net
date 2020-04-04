@@ -14,7 +14,12 @@ namespace Azure.Search.Documents.Models
     {
         internal static ItemError DeserializeItemError(JsonElement element)
         {
-            ItemError result = new ItemError();
+            string key = default;
+            string errorMessage = default;
+            int statusCode = default;
+            string name = default;
+            string details = default;
+            string documentationLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -23,17 +28,17 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Key = property.Value.GetString();
+                    key = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("errorMessage"))
                 {
-                    result.ErrorMessage = property.Value.GetString();
+                    errorMessage = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statusCode"))
                 {
-                    result.StatusCode = property.Value.GetInt32();
+                    statusCode = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -42,7 +47,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -51,7 +56,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Details = property.Value.GetString();
+                    details = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("documentationLink"))
@@ -60,11 +65,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.DocumentationLink = property.Value.GetString();
+                    documentationLink = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new ItemError(key, errorMessage, statusCode, name, details, documentationLink);
         }
     }
 }

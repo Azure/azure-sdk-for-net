@@ -1381,11 +1381,13 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task AuthorizationTimerCallbackToleratesDisposal()
         {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
             var endpoint = new Uri("amqp://test.service.gov");
             var eventHub = "myHub";
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var transport = EventHubsTransportType.AmqpTcp;
-            var cancellationSource = new CancellationTokenSource();
             var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
             var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
             var mockScope = new DisposeOnAuthorizationTimerCallbackMockScope(endpoint, eventHub, credential.Object, transport, null);
@@ -1403,40 +1405,14 @@ namespace Azure.Messaging.EventHubs.Tests
             // requested.  Since opening of the link requests an initial authorization and the expiration
             // was set way in the future, there should be exactly two calls.
             //
-            // Because the timer runs in the background, there is a level of non-determinism in when that
-            // callback will execute.  Allow for a small number of delay and retries to account for it.
+            // Because the timer runs in the background, await the callback completion source, but using a
+            // timed cancellation to ensure that the test does not hang.
 
             refreshTimer.Change(0, Timeout.Infinite);
 
-            var attemptCount = 0;
-            var remainingAttempts = 10;
-            var success = false;
-
-            while ((--remainingAttempts >= 0) && (!success))
-            {
-                try
-                {
-                    await Task.Delay(250 * ++attemptCount).ConfigureAwait(false);
-                    success = ((mockScope.IsDisposed) && (mockScope.CallbackInvoked));
-                }
-                catch (ObjectDisposedException)
-                {
-                    Assert.Fail("No disposed exception should have been triggered");
-                }
-                catch when (remainingAttempts <= 0)
-                {
-                    throw;
-                }
-                catch
-                {
-                    // No action needed.
-                }
-
-                await Task.Delay(250);
-
-                Assert.That(mockScope.IsDisposed, Is.True, "The scope should have been disposed.");
-                Assert.That(mockScope.CallbackInvoked, Is.True, "The authorization timer callback should have been invoked.");
-            }
+            await Task.WhenAny(mockScope.CallbackCompletionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(mockScope.IsDisposed, Is.True, "The scope should have been disposed.");
         }
 
         /// <summary>
@@ -1740,8 +1716,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class DisposeOnAuthorizationTimerCallbackMockScope : AmqpConnectionScope
         {
-            public bool CallbackInvoked = false;
-
+            public TaskCompletionSource<bool> CallbackCompletionSource = new TaskCompletionSource<bool>();
             private readonly AmqpConnection _mockConnection;
 
             public DisposeOnAuthorizationTimerCallbackMockScope(Uri serviceEndpoint,
@@ -1776,9 +1751,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 return state =>
                 {
-                    CallbackInvoked = true;
                     Dispose();
                     baseImplementation();
+                    CallbackCompletionSource.TrySetResult(true);
                 };
             }
             protected override Task<DateTime> RequestAuthorizationUsingCbsAsync(AmqpConnection connection,

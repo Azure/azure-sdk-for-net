@@ -376,6 +376,7 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     public string ConsumerGroup { get; }
     public string Identifier { get; protected set; }
     public bool IsRunning { get; protected set; }
+    protected EventHubsRetryPolicy RetryPolicy { get; }
     
     protected EventProcessor(
         int eventBatchMaximumCount,
@@ -403,6 +404,7 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     public virtual void StartProcessing(CancellationToken cancellationToken = default);
     public virtual Task StopProcessingAsync(CancellationToken cancellationToken = default);
     public virtual void StopProcessing(CancellationToken cancellationToken = default);
+    protected virtual EventHubConnection CreateConnection();
     
     protected virtual Task OnInitializingPartitionAsync(TPartition partition, CancellationToken cancellationToken);
     protected virtual Task OnPartitionProcessingStoppedAsync(TPartition partition, ProcessingStoppedReason reason, CancellationToken cancellationToken);
@@ -417,6 +419,7 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     protected abstract Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken);
     
     // Infrastructure
+    protected internal virtual CreateConnection();
     protected virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties(string partitionId);
 }
 

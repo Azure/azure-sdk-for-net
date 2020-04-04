@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if ((string.IsNullOrEmpty(activeToken.Token)))
                 {
-                    throw new AuthenticationException(Resources1.CouldNotAcquireAccessToken);
+                    throw new AuthenticationException(Resources.CouldNotAcquireAccessToken);
                 }
 
                 _accessToken = activeToken;

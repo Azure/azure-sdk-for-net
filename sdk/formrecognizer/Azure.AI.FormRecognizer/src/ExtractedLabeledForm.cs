@@ -11,15 +11,15 @@ namespace Azure.AI.FormRecognizer.Custom
     /// </summary>
     public class ExtractedLabeledForm
     {
-        internal ExtractedLabeledForm(DocumentResult_internal documentResult, IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        internal ExtractedLabeledForm(DocumentResult_internal documentResult, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             // Supervised
             FormType = documentResult.DocType;
 
             // TODO: validate that PageRange.Length == 2.
             // https://github.com/Azure/azure-sdk-for-net/issues/10547
-            StartPageNumber = documentResult.PageRange.First();
-            EndPageNumber = documentResult.PageRange.Last();
+            StartPageNumber = documentResult.PageRange[0];
+            EndPageNumber = documentResult.PageRange[documentResult.PageRange.Count - 1];
 
             Fields = ConvertFields(documentResult.Fields, readResults);
 
@@ -71,7 +71,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return field.Value;
         }
 
-        private static IReadOnlyList<ExtractedLabeledField> ConvertFields(IDictionary<string, FieldValue_internal> fields, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<ExtractedLabeledField> ConvertFields(IReadOnlyDictionary<string, FieldValue_internal> fields, IReadOnlyList<ReadResult_internal> readResults)
         {
             List<ExtractedLabeledField> list = new List<ExtractedLabeledField>();
             foreach (var field in fields)
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return list;
         }
 
-        private static IReadOnlyList<RawExtractedPage> ConvertRawPages(IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<RawExtractedPage> ConvertRawPages(IReadOnlyList<ReadResult_internal> readResults)
         {
             List<RawExtractedPage> rawPages = new List<RawExtractedPage>();
             foreach (var readResult in readResults)
@@ -91,7 +91,7 @@ namespace Azure.AI.FormRecognizer.Custom
             return rawPages;
         }
 
-        internal static IReadOnlyList<ExtractedLabeledTable> ConvertLabeledTables(IList<PageResult_internal> pageResults, IList<ReadResult_internal> readResults)
+        internal static IReadOnlyList<ExtractedLabeledTable> ConvertLabeledTables(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             List<ExtractedLabeledTable> tables = new List<ExtractedLabeledTable>();
 

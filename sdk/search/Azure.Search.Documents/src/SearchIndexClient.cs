@@ -918,7 +918,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSearchPostRequest(options.ClientRequestId, options);
+                using HttpMessage message = Protocol.CreateSearchPostRequest(options, options.ClientRequestId);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1179,6 +1179,7 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken = default)
         {
             options ??= new SuggestOptions();
+            // TODO: This is not thread safe
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 
@@ -1186,7 +1187,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSuggestPostRequest(options.ClientRequestId, options);
+                using HttpMessage message = Protocol.CreateSuggestPostRequest(options, options.ClientRequestId);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1303,12 +1304,13 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken)
         {
             options ??= new AutocompleteOptions();
+            // TODO: Not thread safe
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 
             return async ?
-                await Protocol.AutocompletePostAsync(options.ClientRequestId, options, cancellationToken).ConfigureAwait(false) :
-                Protocol.AutocompletePost(options.ClientRequestId, options, cancellationToken);
+                await Protocol.AutocompletePostAsync(options, options.ClientRequestId, cancellationToken).ConfigureAwait(false) :
+                Protocol.AutocompletePost(options, options.ClientRequestId, cancellationToken);
         }
         #endregion Autocomplete
 

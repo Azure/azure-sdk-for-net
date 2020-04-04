@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,9 @@ namespace Azure.Search.Documents.Models
     {
         internal static IndexerLimits DeserializeIndexerLimits(JsonElement element)
         {
-            IndexerLimits result = new IndexerLimits();
+            TimeSpan? maxRunTime = default;
+            long? maxDocumentExtractionSize = default;
+            long? maxDocumentContentCharactersToExtract = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxRunTime"))
@@ -23,7 +26,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxRunTime = property.Value.GetTimeSpan("P");
+                    maxRunTime = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("maxDocumentExtractionSize"))
@@ -32,7 +35,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxDocumentExtractionSize = property.Value.GetInt64();
+                    maxDocumentExtractionSize = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxDocumentContentCharactersToExtract"))
@@ -41,11 +44,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxDocumentContentCharactersToExtract = property.Value.GetInt64();
+                    maxDocumentContentCharactersToExtract = property.Value.GetInt64();
                     continue;
                 }
             }
-            return result;
+            return new IndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract);
         }
     }
 }

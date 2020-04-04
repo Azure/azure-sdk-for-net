@@ -27,12 +27,13 @@ namespace Azure.Search.Documents.Models
 
         internal static OutputFieldMappingEntry DeserializeOutputFieldMappingEntry(JsonElement element)
         {
-            OutputFieldMappingEntry result = new OutputFieldMappingEntry();
+            string name = default;
+            string targetName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("targetName"))
@@ -41,11 +42,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.TargetName = property.Value.GetString();
+                    targetName = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new OutputFieldMappingEntry(name, targetName);
         }
     }
 }

@@ -4,7 +4,7 @@
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Specifies the behavior of the receiver.
+    /// The mode in which to receive messages.
     /// </summary>
     public enum ReceiveMode
     {
