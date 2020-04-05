@@ -442,7 +442,7 @@ namespace ContainerRegistry.Tests
                 string taskString =
 @"
 steps:
-  -build: . -t acb:linux-{{.Run.ID}}";
+  - build: . -t acb:linux-{{.Run.ID}}";
                 string valuesString =
 @"
 key1: value1
@@ -517,7 +517,7 @@ key2: value2
 @"
 version: v1.1.0
 steps:
-  -cmd: docker images";
+  - cmd: docker images";
                 var run4 = registryClient.Registries.ScheduleRun(resourceGroup.Name, registry.Name,
                     new EncodedTaskRunRequest(
                         encodedTaskContent: Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)),
@@ -534,6 +534,76 @@ steps:
                 Assert.Single(runList);
 
                 Assert.Equal(agentPool.Name, runList.Single().AgentPoolName);
+
+                // Delete the container registry
+                registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
+            }
+        }
+
+        [Fact]
+        public void ContainerRegistryTaskRunTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = ContainerRegistryTestUtilities.GetResourceManagementClient(context, handler);
+                var registryClient = ContainerRegistryTestUtilities.GetContainerRegistryManagementClient(context, handler);
+
+                // Create resource group
+                var resourceGroup = ContainerRegistryTestUtilities.CreateResourceGroup(resourceClient);
+                var nonDefaultLocation = ContainerRegistryTestUtilities.GetNonDefaultRegistryLocation(resourceClient, resourceGroup.Location);
+
+                // Create container registry
+                var registry = ContainerRegistryTestUtilities.CreateManagedContainerRegistry(registryClient, resourceGroup.Name, nonDefaultLocation);
+
+                string taskString =
+@"
+version: v1.1.0
+steps:
+  - cmd: docker images";
+
+                // Crete task
+                var taskRun = registryClient.TaskRuns.Create(
+                    resourceGroup.Name,
+                    registry.Name,
+                    TestUtilities.GenerateName("acrtaskrun"),
+                    new TaskRun(
+                        location: registry.Location,
+                        identity: new IdentityProperties {
+                            Type = Microsoft.Azure.Management.ContainerRegistry.Models.ResourceIdentityType.UserAssigned,
+                            UserAssignedIdentities = new Dictionary<string, UserIdentityProperties> {
+                                ["/subscriptions/84c559c6-30a0-417c-ba06-8a2253b388c3/resourceGroups/sdk-test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/acrsdktestidentity"] 
+                                    = new UserIdentityProperties()
+                            }
+                        },
+                        runRequest: new EncodedTaskRunRequest(
+                        encodedTaskContent: Convert.ToBase64String(Encoding.UTF8.GetBytes(taskString)),
+                        platform: new PlatformProperties { Architecture = Architecture.Amd64, Os = OS.Linux },
+                        credentials: new Credentials {
+                            SourceRegistry = new SourceRegistryCredentials {
+                                LoginMode = SourceRegistryLoginMode.Default
+                            },
+                            CustomRegistries = new Dictionary<string, CustomRegistryCredentials> {
+                                ["acrsdktestregistry.azurecr.io"] = new CustomRegistryCredentials {
+                                    Identity = "84962bda-7c5e-403e-8515-5100e4ede735" // client id of acrsdktestidentity 
+                                }
+                            }
+                        },
+                        encodedValuesContent: null,
+                        values: null,
+                        timeout: 600,
+                        sourceLocation: null)));
+
+                Assert.NotNull(taskRun);
+                Assert.Equal("ca1", taskRun.RunResult.RunId);
+
+                // List task
+                var taskRunList = registryClient.TaskRuns.List(resourceGroup.Name, registry.Name);
+                Assert.Single(taskRunList);
+
+                // Delete the task
+                registryClient.TaskRuns.Delete(resourceGroup.Name, registry.Name, taskRun.Name);
 
                 // Delete the container registry
                 registryClient.Registries.Delete(resourceGroup.Name, registry.Name);
