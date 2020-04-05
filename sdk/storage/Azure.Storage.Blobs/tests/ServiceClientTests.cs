@@ -266,7 +266,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).ToListAsync();
 
             // Assert
-            AssertMetadataEquality(
+            AssertDictionaryEquality(
                 metadata,
                 containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata);
         }

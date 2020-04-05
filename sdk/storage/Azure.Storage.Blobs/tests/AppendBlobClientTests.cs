@@ -145,6 +145,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateAsync_Tags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            {
+                Tags = BuildTags()
+            };
+
+            // Act
+            await blob.CreateAsync(options);
+            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(options.Tags, response.Value);
+        }
+
+        [Test]
         public async Task CreateAsync_Metadata()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -158,7 +179,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]

@@ -920,7 +920,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1400,7 +1400,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1622,7 +1622,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blockBlobName, blobs.First().Name);
 
             Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
+            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
             Assert.AreEqual(BlobType.Block, getPropertiesResponse.Value.BlobType);
 
             Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();

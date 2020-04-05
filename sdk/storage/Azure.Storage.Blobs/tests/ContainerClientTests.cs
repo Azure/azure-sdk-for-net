@@ -438,7 +438,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
 
             // Cleanup
             await container.DeleteAsync();
@@ -789,7 +789,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1586,7 +1586,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
 
             // Assert
-            AssertMetadataEquality(metadata, blobs.First().Metadata);
+            AssertDictionaryEquality(metadata, blobs.First().Metadata);
         }
 
         [Test]
@@ -1806,7 +1806,7 @@ namespace Azure.Storage.Blobs.Test
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
 
             // Assert
-            AssertMetadataEquality(metadata, item.Blob.Metadata);
+            AssertDictionaryEquality(metadata, item.Blob.Metadata);
         }
 
         [Test]

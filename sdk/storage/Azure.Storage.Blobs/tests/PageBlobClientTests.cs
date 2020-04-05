@@ -102,6 +102,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CreatePageBlobOptions options = new CreatePageBlobOptions
+            {
+                Tags = BuildTags()
+            };
+
+            // Act
+            await blob.CreateAsync(Constants.KB, options);
+            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(options.Tags, response.Value);
+        }
+
+        [Test]
         public async Task CreateAsync_SequenceNumber()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -133,7 +153,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
+            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
             Assert.AreEqual(BlobType.Page, getPropertiesResponse.Value.BlobType);
         }
 

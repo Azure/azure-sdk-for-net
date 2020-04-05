@@ -179,7 +179,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
 
             // Cleanup
             await share.DeleteAsync(false);
@@ -509,7 +509,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
