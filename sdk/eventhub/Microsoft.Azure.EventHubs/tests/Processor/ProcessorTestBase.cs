@@ -1124,6 +1124,77 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             }
         }
 
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task DontCheckpointStartOfStream()
+        {
+            await using (var scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
+
+                // Use a randomly generated container name so that initial offset provider will be respected.
+                var eventProcessorHost = new EventProcessorHost(
+                string.Empty,
+                PartitionReceiver.DefaultConsumerGroupName,
+                connectionString,
+                TestUtility.StorageConnectionString,
+                Guid.NewGuid().ToString());
+
+                var processorOptions = new EventProcessorOptions
+                {
+                    ReceiveTimeout = TimeSpan.FromSeconds(15),
+                    InitialOffsetProvider = partitionId => EventPosition.FromEnd(),
+                    InvokeProcessorAfterReceiveTimeout = false
+                };
+
+                var processorFactory = new TestEventProcessorFactory();
+                processorFactory.OnCreateProcessor += (f, createArgs) =>
+                {
+                    var processor = createArgs.Item2;
+                    string partitionId = createArgs.Item1.PartitionId;
+                    string hostName = createArgs.Item1.Owner;
+                    processor.OnOpen += (_, partitionContext) => TestUtility.Log($"{hostName} > Partition {partitionId} TestEventProcessor opened");
+                    processor.OnClose += (_, closeArgs) =>
+                    {
+                        TestUtility.Log($"{hostName} > Partition {partitionId} TestEventProcessor closing: {closeArgs.Item2}");
+
+                        // Checkpoint at close.
+                       closeArgs.Item1.CheckpointAsync().GetAwaiter().GetResult();
+                    };
+
+                    processor.OnProcessError += (_, errorArgs) => TestUtility.Log($"{hostName} > Partition {partitionId} TestEventProcessor process error {errorArgs.Item2.Message}");
+                    processor.OnProcessEvents += (_, eventsArgs) =>
+                    {
+                        int eventCount = eventsArgs.Item2.events != null ? eventsArgs.Item2.events.Count() : 0;
+                        if (eventCount > 0)
+                        {
+                            TestUtility.Log($"{hostName} > Partition {partitionId} TestEventProcessor processing {eventCount} event(s)");
+                        }
+                    };
+                };
+
+                await eventProcessorHost.RegisterEventProcessorFactoryAsync(processorFactory, processorOptions);
+
+                // Wait 30 seconds and then unregister. Host will checkpoint on close w/o receiving any events.
+                // This checkpoint attempt should be omitted.
+                await Task.Delay(TimeSpan.FromSeconds(30));
+                await eventProcessorHost.UnregisterEventProcessorAsync();
+
+                // Now send a single message. This message won't be received by next host.
+                var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
+                await ehClient.SendAsync(new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")));
+
+                var runResult1 = await RunGenericScenario(eventProcessorHost, processorOptions, numberOfEventsToSendPerPartition: 1);
+                
+                // Confirm that we recived just 1 event not 2.
+                foreach (var kvp in runResult1.ReceivedEvents)
+                {
+                    Assert.True(kvp.Value.Count() == 1, $"Didn't receive exactlt 1 event. Received { kvp.Value.Count() }.");
+                }
+            }
+        }
+
         private async Task<Dictionary<string, Tuple<string, DateTime>>> DiscoverEndOfStream(string connectionString)
         {
             string[] PartitionIds = GetPartitionIds(connectionString);
