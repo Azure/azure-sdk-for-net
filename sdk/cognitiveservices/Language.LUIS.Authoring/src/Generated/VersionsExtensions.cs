@@ -289,15 +289,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='versionId'>
             /// The version ID.
             /// </param>
-            /// <param name='format'>
-            /// Lu format extension. Possible values include: 'lu'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> ExportLuFormatAsync(this IVersions operations, System.Guid appId, string versionId, string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> ExportLuFormatAsync(this IVersions operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ExportLuFormatWithHttpMessagesAsync(appId, versionId, format, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ExportLuFormatWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
