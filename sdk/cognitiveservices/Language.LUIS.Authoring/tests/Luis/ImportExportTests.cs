@@ -113,7 +113,7 @@
         public void ImportAppVersionLuFormat()
         {
             const string VersionId = "0.2";
-            var appText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportLuApp.txt")).ToString();
+            var appText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportLuApp.json")).ToString();
 
             UseClientFor(async client =>
             {
@@ -172,7 +172,7 @@
         [Fact]
         public void ImportAppLuFormat()
         {
-            var appText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportLuApp.lu")).ToString();
+            var appText = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportLuApp.json")).ToString();
 
             UseClientFor(async client =>
             {
