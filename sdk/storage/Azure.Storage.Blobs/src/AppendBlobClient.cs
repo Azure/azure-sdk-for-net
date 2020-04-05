@@ -686,7 +686,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
-                        blobTagsString: tags.ToTagsString(),
+                        blobTagsString: tags?.ToTagsString(),
                         async: async,
                         operationName: operationName ?? $"{nameof(AppendBlobClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)

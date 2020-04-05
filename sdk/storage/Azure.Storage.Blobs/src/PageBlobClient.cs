@@ -826,7 +826,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: conditions?.IfNoneMatch,
                         blobContentLength: size,
                         blobSequenceNumber: sequenceNumber,
-                        blobTagsString: tags.ToTagsString(),
+                        blobTagsString: tags?.ToTagsString(),
                         async: async,
                         operationName: operationName ?? $"{nameof(PageBlobClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)

@@ -145,6 +145,33 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_Stream_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+            IDictionary<string, string> tags = BuildTags();
+            UploadBlobOptions options = new UploadBlobOptions
+            {
+                Tags = tags
+            };
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream, options);
+            }
+
+            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, response.Value);
+        }
+
+        [Test]
         public async Task UploadAsync_Stream_UploadsBlock()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -286,6 +313,52 @@ namespace Azure.Storage.Blobs.Test
             using var actual = new MemoryStream();
             await download.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task UploadAsync_File_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+            IDictionary<string, string> tags = BuildTags();
+            UploadBlobOptions options = new UploadBlobOptions
+            {
+                Tags = tags
+            };
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    // Test that we can upload a read-only file.
+                    File.SetAttributes(path, FileAttributes.ReadOnly);
+
+                    // Act
+                    await blob.UploadAsync(path, options);
+
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.SetAttributes(path, FileAttributes.Normal);
+                        File.Delete(path);
+                    }
+                }
+            }
+
+            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, response.Value);
         }
 
         [Test]
@@ -498,6 +571,7 @@ namespace Azure.Storage.Blobs.Test
                 content: stream,
                 blobHttpHeaders: default,
                 metadata: default,
+                tags: default,
                 conditions: default,
                 progressHandler: default,
                 transferOptions: transferOptions,
@@ -534,6 +608,7 @@ namespace Azure.Storage.Blobs.Test
                     path: path,
                     blobHttpHeaders: default,
                     metadata: default,
+                    tags: default,
                     conditions: default,
                     progressHandler: default,
                     transferOptions: transferOptions,

@@ -27,6 +27,7 @@ namespace Azure.Storage.Blobs.Test
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
         private static readonly BlobHttpHeaders s_blobHttpHeaders = new BlobHttpHeaders() { CacheControl = "Please do", ContentEncoding = "Yes" };
         private static readonly Dictionary<string, string> s_metadata = new Dictionary<string, string>() { { "Key", "Value" } };
+        private static readonly Dictionary<string, string> s_tags = new Dictionary<string, string>() { { "tagKey", "tagValue" } };
         private static readonly BlobRequestConditions s_conditions = new BlobRequestConditions() { LeaseId = "MyImportantLease" };
         private static readonly AccessTier s_accessTier = AccessTier.Cool;
         private static readonly Progress<long> s_progress = new Progress<long>();
@@ -228,12 +229,12 @@ namespace Azure.Storage.Blobs.Test
             if (_async)
             {
                 clientMock.Setup(
-                        c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, default, true, s_cancellationToken))
+                        c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_tags, s_conditions, s_accessTier, s_progress, default, true, s_cancellationToken))
                     .ReturnsAsync(s_response);
             }
             else
             {
-                clientMock.Setup(c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, default, false, s_cancellationToken))
+                clientMock.Setup(c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_tags, s_conditions, s_accessTier, s_progress, default, false, s_cancellationToken))
                     .ReturnsAsync(s_response);
             }
 
@@ -248,11 +249,11 @@ namespace Azure.Storage.Blobs.Test
         {
             if (_async)
             {
-                return await uploader.UploadAsync(content, s_blobHttpHeaders, s_metadata, s_conditions, s_progress, s_accessTier, s_cancellationToken);
+                return await uploader.UploadAsync(content, s_blobHttpHeaders, s_metadata, s_tags, s_conditions, s_progress, s_accessTier, s_cancellationToken);
             }
             else
             {
-                return uploader.Upload(content, s_blobHttpHeaders, s_metadata, s_conditions, s_progress, s_accessTier, s_cancellationToken);
+                return uploader.Upload(content, s_blobHttpHeaders, s_metadata, s_tags, s_conditions, s_progress, s_accessTier, s_cancellationToken);
             }
         }
 

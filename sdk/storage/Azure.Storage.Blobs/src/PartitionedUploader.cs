@@ -13,6 +13,8 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Shared;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
 {
@@ -96,7 +98,8 @@ namespace Azure.Storage.Blobs
         public async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
-            IDictionary<string, string> metadata,
+            Metadata metadata,
+            Tags tags,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
@@ -110,6 +113,7 @@ namespace Azure.Storage.Blobs
                     content,
                     blobHttpHeaders,
                     metadata,
+                    tags,
                     conditions,
                     accessTier,
                     progressHandler,
@@ -134,6 +138,7 @@ namespace Azure.Storage.Blobs
                 blockSize,
                 blobHttpHeaders,
                 metadata,
+                tags,
                 conditions,
                 progressHandler,
                 accessTier,
@@ -144,7 +149,8 @@ namespace Azure.Storage.Blobs
         public Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
-            IDictionary<string, string> metadata,
+            Metadata metadata,
+            Tags tags,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
@@ -158,6 +164,7 @@ namespace Azure.Storage.Blobs
                     content,
                     blobHttpHeaders,
                     metadata,
+                    tags,
                     conditions,
                     accessTier,
                     progressHandler,
@@ -183,6 +190,7 @@ namespace Azure.Storage.Blobs
                 blockSize,
                 blobHttpHeaders,
                 metadata,
+                tags,
                 conditions,
                 progressHandler,
                 accessTier,
@@ -193,7 +201,8 @@ namespace Azure.Storage.Blobs
             Stream content,
             int blockSize,
             BlobHttpHeaders blobHttpHeaders,
-            IDictionary<string, string> metadata,
+            Metadata metadata,
+            Tags tags,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier,
@@ -239,12 +248,17 @@ namespace Azure.Storage.Blobs
 
                 // Commit the block list after everything has been staged to
                 // complete the upload
+                CommitBlockListOptions options = new CommitBlockListOptions
+                {
+                    HttpHeaders = blobHttpHeaders,
+                    Metadata = metadata,
+                    Tags = tags,
+                    Conditions = conditions,
+                    AccessTier = accessTier
+                };
                 return _client.CommitBlockList(
                     blockIds,
-                    blobHttpHeaders,
-                    metadata,
-                    conditions,
-                    accessTier,
+                    options,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -262,7 +276,8 @@ namespace Azure.Storage.Blobs
             Stream content,
             int blockSize,
             BlobHttpHeaders blobHttpHeaders,
-            IDictionary<string, string> metadata,
+            Metadata metadata,
+            Tags tags,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier,
@@ -336,12 +351,19 @@ namespace Azure.Storage.Blobs
                 // Wait for all the remaining blocks to finish staging and then
                 // commit the block list to complete the upload
                 await Task.WhenAll(runningTasks).ConfigureAwait(false);
+
+                CommitBlockListOptions options = new CommitBlockListOptions
+                {
+                    HttpHeaders = blobHttpHeaders,
+                    Metadata = metadata,
+                    Tags = tags,
+                    Conditions = conditions,
+                    AccessTier = accessTier
+                };
+
                 return await _client.CommitBlockListAsync(
                     blockIds,
-                    blobHttpHeaders,
-                    metadata,
-                    conditions,
-                    accessTier,
+                    options,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
