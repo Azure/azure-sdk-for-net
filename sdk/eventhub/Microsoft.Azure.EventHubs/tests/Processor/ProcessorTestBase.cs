@@ -1184,6 +1184,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                 // Now send a single message. This message won't be received by next host.
                 var ehClient = EventHubClient.CreateFromConnectionString(connectionString);
                 await ehClient.SendAsync(new EventData(Encoding.UTF8.GetBytes("Hello EventHub!")));
+                await Task.Delay(TimeSpan.FromSeconds(10));
 
                 var runResult1 = await RunGenericScenario(eventProcessorHost, processorOptions, numberOfEventsToSendPerPartition: 1);
                 
