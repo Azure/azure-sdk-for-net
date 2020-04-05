@@ -184,7 +184,16 @@ namespace Microsoft.Azure.ServiceBus.Management
                     return;
                 }
 
-                EntityNameHelper.CheckValidQueueName(value, nameof(ForwardTo));
+                string testValue = value;
+
+                if (Uri.TryCreate(value, UriKind.Absolute, out Uri uriValue))
+                {
+                    testValue = uriValue.PathAndQuery;
+                }
+
+                testValue = testValue.TrimStart('/');
+
+                EntityNameHelper.CheckValidQueueName(testValue, nameof(ForwardTo));
                 if (this.topicPath.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
