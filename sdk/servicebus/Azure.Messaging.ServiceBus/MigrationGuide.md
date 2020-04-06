@@ -57,7 +57,7 @@ In the interest of simplifying the API surface we've made a single top level cli
 |-------------------------------------------------------|-----------------------------------------------------------------|--------|
 `new MessageSender()`   | `ServiceBusClient.CreateSender()`                     | [Create the sender](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md) |
 `new MessageReceiver()`   | `ServiceBusClient.CreateReceiver()`                     | [Create the receiver](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md) |
-`new MessageReceiver()`   | `ServiceBusClient.CreateProcessor()`                     | [create the processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample04_Processor.md) |
+`new MessageReceiver()`   | `ServiceBusClient.CreateProcessor()`                     | [Create the processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample04_Processor.md) |
 | `SessionClient.AcceptMessageSessionAsync()`  | `ServiceBusClient.CreateSessionReceiverAsync()` | [Create the session receiver](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample03_SendReceiveSessions.md)
 | `SessionClient.AcceptMessageSessionAsync()`  | `ServiceBusClient.CreateSessionProcessor()` | [Create the session processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample05_SessionProcessor.md)
 
