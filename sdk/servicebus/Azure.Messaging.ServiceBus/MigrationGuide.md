@@ -11,8 +11,10 @@ Familiarity with the v4 client library is assumed. For those new to the Service 
   - [Package and namespaces](#package-and-namespaces)
   - [Client hierarchy](#client-hierarchy)
   - [Client constructors](#client-constructors)
+  - [Creating sender and receiver](#creating-sender-and-receiver)
   - [Sending messages](#sending-messages)
   - [Receiving messages](#receiving-messages)
+  - [Working with sessions](#working-with-sessions)
 - [Migration samples](#migration-samples)
   - [Sending and receiving a message](#sending-and-receiving-a-message)
   - [Sending and receiving a batch of messages](#sending-and-receiving-a-batch-of-messages)
@@ -46,17 +48,27 @@ In the interest of simplifying the API surface we've made a single top level cli
 
 | In v4                                                 | Equivalent in v7                                                | Sample |
 |-------------------------------------------------------|-----------------------------------------------------------------|--------|
-| `new QueueClient()` or `new Message<Sender/Receiver>()`   | `new ServiceBusClient().Create<Sender/Receiver/Processor>()`                      | [Authenticate with connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs#L177) |
-| `new QueueClient(..., ITokenProvider)` or `Message<Sender/Receiver>(..., ITokenProvider)`  | `new ServiceBusClient(..., TokenCredential).Create<Sender/Receiver/Processor>()` | [Authenticate with client secret credential](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs#L165)
+| `new QueueClient()` or `new TopicClient()` or `new SubscriptionClient()` or `new SessionClient()`  | `new ServiceBusClient()`                      | [Authenticate with connection string](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs#L177) |
+| `new QueueClient(..., ITokenProvider)` or `new TopicClient(..., ITokenProvider)` or `new SubscriptionClient(..., ITokenProvider)` or `new SessionClient(..., ITokenProvider)`  | `new ServiceBusClient(..., TokenCredential)` | [Authenticate with client secret credential](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs#L165)
+
+### Creating sender and receiver
+
+| In v4                                                 | Equivalent in v7                                                | Sample |
+|-------------------------------------------------------|-----------------------------------------------------------------|--------|
+`new MessageSender()`   | `ServiceBusClient.CreateSender()`                     | [Create the sender](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md) |
+`new MessageReceiver()`   | `ServiceBusClient.CreateReceiver()`                     | [Create the receiver](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md) |
+`new MessageReceiver()`   | `ServiceBusClient.CreateProcessor()`                     | [create the processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample04_Processor.md) |
+| `SessionClient.AcceptMessageSessionAsync()`  | `ServiceBusClient.CreateSessionReceiverAsync()` | [Create the session receiver](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample03_SendReceiveSessions.md)
+| `SessionClient.AcceptMessageSessionAsync()`  | `ServiceBusClient.CreateSessionProcessor()` | [Create the session processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample05_SessionProcessor.md)
 
 ### Sending messages
 
-The v4 client allowed for sending a single message or a list of messages, which had the potential to fail unexpectedly if the maximum allowable size was exceeded. v7 aims to prevent this by asking that you first create a batch of messages using `CreateBatchAsync` and then attempt to add messages to that using `TryAdd()`. If the batch accepts a message, you can be confident that it will not violate size constraints when calling Send to send the batch.
+The v4 client allowed for sending a single message or a list of messages, which had the potential to fail unexpectedly if the maximum allowable size was exceeded. v7 aims to prevent this by asking that you first create a batch of messages using `CreateBatchAsync` and then attempt to add messages to that using `TryAdd()`. If the batch accepts a message, you can be confident that it will not violate size constraints when calling Send to send the batch. v7 still allows sending a single message.
 
 | In v4                                          | Equivalent in v7                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
 | `QueueClient.SendAsync(Message)` or `MessageSender.SendAsync(Message)`                          | `ServiceBusSender.SendAsync(ServiceBusMessage)`                               | [Send a message](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-message) |
-| `QueueClient.SendAsync(IList<Message>)` or `MessageSender.SendAsync(IList<Message>)`                          | `ServiceBusSender.SendBatchAsync(ServiceBusMessageBatch)`                               | [Send a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-batch-of-messages) |
+| `QueueClient.SendAsync(IList<Message>)` or `MessageSender.SendAsync(IList<Message>)`                          | `messageBatch = ServiceBusSender.CreateBatchAsync()` `messageBatch.TryAdd(ServiceBusMessage)` `ServiceBusSender.SendBatchAsync(messageBatch)`                               | [Send a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-batch-of-messages) |
 
 ### Receiving messages 
 
@@ -64,7 +76,15 @@ The v4 client allowed for sending a single message or a list of messages, which 
 |------------------------------------------------|------------------------------------------------------------------|--------|
 | `MessageReceiver.ReceiveAsync()`                      | `ServiceBusReceiver.ReceiveAsync()`                               | [Receive a message](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-message) |
 | `MessageReceiver.ReceiveAsync()`                      | `ServiceBusReceiver.ReceiveBatchAsync()`                               | [Receive a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-batch-of-messages) |
-| `QueueClient.RegisterMessageHandler()` or   `MessageReceiver.RegisterMessageHandler()`                    | `ServiceBusProcessor.StartProcessingAsync()`                               | [Receive messages using processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample04_Processor.md) |
+| `QueueClient.RegisterMessageHandler()` or   `MessageReceiver.RegisterMessageHandler()`                    | `ServiceBusProcessor.ProcessMessageAsync += MessageHandler` `ServiceBusProcessor.ProcessErrorAsync += ErrorHandler` `ServiceBusProcessor.StartProcessingAsync()`                               | [Receive messages using processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample04_Processor.md) |
+
+### Working with sessions 
+
+| In v4                                          | Equivalent in v7                                                 | Sample |
+|------------------------------------------------|------------------------------------------------------------------|--------|
+| `MessageSender.SendAsync(new Message{SessionId = "sessionId"})`                      | `ServiceBusSender.SendAsync(new ServiceBusMessage{SessionId = "sessionId"})`                               | [Send a message to session](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample03_SendReceiveSessions.md) |
+| `IMessageSession.ReceiveAsync()`                      | `ServiceBusSessionReceiver.ReceiveAsync()`                               | [Receive a message from session](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample03_SendReceiveSessions.md) |
+| `IMessageSession.RegisterMessageHandler()`                    | `ServiceBusSessionProcessor.ProcessMessageAsync += MessageHandler` `ServiceBusSessionProcessor.ProcessErrorAsync += ErrorHandler` `ServiceBusSessionProcessor.StartProcessingAsync()`                               | [Receive messages from session processor](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample05_SessionProcessor.md) |
 
 ## Migration samples
 
@@ -80,7 +100,7 @@ In v4:
 string connectionString = "<connection_string>";
 string entityPath = "<queue_name>";
 // create the sender
-MessageSender sender =  new MessageSender(connectionString, entityPath);
+MessageSender sender = new MessageSender(connectionString, entityPath);
 
 // create a message that we can send
 Message message = new Message(Encoding.Default.GetBytes("Hello world!"));
@@ -89,7 +109,7 @@ Message message = new Message(Encoding.Default.GetBytes("Hello world!"));
 await sender.SendAsync(message);
 
 // create a receiver that we can use to receive the message
-MessageReceiver receiver =  new MessageReceiver(connectionString, entityPath);
+MessageReceiver receiver = new MessageReceiver(connectionString, entityPath);
 
 // received a message
 Message receivedMessage = await receiver.ReceiveAsync();
@@ -145,7 +165,7 @@ In v4:
 string connectionString = "<connection_string>";
 string entityPath = "<queue_name>";
 // create the sender
-MessageSender sender =  new MessageSender(connectionString, entityPath);
+MessageSender sender = new MessageSender(connectionString, entityPath);
 
 // create a list of messages that we can send
 var messagesToSend = new List<Message>();
@@ -160,7 +180,7 @@ for (var i = 0; i < 10; i++)
 await sender.SendAsync(messagesToSend);
 
 // create a receiver that we can use to receive the messages
-MessageReceiver receiver =  new MessageReceiver(connectionString, entityPath);
+MessageReceiver receiver = new MessageReceiver(connectionString, entityPath);
 
 // received a list of messages
 IList<Message> receivedMessages = await receiver.ReceiveAsync(maxMessageCount: 10);
