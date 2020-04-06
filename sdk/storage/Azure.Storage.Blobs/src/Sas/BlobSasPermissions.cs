@@ -42,11 +42,6 @@ namespace Azure.Storage.Sas
         Delete = 16,
 
         /// <summary>
-        /// Indicates that Tag is permitted.
-        /// </summary>
-        Tag = 32,
-
-        /// <summary>
         /// Indicates that all permissions are set.
         /// </summary>
         All = ~0
@@ -88,10 +83,6 @@ namespace Azure.Storage.Blobs
             if ((permissions & BlobSasPermissions.Delete) == BlobSasPermissions.Delete)
             {
                 sb.Append(Constants.Sas.Permissions.Delete);
-            }
-            if ((permissions & BlobSasPermissions.Tag) == BlobSasPermissions.Tag)
-            {
-                sb.Append(Constants.Sas.Permissions.Tag);
             }
             return sb.ToString();
         }
