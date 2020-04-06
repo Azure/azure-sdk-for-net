@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is a template project to demonstrate how to create a package that uses code generation as well as use for testing our build and release pipelines</Description>
-    <AssemblyTitle>Azure SDK Template</AssemblyTitle>
-    <Version>1.0.2-preview.6</Version>
-    <PackageTags>Azure Template</PackageTags>
+    <Description>This is the Microsoft Azure Cognitive Services Form Recognizer client library</Description>
+    <AssemblyTitle>Microsoft Azure.AI.FormRecognizer client library</AssemblyTitle>
+    <Version>1.0.0-preview.1</Version>
+    <PackageTags>Microsoft Azure Form Recognizer</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
     <GenerateAPIListing>false</GenerateAPIListing>
