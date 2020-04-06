@@ -1,5 +1,9 @@
 # Release History
 
+## 5.1.0-preview.2 (Unreleased)
+
+Changes will be detailed prior to release
+
 ## 5.1.0-preview.1
 
 ### Acknowledgments
