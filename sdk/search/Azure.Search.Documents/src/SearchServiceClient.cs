@@ -325,8 +325,8 @@ namespace Azure.Search.Documents
                 dataSource?.Name,
                 dataSource,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -352,8 +352,8 @@ namespace Azure.Search.Documents
                 dataSource?.Name,
                 dataSource,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -376,8 +376,8 @@ namespace Azure.Search.Documents
             DataSourcesClient.Delete(
                 dataSourceName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -399,8 +399,8 @@ namespace Azure.Search.Documents
             await DataSourcesClient.DeleteAsync(
                 dataSourceName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -622,8 +622,8 @@ namespace Azure.Search.Documents
                 index,
                 allowIndexDowntime,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -656,8 +656,8 @@ namespace Azure.Search.Documents
                 index,
                 allowIndexDowntime,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -680,8 +680,8 @@ namespace Azure.Search.Documents
             IndexesClient.Delete(
                 indexName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -703,8 +703,8 @@ namespace Azure.Search.Documents
             await IndexesClient.DeleteAsync(
                 indexName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -901,8 +901,8 @@ namespace Azure.Search.Documents
                 indexer?.Name,
                 indexer,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -928,8 +928,8 @@ namespace Azure.Search.Documents
                 indexer?.Name,
                 indexer,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -952,8 +952,8 @@ namespace Azure.Search.Documents
             IndexersClient.Delete(
                 indexerName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -975,8 +975,8 @@ namespace Azure.Search.Documents
             await IndexersClient.DeleteAsync(
                 indexerName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1113,7 +1113,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response Reset(
+        public virtual Response ResetIndexer(
             string indexerName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1132,7 +1132,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response> ResetAsync(
+        public virtual async Task<Response> ResetIndexerAsync(
             string indexerName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1152,7 +1152,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response Run(
+        public virtual Response RunIndexer(
             string indexerName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1171,7 +1171,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response> RunAsync(
+        public virtual async Task<Response> RunIndexerAsync(
             string indexerName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1251,8 +1251,8 @@ namespace Azure.Search.Documents
                 skillset?.Name,
                 skillset,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -1278,8 +1278,8 @@ namespace Azure.Search.Documents
                 skillset?.Name,
                 skillset,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1302,8 +1302,8 @@ namespace Azure.Search.Documents
             SkillsetsClient.Delete(
                 skillsetName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -1325,8 +1325,8 @@ namespace Azure.Search.Documents
             await SkillsetsClient.DeleteAsync(
                 skillsetName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1484,8 +1484,8 @@ namespace Azure.Search.Documents
                 synonymMap?.Name,
                 synonymMap,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -1511,8 +1511,8 @@ namespace Azure.Search.Documents
                 synonymMap?.Name,
                 synonymMap,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1535,8 +1535,8 @@ namespace Azure.Search.Documents
             SynonymMapsClient.Delete(
                 synonymMapName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -1558,8 +1558,8 @@ namespace Azure.Search.Documents
             await SynonymMapsClient.DeleteAsync(
                 synonymMapName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch.ToString(),
-                accessConditions?.IfNoneMatch.ToString(),
+                accessConditions?.IfMatch?.ToString(),
+                accessConditions?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 

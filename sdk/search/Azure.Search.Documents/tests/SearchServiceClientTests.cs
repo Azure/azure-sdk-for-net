@@ -159,63 +159,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
 
             string indexName = Recording.Random.GetName(8);
-            var expectedIndex = new SearchIndex(indexName)
-            {
-                Fields =
-                {
-                    new SimpleField("hotelId", DataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
-                    new SearchableField("description") { Analyzer = AnalyzerName.EnLucene },
-                    new SearchableField("descriptionFr") { Analyzer = AnalyzerName.FrLucene },
-                    new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
-                    new SimpleField("parkingIncluded", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SimpleField("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SimpleField("lastRenovationDate", DataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SimpleField("rating", DataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SimpleField("location", DataType.GeographyPoint) { IsFilterable = true, IsSortable = true },
-                    new ComplexField("address")
-                    {
-                        Fields =
-                        {
-                            new SearchableField("streetAddress"),
-                            new SearchableField("city") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                            new SearchableField("stateProvince") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                            new SearchableField("country") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                            new SearchableField("postalCode") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        },
-                    },
-                    new ComplexField("rooms", collection: true)
-                    {
-                        Fields =
-                        {
-                            new SearchableField("description") { Analyzer = AnalyzerName.EnLucene },
-                            new SearchableField("descriptionFr") { Analyzer = AnalyzerName.FrLucene },
-                            new SearchableField("type") { IsFilterable = true, IsFacetable = true },
-                            new SimpleField("baseRate", DataType.Double) { IsFilterable = true, IsFacetable = true },
-                            new SearchableField("bedOptions") { IsFilterable = true, IsFacetable = true },
-                            new SimpleField("sleepsCount", DataType.Int32) { IsFilterable = true, IsFacetable = true },
-                            new SimpleField("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsFacetable = true },
-                            new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
-                        },
-                    },
-                },
-                Suggesters = new[]
-                {
-                    new Suggester("sg", "description", "hotelName"),
-                },
-                ScoringProfiles = new[]
-                {
-                    new ScoringProfile("nearest")
-                    {
-                        FunctionAggregation = ScoringFunctionAggregation.Sum,
-                        Functions = new[]
-                        {
-                            new DistanceScoringFunction("location", 2, new DistanceScoringParameters("myloc", 100)),
-                        },
-                    },
-                },
-            };
+            SearchIndex expectedIndex = SearchResources.GetHotelIndex(indexName);
 
             SearchServiceClient client = resources.GetServiceClient();
             SearchIndex actualIndex = await client.CreateIndexAsync(expectedIndex);
@@ -252,6 +196,76 @@ namespace Azure.Search.Documents.Tests
             // TODO: Replace with comparison of actual SearchIndex once test framework uses Azure.Search.Documents instead.
             Assert.AreEqual(resources.IndexName, index.Name);
             Assert.AreEqual(13, index.Fields.Count);
+        }
+
+        [Test]
+        public async Task CreateAzureBlobIndexer()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);
+
+            SearchServiceClient serviceClient = resources.GetServiceClient();
+
+            // Create the Azure Blob data source and indexer.
+            DataSource dataSource = new DataSource(
+                resources.StorageAccountName,
+                DataSourceType.AzureBlob,
+                new DataSourceCredentials(resources.StorageAccountConnectionString),
+                new DataContainer(resources.BlobContainerName));
+
+            DataSource actualSource = await serviceClient.CreateDataSourceAsync(
+                dataSource,
+                new SearchRequestOptions
+                {
+                    ClientRequestId = Recording.Random.NewGuid(),
+                });
+
+            SearchIndexer indexer = new SearchIndexer(
+                Recording.Random.GetName(8),
+                dataSource.Name,
+                resources.IndexName);
+
+            SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
+                indexer,
+                new SearchRequestOptions
+                {
+                    ClientRequestId = Recording.Random.NewGuid(),
+                });
+
+            // Update the indexer.
+            actualIndexer.Description = "Updated description";
+            await serviceClient.CreateOrUpdateIndexerAsync(
+                actualIndexer,
+                new MatchConditions
+                {
+                    IfMatch = new ETag(actualIndexer.ETag),
+                },
+                new SearchRequestOptions
+                {
+                    ClientRequestId = Recording.Random.NewGuid(),
+                });
+
+            // Run the indexer.
+            await serviceClient.RunIndexerAsync(
+                indexer.Name,
+                new SearchRequestOptions
+                {
+                    ClientRequestId = Recording.Random.NewGuid(),
+                });
+
+            // Indexers may take longer than indexing documents uploaded to the Search service.
+            await DelayAsync(TimeSpan.FromSeconds(5));
+
+            // Query the index.
+            SearchIndexClient indexClient = serviceClient.GetSearchIndexClient(
+                resources.IndexName);
+
+            long count = await indexClient.GetDocumentCountAsync(
+                new SearchRequestOptions
+                {
+                    ClientRequestId = Recording.Random.NewGuid(),
+                });
+
+            Assert.AreEqual(SearchResources.TestDocuments.Length, count);
         }
     }
 }
