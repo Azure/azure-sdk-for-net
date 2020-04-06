@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
+using Azure.Storage.Files.DataLake.Models;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -27,12 +28,11 @@ namespace Azure.Storage.Files.DataLake
             }
             else
             {
-                Dictionary<string, Dictionary<string, string>> errorDictionary
-                    = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonMessage);
+                DataLakeErrorWrapper error = JsonSerializer.Deserialize<DataLakeErrorWrapper>(jsonMessage);
                 return new RequestFailedException(
                     status: response.Status,
-                    errorCode: errorDictionary[Constants.DataLake.ErrorKey][Constants.DataLake.ErrorCodeKey],
-                    message: errorDictionary[Constants.DataLake.ErrorKey][Constants.DataLake.ErrorMessageKey],
+                    errorCode: error.Error.Code,
+                    message: $"{error.Error.Message}\n{error.Error.Detail?.ToErrorDetailString()}",
                     innerException: new Exception());
             }
         }

@@ -326,5 +326,15 @@ namespace Azure.Storage.Files.DataLake
                 Permissions = dataLakeAccessPolicy.Permissions
             };
         }
+
+        internal static string ToErrorDetailString(this Dictionary<string, string> errorDetails)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (KeyValuePair<string, string> entry in errorDetails)
+            {
+                sb.Append($"{entry.Key} = {entry.Value}{Environment.NewLine}");
+            }
+            return sb.ToString();
+        }
     }
 }
