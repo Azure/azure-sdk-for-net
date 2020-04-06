@@ -272,14 +272,16 @@ namespace Azure.Storage.Blobs.Test
                     )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.StageAsync);
 
                 clientMock.Setup(
-                    c => c.CommitBlockListAsync(
+                    c => c.CommitBlockListInternal(
                         IsAny<IEnumerable<string>>(),
                         s_blobHttpHeaders,
                         s_metadata,
+                        s_tags,
                         s_conditions,
                         s_accessTier,
+                        true,
                         s_cancellationToken
-                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, BlobRequestConditions, AccessTier?, CancellationToken>(sink.CommitAsync);
+                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, bool, CancellationToken>(sink.CommitInternal);
             }
             else
             {
@@ -294,14 +296,16 @@ namespace Azure.Storage.Blobs.Test
                     )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.Stage);
 
                 clientMock.Setup(
-                    c => c.CommitBlockList(
+                    c => c.CommitBlockListInternal(
                         IsAny<IEnumerable<string>>(),
                         s_blobHttpHeaders,
                         s_metadata,
+                        s_tags,
                         s_conditions,
                         s_accessTier,
+                        false,
                         s_cancellationToken
-                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, BlobRequestConditions, AccessTier?, CancellationToken>(sink.Commit);
+                    )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, bool, CancellationToken>(sink.CommitInternal);
             }
         }
 
@@ -324,14 +328,17 @@ namespace Azure.Storage.Blobs.Test
                 Staged = new Dictionary<string, byte[]>();
             }
 
-            public async Task<Response<BlobContentInfo>> CommitAsync(IEnumerable<string> blocks, BlobHttpHeaders headers, Dictionary<string, string> metadata, BlobRequestConditions accessConditions, AccessTier? accessTier, CancellationToken cancellationToken)
+            public async Task<Response<BlobContentInfo>> CommitInternal(
+                IEnumerable<string> blocks,
+                BlobHttpHeaders headers,
+                Dictionary<string, string> metadata,
+                Dictionary<string, string> tags,
+                BlobRequestConditions accessConditions,
+                AccessTier? accessTier,
+                bool async,
+                CancellationToken cancellationToken)
             {
-                await Task.Delay(25);
-                return Commit(blocks, headers, metadata, accessConditions, accessTier, cancellationToken);
-            }
-
-            public Response<BlobContentInfo> Commit(IEnumerable<string> blocks, BlobHttpHeaders headers, Dictionary<string, string> metadata, BlobRequestConditions accessConditions, AccessTier? accessTier, CancellationToken cancellationToken)
-            {
+                await Task.CompletedTask;
                 Blocks = blocks.ToArray();
                 return s_response;
             }

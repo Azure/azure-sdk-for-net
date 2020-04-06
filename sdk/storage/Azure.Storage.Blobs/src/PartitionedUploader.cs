@@ -248,18 +248,17 @@ namespace Azure.Storage.Blobs
 
                 // Commit the block list after everything has been staged to
                 // complete the upload
-                CommitBlockListOptions options = new CommitBlockListOptions
-                {
-                    HttpHeaders = blobHttpHeaders,
-                    Metadata = metadata,
-                    Tags = tags,
-                    Conditions = conditions,
-                    AccessTier = accessTier
-                };
-                return _client.CommitBlockList(
+                // Calling internal method for easier mocking in PartitionedUploaderTests
+                return _client.CommitBlockListInternal(
                     blockIds,
-                    options,
-                    cancellationToken);
+                    blobHttpHeaders,
+                    metadata,
+                    tags,
+                    conditions,
+                    accessTier,
+                    async: false,
+                    cancellationToken)
+                    .EnsureCompleted();
             }
             catch (Exception ex)
             {
@@ -352,18 +351,15 @@ namespace Azure.Storage.Blobs
                 // commit the block list to complete the upload
                 await Task.WhenAll(runningTasks).ConfigureAwait(false);
 
-                CommitBlockListOptions options = new CommitBlockListOptions
-                {
-                    HttpHeaders = blobHttpHeaders,
-                    Metadata = metadata,
-                    Tags = tags,
-                    Conditions = conditions,
-                    AccessTier = accessTier
-                };
-
-                return await _client.CommitBlockListAsync(
+                // Calling internal method for easier mocking in PartitionedUploaderTests
+                return await _client.CommitBlockListInternal(
                     blockIds,
-                    options,
+                    blobHttpHeaders,
+                    metadata,
+                    tags,
+                    conditions,
+                    accessTier,
+                    async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
             }

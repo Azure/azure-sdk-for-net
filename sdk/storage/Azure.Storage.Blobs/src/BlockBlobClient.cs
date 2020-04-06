@@ -1502,7 +1502,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> CommitBlockListInternal(
+        internal virtual async Task<Response<BlobContentInfo>> CommitBlockListInternal(
             IEnumerable<string> base64BlockIds,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
