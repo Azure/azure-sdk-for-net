@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
+## 1.0.0-preview.2 (2020-04-06)
 
 ### Added
 
