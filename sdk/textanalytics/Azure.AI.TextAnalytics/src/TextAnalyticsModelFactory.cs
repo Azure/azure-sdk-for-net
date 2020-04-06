@@ -17,12 +17,12 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.TextDocumentStatistics"/> for mocking purposes.
         /// </summary>
-        /// <param name="grahemeCount">Sets the <see cref="TextDocumentStatistics.GraphemeCount"/> property.</param>
+        /// <param name="graphemeCount">Sets the <see cref="TextDocumentStatistics.GraphemeCount"/> property.</param>
         /// <param name="transactionCount">Sets the <see cref="TextDocumentStatistics.TransactionCount"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.TextDocumentStatistics"/> for mocking purposes.</returns>
-        public static TextDocumentStatistics TextDocumentStatistics(int grahemeCount, int transactionCount)
+        public static TextDocumentStatistics TextDocumentStatistics(int graphemeCount, int transactionCount)
         {
-            return new TextDocumentStatistics(grahemeCount, transactionCount);
+            return new TextDocumentStatistics(graphemeCount, transactionCount);
         }
 
         /// <summary>
