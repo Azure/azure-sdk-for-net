@@ -163,7 +163,7 @@ await sender.SendAsync(messagesToSend);
 MessageReceiver receiver =  new MessageReceiver(connectionString, entityPath);
 
 // received a list of messages
-IList<Message> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
+IList<Message> receivedMessages = await receiver.ReceiveAsync(maxMessageCount: 10);
 
 foreach (Message receivedMessage in receivedMessages)
 {
