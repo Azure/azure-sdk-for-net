@@ -13,20 +13,20 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class CustomFormModelField
     {
         /// <summary> Initializes a new instance of CustomFormModelField. </summary>
-        /// <param name="label"> Training field name. </param>
+        /// <param name="name"> Training field name. </param>
         /// <param name="accuracy"> Estimated extraction accuracy for this field. </param>
-        internal CustomFormModelField(string label, float? accuracy)
+        internal CustomFormModelField(string name, float? accuracy)
         {
-            if (label == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(label));
+                throw new ArgumentNullException(nameof(name));
             }
             if (accuracy == null)
             {
                 throw new ArgumentNullException(nameof(accuracy));
             }
 
-            Label = label;
+            Name = name;
             Accuracy = accuracy;
         }
     }

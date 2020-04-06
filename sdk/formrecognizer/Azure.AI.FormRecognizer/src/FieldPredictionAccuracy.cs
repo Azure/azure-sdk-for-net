@@ -5,14 +5,15 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
-
+    /// <summary>
+    /// </summary>
     [CodeGenModel("FormFieldsReport")]
     public partial class CustomFormModelField
     {
         /// <summary>
         /// </summary>
         [CodeGenMember("FieldName")]
-        public string Label { get; internal set; }
+        public string Name { get; internal set; }
 
         /// <summary> Estimated extraction accuracy for this field. </summary>
         [CodeGenMember("Accuracy")]
