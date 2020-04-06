@@ -1,7 +1,8 @@
 # Release History
 
-## 1.0.0-preview.1
+## 1.0.0-preview.1 (2020-04-06)
 
+- Update package version to follow standard Azure-SDK-for-Net versioning guidelines
 - Require `System.IdentityModel.Tokens.Jwt >= 5.1.2` instead of `System.IdentityModel.Tokens.Jwt == 5.1.2`.
 
 ## 0.10.0-preview
