@@ -147,7 +147,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace.</param>
         /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring this <see cref="ServiceBusClient"/>.</param>
         public ServiceBusClient(
-        string fullyQualifiedNamespace,
+            string fullyQualifiedNamespace,
             TokenCredential credential,
             ServiceBusClientOptions options)
         {
