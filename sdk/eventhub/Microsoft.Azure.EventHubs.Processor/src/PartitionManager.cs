@@ -253,7 +253,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                         try
                         {
                             allLeases[subjectLease.PartitionId] = subjectLease;
-                            if (subjectLease.Owner == this.host.HostName && !(await subjectLease.IsExpired()))
+                            if (subjectLease.Owner == this.host.HostName && !(await subjectLease.IsExpired().ConfigureAwait(false)))
                             {
                                 ourLeaseCount++;
 
