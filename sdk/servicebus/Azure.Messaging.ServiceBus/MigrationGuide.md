@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to version 7 of the Service Bus client library from version 4. It will focus on side-by-side comparisons for similar operations between the v7 package, [`Azure.Messaging.ServiceBus`](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) and v4 package, [`Microsoft.Azure.ServiceBus`](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/).
 
-Familiarity with the v4 client library is assumed. For those new to the Service Bus client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/Servicebus/Azure.Messaging.ServiceBus/samples) for the v7 library rather than this guide.
+Familiarity with the v4 client library is assumed. For those new to the Service Bus client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples) for the v7 library rather than this guide.
 
 ## Table of contents
 
@@ -56,7 +56,7 @@ The v4 client allowed for sending a single message or a list of messages, which 
 | In v4                                          | Equivalent in v7                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
 | `QueueClient.SendAsync(Message)` or `MessageSender.SendAsync(Message)`                          | `ServiceBusSender.SendAsync(ServiceBusMessage)`                               | [Send a message](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-message) |
-| `QueueClient.SendAsync(IList<Message>)` or `MessageSender.SendAsync(IList<Message>)`                          | `ServiceBusSender.SendBatchAsync(ServiceBusMessageBatch)`                               | [Send a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample01_HelloWorld.cs#L83) |
+| `QueueClient.SendAsync(IList<Message>)` or `MessageSender.SendAsync(IList<Message>)`                          | `ServiceBusSender.SendBatchAsync(ServiceBusMessageBatch)`                               | [Send a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-batch-of-messages) |
 
 ### Receiving messages 
 
@@ -152,7 +152,7 @@ var messagesToSend = new List<Message>();
 
 for (var i = 0; i < 10; i++)
 {
-    var message = new Message(Encoding.UTF8.GetBytes("Hello World" + i));
+    Message message = new Message(Encoding.UTF8.GetBytes("Hello World" + i));
     messagesToSend.Add(message);
 }
 
