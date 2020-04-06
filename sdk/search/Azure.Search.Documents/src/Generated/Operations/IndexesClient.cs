@@ -137,7 +137,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GetIndexStatisticsResult>> GetStatisticsAsync(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetStatisticsAsync(indexName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GetIndexStatisticsResult> GetStatistics(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexStatistics> GetStatistics(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.GetStatistics(indexName, xMsClientRequestId, cancellationToken);
         }

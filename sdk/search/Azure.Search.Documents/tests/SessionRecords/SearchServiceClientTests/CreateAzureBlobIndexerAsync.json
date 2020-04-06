@@ -1,0 +1,250 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-ebnmsrru.search.windows.net/datasources?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "321",
+        "Content-Type": "application/json",
+        "traceparent": "00-45683c7f91292c47bc5a3fb58dce41ad-d06c5cc36d605449-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200405.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": [
+          "f5274433-118f-9bbb-7697-416dfa14a0bf",
+          "fecd81e5c16edf0a09487bc3f8404bc1"
+        ],
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "azsnetjdkehurb",
+        "type": "azureblob",
+        "credentials": {
+          "connectionString": "DefaultEndpointsProtocol=https;AccountName=azsnetjdkehurb;AccountKey=vW/rR\u002BOBGTg8kNQ\u002BmXf7dIKMTbc1Fh3xRxez9S3pGZq3LJii6h3Mfnr\u002B6YCEGCWfmqt2IVGLU3RnzmUH3\u002BU4Qg==;EndpointSuffix=core.windows.net"
+        },
+        "container": {
+          "name": "hotels"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "360",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Mon, 06 Apr 2020 04:18:38 GMT",
+        "elapsed-time": "68",
+        "ETag": "W/\u00220x8D7D9E194978617\u0022",
+        "Expires": "-1",
+        "Location": "https://azs-net-ebnmsrru.search.windows.net/datasources(\u0027azsnetjdkehurb\u0027)?api-version=2019-05-06-Preview",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "8fb4a664-c7c8-48e3-8e41-8a3b3b825052",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-ebnmsrru.search.windows.net/$metadata#datasources/$entity",
+        "@odata.etag": "\u00220x8D7D9E194978617\u0022",
+        "name": "azsnetjdkehurb",
+        "description": null,
+        "type": "azureblob",
+        "subtype": null,
+        "credentials": {
+          "connectionString": null
+        },
+        "container": {
+          "name": "hotels",
+          "query": null
+        },
+        "dataChangeDetectionPolicy": null,
+        "dataDeletionDetectionPolicy": null
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-ebnmsrru.search.windows.net/indexers?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "82",
+        "Content-Type": "application/json",
+        "traceparent": "00-2bc60bceca911e459da8fa3761b11fb3-55e6fa1c1ca6bd4c-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200405.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": [
+          "95f4308e-5178-81a5-43c1-6d586f0e5c71",
+          "46eb4839f89535a24b7f2b1c3061ef95"
+        ],
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "jgiorpcc",
+        "dataSourceName": "azsnetjdkehurb",
+        "targetIndexName": "bretbohu"
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "356",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Mon, 06 Apr 2020 04:18:38 GMT",
+        "elapsed-time": "346",
+        "ETag": "W/\u00220x8D7D9E194C99BB4\u0022",
+        "Expires": "-1",
+        "Location": "https://azs-net-ebnmsrru.search.windows.net/indexers(\u0027jgiorpcc\u0027)?api-version=2019-05-06-Preview",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "030823ba-8fd7-4453-98f0-d61776a3a8b7",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-ebnmsrru.search.windows.net/$metadata#indexers/$entity",
+        "@odata.etag": "\u00220x8D7D9E194C99BB4\u0022",
+        "name": "jgiorpcc",
+        "description": null,
+        "dataSourceName": "azsnetjdkehurb",
+        "skillsetName": null,
+        "targetIndexName": "bretbohu",
+        "disabled": null,
+        "schedule": null,
+        "parameters": null,
+        "fieldMappings": [],
+        "outputFieldMappings": [],
+        "cache": null
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-ebnmsrru.search.windows.net/indexers(\u0027jgiorpcc\u0027)?api-version=2019-05-06-Preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "208",
+        "Content-Type": "application/json",
+        "If-Match": "\u00220x8D7D9E194C99BB4\u0022",
+        "Prefer": "return=representation",
+        "traceparent": "00-355cad7be3137644993dc8d141a8907b-f789c254b80f9643-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200405.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": [
+          "3e70dbe5-75cd-b767-a3fa-8037d2f25133",
+          "870572815563955c8dbe49f8268950e1"
+        ],
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "jgiorpcc",
+        "description": "Updated description",
+        "dataSourceName": "azsnetjdkehurb",
+        "targetIndexName": "bretbohu",
+        "fieldMappings": [],
+        "outputFieldMappings": [],
+        "@odata.etag": "\u00220x8D7D9E194C99BB4\u0022"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "373",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Mon, 06 Apr 2020 04:18:38 GMT",
+        "elapsed-time": "78",
+        "ETag": "W/\u00220x8D7D9E194F966F6\u0022",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "2fe5c46d-f8e9-4c72-9115-37300662cb17",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-ebnmsrru.search.windows.net/$metadata#indexers/$entity",
+        "@odata.etag": "\u00220x8D7D9E194F966F6\u0022",
+        "name": "jgiorpcc",
+        "description": "Updated description",
+        "dataSourceName": "azsnetjdkehurb",
+        "skillsetName": null,
+        "targetIndexName": "bretbohu",
+        "disabled": null,
+        "schedule": null,
+        "parameters": null,
+        "fieldMappings": [],
+        "outputFieldMappings": [],
+        "cache": null
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-ebnmsrru.search.windows.net/indexers(\u0027jgiorpcc\u0027)/search.run?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "traceparent": "00-a8ac0568ac871c4ebea623e85f0f96ae-9ed356a57a0ee64b-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200405.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": [
+          "9473d8d1-1e9d-c4a4-e034-a39a776a6359",
+          "be9af72e685c8f317edab00f2b6e911a"
+        ],
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Mon, 06 Apr 2020 04:18:38 GMT",
+        "elapsed-time": "157",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "035fee72-cf7a-42d4-a789-4a641beb650f",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://azs-net-ebnmsrru.search.windows.net/indexes(\u0027bretbohu\u0027)/docs/$count?api-version=2019-05-06-Preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200405.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": [
+          "fa669ea9-bc7e-6395-ce40-a62fb1c11d22",
+          "2ecaef5b92ee6985a6e416c36d959872"
+        ],
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "5",
+        "Content-Type": "text/plain",
+        "Date": "Mon, 06 Apr 2020 04:18:43 GMT",
+        "elapsed-time": "4",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "f5faf5aa-4de7-4443-984b-c49b59edc21d",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": "\uFEFF10"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "939854059",
+    "SearchIndexName": "bretbohu",
+    "SearchServiceName": "azs-net-ebnmsrru",
+    "StorageAccountConnectionString": "DefaultEndpointsProtocol=https;AccountName=azsnetjdkehurb;AccountKey=vW/rR\u002BOBGTg8kNQ\u002BmXf7dIKMTbc1Fh3xRxez9S3pGZq3LJii6h3Mfnr\u002B6YCEGCWfmqt2IVGLU3RnzmUH3\u002BU4Qg==;EndpointSuffix=core.windows.net",
+    "StorageAccountName": "azsnetjdkehurb"
+  }
+}
