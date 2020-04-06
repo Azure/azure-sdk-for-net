@@ -33,12 +33,7 @@ namespace Azure.Identity
         protected VisualStudioCodeCredential() : this(default, default) {}
 
         /// <inheritdoc />
-        public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
-
-        internal VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-            : this(tenantId, CredentialPipeline.GetInstance(options), fileSystem, vscAdapter)
-        {
-        }
+        public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, CredentialPipeline.GetInstance(options), default, default) {}
 
         internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
             : this(tenantId, pipeline, pipeline.CreateMsalPublicClient(ClientId), fileSystem, vscAdapter)
