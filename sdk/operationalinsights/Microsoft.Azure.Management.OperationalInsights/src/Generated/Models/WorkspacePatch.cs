@@ -22,18 +22,18 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     /// The top level Workspace resource container.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Workspace : IResource
+    public partial class WorkspacePatch : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Workspace class.
+        /// Initializes a new instance of the WorkspacePatch class.
         /// </summary>
-        public Workspace()
+        public WorkspacePatch()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Workspace class.
+        /// Initializes a new instance of the WorkspacePatch class.
         /// </summary>
         /// <param name="provisioningState">The provisioning state of the
         /// workspace. Possible values include: 'Creating', 'Succeeded',
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// 'Enabled', 'Disabled'</param>
         /// <param name="privateLinkScopedResources">List of linked private
         /// link scope resources.</param>
-        /// <param name="eTag">The ETag of the workspace.</param>
-        public Workspace(string provisioningState = default(string), string customerId = default(string), WorkspaceSku sku = default(WorkspaceSku), int? retentionInDays = default(int?), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), string eTag = default(string))
+        /// <param name="tags">Resource tags. Optional.</param>
+        public WorkspacePatch(string provisioningState = default(string), string customerId = default(string), WorkspaceSku sku = default(WorkspaceSku), int? retentionInDays = default(int?), string publicNetworkAccessForIngestion = default(string), string publicNetworkAccessForQuery = default(string), IList<PrivateLinkScopedResource> privateLinkScopedResources = default(IList<PrivateLinkScopedResource>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             ProvisioningState = provisioningState;
             CustomerId = customerId;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             PublicNetworkAccessForIngestion = publicNetworkAccessForIngestion;
             PublicNetworkAccessForQuery = publicNetworkAccessForQuery;
             PrivateLinkScopedResources = privateLinkScopedResources;
-            ETag = eTag;
+            Tags = tags;
             CustomInit();
         }
 
@@ -121,10 +121,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public IList<PrivateLinkScopedResource> PrivateLinkScopedResources { get; private set; }
 
         /// <summary>
-        /// Gets or sets the ETag of the workspace.
+        /// Gets or sets resource tags. Optional.
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Validate the object.

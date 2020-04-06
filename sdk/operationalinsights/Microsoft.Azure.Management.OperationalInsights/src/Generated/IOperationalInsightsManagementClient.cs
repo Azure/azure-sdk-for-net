@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Operational Insights Client
@@ -41,16 +45,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -72,9 +74,9 @@ namespace Microsoft.Azure.Management.OperationalInsights
 
 
         /// <summary>
-        /// Gets the ILinkedServicesOperations.
+        /// Gets the IDataExportsOperations.
         /// </summary>
-        ILinkedServicesOperations LinkedServices { get; }
+        IDataExportsOperations DataExports { get; }
 
         /// <summary>
         /// Gets the IDataSourcesOperations.
@@ -87,9 +89,51 @@ namespace Microsoft.Azure.Management.OperationalInsights
         IWorkspacesOperations Workspaces { get; }
 
         /// <summary>
+        /// Gets the ILinkedServicesOperations.
+        /// </summary>
+        ILinkedServicesOperations LinkedServices { get; }
+
+        /// <summary>
+        /// Gets the ILinkedStorageAccountsOperations.
+        /// </summary>
+        ILinkedStorageAccountsOperations LinkedStorageAccounts { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Gets the IClustersOperations.
+        /// </summary>
+        IClustersOperations Clusters { get; }
+
+        /// <summary>
+        /// Gets the IStorageInsightsOperations.
+        /// </summary>
+        IStorageInsightsOperations StorageInsights { get; }
+
+        /// <summary>
+        /// Gets the ISavedSearchesOperations.
+        /// </summary>
+        ISavedSearchesOperations SavedSearches { get; }
+
+        /// <summary>
+        /// Get the status of a long running azure asynchronous operation.
+        /// </summary>
+        /// <param name='location'>
+        /// The region name of operation.
+        /// </param>
+        /// <param name='asyncOperationId'>
+        /// The operation Id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<OperationStatus>> GetAsyncOperationsStatusWithHttpMessagesAsync(string location, string asyncOperationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

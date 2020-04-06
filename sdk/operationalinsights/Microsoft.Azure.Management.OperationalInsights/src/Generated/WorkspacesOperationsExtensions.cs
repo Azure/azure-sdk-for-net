@@ -30,10 +30,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             /// <param name='intelligencePackName'>
             /// The name of the intelligence pack to be disabled.
@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             /// <param name='intelligencePackName'>
             /// The name of the intelligence pack to be disabled.
@@ -73,10 +73,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             /// <param name='intelligencePackName'>
             /// The name of the intelligence pack to be enabled.
@@ -93,10 +93,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             /// <param name='intelligencePackName'>
             /// The name of the intelligence pack to be enabled.
@@ -117,10 +117,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             public static IList<IntelligencePack> ListIntelligencePacks(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -135,10 +135,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -152,16 +152,56 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
+            /// Gets a list of management groups connected to a workspace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            public static IEnumerable<ManagementGroup> ListManagementGroups(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
+            {
+                return operations.ListManagementGroupsAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of management groups connected to a workspace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<ManagementGroup>> ListManagementGroupsAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListManagementGroupsWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the shared keys for a workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             public static SharedKeys GetSharedKeys(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -175,10 +215,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -198,7 +238,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -215,7 +255,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='workspaceName'>
             /// The name of the workspace.
@@ -232,53 +272,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
             }
 
             /// <summary>
-            /// Gets a list of management groups connected to a workspace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            public static IEnumerable<ManagementGroup> ListManagementGroups(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
-            {
-                return operations.ListManagementGroupsAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of management groups connected to a workspace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IEnumerable<ManagementGroup>> ListManagementGroupsAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListManagementGroupsWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets workspaces in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IEnumerable<Workspace> ListByResourceGroup(this IWorkspacesOperations operations, string resourceGroupName)
             {
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group to get. The name is case insensitive.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The resource group name of the workspace.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             public static void Delete(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -406,7 +406,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The resource group name of the workspace.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -426,7 +426,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The resource group name of the workspace.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             public static Workspace Get(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
             {
@@ -443,7 +443,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// The resource group name of the workspace.
             /// </param>
             /// <param name='workspaceName'>
-            /// Name of the Log Analytics Workspace.
+            /// The name of the workspace.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='parameters'>
             /// The parameters required to patch a workspace.
             /// </param>
-            public static Workspace Update(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, Workspace parameters)
+            public static Workspace Update(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, WorkspacePatch parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, workspaceName, parameters).GetAwaiter().GetResult();
             }
@@ -494,7 +494,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Workspace> UpdateAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, Workspace parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Workspace> UpdateAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, WorkspacePatch parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -546,6 +546,43 @@ namespace Microsoft.Azure.Management.OperationalInsights
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Deletes a workspace instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the workspace.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            public static void BeginDelete(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a workspace instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the workspace.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IWorkspacesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }
