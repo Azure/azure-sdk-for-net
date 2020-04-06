@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
 
     /// <summary>
-    /// Defines values for SkuName.
+    /// Defines values for ResourceIdentityType.
     /// </summary>
-    public static class SkuName
+    public static class ResourceIdentityType
     {
-        public const string Standard = "Standard";
-        public const string RS0 = "RS0";
+        public const string SystemAssigned = "SystemAssigned";
+        public const string None = "None";
     }
 }

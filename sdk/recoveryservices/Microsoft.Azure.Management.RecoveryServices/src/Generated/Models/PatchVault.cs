@@ -16,22 +16,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Resource information, as returned by the resource provider.
+    /// Patch Resource information, as returned by the resource provider.
     /// </summary>
-    public partial class Vault : TrackedResource
+    public partial class PatchVault : PatchTrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the Vault class.
+        /// Initializes a new instance of the PatchVault class.
         /// </summary>
-        public Vault()
+        public PatchVault()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Vault class.
+        /// Initializes a new instance of the PatchVault class.
         /// </summary>
-        /// <param name="location">Resource location.</param>
         /// <param name="id">Resource Id represents the complete path to the
         /// resource.</param>
         /// <param name="name">Resource name associated with the
@@ -39,11 +38,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
         /// <param name="eTag">Optional ETag.</param>
+        /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        public Vault(string location, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityData identity = default(IdentityData), VaultProperties properties = default(VaultProperties), Sku sku = default(Sku))
-            : base(location, id, name, type, eTag, tags)
+        public PatchVault(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VaultProperties properties = default(VaultProperties), Sku sku = default(Sku))
+            : base(id, name, type, eTag, location, tags)
         {
-            Identity = identity;
             Properties = properties;
             Sku = sku;
             CustomInit();
@@ -53,11 +52,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public IdentityData Identity { get; set; }
 
         /// <summary>
         /// </summary>
@@ -75,13 +69,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
-            if (Identity != null)
-            {
-                Identity.Validate();
-            }
             if (Sku != null)
             {
                 Sku.Validate();

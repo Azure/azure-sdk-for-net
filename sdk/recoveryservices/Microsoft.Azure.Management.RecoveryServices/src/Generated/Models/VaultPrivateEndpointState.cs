@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
 
     /// <summary>
-    /// Defines values for SkuName.
+    /// Defines values for VaultPrivateEndpointState.
     /// </summary>
-    public static class SkuName
+    public static class VaultPrivateEndpointState
     {
-        public const string Standard = "Standard";
-        public const string RS0 = "RS0";
+        public const string None = "None";
+        public const string Enabled = "Enabled";
     }
 }

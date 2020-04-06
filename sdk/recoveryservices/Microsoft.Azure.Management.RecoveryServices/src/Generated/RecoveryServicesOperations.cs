@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.RecoveryServices
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ReplicationUsagesOperations operations.
+    /// RecoveryServicesOperations operations.
     /// </summary>
-    internal partial class ReplicationUsagesOperations : IServiceOperations<RecoveryServicesClient>, IReplicationUsagesOperations
+    internal partial class RecoveryServicesOperations : IServiceOperations<RecoveryServicesClient>, IRecoveryServicesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ReplicationUsagesOperations class.
+        /// Initializes a new instance of the RecoveryServicesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ReplicationUsagesOperations(RecoveryServicesClient client)
+        internal RecoveryServicesOperations(RecoveryServicesClient client)
         {
             if (client == null)
             {
@@ -51,14 +51,21 @@ namespace Microsoft.Azure.Management.RecoveryServices
         public RecoveryServicesClient Client { get; private set; }
 
         /// <summary>
-        /// Fetches the replication usages of the vault.
+        /// API to check for resource name availability.
+        /// A name is available if no other resource exists that has the same
+        /// SubscriptionId, Resource Name and Type
+        /// or if one or more such resources exist, each of these must be GC'd and
+        /// their time of deletion be more than 24 Hours Ago
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the recovery services vault is
         /// present.
         /// </param>
-        /// <param name='vaultName'>
-        /// The name of the recovery services vault.
+        /// <param name='location'>
+        /// Location of the resource
+        /// </param>
+        /// <param name='input'>
+        /// Contains information about Resource type and Resource name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -81,23 +88,27 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<ReplicationUsage>>> ListWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, CheckNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            if (vaultName == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "location");
+            }
+            if (input == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "input");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -107,16 +118,17 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("vaultName", vaultName);
+                tracingParameters.Add("location", location);
+                tracingParameters.Add("input", input);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/replicationUsages").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
+            _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -129,7 +141,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -160,6 +172,12 @@ namespace Microsoft.Azure.Management.RecoveryServices
 
             // Serialize Request
             string _requestContent = null;
+            if(input != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(input, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -215,7 +233,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<ReplicationUsage>>();
+            var _result = new AzureOperationResponse<CheckNameAvailabilityResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -228,7 +246,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ReplicationUsage>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CheckNameAvailabilityResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

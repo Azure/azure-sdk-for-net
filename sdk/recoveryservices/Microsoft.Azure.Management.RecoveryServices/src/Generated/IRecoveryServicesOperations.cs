@@ -19,19 +19,26 @@ namespace Microsoft.Azure.Management.RecoveryServices
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ReplicationUsagesOperations operations.
+    /// RecoveryServicesOperations operations.
     /// </summary>
-    public partial interface IReplicationUsagesOperations
+    public partial interface IRecoveryServicesOperations
     {
         /// <summary>
-        /// Fetches the replication usages of the vault.
+        /// API to check for resource name availability.
+        /// A name is available if no other resource exists that has the same
+        /// SubscriptionId, Resource Name and Type
+        /// or if one or more such resources exist, each of these must be GC'd
+        /// and their time of deletion be more than 24 Hours Ago
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the recovery services vault is
         /// present.
         /// </param>
-        /// <param name='vaultName'>
-        /// The name of the recovery services vault.
+        /// <param name='location'>
+        /// Location of the resource
+        /// </param>
+        /// <param name='input'>
+        /// Contains information about Resource type and Resource name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -48,6 +55,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<ReplicationUsage>>> ListWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, CheckNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

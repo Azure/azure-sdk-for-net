@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
 
     /// <summary>
-    /// Defines values for SkuName.
+    /// Defines values for ProvisioningState.
     /// </summary>
-    public static class SkuName
+    public static class ProvisioningState
     {
-        public const string Standard = "Standard";
-        public const string RS0 = "RS0";
+        public const string Succeeded = "Succeeded";
+        public const string Deleting = "Deleting";
+        public const string Failed = "Failed";
+        public const string Pending = "Pending";
     }
 }

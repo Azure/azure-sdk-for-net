@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
 
     /// <summary>
-    /// Defines values for SkuName.
+    /// Defines values for PrivateEndpointConnectionStatus.
     /// </summary>
-    public static class SkuName
+    public static class PrivateEndpointConnectionStatus
     {
-        public const string Standard = "Standard";
-        public const string RS0 = "RS0";
+        public const string Pending = "Pending";
+        public const string Approved = "Approved";
+        public const string Rejected = "Rejected";
+        public const string Disconnected = "Disconnected";
     }
 }

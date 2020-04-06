@@ -14,24 +14,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the certificate to be uploaded to the vault.
+    /// The Private Endpoint network resource that is linked to the Private
+    /// Endpoint connection.
     /// </summary>
-    public partial class CertificateRequest
+    public partial class PrivateEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the CertificateRequest class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public CertificateRequest()
+        public PrivateEndpoint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CertificateRequest class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public CertificateRequest(RawCertificateData properties = default(RawCertificateData))
+        /// <param name="id">Gets or sets id.</param>
+        public PrivateEndpoint(string id = default(string))
         {
-            Properties = properties;
+            Id = id;
             CustomInit();
         }
 
@@ -41,9 +43,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public RawCertificateData Properties { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }
