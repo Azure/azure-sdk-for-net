@@ -1,7 +1,7 @@
 # Release History
 
-## 12.4.0-preview.1 (Unreleased)
-
+## 12.4.0 (2020-04)
+- Added IsDirectoryKey constant to Constants.DataLake
 
 ## 12.3.0 (2020-03)
 - Added InitialTransferLength to StorageTransferOptions
