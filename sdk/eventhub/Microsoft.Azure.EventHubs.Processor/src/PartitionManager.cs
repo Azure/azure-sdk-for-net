@@ -90,6 +90,10 @@ namespace Microsoft.Azure.EventHubs.Processor
             {
                 await this.RunLoopAsync(this.cancellationTokenSource.Token).ConfigureAwait(false);
             }
+            catch (TaskCanceledException) when (this.cancellationTokenSource.IsCancellationRequested)
+            {
+                // Expected during host shutdown.
+            }
             catch (Exception e)
             {
                 // Ideally RunLoop should never throw.
@@ -249,7 +253,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                         try
                         {
                             allLeases[subjectLease.PartitionId] = subjectLease;
-                            if (subjectLease.Owner == this.host.HostName)
+                            if (subjectLease.Owner == this.host.HostName && !(await subjectLease.IsExpired()))
                             {
                                 ourLeaseCount++;
 
