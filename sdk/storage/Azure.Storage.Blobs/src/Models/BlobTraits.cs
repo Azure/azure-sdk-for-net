@@ -33,6 +33,11 @@ namespace Azure.Storage.Blobs.Models
         Metadata = 2,
 
         /// <summary>
+        /// Flat specifying that the blob's tags should be included.
+        /// </summary>
+        Tags = 4,
+
+        /// <summary>
         /// Flag specifying that all traits should be included.
         /// </summary>
         All = ~None

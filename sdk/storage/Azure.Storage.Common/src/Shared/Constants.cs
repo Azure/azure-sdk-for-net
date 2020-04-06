@@ -21,8 +21,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        //TODO updated this to 2019-12-12
-        public const string DefaultSasVersion = "2019-07-07";
+        public const string DefaultSasVersion = "2019-12-12";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -314,6 +313,7 @@ namespace Azure.Storage
                 public const char Update = 'u';
                 public const char Process = 'p';
                 public const char Create = 'c';
+                public const char Tag = 't';
             }
 
             internal static class Parameters

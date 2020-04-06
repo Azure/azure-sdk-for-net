@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1323,5 +1324,103 @@ namespace Azure.Storage.Blobs
                     cancellationToken)
                     .ConfigureAwait(false);
         #endregion DeleteBlobContainer
+
+        #region FilterBlobs
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// match a given search expression. Filter blobs searches across all containers within a
+        /// storage account but can be scoped within the expression to a single container.
+        /// </summary>
+        /// <param name="expression">
+        /// The where parameter enables the caller to query blobs whose tags match a given expression.
+        /// The given expression must evaluate to true for a blob to be returned in the results.
+        /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+        /// however, only a subset of the OData filter syntax is supported in the Blob service.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<FilterBlobItem> FilterBlobs(
+            string expression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, expression).ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// match a given search expression. Filter blobs searches across all containers within a
+        /// storage account but can be scoped within the expression to a single container.
+        /// </summary>
+        /// <param name="expression">
+        /// The where parameter enables the caller to query blobs whose tags match a given expression.
+        /// The given expression must evaluate to true for a blob to be returned in the results.
+        /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
+        /// however, only a subset of the OData filter syntax is supported in the Blob service.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<FilterBlobItem> FilterBlobsAsync(
+            string expression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, expression).ToAsyncCollection(cancellationToken);
+
+        internal async Task<Response<FilterBlobSegment>> FilterBlobsInternal(
+            string marker,
+            string expression,
+            int? pageSizeHint,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobServiceClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobServiceClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(expression)}: {expression}");
+
+                try
+                {
+                    return await BlobRestClient.Service.FilterBlobsAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        version: Version.ToVersionString(),
+                        //where: WebUtility.UrlEncode(expression),
+                        where: expression,
+                        marker: marker,
+                        maxresults: pageSizeHint,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobServiceClient));
+                }
+            }
+        }
+        #endregion FilterBlobs
     }
 }

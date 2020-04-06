@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -482,6 +483,44 @@ namespace Azure.Storage.Blobs.Test
             await service.DeleteBlobContainerAsync(name);
             Assert.ThrowsAsync<RequestFailedException>(
                 async () => await container.GetPropertiesAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task FilterBlobsAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            string tagKey = "myTagKey";
+            string tagValue = "myTagValue";
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue }
+            };
+            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            string expression = $"\"{tagKey}\"='{tagValue}'";
+
+            // It takes a few seconds for Filter Blobs to pick up new changes
+            await Task.Delay(1000);
+
+            // Act
+            List<FilterBlobItem> blobs = new List<FilterBlobItem>();
+            await foreach (Page<FilterBlobItem> page in service.FilterBlobsAsync(expression).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            FilterBlobItem filterBlob = blobs.Where(r => r.Name == blobName).FirstOrDefault();
+            Assert.AreEqual(tagValue, filterBlob.TagValue);
         }
     }
 }

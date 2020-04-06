@@ -1556,6 +1556,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsFlatSegmentAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            // Act
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(BlobTraits.Tags).ToListAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, blobItems[0].Tags);
+        }
+
+        [Test]
         [AsyncOnly]
         public async Task ListBlobsFlatSegmentAsync_MaxResults()
         {
@@ -1771,6 +1792,27 @@ namespace Azure.Storage.Blobs.Test
                 expectedPrefixes
                 .All(prefix => foundBlobPrefixes.Contains(prefix))
                 );
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsHierarchySegmentAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            // Act
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(BlobTraits.Tags).ToListAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, blobHierachyItems[0].Blob.Tags);
         }
 
         [Test]

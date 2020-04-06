@@ -1131,7 +1131,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The result of a Filter Blobs API call</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FilterBlobResponse>> FilterBlobsAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FilterBlobSegment>> FilterBlobsAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1244,8 +1244,8 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.FilterBlobsAsync Azure.Response{Azure.Storage.Blobs.Models.FilterBlobResponse}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.FilterBlobResponse> FilterBlobsAsync_CreateResponse(
+            /// <returns>The Service.FilterBlobsAsync Azure.Response{Azure.Storage.Blobs.Models.FilterBlobSegment}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.FilterBlobSegment> FilterBlobsAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -1256,14 +1256,14 @@ namespace Azure.Storage.Blobs
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.FilterBlobResponse _value = Azure.Storage.Blobs.Models.FilterBlobResponse.FromXml(_xml.Root);
+                        Azure.Storage.Blobs.Models.FilterBlobSegment _value = Azure.Storage.Blobs.Models.FilterBlobSegment.FromXml(_xml.Root);
 
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FilterBlobResponse>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FilterBlobSegment>(response);
                     }
                     default:
                     {
@@ -20091,13 +20091,13 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class FilterBlobItem
 
-#region class FilterBlobResponse
+#region class FilterBlobSegment
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// The result of a Filter Blobs API call
     /// </summary>
-    public partial class FilterBlobResponse
+    public partial class FilterBlobSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -20120,18 +20120,18 @@ namespace Azure.Storage.Blobs.Models
         public string NextMarker { get; internal set; }
 
         /// <summary>
-        /// Creates a new FilterBlobResponse instance
+        /// Creates a new FilterBlobSegment instance
         /// </summary>
-        internal FilterBlobResponse()
+        internal FilterBlobSegment()
             : this(false)
         {
         }
 
         /// <summary>
-        /// Creates a new FilterBlobResponse instance
+        /// Creates a new FilterBlobSegment instance
         /// </summary>
         /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal FilterBlobResponse(bool skipInitialization)
+        internal FilterBlobSegment(bool skipInitialization)
         {
             if (!skipInitialization)
             {
@@ -20140,16 +20140,16 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary>
-        /// Deserializes XML into a new FilterBlobResponse instance.
+        /// Deserializes XML into a new FilterBlobSegment instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized FilterBlobResponse instance.</returns>
-        internal static Azure.Storage.Blobs.Models.FilterBlobResponse FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized FilterBlobSegment instance.</returns>
+        internal static Azure.Storage.Blobs.Models.FilterBlobSegment FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             System.Xml.Linq.XAttribute _attribute;
-            Azure.Storage.Blobs.Models.FilterBlobResponse _value = new Azure.Storage.Blobs.Models.FilterBlobResponse(true);
+            Azure.Storage.Blobs.Models.FilterBlobSegment _value = new Azure.Storage.Blobs.Models.FilterBlobSegment(true);
             _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
             if (_attribute != null)
             {
@@ -20181,7 +20181,7 @@ namespace Azure.Storage.Blobs.Models
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobResponse value);
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobSegment value);
     }
 
     /// <summary>
@@ -20190,15 +20190,15 @@ namespace Azure.Storage.Blobs.Models
     public static partial class BlobsModelFactory
     {
         /// <summary>
-        /// Creates a new FilterBlobResponse instance for mocking.
+        /// Creates a new FilterBlobSegment instance for mocking.
         /// </summary>
-        public static FilterBlobResponse FilterBlobResponse(
+        public static FilterBlobSegment FilterBlobSegment(
             string serviceEndpoint,
             string where,
             System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> blobs,
             string nextMarker = default)
         {
-            return new FilterBlobResponse()
+            return new FilterBlobSegment()
             {
                 ServiceEndpoint = serviceEndpoint,
                 Where = where,
@@ -20208,7 +20208,7 @@ namespace Azure.Storage.Blobs.Models
         }
     }
 }
-#endregion class FilterBlobResponse
+#endregion class FilterBlobSegment
 
 #region class FlattenedContainerItem
 namespace Azure.Storage.Blobs.Models
