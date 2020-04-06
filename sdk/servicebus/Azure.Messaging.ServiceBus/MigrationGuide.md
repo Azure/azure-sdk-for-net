@@ -137,7 +137,7 @@ Console.WriteLine(body);
 
 In v4, `QueueClient`/`MessageSender`/`MessageReceiver` would be created directly, after which user would call `SendAsync()` method via `QueueClient`/`MessageSender` to send a batch of messages and `ReceiveAsync()` method via `MessageReceiver` to receive a batch of messages.
 
-In v7, user would initialize the `ServiceBusClient` and call `CreateSender()` method to create a `ServiceBusSender` and `CreateReceiver()` method to create a `ServiceBusReceiver`. To send a batch of messages, user would call `CreateBatchAsync()` method to create `ServiceBusMessageBatch` and try to add messages to it using `TryAdd()` method. If the `ServiceBusMessageBatch` accepts a message, user can be confident that it will not violate size constraints when calling `SendBatchAsync()` via `ServiceBusSender`. To receive a batch of messages, user would call `ReiveBatchAsync()` method via `ServiceBusReceiver`. 
+In v7, user would initialize the `ServiceBusClient` and call `CreateSender()` method to create a `ServiceBusSender` and `CreateReceiver()` method to create a `ServiceBusReceiver`. To send a batch of messages, user would call `CreateBatchAsync()` method to create `ServiceBusMessageBatch` and try to add messages to it using `TryAdd()` method. If the `ServiceBusMessageBatch` accepts a message, user can be confident that it will not violate size constraints when calling `SendBatchAsync()` via `ServiceBusSender`. To receive a batch of messages, user would call `ReceiveBatchAsync()` method via `ServiceBusReceiver`. 
 
 In v4:
 
