@@ -37,6 +37,101 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
+        public async Task StartRecognizeContentPopulatesExtractedLayoutPage(bool useStream)
+        {
+            var client = CreateInstrumentedClient();
+            Operation<IReadOnlyList<ExtractedLayoutPage>> operation;
+
+            if (useStream)
+            {
+                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
+                operation = await client.StartRecognizeContentAsync(stream, ContentType.Jpeg);
+            }
+            else
+            {
+                var uri = new Uri(TestEnvironment.RetrieveInvoiceUri(1));
+                operation = await client.StartRecognizeContentFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.IsTrue(operation.HasValue);
+
+            var layoutPage = operation.Value.Single();
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the form. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual(1, layoutPage.PageNumber);
+
+            var rawPage = layoutPage.RawExtractedPage;
+
+            Assert.AreEqual(1, rawPage.Page);
+            Assert.AreEqual(LengthUnit.Inch, rawPage.Unit);
+            Assert.AreEqual(8.5, rawPage.Width);
+            Assert.AreEqual(11, rawPage.Height);
+            Assert.AreEqual(0, rawPage.Angle);
+            Assert.AreEqual(18, rawPage.Lines.Count);
+
+            var lines = rawPage.Lines.ToList();
+
+            for (var lineIndex = 0; lineIndex < lines.Count; lineIndex++)
+            {
+                var line = lines[lineIndex];
+
+                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
+                Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
+                Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
+            }
+
+            var table = layoutPage.Tables.Single();
+
+            Assert.AreEqual(2, table.RowCount);
+            Assert.AreEqual(6, table.ColumnCount);
+
+            var cells = table.Cells.ToList();
+
+            Assert.AreEqual(10, cells.Count);
+
+            var expectedText = new string[2, 6]
+            {
+                { "Invoice Number", "Invoice Date", "Invoice Due Date", "Charges", "", "VAT ID" },
+                { "34278587", "6/18/2017", "6/24/2017", "$56,651.49", "", "PT" }
+            };
+
+            foreach (var cell in cells)
+            {
+                Assert.GreaterOrEqual(cell.RowIndex, 0, $"Cell with text {cell.Text} should have row index greater than or equal to zero.");
+                Assert.Less(cell.RowIndex, table.RowCount, $"Cell with text {cell.Text} should have row index less than {table.RowCount}.");
+                Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with text {cell.Text} should have column index greater than or equal to zero.");
+                Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with text {cell.Text} should have column index less than {table.ColumnCount}.");
+
+                // There's a single cell in the table (row = 1, column = 3) that has a column span of 2.
+
+                var expectedColumnSpan = (cell.RowIndex == 1 && cell.ColumnIndex == 3) ? 2 : 1;
+
+                Assert.AreEqual(1, cell.RowSpan, $"Cell with text {cell.Text} should have a row span of 1.");
+                Assert.AreEqual(expectedColumnSpan, cell.ColumnSpan, $"Cell with text {cell.Text} should have a column span of {expectedColumnSpan}.");
+
+                Assert.AreEqual(expectedText[cell.RowIndex, cell.ColumnIndex], cell.Text);
+
+                Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
+                Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
+
+                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater than or equal to zero.");
+                Assert.LessOrEqual(cell.RowIndex, 1, $"Cell with text {cell.Text} should have confidence less than or equal to one.");
+
+                Assert.Greater(cell.RawExtractedItems.Count, 0, $"Cell with text {cell.Text} should have at least one extracted item.");
+            }
+        }
+
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and perform operations.
+        /// </summary>
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();

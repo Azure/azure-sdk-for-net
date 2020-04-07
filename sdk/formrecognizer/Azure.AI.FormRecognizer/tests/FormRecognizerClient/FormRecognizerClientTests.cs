@@ -64,6 +64,62 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        [Ignore("Argument validation not implemented yet.")]
+        public void StartRecognizeContentRequiresTheFormFileStream()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeContentAsync(null, ContentType.Jpeg));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeContentRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentAsync(stream, ContentType.Jpeg, cancellationSource.Token));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        [Ignore("Argument validation not implemented yet.")]
+        public void StartRecognizeContentFromUriRequiresTheFormFileUri()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeContentFromUriAsync(null));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeContentFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeContentFromUriRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var fakeUri = new Uri("http://localhost");
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationSource.Token));
+        }
+
+        /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsAsync"/>
         /// method.
         /// </summary>
