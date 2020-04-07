@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.HybridData
             }
 
             /// <summary>
-            /// Gets the data service that match the data service name given.
+            /// Gets the data service that matches the data service name given.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.HybridData
             }
 
             /// <summary>
-            /// Gets the data service that match the data service name given.
+            /// Gets the data service that matches the data service name given.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
