@@ -44,13 +44,13 @@ namespace Azure.AI.FormRecognizer
         #region Content
 
         /// <summary>
-        /// Extracts layout elements from one or more passed-in forms.
+        /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain layout elements extracted from the form.</returns>
+        /// completion will contain layout elements recognized from the form.</returns>
         [ForwardsClientCalls]
         public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartRecognizeContentAsync(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
         {
@@ -61,13 +61,13 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extracts layout elements from one or more passed-in forms.
+        /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain layout elements extracted from the form.</returns>
+        /// completion will contain layout elements recognized from the form.</returns>
         [ForwardsClientCalls]
         public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartRecognizeContent(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
         {
@@ -78,12 +78,12 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extracts layout elements from one or more passed-in forms.
+        /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
+        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain layout elements extracted from the form.</returns>
+        /// completion will contain layout elements recognized from the form.</returns>
         [ForwardsClientCalls]
         public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartRecognizeContentFromUriAsync(Uri formFileUri, CancellationToken cancellationToken = default)
         {
@@ -93,12 +93,12 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extracts layout elements from one or more passed-in forms.
+        /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
-        /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
+        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain layout elements extracted from the form.</returns>
+        /// completion will contain layout elements recognized from the form.</returns>
         [ForwardsClientCalls]
         public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartRecognizeContentFromUri(Uri formFileUri, CancellationToken cancellationToken = default)
         {
@@ -112,14 +112,14 @@ namespace Azure.AI.FormRecognizer
         #region Receipts
 
         /// <summary>
-        /// Extracts values from one or more receipts.
+        /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain the extracted receipt.</returns>
+        /// completion will contain the recognized receipt.</returns>
         [ForwardsClientCalls]
         public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartRecognizeReceiptsAsync(Stream receiptFileStream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
@@ -130,14 +130,14 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extracts values from one or more receipts.
+        /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileStream">The stream containing the one or more receipts to extract values from.</param>
+        /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="contentType">The content type of the input file.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain the extracted receipt.</returns>
+        /// completion will contain the recognized receipt.</returns>
         [ForwardsClientCalls]
         public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartRecognizeReceipts(Stream receiptFileStream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
@@ -148,13 +148,13 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extracts values from one or more receipts.
+        /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain the extracted receipt.</returns>
+        /// completion will contain the recognized receipt.</returns>
         [ForwardsClientCalls]
         public virtual async Task<Operation<IReadOnlyList<ExtractedReceipt>>> StartRecognizeReceiptsFromUriAsync(Uri receiptFileUri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
@@ -164,13 +164,13 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extracts values from one or more receipts.
+        /// Recognizes values from one or more receipts.
         /// </summary>
-        /// <param name="receiptFileUri">The absolute URI of the remote file to extract values from.</param>
+        /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
         /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
-        /// completion will contain the extracted receipt.</returns>
+        /// completion will contain the recognized receipt.</returns>
         [ForwardsClientCalls]
         public virtual Operation<IReadOnlyList<ExtractedReceipt>> StartRecognizeReceiptsFromUri(Uri receiptFileUri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
