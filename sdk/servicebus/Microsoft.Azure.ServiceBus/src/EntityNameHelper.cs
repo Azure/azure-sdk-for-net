@@ -133,9 +133,9 @@ namespace Microsoft.Azure.ServiceBus
             if (Uri.TryCreate(entityName, UriKind.Absolute, out Uri uriValue))
             {
                 entityName = uriValue.PathAndQuery;
+                return entityName.TrimStart('/');
             }
-
-            return entityName.TrimStart('/');
+            return entityName;
         }
     }
 }
