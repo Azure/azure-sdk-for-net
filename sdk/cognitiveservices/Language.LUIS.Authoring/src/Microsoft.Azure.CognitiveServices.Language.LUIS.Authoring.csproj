@@ -1,8 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure Cognitive Services Language LUIS Authoring</AssemblyTitle>
-    <Description>Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Authoring API.</Description>
-    <Version>3.2.0-preview.1</Version>
+    <Description>
+      Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Authoring API.
+      Language Understanding - https://aka.ms/luis-sdk-overview
+      Documentation - https://aka.ms/luis-sdk-doc
+      Developer resources - https://aka.ms/luis-sdk-dev
+      LUIS portal - https://aka.ms/luis-sdk-portal
+    </Description>
+    <Version>3.2.0-preview.2</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;LUIS;Language Understanding Intelligent Service;Language Understanding;REST HTTP client</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
@@ -15,11 +21,11 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFags);$(Commonrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
     <AzureApiTag />
-    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+    <PackageTags>$(PackageTTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
 </Project>
