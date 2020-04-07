@@ -1,5 +1,8 @@
 # Release History
 
+## 12.2.0-preview.1 (Unreleased)
+
+
 ## 12.1.0 (2020-04)
 - Fixed bug where DataLakeFileSystemClient.DeleteIfExistsAsync() would throw an exception if the underlying File System did not exist.
 - Added PathProperties.IsDirectory
