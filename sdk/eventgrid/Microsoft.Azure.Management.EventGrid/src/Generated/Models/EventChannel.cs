@@ -43,12 +43,15 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="provisioningState">Provisioning state of the event
         /// channel. Possible values include: 'Creating', 'Updating',
         /// 'Deleting', 'Succeeded', 'Canceled', 'Failed'</param>
-        public EventChannel(string id = default(string), string name = default(string), string type = default(string), EventChannelSource source = default(EventChannelSource), EventChannelDestination destination = default(EventChannelDestination), string provisioningState = default(string))
+        /// <param name="filter">Information about the filter for the event
+        /// channel.</param>
+        public EventChannel(string id = default(string), string name = default(string), string type = default(string), EventChannelSource source = default(EventChannelSource), EventChannelDestination destination = default(EventChannelDestination), string provisioningState = default(string), EventChannelFilter filter = default(EventChannelFilter))
             : base(id, name, type)
         {
             Source = source;
             Destination = destination;
             ProvisioningState = provisioningState;
+            Filter = filter;
             CustomInit();
         }
 
@@ -77,6 +80,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets information about the filter for the event channel.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.filter")]
+        public EventChannelFilter Filter { get; set; }
 
     }
 }
