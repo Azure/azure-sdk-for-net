@@ -13,31 +13,31 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.Tests
 {
     /// <summary>
-    /// The suite of tests for the <see cref="ReceiptClient"/> class.
+    /// The suite of tests for the <see cref="FormRecognizerClient"/> class.
     /// </summary>
     /// <remarks>
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
     [LiveOnly]
-    public class ReceiptClientLiveTests : ClientTestBase
+    public class FormRecognizerClientLiveTests : ClientTestBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReceiptClientLiveTests"/> class.
+        /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public ReceiptClientLiveTests(bool isAsync) : base(isAsync)
+        public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
         /// <summary>
-        /// Verifies that the <see cref="ReceiptClient" /> is able to connect to the Form
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform operations.
         /// </summary>
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartExtractReceiptsPopulatesExtractedReceipt(bool useStream)
+        public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();
             Operation<IReadOnlyList<ExtractedReceipt>> operation;
@@ -45,12 +45,12 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = new FileStream(TestEnvironment.ReceiptPath, FileMode.Open);
-                operation = await client.StartExtractReceiptsAsync(stream, ContentType.Jpeg);
+                operation = await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg);
             }
             else
             {
                 var uri = new Uri(TestEnvironment.ReceiptUri);
-                operation = await client.StartExtractReceiptsAsync(uri);
+                operation = await client.StartRecognizeReceiptsFromUriAsync(uri);
             }
 
             await operation.WaitForCompletionAsync();
@@ -111,11 +111,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
-        /// Creates a <see cref="ReceiptClient" /> with the endpoint and API key provided via environment
+        /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
-        /// <returns>The instrumented <see cref="ReceiptClient" />.</returns>
-        private ReceiptClient CreateInstrumentedClient()
+        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
+        private FormRecognizerClient CreateInstrumentedClient()
         {
             var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.EndpointEnvironmentVariableName);
             var keyEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.ApiKeyEnvironmentVariableName);
@@ -125,7 +125,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var endpoint = new Uri(endpointEnvironmentVariable);
             var credential = new AzureKeyCredential(keyEnvironmentVariable);
-            var client = new ReceiptClient(endpoint, credential);
+            var client = new FormRecognizerClient(endpoint, credential);
 
             return InstrumentClient(client);
         }
