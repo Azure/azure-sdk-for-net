@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.2 (Unreleased)
+
+
 ## 1.0.0-preview.1 (2020-04-06)
 
 - Update package version to follow standard Azure-SDK-for-Net versioning guidelines
