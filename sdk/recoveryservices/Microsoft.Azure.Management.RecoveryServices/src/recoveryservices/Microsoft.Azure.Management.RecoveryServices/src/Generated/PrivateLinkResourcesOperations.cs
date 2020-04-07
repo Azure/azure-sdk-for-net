@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.RecoveryServices
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VaultExtendedInfoOperations operations.
+    /// PrivateLinkResourcesOperations operations.
     /// </summary>
-    internal partial class VaultExtendedInfoOperations : IServiceOperations<RecoveryServicesClient>, IVaultExtendedInfoOperations
+    internal partial class PrivateLinkResourcesOperations : IServiceOperations<RecoveryServicesClient>, IPrivateLinkResourcesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the VaultExtendedInfoOperations class.
+        /// Initializes a new instance of the PrivateLinkResourcesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal VaultExtendedInfoOperations(RecoveryServicesClient client)
+        internal PrivateLinkResourcesOperations(RecoveryServicesClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         public RecoveryServicesClient Client { get; private set; }
 
         /// <summary>
-        /// Get the vault extended info.
+        /// Returns the list of private link resources that need to be created for
+        /// Backup and SiteRecovery
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the recovery services vault is
@@ -81,7 +82,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VaultExtendedInfoResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PrivateLinkResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -95,7 +96,10 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
             }
-            string apiVersion = "2016-06-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -103,22 +107,21 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/extendedInformation/vaultExtendedInfo").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateLinkResources").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -213,7 +216,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VaultExtendedInfoResource>();
+            var _result = new AzureOperationResponse<IPage<PrivateLinkResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -226,7 +229,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VaultExtendedInfoResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<PrivateLinkResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -246,7 +249,8 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
 
         /// <summary>
-        /// Create vault extended info.
+        /// Returns a specified private link resource that need to be created for
+        /// Backup and SiteRecovery
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the recovery services vault is
@@ -255,8 +259,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
         /// </param>
-        /// <param name='resourceResourceExtendedInfoDetails'>
-        /// Details of ResourceExtendedInfo
+        /// <param name='privateLinkResourceName'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -279,7 +282,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VaultExtendedInfoResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string vaultName, VaultExtendedInfoResource resourceResourceExtendedInfoDetails, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateLinkResource>> GetWithHttpMessagesAsync(string resourceGroupName, string vaultName, string privateLinkResourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -293,11 +296,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
             }
-            if (resourceResourceExtendedInfoDetails == null)
+            if (Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceResourceExtendedInfoDetails");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            string apiVersion = "2016-06-01";
+            if (privateLinkResourceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "privateLinkResourceName");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -307,21 +313,21 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vaultName", vaultName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("resourceResourceExtendedInfoDetails", resourceResourceExtendedInfoDetails);
+                tracingParameters.Add("privateLinkResourceName", privateLinkResourceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/extendedInformation/vaultExtendedInfo").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateLinkResources/{privateLinkResourceName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
+            _url = _url.Replace("{privateLinkResourceName}", System.Uri.EscapeDataString(privateLinkResourceName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -330,7 +336,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -361,12 +367,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
 
             // Serialize Request
             string _requestContent = null;
-            if(resourceResourceExtendedInfoDetails != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(resourceResourceExtendedInfoDetails, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -422,7 +422,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VaultExtendedInfoResource>();
+            var _result = new AzureOperationResponse<PrivateLinkResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VaultExtendedInfoResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PrivateLinkResource>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -455,17 +455,11 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
 
         /// <summary>
-        /// Update vault extended info.
+        /// Returns the list of private link resources that need to be created for
+        /// Backup and SiteRecovery
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group where the recovery services vault is
-        /// present.
-        /// </param>
-        /// <param name='vaultName'>
-        /// The name of the recovery services vault.
-        /// </param>
-        /// <param name='resourceResourceExtendedInfoDetails'>
-        /// Details of ResourceExtendedInfo
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -488,25 +482,12 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VaultExtendedInfoResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string vaultName, VaultExtendedInfoResource resourceResourceExtendedInfoDetails, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PrivateLinkResource>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (nextPageLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "nextPageLink");
             }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (vaultName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
-            }
-            if (resourceResourceExtendedInfoDetails == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceResourceExtendedInfoDetails");
-            }
-            string apiVersion = "2016-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -514,24 +495,14 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("vaultName", vaultName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("resourceResourceExtendedInfoDetails", resourceResourceExtendedInfoDetails);
+                tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/extendedInformation/vaultExtendedInfo").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
+            string _url = "{nextLink}";
+            _url = _url.Replace("{nextLink}", nextPageLink);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
             if (_queryParameters.Count > 0)
             {
                 _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
@@ -539,7 +510,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -570,12 +541,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
 
             // Serialize Request
             string _requestContent = null;
-            if(resourceResourceExtendedInfoDetails != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(resourceResourceExtendedInfoDetails, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -631,7 +596,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VaultExtendedInfoResource>();
+            var _result = new AzureOperationResponse<IPage<PrivateLinkResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -644,7 +609,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VaultExtendedInfoResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<PrivateLinkResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.RecoveryServices
     using System.Threading.Tasks;
 
     /// <summary>
-    /// VaultCertificatesOperations operations.
+    /// UsagesOperations operations.
     /// </summary>
-    internal partial class VaultCertificatesOperations : IServiceOperations<RecoveryServicesClient>, IVaultCertificatesOperations
+    internal partial class UsagesOperations : IServiceOperations<RecoveryServicesClient>, IUsagesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the VaultCertificatesOperations class.
+        /// Initializes a new instance of the UsagesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal VaultCertificatesOperations(RecoveryServicesClient client)
+        internal UsagesOperations(RecoveryServicesClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         public RecoveryServicesClient Client { get; private set; }
 
         /// <summary>
-        /// Uploads a certificate for a resource.
+        /// Fetches the usages of the vault.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group where the recovery services vault is
@@ -59,11 +59,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// </param>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
-        /// </param>
-        /// <param name='certificateName'>
-        /// Certificate friendly name.
-        /// </param>
-        /// <param name='properties'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -86,11 +81,15 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VaultCertificateResponse>> CreateWithHttpMessagesAsync(string resourceGroupName, string vaultName, string certificateName, RawCertificateData properties = default(RawCertificateData), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<VaultUsage>>> ListByVaultsWithHttpMessagesAsync(string resourceGroupName, string vaultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             if (resourceGroupName == null)
             {
@@ -100,16 +99,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vaultName");
             }
-            if (certificateName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
-            }
-            string apiVersion = "2016-06-01";
-            CertificateRequest certificateRequest = new CertificateRequest();
-            if (properties != null)
-            {
-                certificateRequest.Properties = properties;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -117,25 +106,21 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vaultName", vaultName);
-                tracingParameters.Add("certificateName", certificateName);
-                tracingParameters.Add("certificateRequest", certificateRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByVaults", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/certificates/{certificateName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/usages").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
-            _url = _url.Replace("{certificateName}", System.Uri.EscapeDataString(certificateName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -144,7 +129,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -175,12 +160,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
 
             // Serialize Request
             string _requestContent = null;
-            if(certificateRequest != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(certificateRequest, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -236,7 +215,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VaultCertificateResponse>();
+            var _result = new AzureOperationResponse<IEnumerable<VaultUsage>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -249,7 +228,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<VaultCertificateResponse>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<VaultUsage>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
