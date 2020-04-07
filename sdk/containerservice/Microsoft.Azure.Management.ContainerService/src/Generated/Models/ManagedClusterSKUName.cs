@@ -12,12 +12,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 {
 
     /// <summary>
-    /// Defines values for ScaleSetPriority.
+    /// Defines values for ManagedClusterSKUName.
     /// </summary>
-    public static class ScaleSetPriority
+    public static class ManagedClusterSKUName
     {
-        public const string Spot = "Spot";
-        public const string Low = "Low";
-        public const string Regular = "Regular";
+        public const string Basic = "Basic";
     }
 }
