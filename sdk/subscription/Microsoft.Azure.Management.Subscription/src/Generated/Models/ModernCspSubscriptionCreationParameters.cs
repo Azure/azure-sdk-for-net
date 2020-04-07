@@ -15,22 +15,22 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters required to create a new subscription.
+    /// The parameters required to create a new CSP subscription.
     /// </summary>
-    public partial class ModernSubscriptionCreationParameters
+    public partial class ModernCspSubscriptionCreationParameters
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ModernSubscriptionCreationParameters class.
+        /// ModernCspSubscriptionCreationParameters class.
         /// </summary>
-        public ModernSubscriptionCreationParameters()
+        public ModernCspSubscriptionCreationParameters()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ModernSubscriptionCreationParameters class.
+        /// ModernCspSubscriptionCreationParameters class.
         /// </summary>
         /// <param name="displayName">The friendly name of the
         /// subscription.</param>
@@ -38,20 +38,12 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// determines the pricing and service-level agreement of the
         /// subscription.  Use 001 for Microsoft Azure Plan and 002 for
         /// Microsoft Azure Plan for DevTest.</param>
-        /// <param name="costCenter">If set, the cost center will show up on
-        /// the Azure usage and charges file.</param>
-        /// <param name="owner">If specified, the AD principal will get owner
-        /// access to the subscription, along with the user who is performing
-        /// the create subscription operation</param>
-        /// <param name="managementGroupId">The identifier of the management
-        /// group to which this subscription will be associated.</param>
-        public ModernSubscriptionCreationParameters(string displayName, string skuId, string costCenter = default(string), AdPrincipal owner = default(AdPrincipal), string managementGroupId = default(string))
+        /// <param name="resellerId">Reseller ID, basically MPN Id.</param>
+        public ModernCspSubscriptionCreationParameters(string displayName, string skuId, string resellerId = default(string))
         {
             DisplayName = displayName;
             SkuId = skuId;
-            CostCenter = costCenter;
-            Owner = owner;
-            ManagementGroupId = managementGroupId;
+            ResellerId = resellerId;
             CustomInit();
         }
 
@@ -76,26 +68,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         public string SkuId { get; set; }
 
         /// <summary>
-        /// Gets or sets if set, the cost center will show up on the Azure
-        /// usage and charges file.
+        /// Gets or sets reseller ID, basically MPN Id.
         /// </summary>
-        [JsonProperty(PropertyName = "costCenter")]
-        public string CostCenter { get; set; }
-
-        /// <summary>
-        /// Gets or sets if specified, the AD principal will get owner access
-        /// to the subscription, along with the user who is performing the
-        /// create subscription operation
-        /// </summary>
-        [JsonProperty(PropertyName = "owner")]
-        public AdPrincipal Owner { get; set; }
-
-        /// <summary>
-        /// Gets or sets the identifier of the management group to which this
-        /// subscription will be associated.
-        /// </summary>
-        [JsonProperty(PropertyName = "managementGroupId")]
-        public string ManagementGroupId { get; set; }
+        [JsonProperty(PropertyName = "resellerId")]
+        public string ResellerId { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -112,10 +88,6 @@ namespace Microsoft.Azure.Management.Subscription.Models
             if (SkuId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SkuId");
-            }
-            if (Owner != null)
-            {
-                Owner.Validate();
             }
         }
     }

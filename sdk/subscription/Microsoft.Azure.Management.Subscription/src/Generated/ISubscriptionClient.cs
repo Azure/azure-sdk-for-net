@@ -41,6 +41,12 @@ namespace Microsoft.Azure.Management.Subscription
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// Version of the API to be used with the client request. Current
+        /// version is 2019-10-01-preview
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -60,9 +66,9 @@ namespace Microsoft.Azure.Management.Subscription
 
 
         /// <summary>
-        /// Gets the ISubscriptionsOperations.
+        /// Gets the ISubscriptionOperations.
         /// </summary>
-        ISubscriptionsOperations Subscriptions { get; }
+        ISubscriptionOperations Subscription { get; }
 
         /// <summary>
         /// Gets the ISubscriptionOperationOperations.
@@ -70,24 +76,9 @@ namespace Microsoft.Azure.Management.Subscription
         ISubscriptionOperationOperations SubscriptionOperation { get; }
 
         /// <summary>
-        /// Gets the ISubscriptionFactoryOperations.
-        /// </summary>
-        ISubscriptionFactoryOperations SubscriptionFactory { get; }
-
-        /// <summary>
-        /// Gets the ISubscriptionOperations.
-        /// </summary>
-        ISubscriptionOperations SubscriptionOperations { get; }
-
-        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the ITenantsOperations.
-        /// </summary>
-        ITenantsOperations Tenants { get; }
 
     }
 }
