@@ -746,6 +746,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_Tags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            StartCopyFromUriOptions options = new StartCopyFromUriOptions
+            {
+                Tags = tags
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Response<IDictionary<string, string>> response = await destBlob.GetTagsAsync();
+            AssertDictionaryEquality(tags, response.Value);
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync_Metadata()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

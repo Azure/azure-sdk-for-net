@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -1220,6 +1221,68 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StartCopyFromUri
         /// <summary>
+        /// The <see cref="StartCopyFromUri(Uri, StartCopyFromUriOptions, CancellationToken)"/>
+        /// operation copies data at from the <paramref name="source"/> to this
+        /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
+        /// returned from the <see cref="GetProperties"/> to determine if the
+        /// copy has completed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// </summary>
+        /// <param name="source">
+        /// Specifies the <see cref="Uri"/> of the source blob.  The value may
+        /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
+        /// blob.  A source blob in the same storage account can be
+        /// authenticated via Shared Key.  However, if the source is a blob in
+        /// another account, the source blob must either be public or must be
+        /// authenticated via a shared access signature. If the source blob
+        /// is public, no authentication is required to perform the copy
+        /// operation.
+        ///
+        /// The source object may be a file in the Azure File service.  If the
+        /// source object is a file that is to be copied to a blob, then the
+        /// source file must be authenticated using a shared access signature,
+        /// whether it resides in the same account or in a different account.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="CopyFromUriOperation"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual CopyFromUriOperation StartCopyFromUri(
+            Uri source,
+            StartCopyFromUriOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobCopyInfo> response = StartCopyFromUriInternal(
+                source,
+                options?.Metadata,
+                options?.Tags,
+                options?.AccessTier,
+                options?.SourceConditions,
+                options?.DestinationConditions,
+                options?.RehydratePriority,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+            return new CopyFromUriOperation(
+                this,
+                response.Value.CopyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
+
+        /// <summary>
         /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
@@ -1274,6 +1337,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual CopyFromUriOperation StartCopyFromUri(
             Uri source,
             Metadata metadata = default,
@@ -1286,6 +1350,7 @@ namespace Azure.Storage.Blobs.Specialized
             Response<BlobCopyInfo> response = StartCopyFromUriInternal(
                 source,
                 metadata,
+                default,
                 accessTier,
                 sourceConditions,
                 destinationConditions,
@@ -1293,6 +1358,68 @@ namespace Azure.Storage.Blobs.Specialized
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
+            return new CopyFromUriOperation(
+                this,
+                response.Value.CopyId,
+                response.GetRawResponse(),
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The <see cref="StartCopyFromUri(Uri, Metadata, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
+        /// operation copies data at from the <paramref name="source"/> to this
+        /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
+        /// returned from the <see cref="GetPropertiesAsync"/> to determine if
+        /// the copy has completed.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/copy-blob" />.
+        /// </summary>
+        /// <param name="source">
+        /// Specifies the <see cref="Uri"/> of the source blob.  The value may
+        /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
+        /// blob.  A source blob in the same storage account can be
+        /// authenticated via Shared Key.  However, if the source is a blob in
+        /// another account, the source blob must either be public or must be
+        /// authenticated via a shared access signature. If the source blob
+        /// is public, no authentication is required to perform the copy
+        /// operation.
+        ///
+        /// The source object may be a file in the Azure File service.  If the
+        /// source object is a file that is to be copied to a blob, then the
+        /// source file must be authenticated using a shared access signature,
+        /// whether it resides in the same account or in a different account.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="CopyFromUriOperation"/> describing the
+        /// state of the copy operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
+            Uri source,
+            StartCopyFromUriOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Response<BlobCopyInfo> response = await StartCopyFromUriInternal(
+                source,
+                options?.Metadata,
+                options?.Tags,
+                options?.AccessTier,
+                options?.SourceConditions,
+                options?.DestinationConditions,
+                options?.RehydratePriority,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
             return new CopyFromUriOperation(
                 this,
                 response.Value.CopyId,
@@ -1355,6 +1482,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
             Uri source,
             Metadata metadata = default,
@@ -1367,6 +1495,7 @@ namespace Azure.Storage.Blobs.Specialized
             Response<BlobCopyInfo> response = await StartCopyFromUriInternal(
                 source,
                 metadata,
+                default,
                 accessTier,
                 sourceConditions,
                 destinationConditions,
@@ -1408,6 +1537,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob.
         /// </param>
+        /// <param name="tags">
+        /// Optional tags to set for this blob.
+        /// </param>
         /// <param name="accessTier">
         /// Optional <see cref="AccessTier"/>
         /// Indicates the tier to be set on the blob.
@@ -1442,6 +1574,7 @@ namespace Azure.Storage.Blobs.Specialized
         private async Task<Response<BlobCopyInfo>> StartCopyFromUriInternal(
             Uri source,
             Metadata metadata,
+            Tags tags,
             AccessTier? accessTier,
             BlobRequestConditions sourceConditions,
             BlobRequestConditions destinationConditions,
@@ -1478,6 +1611,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: destinationConditions?.IfNoneMatch,
                         leaseId: destinationConditions?.LeaseId,
                         metadata: metadata,
+                        blobTagsString: tags?.ToTagsString(),
                         async: async,
                         operationName: "BlobBaseClient.StartCopyFromUri",
                         cancellationToken: cancellationToken)

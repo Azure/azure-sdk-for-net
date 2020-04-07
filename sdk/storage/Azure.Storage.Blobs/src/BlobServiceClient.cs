@@ -1402,7 +1402,6 @@ namespace Azure.Storage.Blobs
                         pipeline: Pipeline,
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
-                        //where: WebUtility.UrlEncode(expression),
                         where: expression,
                         marker: marker,
                         maxresults: pageSizeHint,
