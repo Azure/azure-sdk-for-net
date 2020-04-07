@@ -130,12 +130,17 @@ namespace Microsoft.Azure.ServiceBus
 
         private static string GetPathWithoutBaseUri(string entityName)
         {
-            if (Uri.TryCreate(entityName, UriKind.Absolute, out Uri uriValue))
+            // Note: on Linux/macOS, "/path" URLs are treated as valid absolute file URLs.
+            // To ensure relative queue paths are correctly rejected on these platforms,
+            // an additional check using IsWellFormedOriginalString() is made here.
+            // See https://github.com/dotnet/corefx/issues/22098 for more information.
+            if (Uri.TryCreate(entityName, UriKind.Absolute, out Uri uriValue) &&
+                uriValue.IsWellFormedOriginalString())
             {
                 entityName = uriValue.PathAndQuery;
+                return entityName.TrimStart('/');
             }
-
-            return entityName.TrimStart('/');
+            return entityName;
         }
     }
 }
