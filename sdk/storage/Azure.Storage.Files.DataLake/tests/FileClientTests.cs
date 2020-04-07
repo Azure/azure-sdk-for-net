@@ -1509,8 +1509,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                     {
                         Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
                         Assert.IsTrue(e.Message.Contains("The value for one of the HTTP headers is not in the correct format."));
-                        Assert.IsTrue(e.Message.Contains("HeaderName = Content-Length"));
-                        Assert.IsTrue(e.Message.Contains("HeaderValue = 0"));
+                        Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
+                        Assert.AreEqual("0", e.Data["HeaderValue"]);
                     });
             }
         }

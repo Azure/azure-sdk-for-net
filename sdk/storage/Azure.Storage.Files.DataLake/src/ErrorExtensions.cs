@@ -31,21 +31,21 @@ namespace Azure.Storage.Files.DataLake
                 JsonDocument json = JsonDocument.Parse(jsonMessage);
                 JsonElement error = json.RootElement.GetProperty("error");
 
-                // Populate message
-                StringBuilder sb = new StringBuilder(error.GetProperty("message").GetString());
+                IDictionary<string, string> details = default;
                 if (error.TryGetProperty("detail", out JsonElement detail))
                 {
+                    details = new Dictionary<string, string>();
                     foreach (JsonProperty property in detail.EnumerateObject())
                     {
-                        sb.Append($"{property.Name} = {property.Value.ToString()}{Environment.NewLine}");
+                        details[property.Name] = property.Value.GetString();
                     }
                 }
 
-                return new RequestFailedException(
-                    status: response.Status,
+                return clientDiagnostics.CreateRequestFailedExceptionWithContent(
+                    response: response,
+                    message: error.GetProperty("message").GetString(),
                     errorCode: error.GetProperty("code").GetString(),
-                    message: sb.ToString(),
-                    innerException: new Exception());
+                    additionalInfo: details);
             }
         }
 
