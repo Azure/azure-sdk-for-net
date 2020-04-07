@@ -1,14 +1,14 @@
-# Microsoft Azure Keyvault SDK for .NET
+# Microsoft Azure Key Vault SDK for .NET
 
 ## New libraries available
 
 This library has been replaced by the following new Azure SDKs. You can read about the new Azure SDKs at https://aka.ms/azsdkvalueprop.
 
-The latest libraries to interact with the Azure KeyVault service are:
+The latest libraries to interact with the Azure Key Vault service are:
 
+* [Azure.Security.KeyVault.Certificates](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates)
 * [Azure.Security.KeyVault.Keys](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys)
 * [Azure.Security.KeyVault.Secrets](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets)
-* [Azure.Security.KeyVault.Certificates](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Certificates)
 
 It is **recommended** that you move to the new package.
 
