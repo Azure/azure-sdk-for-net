@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// IpFirewallRulesOperations operations.
+    /// PrivateEndpointConnectionsOperations operations.
     /// </summary>
-    public partial interface IIpFirewallRulesOperations
+    public partial interface IPrivateEndpointConnectionsOperations
     {
         /// <summary>
-        /// Returns a list of firewall rules
+        /// Gets a private endpoint connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -32,36 +32,8 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='workspaceName'>
         /// The name of the workspace
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<IpFirewallRuleInfo>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates a firewall rule
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
-        /// </param>
-        /// <param name='ipFirewallRuleInfo'>
-        /// IP firewall rule properties
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,9 +50,9 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IpFirewallRuleInfo>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, IpFirewallRuleInfo ipFirewallRuleInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a firewall rule
+        /// Approve or reject a private endpoint connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -88,36 +60,8 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='workspaceName'>
         /// The name of the workspace
         /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<object>> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Get a firewall rule
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -134,9 +78,9 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IpFirewallRuleInfo>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Replaces firewall rules
+        /// Delete a private endpoint connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -144,8 +88,8 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='workspaceName'>
         /// The name of the workspace
         /// </param>
-        /// <param name='request'>
-        /// Replace all IP firewall rules request
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -162,21 +106,15 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReplaceAllFirewallRulesOperationResponse>> ReplaceAllWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ReplaceAllIpFirewallRulesRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationResource>> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a firewall rule
+        /// Lists private endpoint connection in workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace
-        /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
-        /// </param>
-        /// <param name='ipFirewallRuleInfo'>
-        /// IP firewall rule properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -193,9 +131,9 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IpFirewallRuleInfo>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, IpFirewallRuleInfo ipFirewallRuleInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a firewall rule
+        /// Approve or reject a private endpoint connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
@@ -203,36 +141,8 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='workspaceName'>
         /// The name of the workspace
         /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<object>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Replaces firewall rules
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='request'>
-        /// Replace all IP firewall rules request
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -249,9 +159,37 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReplaceAllFirewallRulesOperationResponse>> BeginReplaceAllWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ReplaceAllIpFirewallRulesRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of firewall rules
+        /// Delete a private endpoint connection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='privateEndpointConnectionName'>
+        /// The name of the private endpoint connection.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorContractException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OperationResource>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists private endpoint connection in workspace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -262,7 +200,7 @@ namespace Microsoft.Azure.Management.Synapse
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorContractException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -271,6 +209,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IpFirewallRuleInfo>>> ListByWorkspaceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PrivateEndpointConnection>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -19,13 +19,181 @@ namespace Microsoft.Azure.Management.Synapse
     using System.Threading.Tasks;
 
     /// <summary>
-    /// IpFirewallRulesOperations operations.
+    /// IntegrationRuntimesOperations operations.
     /// </summary>
-    public partial interface IIpFirewallRulesOperations
+    public partial interface IIntegrationRuntimesOperations
     {
         /// <summary>
-        /// Returns a list of firewall rules
+        /// Update integration runtime
         /// </summary>
+        /// <remarks>
+        /// Update an integration runtime
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// Integration runtime name
+        /// </param>
+        /// <param name='updateIntegrationRuntimeRequest'>
+        /// The parameters for updating an integration runtime.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IntegrationRuntimeResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, UpdateIntegrationRuntimeRequest updateIntegrationRuntimeRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get integration runtime
+        /// </summary>
+        /// <remarks>
+        /// Get an integration runtime
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// Integration runtime name
+        /// </param>
+        /// <param name='ifNoneMatch'>
+        /// ETag of the integration runtime entity. Should only be specified
+        /// for get. If the ETag matches the existing entity tag, or if * was
+        /// provided, then no content will be returned.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IntegrationRuntimeResource>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, string ifNoneMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Create integration runtime
+        /// </summary>
+        /// <remarks>
+        /// Create an integration runtime
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// Integration runtime name
+        /// </param>
+        /// <param name='integrationRuntime'>
+        /// Integration runtime resource definition.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the integration runtime entity. Should only be specified
+        /// for update, for which it should match existing entity or can be *
+        /// for unconditional update.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IntegrationRuntimeResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, IntegrationRuntimeResource integrationRuntime, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete integration runtime
+        /// </summary>
+        /// <remarks>
+        /// Delete an integration runtime
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// Integration runtime name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Upgrade integration runtime
+        /// </summary>
+        /// <remarks>
+        /// Upgrade an integration runtime
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='workspaceName'>
+        /// The name of the workspace
+        /// </param>
+        /// <param name='integrationRuntimeName'>
+        /// Integration runtime name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpgradeWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List integration runtimes
+        /// </summary>
+        /// <remarks>
+        /// List all integration runtimes
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
@@ -47,49 +215,21 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IpFirewallRuleInfo>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IntegrationRuntimeResource>>> ListByWorkspaceWithHttpMessagesAsync(string resourceGroupName, string workspaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a firewall rule
+        /// Start integration runtime
         /// </summary>
+        /// <remarks>
+        /// Start an integration runtime
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace
         /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
-        /// </param>
-        /// <param name='ipFirewallRuleInfo'>
-        /// IP firewall rule properties
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorContractException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IpFirewallRuleInfo>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, IpFirewallRuleInfo ipFirewallRuleInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a firewall rule
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
+        /// <param name='integrationRuntimeName'>
+        /// Integration runtime name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,105 +246,21 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<object>> DeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IntegrationRuntimeStatusResponse>> StartWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a firewall rule
+        /// Stop integration runtime
         /// </summary>
+        /// <remarks>
+        /// Stop an integration runtime
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
         /// The name of the workspace
         /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorContractException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IpFirewallRuleInfo>> GetWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Replaces firewall rules
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='request'>
-        /// Replace all IP firewall rules request
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorContractException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplaceAllFirewallRulesOperationResponse>> ReplaceAllWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ReplaceAllIpFirewallRulesRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates a firewall rule
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
-        /// </param>
-        /// <param name='ipFirewallRuleInfo'>
-        /// IP firewall rule properties
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorContractException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IpFirewallRuleInfo>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, IpFirewallRuleInfo ipFirewallRuleInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a firewall rule
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='ruleName'>
-        /// The IP firewall rule name
+        /// <param name='integrationRuntimeName'>
+        /// Integration runtime name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -215,44 +271,16 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<object>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string workspaceName, string integrationRuntimeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Replaces firewall rules
+        /// List integration runtimes
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group. The name is case insensitive.
-        /// </param>
-        /// <param name='workspaceName'>
-        /// The name of the workspace
-        /// </param>
-        /// <param name='request'>
-        /// Replace all IP firewall rules request
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorContractException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ReplaceAllFirewallRulesOperationResponse>> BeginReplaceAllWithHttpMessagesAsync(string resourceGroupName, string workspaceName, ReplaceAllIpFirewallRulesRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns a list of firewall rules
-        /// </summary>
+        /// <remarks>
+        /// List all integration runtimes
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -271,6 +299,6 @@ namespace Microsoft.Azure.Management.Synapse
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IpFirewallRuleInfo>>> ListByWorkspaceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IntegrationRuntimeResource>>> ListByWorkspaceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
