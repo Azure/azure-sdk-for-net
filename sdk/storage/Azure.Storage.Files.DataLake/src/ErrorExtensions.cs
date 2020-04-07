@@ -28,11 +28,23 @@ namespace Azure.Storage.Files.DataLake
             }
             else
             {
-                DataLakeErrorWrapper error = JsonSerializer.Deserialize<DataLakeErrorWrapper>(jsonMessage);
+                JsonDocument json = JsonDocument.Parse(jsonMessage);
+                JsonElement error = json.RootElement.GetProperty("error");
+
+                // Populate message
+                StringBuilder sb = new StringBuilder(error.GetProperty("message").GetString());
+                if (error.TryGetProperty("detail", out JsonElement detail))
+                {
+                    foreach (JsonProperty property in detail.EnumerateObject())
+                    {
+                        sb.Append($"{property.Name} = {property.Value.ToString()}{Environment.NewLine}");
+                    }
+                }
+
                 return new RequestFailedException(
                     status: response.Status,
-                    errorCode: error.Error.Code,
-                    message: $"{error.Error.Message}\n{error.Error.Detail?.ToErrorDetailString()}",
+                    errorCode: error.GetProperty("code").GetString(),
+                    message: sb.ToString(),
                     innerException: new Exception());
             }
         }
