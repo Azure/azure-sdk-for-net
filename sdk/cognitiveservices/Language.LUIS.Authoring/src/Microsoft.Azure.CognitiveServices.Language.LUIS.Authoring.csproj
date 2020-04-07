@@ -21,11 +21,11 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFags);$(Commonrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
     <AzureApiTag />
-    <PackageTags>$(PackageTTags);$(AzureApiTag);</PackageTags>
+    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
   </PropertyGroup>
 </Project>
