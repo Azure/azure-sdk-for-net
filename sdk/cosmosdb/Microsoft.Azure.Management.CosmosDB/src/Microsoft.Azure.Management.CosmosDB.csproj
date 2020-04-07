@@ -11,12 +11,12 @@
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Updating with the latest azure-rest-api-specs,
+        Updating with the latest azure-rest-api-specs apiVersion 2020-03-01,
         Includes: 
           Changing Throughput to a strong type in Options,
           Introduces Autoscale,
           Introduces KeyVaultUri in DatabaseAccount properties to support customer managed keys,
-          Introduces Notebooks
+          Introduces PublicNetworkAccess in DatabaseAccount
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
