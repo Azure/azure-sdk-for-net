@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "batchai/resource-manager" -AutoRestVersion "latest" 
+Start-AutoRestCodeGeneration -ResourceProvider "batchai/resource-manager" -AutoRestVersion "v2" 
