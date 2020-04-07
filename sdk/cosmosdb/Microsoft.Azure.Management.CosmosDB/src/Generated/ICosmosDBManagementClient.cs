@@ -160,11 +160,6 @@ namespace Microsoft.Azure.Management.CosmosDB
         IGremlinResourcesOperations GremlinResources { get; }
 
         /// <summary>
-        /// Gets the INotebookWorkspacesOperations.
-        /// </summary>
-        INotebookWorkspacesOperations NotebookWorkspaces { get; }
-
-        /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }

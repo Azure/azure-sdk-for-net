@@ -19,17 +19,36 @@ namespace Microsoft.Azure.Management.CosmosDB
           {
               return new Tuple<string, string, string>[]
               {
-
+                new Tuple<string, string, string>("DocumentDB", "CassandraResources", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "Collection", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionPartition", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionPartitionRegion", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "CollectionRegion", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "Database", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "DatabaseAccountRegion", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "DatabaseAccounts", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "GremlinResources", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "MongoDBResources", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "Operations", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeId", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "PartitionKeyRangeIdRegion", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "Percentile", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "PercentileSourceTarget", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "PercentileTarget", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "PrivateEndpointConnections", "2019-08-01-preview"),
+                new Tuple<string, string, string>("DocumentDB", "PrivateLinkResources", "2019-08-01-preview"),
+                new Tuple<string, string, string>("DocumentDB", "SqlResources", "2020-03-01"),
+                new Tuple<string, string, string>("DocumentDB", "TableResources", "2020-03-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.0.6187";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cosmos-db/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net2\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cosmos-db/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net2\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "c1ffffc63cc67b1780b4e0a41d0ce28520d9208d";
+      public static readonly String GithubCommidId = "ef3a1ab6db775897bfc13f921e0e489ca4d58be5";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
