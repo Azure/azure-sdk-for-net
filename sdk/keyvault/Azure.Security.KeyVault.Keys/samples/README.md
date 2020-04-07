@@ -6,7 +6,7 @@ products:
 - azure
 - azure-key-vault
 name: Azure.Security.KeyVault.Keys samples for .NET
-description: Samples for the Azure.Security.KeyVault.Keys client library
+description: Samples for the Azure.Security.KeyVault.Keys client library.
 ---
 
 # Azure.Security.KeyVault.Keys Samples
