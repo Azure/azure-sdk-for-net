@@ -75,7 +75,7 @@ namespace Microsoft.Azure.ServiceBus
 
         internal static void CheckValidQueueName(string queueName, string paramName = "queuePath")
         {
-            CheckValidEntityName(queueName, ManagementClientConstants.QueueNameMaximumLength, true, paramName);
+            CheckValidEntityName(GetPathWithoutBaseUri(queueName), ManagementClientConstants.QueueNameMaximumLength, true, paramName);
         }
 
         internal static void CheckValidTopicName(string topicName, string paramName = "topicPath")
@@ -126,6 +126,16 @@ namespace Microsoft.Azure.ServiceBus
                     throw new ArgumentException($@"'{entityName}' contains character '{uriSchemeKey}' which is not allowed because it is reserved in the Uri scheme.", paramName);
                 }
             }
+        }
+
+        private static string GetPathWithoutBaseUri(string entityName)
+        {
+            if (Uri.TryCreate(entityName, UriKind.Absolute, out Uri uriValue))
+            {
+                entityName = uriValue.PathAndQuery;
+            }
+
+            return entityName.TrimStart('/');
         }
     }
 }

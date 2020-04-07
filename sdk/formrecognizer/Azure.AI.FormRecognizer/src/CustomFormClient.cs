@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// Initializes a new instance of the <see cref="CustomFormClient"/>.
         /// </summary>
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public CustomFormClient(Uri endpoint, FormRecognizerApiKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
+        public CustomFormClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
         }
@@ -45,11 +45,11 @@ namespace Azure.AI.FormRecognizer.Custom
         /// Initializes a new instance of the <see cref="CustomFormClient"/>.
         /// </summary>
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public CustomFormClient(Uri endpoint, FormRecognizerApiKeyCredential credential, FormRecognizerClientOptions options)
+        public CustomFormClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
             _diagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 

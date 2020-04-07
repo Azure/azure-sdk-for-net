@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 ReceiveMode = ReceiveMode.ReceiveAndDelete
             };
-            var receiver = new ServiceBusClient(connString).GetReceiver(queueName, options);
+            var receiver = new ServiceBusClient(connString).CreateReceiver(queueName, options);
             Assert.AreEqual(queueName, receiver.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, receiver.FullyQualifiedNamespace);
             Assert.IsNotNull(receiver.Identifier);

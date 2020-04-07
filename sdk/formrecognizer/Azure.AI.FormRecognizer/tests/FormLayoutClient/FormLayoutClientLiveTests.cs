@@ -139,7 +139,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.NotNull(keyEnvironmentVariable);
 
             var endpoint = new Uri(endpointEnvironmentVariable);
-            var credential = new FormRecognizerApiKeyCredential(keyEnvironmentVariable);
+            var credential = new AzureKeyCredential(keyEnvironmentVariable);
             var client = new FormLayoutClient(endpoint, credential);
 
             return InstrumentClient(client);

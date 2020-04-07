@@ -713,7 +713,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProcessorRaisesErrorEventHandlerWhenErrorsAreReported()
+        public async Task ProcessorRaisesErrorEventHandlerWhenErrorsAreReportedForPartition()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
@@ -735,6 +735,39 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(capturedEventArgs, Is.Not.Null, "The event handler should have been fired.");
             Assert.That(capturedEventArgs.PartitionId, Is.EqualTo(partitionId), "The partition identifier should have been propagated.");
+            Assert.That(capturedEventArgs.Exception, Is.InstanceOf<DivideByZeroException>().And.Message.EqualTo(exception.Message), "The exception should have been propagated.");
+            Assert.That(capturedEventArgs.Operation, Is.EqualTo(description), "The operation description should have been propagated.");
+            Assert.That(capturedEventArgs.CancellationToken, Is.EqualTo(cancellationSource.Token), "The cancellation token should have been propagated.");
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorRaisesErrorEventHandlerWhenErrorsAreReportedForNoPartition()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var capturedEventArgs = default(ProcessErrorEventArgs);
+            var exception = new DivideByZeroException("OMG, ZERO?!?!?!");
+            var description = "Doing Stuff";
+            var processorClient = new TestEventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.ProcessErrorAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                return Task.CompletedTask;
+            };
+
+            await processorClient.InvokeOnProcessingErrorAsync(exception, null, description, cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The event handler should have been fired.");
+            Assert.That(capturedEventArgs.PartitionId, Is.Null, "The partition identifier should have been null.");
             Assert.That(capturedEventArgs.Exception, Is.InstanceOf<DivideByZeroException>().And.Message.EqualTo(exception.Message), "The exception should have been propagated.");
             Assert.That(capturedEventArgs.Operation, Is.EqualTo(description), "The operation description should have been propagated.");
             Assert.That(capturedEventArgs.CancellationToken, Is.EqualTo(cancellationSource.Token), "The cancellation token should have been propagated.");
