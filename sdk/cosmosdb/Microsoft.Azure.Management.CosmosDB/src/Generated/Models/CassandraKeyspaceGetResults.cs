@@ -42,10 +42,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        public CassandraKeyspaceGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CassandraKeyspaceGetPropertiesResource resource = default(CassandraKeyspaceGetPropertiesResource))
+        public CassandraKeyspaceGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), CassandraKeyspaceGetPropertiesResource resource = default(CassandraKeyspaceGetPropertiesResource), CassandraKeyspaceGetPropertiesOptions options = default(CassandraKeyspaceGetPropertiesOptions))
             : base(id, name, type, location, tags)
         {
             Resource = resource;
+            Options = options;
             CustomInit();
         }
 
@@ -58,6 +59,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resource")]
         public CassandraKeyspaceGetPropertiesResource Resource { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.options")]
+        public CassandraKeyspaceGetPropertiesOptions Options { get; set; }
 
         /// <summary>
         /// Validate the object.
