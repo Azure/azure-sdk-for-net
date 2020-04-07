@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider  "containerregistry/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider  "containerregistry/resource-manager" -AutoRestVersion "v2"
