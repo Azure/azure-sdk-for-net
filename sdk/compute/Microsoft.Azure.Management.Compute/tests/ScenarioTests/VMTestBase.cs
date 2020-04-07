@@ -257,7 +257,10 @@ namespace Compute.Tests
                 {
                     OSDisk osDisk = inputVM.StorageProfile.OsDisk;
                     osDisk.Caching = CachingTypes.ReadOnly;
-                    osDisk.DiffDiskSettings = new DiffDiskSettings { Option = DiffDiskOptions.Local };
+                    osDisk.DiffDiskSettings = new DiffDiskSettings {
+                        Option = DiffDiskOptions.Local,
+                        Placement = DiffDiskPlacement.ResourceDisk
+                    };
                 }
 
                 if (zones != null)
