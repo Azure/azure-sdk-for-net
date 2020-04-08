@@ -102,7 +102,7 @@ if ($ProvisionerApplicationId) {
     }
 
     $provisionerAccount = Retry {
-        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal @subscriptionArgs
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment @subscriptionArgs
     }
 
     $exitActions += {
@@ -148,8 +148,8 @@ The name of the resource group to delete.
 The tenant ID of a service principal when a provisioner is specified.
 
 .PARAMETER SubscriptionId
-Optional subscription ID to use for new resources when logging in as a provisioner.
-You can also use Set-AzContext if not provisioning.
+Optional subscription ID to use for new resources when logging in as a
+provisioner. You can also use Set-AzContext if not provisioning.
 
 .PARAMETER ProvisionerApplicationId
 A service principal ID to provision test resources when a provisioner is specified.
