@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -215,10 +215,7 @@ namespace Azure.Search.Documents.Tests
 
             DataSource actualSource = await serviceClient.CreateDataSourceAsync(
                 dataSource,
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions());
 
             SearchIndexer indexer = new SearchIndexer(
                 Recording.Random.GetName(8),
@@ -227,10 +224,7 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
                 indexer,
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions());
 
             // Update the indexer.
             actualIndexer.Description = "Updated description";
@@ -240,41 +234,70 @@ namespace Azure.Search.Documents.Tests
                 {
                     IfMatch = new ETag(actualIndexer.ETag),
                 },
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions());
 
-            // TODO: Poll for indexer status akin to an LRO.
-            TimeSpan delay = TimeSpan.FromSeconds(10);
+            await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Run the indexer.
-            await RetryAsync(
-                async () =>
-                {
-                    await serviceClient.RunIndexerAsync(
-                        indexer.Name,
-                        new SearchRequestOptions
-                        {
-                            ClientRequestId = Recording.Random.NewGuid(),
-                        });
-                },
-                ex => ex.Status == 409);
+            await serviceClient.RunIndexerAsync(
+                indexer.Name,
+                GetOptions());
 
-            // Indexers may take longer than indexing documents uploaded to the Search service.
-            await DelayAsync(delay);
+            await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Query the index.
             SearchIndexClient indexClient = serviceClient.GetSearchIndexClient(
                 resources.IndexName);
 
             long count = await indexClient.GetDocumentCountAsync(
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions());
 
             Assert.AreEqual(SearchResources.TestDocuments.Length, count);
+        }
+
+        /// <summary>
+        /// Gets a new <see cref="SearchRequestOptions"/>.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="SearchRequestOptions"/> with a new <see cref="SearchRequestOptions.ClientRequestId"/>.
+        /// </returns>
+        private SearchRequestOptions GetOptions() => new SearchRequestOptions
+        {
+            ClientRequestId = Recording.Random.NewGuid(),
+        };
+
+        /// <summary>
+        /// Waits for an indexer to complete up to the given <paramref name="timeout"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="SearchServiceClient"/> to use for requests.</param>
+        /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to check.</param>
+        /// <param name="timeout">The amount of time before being canceled. The default is 1 minute.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        private async Task WaitForIndexingAsync(
+            SearchServiceClient client,
+            string indexerName,
+            TimeSpan? timeout = null)
+        {
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+            timeout ??= TimeSpan.FromMinutes(1);
+
+            using CancellationTokenSource cts = new CancellationTokenSource(timeout.Value);
+
+            while (true)
+            {
+                await DelayAsync(delay);
+
+                IndexerExecutionInfo status = await client.GetIndexerStatusAsync(
+                    indexerName,
+                    GetOptions(),
+                    cts.Token);
+
+                if (status.Status == IndexerStatus.Running &&
+                    status.LastResult?.Status == IndexerExecutionStatus.Success)
+                {
+                    return;
+                }
+            }
         }
     }
 }
