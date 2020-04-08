@@ -33,6 +33,10 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
+    [Parameter(ParameterSetName = 'Provisioner')]
+    [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
+    [string] $SubscriptionId,
+
     [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationId,
@@ -48,7 +52,7 @@ param (
     [string] $Location = '',
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
+    [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud')]
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
@@ -126,17 +130,11 @@ if (!$templateFiles) {
 # environment. If no matching environment is found $Location remains an empty
 # string.
 if (!$Location) {
-    $defaultLocations = @{
+    $Location = @{
         'AzureCloud' = 'westus2';
         'AzureUSGovernment' = 'usgovvirginia';
         'AzureChinaCloud' = 'chinaeast2';
-    }
-
-    if ($defaultLocations.ContainsKey($Environment)) {
-        $Location = $defaultLocations[$Environment]
-    } else {
-        Write-Error "Location cannot be empty and there is no default location for Environment: '$Environment'"
-    }
+    }[$Environment]
 
     Write-Verbose "Location was not set. Using default location for environment: '$Location'"
 }
@@ -149,8 +147,13 @@ if ($ProvisionerApplicationId) {
     $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
 
+    # Use the given subscription ID if provided.
+    $subscriptionArgs = if ($SubscriptionId) {
+        @{SubscriptionId = $SubscriptionId}
+    }
+
     $provisionerAccount = Retry {
-        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal @subscriptionArgs
     }
 
     $exitActions += {
@@ -418,12 +421,12 @@ This isused for CI automation.
 Optional location where resources should be created. By default this is
 'westus2'.
 
-.PARAMETER AdditionalParameters
-Optional key-value pairs of parameters to pass to the ARM template(s).
-
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
 ('PublicCloud')
+
+.PARAMETER AdditionalParameters
+Optional key-value pairs of parameters to pass to the ARM template(s).
 
 .PARAMETER CI
 Indicates the script is run as part of a Continuous Integration / Continuous
@@ -433,10 +436,9 @@ Deployment (CI/CD) build (only Azure Pipelines is currently supported).
 Force creation of resources instead of being prompted.
 
 .EXAMPLE
-$subscriptionId = "REPLACE_WITH_SUBSCRIPTION_ID"
-Connect-AzAccount -Subscription $subscriptionId
+Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
 $testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-.\eng\common\LiveTestResources\New-TestResources.ps1 `
+New-TestResources.ps1 `
     -BaseName 'myalias' `
     -ServiceDirectory 'keyvault' `
     -TestApplicationId $testAadApp.ApplicationId.ToString() `
@@ -449,7 +451,7 @@ Requires PowerShell 7 to use ConvertFrom-SecureString -AsPlainText or convert
 the SecureString to plaintext by another means.
 
 .EXAMPLE
-eng/New-TestResources.ps1 `
+New-TestResources.ps1 `
     -BaseName 'Generated' `
     -ServiceDirectory '$(ServiceDirectory)' `
     -TenantId '$(TenantId)' `
