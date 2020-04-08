@@ -43,7 +43,7 @@ namespace Azure.Storage.Shared
         /// </summary>
         internal static async IAsyncEnumerable<ChunkedStream> GetBlocksAsync(
             Stream stream,
-            int blockSize,
+            long blockSize,
             bool async,
             ArrayPool<byte> arrayPool,
             [EnumeratorCancellation] CancellationToken cancellationToken)
@@ -53,7 +53,7 @@ namespace Azure.Storage.Shared
 
             // The minimum amount of data we'll accept from a stream before
             // splitting another block.
-            int minimumBlockSize = blockSize / 2;
+            long minimumBlockSize = blockSize / 2;
 
             // Read the next block
             do

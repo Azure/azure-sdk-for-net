@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs
         /// The size of each staged block.  If null, we'll change between 4MB
         /// and 8MB depending on the size of the content.
         /// </summary>
-        private readonly int? _blockSize;
+        private readonly long? _blockSize;
 
         /// <summary>
         /// The name of the calling operaiton.
@@ -82,12 +82,12 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _blockSize
-            if (transferOptions.MaximumTransferLength.HasValue
-                && transferOptions.MaximumTransferLength > 0)
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize > 0)
             {
                 _blockSize = Math.Min(
                     Constants.Blob.Block.MaxStageBytes,
-                    transferOptions.MaximumTransferLength.Value);
+                    transferOptions.MaximumTransferSize.Value);
             }
 
             _operationName = operationName;
@@ -122,7 +122,7 @@ namespace Azure.Storage.Blobs
             // If the caller provided an explicit block size, we'll use it.
             // Otherwise we'll adjust dynamically based on the size of the
             // content.
-            int blockSize =
+            long blockSize =
                 _blockSize != null ? _blockSize.Value :
                 length < Constants.LargeUploadThreshold ?
                     Constants.DefaultBufferSize :
@@ -169,7 +169,7 @@ namespace Azure.Storage.Blobs
             // If the caller provided an explicit block size, we'll use it.
             // Otherwise we'll adjust dynamically based on the size of the
             // content.
-            int blockSize =
+            long blockSize =
                 _blockSize != null ? _blockSize.Value :
                 length < Constants.LargeUploadThreshold ?
                     Constants.DefaultBufferSize :
@@ -191,7 +191,7 @@ namespace Azure.Storage.Blobs
 
         private Response<BlobContentInfo> UploadInSequence(
             Stream content,
-            int blockSize,
+            long blockSize,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
             BlobRequestConditions conditions,
@@ -260,7 +260,7 @@ namespace Azure.Storage.Blobs
 
         private async Task<Response<BlobContentInfo>> UploadInParallelAsync(
             Stream content,
-            int blockSize,
+            long blockSize,
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
             BlobRequestConditions conditions,
