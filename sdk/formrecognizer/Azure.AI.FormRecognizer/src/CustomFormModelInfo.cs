@@ -2,19 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class CustomModelInfo
+    public class CustomFormModelInfo
     {
-        internal CustomModelInfo(ModelInfo_internal modelInfo)
+        internal CustomFormModelInfo(ModelInfo_internal modelInfo)
         {
             ModelId = modelInfo.ModelId.ToString();
-            CreatedOn = modelInfo.CreatedDateTime;
-            LastUpdatedOn = modelInfo.LastUpdatedDateTime;
+            CreatedOn = new DateTime(modelInfo.CreatedDateTime.Ticks, DateTimeKind.Utc);
+            LastUpdatedOn = new DateTime(modelInfo.LastUpdatedDateTime.Ticks, DateTimeKind.Utc);
             Status = modelInfo.Status;
         }
 
@@ -24,14 +23,14 @@ namespace Azure.AI.FormRecognizer.Custom
 
         /// <summary>
         /// </summary>
-        public ModelStatus Status { get; }
+        public CustomFormModelStatus Status { get; }
 
         /// <summary>
         /// </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTime CreatedOn { get; }
 
         /// <summary>
         /// </summary>
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTime LastUpdatedOn { get; }
     }
 }
