@@ -21,7 +21,6 @@
                         "invited.user@live.com"
                     }
                 };
-                var accessList = await client.Permissions.ListAsync(GlobalAppId);
 
                 //Act 
                 await client.Permissions.UpdateAsync(GlobalAppId, collaborators);
@@ -39,7 +38,6 @@
                 await client.Permissions.DeleteAsync(GlobalAppId, userToRemove);
 
                 //Assert
-                Assert.Equal(accessList.Owner, result.Owner);
                 Assert.Equal(new string[] { "guest@outlook.com", "invited.user@live.com" }, result.Emails);
             });
         }
