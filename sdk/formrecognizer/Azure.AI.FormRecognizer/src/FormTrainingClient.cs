@@ -54,6 +54,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
+        [ForwardsClientCalls]
         public virtual TrainingOperation StartTraining(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -83,6 +84,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
         /// completion will contain meta-data about the trained model.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -106,6 +108,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Response<CustomFormModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -116,6 +119,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response<CustomFormModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
