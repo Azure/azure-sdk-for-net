@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -244,16 +245,24 @@ namespace Azure.Search.Documents.Tests
                     ClientRequestId = Recording.Random.NewGuid(),
                 });
 
+            // TODO: Poll for indexer status akin to an LRO.
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+
             // Run the indexer.
-            await serviceClient.RunIndexerAsync(
-                indexer.Name,
-                new SearchRequestOptions
+            await RetryAsync(
+                async () =>
                 {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                    await serviceClient.RunIndexerAsync(
+                        indexer.Name,
+                        new SearchRequestOptions
+                        {
+                            ClientRequestId = Recording.Random.NewGuid(),
+                        });
+                },
+                ex => ex.Status == 409);
 
             // Indexers may take longer than indexing documents uploaded to the Search service.
-            await DelayAsync(TimeSpan.FromSeconds(5));
+            await DelayAsync(delay);
 
             // Query the index.
             SearchIndexClient indexClient = serviceClient.GetSearchIndexClient(

@@ -151,6 +151,43 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
+        /// Retries an operation up to the specified max.
+        /// </summary>
+        /// <param name="action">Required. The async action to invoke.null</param>
+        /// <param name="filter">
+        /// Required. The condition taking a <see cref="RequestFailedException"/>
+        /// and returning true if the operation should be retried.
+        /// </param>
+        /// <param name="maxRetries">The maximum number of retries. The default is 3.null</param>
+        /// <param name="delay">The amount of time to delay before retrying. The default is 5 seconds.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        public async Task RetryAsync(
+            Func<Task> action,
+            Func<RequestFailedException, bool> filter,
+            int maxRetries = 3,
+            TimeSpan? delay = null)
+        {
+            Debug.Assert(action != null);
+            Debug.Assert(filter != null);
+
+            int tries = 0;
+            delay ??= TimeSpan.FromSeconds(5);
+
+            while (tries++ < maxRetries)
+            {
+                try
+                {
+                    await action();
+                    return;
+                }
+                catch (RequestFailedException ex) when (tries < maxRetries && filter(ex))
+                {
+                    await DelayAsync(delay);
+                }
+            }
+        }
+
+        /// <summary>
         /// Assert that we can catch the desired exception.  NUnit's default
         /// forces everything to be sync.
         /// </summary>

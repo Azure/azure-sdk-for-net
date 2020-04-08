@@ -196,6 +196,12 @@ namespace Azure.Search.Documents.Tests
         public bool RequiresCleanup { get; private set; }
 
         /// <summary>
+        /// Flag indicating whether these storage resources need to be cleaned up.
+        /// This is true for any storage resources that we created.
+        /// </summary>
+        public bool RequiresStorageCleanup { get; private set; }
+
+        /// <summary>
         /// The TestFixture with context about our current test run,
         /// recordings, instrumentation, etc.
         /// </summary>
@@ -414,11 +420,11 @@ namespace Azure.Search.Documents.Tests
         /// <returns></returns>
         private async Task DeleteStorageAccount()
         {
-            if (RequiresCleanup)
+            if (RequiresStorageCleanup)
             {
                 StorageManagementClient client = GetStorageManagementClient();
                 await client.StorageAccounts.DeleteAsync(Settings.ResourceGroup, StorageAccountName);
-                RequiresCleanup = false;
+                RequiresStorageCleanup = false;
             }
         }
 
@@ -577,6 +583,8 @@ namespace Azure.Search.Documents.Tests
                     StorageAccountName,
                     parameters,
                     cts.Token);
+
+                RequiresStorageCleanup = true;
 
                 StorageAccountListKeysResult keys = await client.StorageAccounts.ListKeysAsync(
                     Settings.ResourceGroup,
