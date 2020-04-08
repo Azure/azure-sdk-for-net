@@ -285,7 +285,7 @@ namespace Azure.Search.Documents.Tests
 
             while (true)
             {
-                await DelayAsync(delay);
+                await DelayAsync(delay, cancellationToken: cts.Token);
 
                 IndexerExecutionInfo status = await client.GetIndexerStatusAsync(
                     indexerName,
