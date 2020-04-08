@@ -49,6 +49,7 @@ namespace Azure.AI.FormRecognizer.Models
         public RecognizeContentOperation(string operationId, FormRecognizerClient client)
         {
             // TODO: Add argument validation here.
+            // TODO: include cancellation token argument.
 
             Id = operationId;
             _serviceClient = client.ServiceClient;

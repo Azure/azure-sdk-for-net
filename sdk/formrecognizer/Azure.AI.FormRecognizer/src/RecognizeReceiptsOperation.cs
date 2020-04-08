@@ -48,6 +48,7 @@ namespace Azure.AI.FormRecognizer.Models
         public RecognizeReceiptsOperation(string operationId, FormRecognizerClient client)
         {
             // TODO: Add argument validation here.
+            // TODO: include cancellation token argument.
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
@@ -96,7 +97,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                var update = async
+                Response<AnalyzeOperationResult_internal> update = async
                     ? await _serviceClient.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeReceiptResult(new Guid(Id), cancellationToken);
 
