@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using Azure.Storage.Blobs.Models;
 
@@ -17,9 +18,15 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary>
         /// The current sequence number for a page blob. This header is not
-        /// returned for block blobs or append blobs
+        /// returned for block blobs or append blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// The versionId of the blob version that was created.
+        /// If null, a new blob version was not created.
+        /// </summary>
+        public string VersionId { get; internal set; }
     }
 
     /// <summary>
@@ -215,6 +222,11 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning disable CA1819 // Properties should not return arrays
         public byte[] BlobContentHash => _flattened.BlobContentHash;
 #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
+        /// </summary>
+        public string VersionId => _flattened.VersionId;
     }
 
     /// <summary>
@@ -226,22 +238,22 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobDownloadInfo instance for mocking.
         /// </summary>
         public static BlobDownloadInfo BlobDownloadInfo(
-            System.DateTimeOffset lastModified = default,
+            DateTimeOffset lastModified = default,
             long blobSequenceNumber = default,
-            Azure.Storage.Blobs.Models.BlobType blobType = default,
+            BlobType blobType = default,
             byte[] contentCrc64 = default,
             string contentLanguage = default,
             string copyStatusDescription = default,
             string copyId = default,
             string copyProgress = default,
-            System.Uri copySource = default,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus = default,
+            Uri copySource = default,
+            CopyStatus copyStatus = default,
             string contentDisposition = default,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration = default,
+            LeaseDurationType leaseDuration = default,
             string cacheControl = default,
-            Azure.Storage.Blobs.Models.LeaseState leaseState = default,
+            LeaseState leaseState = default,
             string contentEncoding = default,
-            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus = default,
+            LeaseStatus leaseStatus = default,
             byte[] contentHash = default,
             string acceptRanges = default,
             ETag eTag = default,
@@ -253,9 +265,83 @@ namespace Azure.Storage.Blobs.Models
             string encryptionScope = default,
             long contentLength = default,
             byte[] blobContentHash = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default,
-            System.IO.Stream content = default,
-            System.DateTimeOffset copyCompletionTime = default)
+            string versionId = default,
+            IDictionary<string, string> metadata = default,
+            Stream content = default,
+            DateTimeOffset copyCompletionTime = default)
+        {
+            return new BlobDownloadInfo(
+                new FlattenedDownloadProperties()
+                {
+                    LastModified = lastModified,
+                    BlobSequenceNumber = blobSequenceNumber,
+                    BlobType = blobType,
+                    ContentCrc64 = contentCrc64,
+                    ContentLanguage = contentLanguage,
+                    CopyStatusDescription = copyStatusDescription,
+                    CopyId = copyId,
+                    CopyProgress = copyProgress,
+                    CopySource = copySource,
+                    CopyStatus = copyStatus,
+                    ContentDisposition = contentDisposition,
+                    LeaseDuration = leaseDuration,
+                    CacheControl = cacheControl,
+                    LeaseState = leaseState,
+                    ContentEncoding = contentEncoding,
+                    LeaseStatus = leaseStatus,
+                    ContentHash = contentHash,
+                    AcceptRanges = acceptRanges,
+                    ETag = eTag,
+                    BlobCommittedBlockCount = blobCommittedBlockCount,
+                    ContentRange = contentRange,
+                    IsServerEncrypted = isServerEncrypted,
+                    ContentType = contentType,
+                    EncryptionKeySha256 = encryptionKeySha256,
+                    EncryptionScope = encryptionScope,
+                    ContentLength = contentLength,
+                    VersionId = versionId,
+                    BlobContentHash = blobContentHash,
+                    Metadata = metadata,
+                    Content = content,
+                    CopyCompletionTime = copyCompletionTime
+                }
+            );
+        }
+
+        /// <summary>
+        /// Creates a new BlobDownloadInfo instance for mocking.
+        /// </summary>
+        public static BlobDownloadInfo BlobDownloadInfo(
+            DateTimeOffset lastModified,
+            long blobSequenceNumber,
+            BlobType blobType,
+            byte[] contentCrc64,
+            string contentLanguage,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            string contentDisposition,
+            LeaseDurationType leaseDuration,
+            string cacheControl,
+            LeaseState leaseState,
+            string contentEncoding,
+            LeaseStatus leaseStatus,
+            byte[] contentHash,
+            string acceptRanges,
+            ETag eTag,
+            int blobCommittedBlockCount,
+            string contentRange,
+            bool isServerEncrypted,
+            string contentType,
+            string encryptionKeySha256,
+            string encryptionScope,
+            long contentLength,
+            byte[] blobContentHash,
+            IDictionary<string, string> metadata,
+            Stream content,
+            DateTimeOffset copyCompletionTime)
         {
             return new BlobDownloadInfo(
                 new FlattenedDownloadProperties()
@@ -297,23 +383,24 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobDownloadInfo instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobDownloadInfo BlobDownloadInfo(
-            System.DateTimeOffset lastModified,
+            DateTimeOffset lastModified,
             long blobSequenceNumber,
-            Azure.Storage.Blobs.Models.BlobType blobType,
+            BlobType blobType,
             byte[] contentCrc64,
             string contentLanguage,
             string copyStatusDescription,
             string copyId,
             string copyProgress,
-            System.Uri copySource,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            Uri copySource,
+            CopyStatus copyStatus,
             string contentDisposition,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
+            LeaseDurationType leaseDuration,
             string cacheControl,
-            Azure.Storage.Blobs.Models.LeaseState leaseState,
+            LeaseState leaseState,
             string contentEncoding,
-            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
+            LeaseStatus leaseStatus,
             byte[] contentHash,
             string acceptRanges,
             ETag eTag,
@@ -324,9 +411,9 @@ namespace Azure.Storage.Blobs.Models
             string encryptionKeySha256,
             long contentLength,
             byte[] blobContentHash,
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            System.IO.Stream content,
-            System.DateTimeOffset copyCompletionTime)
+            IDictionary<string, string> metadata,
+            Stream content,
+            DateTimeOffset copyCompletionTime)
         {
             return new BlobDownloadInfo(
                 new FlattenedDownloadProperties()

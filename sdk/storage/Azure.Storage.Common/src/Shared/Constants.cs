@@ -66,6 +66,7 @@ namespace Azure.Storage
         public const string SasTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
 
         public const string SnapshotParameterName = "snapshot";
+        public const string VersionIdParameterName = "versionid";
 
         public const string Https = "https";
         public const string Http = "http";
@@ -133,6 +134,7 @@ namespace Azure.Storage
             public const string IfUnmodifiedSince = "If-Unmodified-Since";
             public const string Range = "Range";
             public const string ContentRange = "Content-Range";
+            public const string VersionId = "x-ms-version-id";
         }
 
         internal static class ErrorCodes

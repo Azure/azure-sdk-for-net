@@ -342,5 +342,21 @@ namespace Azure.Storage.Blobs.Models
                 LastModified = lastModified,
                 IsServerEncrypted = isServerEncrypted,
             };
+
+        /// <summary>
+        /// Creates a new BlobInfo instance for mocking.
+        /// </summary>
+        public static BlobInfo blobInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModifed = default,
+            long blobSequenceNumber = default,
+            string versionId = default) =>
+            new BlobInfo
+            {
+                ETag = eTag,
+                LastModified = lastModifed,
+                BlobSequenceNumber = blobSequenceNumber,
+                VersionId = versionId
+            };
     }
 }

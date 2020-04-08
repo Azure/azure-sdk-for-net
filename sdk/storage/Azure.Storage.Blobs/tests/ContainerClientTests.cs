@@ -1732,6 +1732,33 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsFlatSegmentAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+
+            // Act
+            var blobs = new List<BlobItem>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(states: BlobStates.Version).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.IsNull(blobs[0].IsCurrentVersion);
+            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].VersionId);
+            Assert.IsTrue(blobs[1].IsCurrentVersion);
+            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
+        }
+
+        [Test]
         public async Task ListBlobsHierarchySegmentAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1902,6 +1929,33 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.AreEqual(2, blobs.Count);
             Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Blob.Snapshot);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsHierarchySegmentAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+
+            // Act
+            var blobs = new List<BlobHierarchyItem>();
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Version).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.IsNull(blobs[0].Blob.IsCurrentVersion);
+            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].Blob.VersionId);
+            Assert.IsTrue(blobs[1].Blob.IsCurrentVersion);
+            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].Blob.VersionId);
         }
 
         [Test]
