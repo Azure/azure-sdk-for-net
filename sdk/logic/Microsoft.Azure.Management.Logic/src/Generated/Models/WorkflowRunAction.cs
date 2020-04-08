@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="retryHistory">Gets the retry histories.</param>
         /// <param name="name">Gets the workflow run action name.</param>
         /// <param name="type">Gets the workflow run action type.</param>
-        public WorkflowRunAction(string id = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string status = default(string), string code = default(string), object error = default(object), string trackingId = default(string), Correlation correlation = default(Correlation), ContentLink inputsLink = default(ContentLink), ContentLink outputsLink = default(ContentLink), object trackedProperties = default(object), IList<RetryHistory> retryHistory = default(IList<RetryHistory>), string name = default(string), string type = default(string))
+        public WorkflowRunAction(string id = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string status = default(string), string code = default(string), object error = default(object), string trackingId = default(string), RunActionCorrelation correlation = default(RunActionCorrelation), ContentLink inputsLink = default(ContentLink), ContentLink outputsLink = default(ContentLink), object trackedProperties = default(object), IList<RetryHistory> retryHistory = default(IList<RetryHistory>), string name = default(string), string type = default(string))
             : base(id)
         {
             StartTime = startTime;
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// Gets or sets the correlation properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlation")]
-        public Correlation Correlation { get; set; }
+        public RunActionCorrelation Correlation { get; set; }
 
         /// <summary>
         /// Gets the link to inputs.
