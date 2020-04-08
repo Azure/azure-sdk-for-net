@@ -27,7 +27,7 @@ namespace Azure.Core.Buffers
                 }
                 else
                 {
-                    if (array == null || buffer.Length < buffer.Length)
+                    if (array == null || array.Length < buffer.Length)
                     {
                         if (array != null)
                             ArrayPool<byte>.Shared.Return(array);
