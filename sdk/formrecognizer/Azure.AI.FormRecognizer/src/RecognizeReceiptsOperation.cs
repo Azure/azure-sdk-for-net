@@ -2,50 +2,62 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal class ExtractReceiptOperation : Operation<IReadOnlyList<ExtractedReceipt>>
+    /// <summary>
+    /// </summary>
+    public class RecognizeReceiptsOperation : Operation<IReadOnlyList<ExtractedReceipt>>
     {
         private Response _response;
         private IReadOnlyList<ExtractedReceipt> _value;
         private bool _hasCompleted;
 
-        private readonly ServiceClient _operations;
+        private readonly ServiceClient _serviceClient;
 
+        /// <inheritdoc/>
         public override string Id { get; }
 
+        /// <inheritdoc/>
         public override IReadOnlyList<ExtractedReceipt> Value => OperationHelpers.GetValue(ref _value);
 
+        /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
 
+        /// <inheritdoc/>
         public override bool HasValue => _value != null;
 
-        /// <inheritdoc/>
-        public override Response GetRawResponse() => _response;
-
-        /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(cancellationToken);
-
-        /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
-            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
-
-        internal ExtractReceiptOperation(ServiceClient operations, string operationLocation)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeReceiptsOperation"/> class.
+        /// </summary>
+        /// <param name="operationId"></param>
+        /// <param name="client"></param>
+        public RecognizeReceiptsOperation(string operationId, FormRecognizerClient client)
         {
-            _operations = operations;
+            Id = operationId;
+            _serviceClient = client.ServiceClient;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeReceiptsOperation"/> class.
+        /// </summary>
+        internal RecognizeReceiptsOperation(ServiceClient serviceClient, string operationLocation)
+        {
+            _serviceClient = serviceClient;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
         }
+
+        /// <inheritdoc/>
+        public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
@@ -55,13 +67,21 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
+        /// <inheritdoc/>
+        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(cancellationToken);
+
+        /// <inheritdoc/>
+        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
+
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
             {
-                Response<AnalyzeOperationResult_internal> update = async
-                    ? await _operations.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
-                    : _operations.GetAnalyzeReceiptResult(new Guid(Id), cancellationToken);
+                var update = async
+                    ? await _serviceClient.GetAnalyzeReceiptResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                    : _serviceClient.GetAnalyzeReceiptResult(new Guid(Id), cancellationToken);
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
