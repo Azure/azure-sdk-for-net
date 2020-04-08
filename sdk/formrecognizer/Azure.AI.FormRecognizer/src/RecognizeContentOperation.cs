@@ -44,8 +44,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class.
         /// </summary>
-        /// <param name="operationId">A unique identifier for accessing an existing long-running operation.</param>
-        /// <param name="client">The client that originally started the long-running operation to be retrieved.</param>
+        /// <param name="operationId">The ID of this operation.</param>
+        /// <param name="client">The client used to check for completion.</param>
         public RecognizeContentOperation(string operationId, FormRecognizerClient client)
         {
             // TODO: Add argument validation here.
