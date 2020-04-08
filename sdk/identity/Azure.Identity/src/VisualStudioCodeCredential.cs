@@ -73,7 +73,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
                 }
 
-                var result = await _client.AcquireTokenWithDeviceCodeAsync(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (OperationCanceledException e)
