@@ -421,7 +421,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
                                                           EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount);
+            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, ownerLevel: 0);
 
         /// <summary>
         ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
@@ -562,15 +562,34 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 cancellationSource.Token.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                var connection = CreateConnection();
-                await using var connectionAwaiter = connection.ConfigureAwait(false);
-
+                var connection = default(EventHubConnection);
                 var retryDelay = default(TimeSpan?);
                 var capturedException = default(Exception);
                 var eventBatch = default(IReadOnlyList<EventData>);
                 var lastEvent = default(EventData);
                 var failedAttemptCount = 0;
                 var failedConsumerCount = 0;
+
+                // Create the connection to be used for spawning consumers; if the creation
+                // fails, then consider the processing task to be failed.  The main processing
+                // loop will take responsibility for attempting to restart or relinquishing ownership.
+
+                try
+                {
+                    connection = CreateConnection();
+                }
+                catch (Exception ex)
+                {
+                    // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
+                    // for observing or surfacing exceptions that may occur in the handler.
+
+                    _ = InvokeOnProcessingErrorAsync(ex, partition, Resources.OperationReadEvents, CancellationToken.None);
+                    Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                    throw;
+                }
+
+                await using var connectionAwaiter = connection.ConfigureAwait(false);
 
                 // Continue processing the partition until cancellation is signaled or until the count of failed consumers is too great.
                 // Consumers which been consistently unable to receive and process events will be considered invalid and abandoned for a new consumer.
@@ -693,7 +712,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             return new PartitionProcessor
             (
-                Task.Run(performProcessing, cancellationSource.Token),
+                Task.Run(performProcessing),
                 partition,
                 readLastEnquedEventInformation,
                 cancellationSource

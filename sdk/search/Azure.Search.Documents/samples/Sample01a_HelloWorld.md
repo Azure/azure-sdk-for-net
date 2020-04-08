@@ -18,7 +18,7 @@ AzureKeyCredential credential = new AzureKeyCredential(
 SearchServiceClient search = new SearchServiceClient(endpoint, credential);
 
 // Perform an operation
-Response<SearchServiceStatistics> stats = search.GetStatistics();
+Response<SearchServiceStatistics> stats = search.GetServiceStatistics();
 Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
 ```
 
@@ -34,7 +34,7 @@ string fakeIndexName = "doesnotexist";
 SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
 try
 {
-    index.GetCount();
+    index.GetDocumentCount();
 }
 catch (RequestFailedException ex) when (ex.Status == 404)
 {

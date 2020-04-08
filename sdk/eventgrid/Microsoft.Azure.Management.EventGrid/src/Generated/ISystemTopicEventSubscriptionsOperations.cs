@@ -207,6 +207,22 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='systemTopicName'>
         /// Name of the system topic.
         /// </param>
+        /// <param name='filter'>
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 items per page.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -222,7 +238,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListBySystemTopicWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListBySystemTopicWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update an event subscription for a system topic.
         /// </summary>
@@ -328,5 +344,30 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<EventSubscription>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List event subscriptions of a system topic.
+        /// </summary>
+        /// <remarks>
+        /// List event subscriptions that belong to a specific system topic.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListBySystemTopicNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

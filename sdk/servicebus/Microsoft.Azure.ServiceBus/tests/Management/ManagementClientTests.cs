@@ -338,7 +338,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 var runtimeInfos = await client.GetQueuesRuntimeInfoAsync();
 
-                Assert.True(runtimeInfos.Count > 1);
+                Assert.True(runtimeInfos.Count > 0);
                 var runtimeInfo = runtimeInfos.FirstOrDefault(e => e.Path.Equals(queueName, StringComparison.OrdinalIgnoreCase));
 
                 Assert.NotNull(runtimeInfo);

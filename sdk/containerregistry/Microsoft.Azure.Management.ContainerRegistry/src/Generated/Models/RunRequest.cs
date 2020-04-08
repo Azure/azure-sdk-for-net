@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// The request parameters for scheduling a run.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RunRequest")]
     public partial class RunRequest
     {
         /// <summary>
@@ -31,9 +32,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         /// <param name="isArchiveEnabled">The value that indicates whether
         /// archiving is enabled for the run or not.</param>
-        public RunRequest(bool? isArchiveEnabled = default(bool?))
+        /// <param name="agentPoolName">The dedicated agent pool for the
+        /// run.</param>
+        public RunRequest(bool? isArchiveEnabled = default(bool?), string agentPoolName = default(string))
         {
             IsArchiveEnabled = isArchiveEnabled;
+            AgentPoolName = agentPoolName;
             CustomInit();
         }
 
@@ -48,6 +52,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "isArchiveEnabled")]
         public bool? IsArchiveEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dedicated agent pool for the run.
+        /// </summary>
+        [JsonProperty(PropertyName = "agentPoolName")]
+        public string AgentPoolName { get; set; }
 
     }
 }

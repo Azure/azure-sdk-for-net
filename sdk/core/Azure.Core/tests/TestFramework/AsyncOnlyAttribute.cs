@@ -6,6 +6,10 @@ using NUnit.Framework;
 
 namespace Azure.Core.Testing
 {
+    /// <summary>
+    /// Marks that a test should only be executed asynchronously (in a test
+    /// fixture derived from <see cref="ClientTestBase"/>).
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
     public class AsyncOnlyAttribute : NUnitAttribute
     {

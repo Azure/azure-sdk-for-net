@@ -36,19 +36,28 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         /// <param name="tags">The tags for the container registry.</param>
         /// <param name="sku">The SKU of the container registry.</param>
+        /// <param name="identity">The identity of the container
+        /// registry.</param>
         /// <param name="adminUserEnabled">The value that indicates whether the
         /// admin user is enabled.</param>
         /// <param name="networkRuleSet">The network rule set for a container
         /// registry.</param>
         /// <param name="policies">The policies for a container
         /// registry.</param>
-        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? adminUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies))
+        /// <param name="encryption">The encryption settings of container
+        /// registry.</param>
+        /// <param name="dataEndpointEnabled">Enable a single data endpoint per
+        /// region for serving data.</param>
+        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), IdentityProperties identity = default(IdentityProperties), bool? adminUserEnabled = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty), bool? dataEndpointEnabled = default(bool?))
         {
             Tags = tags;
             Sku = sku;
+            Identity = identity;
             AdminUserEnabled = adminUserEnabled;
             NetworkRuleSet = networkRuleSet;
             Policies = policies;
+            Encryption = encryption;
+            DataEndpointEnabled = dataEndpointEnabled;
             CustomInit();
         }
 
@@ -70,6 +79,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public Sku Sku { get; set; }
 
         /// <summary>
+        /// Gets or sets the identity of the container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityProperties Identity { get; set; }
+
+        /// <summary>
         /// Gets or sets the value that indicates whether the admin user is
         /// enabled.
         /// </summary>
@@ -87,6 +102,19 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.policies")]
         public Policies Policies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption settings of container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionProperty Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable a single data endpoint per region for serving
+        /// data.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataEndpointEnabled")]
+        public bool? DataEndpointEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.

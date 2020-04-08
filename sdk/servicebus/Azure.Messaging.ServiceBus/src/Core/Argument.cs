@@ -136,7 +136,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        ///   Ensures that an argument's value is a well-formed Event Hubs fully qualified namespace value,
+        ///   Ensures that an argument's value is a well-formed Service Bus fully qualified namespace value,
         ///   throwing a <see cref="ArgumentException" /> if that invariant is not met.
         /// </summary>
         ///

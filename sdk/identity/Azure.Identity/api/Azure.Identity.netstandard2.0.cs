@@ -57,10 +57,14 @@ namespace Azure.Identity
         public bool ExcludeInteractiveBrowserCredential { get { throw null; } set { } }
         public bool ExcludeManagedIdentityCredential { get { throw null; } set { } }
         public bool ExcludeSharedTokenCacheCredential { get { throw null; } set { } }
+        public bool ExcludeVisualStudioCodeCredential { get { throw null; } set { } }
+        public bool ExcludeVisualStudioCredential { get { throw null; } set { } }
         public string InteractiveBrowserTenantId { get { throw null; } set { } }
         public string ManagedIdentityClientId { get { throw null; } set { } }
         public string SharedTokenCacheTenantId { get { throw null; } set { } }
         public string SharedTokenCacheUsername { get { throw null; } set { } }
+        public string VisualStudioCodeTenantId { get { throw null; } set { } }
+        public string VisualStudioTenantId { get { throw null; } set { } }
     }
     public partial class DeviceCodeCredential : Azure.Core.TokenCredential
     {

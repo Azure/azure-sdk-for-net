@@ -10,6 +10,12 @@
 - Add "import" value to `KeyOperation` enumeration.
 - Add `RecoverableDays` property to `KeyProperties`.
 
+## 4.0.3 (2020-03-18)
+
+### Fixed
+
+- Fixed concurrency issue in our challenge-based authentication policy ([#9737](https://github.com/Azure/azure-sdk-for-net/issues/9737))
+
 ## 4.0.2 (2020-03-03)
 
 ### Fixed

@@ -41,7 +41,7 @@ namespace Azure.Search.Documents
             this.pipeline = pipeline;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, DataSource dataSource)
+        internal HttpMessage CreateCreateOrUpdateRequest(string dataSourceName, DataSource dataSource, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -75,12 +75,12 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new datasource or updates a datasource if it already exists. </summary>
         /// <param name="dataSourceName"> The name of the datasource to create or update. </param>
+        /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataSource>> CreateOrUpdateAsync(string dataSourceName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, DataSource dataSource, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<DataSource>> CreateOrUpdateAsync(string dataSourceName, DataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -95,7 +95,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using var message = CreateCreateOrUpdateRequest(dataSourceName, xMsClientRequestId, ifMatch, ifNoneMatch, dataSource);
+                using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -120,12 +120,12 @@ namespace Azure.Search.Documents
 
         /// <summary> Creates a new datasource or updates a datasource if it already exists. </summary>
         /// <param name="dataSourceName"> The name of the datasource to create or update. </param>
+        /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="dataSource"> The definition of the datasource to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataSource> CreateOrUpdate(string dataSourceName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, DataSource dataSource, CancellationToken cancellationToken = default)
+        public Response<DataSource> CreateOrUpdate(string dataSourceName, DataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -140,7 +140,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using var message = CreateCreateOrUpdateRequest(dataSourceName, xMsClientRequestId, ifMatch, ifNoneMatch, dataSource);
+                using var message = CreateCreateOrUpdateRequest(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
@@ -196,7 +196,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response> DeleteAsync(string dataSourceName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+        public async ValueTask<Response> DeleteAsync(string dataSourceName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -231,7 +231,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response Delete(string dataSourceName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+        public Response Delete(string dataSourceName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -283,7 +283,7 @@ namespace Azure.Search.Documents
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataSource>> GetAsync(string dataSourceName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<DataSource>> GetAsync(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -320,7 +320,7 @@ namespace Azure.Search.Documents
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataSource> Get(string dataSourceName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<DataSource> Get(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (dataSourceName == null)
             {
@@ -378,7 +378,7 @@ namespace Azure.Search.Documents
         /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ListDataSourcesResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<ListDataSourcesResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("DataSourcesClient.List");
             scope.Start();
@@ -410,7 +410,7 @@ namespace Azure.Search.Documents
         /// <param name="select"> Selects which top-level properties of the data sources to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ListDataSourcesResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<ListDataSourcesResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             using var scope = clientDiagnostics.CreateScope("DataSourcesClient.List");
             scope.Start();
@@ -438,7 +438,7 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateCreateRequest(Guid? xMsClientRequestId, DataSource dataSource)
+        internal HttpMessage CreateCreateRequest(DataSource dataSource, Guid? xMsClientRequestId)
         {
             var message = pipeline.CreateMessage();
             var request = message.Request;
@@ -460,10 +460,10 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new datasource. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="dataSource"> The definition of the datasource to create. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<DataSource>> CreateAsync(Guid? xMsClientRequestId, DataSource dataSource, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<DataSource>> CreateAsync(DataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
             {
@@ -474,7 +474,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using var message = CreateCreateRequest(xMsClientRequestId, dataSource);
+                using var message = CreateCreateRequest(dataSource, xMsClientRequestId);
                 await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -497,10 +497,10 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Creates a new datasource. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="dataSource"> The definition of the datasource to create. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DataSource> Create(Guid? xMsClientRequestId, DataSource dataSource, CancellationToken cancellationToken = default)
+        public Response<DataSource> Create(DataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (dataSource == null)
             {
@@ -511,7 +511,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using var message = CreateCreateRequest(xMsClientRequestId, dataSource);
+                using var message = CreateCreateRequest(dataSource, xMsClientRequestId);
                 pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {

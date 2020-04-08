@@ -15,9 +15,13 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// A processor is responsible for receiving <see cref="ServiceBusReceivedMessage" /> from a specific entity.
+    /// A <see cref="ServiceBusProcessor"/> is responsible for processing <see cref="ServiceBusReceivedMessage" /> from a specific
+    /// entity using event handlers. It is constructed by calling
+    ///  <see cref="ServiceBusClient.CreateProcessor(string, ServiceBusProcessorOptions)"/>.
+    /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
+    /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
+    /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
-    ///
     public class ServiceBusProcessor
     {
         private Func<ProcessMessageEventArgs, Task> _processMessage;
@@ -106,7 +110,6 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the client is processing messages; otherwise, <c>false</c>.
         /// </value>
-        ///
         public bool IsProcessing => ActiveReceiveTask != null;
 
         /// <summary>
@@ -115,8 +118,11 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         private readonly ServiceBusConnection _connection;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
-        /// <value>The maximum number of concurrent calls to the callback.</value>
+        /// <summary>Gets or sets the maximum number of concurrent calls to the
+        /// <see cref="ProcessMessageAsync"/> event handler the processor should initiate.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the event handler.</value>
         public int MaxConcurrentCalls
         {
             get => _maxConcurrentCalls;
@@ -128,12 +134,17 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        /// <summary>
+        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public TimeSpan? MaxReceiveWaitTime { get; }
+
         private int _maxConcurrentCalls;
         private int _maxConcurrentAcceptSessions;
         private const int DefaultMaxConcurrentCalls = 1;
         private const int DefaultMaxConcurrentSessions = 8;
 
-        /// <summary>Gets or sets a value that indicates whether the Processor should automatically
+        /// <summary>Gets or sets a value that indicates whether the <see cref="ServiceBusProcessor"/> should automatically
         /// complete messages after the event handler has completed processing. If the event handler
         /// triggers an exception, the message will not be automatically completed.</summary>
         ///
@@ -186,6 +197,7 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = options.PrefetchCount;
             MaxAutoLockRenewalDuration = options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = options.MaxConcurrentCalls;
+            MaxReceiveWaitTime = options.MaxReceiveWaitTime;
             AutoComplete = options.AutoComplete;
 
             EntityPath = entityPath;
@@ -229,8 +241,8 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        /// The event responsible for processing messages received from the Queue or Subscription. Implementation
-        /// is mandatory.
+        /// The event responsible for processing messages received from the Queue or Subscription.
+        /// Implementation is mandatory.
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -585,6 +597,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = ServiceBusErrorSource.Receive;
                     ServiceBusReceivedMessage message = await receiver.ReceiveAsync(
+                        MaxReceiveWaitTime,
                         cancellationToken).ConfigureAwait(false);
                     if (message == null)
                     {

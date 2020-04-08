@@ -1,4 +1,4 @@
-﻿# .NET Event Hubs Client: Event Processor&lt;T&gt; Proposal
+# .NET Event Hubs Client: Event Processor&lt;T&gt; Proposal
 
 The Event Hubs client library offers two primary clients for consuming events, the `EventHubConsumerClient` and `EventProcessorClient`, each designed for slightly different scenarios but unified in their approach to provide a consistent experience for developers starting with the "Hello World" experience and stepping-up to production use.  These clients embrace a common design philosophy in providing developers an experience optimized around ease of use, familiar patterns, and a consistent API across them.
 
@@ -376,6 +376,7 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     public string ConsumerGroup { get; }
     public string Identifier { get; protected set; }
     public bool IsRunning { get; protected set; }
+    protected EventHubsRetryPolicy RetryPolicy { get; }
     
     protected EventProcessor(
         int eventBatchMaximumCount,
@@ -403,6 +404,7 @@ public abstract class EventProcessor<TPartition> where TPartition : EventProcess
     public virtual void StartProcessing(CancellationToken cancellationToken = default);
     public virtual Task StopProcessingAsync(CancellationToken cancellationToken = default);
     public virtual void StopProcessing(CancellationToken cancellationToken = default);
+    protected virtual EventHubConnection CreateConnection();
     
     protected virtual Task OnInitializingPartitionAsync(TPartition partition, CancellationToken cancellationToken);
     protected virtual Task OnPartitionProcessingStoppedAsync(TPartition partition, ProcessingStoppedReason reason, CancellationToken cancellationToken);

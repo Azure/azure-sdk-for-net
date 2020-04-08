@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
@@ -37,9 +37,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    AutoComplete = autoComplete
+                    AutoComplete = autoComplete,
+                    MaxReceiveWaitTime = TimeSpan.FromSeconds(30)
                 };
-                var processor = client.GetProcessor(scope.QueueName, options);
+                var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -98,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 lockDuration: lockDuration))
             {
                 await using var client = GetClient();
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 var messageSendCt = numThreads;
@@ -111,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     MaxConcurrentCalls = numThreads,
                     AutoComplete = false
                 };
-                var processor = client.GetProcessor(scope.QueueName, options);
+                var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -164,7 +165,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 lockDuration: lockDuration))
             {
                 await using var client = GetClient();
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 var messageSendCt = numThreads;
@@ -178,7 +179,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     AutoComplete = false,
                     MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(autoLockRenewalDuration)
                 };
-                var processor = client.GetProcessor(scope.QueueName, options);
+                var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageCt = 0;
 
                 TaskCompletionSource<bool>[] completionSources = Enumerable
@@ -236,7 +237,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 int numMessages = 100;
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, numMessages);
@@ -247,7 +248,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     MaxConcurrentCalls = numThreads,
                     ReceiveMode = ReceiveMode.ReceiveAndDelete
                 };
-                var processor = client.GetProcessor(scope.QueueName, options);
+                var processor = client.CreateProcessor(scope.QueueName, options);
                 int messageProcessedCt = 0;
 
                 // stop processing halfway through
@@ -272,7 +273,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 }
                 await tcs.Task;
 
-                var receiver = GetNoRetryClient().GetReceiver(scope.QueueName);
+                var receiver = GetNoRetryClient().CreateReceiver(scope.QueueName);
                 var receivedMessages = await receiver.ReceiveBatchAsync(numMessages);
                 // can't assert on the exact amount processed due to threads that
                 // are already in flight when calling StopProcessingAsync, but we can at least verify that there are remaining messages
@@ -287,7 +288,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var invalidQueueName = "nonexistentqueuename";
             var exceptionReceivedHandlerCalled = false;
             var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-            ServiceBusProcessor processor = client.GetProcessor(invalidQueueName);
+            ServiceBusProcessor processor = client.CreateProcessor(invalidQueueName);
 
             processor.ProcessMessageAsync += ProcessMessage;
             processor.ProcessErrorAsync += ProcessErrors;
@@ -349,7 +350,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = GetClient();
 
-                var processor = client.GetProcessor(scope.QueueName);
+                var processor = client.CreateProcessor(scope.QueueName);
 
                 Func<ProcessMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
                 Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
@@ -382,9 +383,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 lockDuration: lockDuration))
             {
                 await using var client = GetClient();
-                var sender = client.GetSender(scope.QueueName);
+                var sender = client.CreateSender(scope.QueueName);
                 await sender.SendAsync(GetMessage());
-                var processor = client.GetProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
                 {
                     AutoComplete = true
                 });
@@ -401,7 +402,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await processor.StartProcessingAsync();
                 await tcs.Task;
                 await processor.StopProcessingAsync();
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 var msg = await receiver.ReceiveAsync();
                 Assert.IsNull(msg);
             }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.Search.Documents
 {
@@ -55,8 +56,8 @@ namespace Azure.Search.Documents
         /// </summary>
         /// <param name="items">The items to join.</param>
         /// <returns>The items joined together by commas.</returns>
-        public static string CommaJoin(this ICollection<string> items) =>
-            items?.Count > 0 ? string.Join(",", items) : null;
+        public static string CommaJoin(this IEnumerable<string> items) =>
+            items != null && items.Count() > 0 ? string.Join(",", items) : null;
 
         /// <summary>
         /// Split a collection of strings by commas.

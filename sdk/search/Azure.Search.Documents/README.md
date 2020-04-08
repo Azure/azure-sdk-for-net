@@ -60,7 +60,7 @@ az search service create --name <mysearch> --resource-group <mysearch-rg> --sku 
 See [choosing a pricing tier](https://docs.microsoft.com/azure/search/search-sku-tier)
  for more information about available options.
 
-### Get a Search api-key
+### Authenticate the client
 
 All requests to a search service need an api-key that was generated specifically
 for your service. [The api-key is the sole mechanism for authenticating access to
@@ -79,6 +79,18 @@ originating from a client app.
 
 *Note: The example Azure CLI snippet above retrieves an admin key so it's easier
 to get started exploring APIs, but it should be managed carefully.*
+
+We can use the api-key to create a new `SearchServiceClient`.
+
+```C# Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+// Get the service endpoint and API key from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
+
+// Create a client
+AzureKeyCredential credential = new AzureKeyCredential(key);
+SearchServiceClient client = new SearchServiceClient(endpoint, credential);
+```
 
 ### Send your first search query
 
@@ -141,7 +153,7 @@ exposes operations on these resources through two main client types:
   - [Declare custom synonym maps to expand or rewrite queries](https://docs.microsoft.com/rest/api/searchservice/synonym-map-operations)
   - Most of the `SearchServiceClient` functionality is not yet available in our current preview
 
-_The `Azure.Search.Documents` client library (v11) is a brand new offering for
+_The `Azure.Search.Documents` client library (v1) is a brand new offering for
 .NET developers who want to use search technology in their applications.  There
 is an older, fully featured `Microsoft.Azure.Search` client library (v10) with
 many similar looking APIs, so please be careful to avoid confusion when
@@ -157,9 +169,10 @@ much more.
 
 ### Querying
 
-Let's start by importing our namespace.
+Let's start by importing our namespaces.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Namespace
+using Azure;
 using Azure.Search.Documents;
 ```
 
@@ -264,8 +277,8 @@ to be aware of.
 
 ```C# Snippet:Azure_Search_Tests_Samples_Readme_Index
 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
-    IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
-    IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
+IndexDocumentsAction.Upload(new Hotel { Id = "783", Name = "Upload Inn" }),
+IndexDocumentsAction.Merge(new Hotel { Id = "12", Name = "Renovated Ranch" }));
 
 IndexDocumentsOptions options = new IndexDocumentsOptions { ThrowOnAnyError = true };
 client.IndexDocuments(batch, options);
@@ -306,6 +319,7 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 {
     Console.WriteLine("We couldn't find the hotel you are looking for!");
     Console.WriteLine("Please try selecting another.");
+    return null;
 }
 ```
 

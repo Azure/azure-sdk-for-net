@@ -1538,7 +1538,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlobContainerClient"/>.
         /// </summary>
         /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
-        /// <param name="blobName">The name of the append blob.</param>
+        /// <param name="blobName">The name of the block blob.</param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
         public static BlockBlobClient GetBlockBlobClient(
             this BlobContainerClient client,

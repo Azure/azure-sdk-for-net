@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// Initializes a new instance of the <see cref="CustomFormClient"/>.
         /// </summary>
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public CustomFormClient(Uri endpoint, FormRecognizerApiKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
+        public CustomFormClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
         }
@@ -45,11 +45,11 @@ namespace Azure.AI.FormRecognizer.Custom
         /// Initializes a new instance of the <see cref="CustomFormClient"/>.
         /// </summary>
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        public CustomFormClient(Uri endpoint, FormRecognizerApiKeyCredential credential, FormRecognizerClientOptions options)
+        public CustomFormClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         {
             _diagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             _operations = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
         }
 
@@ -77,7 +77,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(_operations, response.Headers.Location);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = _operations.RestClient.TrainCustomModelAsync(trainRequest);
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
@@ -144,7 +144,7 @@ namespace Azure.AI.FormRecognizer.Custom
                 trainRequest.SourceFilter = filter;
             }
 
-            ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await _operations.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingWithLabelsOperation(_operations, response.Headers.Location);
         }
 
@@ -168,7 +168,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), contentType, stream, includeTextDetails: includeRawPageExtractions, cancellationToken);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -184,7 +184,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual Operation<IReadOnlyList<ExtractedPage>> StartExtractFormPages(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -202,7 +202,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), contentType, stream, includeTextDetails: includeRawPageExtractions, cancellationToken).ConfigureAwait(false);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -219,7 +219,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual async Task<Operation<IReadOnlyList<ExtractedPage>>> StartExtractFormPagesAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
             return new ExtractPagesOperation(_operations, modelId, response.Headers.OperationLocation);
         }
         #endregion
@@ -240,7 +240,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), contentType, stream, includeTextDetails: includeRawPageExtractions, cancellationToken);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -256,7 +256,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual Operation<IReadOnlyList<ExtractedLabeledForm>> StartExtractLabeledForms(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = _operations.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -274,7 +274,7 @@ namespace Azure.AI.FormRecognizer.Custom
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, contentType, stream, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), contentType, stream, includeTextDetails: includeRawPageExtractions, cancellationToken).ConfigureAwait(false);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
 
@@ -290,7 +290,7 @@ namespace Azure.AI.FormRecognizer.Custom
         public virtual async Task<Operation<IReadOnlyList<ExtractedLabeledForm>>> StartExtractLabeledFormsAsync(string modelId, Uri uri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = uri.ToString() };
-            ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await _operations.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
             return new ExtractLabeledFormOperation(_operations, modelId, response.Headers.OperationLocation);
         }
         #endregion

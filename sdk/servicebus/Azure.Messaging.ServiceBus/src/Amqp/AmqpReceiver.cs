@@ -168,19 +168,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Receives a batch of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
         /// </summary>
         ///
-        /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
+        /// <param name="maxMessages">The maximum number of messages that will be received.</param>
+        /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>List of messages received. Returns null if no message is found.</returns>
         public override async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
-            int maximumMessageCount,
+            int maxMessages,
+            TimeSpan? maxWaitTime,
             CancellationToken cancellationToken)
         {
             IList<ServiceBusReceivedMessage> messages = null;
             await _retryPolicy.RunOperation(async (timeout) =>
             {
                 messages = await ReceiveBatchAsyncInternal(
-                    maximumMessageCount,
+                    maxMessages,
+                    maxWaitTime,
                     timeout,
                     cancellationToken).ConfigureAwait(false);
             },
@@ -194,14 +197,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition.
         /// </summary>
         ///
-        /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="timeout"></param>
+        /// <param name="maxMessages">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
+        /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         private async Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsyncInternal(
-            int maximumMessageCount,
+            int maxMessages,
+            TimeSpan? maxWaitTime,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -216,7 +222,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var messagesReceived = await Task.Factory.FromAsync
             (
-                (callback, state) => link.BeginReceiveRemoteMessages(maximumMessageCount, TimeSpan.FromMilliseconds(20), timeout, callback, state),
+                (callback, state) => link.BeginReceiveRemoteMessages(
+                    maxMessages,
+                    TimeSpan.FromMilliseconds(20),
+                    maxWaitTime ?? timeout,
+                    callback,
+                    state),
                 (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
                 TaskCreationOptions.RunContinuationsAsynchronously
             ).ConfigureAwait(false);
@@ -358,7 +369,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     // The link state is lost, We need to return a non-retriable error.
                     ServiceBusEventSource.Log.LinkStateLost(
-                        "ClientId",
+                        _identifier,
                         receiveLink.Name,
                         receiveLink.State,
                         _isSessionReceiver,
@@ -740,7 +751,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// The first call to PeekBatchBySequenceAsync(long, int, CancellationToken) fetches the first active message for this receiver. Each subsequent call
         /// fetches the subsequent message in the entity.
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
-        /// Also, unlike <see cref="ReceiveBatchAsync(int, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
+        /// Also, unlike <see cref="ReceiveBatchAsync(int, TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
         /// </remarks>
         /// <returns></returns>
         public override async Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(

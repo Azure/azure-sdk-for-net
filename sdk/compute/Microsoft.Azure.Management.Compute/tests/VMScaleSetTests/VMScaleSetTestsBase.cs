@@ -399,7 +399,10 @@ namespace Compute.Tests
                 VirtualMachineScaleSetOSDisk osDisk = new VirtualMachineScaleSetOSDisk();
                 osDisk.Caching = CachingTypes.ReadOnly;
                 osDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-                osDisk.DiffDiskSettings = new DiffDiskSettings { Option = DiffDiskOptions.Local };
+                osDisk.DiffDiskSettings = new DiffDiskSettings {
+                    Option = DiffDiskOptions.Local,
+                    Placement = DiffDiskPlacement.CacheDisk
+                    };
                 inputVMScaleSet.VirtualMachineProfile.StorageProfile.OsDisk = osDisk;
             }
 

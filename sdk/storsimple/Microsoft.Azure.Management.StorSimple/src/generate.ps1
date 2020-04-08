@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "storSimple1200Series\resource-manager" -AutoRestVersion "latest" -SdkGenerationDirectory "$PSScriptRoot\Generated"  
+Start-AutoRestCodeGeneration -ResourceProvider "storSimple1200Series\resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\Generated"  

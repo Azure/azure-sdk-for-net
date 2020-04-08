@@ -31,6 +31,22 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
+        /// Get the first element in an async enumerable.
+        /// </summary>
+        /// <typeparam name="T">Type of elements.</typeparam>
+        /// <param name="sequence">The async enumerable.</param>
+        /// <returns>The first element.</returns>
+        public static async Task<T> FirstAsync<T>(this IAsyncEnumerable<T> sequence)
+        {
+            await foreach (T value in sequence)
+            {
+                return value;
+            }
+            Assert.Fail("No elements in sequence!");
+            return default; // The compiler doesn't know that'll throw...
+        }
+
+        /// <summary>
         /// Convert an AsyncPageable into a List.
         /// </summary>
         /// <typeparam name="T">Type of elements.</typeparam>

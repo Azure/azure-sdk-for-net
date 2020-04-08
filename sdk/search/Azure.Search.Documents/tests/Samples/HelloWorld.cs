@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 #region Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
@@ -19,6 +20,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [SyncOnly]
         public async Task CreateClient()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -36,8 +38,7 @@ namespace Azure.Search.Documents.Tests.Samples
             /*@@*/ search = InstrumentClient(new SearchServiceClient(endpoint, credential, GetSearchClientOptions()));
 
             // Perform an operation
-            //@@ Response<SearchServiceStatistics> stats = search.GetStatistics();
-            /*@@*/ Response<SearchServiceStatistics> stats = await search.GetServiceStatisticsAsync();
+            Response<SearchServiceStatistics> stats = search.GetServiceStatistics();
             Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} indexes.");
             #endregion Snippet:Azure_Search_Tests_Samples_CreateClient
 
@@ -45,6 +46,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [AsyncOnly]
         public async Task CreateClientAsync()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -70,6 +72,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [SyncOnly]
         public async Task HandleErrors()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -87,8 +90,7 @@ namespace Azure.Search.Documents.Tests.Samples
             /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
             try
             {
-                //@@ index.GetCount();
-                /*@@*/ await index.GetDocumentCountAsync();
+                index.GetDocumentCount();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -98,6 +100,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [AsyncOnly]
         public async Task HandleErrorsAsync()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);

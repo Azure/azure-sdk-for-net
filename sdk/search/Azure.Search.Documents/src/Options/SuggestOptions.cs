@@ -112,5 +112,26 @@ namespace Azure.Search.Documents
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(SuggestOptions)}.");
         }
         #pragma warning restore CA1822
+
+        /// <summary>
+        /// Creates a shallow copy of the SuggestOptions.
+        /// </summary>
+        /// <returns>The cloned SuggestOptions.</returns>
+        internal SuggestOptions Clone() =>
+            new SuggestOptions
+            {
+                SearchText = SearchText,
+                SuggesterName = SuggesterName,
+                Filter = Filter,
+                SearchFields = SearchFields,
+                Select = Select,
+                Size = Size,
+                OrderBy = OrderBy,
+                HighlightPostTag = HighlightPostTag,
+                HighlightPreTag = HighlightPreTag,
+                MinimumCoverage = MinimumCoverage,
+                UseFuzzyMatching = UseFuzzyMatching,
+                ClientRequestId = ClientRequestId
+            };
     }
 }

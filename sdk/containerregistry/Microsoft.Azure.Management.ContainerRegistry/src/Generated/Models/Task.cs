@@ -53,12 +53,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// include: 'Disabled', 'Enabled'</param>
         /// <param name="agentConfiguration">The machine configuration of the
         /// run agent.</param>
+        /// <param name="agentPoolName">The dedicated agent pool for the
+        /// task.</param>
         /// <param name="timeout">Run timeout in seconds.</param>
         /// <param name="trigger">The properties that describe all triggers for
         /// the task.</param>
         /// <param name="credentials">The properties that describes a set of
         /// credentials that will be used when this run is invoked.</param>
-        public Task(string location, PlatformProperties platform, TaskStepProperties step, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string provisioningState = default(string), System.DateTime? creationDate = default(System.DateTime?), string status = default(string), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TriggerProperties trigger = default(TriggerProperties), Credentials credentials = default(Credentials))
+        public Task(string location, PlatformProperties platform, TaskStepProperties step, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string provisioningState = default(string), System.DateTime? creationDate = default(System.DateTime?), string status = default(string), AgentProperties agentConfiguration = default(AgentProperties), string agentPoolName = default(string), int? timeout = default(int?), TriggerProperties trigger = default(TriggerProperties), Credentials credentials = default(Credentials))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -67,6 +69,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             Status = status;
             Platform = platform;
             AgentConfiguration = agentConfiguration;
+            AgentPoolName = agentPoolName;
             Timeout = timeout;
             Step = step;
             Trigger = trigger;
@@ -118,6 +121,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.agentConfiguration")]
         public AgentProperties AgentConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dedicated agent pool for the task.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.agentPoolName")]
+        public string AgentPoolName { get; set; }
 
         /// <summary>
         /// Gets or sets run timeout in seconds.
