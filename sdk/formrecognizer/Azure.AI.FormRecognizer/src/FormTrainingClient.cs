@@ -18,12 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class FormTrainingClient
     {
-        private readonly ClientDiagnostics _diagnostics;
-        private readonly HttpPipeline _pipeline;
-
         internal readonly ServiceClient ServiceClient;
-
-        internal const string CustomModelsRoute = "/custom/models";
 
         /// <summary>
         /// </summary>
@@ -43,9 +38,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         public FormTrainingClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
-            _diagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(_diagnostics, _pipeline, endpoint.ToString());
+            var diagnostics = new ClientDiagnostics(options);
+            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
+            ServiceClient = new ServiceClient(diagnostics, pipeline, endpoint.ToString());
         }
 
         #region Training
