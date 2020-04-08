@@ -151,22 +151,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task GetPathClient()
-        {
-            // Arrange
-            await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-            await fileClient.CreateAsync();
-            DataLakePathClient pathClient = InstrumentClient(test.FileSystem.GetPathClient(fileClient.Name));
-
-            // Act
-            Response<PathProperties> response = await pathClient.GetPropertiesAsync();
-
-            // Assert
-            Assert.IsNotNull(response.Value.ETag);
-        }
-
-        [Test]
         public async Task CreateAsync()
         {
             // Arrange
