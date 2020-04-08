@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(LengthUnit.Inch, rawPage.Unit);
             Assert.AreEqual(8.5, rawPage.Width);
             Assert.AreEqual(11, rawPage.Height);
-            Assert.AreEqual(0, rawPage.Angle);
+            Assert.AreEqual(0, rawPage.TextAngle);
             Assert.AreEqual(18, rawPage.Lines.Count);
 
             var lines = rawPage.Lines.ToList();

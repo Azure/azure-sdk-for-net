@@ -7,29 +7,23 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RawExtractedLine : RawExtractedItem
+    public class RawExtractedLine : FormContent
     {
-        internal RawExtractedLine(TextLine_internal textLine)
+        internal RawExtractedLine(TextLine_internal textLine, int pageNumber) : base(new BoundingBox(textLine.BoundingBox), pageNumber, textLine.Text)
         {
-            Text = textLine.Text;
-            BoundingBox = new BoundingBox(textLine.BoundingBox);
-            Words = ConvertWords(textLine.Words);
+            Words = ConvertWords(textLine.Words, pageNumber);
         }
 
         /// <summary> List of words in the text line. </summary>
         public IReadOnlyList<RawExtractedWord> Words { get; internal set; }
 
-        /// <summary>
-        /// </summary>
-        public static implicit operator string(RawExtractedLine line) => line.Text;
-
-        private static IReadOnlyList<RawExtractedWord> ConvertWords(IReadOnlyList<TextWord_internal> textWords)
+        private static IReadOnlyList<RawExtractedWord> ConvertWords(IReadOnlyList<TextWord_internal> textWords, int pageNumber)
         {
             List<RawExtractedWord> rawWords = new List<RawExtractedWord>();
 
             foreach (TextWord_internal textWord in textWords)
             {
-                rawWords.Add(new RawExtractedWord(textWord));
+                rawWords.Add(new RawExtractedWord(textWord, pageNumber));
             }
 
             return rawWords;
