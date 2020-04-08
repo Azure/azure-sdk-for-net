@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -16,7 +15,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// Sample demonstrates how to wrap and unwrap a symmetric key with an RSA key using the synchronous methods of the CryptographyClient.
     /// </summary>
-    [LiveOnly]
     public partial class Sample6_WrapUnwrap
     {
         [Test]
