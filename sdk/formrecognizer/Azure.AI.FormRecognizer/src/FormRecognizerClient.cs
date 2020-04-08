@@ -52,12 +52,12 @@ namespace Azure.AI.FormRecognizer
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements recognized from the form.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartRecognizeContentAsync(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(contentType, formFileStream, cancellationToken).ConfigureAwait(false);
-            return new ExtractLayoutOperation(ServiceClient, response.Headers.OperationLocation);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -69,12 +69,12 @@ namespace Azure.AI.FormRecognizer
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements recognized from the form.</returns>
         [ForwardsClientCalls]
-        public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartRecognizeContent(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(contentType, formFileStream, cancellationToken);
-            return new ExtractLayoutOperation(ServiceClient, response.Headers.OperationLocation);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -85,11 +85,11 @@ namespace Azure.AI.FormRecognizer
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements recognized from the form.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<Operation<IReadOnlyList<ExtractedLayoutPage>>> StartRecognizeContentFromUriAsync(Uri formFileUri, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formFileUri, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
-            return new ExtractLayoutOperation(ServiceClient, response.Headers.OperationLocation);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -100,11 +100,11 @@ namespace Azure.AI.FormRecognizer
         /// <returns>A Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt; to wait on this long-running operation.  Its Operation&lt;IReadOnlyList&lt;ExtractedLayoutPage&gt;&gt;.Value upon successful
         /// completion will contain layout elements recognized from the form.</returns>
         [ForwardsClientCalls]
-        public virtual Operation<IReadOnlyList<ExtractedLayoutPage>> StartRecognizeContentFromUri(Uri formFileUri, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formFileUri, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
-            return new ExtractLayoutOperation(ServiceClient, response.Headers.OperationLocation);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         #endregion
