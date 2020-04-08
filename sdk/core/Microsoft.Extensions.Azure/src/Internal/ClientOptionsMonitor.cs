@@ -40,11 +40,9 @@ namespace Microsoft.Extensions.Azure
             _cache.TryRemove(name);
             var options = Get(name);
 
-            // cache the event handler to prevent other threads from modifying it.
-            Action<TOptions, string> onChangeLocal = _onChange;
-            if (onChangeLocal != null)
+            if (_onChange != null)
             {
-                onChangeLocal.Invoke(options, name);
+                _onChange?.Invoke(options, name);
             }
         }
 
