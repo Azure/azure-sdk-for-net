@@ -146,7 +146,6 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy>> GetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetDirectoryClient(string directoryName) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeFileClient GetFileClient(string fileName) { throw null; }
-        public virtual Azure.Storage.Files.DataLake.DataLakePathClient GetPathClient(string pathName) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(string path = null, bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(string path = null, bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -183,6 +182,7 @@ namespace Azure.Storage.Files.DataLake
     public partial class DataLakePathClient
     {
         protected DataLakePathClient() { }
+        public DataLakePathClient(Azure.Storage.Files.DataLake.DataLakeFileSystemClient fileSystemClient, string path) { }
         public DataLakePathClient(System.Uri pathUri) { }
         public DataLakePathClient(System.Uri pathUri, Azure.Core.TokenCredential credential) { }
         public DataLakePathClient(System.Uri pathUri, Azure.Core.TokenCredential credential, Azure.Storage.Files.DataLake.DataLakeClientOptions options) { }
