@@ -8,14 +8,14 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
-    public partial class FieldPredictionAccuracy
+    public partial class CustomFormModelField
     {
-        internal static FieldPredictionAccuracy DeserializeFieldPredictionAccuracy(JsonElement element)
+        internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element)
         {
             string fieldName = default;
-            float accuracy = default;
+            float? accuracy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"))
@@ -29,11 +29,15 @@ namespace Azure.AI.FormRecognizer.Custom
                 }
                 if (property.NameEquals("accuracy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     accuracy = property.Value.GetSingle();
                     continue;
                 }
             }
-            return new FieldPredictionAccuracy(fieldName, accuracy);
+            return new CustomFormModelField(fieldName, accuracy);
         }
     }
 }

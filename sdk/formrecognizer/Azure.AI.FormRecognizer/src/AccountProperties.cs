@@ -3,24 +3,24 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    public class SubscriptionProperties
+    public class AccountProperties
     {
-        internal SubscriptionProperties(ModelsSummary_internal summary)
+        internal AccountProperties(ModelsSummary_internal summary)
         {
-            Count = summary.Count;
-            Limit = summary.Limit;
+            CustomModelCount = summary.Count;
+            CustomModelLimit = summary.Limit;
             LastUpdatedOn = summary.LastUpdatedDateTime;
         }
 
         /// <summary> Current count of trained custom models. </summary>
-        public int Count { get; set; }
+        public int CustomModelCount { get; internal set; }
         /// <summary> Max number of models that can be trained for this subscription. </summary>
-        public int Limit { get; set; }
+        public int CustomModelLimit { get; internal set; }
         /// <summary> Date and time (UTC) when the summary was last updated. </summary>
-        public DateTimeOffset LastUpdatedOn { get; set; }
+        internal DateTimeOffset LastUpdatedOn { get; set; }
     }
 }
