@@ -13,18 +13,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for LinkedServicesOperations.
+    /// Extension methods for SavedSearchesOperations.
     /// </summary>
-    public static partial class LinkedServicesOperationsExtensions
+    public static partial class SavedSearchesOperationsExtensions
     {
             /// <summary>
-            /// Create or update a linked service.
+            /// Deletes the specified saved search in a given workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,19 +33,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linkedServices resource
+            /// <param name='savedSearchId'>
+            /// The id of the saved search.
             /// </param>
-            /// <param name='parameters'>
-            /// The parameters required to create or update a linked service.
-            /// </param>
-            public static LinkedService CreateOrUpdate(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName, LinkedService parameters)
+            public static void Delete(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, linkedServiceName, parameters).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, savedSearchId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or update a linked service.
+            /// Deletes the specified saved search in a given workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,25 +53,71 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linkedServices resource
-            /// </param>
-            /// <param name='parameters'>
-            /// The parameters required to create or update a linked service.
+            /// <param name='savedSearchId'>
+            /// The id of the saved search.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LinkedService> CreateOrUpdateAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName, LinkedService parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, linkedServiceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, savedSearchId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Creates or updates a saved search for a given workspace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='savedSearchId'>
+            /// The id of the saved search.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters required to save a search.
+            /// </param>
+            public static SavedSearch CreateOrUpdate(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchId, SavedSearch parameters)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, savedSearchId, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a saved search for a given workspace.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='savedSearchId'>
+            /// The id of the saved search.
+            /// </param>
+            /// <param name='parameters'>
+            /// The parameters required to save a search.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SavedSearch> CreateOrUpdateAsync(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchId, SavedSearch parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, savedSearchId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes a linked service instance.
+            /// Gets the specified saved search for a given workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -87,16 +128,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linked service.
+            /// <param name='savedSearchId'>
+            /// The id of the saved search.
             /// </param>
-            public static void Delete(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName)
+            public static SavedSearch Get(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchId)
             {
-                operations.DeleteAsync(resourceGroupName, workspaceName, linkedServiceName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, savedSearchId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a linked service instance.
+            /// Gets the specified saved search for a given workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -107,65 +148,22 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linked service.
+            /// <param name='savedSearchId'>
+            /// The id of the saved search.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SavedSearch> GetAsync(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, string savedSearchId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, linkedServiceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a linked service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linked service.
-            /// </param>
-            public static LinkedService Get(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName)
-            {
-                return operations.GetAsync(resourceGroupName, workspaceName, linkedServiceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a linked service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linked service.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<LinkedService> GetAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, linkedServiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, savedSearchId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the linked services instances in a workspace.
+            /// Gets the saved searches for a given Log Analytics Workspace
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -176,13 +174,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static IEnumerable<LinkedService> ListByWorkspace(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName)
+            public static SavedSearchesListResult ListByWorkspace(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName)
             {
                 return operations.ListByWorkspaceAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the linked services instances in a workspace.
+            /// Gets the saved searches for a given Log Analytics Workspace
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -196,7 +194,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<LinkedService>> ListByWorkspaceAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SavedSearchesListResult> ListByWorkspaceAsync(this ISavedSearchesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByWorkspaceWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {

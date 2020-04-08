@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
 
     /// <summary>
-    /// Defines values for SkuNameEnum.
+    /// Defines values for WorkspaceSkuNameEnum.
     /// </summary>
-    public static class SkuNameEnum
+    public static class WorkspaceSkuNameEnum
     {
         public const string Free = "Free";
         public const string Standard = "Standard";
@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         public const string PerNode = "PerNode";
         public const string PerGB2018 = "PerGB2018";
         public const string Standalone = "Standalone";
+        public const string CapacityReservation = "CapacityReservation";
     }
 }

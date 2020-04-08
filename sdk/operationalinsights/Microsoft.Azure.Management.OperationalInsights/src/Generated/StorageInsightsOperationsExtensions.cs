@@ -12,18 +12,17 @@ namespace Microsoft.Azure.Management.OperationalInsights
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for DataSourcesOperations.
+    /// Extension methods for StorageInsightsOperations.
     /// </summary>
-    public static partial class DataSourcesOperationsExtensions
+    public static partial class StorageInsightsOperationsExtensions
     {
             /// <summary>
-            /// Create or update a data source.
+            /// Create or update a storage insight.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,19 +33,19 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='dataSourceName'>
-            /// The name of the datasource resource.
+            /// <param name='storageInsightName'>
+            /// Name of the storageInsightsConfigs resource
             /// </param>
             /// <param name='parameters'>
-            /// The parameters required to create or update a datasource.
+            /// The parameters required to create or update a storage insight.
             /// </param>
-            public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, string resourceGroupName, string workspaceName, string dataSourceName, DataSource parameters)
+            public static StorageInsight CreateOrUpdate(this IStorageInsightsOperations operations, string resourceGroupName, string workspaceName, string storageInsightName, StorageInsight parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, dataSourceName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, storageInsightName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or update a data source.
+            /// Create or update a storage insight.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -57,25 +56,25 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='dataSourceName'>
-            /// The name of the datasource resource.
+            /// <param name='storageInsightName'>
+            /// Name of the storageInsightsConfigs resource
             /// </param>
             /// <param name='parameters'>
-            /// The parameters required to create or update a datasource.
+            /// The parameters required to create or update a storage insight.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataSource> CreateOrUpdateAsync(this IDataSourcesOperations operations, string resourceGroupName, string workspaceName, string dataSourceName, DataSource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageInsight> CreateOrUpdateAsync(this IStorageInsightsOperations operations, string resourceGroupName, string workspaceName, string storageInsightName, StorageInsight parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, dataSourceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, storageInsightName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes a data source instance.
+            /// Gets a storage insight instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,16 +85,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='dataSourceName'>
-            /// Name of the datasource.
+            /// <param name='storageInsightName'>
+            /// Name of the storageInsightsConfigs resource
             /// </param>
-            public static void Delete(this IDataSourcesOperations operations, string resourceGroupName, string workspaceName, string dataSourceName)
+            public static StorageInsight Get(this IStorageInsightsOperations operations, string resourceGroupName, string workspaceName, string storageInsightName)
             {
-                operations.DeleteAsync(resourceGroupName, workspaceName, dataSourceName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, storageInsightName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a data source instance.
+            /// Gets a storage insight instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -106,72 +105,25 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='dataSourceName'>
-            /// Name of the datasource.
+            /// <param name='storageInsightName'>
+            /// Name of the storageInsightsConfigs resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDataSourcesOperations operations, string resourceGroupName, string workspaceName, string dataSourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageInsight> GetAsync(this IStorageInsightsOperations operations, string resourceGroupName, string workspaceName, string storageInsightName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, dataSourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets a datasource instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='dataSourceName'>
-            /// Name of the datasource
-            /// </param>
-            public static DataSource Get(this IDataSourcesOperations operations, string resourceGroupName, string workspaceName, string dataSourceName)
-            {
-                return operations.GetAsync(resourceGroupName, workspaceName, dataSourceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a datasource instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='workspaceName'>
-            /// The name of the workspace.
-            /// </param>
-            /// <param name='dataSourceName'>
-            /// Name of the datasource
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DataSource> GetAsync(this IDataSourcesOperations operations, string resourceGroupName, string workspaceName, string dataSourceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, dataSourceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, storageInsightName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the first page of data source instances in a workspace with the link
-            /// to the next page.
+            /// Deletes a storageInsightsConfigs resource
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -179,23 +131,19 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='skiptoken'>
-            /// Starting point of the collection of data source instances.
+            /// <param name='storageInsightName'>
+            /// Name of the storageInsightsConfigs resource
             /// </param>
-            public static IPage<DataSource> ListByWorkspace(this IDataSourcesOperations operations, ODataQuery<DataSourceFilter> odataQuery, string resourceGroupName, string workspaceName, string skiptoken = default(string))
+            public static void Delete(this IStorageInsightsOperations operations, string resourceGroupName, string workspaceName, string storageInsightName)
             {
-                return operations.ListByWorkspaceAsync(odataQuery, resourceGroupName, workspaceName, skiptoken).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, storageInsightName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the first page of data source instances in a workspace with the link
-            /// to the next page.
+            /// Deletes a storageInsightsConfigs resource
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group. The name is case insensitive.
@@ -203,23 +151,59 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='skiptoken'>
-            /// Starting point of the collection of data source instances.
+            /// <param name='storageInsightName'>
+            /// Name of the storageInsightsConfigs resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataSource>> ListByWorkspaceAsync(this IDataSourcesOperations operations, ODataQuery<DataSourceFilter> odataQuery, string resourceGroupName, string workspaceName, string skiptoken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IStorageInsightsOperations operations, string resourceGroupName, string workspaceName, string storageInsightName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByWorkspaceWithHttpMessagesAsync(odataQuery, resourceGroupName, workspaceName, skiptoken, null, cancellationToken).ConfigureAwait(false))
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, storageInsightName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists the storage insight instances within a workspace
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            public static IPage<StorageInsight> ListByWorkspace(this IStorageInsightsOperations operations, string resourceGroupName, string workspaceName)
+            {
+                return operations.ListByWorkspaceAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the storage insight instances within a workspace
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<StorageInsight>> ListByWorkspaceAsync(this IStorageInsightsOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByWorkspaceWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the first page of data source instances in a workspace with the link
-            /// to the next page.
+            /// Lists the storage insight instances within a workspace
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -227,14 +211,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<DataSource> ListByWorkspaceNext(this IDataSourcesOperations operations, string nextPageLink)
+            public static IPage<StorageInsight> ListByWorkspaceNext(this IStorageInsightsOperations operations, string nextPageLink)
             {
                 return operations.ListByWorkspaceNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the first page of data source instances in a workspace with the link
-            /// to the next page.
+            /// Lists the storage insight instances within a workspace
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -245,7 +228,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataSource>> ListByWorkspaceNextAsync(this IDataSourcesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StorageInsight>> ListByWorkspaceNextAsync(this IStorageInsightsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByWorkspaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

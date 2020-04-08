@@ -19,12 +19,13 @@ namespace Microsoft.Azure.Management.OperationalInsights
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for LinkedServicesOperations.
+    /// Extension methods for LinkedStorageAccountsOperations.
     /// </summary>
-    public static partial class LinkedServicesOperationsExtensions
+    public static partial class LinkedStorageAccountsOperationsExtensions
     {
             /// <summary>
-            /// Create or update a linked service.
+            /// Create or Update a link relation between current workspace and a group of
+            /// storage accounts of a specific data source type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,19 +36,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linkedServices resource
+            /// <param name='dataSourceType'>
+            /// Linked storage accounts type. Possible values include: 'CustomLogs',
+            /// 'AzureWatson'
             /// </param>
-            /// <param name='parameters'>
-            /// The parameters required to create or update a linked service.
+            /// <param name='storageAccountIds'>
+            /// Linked storage accounts resources ids.
             /// </param>
-            public static LinkedService CreateOrUpdate(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName, LinkedService parameters)
+            public static LinkedStorageAccountsResource CreateOrUpdate(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, DataSourceType dataSourceType, IList<string> storageAccountIds = default(IList<string>))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, linkedServiceName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, dataSourceType, storageAccountIds).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create or update a linked service.
+            /// Create or Update a link relation between current workspace and a group of
+            /// storage accounts of a specific data source type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,25 +61,27 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linkedServices resource
+            /// <param name='dataSourceType'>
+            /// Linked storage accounts type. Possible values include: 'CustomLogs',
+            /// 'AzureWatson'
             /// </param>
-            /// <param name='parameters'>
-            /// The parameters required to create or update a linked service.
+            /// <param name='storageAccountIds'>
+            /// Linked storage accounts resources ids.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LinkedService> CreateOrUpdateAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName, LinkedService parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LinkedStorageAccountsResource> CreateOrUpdateAsync(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, DataSourceType dataSourceType, IList<string> storageAccountIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, linkedServiceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, dataSourceType, storageAccountIds, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes a linked service instance.
+            /// Deletes all linked storage accounts of a specific data source type
+            /// associated with the specified workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -87,16 +92,18 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linked service.
+            /// <param name='dataSourceType'>
+            /// Linked storage accounts type. Possible values include: 'CustomLogs',
+            /// 'AzureWatson'
             /// </param>
-            public static void Delete(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName)
+            public static void Delete(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, DataSourceType dataSourceType)
             {
-                operations.DeleteAsync(resourceGroupName, workspaceName, linkedServiceName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, workspaceName, dataSourceType).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes a linked service instance.
+            /// Deletes all linked storage accounts of a specific data source type
+            /// associated with the specified workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -107,19 +114,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linked service.
+            /// <param name='dataSourceType'>
+            /// Linked storage accounts type. Possible values include: 'CustomLogs',
+            /// 'AzureWatson'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, DataSourceType dataSourceType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, linkedServiceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, dataSourceType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Gets a linked service instance.
+            /// Gets all linked storage account of a specific data source type associated
+            /// with the specified workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -130,16 +139,18 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linked service.
+            /// <param name='dataSourceType'>
+            /// Linked storage accounts type. Possible values include: 'CustomLogs',
+            /// 'AzureWatson'
             /// </param>
-            public static LinkedService Get(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName)
+            public static LinkedStorageAccountsResource Get(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, DataSourceType dataSourceType)
             {
-                return operations.GetAsync(resourceGroupName, workspaceName, linkedServiceName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, workspaceName, dataSourceType).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets a linked service instance.
+            /// Gets all linked storage account of a specific data source type associated
+            /// with the specified workspace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -150,22 +161,24 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            /// <param name='linkedServiceName'>
-            /// Name of the linked service.
+            /// <param name='dataSourceType'>
+            /// Linked storage accounts type. Possible values include: 'CustomLogs',
+            /// 'AzureWatson'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LinkedService> GetAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, string linkedServiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LinkedStorageAccountsResource> GetAsync(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, DataSourceType dataSourceType, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, linkedServiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, dataSourceType, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the linked services instances in a workspace.
+            /// Gets all linked storage accounts associated with the specified workspace,
+            /// storage accounts will be sorted by their data source type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -176,13 +189,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='workspaceName'>
             /// The name of the workspace.
             /// </param>
-            public static IEnumerable<LinkedService> ListByWorkspace(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName)
+            public static IEnumerable<LinkedStorageAccountsResource> ListByWorkspace(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName)
             {
                 return operations.ListByWorkspaceAsync(resourceGroupName, workspaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the linked services instances in a workspace.
+            /// Gets all linked storage accounts associated with the specified workspace,
+            /// storage accounts will be sorted by their data source type.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -196,7 +210,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<LinkedService>> ListByWorkspaceAsync(this ILinkedServicesOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<LinkedStorageAccountsResource>> ListByWorkspaceAsync(this ILinkedStorageAccountsOperations operations, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByWorkspaceWithHttpMessagesAsync(resourceGroupName, workspaceName, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -54,11 +54,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Create or update a linked service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the linkedServices
-        /// resource
+        /// The name of the workspace.
         /// </param>
         /// <param name='linkedServiceName'>
         /// Name of the linkedServices resource
@@ -112,6 +111,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 63);
+                }
+                if (workspaceName.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 4);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
+                }
+            }
             if (linkedServiceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "linkedServiceName");
@@ -120,17 +134,27 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -311,11 +335,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Deletes a linked service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contains the linkedServices
-        /// resource
+        /// The name of the workspace.
         /// </param>
         /// <param name='linkedServiceName'>
         /// Name of the linked service.
@@ -363,6 +386,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 63);
+                }
+                if (workspaceName.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 4);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
+                }
+            }
             if (linkedServiceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "linkedServiceName");
@@ -371,9 +409,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -511,11 +563,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets a linked service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contains the linkedServices
-        /// resource
+        /// The name of the workspace.
         /// </param>
         /// <param name='linkedServiceName'>
         /// Name of the linked service.
@@ -566,6 +617,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 63);
+                }
+                if (workspaceName.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 4);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
+                }
+            }
             if (linkedServiceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "linkedServiceName");
@@ -574,9 +640,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -732,10 +812,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets the linked services instances in a workspace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contains the linked services.
+        /// The name of the workspace.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -783,13 +863,42 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 63);
+                }
+                if (workspaceName.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 4);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
