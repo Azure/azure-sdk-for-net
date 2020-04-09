@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -180,5 +181,16 @@ namespace Azure.AI.FormRecognizer
         }
 
         #endregion
+
+        #region Training client
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public virtual FormTrainingClient GetFormTrainingClient()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Training client
     }
 }

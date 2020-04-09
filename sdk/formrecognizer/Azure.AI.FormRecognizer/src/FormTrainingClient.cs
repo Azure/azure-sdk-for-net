@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.Training
         public FormTrainingClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
             var diagnostics = new ClientDiagnostics(options);
-            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             ServiceClient = new ServiceClient(diagnostics, pipeline, endpoint.ToString());
         }
 
@@ -136,6 +136,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId">The ID of the model to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
             return ServiceClient.DeleteCustomModel(new Guid(modelId), cancellationToken);
@@ -147,6 +148,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="modelId">The ID of the model to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             return await ServiceClient.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
@@ -158,6 +160,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
         {
             return ServiceClient.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
@@ -169,6 +172,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
         {
             return ServiceClient.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
@@ -179,6 +183,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
             Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
@@ -190,6 +195,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
             Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
