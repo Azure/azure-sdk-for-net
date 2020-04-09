@@ -56,7 +56,6 @@ param (
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
     [hashtable] $AdditionalParameters,
 
     [Parameter()]
