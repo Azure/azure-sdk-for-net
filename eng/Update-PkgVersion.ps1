@@ -48,7 +48,7 @@ Param (
 . ${PSScriptRoot}\common\scripts\SemVer.ps1
 
 # Updated Version in csproj and changelog using computed or set NewVersionString
-function Update-Version($Unreleased=$True, $ReplaceVersion=$False)
+function Update-Version([AzureEngSemanticVersion]$SemVer, $Unreleased=$True, $ReplaceVersion=$False)
 {
     Write-Verbose "New Version: ${NewPackageVersion}"
     if ($SemVer.HasValidPrereleaseLabel() -ne $true){
@@ -78,11 +78,11 @@ if ([System.String]::IsNullOrEmpty($NewVersionString))
     Write-Verbose "Current Version: ${PackageVersion}"
 
     $SemVer.IncrementAndSetToPrerelease()
-    Update-Version
+    Update-Version -SemVer $SemVer-SemVer $SemVer
 }
 else
 {
     # Use specified VersionString
     $SemVer = [AzureEngSemanticVersion]::new($NewVersionString)
-    Update-Version -Unreleased $False -ReplaceVersion $True
+    Update-Version -SemVer $SemVer -Unreleased $False -ReplaceVersion $True
 }
