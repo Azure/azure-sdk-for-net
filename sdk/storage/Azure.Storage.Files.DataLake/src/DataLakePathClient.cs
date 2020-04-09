@@ -280,6 +280,20 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="fileSystemClient"><see cref="DataLakeFileSystemClient"/> of the path's File System.</param>
+        /// <param name="path">The path to the <see cref="DataLakePathClient"/>.</param>
+        public DataLakePathClient(DataLakeFileSystemClient fileSystemClient, string path)
+            : this(
+                  (new DataLakeUriBuilder(fileSystemClient.Uri) { DirectoryOrFilePath = path }).ToDfsUri(),
+                  fileSystemClient.Pipeline,
+                  fileSystemClient.Version,
+                  fileSystemClient.ClientDiagnostics)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
         /// </summary>
