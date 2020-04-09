@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        /// If token could not be aquired through any of the specified providers, an exception should be thrown
+        /// If token could not be acquired through any of the specified providers, an exception should be thrown
         /// </summary>
         [Fact]
         public void DiscoveryTestBothFail()
@@ -319,22 +319,37 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         /// Injects an HTTP factory.
         /// </summary>
         [Fact]
-        public void InjectHttpFactory()
+        public async Task InjectHttpFactory()
         {
             var factory = new MockHttpClientFactory();
-            var provider = new AzureServiceTokenProvider(httpClientFactory: factory);
-            //todo: How to assert that the factory is passed into the underlying?
+
+            // create a client secret token provider
+            var azureServiceTokenProvider = new AzureServiceTokenProvider(Constants.ClientSecretConnString, Constants.AzureAdInstance, factory);
+
+            // trying to use the provider should fail because the http factory isn't implemented. We can verify it was used though.
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() =>
+                azureServiceTokenProvider.GetAccessTokenAsync(Constants.GraphResourceId, Constants.TenantId));
+
+            Assert.EndsWith(MockHttpClientFactory.ExceptionMessage, exception.Message);
         }
 
         /// <summary>
         /// Side load an HTTP factory.
         /// </summary>
         [Fact]
-        public void SideLoadHttpFactory()
+        public async Task SideLoadHttpFactory()
         {
-            AzureServiceTokenProvider.HttpClientFactory = new MockHttpClientFactory();
-            var provider = new AzureServiceTokenProvider();
-            //todo: How to assert that the factory is passed into the underlying?
+            MockHttpClientFactory factory = new MockHttpClientFactory();
+
+            // create a client secret token provider
+            AzureServiceTokenProvider.HttpClientFactory = factory;
+            var azureServiceTokenProvider = new AzureServiceTokenProvider(Constants.ClientSecretConnString, Constants.AzureAdInstance);
+
+            // trying to use the provider should fail because the http factory isn't implemented. We can verify it was used though.
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() =>
+                azureServiceTokenProvider.GetAccessTokenAsync(Constants.GraphResourceId, Constants.TenantId));
+
+            Assert.EndsWith(MockHttpClientFactory.ExceptionMessage, exception.Message);
         }
     }
 }

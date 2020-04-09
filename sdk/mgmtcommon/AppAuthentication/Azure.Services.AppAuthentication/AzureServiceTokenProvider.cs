@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         /// <summary>
         /// If a connection string was specified, or discovery of provider has already happened (in which case _selectedAccessTokenProvider would have been set),
-        /// Use the approproate access token provider. 
+        /// Use the appropriate access token provider. 
         /// </summary>
         /// <returns></returns>
         private List<NonInteractiveAzureServiceTokenProviderBase> GetTokenProviders()

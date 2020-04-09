@@ -6,9 +6,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests.Mocks
 {
     internal class MockHttpClientFactory : IHttpClientFactory
     {
+        public const string ExceptionMessage = "MockHttpClientFactory.GetHttpClient";
+
         public HttpClient GetHttpClient()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(ExceptionMessage);
         }
     }
 }
