@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the inline workflow task details.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("InlineWorkflowTaskDetails")]
     public partial class InlineWorkflowTaskDetails : GroupTaskDetails
     {
         /// <summary>

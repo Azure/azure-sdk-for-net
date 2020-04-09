@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Provider specific failover input.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ProviderSpecificFailoverInput")]
     public partial class ProviderSpecificFailoverInput
     {
         /// <summary>

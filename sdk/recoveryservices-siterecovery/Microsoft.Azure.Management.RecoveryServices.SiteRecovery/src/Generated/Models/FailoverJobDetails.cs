@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the details for a failover job.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FailoverJobDetails")]
     public partial class FailoverJobDetails : JobDetails
     {
         /// <summary>

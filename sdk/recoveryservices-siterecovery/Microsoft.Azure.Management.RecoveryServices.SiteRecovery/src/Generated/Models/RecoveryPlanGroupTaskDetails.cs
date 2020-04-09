@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents the recovery plan group task.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RecoveryPlanGroupTaskDetails")]
     public partial class RecoveryPlanGroupTaskDetails : GroupTaskDetails
     {
         /// <summary>

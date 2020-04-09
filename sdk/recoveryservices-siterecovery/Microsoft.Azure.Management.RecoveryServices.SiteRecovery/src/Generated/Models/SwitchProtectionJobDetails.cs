@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     /// <summary>
     /// This class represents details for switch protection job.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SwitchProtectionJobDetails")]
     public partial class SwitchProtectionJobDetails : JobDetails
     {
         /// <summary>

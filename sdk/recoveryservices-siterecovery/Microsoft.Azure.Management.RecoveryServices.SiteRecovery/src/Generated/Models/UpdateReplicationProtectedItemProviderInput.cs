@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Update replication protected item provider specific input.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("UpdateReplicationProtectedItemProviderInput")]
     public partial class UpdateReplicationProtectedItemProviderInput
     {
         /// <summary>
