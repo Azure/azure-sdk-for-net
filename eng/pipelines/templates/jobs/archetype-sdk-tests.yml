@@ -20,23 +20,28 @@ jobs:
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
+          CloudType: AzureCloud
         Windows_NetCoreApp:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          CloudType: AzureCloud
         Windows_NetCoreApp_ProjectReferences:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          CloudType: AzureCloud
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
+          CloudType: AzureCloud
         MacOs:
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+          CloudType: AzureCloud
     pool:
       vmImage: "$(OSVmImage)"
 
