@@ -19,68 +19,21 @@ namespace Microsoft.Azure.Management.Monitor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AlertRulesOperations operations.
+    /// PrivateLinkScopedResourcesOperations operations.
     /// </summary>
-    public partial interface IAlertRulesOperations
+    public partial interface IPrivateLinkScopedResourcesOperations
     {
         /// <summary>
-        /// Creates or updates a classic metric alert rule.
+        /// Gets a scoped resource in a private link scope.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule.
+        /// <param name='scopeName'>
+        /// The name of the Azure Monitor PrivateLinkScope resource.
         /// </param>
-        /// <param name='parameters'>
-        /// The parameters of the rule to create or update.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AlertRuleResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string ruleName, AlertRuleResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes a classic metric alert rule
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a classic metric alert rule
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule.
+        /// <param name='name'>
+        /// The name of the scoped resource object.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -97,41 +50,21 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AlertRuleResource>> GetWithHttpMessagesAsync(string resourceGroupName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ScopedResource>> GetWithHttpMessagesAsync(string resourceGroupName, string scopeName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an existing classic metric AlertRuleResource. To update
-        /// other fields use the CreateOrUpdate method.
+        /// Approve or reject a private endpoint connection with a given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule.
+        /// <param name='scopeName'>
+        /// The name of the Azure Monitor PrivateLinkScope resource.
         /// </param>
-        /// <param name='alertRulesResource'>
-        /// Parameters supplied to the operation.
+        /// <param name='name'>
+        /// The name of the scoped resource object.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<AlertRuleResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string ruleName, AlertRuleResourcePatch alertRulesResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// List the classic metric alert rules within a resource group.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// <param name='linkedResourceId'>
+        /// The resource id of the scoped Azure monitor resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -148,10 +81,41 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<AlertRuleResource>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ScopedResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string scopeName, string name, string linkedResourceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List the classic metric alert rules within a subscription.
+        /// Deletes a private endpoint connection with a given name.
         /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='scopeName'>
+        /// The name of the Azure Monitor PrivateLinkScope resource.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the scoped resource object.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string scopeName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all private endpoint connections on a private link scope.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='scopeName'>
+        /// The name of the Azure Monitor PrivateLinkScope resource.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -167,6 +131,84 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<AlertRuleResource>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ScopedResource>>> ListByPrivateLinkScopeWithHttpMessagesAsync(string resourceGroupName, string scopeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Approve or reject a private endpoint connection with a given name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='scopeName'>
+        /// The name of the Azure Monitor PrivateLinkScope resource.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the scoped resource object.
+        /// </param>
+        /// <param name='linkedResourceId'>
+        /// The resource id of the scoped Azure monitor resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ScopedResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string scopeName, string name, string linkedResourceId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a private endpoint connection with a given name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='scopeName'>
+        /// The name of the Azure Monitor PrivateLinkScope resource.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the scoped resource object.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string scopeName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets all private endpoint connections on a private link scope.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<ScopedResource>>> ListByPrivateLinkScopeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
