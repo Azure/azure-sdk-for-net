@@ -12,6 +12,7 @@ namespace Azure.AI.FormRecognizer.Models
         public BoundingBox BoundingBox { get; }
 
         /// <summary>
+        /// The 1-based page number in the input document.
         /// </summary>
         public int PageNumber { get; }
 

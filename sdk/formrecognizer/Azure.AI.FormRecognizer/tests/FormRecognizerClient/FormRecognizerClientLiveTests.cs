@@ -37,10 +37,10 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeContentPopulatesExtractedLayoutPage(bool useStream)
+        public async Task StartRecognizeContentPopulatesFormPage(bool useStream)
         {
             var client = CreateInstrumentedClient();
-            Operation<IReadOnlyList<ExtractedLayoutPage>> operation;
+            Operation<IReadOnlyList<FormPage>> operation;
 
             if (useStream)
             {
@@ -57,23 +57,19 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            var layoutPage = operation.Value.Single();
+            var formPage = operation.Value.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(1, layoutPage.PageNumber);
+            Assert.AreEqual(1, formPage.PageNumber);
+            Assert.AreEqual(LengthUnit.Inch, formPage.Unit);
+            Assert.AreEqual(8.5, formPage.Width);
+            Assert.AreEqual(11, formPage.Height);
+            Assert.AreEqual(0, formPage.TextAngle);
+            Assert.AreEqual(18, formPage.Lines.Count);
 
-            var rawPage = layoutPage.RawExtractedPage;
-
-            Assert.AreEqual(1, rawPage.Page);
-            Assert.AreEqual(LengthUnit.Inch, rawPage.Unit);
-            Assert.AreEqual(8.5, rawPage.Width);
-            Assert.AreEqual(11, rawPage.Height);
-            Assert.AreEqual(0, rawPage.TextAngle);
-            Assert.AreEqual(18, rawPage.Lines.Count);
-
-            var lines = rawPage.Lines.ToList();
+            var lines = formPage.Lines.ToList();
 
             for (var lineIndex = 0; lineIndex < lines.Count; lineIndex++)
             {
@@ -84,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
             }
 
-            var table = layoutPage.Tables.Single();
+            var table = formPage.Tables.Single();
 
             Assert.AreEqual(2, table.RowCount);
             Assert.AreEqual(6, table.ColumnCount);
