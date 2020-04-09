@@ -92,6 +92,10 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
@@ -104,7 +108,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
             }
-            string apiVersion = "2016-06-01";
             CertificateRequest certificateRequest = new CertificateRequest();
             if (properties != null)
             {
@@ -117,7 +120,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("certificateName", certificateName);
@@ -133,9 +135,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             _url = _url.Replace("{vaultName}", System.Uri.EscapeDataString(vaultName));
             _url = _url.Replace("{certificateName}", System.Uri.EscapeDataString(certificateName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
