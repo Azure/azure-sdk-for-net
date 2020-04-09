@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides Management for Recovery Services.")]
 
 [assembly: AssemblyVersion("4.3.0.0")]
-[assembly: AssemblyFileVersion("4.3.1.0")]
+[assembly: AssemblyFileVersion("4.3.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
