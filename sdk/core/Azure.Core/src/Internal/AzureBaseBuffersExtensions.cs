@@ -59,7 +59,7 @@ namespace Azure.Core.Buffers
                     }
                     else
                     {
-                        if (array == null || buffer.Length < segment.Length)
+                        if (array == null || array.Length < segment.Length)
                         {
                             if (array != null)
                                 ArrayPool<byte>.Shared.Return(array);
