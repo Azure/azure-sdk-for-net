@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.Training
         {
         }
 
-        internal TrainingOperation(ServiceClient allOperations, string location)
+        internal TrainingOperation(string location, ServiceClient allOperations)
         {
             _serviceClient = allOperations;
 
