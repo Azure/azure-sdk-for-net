@@ -1,0 +1,183 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzLw==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"culture\": \"en-us\",\r\n  \"domain\": \"Comics\",\r\n  \"description\": \"New LUIS App\",\r\n  \"usageScenario\": \"IoT\",\r\n  \"name\": \"LUIS App to be exported in Lu format\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "161"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "1b0d03a9-7bae-4dea-97f5-dd01cbe3537f"
+        ],
+        "Request-Id": [
+          "1b0d03a9-7bae-4dea-97f5-dd01cbe3537f"
+        ],
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/be22f945-ae3a-4010-a562-f4cd341ffd72"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:09:13 GMT"
+        ],
+        "Location": [
+          "https://westus.api.cognitive.microsoft.com/luis/authoring/v3.0-preview/apps/be22f945-ae3a-4010-a562-f4cd341ffd72"
+        ],
+        "Content-Length": [
+          "38"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "\"be22f945-ae3a-4010-a562-f4cd341ffd72\"",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/be22f945-ae3a-4010-a562-f4cd341ffd72/versions/0.1/export?format=lu",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2JlMjJmOTQ1LWFlM2EtNDAxMC1hNTYyLWY0Y2QzNDFmZmQ3Mi92ZXJzaW9ucy8wLjEvZXhwb3J0P2Zvcm1hdD1sdQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "db0e8be3-abb2-4994-a97f-d9657213a547"
+        ],
+        "Request-Id": [
+          "db0e8be3-abb2-4994-a97f-d9657213a547"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:09:13 GMT"
+        ],
+        "Content-Length": [
+          "416"
+        ],
+        "Content-Disposition": [
+          "attachment; filename=\"LUIS App to be exported in Lu format.lu\""
+        ],
+        "Content-Type": [
+          "application/octet-stream"
+        ]
+      },
+      "ResponseBody": "DQo+IExVSVMgYXBwbGljYXRpb24gaW5mb3JtYXRpb24NCj4gISMgQGFwcC5uYW1lID0gTFVJUyBBcHAgdG8gYmUgZXhwb3J0ZWQgaW4gTHUgZm9ybWF0DQo+ICEjIEBhcHAuZGVzYyA9IE5ldyBMVUlTIEFwcA0KPiAhIyBAYXBwLnZlcnNpb25JZCA9IDAuMQ0KPiAhIyBAYXBwLmN1bHR1cmUgPSBlbi11cw0KPiAhIyBAYXBwLmx1aXNfc2NoZW1hX3ZlcnNpb24gPSA2LjAuMA0KDQoNCj4gIyBJbnRlbnQgZGVmaW5pdGlvbnMNCg0KIyMgTm9uZQ0KDQoNCkAgaW50ZW50IE5vbmUNCg0KPiAjIEVudGl0eSBkZWZpbml0aW9ucw0KDQoNCj4gIyBQUkVCVUlMVCBFbnRpdHkgZGVmaW5pdGlvbnMNCg0KDQo+ICMgUGhyYXNlIGxpc3QgZGVmaW5pdGlvbnMNCg0KDQo+ICMgTGlzdCBlbnRpdGllcw0KDQo+ICMgUmVnRXggZW50aXRpZXMNCg0KDQo=",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/luis/authoring/v3.0-preview/apps/be22f945-ae3a-4010-a562-f4cd341ffd72?force=false",
+      "EncodedRequestUri": "L2x1aXMvYXV0aG9yaW5nL3YzLjAtcHJldmlldy9hcHBzL2JlMjJmOTQ1LWFlM2EtNDAxMC1hNTYyLWY0Y2QzNDFmZmQ3Mj9mb3JjZT1mYWxzZQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "3fc290e189af4d33a677dfa763782b26"
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4121.0",
+          "OSName/Windows",
+          "OSVersion/10.0.18363.0",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.2.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Pragma": [
+          "no-cache"
+        ],
+        "Apim-Request-Id": [
+          "9760ae49-0dd0-4918-a0e8-8e23d2fb6738"
+        ],
+        "Request-Id": [
+          "9760ae49-0dd0-4918-a0e8-8e23d2fb6738"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "X-Frame-Options": [
+          "SAMEORIGIN"
+        ],
+        "Cache-Control": [
+          "no-store, proxy-revalidate, no-cache, max-age=0, private"
+        ],
+        "Date": [
+          "Sun, 05 Apr 2020 16:09:14 GMT"
+        ],
+        "Content-Length": [
+          "51"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"code\": \"Success\",\r\n  \"message\": \"Operation Successful\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}
