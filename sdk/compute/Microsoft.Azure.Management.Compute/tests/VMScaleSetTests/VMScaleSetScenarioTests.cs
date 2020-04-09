@@ -397,14 +397,21 @@ namespace Compute.Tests
                         Assert.Equal("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState);
                         Assert.Equal("AutomaticRepairs", getInstanceViewResponse.OrchestrationServices[0].ServiceName);
 
-                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, "Suspend");
+                        OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput()
+                        {
+                            ServiceName = OrchestrationServiceNames.AutomaticRepairs,
+                            Action = OrchestrationServiceStateAction.Suspend
+                        };
+
+                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, orchestrationServiceStateInput);
 
                         getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
-                        Assert.Equal("Suspended", getInstanceViewResponse.OrchestrationServices[0].ServiceState);
+                        Assert.Equal(OrchestrationServiceState.Suspended.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState);
 
-                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, "Resume");
+                        orchestrationServiceStateInput.Action = OrchestrationServiceStateAction.Resume;
+                        m_CrpClient.VirtualMachineScaleSets.SetOrchestrationServiceState(rgName, vmssName, orchestrationServiceStateInput);
                         getInstanceViewResponse = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
-                        Assert.Equal("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState);
+                        Assert.Equal(OrchestrationServiceState.Running.ToString(), getInstanceViewResponse.OrchestrationServices[0].ServiceState);
 
                         m_CrpClient.VirtualMachineScaleSets.Delete(rgName, vmssName);
                     }
