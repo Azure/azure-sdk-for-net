@@ -65,7 +65,7 @@ namespace Microsoft.Rest.Azure.Authentication
             _assertionProvider = (clientId) => Task.FromResult<ClientAssertionCertificate>(new ClientAssertionCertificate(clientId, certificateFilePath));
         }
 
-        public CertificateAuthenticationProvider(ClientAssertionCertificate certAssertion, bool IsCertRollOverEnabled) : this()
+        public CertificateAuthenticationProvider(IClientAssertionCertificate certAssertion, bool IsCertRollOverEnabled) : this()
         {
             _isCertRollOverEnabled = IsCertRollOverEnabled;
             _assertionProvider = (clientId) => Task.FromResult<ClientAssertionCertificate>(certAssertion);
