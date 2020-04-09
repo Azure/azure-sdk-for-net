@@ -59,7 +59,7 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - template: eng/common/TestResources/deploy-test-resources.yml
+      - template: /eng/common/TestResources/deploy-test-resources.yml
         parameters:
           ServiceDirectory: '${{ parameters.ServiceDirectory }}'
 
@@ -81,7 +81,7 @@ jobs:
           AZURE_TEST_MODE: "None"
           ${{ insert }}: ${{ parameters.EnvVars }}
 
-      - template: eng/common/TestResources/remove-test-resources.yml
+      - template: /eng/common/TestResources/remove-test-resources.yml
 
       - task: PublishTestResults@2
         condition: always()
