@@ -3,17 +3,9 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Buffers;
-using Azure.Core.Tests.Buffers;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.Azure;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Buffers
@@ -101,6 +93,25 @@ namespace Azure.Core.Tests.Buffers
             CheckMemoryStreamContent(ms);
         }
 
+        [Test]
+        public async Task WriteNativeMemorySequenceEmptySequenceAndLargeSegment()
+        {
+            using NativeMemoryManager totalNativeMemory = new NativeMemoryManager(32);
+            using MemoryStream ms = new MemoryStream();
+
+            // Put some data in memory
+            PopulatMemoryWithData(totalNativeMemory.Memory);
+
+            // create the individual segments
+            BufferSegment start = new BufferSegment(totalNativeMemory.Memory.Slice(0, 0)); // have an empty start segment
+            BufferSegment last = start.Append(totalNativeMemory.Memory.Slice(0, 23)); // have a segment the size of the actual buffer
+            ReadOnlySequence<byte> sequence = new ReadOnlySequence<byte>(start, 0, last, 23);
+
+            await AzureBaseBuffersExtensions.WriteAsync(ms, sequence);
+
+            CheckMemoryStreamContent(ms);
+        }
+
         private static void CheckMemoryStreamContent(MemoryStream ms)
         {
             ms.Seek(0, SeekOrigin.Begin);
@@ -112,11 +123,7 @@ namespace Azure.Core.Tests.Buffers
 
         private static ReadOnlySequence<byte> CreateSequenceFromMemory(Memory<byte> totalMemory)
         {
-            // populate the memory with some data.
-            for (byte i = 0; i < totalMemory.Length; i++)
-            {
-                totalMemory.Span[i] = i;
-            }
+            PopulatMemoryWithData(totalMemory);
 
             // create the individual segments
             BufferSegment start = new BufferSegment(totalMemory.Slice(0, 2));
@@ -126,6 +133,15 @@ namespace Azure.Core.Tests.Buffers
 
             // create the sequence
             return new ReadOnlySequence<byte>(start, 0, last, 2); // the last segment has length 2
+        }
+
+        private static void PopulatMemoryWithData(Memory<byte> totalMemory)
+        {
+            // populate the memory with some data.
+            for (byte i = 0; i < totalMemory.Length; i++)
+            {
+                totalMemory.Span[i] = i;
+            }
         }
     }
 }
