@@ -72,57 +72,54 @@ live tests against a pull request by commenting `/azp run net - search - tests`
 in the PR.
 
 ### Live Test Resources
-You'll need to pass the details for a subscription, service principal, resource
-group, and location via environment variables.  We set this up for live tests
-using the [test-resources.json](./test-resources.json) ARM template, but it's
-equivalent to the following steps if you want to run the live tests locally.
+To set up your Azure account to run live tests, you'll need to log into Azure,
+create a service principal, and set up your resources defined in
+[test-resources.json](./test-resources.json) as shown in the following example.
+Note that `-Subscription` is an optional parameter but recommended if your account
+is a member of multiple subscriptions.
 
 ```powershell
-PS C:\src> az ad sp create-for-rbac --sdk-auth
-Creating a role assignment under the scope of "/subscriptions/<subscription_id>"
-{
-  "clientId": "<client_id>",
-  "clientSecret": "<client_secret>",
-  "subscriptionId": "<subscription_id>",
-  "tenantId": "<tenant_id>",
-  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
-  "resourceManagerEndpointUrl": "https://management.azure.com/",
-  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
-  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
-  "galleryEndpointUrl": "https://gallery.azure.com/",
-  "managementEndpointUrl": "https://management.core.windows.net/"
-}
+PS C:\src> Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
+PS C:\src> $sp = New-AzADServicePrincipal -Role Owner
+PS C:\src> eng\common\TestResources\New-TestResources.ps1 `
+  -BaseName 'myusername' `
+  -ServiceDirectory search `
+  -TestApplicationId $sp.ApplicationId `
+  -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText)
+```
 
-PS C:\src> az group create --location <location> --name <resource_group>
-{
-  "id": "/subscriptions/<subscription_id>/resourceGroups/<resource_group>",
-  "location": <location>,
-  "managedBy": null,
-  "name": "<resource_group>",
-  "properties": {
-    "provisioningState": "Succeeded"
-  },
-  "tags": null,
-  "type": "Microsoft.Resources/resourceGroups"
-}
+Along with some log messages, this will output environment variables based on your
+current shell like in the following example:
 
-PS C:\src> setx AZURE_TENANT_ID <tenant_id>
-SUCCESS: Specified value was saved.
+```
+$env:AZURE_TENANT_ID = '04acef35-c7bd-4d14-bfd9-59f11b7b9eac'
+$env:AZURE_CLIENT_ID = 'ce1a3a01-424f-4e34-b9a6-823e2b1ae783'
+$env:AZURE_CLIENT_SECRET = 'c27ccc92-e1ca-4d29-8f4e-c6a1ee61ff57'
+$env:AZURE_SUBSCRIPTION_ID = 'd686c17c-aade-4238-bce0-290453cfcf97'
+$env:AZURE_RESOURCE_GROUP = 'rg-myusername'
+$env:AZURE_LOCATION = 'westus2'
+$env:AZURE_SEARCH_STORAGE_NAME = 'myusernamestg'
+$env:AZURE_SEARCH_STORAGE_KEY = 'Of2O5Snep5tl13bfjh02/fSNYfrBPXV7CYK7EVnMm/z9fN7zCcq6WKuWfZDM9QsTORvC7zYLifyIEtymI5VCmA=='
+```
 
-PS C:\src> setx AZURE_CLIENT_ID <client_id>
-SUCCESS: Specified value was saved.
+For security reasons we do not set these environment variables automatically for either
+the current process or persistently for future sessions. You must do that yourself.
 
-PS C:\src> setx AZURE_CLIENT_SECRET <client_secret>
-SUCCESS: Specified value was saved.
+If your current shell was detected propertly, you should be able to copy and paste the
+output directly in your terminal and add to your profile script. For example,
+in PowerShell on Windows you could copy and paste the output and run the following command:
 
-PS C:\src> setx AZURE_SUBSCRIPTION_ID <subscription_id>
-SUCCESS: Specified value was saved.
+```powershell
+$env:AZURE_TENANT_ID = '04acef35-c7bd-4d14-bfd9-59f11b7b9eac'
+$env:AZURE_CLIENT_ID = 'ce1a3a01-424f-4e34-b9a6-823e2b1ae783'
+$env:AZURE_CLIENT_SECRET = 'c27ccc92-e1ca-4d29-8f4e-c6a1ee61ff57'
+$env:AZURE_SUBSCRIPTION_ID = 'd686c17c-aade-4238-bce0-290453cfcf97'
+$env:AZURE_RESOURCE_GROUP = 'rg-myusername'
+$env:AZURE_LOCATION = 'westus2'
+$env:AZURE_SEARCH_STORAGE_NAME = 'myusernamestg'
+$env:AZURE_SEARCH_STORAGE_KEY = 'Of2O5Snep5tl13bfjh02/fSNYfrBPXV7CYK7EVnMm/z9fN7zCcq6WKuWfZDM9QsTORvC7zYLifyIEtymI5VCmA=='
 
-PS C:\src> setx AZURE_RESOURCE_GROUP <resource_group>
-SUCCESS: Specified value was saved.
-
-PS C:\src> setx AZURE_LOCATION <location>
-SUCCESS: Specified value was saved.
+dir env:AZURE* | % { setx $_.Name $_.Value }
 ```
 
 ### Samples
