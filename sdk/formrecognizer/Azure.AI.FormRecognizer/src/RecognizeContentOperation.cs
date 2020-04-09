@@ -12,21 +12,62 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal class ExtractLayoutOperation : Operation<IReadOnlyList<ExtractedLayoutPage>>
+    /// <summary>
+    /// Tracks the status of a long-running operation for recognizing layout elements from forms.
+    /// </summary>
+    public class RecognizeContentOperation : Operation<IReadOnlyList<ExtractedLayoutPage>>
     {
+        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
+        private readonly ServiceClient _serviceClient;
+
+        /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
+
+        /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
         private IReadOnlyList<ExtractedLayoutPage> _value;
+
+        /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
 
-        private readonly ServiceClient _operations;
-
+        /// <inheritdoc/>
         public override string Id { get; }
 
+        /// <inheritdoc/>
         public override IReadOnlyList<ExtractedLayoutPage> Value => OperationHelpers.GetValue(ref _value);
 
+        /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
 
+        /// <inheritdoc/>
         public override bool HasValue => _value != null;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class.
+        /// </summary>
+        /// <param name="operationId">The ID of this operation.</param>
+        /// <param name="client">The client used to check for completion.</param>
+        public RecognizeContentOperation(string operationId, FormRecognizerClient client)
+        {
+            // TODO: Add argument validation here.
+            // TODO: include cancellation token argument.
+
+            Id = operationId;
+            _serviceClient = client.ServiceClient;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class.
+        /// </summary>
+        /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
+        internal RecognizeContentOperation(ServiceClient serviceClient, string operationLocation)
+        {
+            _serviceClient = serviceClient;
+
+            // TODO: Add validation here
+            // https://github.com/Azure/azure-sdk-for-net/issues/10385
+            Id = operationLocation.Split('/').Last();
+        }
 
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
@@ -39,15 +80,6 @@ namespace Azure.AI.FormRecognizer.Models
         public override ValueTask<Response<IReadOnlyList<ExtractedLayoutPage>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        internal ExtractLayoutOperation(ServiceClient operations, string operationLocation)
-        {
-            _operations = operations;
-
-            // TODO: Add validation here
-            // https://github.com/Azure/azure-sdk-for-net/issues/10385
-            Id = operationLocation.Split('/').Last();
-        }
-
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
             UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
@@ -56,16 +88,23 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
+        /// <summary>
+        /// Calls the server to get updated status of the long-running operation.
+        /// </summary>
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The HTTP response from the service.</returns>
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
             {
                 Response<AnalyzeOperationResult_internal> update = async
-                    ? await _operations.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
-                    : _operations.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
+                    ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                    : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
+
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
