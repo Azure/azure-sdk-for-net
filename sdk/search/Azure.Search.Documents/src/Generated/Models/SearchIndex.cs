@@ -5,17 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Represents a search index definition, which describes the fields and search behavior of an index. </summary>
     public partial class SearchIndex
     {
-        /// <summary> Initializes a new instance of SearchIndex. </summary>
-        public SearchIndex()
-        {
-        }
 
         /// <summary> Initializes a new instance of SearchIndex. </summary>
         /// <param name="name"> The name of the index. </param>
@@ -45,11 +43,6 @@ namespace Azure.Search.Documents.Models
             EncryptionKey = encryptionKey;
             ETag = eTag;
         }
-
-        /// <summary> The name of the index. </summary>
-        public string Name { get; set; }
-        /// <summary> The fields of the index. </summary>
-        public IList<SearchField> Fields { get; set; } = new List<SearchField>();
         /// <summary> The scoring profiles for the index. </summary>
         public IList<ScoringProfile> ScoringProfiles { get; set; }
         /// <summary> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </summary>

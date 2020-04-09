@@ -34,11 +34,9 @@ namespace Azure.Messaging.EventHubs.Tests
     /// </remarks>
     ///
     [NonParallelizable]
+    [TestFixture]
     public class DiagnosticsTests
     {
-        /// <summary>The name of the diagnostics source being tested.</summary>
-        private const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
-
         /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
         ///   class.
@@ -47,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
             var activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -91,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
             var activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -255,7 +253,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
             var transportMock = new Mock<TransportProducer>();
@@ -289,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var writtenEventsData = 0;
             var batchTransportMock = new Mock<TransportEventBatch>();
@@ -346,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = 12;
@@ -375,16 +373,18 @@ namespace Azure.Messaging.EventHubs.Tests
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, fullyQualifiedNamespace)
             };
 
+            var scopes = listener.Scopes.ToList();
+
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(listener.Scopes.Select(scope => scope.Name), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName), "The processing scopes should have the correct name.");
+            Assert.That(scopes.Select(scope => scope.Name), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName), "The processing scopes should have the correct name.");
 
             for (var index = 0; index < eventBatch.Count; ++index)
             {
                 var targetId = (++diagnosticId).ToString();
-                Assert.That(listener.Scopes.SelectMany(scope => scope.Links), Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: { targetId }");
+                Assert.That(scopes.SelectMany(scope => scope.Links), Has.One.EqualTo(targetId), $"There should have been a link for the diagnostic identifier: { targetId }");
             }
 
-            foreach (var scope in listener.Scopes)
+            foreach (var scope in scopes)
             {
                 Assert.That(expectedTags, Is.SubsetOf(scope.Activity.Tags.ToList()));
             }
@@ -401,7 +401,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = "OMGHAI2U!";
@@ -429,7 +429,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds().ToString())
             };
 
-            Assert.That(linkedActivity.Tags, Is.EquivalentTo(expectedTags), "The activity should have been tagged appropriately.");
+            var tags = linkedActivity.Tags.ToList();
+            Assert.That(tags, Is.EquivalentTo(expectedTags), "The activity should have been tagged appropriately.");
         }
 
         /// <summary>

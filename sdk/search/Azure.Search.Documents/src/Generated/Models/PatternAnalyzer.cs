@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,25 +14,31 @@ namespace Azure.Search.Documents.Models
     public partial class PatternAnalyzer : Analyzer
     {
         /// <summary> Initializes a new instance of PatternAnalyzer. </summary>
-        public PatternAnalyzer()
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public PatternAnalyzer(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 
         /// <summary> Initializes a new instance of PatternAnalyzer. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="lowerCaseTerms"> A value indicating whether terms should be lower-cased. Default is true. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more whitespace characters. </param>
         /// <param name="flags"> Regular expression flags. </param>
         /// <param name="stopwords"> A list of stopwords. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal PatternAnalyzer(bool? lowerCaseTerms, string pattern, RegexFlags? flags, IList<string> stopwords, string oDataType, string name) : base(oDataType, name)
+        internal PatternAnalyzer(string oDataType, string name, bool? lowerCaseTerms, string pattern, RegexFlags? flags, IList<string> stopwords) : base(oDataType, name)
         {
             LowerCaseTerms = lowerCaseTerms;
             Pattern = pattern;
             Flags = flags;
             Stopwords = stopwords;
-            ODataType = "#Microsoft.Azure.Search.PatternAnalyzer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 
         /// <summary> A value indicating whether terms should be lower-cased. Default is true. </summary>

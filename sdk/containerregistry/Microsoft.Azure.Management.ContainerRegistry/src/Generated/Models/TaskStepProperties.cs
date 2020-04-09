@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// Base properties for any task step.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("TaskStepProperties")]
     public partial class TaskStepProperties
     {
         /// <summary>

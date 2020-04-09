@@ -91,8 +91,9 @@ namespace Azure.Messaging.EventHubs.Processor
                                                                                                      string consumerGroup,
                                                                                                      CancellationToken cancellationToken)
         {
-            Logger.ListOwnershipAsyncStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.ListOwnershipStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
+
             List<EventProcessorPartitionOwnership> result = null;
 
             try
@@ -130,12 +131,12 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                Logger.ListOwnershipAsyncError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.ToString());
+                Logger.ListOwnershipError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.Message);
                 throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
             }
             finally
             {
-                Logger.ListOwnershipAsyncComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, result?.Count ?? 0);
+                Logger.ListOwnershipComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, result?.Count ?? 0);
             }
         }
 
@@ -161,6 +162,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             foreach (EventProcessorPartitionOwnership ownership in partitionOwnership)
             {
+                Logger.ClaimOwnershipStart(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier);
                 metadata[BlobMetadataKey.OwnerIdentifier] = ownership.OwnerIdentifier;
 
                 var blobRequestConditions = new BlobRequestConditions();
@@ -191,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                 // A blob could have just been created by another Event Processor that claimed ownership of this
                                 // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
 
-                                Logger.OwnershipNotClaimable(ownership.PartitionId, ownership.OwnerIdentifier);
+                                Logger.OwnershipNotClaimable(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
                                 return null;
                             }
                         };
@@ -230,16 +232,25 @@ namespace Azure.Messaging.EventHubs.Processor
                     }
 
                     claimedOwnership.Add(ownership);
-
-                    Logger.OwnershipClaimed(ownership.PartitionId, ownership.OwnerIdentifier);
+                    Logger.OwnershipClaimed(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier);
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                 {
-                    Logger.OwnershipNotClaimable(ownership.PartitionId, ownership.OwnerIdentifier, ex.ToString());
+                    Logger.OwnershipNotClaimable(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.ToString());
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
+                    Logger.ClaimOwnershipError(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
                     throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
+                }
+                catch (Exception ex)
+                {
+                    Logger.ClaimOwnershipError(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier, ex.Message);
+                    throw;
+                }
+                finally
+                {
+                    Logger.ClaimOwnershipComplete(ownership.PartitionId, ownership.FullyQualifiedNamespace, ownership.EventHubName, ownership.ConsumerGroup, ownership.OwnerIdentifier);
                 }
             }
 
@@ -262,10 +273,11 @@ namespace Azure.Messaging.EventHubs.Processor
                                                                                                string consumerGroup,
                                                                                                CancellationToken cancellationToken)
         {
-            Logger.ListCheckpointsAsyncStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.ListCheckpointsStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
             var prefix = string.Format(CheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
+            var checkpointCount = 0;
 
             Func<CancellationToken, Task<IEnumerable<EventProcessorCheckpoint>>> listCheckpointsAsync = async listCheckpointsToken =>
             {
@@ -301,11 +313,11 @@ namespace Azure.Messaging.EventHubs.Processor
                     }
                     else
                     {
-                        Logger.InvalidCheckpointFound(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId);
+                        Logger.InvalidCheckpointFound(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup);
                     }
                 }
 
-                Logger.ListCheckpointsAsyncComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpoints.Count);
+                checkpointCount = checkpoints.Count;
                 return checkpoints;
             };
 
@@ -315,7 +327,17 @@ namespace Azure.Messaging.EventHubs.Processor
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
+                Logger.ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.Message);
                 throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
+            }
+            catch (Exception ex)
+            {
+                Logger.ListCheckpointsError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.ListCheckpointsComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, checkpointCount);
             }
         }
 
@@ -334,6 +356,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup);
 
             var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLowerInvariant(), checkpoint.EventHubName.ToLowerInvariant(), checkpoint.ConsumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -353,12 +376,20 @@ namespace Azure.Messaging.EventHubs.Processor
             try
             {
                 await ApplyRetryPolicy(updateCheckpointAsync, cancellationToken).ConfigureAwait(false);
-                Logger.CheckpointUpdated(checkpoint.PartitionId);
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                Logger.CheckpointUpdateError(checkpoint.PartitionId, ex.ToString());
+                Logger.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, ex.Message);
                 throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
+            }
+            catch (Exception ex)
+            {
+                Logger.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, ex.Message);
+                throw;
+            }
+            finally
+            {
+                Logger.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup);
             }
         }
 

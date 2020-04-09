@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string document, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("document", document);
@@ -189,7 +189,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectedLanguage> DetectLanguage(string document, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("document", document);
@@ -251,7 +251,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(documents, countryHint);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -285,7 +285,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(documents, countryHint);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -313,7 +313,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
@@ -361,7 +361,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
@@ -418,7 +418,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<IReadOnlyCollection<CategorizedEntity>>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.AddAttribute("document", document);
@@ -479,7 +479,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<IReadOnlyCollection<CategorizedEntity>> RecognizeEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.AddAttribute("document", document);
@@ -543,7 +543,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -579,7 +579,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -610,7 +610,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -661,7 +661,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -715,7 +715,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("document", document);
@@ -773,7 +773,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("document", document);
@@ -834,7 +834,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -867,7 +867,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -895,7 +895,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
@@ -943,7 +943,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
@@ -999,7 +999,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<IReadOnlyCollection<string>>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.AddAttribute("document", document);
@@ -1059,7 +1059,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<IReadOnlyCollection<string>> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.AddAttribute("document", document);
@@ -1122,7 +1122,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1157,7 +1157,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1187,7 +1187,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
@@ -1237,7 +1237,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
@@ -1253,300 +1253,6 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(documents);
                         return CreateKeyPhraseResponse(response, map);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #endregion
-
-        #region Recognize PII Entities
-
-        /// <summary>
-        /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in document,
-        /// and categorize those entities into types such as US social security
-        /// number, drivers license number, or credit card number.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="document">The document to analyze.</param>
-        /// <param name="language">The language that the document is written in.
-        /// If unspecified, this value will be set to the default language in
-        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
-        /// service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of entities identified
-        /// in the document, as well as a score indicating the confidence
-        /// that the entity correctly matches the identified substring.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<Response<IReadOnlyCollection<PiiEntity>>> RecognizePiiEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(document, nameof(document));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
-            scope.AddAttribute("document", document);
-            scope.Start();
-
-            try
-            {
-                TextDocumentInput[] documents = new TextDocumentInput[] { ConvertToDocumentInput(document, language) };
-                using Request request = CreateDocumentInputRequest(documents, new TextAnalyticsRequestOptions(), PiiEntitiesRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        RecognizePiiEntitiesResultCollection results = await CreateRecognizePiiEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].HasError)
-                        {
-                            // only one document, so we can ignore the id and grab the first error message.
-                            TextAnalyticsError error = results[0].Error;
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
-                        }
-                        return Response.FromValue((IReadOnlyCollection<PiiEntity>)results[0].Entities, response);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in document,
-        /// and categorize those entities into types such as US social security
-        /// number, drivers license number, or credit card number.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="document">The document to analyze.</param>
-        /// <param name="language">The language that the document is written in.
-        /// If unspecified, this value will be set to the default language in
-        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
-        /// service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of entities identified
-        /// in the document, as well as a score indicating the confidence
-        /// that the entity correctly matches the identified substring.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual Response<IReadOnlyCollection<PiiEntity>> RecognizePiiEntities(string document, string language = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(document, nameof(document));
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
-            scope.AddAttribute("document", document);
-            scope.Start();
-
-            try
-            {
-                TextDocumentInput[] documents = new TextDocumentInput[] { ConvertToDocumentInput(document, language) };
-                using Request request = CreateDocumentInputRequest(documents, new TextAnalyticsRequestOptions(), PiiEntitiesRoute);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        RecognizePiiEntitiesResultCollection results = CreateRecognizePiiEntitiesResponse(response, map);
-                        if (results[0].HasError)
-                        {
-                            // only one document, so we can ignore the id and grab the first error message.
-                            TextAnalyticsError error = results[0].Error;
-                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
-                        }
-                        return Response.FromValue((IReadOnlyCollection<PiiEntity>)results[0].Entities, response);
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in documents,
-        /// and categorize those entities into types such as US social security
-        /// number, drivers license number, or credit card number.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that the documents are written in.
-        /// If unspecified, this value will be set to the default language in
-        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
-        /// service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of entities identified
-        /// for each of the documents, as well as scores indicating the confidence
-        /// that a given entity correctly matches the identified substring.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(documents, nameof(documents));
-            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
-            options ??= new TextAnalyticsRequestOptions();
-
-            return await RecognizePiiEntitiesBatchAsync(documentInputs, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in documents,
-        /// and categorize those entities into types such as US social security
-        /// number, drivers license number, or credit card number.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="language">The language that the documents are written in.
-        /// If unspecified, this value will be set to the default language in
-        /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
-        /// service.  If set to an empty string, the service will apply a model
-        /// where the language is explicitly set to "None".</param>
-        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of entities identified
-        /// for each of the documents, as well as scores indicating the confidence
-        /// that a given entity correctly matches the identified substring.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(documents, nameof(documents));
-            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
-            options ??= new TextAnalyticsRequestOptions();
-
-            return RecognizePiiEntitiesBatch(documentInputs, options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in documents,
-        /// and categorize those entities into types such as US social security
-        /// number, drivers license number, or credit card number.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of entities identified
-        /// for each of the documents, as well as scores indicating the confidence
-        /// that a given entity correctly matches the identified substring.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateDocumentInputRequest(documents, options, PiiEntitiesRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return await CreateRecognizePiiEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Runs a predictive model to identify a collection of entities containing
-        /// Personally Identifiable Information found in the passed-in documents,
-        /// and categorize those entities into types such as US social security
-        /// number, drivers license number, or credit card number.
-        /// For a list of languages supported by this operation, see
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
-        /// For document length limits, maximum batch size, and supported text encoding, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits"/>.
-        /// </summary>
-        /// <param name="documents">The documents to analyze.</param>
-        /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
-        /// select the version of the predictive model to run, and whether
-        /// statistics are returned in the response.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/>
-        /// controlling the request lifetime.</param>
-        /// <returns>A result containing the collection of entities identified
-        /// for each of the documents, as well as scores indicating the confidence
-        /// that a given entity correctly matches the identified substring.</returns>
-        /// <exception cref="RequestFailedException">Service returned a non-success
-        /// status code.</exception>
-        public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(documents, nameof(documents));
-            options ??= new TextAnalyticsRequestOptions();
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntitiesBatch)}");
-            scope.Start();
-
-            try
-            {
-                using Request request = CreateDocumentInputRequest(documents, options, PiiEntitiesRoute);
-                Response response = _pipeline.SendRequest(request, cancellationToken);
-
-                switch (response.Status)
-                {
-                    case 200:
-                        IDictionary<string, int> map = CreateIdToIndexMap(documents);
-                        return CreateRecognizePiiEntitiesResponse(response, map);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1586,7 +1292,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<IReadOnlyCollection<LinkedEntity>>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.AddAttribute("document", document);
@@ -1645,7 +1351,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<IReadOnlyCollection<LinkedEntity>> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.AddAttribute("document", document);
@@ -1707,7 +1413,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1741,7 +1447,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1770,7 +1476,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");
@@ -1819,7 +1525,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");

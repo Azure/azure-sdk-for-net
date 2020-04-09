@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Moq;
 using Moq.Protected;
@@ -25,7 +26,124 @@ namespace Azure.Messaging.EventHubs.Tests
     ///
     public partial class EventProcessorTests
     {
-         /// <summary>
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   background processing loop.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadLastEnqueuedEventPropertiesReadsPropertiesWhenThePartitionIsOwned()
+        {
+            using var processorCancellation = new CancellationTokenSource();
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var partitionId = "27";
+            var partitionIds = new[] { "0", partitionId };
+            var ownedPartitions = new List<string>();
+            var lastEventProperties = new LastEnqueuedEventProperties(1234, 9876, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMinutes(5), TrackLastEnqueuedEventProperties = true };
+            var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+
+            mockLoadBalancer
+                .SetupGet(processor => processor.OwnedPartitionIds)
+                .Returns(ownedPartitions);
+
+            mockLoadBalancer
+                .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
+                .Callback(() =>
+                {
+                    GetActivePartitionProcessors(mockProcessor.Object).TryAdd(
+                        partitionId,
+                        new EventProcessor<EventProcessorPartition>.PartitionProcessor(Task.Delay(Timeout.Infinite, processorCancellation.Token), new EventProcessorPartition { PartitionId = partitionId }, () => lastEventProperties, processorCancellation)
+                    );
+
+                    ownedPartitions.Add(partitionId);
+                    completionSource.TrySetResult(true);
+                })
+                .Returns(() => default);
+
+            mockConnection
+                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(partitionIds);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Returns(Mock.Of<SettableTransportConsumer>());
+
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(mockProcessor.Object.InvokeReadLastEnqueuedEventProperties(partitionId), Is.EqualTo(lastEventProperties), "The last enqueued properties should have been returned.");
+
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}" />
+        ///   background processing loop.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadLastEnqueuedEventPropertiesThrowsWhenThePartitionIsNotOwned()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var partitionId = "27";
+            var partitionIds = new[] { "0", partitionId };
+            var lastEventProperties = new LastEnqueuedEventProperties(1234, 9876, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), DateTimeOffset.Parse("2012-03-04T08:30:00Z"));
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMinutes(5), TrackLastEnqueuedEventProperties = true };
+            var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
+            var mockConnection = new Mock<EventHubConnection>();
+            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
+
+            mockLoadBalancer
+                .SetupGet(processor => processor.OwnedPartitionIds)
+                .Returns(Array.Empty<string>());
+
+            mockLoadBalancer
+                .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
+                .Returns(() => default)
+                .Callback(() => completionSource.TrySetResult(true));
+
+            mockConnection
+                .Setup(conn => conn.GetPartitionIdsAsync(It.IsAny<EventHubsRetryPolicy>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(partitionIds);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection.Object);
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubConnection>(), It.IsAny<EventProcessorOptions>()))
+                .Returns(Mock.Of<SettableTransportConsumer>());
+
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            Assert.That(() => mockProcessor.Object.InvokeReadLastEnqueuedEventProperties(partitionId), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed), "The last enqueued properties cannot be read for an unowned partition.");
+
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.ToString" />
         ///   method.
         /// </summary>

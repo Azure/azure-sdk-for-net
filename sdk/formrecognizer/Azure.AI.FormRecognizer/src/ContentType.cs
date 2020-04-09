@@ -8,23 +8,23 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Form content type for local files.
     /// </summary>
-    [CodeGenSchema("ContentType")]
+    [CodeGenModel("ContentType")]
     public enum ContentType
     {
         /// <summary>application/pdf</summary>
-        [CodeGenSchemaMember("ApplicationPdf")]
+        [CodeGenMember("ApplicationPdf")]
         Pdf,
 
         /// <summary>image/png</summary>
-        [CodeGenSchemaMember("ImagePng")]
+        [CodeGenMember("ImagePng")]
         Png,
 
         /// <summary>image/jpeg</summary>
-        [CodeGenSchemaMember("ImageJpeg")]
+        [CodeGenMember("ImageJpeg")]
         Jpeg,
 
         /// <summary>image/tiff</summary>
-        [CodeGenSchemaMember("ImageTiff")]
+        [CodeGenMember("ImageTiff")]
         Tiff,
     }
 }

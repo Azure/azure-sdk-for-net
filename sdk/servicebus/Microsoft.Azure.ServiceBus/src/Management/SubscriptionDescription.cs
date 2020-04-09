@@ -183,7 +183,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     this.forwardTo = value;
                     return;
                 }
-
+                
                 EntityNameHelper.CheckValidQueueName(value, nameof(ForwardTo));
                 if (this.topicPath.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {

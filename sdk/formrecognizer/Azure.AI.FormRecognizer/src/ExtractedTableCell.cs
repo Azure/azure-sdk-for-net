@@ -10,7 +10,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class ExtractedTableCell
     {
-        internal ExtractedTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, ICollection<string> references)
+        internal ExtractedTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, IReadOnlyList<string> references)
         {
             BoundingBox = new BoundingBox(dataTableCell.BoundingBox);
             ColumnIndex = dataTableCell.ColumnIndex;
@@ -66,6 +66,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<RawExtractedItem> RawExtractedItems { get; internal set; }
+        public IReadOnlyList<FormContent> RawExtractedItems { get; internal set; }
     }
 }

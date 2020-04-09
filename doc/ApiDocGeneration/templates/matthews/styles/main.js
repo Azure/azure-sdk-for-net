@@ -96,6 +96,8 @@ function populateOptions(selector, packageName) {
 
     httpGetAsync(versionRequestUrl, function (responseText) {
         var versionselector = document.createElement("select")
+        var cv = WINDOW_CONTENTS[6]
+
         versionselector.className = 'navbar-version-select'
         if (responseText) {
             options = responseText.match(/[^\r\n]+/g)
@@ -103,7 +105,15 @@ function populateOptions(selector, packageName) {
                 $(versionselector).append('<option value="' + options[i] + '">' + options[i] + '</option>')
             }
         }
-        $(versionselector).val(WINDOW_CONTENTS[6]);
+
+        if(cv === 'latest')
+        {
+            $(versionselector).selectedIndex = 0
+        }
+        else {
+            $(versionselector).val(cv);
+        }
+        
         $(selector).append(versionselector)
 
         $(versionselector).change(function () {

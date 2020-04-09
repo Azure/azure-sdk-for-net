@@ -20,16 +20,16 @@ Remove-TestResources.ps1 [-BaseName] <String> [-Environment <String>] [-Force] [
 
 ### Default+Provisioner
 ```
-Remove-TestResources.ps1 [-BaseName] <String> -TenantId <String> -ProvisionerApplicationId <String>
- -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Remove-TestResources.ps1 [-BaseName] <String> -TenantId <String> [-SubscriptionId <String>]
+ -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ResourceGroup+Provisioner
 ```
-Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> -ProvisionerApplicationId <String>
- -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> [-SubscriptionId <String>]
+ -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ResourceGroup
@@ -116,6 +116,23 @@ Parameter Sets: Default+Provisioner, ResourceGroup+Provisioner
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SubscriptionId
+Optional subscription ID to use for new resources when logging in as a 
+provisioner.
+You can also use Set-AzContext if not provisioning.
+
+```yaml
+Type: String
+Parameter Sets: Default+Provisioner, ResourceGroup+Provisioner
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

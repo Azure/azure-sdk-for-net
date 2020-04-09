@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("DataTable")]
+    [CodeGenModel("DataTable")]
     internal partial class DataTable_internal
     {
     }

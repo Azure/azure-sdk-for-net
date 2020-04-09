@@ -3,20 +3,16 @@
 
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    [CodeGenSchema("TrainingDocumentInfo")]
+    [CodeGenModel("TrainingDocumentInfo")]
     public partial class TrainingDocumentInfo
     {
-        internal TrainingDocumentInfo()
-        {
-        }
-
         /// <summary>
         /// </summary>
-        [CodeGenSchemaMember("pages")]
-        public int PageCount { get; set; }
+        [CodeGenMember("pages")]
+        public int PageCount { get; internal set; }
     }
 }

@@ -109,6 +109,11 @@ namespace Microsoft.Azure.Management.FrontDoor
         public virtual IEndpointsOperations Endpoints { get; private set; }
 
         /// <summary>
+        /// Gets the IRulesEnginesOperations.
+        /// </summary>
+        public virtual IRulesEnginesOperations RulesEngines { get; private set; }
+
+        /// <summary>
         /// Gets the IPoliciesOperations.
         /// </summary>
         public virtual IPoliciesOperations Policies { get; private set; }
@@ -366,6 +371,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             FrontDoors = new FrontDoorsOperations(this);
             FrontendEndpoints = new FrontendEndpointsOperations(this);
             Endpoints = new EndpointsOperations(this);
+            RulesEngines = new RulesEnginesOperations(this);
             Policies = new PoliciesOperations(this);
             ManagedRuleSets = new ManagedRuleSetsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
@@ -441,7 +447,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 checkFrontDoorNameAvailabilityInput.Validate();
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -629,7 +635,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2019-05-01";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

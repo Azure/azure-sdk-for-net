@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Support
         /// Azure service/product as displayed in the **Services** drop-down
         /// list on the Azure portal's [New support
         /// request](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/overview)
-        /// page. Always use the service and it's corresponding problem
+        /// page. Always use the service and its corresponding problem
         /// classification(s) obtained programmatically for support ticket
         /// creation. This practice ensures that you always have the most
         /// recent set of service and problem classification Ids.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Support
         /// Gets a specific Azure service for support ticket creation.
         /// </summary>
         /// <param name='serviceName'>
-        /// Name of Azure service
+        /// Name of the Azure service.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

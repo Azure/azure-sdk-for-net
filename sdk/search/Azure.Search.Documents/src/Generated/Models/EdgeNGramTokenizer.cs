@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,23 +14,29 @@ namespace Azure.Search.Documents.Models
     public partial class EdgeNGramTokenizer : Tokenizer
     {
         /// <summary> Initializes a new instance of EdgeNGramTokenizer. </summary>
-        public EdgeNGramTokenizer()
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public EdgeNGramTokenizer(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenizer";
         }
 
         /// <summary> Initializes a new instance of EdgeNGramTokenizer. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="minGram"> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </param>
         /// <param name="maxGram"> The maximum n-gram length. Default is 2. Maximum is 300. </param>
         /// <param name="tokenChars"> Character classes to keep in the tokens. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal EdgeNGramTokenizer(int? minGram, int? maxGram, IList<TokenCharacterKind> tokenChars, string oDataType, string name) : base(oDataType, name)
+        internal EdgeNGramTokenizer(string oDataType, string name, int? minGram, int? maxGram, IList<TokenCharacterKind> tokenChars) : base(oDataType, name)
         {
             MinGram = minGram;
             MaxGram = maxGram;
             TokenChars = tokenChars;
-            ODataType = "#Microsoft.Azure.Search.EdgeNGramTokenizer";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.EdgeNGramTokenizer";
         }
 
         /// <summary> The minimum n-gram length. Default is 1. Maximum is 300. Must be less than the value of maxGram. </summary>

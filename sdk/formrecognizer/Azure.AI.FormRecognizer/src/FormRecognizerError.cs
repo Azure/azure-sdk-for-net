@@ -7,17 +7,17 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    [CodeGenSchema("ErrorInformation")]
+    [CodeGenModel("ErrorInformation")]
     public partial class FormRecognizerError
     {
         /// <summary>
         /// </summary>
-        [CodeGenSchemaMember("Code")]
-        public string Code { get; set; }
+        [CodeGenMember("Code")]
+        public string Code { get; internal set; }
 
         /// <summary>
         /// </summary>
-        [CodeGenSchemaMember("Message")]
-        public string Message { get; set; }
+        [CodeGenMember("Message")]
+        public string Message { get; internal set; }
     }
 }

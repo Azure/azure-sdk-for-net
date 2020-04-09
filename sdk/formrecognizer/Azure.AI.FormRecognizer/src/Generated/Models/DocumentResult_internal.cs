@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -13,15 +15,34 @@ namespace Azure.AI.FormRecognizer.Models
     internal partial class DocumentResult_internal
     {
         /// <summary> Initializes a new instance of DocumentResult_internal. </summary>
-        internal DocumentResult_internal()
+        /// <param name="docType"> Document type. </param>
+        /// <param name="pageRange"> First and last page number where the document is found. </param>
+        /// <param name="fields"> Dictionary of named field values. </param>
+        internal DocumentResult_internal(string docType, IEnumerable<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
+            if (docType == null)
+            {
+                throw new ArgumentNullException(nameof(docType));
+            }
+            if (pageRange == null)
+            {
+                throw new ArgumentNullException(nameof(pageRange));
+            }
+            if (fields == null)
+            {
+                throw new ArgumentNullException(nameof(fields));
+            }
+
+            DocType = docType;
+            PageRange = pageRange.ToArray();
+            Fields = fields;
         }
 
         /// <summary> Initializes a new instance of DocumentResult_internal. </summary>
         /// <param name="docType"> Document type. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
-        internal DocumentResult_internal(string docType, IList<int> pageRange, IDictionary<string, FieldValue_internal> fields)
+        internal DocumentResult_internal(string docType, IReadOnlyList<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             DocType = docType;
             PageRange = pageRange;
@@ -29,10 +50,10 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> Document type. </summary>
-        public string DocType { get; internal set; }
+        public string DocType { get; }
         /// <summary> First and last page number where the document is found. </summary>
-        public IList<int> PageRange { get; internal set; } = new List<int>();
+        public IReadOnlyList<int> PageRange { get; }
         /// <summary> Dictionary of named field values. </summary>
-        public IDictionary<string, FieldValue_internal> Fields { get; internal set; } = new Dictionary<string, FieldValue_internal>();
+        public IReadOnlyDictionary<string, FieldValue_internal> Fields { get; }
     }
 }

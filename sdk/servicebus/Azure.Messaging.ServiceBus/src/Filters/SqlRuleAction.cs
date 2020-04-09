@@ -11,7 +11,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Represents set of actions written in SQL language-based syntax that is performed against a <see cref="ServiceBusMessage" />.
     /// </summary>
-    public sealed class SqlRuleAction : RuleAction
+    internal sealed class SqlRuleAction : RuleAction
     {
         internal PropertyDictionary parameters;
 

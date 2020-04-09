@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
         /// Gets the IReplicationsOperations.
         /// </summary>
         public virtual IReplicationsOperations Replications { get; private set; }
@@ -87,14 +92,34 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public virtual IWebhooksOperations Webhooks { get; private set; }
 
         /// <summary>
+        /// Gets the IAgentPoolsOperations.
+        /// </summary>
+        public virtual IAgentPoolsOperations AgentPools { get; private set; }
+
+        /// <summary>
         /// Gets the IRunsOperations.
         /// </summary>
         public virtual IRunsOperations Runs { get; private set; }
 
         /// <summary>
+        /// Gets the ITaskRunsOperations.
+        /// </summary>
+        public virtual ITaskRunsOperations TaskRuns { get; private set; }
+
+        /// <summary>
         /// Gets the ITasksOperations.
         /// </summary>
         public virtual ITasksOperations Tasks { get; private set; }
+
+        /// <summary>
+        /// Gets the IScopeMapsOperations.
+        /// </summary>
+        public virtual IScopeMapsOperations ScopeMaps { get; private set; }
+
+        /// <summary>
+        /// Gets the ITokensOperations.
+        /// </summary>
+        public virtual ITokensOperations Tokens { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ContainerRegistryManagementClient class.
@@ -339,10 +364,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         {
             Registries = new RegistriesOperations(this);
             Operations = new Operations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             Replications = new ReplicationsOperations(this);
             Webhooks = new WebhooksOperations(this);
+            AgentPools = new AgentPoolsOperations(this);
             Runs = new RunsOperations(this);
+            TaskRuns = new TaskRunsOperations(this);
             Tasks = new TasksOperations(this);
+            ScopeMaps = new ScopeMapsOperations(this);
+            Tokens = new TokensOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

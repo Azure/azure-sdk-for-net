@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// This property is required for providing the region and new quota limits
+    /// This property is required for providing the region and new quota
+    /// limits.
     /// </summary>
     public partial class QuotaChangeRequest
     {

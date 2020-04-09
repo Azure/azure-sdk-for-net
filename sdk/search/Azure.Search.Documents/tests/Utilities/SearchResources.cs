@@ -3,15 +3,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Search.Documents.Models;
+using Azure.Storage.Blobs;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.Search;
 using Microsoft.Azure.Management.Search.Models;
+using Microsoft.Azure.Management.Storage;
+using Microsoft.Azure.Management.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -80,6 +87,13 @@ namespace Azure.Search.Documents.Tests
             public static string Location { get; } = GetEnvVar("AZURE_LOCATION");
 
             /// <summary>
+            /// The timeout for cancellation.
+            /// </summary>
+            public static TimeSpan Timeout => Debugger.IsAttached ?
+                System.Threading.Timeout.InfiniteTimeSpan :
+                TimeSpan.FromSeconds(60);
+
+            /// <summary>
             /// Get the value of an environment variable and fail the test if
             /// not found.
             /// </summary>
@@ -99,7 +113,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// The name of the Search Service.
+        /// The name of the Search service.
         /// </summary>
         public string SearchServiceName
         {
@@ -111,6 +125,39 @@ namespace Azure.Search.Documents.Tests
             }
         }
         private string _searchServiceName = null;
+
+        /// <summary>
+        /// The storage account name.
+        /// </summary>
+        public string StorageAccountName
+        {
+            get => TestFixture.Recording.GetVariable("StorageAccountName", _storageAccountName);
+            set
+            {
+                TestFixture.Recording.SetVariable("StorageAccountName", value);
+                _storageAccountName = value;
+            }
+        }
+        private string _storageAccountName = null;
+
+        /// <summary>
+        /// Gets the storage account endpoint for blobs.
+        /// </summary>
+        public string StorageAccountConnectionString
+        {
+            get => TestFixture.Recording.GetVariable("StorageAccountConnectionString", _storageAccountConnectionString);
+            set
+            {
+                TestFixture.Recording.SetVariable("StorageAccountConnectionString", value);
+                _storageAccountConnectionString = value;
+            }
+        }
+        private string _storageAccountConnectionString;
+
+        /// <summary>
+        /// Gets the name of the blob container.
+        /// </summary>
+        public string BlobContainerName { get; } = "hotels";
 
         /// <summary>
         /// The name of the index created for test data.
@@ -127,7 +174,7 @@ namespace Azure.Search.Documents.Tests
         private string _indexName = null;
 
         /// <summary>
-        /// The URI of the Search Service.
+        /// The URI of the Search service.
         /// </summary>
         public Uri Endpoint => new Uri($"https://{SearchServiceName}.search.windows.net");
 
@@ -147,6 +194,12 @@ namespace Azure.Search.Documents.Tests
         /// This is true for any resources that we created.
         /// </summary>
         public bool RequiresCleanup { get; private set; }
+
+        /// <summary>
+        /// Flag indicating whether these storage resources need to be cleaned up.
+        /// This is true for any storage resources that we created.
+        /// </summary>
+        public bool RequiresStorageCleanup { get; private set; }
 
         /// <summary>
         /// The TestFixture with context about our current test run,
@@ -212,6 +265,29 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
+        /// Creates a new Search service resources with a Hotel index and sample data
+        /// loaded into a new blob container.
+        /// </summary>
+        /// <param name="fixture">
+        /// The TestFixture with context about our current test run,
+        /// recordings, instrumentation, etc.
+        /// </param>
+        /// <returns>A new <see cref="SearchResources"/> context.</returns>
+        public static async Task<SearchResources> CreateWithBlobStorageAndIndexAsync(SearchTestBase fixture)
+        {
+            var resources = new SearchResources(fixture);
+            await Task.WhenAll(
+                resources.CreateSearchServiceAndIndexAsync(),
+                Task.Run(async () =>
+                {
+                    await resources.CreateStorageAccountAsync();
+                    await resources.CreateHotelsContainerAsync();
+                }));
+
+            return resources;
+        }
+
+        /// <summary>
         /// Get a shared Search Service resource with a Hotel index and sample
         /// data set.  See TestResources.Data.cs for the index schema and data
         /// set.  This resource is shared across the entire test run and should
@@ -224,7 +300,7 @@ namespace Azure.Search.Documents.Tests
         /// <returns>The shared TestResources context.</returns>
         public static async Task<SearchResources> GetSharedHotelsIndexAsync(SearchTestBase fixture)
         {
-            SharedSearchResources.Search ??= await CreateWithHotelsIndexAsync(fixture);
+            await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture));
 
             // Clone it for the current fixture (note that setting these values
             // will create the recording ServiceName/IndexName/etc. variables)
@@ -280,7 +356,7 @@ namespace Azure.Search.Documents.Tests
         }
         #endregion Get Clients
 
-        #region Search Service Management
+        #region Service Management
         /// <summary>
         /// Create a client that can be used to create and delete Search
         /// Services.
@@ -289,21 +365,40 @@ namespace Azure.Search.Documents.Tests
         /// A client that can be used to create and delete Search Services.
         /// </returns>
         private static SearchManagementClient GetManagementClient() =>
-            new SearchManagementClient(
+                new SearchManagementClient(
+                    new AzureCredentialsFactory().FromServicePrincipal(
+                        Settings.ClientId,
+                        Settings.ClientSecret,
+                        Settings.TenantId,
+                        AzureEnvironment.AzureGlobalCloud))
+                {
+                    SubscriptionId = Settings.SubscriptionId
+                };
+
+        /// <summary>
+        /// Creates a storage client that can be used to create and delete storage accounts.
+        /// </summary>
+        /// <returns>
+        /// A storage client that can be used to create and delete storage accounts.
+        /// </returns>
+        private static StorageManagementClient GetStorageManagementClient() =>
+            new StorageManagementClient(
                 new AzureCredentialsFactory().FromServicePrincipal(
                     Settings.ClientId,
                     Settings.ClientSecret,
                     Settings.TenantId,
                     AzureEnvironment.AzureGlobalCloud))
-            {
-                SubscriptionId = Settings.SubscriptionId
-            };
+                {
+                    SubscriptionId = Settings.SubscriptionId
+                };
 
         /// <summary>
         /// Automatically delete the Search Service when the resources are no
         /// longer needed.
         /// </summary>
-        public async ValueTask DisposeAsync() => await DeleteSearchSeviceAsync();
+        public async ValueTask DisposeAsync() => await Task.WhenAll(
+            DeleteSearchSeviceAsync(),
+            DeleteStorageAccount());
 
         /// <summary>
         /// Delete the Search Service created as a test resource.
@@ -316,6 +411,20 @@ namespace Azure.Search.Documents.Tests
                 SearchManagementClient client = GetManagementClient();
                 await client.Services.DeleteAsync(Settings.ResourceGroup, SearchServiceName);
                 RequiresCleanup = false;
+            }
+        }
+
+        /// <summary>
+        /// Delete the storage account created as a test resource.
+        /// </summary>
+        /// <returns></returns>
+        private async Task DeleteStorageAccount()
+        {
+            if (RequiresStorageCleanup)
+            {
+                StorageManagementClient client = GetStorageManagementClient();
+                await client.StorageAccounts.DeleteAsync(Settings.ResourceGroup, StorageAccountName);
+                RequiresStorageCleanup = false;
             }
         }
 
@@ -353,7 +462,10 @@ namespace Azure.Search.Documents.Tests
                         new SearchService
                         {
                             Location = Settings.Location,
-                            Sku = new Sku { Name = SkuName.Free }
+                            Sku = new Microsoft.Azure.Management.Search.Models.Sku
+                            {
+                                Name = Microsoft.Azure.Management.Search.Models.SkuName.Free
+                            }
                         });
 
                     // In the common case, DNS propagation happens in less than
@@ -408,16 +520,11 @@ namespace Azure.Search.Documents.Tests
                 // Generate a random Index Name
                 IndexName = Settings.Random.GetName(8);
 
-                // Create a Track 1 client as a temporary work around until we
-                // have support for managing indexes in Track 2
-                Microsoft.Azure.Search.SearchServiceClient client =
-                    new Microsoft.Azure.Search.SearchServiceClient(
-                        SearchServiceName,
-                        new Microsoft.Azure.Search.SearchCredentials(PrimaryApiKey));
-                await client.Indexes.CreateWithHttpMessagesAsync(GetHotelIndex(IndexName));
+                SearchServiceClient client = new SearchServiceClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
+                await client.CreateIndexAsync(GetHotelIndex(IndexName));
 
                 // Give the index time to stabilize before running tests.
-                await Task.Delay(TimeSpan.FromSeconds(20));
+                await WaitForIndexCreationAsync();
             }
 
             return this;
@@ -436,19 +543,121 @@ namespace Azure.Search.Documents.Tests
             // Upload the documents
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
-                // Create a Track 1 client as a temporary work around until we
-                // have support for populating indexes in Track 2
-                Microsoft.Azure.Search.SearchIndexClient client =
-                    new Microsoft.Azure.Search.SearchIndexClient(
-                        SearchServiceName,
-                        IndexName,
-                        new Microsoft.Azure.Search.SearchCredentials(PrimaryApiKey));
-                var batch = Microsoft.Azure.Search.Models.IndexBatch.Upload(TestDocuments);
-                await client.Documents.IndexWithHttpMessagesAsync(batch);
+                SearchIndexClient client = new SearchIndexClient(Endpoint, IndexName, new AzureKeyCredential(PrimaryApiKey));
+                IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Upload(TestDocuments);
+                await client.IndexDocumentsAsync(batch);
+
                 await WaitForIndexingAsync();
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Creates a new storage account.
+        /// </summary>
+        /// <returns>The current <see cref="SearchResources"/>.</returns>
+        private async Task<SearchResources> CreateStorageAccountAsync()
+        {
+            if (TestFixture.Mode != RecordedTestMode.Playback)
+            {
+                using CancellationTokenSource cts = new CancellationTokenSource(Settings.Timeout);
+
+                StorageManagementClient client = GetStorageManagementClient();
+
+                // Use same resource name but without dashes that are invalid for storage account names.
+                StorageAccountName = Settings.ResourcePrefix.Replace("-", string.Empty) + Settings.Random.GetName(8);
+                StorageAccountCreateParameters parameters = new StorageAccountCreateParameters
+                {
+                    AccessTier = AccessTier.Hot,
+                    Kind = Microsoft.Azure.Management.Storage.Models.Kind.BlobStorage,
+                    Location = Settings.Location,
+                    Sku = new Microsoft.Azure.Management.Storage.Models.Sku
+                    {
+                        Name = Microsoft.Azure.Management.Storage.Models.SkuName.StandardLRS,
+                    },
+                };
+
+                StorageAccount account = await client.StorageAccounts.CreateAsync(
+                    Settings.ResourceGroup,
+                    StorageAccountName,
+                    parameters,
+                    cts.Token);
+
+                RequiresStorageCleanup = true;
+
+                StorageAccountListKeysResult keys = await client.StorageAccounts.ListKeysAsync(
+                    Settings.ResourceGroup,
+                    account.Name,
+                    cts.Token);
+                StorageAccountKey key = keys.Keys[0];
+
+                StorageAccountConnectionString = $"DefaultEndpointsProtocol=https;AccountName={account.Name};AccountKey={key.Value};EndpointSuffix=core.windows.net";
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Upload <see cref="TestDocuments"/> to a new blob storage container named "hotels".
+        /// </summary>
+        /// <returns>The current <see cref="SearchResources"/>.</returns>
+        private async Task<SearchResources> CreateHotelsContainerAsync()
+        {
+            if (TestFixture.Mode != RecordedTestMode.Playback)
+            {
+                using CancellationTokenSource cts = new CancellationTokenSource(Settings.Timeout);
+
+                BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, "hotels");
+                await client.CreateAsync(cancellationToken: cts.Token);
+
+                Hotel[] hotels = TestDocuments;
+                List<Task> tasks = new List<Task>(hotels.Length);
+
+                foreach (Hotel hotel in hotels)
+                {
+                    Task task = Task.Run(async () =>
+                    {
+                        using MemoryStream stream = new MemoryStream();
+                        await JsonSerializer
+                            .SerializeAsync(stream, hotel, JsonExtensions.SerializerOptions, cts.Token)
+                            .ConfigureAwait(false);
+
+                        stream.Seek(0, SeekOrigin.Begin);
+
+                        await client
+                            .UploadBlobAsync(hotel.HotelId, stream, cts.Token)
+                            .ConfigureAwait(false);
+                    });
+
+                    tasks.Add(task);
+                }
+
+                await Task.WhenAll(tasks);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Wait for the index to stabilize.
+        /// </summary>
+        /// <remarks>
+        /// The default delay is 20s, but can be configured by setting the <c>AZURE_SEARCH_CREATE_DELAY</c>
+        /// environment variable to the number of seconds you want to wait otherwise.
+        /// </remarks>
+        /// <returns>A Task to await.</returns>
+        public async Task WaitForIndexCreationAsync()
+        {
+            TimeSpan delay = TimeSpan.FromSeconds(20);
+
+            string value = Environment.GetEnvironmentVariable("AZURE_SEARCH_CREATE_DELAY");
+            if (int.TryParse(value, out int numValue))
+            {
+                delay = TimeSpan.FromSeconds(numValue);
+            }
+
+            await TestFixture.DelayAsync(delay);
         }
 
         /// <summary>
@@ -469,8 +678,8 @@ namespace Azure.Search.Documents.Tests
         /// Wait for the Search Service to be provisioned.
         /// </summary>
         /// <returns>A Task to wait.</returns>
-        private static async Task WaitForServiceProvisioningAsync() =>
-            await Task.Delay(TimeSpan.FromSeconds(10));
+        public async Task WaitForServiceProvisioningAsync() =>
+            await TestFixture.DelayAsync(TimeSpan.FromSeconds(10));
 
         /// <summary>
         /// Wait for DNS to propagate.
@@ -507,6 +716,6 @@ namespace Azure.Search.Documents.Tests
 
             return false;
         }
-        #endregion Search Service Management
+        #endregion Service Management
     }
 }

@@ -27,12 +27,13 @@ namespace Azure.Search.Documents.Models
 
         internal static DataContainer DeserializeDataContainer(JsonElement element)
         {
-            DataContainer result = new DataContainer();
+            string name = default;
+            string query = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("query"))
@@ -41,11 +42,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Query = property.Value.GetString();
+                    query = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new DataContainer(name, query);
         }
     }
 }

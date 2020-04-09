@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer
@@ -13,18 +14,18 @@ namespace Azure.AI.FormRecognizer
     internal partial class KeysResult_internal
     {
         /// <summary> Initializes a new instance of KeysResult_internal. </summary>
-        internal KeysResult_internal()
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeysResult_internal. </summary>
         /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
-        internal KeysResult_internal(IDictionary<string, IList<string>> clusters)
+        internal KeysResult_internal(IReadOnlyDictionary<string, IList<string>> clusters)
         {
+            if (clusters == null)
+            {
+                throw new ArgumentNullException(nameof(clusters));
+            }
+
             Clusters = clusters;
         }
 
         /// <summary> Object mapping clusterIds to a list of keys. </summary>
-        public IDictionary<string, IList<string>> Clusters { get; internal set; } = new Dictionary<string, IList<string>>();
+        public IReadOnlyDictionary<string, IList<string>> Clusters { get; }
     }
 }

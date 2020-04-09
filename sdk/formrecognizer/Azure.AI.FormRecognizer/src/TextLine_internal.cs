@@ -5,11 +5,11 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("TextLine")]
+    [CodeGenModel("TextLine")]
     internal partial class TextLine_internal
     {
         // TODO: Q6 - turn this property into a string.
-        //[CodeGenSchemaMember("Language")]
+        //[CodeGenMember("Language")]
         //internal string CustomizedStringProperty { get; set; }
     }
 }

@@ -77,10 +77,10 @@ namespace Azure.Messaging.ServiceBus.Core
             Exception lastException,
             int attemptCount)
         {
-            if ((Options.MaximumRetries <= 0)
+            if ((Options.MaxRetries <= 0)
                 || (Options.Delay == TimeSpan.Zero)
-                || (Options.MaximumDelay == TimeSpan.Zero)
-                || (attemptCount > Options.MaximumRetries)
+                || (Options.MaxDelay == TimeSpan.Zero)
+                || (attemptCount > Options.MaxRetries)
                 || (!ShouldRetryException(lastException)))
             {
                 return null;
@@ -92,15 +92,15 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 ServiceBusRetryMode.Fixed => CalculateFixedDelay(Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
                 ServiceBusRetryMode.Exponential => CalculateExponentialDelay(attemptCount, Options.Delay.TotalSeconds, baseJitterSeconds, RandomNumberGenerator.Value),
-                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources1.UnknownRetryMode, Options.Mode.ToString())),
+                _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
             };
 
             // Adjust the delay, if needed, to keep within the maximum
             // duration.
 
-            if (Options.MaximumDelay < retryDelay)
+            if (Options.MaxDelay < retryDelay)
             {
-                return Options.MaximumDelay;
+                return Options.MaxDelay;
             }
 
             return retryDelay;

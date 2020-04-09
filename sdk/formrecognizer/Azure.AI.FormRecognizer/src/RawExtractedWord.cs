@@ -5,22 +5,15 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RawExtractedWord : RawExtractedItem
+    public class RawExtractedWord : FormContent
     {
-        internal RawExtractedWord(TextWord_internal textWord)
+        internal RawExtractedWord(TextWord_internal textWord, int pageNumber) : base(new BoundingBox(textWord.BoundingBox), pageNumber, textWord.Text)
         {
-            BoundingBox = new BoundingBox(textWord.BoundingBox);
             Confidence = textWord.Confidence;
-            Text = textWord.Text;
         }
+
         /// <summary>
         /// </summary>
-
         public float? Confidence { get; }
-
-        /// <summary>
-        /// </summary>
-
-        public static implicit operator string(RawExtractedWord word) => word.Text;
     }
 }

@@ -749,11 +749,15 @@ namespace Azure.Storage.Blobs.Specialized
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var pageRange = new HttpRange(
-                range.Offset + startOffset,
-                range.Length.HasValue ?
-                    range.Length.Value - startOffset :
-                    (long?)null);
+            HttpRange? pageRange = null;
+            if (!(range == default))
+            {
+                pageRange = new HttpRange(
+                    range.Offset + startOffset,
+                    range.Length.HasValue ?
+                        range.Length.Value - startOffset :
+                        (long?)null);
+            }
 
             Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
@@ -763,7 +767,7 @@ namespace Azure.Storage.Blobs.Specialized
                     Pipeline,
                     Uri,
                     version: Version.ToVersionString(),
-                    range: pageRange.ToString(),
+                    range: pageRange?.ToString(),
                     leaseId: conditions?.LeaseId,
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     encryptionKey: CustomerProvidedKey?.EncryptionKey,

@@ -212,7 +212,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var retryDelay = default(TimeSpan?);
                 var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
 
-                while (!cancellationToken.IsCancellationRequested)
+                while ((!cancellationToken.IsCancellationRequested) && (!_closed))
                 {
                     try
                     {

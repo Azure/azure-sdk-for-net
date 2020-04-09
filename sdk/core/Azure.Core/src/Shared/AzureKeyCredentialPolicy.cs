@@ -7,27 +7,27 @@ namespace Azure.Core
 {
     internal class AzureKeyCredentialPolicy : HttpPipelineSynchronousPolicy
     {
-        private readonly string _keyHeader;
+        private readonly string _name;
         private readonly AzureKeyCredential _credential;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureKeyCredentialPolicy"/> class.
         /// </summary>
         /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
-        /// <param name="keyHeader">The name of the API key header used for signing requests.</param>
-        public AzureKeyCredentialPolicy(AzureKeyCredential credential, string keyHeader)
+        /// <param name="name">The name of the key header used for the credential.</param>
+        public AzureKeyCredentialPolicy(AzureKeyCredential credential, string name)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNullOrEmpty(keyHeader, nameof(keyHeader));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
             _credential = credential;
-            _keyHeader = keyHeader;
+            _name = name;
         }
 
         /// <inheritdoc/>
         public override void OnSendingRequest(HttpMessage message)
         {
             base.OnSendingRequest(message);
-            message.Request.Headers.SetValue(_keyHeader, _credential.Key);
+            message.Request.Headers.SetValue(_name, _credential.Key);
         }
     }
 }

@@ -728,6 +728,61 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task CommitBlockListAsync_Committed_and_Uncommited_Blocks()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Size);
+            var firstBlockName = GetNewBlockName();
+            var secondBlockName = GetNewBlockName();
+            var thirdBlockName = GetNewBlockName();
+
+            // Stage blocks
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(ToBase64(firstBlockName), stream);
+            }
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(ToBase64(secondBlockName), stream);
+            }
+
+            // Commit first two Blocks
+            var commitList = new string[]
+            {
+                    ToBase64(firstBlockName),
+                    ToBase64(secondBlockName)
+            };
+
+            await blob.CommitBlockListAsync(commitList);
+
+            // Stage 3rd Block
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.StageBlockAsync(ToBase64(thirdBlockName), stream);
+            }
+
+            // Act
+            commitList = new string[]
+            {
+                    ToBase64(firstBlockName),
+                    ToBase64(secondBlockName),
+                    ToBase64(thirdBlockName)
+            };
+            await blob.CommitBlockListAsync(commitList);
+
+            // Assert
+            Response<BlockList> blobList = await blob.GetBlockListAsync(BlockListTypes.All);
+            Assert.AreEqual(3, blobList.Value.CommittedBlocks.Count());
+            Assert.AreEqual(ToBase64(firstBlockName), blobList.Value.CommittedBlocks.First().Name);
+            Assert.AreEqual(ToBase64(secondBlockName), blobList.Value.CommittedBlocks.ElementAt(1).Name);
+            Assert.AreEqual(ToBase64(thirdBlockName), blobList.Value.CommittedBlocks.ElementAt(2).Name);
+            Assert.AreEqual(0, blobList.Value.UncommittedBlocks.Count());
+        }
+
+        [Test]
         public async Task CommitBlockListAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

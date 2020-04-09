@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "recoveryservicessiterecovery/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "recoveryservicessiterecovery/resource-manager" -AutoRestVersion "v2"

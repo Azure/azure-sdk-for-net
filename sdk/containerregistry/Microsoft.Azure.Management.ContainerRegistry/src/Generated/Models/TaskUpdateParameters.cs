@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// run has to happen.</param>
         /// <param name="agentConfiguration">The machine configuration of the
         /// run agent.</param>
+        /// <param name="agentPoolName">The dedicated agent pool for the
+        /// task.</param>
         /// <param name="timeout">Run timeout in seconds.</param>
         /// <param name="step">The properties for updating a task step.</param>
         /// <param name="trigger">The properties for updating trigger
@@ -48,12 +50,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="credentials">The parameters that describes a set of
         /// credentials that will be used when this run is invoked.</param>
         /// <param name="tags">The ARM resource tags.</param>
-        public TaskUpdateParameters(IdentityProperties identity = default(IdentityProperties), string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TaskUpdateParameters(IdentityProperties identity = default(IdentityProperties), string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), string agentPoolName = default(string), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Identity = identity;
             Status = status;
             Platform = platform;
             AgentConfiguration = agentConfiguration;
+            AgentPoolName = agentPoolName;
             Timeout = timeout;
             Step = step;
             Trigger = trigger;
@@ -92,6 +95,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.agentConfiguration")]
         public AgentProperties AgentConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dedicated agent pool for the task.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.agentPoolName")]
+        public string AgentPoolName { get; set; }
 
         /// <summary>
         /// Gets or sets run timeout in seconds.

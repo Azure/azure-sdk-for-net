@@ -19,7 +19,7 @@ namespace Azure.Core
     {
         internal static Operation<Response> Create(HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, Response originalResponse, RequestMethod requestMethod, string scopeName, OperationFinalStateVia finalStateVia, Func<HttpMessage> createOriginalHttpMessage)
         {
-            return Create<Response>(pipeline, clientDiagnostics, originalResponse, requestMethod, scopeName, finalStateVia, createOriginalHttpMessage,
+            return Create(pipeline, clientDiagnostics, originalResponse, requestMethod, scopeName, finalStateVia, createOriginalHttpMessage,
                 (response, token) => response,
                 (response, token) => new ValueTask<Response>(response));
         }

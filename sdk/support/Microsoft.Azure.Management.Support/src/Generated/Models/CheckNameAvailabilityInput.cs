@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Initializes a new instance of the CheckNameAvailabilityInput class.
         /// </summary>
-        /// <param name="name">The resource name to validate</param>
+        /// <param name="name">The resource name to validate.</param>
         /// <param name="type">The type of resource. Possible values include:
         /// 'Microsoft.Support/supportTickets',
         /// 'Microsoft.Support/communications'</param>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource name to validate
+        /// Gets or sets the resource name to validate.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

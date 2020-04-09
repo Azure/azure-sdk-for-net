@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Filters out tokens with same text as the previous token. This token filter is implemented using Apache Lucene. </summary>
     public partial class UniqueTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of UniqueTokenFilter. </summary>
-        public UniqueTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public UniqueTokenFilter(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.UniqueTokenFilter";
         }
 
         /// <summary> Initializes a new instance of UniqueTokenFilter. </summary>
-        /// <param name="onlyOnSamePosition"> A value indicating whether to remove duplicates only at the same position. Default is false. </param>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal UniqueTokenFilter(bool? onlyOnSamePosition, string oDataType, string name) : base(oDataType, name)
+        /// <param name="onlyOnSamePosition"> A value indicating whether to remove duplicates only at the same position. Default is false. </param>
+        internal UniqueTokenFilter(string oDataType, string name, bool? onlyOnSamePosition) : base(oDataType, name)
         {
             OnlyOnSamePosition = onlyOnSamePosition;
-            ODataType = "#Microsoft.Azure.Search.UniqueTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.UniqueTokenFilter";
         }
 
         /// <summary> A value indicating whether to remove duplicates only at the same position. Default is false. </summary>

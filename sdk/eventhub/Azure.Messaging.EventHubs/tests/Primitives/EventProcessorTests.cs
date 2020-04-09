@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
 using NUnit.Framework;
@@ -96,30 +97,48 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetValue(processor);
 
         /// <summary>
+        ///   A basic custom partition type, allowing for testing or processor functionality.
+        /// </summary>
+        ///
+        public class CustomPartition : EventProcessorPartition
+        {
+            public string Description { get; set; }
+        }
+
+        /// <summary>
         ///   A basic mock of the event processor, allowing for testing of specific base class
         ///   functionality.
         /// </summary>
         ///
-        public class ProcessorConstructorMock : EventProcessor<EventProcessorPartition>
+        public class MinimalProcessorMock : EventProcessor<EventProcessorPartition>
         {
-            public ProcessorConstructorMock(int eventBatchMaximumCount,
-                                            string consumerGroup,
-                                            string connectionString,
-                                            EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, connectionString, options) { }
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string connectionString,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, connectionString, options) { }
 
-            public ProcessorConstructorMock(int eventBatchMaximumCount,
-                                            string consumerGroup,
-                                            string connectionString,
-                                            string eventHubName,
-                                            EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options) { }
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string connectionString,
+                                        string eventHubName,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options) { }
 
-            public ProcessorConstructorMock(int eventBatchMaximumCount,
-                                            string consumerGroup,
-                                            string fullyQualifiedNamespace,
-                                            string eventHubName,
-                                            TokenCredential credential,
-                                            EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
+            public MinimalProcessorMock(int eventBatchMaximumCount,
+                                        string consumerGroup,
+                                        string fullyQualifiedNamespace,
+                                        string eventHubName,
+                                        TokenCredential credential,
+                                        EventProcessorOptions options = default) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options) { }
 
+            internal MinimalProcessorMock(int eventBatchMaximumCount,
+                                          string consumerGroup,
+                                          string fullyQualifiedNamespace,
+                                          string eventHubName,
+                                          TokenCredential credential,
+                                          EventProcessorOptions options,
+                                          PartitionLoadBalancer loadBalancer) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options, loadBalancer) { }
+
+            public LastEnqueuedEventProperties InvokeReadLastEnqueuedEventProperties(string partitionId) => ReadLastEnqueuedEventProperties(partitionId);
             protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => throw new NotImplementedException();
             protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
             protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
@@ -135,8 +154,8 @@ namespace Azure.Messaging.EventHubs.Tests
         internal class SettableTransportConsumer : TransportConsumer
         {
             public void SetLastEvent(EventData lastEvent) => LastReceivedEvent = lastEvent;
-            public override Task CloseAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
-            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken) => throw new NotImplementedException();
+            public override Task CloseAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+            public override Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount, TimeSpan? maximumWaitTime, CancellationToken cancellationToken) => Task.FromResult<IReadOnlyList<EventData>>(new List<EventData>(0));
         }
     }
 }

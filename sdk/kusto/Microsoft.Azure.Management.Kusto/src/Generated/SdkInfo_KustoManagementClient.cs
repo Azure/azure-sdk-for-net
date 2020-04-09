@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Kusto
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Kusto", "AttachedDatabaseConfigurations", "2019-11-09"),
-                new Tuple<string, string, string>("Kusto", "ClusterPrincipalAssignments", "2019-11-09"),
-                new Tuple<string, string, string>("Kusto", "Clusters", "2019-11-09"),
-                new Tuple<string, string, string>("Kusto", "DataConnections", "2019-11-09"),
-                new Tuple<string, string, string>("Kusto", "DatabasePrincipalAssignments", "2019-11-09"),
-                new Tuple<string, string, string>("Kusto", "Databases", "2019-11-09"),
-                new Tuple<string, string, string>("Kusto", "Operations", "2019-11-09"),
+                new Tuple<string, string, string>("Kusto", "AttachedDatabaseConfigurations", "2020-02-15"),
+                new Tuple<string, string, string>("Kusto", "ClusterPrincipalAssignments", "2020-02-15"),
+                new Tuple<string, string, string>("Kusto", "Clusters", "2020-02-15"),
+                new Tuple<string, string, string>("Kusto", "DataConnections", "2020-02-15"),
+                new Tuple<string, string, string>("Kusto", "DatabasePrincipalAssignments", "2020-02-15"),
+                new Tuple<string, string, string>("Kusto", "Databases", "2020-02-15"),
+                new Tuple<string, string, string>("Kusto", "Operations", "2020-02-15"),
               }.AsEnumerable();
           }
       }
