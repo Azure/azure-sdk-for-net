@@ -109,7 +109,7 @@ trap {
 }
 
 # Enumerate test resources to deploy. Fail if none found.
-$root = [System.IO.Path]::Combine("$PSScriptRoot/../sdk", $ServiceDirectory) | Resolve-Path
+$root = [System.IO.Path]::Combine("$PSScriptRoot/../../../sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
 
