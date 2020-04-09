@@ -349,6 +349,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The message batch is currently being used in communication with the Service Bus service; messages may not be added until the active operation is complete..
+        /// </summary>
+        internal static string MessageBatchIsLocked {
+            get {
+                return ResourceManager.GetString("MessageBatchIsLocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A message handler has already been registered..
         /// </summary>
         internal static string MessageHandlerAlreadyRegistered {
