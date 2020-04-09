@@ -7,7 +7,7 @@ None
 ### Improvements
 - Client to retry on PublisherRevokedException. (https://github.com/Azure/azure-sdk-for-net/pull/9361)
 - ManagedIdentityTokenProvider now supports custom AzureServiceTokenProvider where developers can use customized service token providers per deployment environment. (https://github.com/Azure/azure-sdk-for-net/pull/9943)
-
+ 
 ### Bug fixes
 - Closing an EventHubClient now closes all senders and receivers created from that client. (https://github.com/Azure/azure-sdk-for-net/pull/7443)
 - Enforce token refresh interval under max allowed TimeSpan to avoid failures. (https://github.com/Azure/azure-sdk-for-net/pull/8541)
