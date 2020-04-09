@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -124,6 +125,75 @@ namespace Azure.AI.FormRecognizer.Training
         {
             await Task.Run(() => { }).ConfigureAwait(false);
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Management Ops
+        /// <summary>
+        /// Delete the model with the specified model ID.
+        /// </summary>
+        /// <param name="modelId">The ID of the model to delete.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
+        {
+            return ServiceClient.DeleteCustomModel(new Guid(modelId), cancellationToken);
+        }
+
+        /// <summary>
+        /// Delete the model with the specified model ID.
+        /// </summary>
+        /// <param name="modelId">The ID of the model to delete.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
+        {
+            return await ServiceClient.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a collection of <see cref="CustomFormModelInfo"/> items describing the models trained on this Cognitive Services Account
+        /// and their training status.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
+        {
+            return ServiceClient.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a collection of <see cref="CustomFormModelInfo"/> items describing the models trained on this Cognitive Services Account
+        /// and their training status.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
+        {
+            return ServiceClient.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the number of models trained on this Cognitive Services Account and the account limits.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
+        {
+            Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
+            return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get the number of models trained on this Cognitive Services Account and the account limits.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
         #endregion
