@@ -52,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// treated with higher priority. As the sorting order depends on the detected text, it may change across images
         /// and OCR version updates. Thus, business logic should be built upon the actual line location instead of order.
         /// </summary>
-        public ICollection<RawExtractedLine> Lines { get; set; }
+        public ICollection<FormLine> Lines { get; set; }
 
         /// <summary>
         /// </summary>
