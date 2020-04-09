@@ -139,6 +139,14 @@ namespace Azure.Storage.Test.Shared
                 () => TestConfigurations.DefaultTargetManagedDiskTenant);
 
         /// <summary>
+        /// Gets the tenant to use for any tests that require authentication
+        /// with Azure AD.
+        /// </summary>
+        public TenantConfiguration TestConfigSoftDelete => GetTestConfig(
+                "Storage_TestConfigSoftDelete",
+                () => TestConfigurations.DefaultTargetSoftDeleteTenant);
+
+        /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
         /// not get values from this directly; use GetTestConfig.
         /// </summary>

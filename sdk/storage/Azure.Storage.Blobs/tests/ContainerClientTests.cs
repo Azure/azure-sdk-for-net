@@ -2021,6 +2021,33 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ContainerRestoreAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateAsync();
+            await container.DeleteAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
+
+            await Task.Delay(30000);
+
+            await BlobRestClient.Container.RestoreAsync(
+                container.ClientDiagnostics,
+                container.Pipeline,
+                container.Uri,
+                container.Version.ToVersionString(),
+                deletedContainerName: containerItem.Name,
+                deletedContainerVersion: containerItem.Version);
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
         #region Secondary Storage
         [Test]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
