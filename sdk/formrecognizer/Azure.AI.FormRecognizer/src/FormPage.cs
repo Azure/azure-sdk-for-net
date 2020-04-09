@@ -9,6 +9,22 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormPage : FormContent
     {
+        internal FormPage(IReadOnlyList<DataTable_internal> tablesResult, ReadResult_internal readResult)
+            : base(null, readResult.Page, null) // TODO: retrieve text and bounding box.
+        {
+            TextAngle = readResult.Angle;
+            Width = readResult.Width;
+            Height = readResult.Height;
+            Unit = readResult.Unit;
+
+            if (readResult.Lines != null)
+            {
+                Lines = RawExtractedPage.ConvertLines(readResult.Lines, PageNumber);
+            }
+
+            Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
+        }
+
         /// <summary>
         /// The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].
         /// </summary>
@@ -41,21 +57,5 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         public IReadOnlyList<ExtractedTable> Tables { get; }
-
-        internal FormPage(IReadOnlyList<DataTable_internal> tablesResult, ReadResult_internal readResult)
-            : base(null, readResult.Page, null) // TODO: retrieve text and bounding box.
-        {
-            TextAngle = readResult.Angle;
-            Width = readResult.Width;
-            Height = readResult.Height;
-            Unit = readResult.Unit;
-
-            if (readResult.Lines != null)
-            {
-                Lines = RawExtractedPage.ConvertLines(readResult.Lines, PageNumber);
-            }
-
-            Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
-        }
     }
 }
