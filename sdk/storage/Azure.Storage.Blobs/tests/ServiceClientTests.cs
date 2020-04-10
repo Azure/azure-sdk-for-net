@@ -255,7 +255,7 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task ListContainersSegmentAsync_Metadata()
         {
-            BlobServiceClient service = GetServiceClient_SoftDelete();
+            BlobServiceClient service = GetServiceClient_SharedKey();
             // Ensure at least one container
             await using DisposingContainer test = await GetTestContainerAsync();
 

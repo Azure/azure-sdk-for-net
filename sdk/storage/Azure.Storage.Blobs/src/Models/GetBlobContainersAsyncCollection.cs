@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs
                 items.Add(ListContainersIncludeType.Metadata);
             }
 
-            return items;
+            return items.Count > 0 ? items : null;
         }
     }
 }
