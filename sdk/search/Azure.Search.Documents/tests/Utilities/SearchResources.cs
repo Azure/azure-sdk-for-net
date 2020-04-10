@@ -132,7 +132,12 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The storage account key.
         /// </summary>
-        public string StorageAccountKey => TestFixture.Recording.GetVariableFromEnvironment("AZURE_SEARCH_STORAGE_KEY");
+        public string StorageAccountKey => TestFixture.Recording.GetVariableFromEnvironment(StorageAccountKeyVariableName);
+
+        /// <summary>
+        /// The name of the <see cref="StorageAccountKey"/> environment variable.
+        /// </summary>
+        internal const string StorageAccountKeyVariableName = "AZURE_SEARCH_STORAGE_KEY";
 
         /// <summary>
         /// The storage account connection string.
@@ -540,7 +545,7 @@ namespace Azure.Search.Documents.Tests
                 using CancellationTokenSource cts = new CancellationTokenSource(Settings.Timeout);
 
                 BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
-                await client.CreateAsync(cancellationToken: cts.Token);
+                await client.CreateIfNotExistsAsync(cancellationToken: cts.Token);
 
                 RequiresBlobContainerCleanup = true;
 

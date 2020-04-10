@@ -53,11 +53,10 @@ specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 
 ### EXAMPLE 1
 ```
-$subscriptionId = "REPLACE_WITH_SUBSCRIPTION_ID"
-Connect-AzAccount -Subscription $subscriptionId
+Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
 $testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-.\eng\common\LiveTestResources\New-TestResources.ps1 `
-    -BaseName 'myalias' `
+New-TestResources.ps1 `
+    -BaseName 'uuid123' `
     -ServiceDirectory 'keyvault' `
     -TestApplicationId $testAadApp.ApplicationId.ToString() `
     -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
@@ -71,7 +70,7 @@ the SecureString to plaintext by another means.
 
 ### EXAMPLE 2
 ```
-eng/New-TestResources.ps1 `
+New-TestResources.ps1 `
     -BaseName 'Generated' `
     -ServiceDirectory '$(ServiceDirectory)' `
     -TenantId '$(TenantId)' `
@@ -215,7 +214,7 @@ Accept wildcard characters: False
 ```
 
 ### -SubscriptionId
-Optional subscription ID to use for new resources when logging in as a 
+Optional subscription ID to use for new resources when logging in as a
 provisioner.
 You can also use Set-AzContext if not provisioning.
 
@@ -416,16 +415,12 @@ Accept wildcard characters: False
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
+## INPUTS
+
 ## OUTPUTS
 
-### Entries from the ARM templates' "output" section in environment variable syntax
-### (e.g. $env:RESOURCE_NAME='<< resource name >>') that can be used for running
-### live tests.
-### If run in -CI mode the environment variables will be output in syntax that Azure
-### DevOps can consume.
 ## NOTES
 
 ## RELATED LINKS
 
-[Remove-TestResources.ps1](./New-TestResources.ps1.md)
-
+[Remove-TestResources.ps1](./Remove-TestResources.ps1.md)

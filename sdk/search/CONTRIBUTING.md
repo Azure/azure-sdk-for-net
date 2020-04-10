@@ -72,55 +72,11 @@ live tests against a pull request by commenting `/azp run net - search - tests`
 in the PR.
 
 ### Live Test Resources
-To set up your Azure account to run live tests, you'll need to log into Azure,
-create a service principal, and set up your resources defined in
-[test-resources.json](./test-resources.json) as shown in the following example.
-Note that `-Subscription` is an optional parameter but recommended if your account
-is a member of multiple subscriptions.
-
-```powershell
-PS C:\src> Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
-PS C:\src> $sp = New-AzADServicePrincipal -Role Owner
-PS C:\src> eng\common\TestResources\New-TestResources.ps1 `
-  -BaseName 'myusername' `
-  -ServiceDirectory search `
-  -TestApplicationId $sp.ApplicationId `
-  -TestApplicationSecret (ConvertFrom-SecureString $sp.Secret -AsPlainText)
-```
-
-Along with some log messages, this will output environment variables based on your
-current shell like in the following example:
-
-```
-$env:AZURE_TENANT_ID = '04acef35-c7bd-4d14-bfd9-59f11b7b9eac'
-$env:AZURE_CLIENT_ID = 'ce1a3a01-424f-4e34-b9a6-823e2b1ae783'
-$env:AZURE_CLIENT_SECRET = 'c27ccc92-e1ca-4d29-8f4e-c6a1ee61ff57'
-$env:AZURE_SUBSCRIPTION_ID = 'd686c17c-aade-4238-bce0-290453cfcf97'
-$env:AZURE_RESOURCE_GROUP = 'rg-myusername'
-$env:AZURE_LOCATION = 'westus2'
-$env:AZURE_SEARCH_STORAGE_NAME = 'myusernamestg'
-$env:AZURE_SEARCH_STORAGE_KEY = 'Of2O5Snep5tl13bfjh02/fSNYfrBPXV7CYK7EVnMm/z9fN7zCcq6WKuWfZDM9QsTORvC7zYLifyIEtymI5VCmA=='
-```
-
-For security reasons we do not set these environment variables automatically for either
-the current process or persistently for future sessions. You must do that yourself.
-
-If your current shell was detected propertly, you should be able to copy and paste the
-output directly in your terminal and add to your profile script. For example,
-in PowerShell on Windows you could copy and paste the output and run the following command:
-
-```powershell
-$env:AZURE_TENANT_ID = '04acef35-c7bd-4d14-bfd9-59f11b7b9eac'
-$env:AZURE_CLIENT_ID = 'ce1a3a01-424f-4e34-b9a6-823e2b1ae783'
-$env:AZURE_CLIENT_SECRET = 'c27ccc92-e1ca-4d29-8f4e-c6a1ee61ff57'
-$env:AZURE_SUBSCRIPTION_ID = 'd686c17c-aade-4238-bce0-290453cfcf97'
-$env:AZURE_RESOURCE_GROUP = 'rg-myusername'
-$env:AZURE_LOCATION = 'westus2'
-$env:AZURE_SEARCH_STORAGE_NAME = 'myusernamestg'
-$env:AZURE_SEARCH_STORAGE_KEY = 'Of2O5Snep5tl13bfjh02/fSNYfrBPXV7CYK7EVnMm/z9fN7zCcq6WKuWfZDM9QsTORvC7zYLifyIEtymI5VCmA=='
-
-dir env:AZURE* | % { setx $_.Name $_.Value }
-```
+Before running or recording live tests you need to create
+[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).
+If recording tests, secrets will be sanitized from saved recordings.
+If you will be working on contributions over time, you should consider
+persisting these variables.
 
 ### Samples
 Our samples are structured as unit tests so we can easily verify they're up to
