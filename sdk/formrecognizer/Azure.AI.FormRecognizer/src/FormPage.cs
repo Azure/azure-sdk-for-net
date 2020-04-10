@@ -56,6 +56,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<ExtractedTable> Tables { get; }
+        public IReadOnlyList<FormTable> Tables { get; }
     }
 }

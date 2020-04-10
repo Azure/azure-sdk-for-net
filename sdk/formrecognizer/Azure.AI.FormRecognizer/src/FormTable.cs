@@ -8,9 +8,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ExtractedTable
+    public class FormTable : FormContent
     {
-        internal ExtractedTable(DataTable_internal table, ReadResult_internal readResult)
+        internal FormTable(DataTable_internal table, ReadResult_internal readResult)
+            : base(null, readResult.Page, null) // TODO: retrieve text and bounding box.
         {
             ColumnCount = table.Columns;
             RowCount = table.Rows;
@@ -32,7 +33,6 @@ namespace Azure.AI.FormRecognizer.Models
         // TODO: implement table indexer
         // TODO: Handling column-span?
         // https://github.com/Azure/azure-sdk-for-net/issues/9975
-
 
         /// <summary>
         /// </summary>
