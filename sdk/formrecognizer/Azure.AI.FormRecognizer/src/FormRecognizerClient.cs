@@ -182,6 +182,85 @@ namespace Azure.AI.FormRecognizer
 
         #endregion
 
+        #region Custom Forms
+
+        /// <summary>
+        /// Extract pages from one or more forms, using a model trained without labels.
+        /// </summary>
+        /// <param name="modelId">The id of the model to use for extracting form values.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
+        /// completion will contain extracted pages from the input document.</returns>
+        public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+
+            //// TODO: automate content-type detection
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
+            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
+            //return new RecognizeFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+        }
+
+        /// <summary>
+        /// Extract pages from one or more forms, using a model trained without labels.
+        /// </summary>
+        /// <param name="modelId">The id of the model to use for extracting form values.</param>
+        /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
+        /// completion will contain extracted pages from the input document.</returns>
+        public virtual RecognizeCustomFormsOperation StartRecognizeCustomFormsFromUri(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
+            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken);
+            //return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+        }
+
+        /// <summary>
+        /// Extract pages from one or more forms, using a model trained without labels.
+        /// </summary>
+        /// <param name="modelId">The id of the model to use for extracting form values.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
+        /// completion will contain extracted pages from the input document.</returns>
+        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream formFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //// TODO: automate content-type detection
+            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
+            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken).ConfigureAwait(false);
+            //return new RecognizeFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+        }
+
+        /// <summary>
+        /// Extract pages from one or more forms, using a model trained without labels.
+        /// </summary>
+        /// <param name="modelId">The id of the model to use for extracting form values.</param>
+        /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
+        /// completion will contain extracted pages from the input document.</returns>
+        public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsFromUriAsync(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
+            //ResponseWithHeaders<AnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
+            //return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+        }
+
+        #endregion
+
         #region Training client
         /// <summary>
         /// </summary>
