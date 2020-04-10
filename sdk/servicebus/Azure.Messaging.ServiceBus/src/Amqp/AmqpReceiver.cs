@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -58,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// The AMQP connection scope responsible for managing transport constructs for this instance.
         /// </summary>
         ///
-        private AmqpConnectionScope ConnectionScope { get; }
+        private readonly AmqpConnectionScope _connectionScope;
 
         /// <summary>
         /// The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
@@ -124,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _entityPath = entityPath;
-            ConnectionScope = connectionScope;
+            _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
             _receiveMode = receiveMode;
@@ -133,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             _receiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
-                    ConnectionScope.OpenReceiverLinkAsync(
+                    _connectionScope.OpenReceiverLinkAsync(
                         entityPath: _entityPath,
                         timeout: timeout,
                         prefetchCount: prefetchCount,
@@ -147,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 });
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
-                timeout => ConnectionScope.OpenManagementLinkAsync(
+                timeout => _connectionScope.OpenManagementLinkAsync(
                     _entityPath,
                     timeout,
                     CancellationToken.None),
@@ -187,7 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     timeout,
                     cancellationToken).ConfigureAwait(false);
             },
-            ConnectionScope,
+            _connectionScope,
             cancellationToken).ConfigureAwait(false);
 
             return messages;
@@ -217,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var stopWatch = Stopwatch.StartNew();
 
-            link = await _receiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+            link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var messagesReceived = await Task.Factory.FromAsync
@@ -275,7 +276,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 await CompleteInternalAsync(
                     lockTokens,
                     timeout).ConfigureAwait(false),
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -295,7 +296,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     lockTokenGuids,
                     timeout,
                     DispositionStatus.Completed,
-                    _isSessionReceiver,
                     SessionId).ConfigureAwait(false);
                 return;
             }
@@ -325,11 +325,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             try
             {
                 ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
-                //var ambientTransaction = Transaction.Current;
-                //if (ambientTransaction != null)
-                //{
-                //    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(ambientTransaction, ServiceBusConnection).ConfigureAwait(false);
-                //}
+                Transaction ambientTransaction = Transaction.Current;
+                if (ambientTransaction != null)
+                {
+                    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
+                        ambientTransaction,
+                        _connectionScope,
+                        timeout).ConfigureAwait(false);
+                }
 
                 if (!_receiveLink.TryGetOpenedObject(out receiveLink))
                 {
@@ -419,7 +422,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     lockToken,
                     timeout,
                     propertiesToModify).ConfigureAwait(false),
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
@@ -440,7 +443,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     lockTokens,
                     timeout,
                     DispositionStatus.Defered,
-                    _isSessionReceiver,
                     SessionId,
                     propertiesToModify);
             }
@@ -471,7 +473,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     lockToken,
                     timeout,
                     propertiesToModify).ConfigureAwait(false),
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -493,7 +495,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     lockTokens,
                     timeout,
                     DispositionStatus.Abandoned,
-                    _isSessionReceiver,
                     SessionId,
                     propertiesToModify);
             }
@@ -532,7 +533,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     propertiesToModify,
                     deadLetterReason,
                     deadLetterErrorDescription).ConfigureAwait(false),
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
@@ -568,7 +569,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     lockTokens,
                     timeout,
                     DispositionStatus.Suspended,
-                    _isSessionReceiver,
                     SessionId,
                     propertiesToModify,
                     deadLetterReason,
@@ -626,7 +626,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="lockTokens">Message lock tokens to update disposition status.</param>
         /// <param name="timeout"></param>
         /// <param name="dispositionStatus"></param>
-        /// <param name="isSessionReceiver"></param>
         /// <param name="sessionId"></param>
         /// <param name="propertiesToModify"></param>
         /// <param name="deadLetterReason"></param>
@@ -635,7 +634,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Guid[] lockTokens,
             TimeSpan timeout,
             DispositionStatus dispositionStatus,
-            bool isSessionReceiver,
             string sessionId = null,
             IDictionary<string, object> propertiesToModify = null,
             string deadLetterReason = null,
@@ -771,7 +769,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     timeout,
                     cancellationToken)
                 .ConfigureAwait(false),
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
             return messages;
@@ -813,7 +811,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
-                UseMinimum(ConnectionScope.SessionTimeout,
+                UseMinimum(_connectionScope.SessionTimeout,
                 timeout.CalculateRemaining(stopWatch.Elapsed)))
                 .ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -883,7 +881,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         lockToken,
                         timeout).ConfigureAwait(false);
                 },
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
             return lockedUntil;
         }
@@ -935,6 +933,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             ThrowIfSessionLockLost();
             AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
+                _connectionScope,
                 _managementLink,
                 amqpRequestMessage,
                 timeout).ConfigureAwait(false);
@@ -953,7 +952,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     lockedUntil = await RenewSessionLockInternal(
                         timeout).ConfigureAwait(false);
                 },
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
             SessionLockedUntil = lockedUntil;
         }
@@ -1001,7 +1000,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     sessionState = await GetStateInternal(timeout).ConfigureAwait(false);
                 },
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
             return sessionState;
         }
@@ -1056,7 +1055,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         sessionState,
                         timeout).ConfigureAwait(false);
                 },
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -1107,7 +1106,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 async (timeout) => messages = await ReceiveDeferredMessagesAsyncInternal(
                     sequenceNumbers.ToArray(),
                     timeout).ConfigureAwait(false),
-                ConnectionScope,
+                _connectionScope,
                 cancellationToken).ConfigureAwait(false);
             return messages;
         }
@@ -1237,7 +1236,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await _retryPolicy.RunOperation(
                async (timeout) =>
                link = await _receiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
-               ConnectionScope,
+               _connectionScope,
                cancellationToken).ConfigureAwait(false);
 
             if (_isSessionReceiver)
