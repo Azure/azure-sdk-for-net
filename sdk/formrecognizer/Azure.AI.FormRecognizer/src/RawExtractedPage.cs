@@ -7,9 +7,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RawExtractedPage
+    public class RawExtractedPage : FormContent
     {
         internal RawExtractedPage(ReadResult_internal readResult)
+            : base(default, readResult.Page, default /* TODO */ )
         {
             Page = readResult.Page;
             TextAngle = readResult.Angle;
