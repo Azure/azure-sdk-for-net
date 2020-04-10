@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public string AsString()
         {
-            if (Type != FieldValueType.String)
+            if (Type != FieldValueType.StringType)
             {
                 throw new InvalidOperationException($"Cannot get field as String.  Field value's type is {Type}.");
             }
@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public int AsInt32()
         {
-            if (Type != FieldValueType.Integer)
+            if (Type != FieldValueType.IntegerType)
             {
                 throw new InvalidOperationException($"Cannot get field as Integer.  Field value's type is {Type}.");
             }
@@ -56,7 +56,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public float AsFloat()
         {
-            if (Type != FieldValueType.Number)
+            if (Type != FieldValueType.FloatType)
             {
                 throw new InvalidOperationException($"Cannot get field as Float.  Field value's type is {Type}.");
             }
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Models
         public string AsPhoneNumber()
 #pragma warning restore CA1822
         {
-            if (Type != FieldValueType.PhoneNumber)
+            if (Type != FieldValueType.PhoneNumberType)
             {
                 throw new InvalidOperationException($"Cannot get field as PhoneNumber.  Field value's type is {Type}.");
             }
