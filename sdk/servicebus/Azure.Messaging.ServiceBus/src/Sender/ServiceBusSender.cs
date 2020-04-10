@@ -211,6 +211,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusEventSource.Log.SendMessageStart(Identifier, messageBatch.Count);
             try
             {
+                messageBatch.Lock();
                 await _innerSender.SendBatchAsync(messageBatch, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -218,6 +219,11 @@ namespace Azure.Messaging.ServiceBus
                 ServiceBusEventSource.Log.SendMessageException(Identifier, ex);
                 throw;
             }
+            finally
+            {
+                messageBatch.Unlock();
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.SendMessageComplete(Identifier);
         }
