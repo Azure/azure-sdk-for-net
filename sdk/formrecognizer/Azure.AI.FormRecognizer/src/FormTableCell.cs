@@ -8,11 +8,11 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ExtractedTableCell
+    public class FormTableCell : FormContent
     {
-        internal ExtractedTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, IReadOnlyList<string> references)
+        internal FormTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, IReadOnlyList<string> references)
+            : base(new BoundingBox(dataTableCell.BoundingBox), readResult.Page, dataTableCell.Text)
         {
-            BoundingBox = new BoundingBox(dataTableCell.BoundingBox);
             ColumnIndex = dataTableCell.ColumnIndex;
             ColumnSpan = dataTableCell.ColumnSpan ?? 1;
             Confidence = dataTableCell.Confidence;
@@ -20,17 +20,12 @@ namespace Azure.AI.FormRecognizer.Models
             IsHeader = dataTableCell.IsHeader ?? false;
             RowIndex = dataTableCell.RowIndex;
             RowSpan = dataTableCell.RowSpan ?? 1;
-            Text = dataTableCell.Text;
 
             if (references != null)
             {
-                RawExtractedItems = ExtractedField.ConvertTextReferences(readResult, references);
+                TextContent = ExtractedField.ConvertTextReferences(readResult, references);
             }
         }
-
-        /// <summary>
-        /// </summary>
-        public BoundingBox BoundingBox { get; }
 
         /// <summary>
         /// </summary>
@@ -62,10 +57,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public string Text { get; }
-
-        /// <summary>
-        /// </summary>
-        public IReadOnlyList<FormContent> RawExtractedItems { get; internal set; }
+        public IReadOnlyList<FormContent> TextContent { get; }
     }
 }
