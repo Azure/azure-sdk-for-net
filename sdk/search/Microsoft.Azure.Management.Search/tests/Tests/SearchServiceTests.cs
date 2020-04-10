@@ -8,8 +8,6 @@ namespace Microsoft.Azure.Management.Search.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using Microsoft.Azure.Management.Network;
-    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Rest.Azure;
