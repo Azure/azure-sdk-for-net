@@ -15,15 +15,15 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary> List of words in the text line. </summary>
-        public IReadOnlyList<RawExtractedWord> Words { get; internal set; }
+        public IReadOnlyList<FormWord> Words { get; internal set; }
 
-        private static IReadOnlyList<RawExtractedWord> ConvertWords(IReadOnlyList<TextWord_internal> textWords, int pageNumber)
+        private static IReadOnlyList<FormWord> ConvertWords(IReadOnlyList<TextWord_internal> textWords, int pageNumber)
         {
-            List<RawExtractedWord> rawWords = new List<RawExtractedWord>();
+            List<FormWord> rawWords = new List<FormWord>();
 
             foreach (TextWord_internal textWord in textWords)
             {
-                rawWords.Add(new RawExtractedWord(textWord, pageNumber));
+                rawWords.Add(new FormWord(textWord, pageNumber));
             }
 
             return rawWords;

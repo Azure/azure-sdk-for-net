@@ -5,9 +5,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class RawExtractedWord : FormContent
+    public class FormWord : FormContent
     {
-        internal RawExtractedWord(TextWord_internal textWord, int pageNumber) : base(new BoundingBox(textWord.BoundingBox), pageNumber, textWord.Text)
+        internal FormWord(TextWord_internal textWord, int pageNumber) : base(new BoundingBox(textWord.BoundingBox), pageNumber, textWord.Text)
         {
             Confidence = textWord.Confidence;
         }

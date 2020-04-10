@@ -102,7 +102,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
             // TODO: Support case where text reference is lines only, without word segment
             // https://github.com/Azure/azure-sdk-for-net/issues/10364
-            return new RawExtractedWord(readResult.Lines.ToList()[lineIndex].Words.ToList()[wordIndex], readResult.Page);
+            return new FormWord(readResult.Lines.ToList()[lineIndex].Words.ToList()[wordIndex], readResult.Page);
 
             // Code from Chris Stone below
             //if (!string.IsNullOrEmpty(reference) && reference.Length > 2 && reference[0] == '#')
@@ -163,7 +163,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
             // TODO: Support case where text reference is lines only, without word segment
             // https://github.com/Azure/azure-sdk-for-net/issues/10364
-            return new RawExtractedWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex], readResults[pageIndex].Page);
+            return new FormWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex], readResults[pageIndex].Page);
         }
     }
 }
