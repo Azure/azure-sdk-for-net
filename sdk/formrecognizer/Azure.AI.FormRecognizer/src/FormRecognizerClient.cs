@@ -185,11 +185,11 @@ namespace Azure.AI.FormRecognizer
         #region Custom Forms
 
         /// <summary>
-        /// Extract pages from one or more forms, using a model trained without labels.
+        /// Recognizes pages from one or more forms, using a model trained without labels.
         /// </summary>
-        /// <param name="modelId">The id of the model to use for extracting form values.</param>
-        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="modelId">The id of the model to use for recognizing form values.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
@@ -205,11 +205,11 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extract pages from one or more forms, using a model trained without labels.
+        /// Recognizes pages from one or more forms, using a model trained without labels.
         /// </summary>
-        /// <param name="modelId">The id of the model to use for extracting form values.</param>
-        /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="modelId">The id of the model to use for recognizing form values.</param>
+        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
@@ -223,11 +223,11 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extract pages from one or more forms, using a model trained without labels.
+        /// Recognizes pages from one or more forms, using a model trained without labels.
         /// </summary>
-        /// <param name="modelId">The id of the model to use for extracting form values.</param>
-        /// <param name="formFileStream">The stream containing one or more forms to extract elements from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="modelId">The id of the model to use for recognizing form values.</param>
+        /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
@@ -244,11 +244,11 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Extract pages from one or more forms, using a model trained without labels.
+        /// Recognizes pages from one or more forms, using a model trained without labels.
         /// </summary>
-        /// <param name="modelId">The id of the model to use for extracting form values.</param>
-        /// <param name="formFileUri">The absolute URI of the remote file to extract elements from.</param>
-        /// <param name="recognizeOptions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="modelId">The id of the model to use for recognizing form values.</param>
+        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>

@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as an <see cref="float"/>.
+        /// Gets the value of the field as a <see cref="float"/>.
         /// </summary>
         /// <returns></returns>
         public float AsFloat()
@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as an <see cref="DateTimeOffset"/>.
+        /// Gets the value of the field as a <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <returns></returns>
 #pragma warning disable CA1822
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as an <see cref="DateTimeOffset"/>.
+        /// Gets the value of the field as a <see cref="TimeSpan"/>.
         /// </summary>
         /// <returns></returns>
 #pragma warning disable CA1822

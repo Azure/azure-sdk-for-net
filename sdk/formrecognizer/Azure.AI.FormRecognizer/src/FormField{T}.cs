@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Canonical name; uniquely identifieds field within the form.
+        /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
         public string Name { get; internal set; }
 
