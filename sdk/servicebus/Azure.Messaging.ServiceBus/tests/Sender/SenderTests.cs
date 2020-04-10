@@ -106,7 +106,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Returns(new ServiceBusRetryOptions());
 
             mockConnection
-                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>()))
+                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>()))
                 .Returns(mockTransportProducer.Object);
 
             mockConnection
@@ -122,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
-            var sender = new ServiceBusSender("dummy", mockConnection.Object);
+            var sender = new ServiceBusSender("dummy", null, mockConnection.Object);
             var sendTask = sender.SendBatchAsync(batch);
 
             Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
