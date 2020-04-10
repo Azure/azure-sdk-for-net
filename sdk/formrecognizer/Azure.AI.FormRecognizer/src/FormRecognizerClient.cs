@@ -193,6 +193,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
+        [ForwardsClientCalls]
         public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -212,6 +213,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
+        [ForwardsClientCalls]
         public virtual RecognizeCustomFormsOperation StartRecognizeCustomFormsFromUri(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -229,6 +231,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream formFileStream, /* ContentType contentType, */ RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
@@ -249,6 +252,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeCustomFormsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeCustomFormsOperation"/>.Value upon successful
         /// completion will contain extracted pages from the input document.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsFromUriAsync(string modelId, Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             await Task.Run(() => { }).ConfigureAwait(false);
