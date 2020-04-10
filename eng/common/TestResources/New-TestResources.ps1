@@ -446,7 +446,7 @@ Force creation of resources instead of being prompted.
 Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
 $testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
 New-TestResources.ps1 `
-    -BaseName 'myalias' `
+    -BaseName 'uuid123' `
     -ServiceDirectory 'keyvault' `
     -TestApplicationId $testAadApp.ApplicationId.ToString() `
     -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
@@ -474,14 +474,6 @@ New-TestResources.ps1 `
 Run this in an Azure DevOps CI (with approrpiate variables configured) before
 executing live tests. The script will output variables as secrets (to enable
 log redaction).
-
-.OUTPUTS
-Entries from the ARM templates' "output" section in environment variable syntax
-(e.g. $env:RESOURCE_NAME='<< resource name >>') that can be used for running
-live tests.
-
-If run in -CI mode the environment variables will be output in syntax that Azure
-DevOps can consume.
 
 .LINK
 Remove-TestResources.ps1

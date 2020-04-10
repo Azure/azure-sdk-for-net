@@ -17,8 +17,6 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using Microsoft.Azure.Management.Search;
 using Microsoft.Azure.Management.Search.Models;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -129,35 +127,36 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The storage account name.
         /// </summary>
-        public string StorageAccountName
-        {
-            get => TestFixture.Recording.GetVariable("StorageAccountName", _storageAccountName);
-            set
-            {
-                TestFixture.Recording.SetVariable("StorageAccountName", value);
-                _storageAccountName = value;
-            }
-        }
-        private string _storageAccountName = null;
+        public string StorageAccountName => TestFixture.Recording.GetVariableFromEnvironment("AZURE_SEARCH_STORAGE_NAME");
 
         /// <summary>
-        /// Gets the storage account endpoint for blobs.
+        /// The storage account key.
         /// </summary>
-        public string StorageAccountConnectionString
-        {
-            get => TestFixture.Recording.GetVariable("StorageAccountConnectionString", _storageAccountConnectionString);
-            set
-            {
-                TestFixture.Recording.SetVariable("StorageAccountConnectionString", value);
-                _storageAccountConnectionString = value;
-            }
-        }
-        private string _storageAccountConnectionString;
+        public string StorageAccountKey => TestFixture.Recording.GetVariableFromEnvironment(StorageAccountKeyVariableName);
 
         /// <summary>
-        /// Gets the name of the blob container.
+        /// The name of the <see cref="StorageAccountKey"/> environment variable.
         /// </summary>
-        public string BlobContainerName { get; } = "hotels";
+        internal const string StorageAccountKeyVariableName = "AZURE_SEARCH_STORAGE_KEY";
+
+        /// <summary>
+        /// The storage account connection string.
+        /// </summary>
+        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix=core.windows.net";
+
+        /// <summary>
+        /// The name of the blob container.
+        /// </summary>
+        public string BlobContainerName
+        {
+            get => TestFixture.Recording.GetVariable("BlobContainerName", _blobContainerName);
+            set
+            {
+                TestFixture.Recording.SetVariable("BlobContainerName", value);
+                _blobContainerName = value;
+            }
+        }
+        private string _blobContainerName = null;
 
         /// <summary>
         /// The name of the index created for test data.
@@ -199,7 +198,7 @@ namespace Azure.Search.Documents.Tests
         /// Flag indicating whether these storage resources need to be cleaned up.
         /// This is true for any storage resources that we created.
         /// </summary>
-        public bool RequiresStorageCleanup { get; private set; }
+        public bool RequiresBlobContainerCleanup { get; private set; }
 
         /// <summary>
         /// The TestFixture with context about our current test run,
@@ -276,13 +275,10 @@ namespace Azure.Search.Documents.Tests
         public static async Task<SearchResources> CreateWithBlobStorageAndIndexAsync(SearchTestBase fixture)
         {
             var resources = new SearchResources(fixture);
-            await Task.WhenAll(
-                resources.CreateSearchServiceAndIndexAsync(),
-                Task.Run(async () =>
-                {
-                    await resources.CreateStorageAccountAsync();
-                    await resources.CreateHotelsContainerAsync();
-                }));
+
+            // Keep them ordered or records may not match seeded random names.
+            await resources.CreateSearchServiceAndIndexAsync();
+            await resources.CreateHotelsBlobContainerAsync();
 
             return resources;
         }
@@ -376,29 +372,12 @@ namespace Azure.Search.Documents.Tests
                 };
 
         /// <summary>
-        /// Creates a storage client that can be used to create and delete storage accounts.
-        /// </summary>
-        /// <returns>
-        /// A storage client that can be used to create and delete storage accounts.
-        /// </returns>
-        private static StorageManagementClient GetStorageManagementClient() =>
-            new StorageManagementClient(
-                new AzureCredentialsFactory().FromServicePrincipal(
-                    Settings.ClientId,
-                    Settings.ClientSecret,
-                    Settings.TenantId,
-                    AzureEnvironment.AzureGlobalCloud))
-                {
-                    SubscriptionId = Settings.SubscriptionId
-                };
-
-        /// <summary>
         /// Automatically delete the Search Service when the resources are no
         /// longer needed.
         /// </summary>
         public async ValueTask DisposeAsync() => await Task.WhenAll(
             DeleteSearchSeviceAsync(),
-            DeleteStorageAccount());
+            DeleteBlobContainerAsync());
 
         /// <summary>
         /// Delete the Search Service created as a test resource.
@@ -415,16 +394,16 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// Delete the storage account created as a test resource.
+        /// Delete the Storage blob container created as a test resource.
         /// </summary>
         /// <returns></returns>
-        private async Task DeleteStorageAccount()
+        private async Task DeleteBlobContainerAsync()
         {
-            if (RequiresStorageCleanup)
+            if (RequiresBlobContainerCleanup)
             {
-                StorageManagementClient client = GetStorageManagementClient();
-                await client.StorageAccounts.DeleteAsync(Settings.ResourceGroup, StorageAccountName);
-                RequiresStorageCleanup = false;
+                BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
+                await client.DeleteIfExistsAsync();
+                RequiresBlobContainerCleanup = false;
             }
         }
 
@@ -554,62 +533,21 @@ namespace Azure.Search.Documents.Tests
         }
 
         /// <summary>
-        /// Creates a new storage account.
+        /// Upload <see cref="TestDocuments"/> to a new blob storage container identified by <see cref="BlobContainerName"/>.
         /// </summary>
         /// <returns>The current <see cref="SearchResources"/>.</returns>
-        private async Task<SearchResources> CreateStorageAccountAsync()
+        private async Task<SearchResources> CreateHotelsBlobContainerAsync()
         {
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
+                BlobContainerName = Settings.Random.GetName(8);
+
                 using CancellationTokenSource cts = new CancellationTokenSource(Settings.Timeout);
 
-                StorageManagementClient client = GetStorageManagementClient();
+                BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
+                await client.CreateIfNotExistsAsync(cancellationToken: cts.Token);
 
-                // Use same resource name but without dashes that are invalid for storage account names.
-                StorageAccountName = Settings.ResourcePrefix.Replace("-", string.Empty) + Settings.Random.GetName(8);
-                StorageAccountCreateParameters parameters = new StorageAccountCreateParameters
-                {
-                    AccessTier = AccessTier.Hot,
-                    Kind = Microsoft.Azure.Management.Storage.Models.Kind.BlobStorage,
-                    Location = Settings.Location,
-                    Sku = new Microsoft.Azure.Management.Storage.Models.Sku
-                    {
-                        Name = Microsoft.Azure.Management.Storage.Models.SkuName.StandardLRS,
-                    },
-                };
-
-                StorageAccount account = await client.StorageAccounts.CreateAsync(
-                    Settings.ResourceGroup,
-                    StorageAccountName,
-                    parameters,
-                    cts.Token);
-
-                RequiresStorageCleanup = true;
-
-                StorageAccountListKeysResult keys = await client.StorageAccounts.ListKeysAsync(
-                    Settings.ResourceGroup,
-                    account.Name,
-                    cts.Token);
-                StorageAccountKey key = keys.Keys[0];
-
-                StorageAccountConnectionString = $"DefaultEndpointsProtocol=https;AccountName={account.Name};AccountKey={key.Value};EndpointSuffix=core.windows.net";
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        /// Upload <see cref="TestDocuments"/> to a new blob storage container named "hotels".
-        /// </summary>
-        /// <returns>The current <see cref="SearchResources"/>.</returns>
-        private async Task<SearchResources> CreateHotelsContainerAsync()
-        {
-            if (TestFixture.Mode != RecordedTestMode.Playback)
-            {
-                using CancellationTokenSource cts = new CancellationTokenSource(Settings.Timeout);
-
-                BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, "hotels");
-                await client.CreateAsync(cancellationToken: cts.Token);
+                RequiresBlobContainerCleanup = true;
 
                 Hotel[] hotels = TestDocuments;
                 List<Task> tasks = new List<Task>(hotels.Length);
