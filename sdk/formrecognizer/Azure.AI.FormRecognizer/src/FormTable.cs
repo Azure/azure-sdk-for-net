@@ -8,9 +8,10 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class ExtractedTable
+    public class FormTable : FormContent
     {
-        internal ExtractedTable(DataTable_internal table, ReadResult_internal readResult)
+        internal FormTable(DataTable_internal table, ReadResult_internal readResult)
+            : base(null, readResult.Page, null) // TODO: retrieve text and bounding box.
         {
             ColumnCount = table.Columns;
             RowCount = table.Rows;
@@ -19,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<ExtractedTableCell> Cells { get; }
+        public IReadOnlyList<FormTableCell> Cells { get; }
 
         /// <summary>
         /// </summary>
@@ -33,11 +34,10 @@ namespace Azure.AI.FormRecognizer.Models
         // TODO: Handling column-span?
         // https://github.com/Azure/azure-sdk-for-net/issues/9975
 
-
         /// <summary>
         /// </summary>
 #pragma warning disable CA1822 // Mark as static
-        public ExtractedTableCell this[int row, int column]
+        internal FormTableCell this[int row, int column]
 #pragma warning restore CA1822 // Mark as static
         {
             get
@@ -53,12 +53,12 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        private static IReadOnlyList<ExtractedTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
+        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
         {
-            List<ExtractedTableCell> cells = new List<ExtractedTableCell>();
+            List<FormTableCell> cells = new List<FormTableCell>();
             foreach (var result in cellsResult)
             {
-                cells.Add(new ExtractedTableCell(result, readResult, result.Elements));
+                cells.Add(new FormTableCell(result, readResult, result.Elements));
             }
 
             return cells;

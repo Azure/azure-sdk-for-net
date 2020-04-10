@@ -7,23 +7,24 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public abstract class FormContent
     {
-        /// <summary>
-        /// </summary>
-        public BoundingBox BoundingBox { get; }
-
-        /// <summary>
-        /// </summary>
-        public int PageNumber { get; }
-
-        /// <summary>
-        /// </summary>
-        public string Text { get; }
-
         internal FormContent(BoundingBox boundingBox, int pageNumber, string text)
         {
             BoundingBox = boundingBox;
             PageNumber = pageNumber;
             Text = text;
         }
+
+        /// <summary>
+        /// </summary>
+        public BoundingBox BoundingBox { get; }
+
+        /// <summary>
+        /// The 1-based page number in the input document.
+        /// </summary>
+        public int PageNumber { get; }
+
+        /// <summary>
+        /// </summary>
+        public string Text { get; }
     }
 }
