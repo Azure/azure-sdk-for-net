@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Custom
             {
                 foreach (var table in pageResult.Tables)
                 {
-                    tables.Add(new ExtractedLabeledTable(table, readResults[pageResult.Page - 1], pageResult.Page));
+                    tables.Add(new ExtractedLabeledTable(table, readResults[pageResult.Page - 1]));
                 }
             }
 

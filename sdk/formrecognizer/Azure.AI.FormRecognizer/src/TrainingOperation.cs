@@ -5,21 +5,23 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// Represents a long-running training operation.
     /// </summary>
-    internal class TrainingOperation : Operation<CustomModel>
+    public class TrainingOperation : Operation<CustomFormModel>
     {
         private Response _response;
-        private CustomModel _value;
+        private CustomFormModel _value;
         private bool _hasCompleted;
-        private readonly ServiceClient _operations;
+
+        // TODO: use this.
+        private CancellationToken _cancellationToken;
+        private readonly ServiceClient _serviceClient;
 
         /// <summary>
         /// Get the ID of the training operation. This value can be used to poll for the status of the training outcome.
@@ -29,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary>
         /// The final result of the training operation, if the operation completed successfully.
         /// </summary>
-        public override CustomModel Value => OperationHelpers.GetValue(ref _value);
+        public override CustomFormModel Value => OperationHelpers.GetValue(ref _value);
 
         /// <summary>
         /// True if the training operation completed.
@@ -48,11 +50,11 @@ namespace Azure.AI.FormRecognizer.Custom
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override ValueTask<Response<CustomModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<CustomModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
@@ -62,13 +64,26 @@ namespace Azure.AI.FormRecognizer.Custom
         {
         }
 
-        internal TrainingOperation(ServiceClient allOperations, string location)
+        internal TrainingOperation(string location, ServiceClient allOperations)
         {
-            _operations = allOperations;
+            _serviceClient = allOperations;
 
             // TODO: validate this
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = location.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="TrainingOperation"/> instance.
+        /// </summary>
+        /// <param name="operationId">The ID of this operation.</param>
+        /// <param name="client">The client used to check for completion.</param>
+        /// <param name="cancellationToken"></param>
+        public TrainingOperation(string operationId, FormTrainingClient client, CancellationToken cancellationToken = default)
+        {
+            Id = operationId;
+            _serviceClient = client.ServiceClient;
+            _cancellationToken = cancellationToken;
         }
 
         /// <inheritdoc/>
@@ -85,15 +100,15 @@ namespace Azure.AI.FormRecognizer.Custom
             {
                 // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
                 Response<Model_internal> update = async
-                    ? await _operations.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
-                    : _operations.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
+                    ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
+                    : _serviceClient.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
 
                 // TODO: Handle correctly according to returned status code
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
-                if (update.Value.ModelInfo.Status != ModelStatus.Training)
+                if (update.Value.ModelInfo.Status != CustomFormModelStatus.Training)
                 {
                     _hasCompleted = true;
-                    _value = new CustomModel(update.Value);
+                    //_value = new CustomFormModel(update.Value);
                 }
 
                 _response = update.GetRawResponse();

@@ -56,7 +56,6 @@ param (
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
     [hashtable] $AdditionalParameters,
 
     [Parameter()]
@@ -109,7 +108,7 @@ trap {
 }
 
 # Enumerate test resources to deploy. Fail if none found.
-$root = [System.IO.Path]::Combine("$PSScriptRoot/../sdk", $ServiceDirectory) | Resolve-Path
+$root = [System.IO.Path]::Combine("$PSScriptRoot/../../../sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
 
@@ -153,7 +152,7 @@ if ($ProvisionerApplicationId) {
     }
 
     $provisionerAccount = Retry {
-        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal @subscriptionArgs
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment @subscriptionArgs
     }
 
     $exitActions += {
@@ -388,6 +387,10 @@ The tenant ID of a service principal when a provisioner is specified. The same
 Tenant ID is used for Test Application and Provisioner Application. This value
 is passed to the ARM template as 'tenantId'.
 
+.PARAMETER SubscriptionId
+Optional subscription ID to use for new resources when logging in as a
+provisioner. You can also use Set-AzContext if not provisioning.
+
 .PARAMETER ProvisionerApplicationId
 The AAD Application ID used to provision test resources when a provisioner is
 specified.
@@ -418,8 +421,12 @@ timestamp is less than the current time.
 This isused for CI automation.
 
 .PARAMETER Location
-Optional location where resources should be created. By default this is
-'westus2'.
+Optional location where resources should be created. If left empty, the default
+is based on the cloud to which the template is being deployed:
+
+* AzureCloud -> 'westus2'
+* AzureUSGovernment -> 'usgovvirginia'
+* AzureChinaCloud -> 'chinaeast2'
 
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
@@ -439,7 +446,7 @@ Force creation of resources instead of being prompted.
 Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
 $testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
 New-TestResources.ps1 `
-    -BaseName 'myalias' `
+    -BaseName 'uuid123' `
     -ServiceDirectory 'keyvault' `
     -TestApplicationId $testAadApp.ApplicationId.ToString() `
     -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
@@ -467,14 +474,6 @@ New-TestResources.ps1 `
 Run this in an Azure DevOps CI (with approrpiate variables configured) before
 executing live tests. The script will output variables as secrets (to enable
 log redaction).
-
-.OUTPUTS
-Entries from the ARM templates' "output" section in environment variable syntax
-(e.g. $env:RESOURCE_NAME='<< resource name >>') that can be used for running
-live tests.
-
-If run in -CI mode the environment variables will be output in syntax that Azure
-DevOps can consume.
 
 .LINK
 Remove-TestResources.ps1

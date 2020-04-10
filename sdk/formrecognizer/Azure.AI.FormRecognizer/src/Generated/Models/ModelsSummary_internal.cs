@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Summary of all trained custom models. </summary>
     internal partial class ModelsSummary_internal

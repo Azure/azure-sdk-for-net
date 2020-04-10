@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     public static class OrchestrationServiceNames
     {
         public const string AutomaticRepairs = "AutomaticRepairs";
+
     }
 }
