@@ -43,10 +43,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// account.</param>
         /// <param name="tableEndpoint">The table endpoint of the azure storage
         /// account.</param>
-        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string blobEndpoint, string queueEndpoint, string tableEndpoint)
+        /// <param name="protectedAccountKeyName2">The secondary protected
+        /// diagnostics storage key name.</param>
+        public DiagnosticsStorageAccountConfig(string storageAccountName, string protectedAccountKeyName, string blobEndpoint, string queueEndpoint, string tableEndpoint, string protectedAccountKeyName2 = default(string))
         {
             StorageAccountName = storageAccountName;
             ProtectedAccountKeyName = protectedAccountKeyName;
+            ProtectedAccountKeyName2 = protectedAccountKeyName2;
             BlobEndpoint = blobEndpoint;
             QueueEndpoint = queueEndpoint;
             TableEndpoint = tableEndpoint;
@@ -69,6 +72,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "protectedAccountKeyName")]
         public string ProtectedAccountKeyName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the secondary protected diagnostics storage key name.
+        /// </summary>
+        [JsonProperty(PropertyName = "protectedAccountKeyName2")]
+        public string ProtectedAccountKeyName2 { get; set; }
 
         /// <summary>
         /// Gets or sets the blob endpoint of the azure storage account.

@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// 'Failed', 'Canceled'</param>
         /// <param name="reliabilityLevel">The reliability level sets the
         /// replica set size of system services. Learn about
-        /// [ReliabilityLevel](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-capacity).
+        /// [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
         ///
         /// - None - Run the System services with a target replica set count of
         /// 1. This should only be used for test clusters.
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <summary>
         /// Gets or sets the reliability level sets the replica set size of
         /// system services. Learn about
-        /// [ReliabilityLevel](https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-capacity).
+        /// [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
         ///
         /// - None - Run the System services with a target replica set count of
         /// 1. This should only be used for test clusters.
