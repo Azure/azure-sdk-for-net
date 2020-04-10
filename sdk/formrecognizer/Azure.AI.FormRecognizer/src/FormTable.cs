@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
 #pragma warning disable CA1822 // Mark as static
-        public FormTableCell this[int row, int column]
+        internal FormTableCell this[int row, int column]
 #pragma warning restore CA1822 // Mark as static
         {
             get
