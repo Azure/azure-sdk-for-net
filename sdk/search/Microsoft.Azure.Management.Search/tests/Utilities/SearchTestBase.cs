@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
     using System.Runtime.CompilerServices;
-    using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Search;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
