@@ -21,8 +21,8 @@ namespace Azure.Identity
         private readonly IConfidentialClientApplication _confidentialClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _authCode;
-        private readonly HttpPipeline _pipeline;
-        private IAccount _account;
+        private readonly CredentialPipeline _pipeline;
+        private AuthenticationProfile _profile;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -63,9 +63,9 @@ namespace Azure.Identity
 
             options ??= new TokenCredentialOptions();
 
-            _pipeline = HttpPipelineBuilder.Build(options);
+            _pipeline = CredentialPipeline.GetInstance(options);
 
-            _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
+            _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
@@ -94,7 +94,7 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AuthorizationCodeCredential)}.{nameof(GetToken)}");
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("InteractiveBrowserCredential.GetToken", requestContext);
 
             scope.Start();
 
@@ -102,28 +102,32 @@ namespace Azure.Identity
             {
                 AccessToken token = default;
 
-                if (_account is null)
+                if (_profile is null)
                 {
                     AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
-                    _account = result.Account;
+                    _profile = new AuthenticationProfile(result);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
                 else
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, _account).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, (AuthenticationAccount)_profile).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
 
                 return token;
             }
-            catch (Exception e)
+            catch (OperationCanceledException e)
             {
                 scope.Failed(e);
 
                 throw;
+            }
+            catch (Exception e)
+            {
+                throw scope.FailAndWrap(e);
             }
         }
     }

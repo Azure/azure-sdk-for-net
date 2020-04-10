@@ -18,7 +18,7 @@ namespace Azure.Identity
     {
         private readonly MsalPublicClient _client = null;
         private readonly CredentialPipeline _pipeline;
-        private IAccount _account = null;
+        private AuthenticationProfile _profile = null;
         private readonly string _clientId;
         private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
 
@@ -43,7 +43,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates a new DeviceCodeCredential with the specifeid options, which will authenticate users with the specified application.
+        /// Creates a new DeviceCodeCredential with the specified options, which will authenticate users with the specified application.
         /// </summary>
         /// <param name="deviceCodeCallback">The callback to be executed to display the device code to the user</param>
         /// <param name="tenantId">The tenant id of the application to which users will authenticate.  This can be null for multi-tenanted applications.</param>
@@ -97,11 +97,11 @@ namespace Azure.Identity
 
             try
             {
-                if (_account != null)
+                if (_profile != null)
                 {
                     try
                     {
-                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, async, cancellationToken).ConfigureAwait(false);
+                        AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_profile, async, cancellationToken).ConfigureAwait(false);
 
                         return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
@@ -131,7 +131,7 @@ namespace Azure.Identity
         {
             AuthenticationResult result = await _client.AcquireTokenWithDeviceCodeAsync(scopes, code => DeviceCodeCallback(code, cancellationToken), async, cancellationToken).ConfigureAwait(false);
 
-            _account = result.Account;
+            _profile = new AuthenticationProfile(result);
 
             return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
