@@ -34,14 +34,14 @@ Along with some log messages, this will output environment variables based on
 your current shell like in the following example:
 
 ```powershell
-$env:AZURE_TENANT_ID = '04acef35-c7bd-4d14-bfd9-59f11b7b9eac'
-$env:AZURE_CLIENT_ID = 'ce1a3a01-424f-4e34-b9a6-823e2b1ae783'
-$env:AZURE_CLIENT_SECRET = 'c27ccc92-e1ca-4d29-8f4e-c6a1ee61ff57'
-$env:AZURE_SUBSCRIPTION_ID = 'd686c17c-aade-4238-bce0-290453cfcf97'
+$env:AZURE_TENANT_ID = '<<secret>>'
+$env:AZURE_CLIENT_ID = '<<secret>>'
+$env:AZURE_CLIENT_SECRET = '<<secret>>'
+$env:AZURE_SUBSCRIPTION_ID = 'YOUR SUBSCRIPTION ID'
 $env:AZURE_RESOURCE_GROUP = 'rg-myusername'
 $env:AZURE_LOCATION = 'westus2'
 $env:AZURE_SEARCH_STORAGE_NAME = 'myusernamestg'
-$env:AZURE_SEARCH_STORAGE_KEY = 'Of2O5Snep5tl13bfjh02/fSNYfrBPXV7CYK7EVnMm/z9fN7zCcq6WKuWfZDM9QsTORvC7zYLifyIEtymI5VCmA=='
+$env:AZURE_SEARCH_STORAGE_KEY = '<<secret>>'
 ```
 
 For security reasons we do not set these environment variables automatically
