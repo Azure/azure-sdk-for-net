@@ -91,3 +91,4 @@ jobs:
       - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
+      - template: /eng/pipelines/templates/scripts/verify-metadata-location.yml
