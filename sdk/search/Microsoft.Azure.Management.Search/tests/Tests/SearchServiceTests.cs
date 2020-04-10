@@ -4,9 +4,12 @@
 
 namespace Microsoft.Azure.Management.Search.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using Microsoft.Azure.Management.Network;
+    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Rest.Azure;
@@ -245,7 +248,7 @@ namespace Microsoft.Azure.Management.Search.Tests
 
                 // Unlike BeginCreateOrUpdate, CreateOrUpdate should have already polled until
                 // provisioning is complete.
-                Assert.Equal(ProvisioningState.Succeeded, service.ProvisioningState);
+                Assert.Equal(Models.ProvisioningState.Succeeded, service.ProvisioningState);
                 Assert.Equal(SearchServiceStatus.Running, service.Status);
 
                 searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
@@ -475,6 +478,16 @@ namespace Microsoft.Azure.Management.Search.Tests
             });
         }
 
+        [Fact]
+        public void CanCreateServiceInPrivateMode()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                CreateServiceForSkuWithDefinitionTemplate(searchMgmt, SkuName.Basic, DefineServiceWithSkuInPrivateMode);
+            });
+        }
+
         private static void AssertServicesEqual(SearchService a, SearchService b) =>
             Assert.Equal(a, b, new ModelComparer<SearchService>());
 
@@ -489,11 +502,37 @@ namespace Microsoft.Azure.Management.Search.Tests
             };
         }
 
+        private SearchService DefineServiceWithSkuInPrivateMode(SkuName sku)
+        {
+            return new SearchService()
+            {
+                Location = "EastUS",
+                Sku = new Sku() { Name = sku },
+                ReplicaCount = 1,
+                PartitionCount = 1,
+                PublicNetworkAccess = PublicNetworkAccess.Disabled
+            };
+        }
+
         private SearchService CreateServiceForSku(SearchManagementClient searchMgmt, SkuName sku)
         {
             string serviceName = SearchTestUtilities.GenerateServiceName();
 
             SearchService service = DefineServiceWithSku(sku);
+
+            service = searchMgmt.Services.BeginCreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+            Assert.NotNull(service);
+
+            return service;
+        }
+
+        private delegate SearchService SearchServiceDefinition(SkuName sku);
+
+        private SearchService CreateServiceForSkuWithDefinitionTemplate(SearchManagementClient searchMgmt, SkuName sku, SearchServiceDefinition searchServiceDefinition)
+        {
+            string serviceName = SearchTestUtilities.GenerateServiceName();
+
+            SearchService service = searchServiceDefinition(sku);
 
             service = searchMgmt.Services.BeginCreateOrUpdate(Data.ResourceGroupName, serviceName, service);
             Assert.NotNull(service);
@@ -519,7 +558,7 @@ namespace Microsoft.Azure.Management.Search.Tests
             SearchManagementClient searchMgmt, 
             SearchService service)
         {
-            while (service.ProvisioningState == ProvisioningState.Provisioning)
+            while (service.ProvisioningState == Models.ProvisioningState.Provisioning)
             {
                 Assert.Equal(SearchServiceStatus.Provisioning, service.Status);
 
@@ -527,7 +566,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                 service = searchMgmt.Services.Get(Data.ResourceGroupName, service.Name);
             }
 
-            Assert.Equal(ProvisioningState.Succeeded, service.ProvisioningState);
+            Assert.Equal(Models.ProvisioningState.Succeeded, service.ProvisioningState);
             Assert.Equal(SearchServiceStatus.Running, service.Status);
             return service;
         }
