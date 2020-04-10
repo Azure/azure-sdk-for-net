@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Firewall Policy Filter Rule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FirewallPolicyFilterRule")]
     public partial class FirewallPolicyFilterRule : FirewallPolicyRule
     {
         /// <summary>
