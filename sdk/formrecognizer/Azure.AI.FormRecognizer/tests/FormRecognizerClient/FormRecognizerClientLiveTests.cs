@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
-                operation = await client.StartRecognizeContentAsync(stream, ContentType.Jpeg);
+                operation = await client.StartRecognizeContentAsync(stream);
             }
             else
             {

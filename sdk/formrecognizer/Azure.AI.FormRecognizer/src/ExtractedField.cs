@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Custom
             Confidence = field.Confidence;
 
             Name = field.Key.Text;
-            NameBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
+            //NameBoundingBox = field.Key.BoundingBox == null ? null : new BoundingBox(field.Key.BoundingBox);
 
             if (field.Key.Elements != null)
             {
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Custom
             }
 
             Value = field.Value.Text;
-            ValueBoundingBox = field.Value.BoundingBox == null ? null : new BoundingBox(field.Value.BoundingBox);
+            //ValueBoundingBox = field.Value.BoundingBox == null ? null : new BoundingBox(field.Value.BoundingBox);
 
             if (field.Value.Elements != null)
             {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -10,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormPage : FormContent
     {
         internal FormPage(ReadResult_internal readResult)
-            : base(null, readResult.Page, null) // TODO: retrieve text and bounding box.
+            : base(new BoundingBox(), readResult.Page, null) // TODO: retrieve text and bounding box.
         {
             TextAngle = readResult.Angle;
             Width = readResult.Width;
@@ -19,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResult.Lines != null)
             {
-                Lines = RawExtractedPage.ConvertLines(readResult.Lines, PageNumber);
+                Lines = ConvertLines(readResult.Lines, PageNumber);
             }
 
             //Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
@@ -52,10 +53,22 @@ namespace Azure.AI.FormRecognizer.Models
         /// treated with higher priority. As the sorting order depends on the detected text, it may change across images
         /// and OCR version updates. Thus, business logic should be built upon the actual line location instead of order.
         /// </summary>
-        public ICollection<FormLine> Lines { get; set; }
+        public IReadOnlyList<FormLine> Lines { get; set; }
 
         /// <summary>
         /// </summary>
         public IReadOnlyList<FormTable> Tables { get; }
+
+        private static IReadOnlyList<FormLine> ConvertLines(IReadOnlyList<TextLine_internal> textLines, int pageNumber)
+        {
+            List<FormLine> rawLines = new List<FormLine>();
+
+            foreach (TextLine_internal textLine in textLines)
+            {
+                rawLines.Add(new FormLine(textLine, pageNumber));
+            }
+
+            return rawLines;
+        }
     }
 }
