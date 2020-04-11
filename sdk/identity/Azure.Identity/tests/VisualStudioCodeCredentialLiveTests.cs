@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
             using IDisposable fixture = await CreateRefreshTokenFixtureAsync(tenantId, cloudName);
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, options, fileSystem, default));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystem, default));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
@@ -56,7 +56,7 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", refreshToken);
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, options, fileSystemService, vscAdapter));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
@@ -70,7 +70,7 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", refreshToken);
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, options, fileSystemService, vscAdapter));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
         }
@@ -85,7 +85,7 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", refreshToken);
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(default, options, fileSystemService, vscAdapter));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(default, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
@@ -102,7 +102,7 @@ namespace Azure.Identity.Tests
             using IDisposable fixture = await CreateRefreshTokenFixtureAsync(tenantId, cloudName);
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(Guid.NewGuid().ToString(), options, fileSystemService, default));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(options), fileSystemService, default));
 
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None);
             Assert.IsNotNull(token.Token);
@@ -116,7 +116,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CreateTestFileSystemService();
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, options, fileSystem, vscAdapter));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystem, vscAdapter));
 
             Assert.CatchAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
         }
@@ -129,7 +129,7 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", "{}");
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, options, fileSystemService, vscAdapter));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
 
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
         }
@@ -142,7 +142,7 @@ namespace Azure.Identity.Tests
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "Azure", Guid.NewGuid().ToString());
 
             TokenCredentialOptions options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, options, fileSystemService, vscAdapter));
+            VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(tenantId, CredentialPipeline.GetInstance(options), fileSystemService, vscAdapter));
 
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[] {".default"}), CancellationToken.None));
         }

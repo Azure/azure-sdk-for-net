@@ -37,12 +37,12 @@ namespace Azure.Identity
         protected VisualStudioCredential() : this(default, default) {}
 
         /// <inheritdoc />
-        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
+        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, CredentialPipeline.GetInstance(options), default, default) {}
 
-        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IProcessService processService)
+        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
         {
             _tenantId = tenantId;
-            _pipeline = CredentialPipeline.GetInstance(options);
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
         }

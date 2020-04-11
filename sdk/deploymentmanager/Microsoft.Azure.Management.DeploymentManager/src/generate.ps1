@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "deploymentmanager/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "deploymentmanager/resource-manager" -AutoRestVersion "v2"

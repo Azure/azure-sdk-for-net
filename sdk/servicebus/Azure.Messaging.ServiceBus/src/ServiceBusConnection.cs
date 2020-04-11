@@ -214,7 +214,7 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        internal TransportSender CreateTransportSender(string entityName, ServiceBusRetryPolicy retryPolicy) =>
+        internal virtual TransportSender CreateTransportSender(string entityName, ServiceBusRetryPolicy retryPolicy) =>
             _innerClient.CreateSender(entityName, retryPolicy);
 
         internal virtual TransportReceiver CreateTransportReceiver(

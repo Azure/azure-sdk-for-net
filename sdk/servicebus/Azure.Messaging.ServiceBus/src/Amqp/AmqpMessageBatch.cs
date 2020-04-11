@@ -27,6 +27,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The maximum number of bytes that a message may be to be considered small.</summary>
         private const byte MaximumBytesSmallMessage = 255;
 
+        /// <summary>The size of the batch, in bytes, to reserve for the AMQP message overhead.</summary>
+        private readonly long _reservedSize;
+
         /// <summary>A flag that indicates whether or not the instance has been disposed.</summary>
         private bool _disposed = false;
 
@@ -82,7 +85,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             // Initialize the size by reserving space for the batch envelope.
 
             using AmqpMessage envelope = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(Enumerable.Empty<ServiceBusMessage>());
-            _sizeBytes = envelope.SerializedMessageSize;
+            _reservedSize = envelope.SerializedMessageSize;
+            _sizeBytes = _reservedSize;
         }
 
         /// <summary>
@@ -120,12 +124,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _sizeBytes = size;
                 BatchMessages.Add(message);
 
-                return true;
+            return true;
             }
             finally
             {
                 amqpMessage?.Dispose();
             }
+        }
+
+        /// <summary>
+        ///   Clears the batch, removing all messages and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public override void Clear()
+        {
+            BatchMessages.Clear();
+            _sizeBytes = _reservedSize;
         }
 
         /// <summary>
@@ -154,9 +169,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override void Dispose()
         {
             _disposed = true;
-
-            BatchMessages.Clear();
-            _sizeBytes = 0;
+            Clear();
         }
     }
 }

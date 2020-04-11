@@ -77,7 +77,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_DiffDisks", vmSize: VirtualMachineSizeTypes.StandardDS5V2, hasManagedDisks: true,
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_DiffDisks", vmSize: VirtualMachineSizeTypes.StandardDS148V2, hasManagedDisks: true,
                    hasDiffDisks: true, osDiskStorageAccountType: StorageAccountTypes.StandardLRS);
             }
             finally

@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
@@ -13,6 +13,6 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary>
         /// </summary>
         [CodeGenMember("pages")]
-        public int PageCount { get; set; }
+        public int PageCount { get; internal set; }
     }
 }

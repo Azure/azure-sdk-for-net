@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 // TODO: How should we handle Phone Numbers?
                 // https://github.com/Azure/azure-sdk-for-net/issues/10333
-                Debug.Assert(value.Type == FieldValueType.String || value.Type == FieldValueType.PhoneNumber);
+                Debug.Assert(value.Type == FieldValueType.StringType || value.Type == FieldValueType.PhoneNumberType);
 
                 // TODO: When should we use text and when should we use string?
                 // For now, use text if the value is null.
@@ -165,7 +165,7 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Number);
+                Debug.Assert(value.Type == FieldValueType.FloatType);
 
                 // TODO: Sometimes ValueNumber isn't populated in ReceiptItems.  The following is a
                 // workaround to get the value from Text if ValueNumber isn't there.
@@ -191,7 +191,7 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Number);
+                Debug.Assert(value.Type == FieldValueType.IntegerType);
 
                 // TODO: Sometimes ValueInteger isn't populated in ReceiptItems.  The following is a
                 // workaround to get the value from Text if ValueNumber isn't there.
@@ -221,8 +221,8 @@ namespace Azure.AI.FormRecognizer.Models
                 // https://github.com/Azure/azure-sdk-for-net/issues/10361
                 dateTimeOffsetValue = value.Type switch
                 {
-                    FieldValueType.Date => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
-                    FieldValueType.Time => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
+                    FieldValueType.DateType => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
+                    FieldValueType.TimeType => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
                     _ => throw new InvalidOperationException($"The value type {value.Type} was expected to be a Date or Time")
                 };
             }
@@ -237,12 +237,12 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValue_internal value;
             if (fields.TryGetValue("Items", out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Array);
+                Debug.Assert(value.Type == FieldValueType.ListType);
 
                 IReadOnlyList<FieldValue_internal> arrayValue = value.ValueArray;
                 foreach (var receiptItemValue in arrayValue)
                 {
-                    Debug.Assert(receiptItemValue.Type == FieldValueType.Object);
+                    Debug.Assert(receiptItemValue.Type == FieldValueType.DictionaryType);
 
                     IReadOnlyDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 

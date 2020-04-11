@@ -12,24 +12,6 @@ namespace Azure.Search.Documents.Models
     /// <summary> Defines a function that boosts scores based on the magnitude of a numeric field. </summary>
     public partial class MagnitudeScoringFunction : ScoringFunction
     {
-        /// <summary> Initializes a new instance of MagnitudeScoringFunction. </summary>
-        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
-        /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
-        /// <param name="parameters"> Parameter values for the magnitude scoring function. </param>
-        public MagnitudeScoringFunction(string fieldName, double boost, MagnitudeScoringParameters parameters) : base(fieldName, boost)
-        {
-            if (fieldName == null)
-            {
-                throw new ArgumentNullException(nameof(fieldName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            Parameters = parameters;
-            Type = "magnitude";
-        }
 
         /// <summary> Initializes a new instance of MagnitudeScoringFunction. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>

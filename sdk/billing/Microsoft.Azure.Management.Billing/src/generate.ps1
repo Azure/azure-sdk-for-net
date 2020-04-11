@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "billing/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "billing/resource-manager" -AutoRestVersion "v2"

@@ -287,16 +287,19 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection connection.
         /// </param>
+        /// <param name='privateEndpointConnection'>
+        /// The private endpoint connection object to update.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateEndpointConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<PrivateEndpointConnection> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<PrivateEndpointConnection> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, parentType, parentName, privateEndpointConnectionName, privateEndpointConnection, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -585,6 +588,9 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='privateEndpointConnectionName'>
         /// The name of the private endpoint connection connection.
         /// </param>
+        /// <param name='privateEndpointConnection'>
+        /// The private endpoint connection object to update.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -606,7 +612,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PrivateEndpointConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PrivateEndpointConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string parentType, string parentName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -628,6 +634,10 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnectionName");
             }
+            if (privateEndpointConnection == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "privateEndpointConnection");
+            }
             string apiVersion = "2020-04-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -640,6 +650,7 @@ namespace Microsoft.Azure.Management.EventGrid
                 tracingParameters.Add("parentType", parentType);
                 tracingParameters.Add("parentName", parentName);
                 tracingParameters.Add("privateEndpointConnectionName", privateEndpointConnectionName);
+                tracingParameters.Add("privateEndpointConnection", privateEndpointConnection);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
@@ -695,6 +706,12 @@ namespace Microsoft.Azure.Management.EventGrid
 
             // Serialize Request
             string _requestContent = null;
+            if(privateEndpointConnection != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(privateEndpointConnection, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
