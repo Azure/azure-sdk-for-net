@@ -116,68 +116,78 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
-        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="receiptLocale"></param>
+        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, string receiptLocale, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(contentType, receiptFileStream, includeTextDetails: includeRawPageExtractions, cancellationToken).ConfigureAwait(false);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            // ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(contentType, receiptFileStream, includeTextDetails: includeRawPageExtractions, cancellationToken).ConfigureAwait(false);
+            // return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
-        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="receiptLocale"></param>
+        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, ContentType contentType, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, string receiptLocale, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            throw new NotImplementedException();
+
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(contentType, receiptFileStream, includeTextDetails: includeRawPageExtractions, cancellationToken);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            // ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(contentType, receiptFileStream, includeTextDetails: includeRawPageExtractions, cancellationToken);
+            // return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="receiptLocale"></param>
+        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptFileUri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptFileUri, string receiptLocale, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
+            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
+            //ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken).ConfigureAwait(false);
+            //return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="includeRawPageExtractions">Whether or not to include raw page extractions in addition to layout elements.</param>
+        /// <param name="receiptLocale"></param>
+        /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, bool includeRawPageExtractions = false, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, string receiptLocale, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
-            ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeRawPageExtractions, sourcePath, cancellationToken);
-            return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
+            throw new NotImplementedException();
+
+            //SourcePath_internal sourcePath = new SourcePath_internal() { Source = receiptFileUri.ToString() };
+            //ResponseWithHeaders<AnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(includeTextDetails: includeTextElements, sourcePath, cancellationToken);
+            //return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         #endregion
