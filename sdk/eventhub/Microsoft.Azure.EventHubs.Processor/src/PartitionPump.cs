@@ -94,6 +94,23 @@ namespace Microsoft.Azure.EventHubs.Processor
         {
             ProcessorEventSource.Log.PartitionPumpCloseStart(this.Host.HostName, this.PartitionContext.PartitionId, reason.ToString());
             this.PumpStatus = PartitionPumpStatus.Closing;
+
+            // Release lease as the first thing since closing receiver can take up to operation timeout.
+            // This helps other available hosts discover lease available sooner.
+            if (reason != CloseReason.LeaseLost)
+            {
+                // Since this pump is dead, release the lease.
+                try
+                {
+                    await this.Host.LeaseManager.ReleaseLeaseAsync(this.PartitionContext.Lease).ConfigureAwait(false);
+                }
+                catch (Exception e)
+                {
+                    // Log and ignore any failure since expired lease will be picked by another host.
+                    this.Host.EventProcessorOptions.NotifyOfException(this.Host.HostName, this.PartitionContext.PartitionId, e, EventProcessorHostActionStrings.ReleasingLease);
+                }
+            }
+
             try
             {
                 this.cancellationTokenSource.Cancel();
@@ -119,20 +136,6 @@ namespace Microsoft.Azure.EventHubs.Processor
                 // If closing the processor has failed, the state of the processor is suspect.
                 // Report the failure to the general error handler instead.
                 this.Host.EventProcessorOptions.NotifyOfException(this.Host.HostName, this.PartitionContext.PartitionId, e, "Closing Event Processor");
-            }
-
-            if (reason != CloseReason.LeaseLost)
-            {
-                // Since this pump is dead, release the lease.
-                try
-                {
-                    await this.Host.LeaseManager.ReleaseLeaseAsync(this.PartitionContext.Lease).ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-                    // Log and ignore any failure since expired lease will be picked by another host.
-                    this.Host.EventProcessorOptions.NotifyOfException(this.Host.HostName, this.PartitionContext.PartitionId, e, EventProcessorHostActionStrings.ReleasingLease);
-                }
             }
 
             this.PumpStatus = PartitionPumpStatus.Closed;

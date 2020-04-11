@@ -33,12 +33,7 @@ namespace Azure.Identity
         protected VisualStudioCodeCredential() : this(default, default) {}
 
         /// <inheritdoc />
-        public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
-
-        internal VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
-            : this(tenantId, CredentialPipeline.GetInstance(options), fileSystem, vscAdapter)
-        {
-        }
+        public VisualStudioCodeCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, CredentialPipeline.GetInstance(options), default, default) {}
 
         internal VisualStudioCodeCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IVisualStudioCodeAdapter vscAdapter)
             : this(tenantId, pipeline, pipeline.CreateMsalPublicClient(ClientId), fileSystem, vscAdapter)
@@ -78,7 +73,7 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
                 }
 
-                var result = await _client.AcquireTokenWithDeviceCodeAsync(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (OperationCanceledException e)

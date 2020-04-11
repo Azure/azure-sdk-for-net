@@ -33,15 +33,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='appId'>
             /// The application ID.
             /// </param>
+            /// <param name='armToken'>
+            /// The custom arm token header to use; containing the user's ARM token used to
+            /// validate azure accounts information.
+            /// </param>
             /// <param name='azureAccountInfoObject'>
             /// The Azure account information object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> AssignToAppAsync(this IAzureAccounts operations, System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> AssignToAppAsync(this IAzureAccounts operations, System.Guid appId, string armToken = default(string), AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AssignToAppWithHttpMessagesAsync(appId, azureAccountInfoObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AssignToAppWithHttpMessagesAsync(appId, armToken, azureAccountInfoObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -60,12 +64,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='appId'>
             /// The application ID.
             /// </param>
+            /// <param name='armToken'>
+            /// The custom arm token header to use; containing the user's ARM token used to
+            /// validate azure accounts information.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<AzureAccountInfoObject>> GetAssignedAsync(this IAzureAccounts operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<AzureAccountInfoObject>> GetAssignedAsync(this IAzureAccounts operations, System.Guid appId, string armToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAssignedWithHttpMessagesAsync(appId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAssignedWithHttpMessagesAsync(appId, armToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -83,15 +91,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='appId'>
             /// The application ID.
             /// </param>
+            /// <param name='armToken'>
+            /// The custom arm token header to use; containing the user's ARM token used to
+            /// validate azure accounts information.
+            /// </param>
             /// <param name='azureAccountInfoObject'>
             /// The Azure account information object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> RemoveFromAppAsync(this IAzureAccounts operations, System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> RemoveFromAppAsync(this IAzureAccounts operations, System.Guid appId, string armToken = default(string), AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RemoveFromAppWithHttpMessagesAsync(appId, azureAccountInfoObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RemoveFromAppWithHttpMessagesAsync(appId, armToken, azureAccountInfoObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -106,12 +118,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='armToken'>
+            /// The custom arm token header to use; containing the user's ARM token used to
+            /// validate azure accounts information.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<AzureAccountInfoObject>> ListUserLUISAccountsAsync(this IAzureAccounts operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<AzureAccountInfoObject>> ListUserLUISAccountsAsync(this IAzureAccounts operations, string armToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListUserLUISAccountsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListUserLUISAccountsWithHttpMessagesAsync(armToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

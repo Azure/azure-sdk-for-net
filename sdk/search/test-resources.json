@@ -30,7 +30,6 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
             }
@@ -43,7 +42,26 @@
             }
         }
     },
-    "resources": [],
+    "variables": {
+        "storageAccountName": "[concat(parameters('baseName'), 'stg')]",
+        "storageApiVersion": "2019-06-01"
+    },
+    "resources": [
+        {
+            "name": "[variables('storageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('storageApiVersion')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "accessTier": "Hot",
+                "supportsHttpsTrafficOnly": true
+            },
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "BlobStorage"
+        }
+    ],
     "outputs": {
         "AZURE_TENANT_ID": {
             "type": "string",
@@ -68,6 +86,14 @@
         "AZURE_LOCATION": {
             "type": "string",
             "value": "[parameters('location')]"
+        },
+        "AZURE_SEARCH_STORAGE_NAME": {
+            "type": "string",
+            "value": "[variables('storageAccountName')]"
+        },
+        "AZURE_SEARCH_STORAGE_KEY": {
+            "type": "string",
+            "value": "[listKeys(variables('storageAccountName'), variables('storageApiVersion')).keys[0].value]"
         }
     }
 }

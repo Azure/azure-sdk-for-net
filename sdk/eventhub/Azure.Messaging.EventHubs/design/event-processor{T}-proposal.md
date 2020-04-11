@@ -1,4 +1,4 @@
-﻿# .NET Event Hubs Client: Event Processor&lt;T&gt; Proposal
+# .NET Event Hubs Client: Event Processor&lt;T&gt; Proposal
 
 The Event Hubs client library offers two primary clients for consuming events, the `EventHubConsumerClient` and `EventProcessorClient`, each designed for slightly different scenarios but unified in their approach to provide a consistent experience for developers starting with the "Hello World" experience and stepping-up to production use.  These clients embrace a common design philosophy in providing developers an experience optimized around ease of use, familiar patterns, and a consistent API across them.
 

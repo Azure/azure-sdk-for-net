@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Training
 {
     [CodeGenModel("ModelsSummary")]
     internal partial class ModelsSummary_internal

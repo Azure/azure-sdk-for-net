@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Models
     internal class SearchResultConverterFactory : ModelConverterFactory
     {
         protected override Type GenericType => typeof(SearchResult<>);
-        protected override Type GenericConverterType => typeof(SuggestResultConverter<>);
+        protected override Type GenericConverterType => typeof(SearchResultConverter<>);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Models
     /// The .NET type that maps to the index schema. Instances of this type can
     /// be retrieved as documents from the index.
     /// </typeparam>
-    internal class SuggestResultConverter<T> : JsonConverter<SearchResult<T>>
+    internal class SearchResultConverter<T> : JsonConverter<SearchResult<T>>
     {
         /// <summary>
         /// Serializing SearchResult isn't supported as it's an output only
