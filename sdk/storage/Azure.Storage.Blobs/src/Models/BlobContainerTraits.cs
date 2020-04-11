@@ -25,21 +25,3 @@ namespace Azure.Storage.Blobs.Models
         Metadata = 1,
     }
 }
-
-namespace Azure.Storage.Blobs
-{
-    /// <summary>
-    /// BlobContainerTraits enum extensions
-    /// </summary>
-    internal static partial class BlobExtensions
-    {
-        /// <summary>
-        /// Convert the details into a ListBlobContainersIncludeType value.
-        /// </summary>
-        /// <returns>A ListBlobContainersIncludeType value.</returns>
-        internal static ListBlobContainersIncludeType? AsIncludeType(this BlobContainerTraits traits)
-            => (traits & BlobContainerTraits.Metadata) == BlobContainerTraits.Metadata ?
-                ListBlobContainersIncludeType.Metadata :
-                (ListBlobContainersIncludeType?)null;
-    }
-}

@@ -493,7 +493,7 @@ namespace Azure.Storage.Blobs
                 string prefix = default,
                 string marker = default,
                 int? maxresults = default,
-                Azure.Storage.Blobs.Models.ListBlobContainersIncludeType? include = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ListContainersIncludeType> include = default,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
@@ -563,7 +563,7 @@ namespace Azure.Storage.Blobs
                 string prefix = default,
                 string marker = default,
                 int? maxresults = default,
-                Azure.Storage.Blobs.Models.ListBlobContainersIncludeType? include = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ListContainersIncludeType> include = default,
                 int? timeout = default,
                 string requestId = default)
             {
@@ -588,7 +588,7 @@ namespace Azure.Storage.Blobs
                 if (prefix != null) { _request.Uri.AppendQuery("prefix", prefix); }
                 if (marker != null) { _request.Uri.AppendQuery("marker", marker); }
                 if (maxresults != null) { _request.Uri.AppendQuery("maxresults", maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-                if (include != null) { _request.Uri.AppendQuery("include", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(include.Value)); }
+                if (include != null) { _request.Uri.AppendQuery("include", string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item)))); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -1131,7 +1131,7 @@ namespace Azure.Storage.Blobs
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>The result of a Filter Blobs API call</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FilterBlobResponse>> FilterBlobsAsync(
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FilterBlobSegment>> FilterBlobsAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -1244,8 +1244,8 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Service.FilterBlobsAsync Azure.Response{Azure.Storage.Blobs.Models.FilterBlobResponse}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.FilterBlobResponse> FilterBlobsAsync_CreateResponse(
+            /// <returns>The Service.FilterBlobsAsync Azure.Response{Azure.Storage.Blobs.Models.FilterBlobSegment}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.FilterBlobSegment> FilterBlobsAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -1256,14 +1256,14 @@ namespace Azure.Storage.Blobs
                     {
                         // Create the result
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Blobs.Models.FilterBlobResponse _value = Azure.Storage.Blobs.Models.FilterBlobResponse.FromXml(_xml.Root);
+                        Azure.Storage.Blobs.Models.FilterBlobSegment _value = Azure.Storage.Blobs.Models.FilterBlobSegment.FromXml(_xml.Root);
 
                         // Create the response
                         return Response.FromValue(_value, response);
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FilterBlobResponse>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FilterBlobSegment>(response);
                     }
                     default:
                     {
@@ -2365,6 +2365,155 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Container.SetAccessPolicyAsync
+
+            #region Container.RestoreAsync
+            /// <summary>
+            /// Restores a previously-deleted container.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="deletedContainerName">Optional.  Version 2019-12-12 and laster.  Specifies the name of the deleted container to restore.</param>
+            /// <param name="deletedContainerVersion">Optional.  Version 2019-12-12 and laster.  Specifies the version of the deleted container to restore.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> RestoreAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string deletedContainerName = default,
+                string deletedContainerVersion = default,
+                bool async = true,
+                string operationName = "ContainerClient.Restore",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = RestoreAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        requestId,
+                        deletedContainerName,
+                        deletedContainerVersion))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return RestoreAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Container.RestoreAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="deletedContainerName">Optional.  Version 2019-12-12 and laster.  Specifies the name of the deleted container to restore.</param>
+            /// <param name="deletedContainerVersion">Optional.  Version 2019-12-12 and laster.  Specifies the version of the deleted container to restore.</param>
+            /// <returns>The Container.RestoreAsync Message.</returns>
+            internal static Azure.Core.HttpMessage RestoreAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string deletedContainerName = default,
+                string deletedContainerVersion = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "undelete", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (deletedContainerName != null) { _request.Headers.SetValue("x-ms-deleted-container-name", deletedContainerName); }
+                if (deletedContainerVersion != null) { _request.Headers.SetValue("x-ms-deleted-container-version", deletedContainerVersion); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Container.RestoreAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Container.RestoreAsync Azure.Response.</returns>
+            internal static Azure.Response RestoreAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 201:
+                    {
+                        return response;
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Container.RestoreAsync
 
             #region Container.AcquireLeaseAsync
             /// <summary>
@@ -15418,6 +15567,16 @@ namespace Azure.Storage.Blobs.Models
         public string Name { get; internal set; }
 
         /// <summary>
+        /// Deleted
+        /// </summary>
+        public bool? Deleted { get; internal set; }
+
+        /// <summary>
+        /// Version
+        /// </summary>
+        public string Version { get; internal set; }
+
+        /// <summary>
         /// Properties of a container
         /// </summary>
         public Azure.Storage.Blobs.Models.BlobContainerProperties Properties { get; internal set; }
@@ -15457,6 +15616,16 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Name = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("Deleted", ""));
+            if (_child != null)
+            {
+                _value.Deleted = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.Version = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
             {
@@ -15479,12 +15648,16 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobContainerItem BlobContainerItem(
             string name,
-            Azure.Storage.Blobs.Models.BlobContainerProperties properties)
+            Azure.Storage.Blobs.Models.BlobContainerProperties properties,
+            bool? deleted = default,
+            string version = default)
         {
             return new BlobContainerItem()
             {
                 Name = name,
                 Properties = properties,
+                Deleted = deleted,
+                Version = version,
             };
         }
     }
@@ -15543,6 +15716,16 @@ namespace Azure.Storage.Blobs.Models
         /// DenyEncryptionScopeOverride
         /// </summary>
         public bool? PreventEncryptionScopeOverride { get; internal set; }
+
+        /// <summary>
+        /// DeletedTime
+        /// </summary>
+        public System.DateTimeOffset? DeletedTime { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
 
         /// <summary>
         /// ETag
@@ -15629,6 +15812,16 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.PreventEncryptionScopeOverride = bool.Parse(_child.Value);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
+            if (_child != null)
+            {
+                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
+            if (_child != null)
+            {
+                _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -15664,12 +15857,14 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
+            bool? hasImmutabilityPolicy = default,
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
-            bool? hasLegalHold = default,
             string defaultEncryptionScope = default,
             bool? preventEncryptionScopeOverride = default,
+            System.DateTimeOffset? deletedTime = default,
+            int? remainingRetentionDays = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default,
-            bool? hasImmutabilityPolicy = default)
+            bool? hasLegalHold = default)
         {
             return new BlobContainerProperties()
             {
@@ -15678,12 +15873,14 @@ namespace Azure.Storage.Blobs.Models
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
                 PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
                 LeaseStatus = leaseStatus,
-                HasLegalHold = hasLegalHold,
                 DefaultEncryptionScope = defaultEncryptionScope,
                 PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
+                DeletedTime = deletedTime,
+                RemainingRetentionDays = remainingRetentionDays,
                 Metadata = metadata,
-                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                HasLegalHold = hasLegalHold,
             };
         }
     }
@@ -20091,13 +20288,13 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class FilterBlobItem
 
-#region class FilterBlobResponse
+#region class FilterBlobSegment
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// The result of a Filter Blobs API call
     /// </summary>
-    public partial class FilterBlobResponse
+    public partial class FilterBlobSegment
     {
         /// <summary>
         /// ServiceEndpoint
@@ -20120,18 +20317,18 @@ namespace Azure.Storage.Blobs.Models
         public string NextMarker { get; internal set; }
 
         /// <summary>
-        /// Creates a new FilterBlobResponse instance
+        /// Creates a new FilterBlobSegment instance
         /// </summary>
-        internal FilterBlobResponse()
+        internal FilterBlobSegment()
             : this(false)
         {
         }
 
         /// <summary>
-        /// Creates a new FilterBlobResponse instance
+        /// Creates a new FilterBlobSegment instance
         /// </summary>
         /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal FilterBlobResponse(bool skipInitialization)
+        internal FilterBlobSegment(bool skipInitialization)
         {
             if (!skipInitialization)
             {
@@ -20140,16 +20337,16 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary>
-        /// Deserializes XML into a new FilterBlobResponse instance.
+        /// Deserializes XML into a new FilterBlobSegment instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized FilterBlobResponse instance.</returns>
-        internal static Azure.Storage.Blobs.Models.FilterBlobResponse FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized FilterBlobSegment instance.</returns>
+        internal static Azure.Storage.Blobs.Models.FilterBlobSegment FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
             System.Xml.Linq.XAttribute _attribute;
-            Azure.Storage.Blobs.Models.FilterBlobResponse _value = new Azure.Storage.Blobs.Models.FilterBlobResponse(true);
+            Azure.Storage.Blobs.Models.FilterBlobSegment _value = new Azure.Storage.Blobs.Models.FilterBlobSegment(true);
             _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
             if (_attribute != null)
             {
@@ -20181,7 +20378,7 @@ namespace Azure.Storage.Blobs.Models
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobResponse value);
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobSegment value);
     }
 
     /// <summary>
@@ -20190,15 +20387,15 @@ namespace Azure.Storage.Blobs.Models
     public static partial class BlobsModelFactory
     {
         /// <summary>
-        /// Creates a new FilterBlobResponse instance for mocking.
+        /// Creates a new FilterBlobSegment instance for mocking.
         /// </summary>
-        public static FilterBlobResponse FilterBlobResponse(
+        public static FilterBlobSegment FilterBlobSegment(
             string serviceEndpoint,
             string where,
             System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> blobs,
             string nextMarker = default)
         {
-            return new FilterBlobResponse()
+            return new FilterBlobSegment()
             {
                 ServiceEndpoint = serviceEndpoint,
                 Where = where,
@@ -20208,7 +20405,7 @@ namespace Azure.Storage.Blobs.Models
         }
     }
 }
-#endregion class FilterBlobResponse
+#endregion class FilterBlobSegment
 
 #region class FlattenedContainerItem
 namespace Azure.Storage.Blobs.Models
@@ -20894,49 +21091,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum LeaseStatusType
 
-#region enum ListBlobContainersIncludeType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Include this parameter to specify that the container's metadata be returned as part of the response body.
-    /// </summary>
-    internal enum ListBlobContainersIncludeType
-    {
-        /// <summary>
-        /// metadata
-        /// </summary>
-        Metadata
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.ListBlobContainersIncludeType.Metadata => "metadata",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.ListBlobContainersIncludeType ParseListBlobContainersIncludeType(string value)
-            {
-                return value switch
-                {
-                    "metadata" => Azure.Storage.Blobs.Models.ListBlobContainersIncludeType.Metadata,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum ListBlobContainersIncludeType
-
 #region enum ListBlobsIncludeItem
 namespace Azure.Storage.Blobs.Models
 {
@@ -21021,6 +21175,56 @@ namespace Azure.Storage.Blobs
     }
 }
 #endregion enum ListBlobsIncludeItem
+
+#region enum ListContainersIncludeType
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// ListContainersIncludeType values
+    /// </summary>
+    public enum ListContainersIncludeType
+    {
+        /// <summary>
+        /// metadata
+        /// </summary>
+        Metadata,
+
+        /// <summary>
+        /// deleted
+        /// </summary>
+        Deleted
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.ListContainersIncludeType value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.ListContainersIncludeType.Metadata => "metadata",
+                    Azure.Storage.Blobs.Models.ListContainersIncludeType.Deleted => "deleted",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListContainersIncludeType value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.ListContainersIncludeType ParseListContainersIncludeType(string value)
+            {
+                return value switch
+                {
+                    "metadata" => Azure.Storage.Blobs.Models.ListContainersIncludeType.Metadata,
+                    "deleted" => Azure.Storage.Blobs.Models.ListContainersIncludeType.Deleted,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListContainersIncludeType value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ListContainersIncludeType
 
 #region class PageBlobInfo
 namespace Azure.Storage.Blobs.Models

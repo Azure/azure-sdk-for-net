@@ -525,7 +525,7 @@ namespace Azure.Storage.Blobs
                         marker: continuationToken,
                         prefix: prefix,
                         maxresults: pageSizeHint,
-                        include: traits.AsIncludeType(),
+                        include: BlobExtensions.AsIncludeItems(traits),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);

@@ -1,10 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable SA1402  // File may only contain a single type
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -43,6 +47,29 @@ namespace Azure.Storage.Blobs.Models
                 response.Value.BlobContainerItems.ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
+        }
+    }
+}
+namespace Azure.Storage.Blobs
+{
+    /// <summary>
+    /// BlobContainerTraits/BlobContianerStates enum methods.
+    /// </summary>
+    internal static partial class BlobExtensions
+    {
+        /// <summary>
+        /// Convert the details into ListContainersIncludeType values.
+        /// </summary>
+        /// <returns>ListContainersIncludeType values</returns>
+        internal static IEnumerable<ListContainersIncludeType> AsIncludeItems(BlobContainerTraits traits)
+        {
+            var items = new List<ListContainersIncludeType>();
+            if ((traits & BlobContainerTraits.Metadata) == BlobContainerTraits.Metadata)
+            {
+                items.Add(ListContainersIncludeType.Metadata);
+            }
+
+            return items.Count > 0 ? items : null;
         }
     }
 }
