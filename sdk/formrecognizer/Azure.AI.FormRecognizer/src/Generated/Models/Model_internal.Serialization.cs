@@ -7,10 +7,10 @@
 
 using System.Text.Json;
 using Azure.AI.FormRecognizer;
-using Azure.AI.FormRecognizer.Custom;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Training
 {
     internal partial class Model_internal
     {

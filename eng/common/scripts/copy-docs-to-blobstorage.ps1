@@ -1,5 +1,5 @@
-# Note, due to how `Expand-Archive` is leveraged in this script, 
-# powershell core is a requirement for successful execution. 
+# Note, due to how `Expand-Archive` is leveraged in this script,
+# powershell core is a requirement for successful execution.
 param (
   $AzCopy,
   $DocLocation,
@@ -9,6 +9,9 @@ param (
   $ExitOnError=1,
   $UploadLatest=1
 )
+
+Write-Host $MyInvocation.Line
+
 $Language = $Language.ToLower()
 
 # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
@@ -51,14 +54,14 @@ function ToSemVer($version){
         {
             throw "Unable to convert $version to valid semver and hard exit on error is enabled. Exiting."
         }
-        else 
+        else
         {
             return $null
         }
     }
 }
 
-function SortSemVersions($versions) 
+function SortSemVersions($versions)
 {
     return $versions | Sort -Property Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber -Descending
 }
@@ -68,7 +71,7 @@ function Sort-Versions
     Param (
         [Parameter(Mandatory=$true)] [string[]]$VersionArray
     )
-    
+
     # standard init and sorting existing
     $versionsObject = New-Object PSObject -Property @{
         OriginalVersionArray = $VersionArray
@@ -78,16 +81,16 @@ function Sort-Versions
         LatestPreviewPackage = ""
     }
 
-    if ($VersionArray.Count -eq 0) 
-    { 
-        return $versionsObject 
+    if ($VersionArray.Count -eq 0)
+    {
+        return $versionsObject
     }
 
     $versionsObject.SortedVersionArray = @(SortSemVersions -versions ($VersionArray | % { ToSemVer $_}))
     $versionsObject.RawVersionsList = $versionsObject.SortedVersionArray | % { $_.RawVersion }
 
     # handle latest and preview
-    # we only want to hold onto the latest preview if its NEWER than the latest GA. 
+    # we only want to hold onto the latest preview if its NEWER than the latest GA.
     # this means that the latest preview package either A) has to be the latest value in the VersionArray
     # or B) set to nothing. We'll handle the set to nothing case a bit later.
     $versionsObject.LatestPreviewPackage = $versionsObject.SortedVersionArray[0].RawVersion
@@ -100,7 +103,7 @@ function Sort-Versions
         $versionsObject.LatestGAPackage = $gaVersions[0].RawVersion
 
         # in the case where latest preview == latestGA (because of our default selection earlier)
-        if ($versionsObject.LatestGAPackage -eq $versionsObject.LatestPreviewPackage) 
+        if ($versionsObject.LatestGAPackage -eq $versionsObject.LatestPreviewPackage)
         {
             # latest is newest, unset latest preview
             $versionsObject.LatestPreviewPackage = ""
@@ -152,7 +155,7 @@ function Update-Existing-Versions
         $existingVersions += $PkgVersion
         Write-Host "No existing versions. Adding $PkgVersion."
     }
-    else 
+    else
     {
         $existingVersions += $pkgVersion
         Write-Host "Already Existing Versions. Adding $PkgVersion."
@@ -167,7 +170,7 @@ function Update-Existing-Versions
     Write-Host $sortedVersionObj.LatestGAPackage
     Write-Host $sortedVersionObj.LatestPreviewPackage
 
-    # write to file. to get the correct performance with "actually empty" files, we gotta do the newline 
+    # write to file. to get the correct performance with "actually empty" files, we gotta do the newline
     # join ourselves. This way we have absolute control over the trailing whitespace.
     $sortedVersionObj.RawVersionsList -join "`n" | Out-File -File "$($DocLocation)/versions" -Force -NoNewLine
     $sortedVersionObj.LatestGAPackage | Out-File -File "$($DocLocation)/latest-ga" -Force -NoNewLine
@@ -205,7 +208,7 @@ function Upload-Blobs
     # we can safely assume we have AT LEAST one version here. Reason being we just completed Update-Existing-Versions
     $latestVersion = ($versionsObj.SortedVersionArray | Select-Object -First 1).RawVersion
 
-    if ($UploadLatest -and ($latestVersion -eq $DocVersion)) 
+    if ($UploadLatest -and ($latestVersion -eq $DocVersion))
     {
         Write-Host "Uploading $($PkgName) to latest folder in $($DocDest)..."
         & $($AzCopy) cp "$($DocDir)/**" "$($DocDest)/$($PkgName)/latest$($SASKey)" --recursive=true
@@ -222,7 +225,7 @@ if ($Language -eq "javascript")
         Write-Host $PkgName
         Expand-Archive -Force -Path "$($DocLocation)/documentation/$($Item.Name)" -DestinationPath "$($DocLocation)/documentation/$($Item.BaseName)"
         $dirList = Get-ChildItem "$($DocLocation)/documentation/$($Item.BaseName)/$($Item.BaseName)" -Attributes Directory
-    
+
         if($dirList.Length -eq 1){
             $DocVersion = $dirList[0].Name
             Write-Host "Uploading Doc for $($PkgName) Version:- $($DocVersion)..."
@@ -243,7 +246,7 @@ if ($Language -eq "dotnet")
         $PkgName = $Item.Name.Remove(0, 5)
         $PkgFullName = $PublishedPkgs | Where-Object -FilterScript {$_.Name -match "$($PkgName).\d"}
 
-        if (($PkgFullName | Measure-Object).count -eq 1) 
+        if (($PkgFullName | Measure-Object).count -eq 1)
         {
             $DocVersion = $PkgFullName[0].BaseName.Remove(0, $PkgName.Length + 1)
 
@@ -264,12 +267,12 @@ if ($Language -eq "dotnet")
 if ($Language -eq "python")
 {
     $PublishedDocs = Get-ChildItem "$DocLocation" | Where-Object -FilterScript {$_.Name.EndsWith(".zip")}
-    
+
     foreach ($Item in $PublishedDocs) {
         $PkgName = $Item.BaseName
         $ZippedDocumentationPath = Join-Path -Path $DocLocation -ChildPath $Item.Name
         $UnzippedDocumentationPath = Join-Path -Path $DocLocation -ChildPath $PkgName
-        $VersionFileLocation = Join-Path -Path $UnzippedDocumentationPath -ChildPath "version.txt"        
+        $VersionFileLocation = Join-Path -Path $UnzippedDocumentationPath -ChildPath "version.txt"
 
         Expand-Archive -Force -Path $ZippedDocumentationPath -DestinationPath $UnzippedDocumentationPath
 

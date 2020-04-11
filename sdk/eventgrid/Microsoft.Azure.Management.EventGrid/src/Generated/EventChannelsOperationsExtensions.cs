@@ -255,6 +255,55 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
+            /// Delete an event channel.
+            /// </summary>
+            /// <remarks>
+            /// Delete existing event channel.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerNamespaceName'>
+            /// Name of the partner namespace.
+            /// </param>
+            /// <param name='eventChannelName'>
+            /// Name of the event channel.
+            /// </param>
+            public static void BeginDelete(this IEventChannelsOperations operations, string resourceGroupName, string partnerNamespaceName, string eventChannelName)
+            {
+                operations.BeginDeleteAsync(resourceGroupName, partnerNamespaceName, eventChannelName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete an event channel.
+            /// </summary>
+            /// <remarks>
+            /// Delete existing event channel.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription.
+            /// </param>
+            /// <param name='partnerNamespaceName'>
+            /// Name of the partner namespace.
+            /// </param>
+            /// <param name='eventChannelName'>
+            /// Name of the event channel.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IEventChannelsOperations operations, string resourceGroupName, string partnerNamespaceName, string eventChannelName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, partnerNamespaceName, eventChannelName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// List event channels.
             /// </summary>
             /// <remarks>

@@ -37,15 +37,6 @@ namespace Azure.Messaging.EventHubs.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class EventProcessorClientLiveTests
     {
-        /// <summary>The name of the custom event property which holds a test-specific artificial sequence number.</summary>
-        private static readonly string CustomIdProperty = $"{ nameof(EventProcessorClientLiveTests) }::Identifier";
-
-        /// <summary>The name of the custom event property which holds a test-specific artificial sequence number.</summary>
-        private static readonly string CustomSequenceProperty = $"{ nameof(EventProcessorClientLiveTests) }::Sequence";
-
-        /// <summary>A generator for random values used within the tests.</summary>
-        private readonly Random RandomGenerator = new Random();
-
         /// <summary>
         ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
         /// </summary>
@@ -63,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Send a set of events.
 
-            var sourceEvents = CreateEvents(50).ToList();
+            var sourceEvents = EventGenerator.CreateEvents(50).ToList();
             var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
@@ -90,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var sourceEvent in sourceEvents)
             {
-                var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
                 Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
@@ -113,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Send a set of events.
 
-            var sourceEvents = CreateEvents(50).ToList();
+            var sourceEvents = EventGenerator.CreateEvents(50).ToList();
             var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
@@ -140,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var sourceEvent in sourceEvents)
             {
-                var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
                 Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
@@ -159,11 +150,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(6));
 
             // Send a set of events.
 
-            var sourceEvents = CreateEvents(500).ToList();
+            var sourceEvents = EventGenerator.CreateEvents(500).ToList();
             var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
@@ -204,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var sourceEvent in sourceEvents)
             {
-                var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
                 Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
@@ -240,7 +231,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Send a set of events.
 
-            var sourceEvents = CreateEvents(200).ToList();
+            var sourceEvents = EventGenerator.CreateEvents(200).ToList();
             var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
@@ -295,7 +286,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Send a set of events.
 
-            var sourceEvents = CreateEvents(25).ToList();
+            var sourceEvents = EventGenerator.CreateEvents(25).ToList();
             var lastSourceEvent = sourceEvents.Last();
             var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
@@ -303,7 +294,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Read the initial set back, marking the offset and sequence number of the last event in the initial set.
 
-            var startingCustomSequence = 0;
             var startingOffset = 0L;
 
             await using (var consumer = new EventHubConsumerClient(scope.ConsumerGroups.First(), connectionString))
@@ -312,7 +302,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (partitionEvent.Data.IsEquivalentTo(lastSourceEvent))
                     {
-                        startingCustomSequence = int.Parse(partitionEvent.Data.Properties[CustomSequenceProperty].ToString());
                         startingOffset = partitionEvent.Data.Offset;
 
                         break;
@@ -322,7 +311,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Send the second set of events to be read by the processor.
 
-            sourceEvents = CreateEvents(20, (startingCustomSequence + 1)).ToList();
+            sourceEvents = EventGenerator.CreateEvents(20).ToList();
             sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
             Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
@@ -355,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var sourceEvent in sourceEvents)
             {
-                var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
                 Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
@@ -379,8 +368,8 @@ namespace Azure.Messaging.EventHubs.Tests
             // Send a set of events.
 
             var segmentEventCount = 25;
-            var beforeCheckpointEvents = CreateEvents(segmentEventCount).ToList();
-            var afterCheckpointEvents = CreateEvents(segmentEventCount, segmentEventCount).ToList();
+            var beforeCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
+            var afterCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
             var sourceEvents = Enumerable.Concat(beforeCheckpointEvents, afterCheckpointEvents).ToList();
             var checkpointEvent = beforeCheckpointEvents.Last();
             var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
@@ -438,7 +427,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var sourceEvent in afterCheckpointEvents)
             {
-                var sourceId = sourceEvent.Properties[CustomIdProperty].ToString();
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
                 Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
@@ -509,7 +498,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (var producer = new EventHubProducerClient(connectionString))
             {
-                foreach (var batch in (await BuildBatchesAsync(sourceEvents, producer, cancellationToken)))
+                foreach (var batch in (await EventGenerator.BuildBatchesAsync(sourceEvents, producer, default, cancellationToken)))
                 {
                     await producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
 
@@ -549,7 +538,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 if (args.HasEvent)
                 {
-                    var eventId = args.Data.Properties[CustomIdProperty].ToString();
+                    var eventId = args.Data.Properties[EventGenerator.IdPropertyName].ToString();
 
                     if (processedEvents.TryAdd(eventId, args.Data))
                     {
@@ -579,97 +568,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
                 return Task.CompletedTask;
             };
-
-
-        /// <summary>
-        ///   Creates a set of events with random data and random body size.
-        /// </summary>
-        ///
-        /// <param name="numberOfEvents">The number of events to create.</param>
-        /// <param name="startSequenceNumberingAt">The number to start the custom sequencing at.</param>
-        ///
-        /// <returns></returns>
-        ///
-        private IEnumerable<EventData> CreateEvents(int numberOfEvents,
-                                                    int startSequenceNumberingAt = 0)
-        {
-            const int minimumBodySize = 3;
-            const int maximumBodySize = 83886;
-
-            EventData currentEvent;
-
-            var currentSequence = startSequenceNumberingAt;
-
-            for (var index = 0; index < numberOfEvents; ++index)
-            {
-                var buffer = new byte[RandomGenerator.Next(minimumBodySize, maximumBodySize)];
-                RandomGenerator.NextBytes(buffer);
-
-                currentEvent = new EventData(buffer);
-                currentEvent.Properties.Add(CustomIdProperty, Guid.NewGuid().ToString());
-                currentEvent.Properties.Add(CustomSequenceProperty, currentSequence);
-
-                currentSequence++;
-                yield return currentEvent;
-            }
-        }
-
-        /// <summary>
-        ///   Builds a set of batches from the provided events.
-        /// </summary>
-        ///
-        /// <param name="events">The events to group into batches.</param>
-        /// <param name="producer">The producer to use for creating batches.</param>
-        /// <param name="batchEvents">A dictionary to which the events included in the batches should be tracked.</param>
-        /// <param name="cancellationToken">The token used to signal a cancellation request.</param>
-        ///
-        /// <returns>The set of batches needed to contain the entire set of <paramref name="events"/>.</returns>
-        ///
-        /// <remarks>
-        ///   Callers are assumed to be responsible for taking ownership of the lifespan of the returned batches, including
-        ///   their disposal.
-        ///
-        ///   This method is intended for use within the test suite only; it is not hardened for general purpose use.
-        /// </remarks>
-        ///
-        private async Task<IEnumerable<EventDataBatch>> BuildBatchesAsync(IEnumerable<EventData> events,
-                                                                          EventHubProducerClient producer,
-                                                                          CancellationToken cancellationToken)
-        {
-            EventData eventData;
-
-            var queuedEvents = new Queue<EventData>(events);
-            var batches = new List<EventDataBatch>();
-            var currentBatch = default(EventDataBatch);
-
-            while (queuedEvents.Count > 0)
-            {
-                currentBatch ??= (await producer.CreateBatchAsync(cancellationToken).ConfigureAwait(false));
-                eventData = queuedEvents.Peek();
-
-                if (!currentBatch.TryAdd(eventData))
-                {
-                    if (currentBatch.Count == 0)
-                    {
-                        throw new InvalidOperationException("There was an event too large to fit into a batch.");
-                    }
-
-                    batches.Add(currentBatch);
-                    currentBatch = default;
-                }
-                else
-                {
-                   queuedEvents.Dequeue();
-                }
-            }
-
-            if ((currentBatch != default) && (currentBatch.Count > 0))
-            {
-                batches.Add(currentBatch);
-            }
-
-            return batches;
-        }
 
         /// <summary>
         ///   A mock <see cref="EventProcessorClient" /> used for testing purposes to override

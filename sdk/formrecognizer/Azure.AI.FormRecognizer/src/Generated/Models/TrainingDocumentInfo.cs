@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Report for a custom model training document. </summary>
     public partial class TrainingDocumentInfo

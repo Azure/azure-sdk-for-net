@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.HybridData
         /// </exception>
         Task<AzureOperationResponse<IPage<DataService>>> ListByDataManagerWithHttpMessagesAsync(string resourceGroupName, string dataManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the data service that match the data service name given.
+        /// Gets the data service that matches the data service name given.
         /// </summary>
         /// <param name='dataServiceName'>
         /// The name of the data service that is being queried.

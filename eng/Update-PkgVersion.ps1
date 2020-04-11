@@ -44,59 +44,23 @@ Param (
     [string] $PackageDirName,
     [string] $NewVersionString
 )
-# Regular expression as specified in https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
-$VERSION_REGEX = "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$"
+
+. ${PSScriptRoot}\common\scripts\SemVer.ps1
 
 # Updated Version in csproj and changelog using computed or set NewVersionString
-function Update-Version($Unreleased=$True, $ReplaceVersion=$False)
+function Update-Version([AzureEngSemanticVersion]$SemVer, $Unreleased=$True, $ReplaceVersion=$False)
 {
     Write-Verbose "New Version: ${NewPackageVersion}"
-    ${PackageVersion}.Node.InnerText = $NewPackageVersion
+    if ($SemVer.HasValidPrereleaseLabel() -ne $true){
+        Write-Error "Invalid prerelease label"
+        exit 1
+    }
+
+    ${PackageVersion}.Node.InnerText = $SemVer.ToString()
     $CsprojData.Save($PackageCsprojPath)
 
     # Increment Version in ChangeLog file
-    & "${PSScriptRoot}/common/Update-Change-Log.ps1" -Version $NewPackageVersion -ChangeLogPath $ChangelogPath -Unreleased $Unreleased -ReplaceVersion $ReplaceVersion
-}
-
-# Parse a VersionString to verify that it is right
-function Parse-Version($VerisionString)
-{
-    if ([System.String]::IsNullOrEmpty($VerisionString))
-    {
-        Write-Error "Missing or Empty Version property ${VerisionString}"
-        exit 1
-    }
-
-    if ($VerisionString -Match $VERSION_REGEX)
-    {
-        if($Matches[4] -eq $null){$Pre = @()}
-        else{$Pre = $Matches[4].Split(".")}
-        $VersionTable = @{
-            major = [int]$Matches[1]
-            minor = [int]$Matches[2]
-            patch = [int]$Matches[3]
-            pretag = [string]$Pre[0]
-            prever = [int]$Pre[1]
-        }
-
-        if ($VersionTable['pretag'] -ne '' -and $VersionTable['pretag'] -ne 'preview')
-        {
-            Write-Error "Unexpected pre-release identifier '$($VersionTable['pretag'])', should be 'preview'"
-            exit 1
-        }
-
-        if ($VersionTable['pretag'] -eq 'preview' -and $VersionTable['prever'] -lt 1)
-        {
-            Write-Error "Unexpected pre-release version '$($VersionTable['prever'])', should be greater than '1'"
-            exit 1
-        }
-        return $VersionTable
-    }
-    else
-    {
-        Write-Error "Version property contains incorrect format. It should be in format 'X.Y.Z[-preview.N]'"
-        exit 1
-    }
+    & "${PSScriptRoot}/common/Update-Change-Log.ps1" -Version $SemVer.ToString() -ChangeLogPath $ChangelogPath -Unreleased $Unreleased -ReplaceVersion $ReplaceVersion
 }
 
 # Obtain Current Package Version
@@ -108,38 +72,17 @@ $ChangelogPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "CH
 $CsprojData.Load($PackageCsprojPath)
 $PackageVersion = Select-XML -Xml $CsprojData -XPath '/Project/PropertyGroup/Version'
 
-
 if ([System.String]::IsNullOrEmpty($NewVersionString))
 {
-    $VersionTable = Parse-Version($PackageVersion)
+    $SemVer = [AzureEngSemanticVersion]::new($PackageVersion)
     Write-Verbose "Current Version: ${PackageVersion}"
-    # Increment Version
-    if ([System.String]::IsNullOrEmpty($VersionTable['pretag']))
-    {
-        $VersionTable['pretag'] = 'preview'
-        $VersionTable['prever'] = 1
-        $VersionTable['minor']++
-        $VersionTable['patch'] = 0
-    }
-    else
-    {
-        $VersionTable['prever']++
-    }
 
-    $NewPackageVersion = "{0}.{1}.{2}-{3}.{4}" -F $VersionTable['major'], $VersionTable['minor'], $VersionTable['patch'], $VersionTable['pretag'], $VersionTable['prever']
-    Update-Version
+    $SemVer.IncrementAndSetToPrerelease()
+    Update-Version -SemVer $SemVer-SemVer $SemVer
 }
 else
 {
     # Use specified VersionString
-    $VersionTable = Parse-Version($NewVersionString)
-    if ($VersionTable['pretag'] -eq '')
-    {
-        $NewPackageVersion = "{0}.{1}.{2}" -F $VersionTable['major'], $VersionTable['minor'], $VersionTable['patch']
-    }
-    else
-    {
-        $NewPackageVersion = "{0}.{1}.{2}-{3}.{4}" -F $VersionTable['major'], $VersionTable['minor'], $VersionTable['patch'], $VersionTable['pretag'], $VersionTable['prever']
-    }
-    Update-Version -Unreleased $False -ReplaceVersion $True
+    $SemVer = [AzureEngSemanticVersion]::new($NewVersionString)
+    Update-Version -SemVer $SemVer -Unreleased $False -ReplaceVersion $True
 }
