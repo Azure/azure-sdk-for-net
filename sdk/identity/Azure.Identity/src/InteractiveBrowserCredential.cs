@@ -39,6 +39,7 @@ namespace Azure.Identity
             : this(options?.TenantId, options?.ClientId ?? Constants.DeveloperSignOnClientId, CredentialPipeline.GetInstance(options))
         {
             _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
+            _profile = options?.AuthenticationProfile;
         }
 
         /// <summary>

@@ -25,5 +25,10 @@ namespace Azure.Identity
         /// The client id of the application used to authenticate the user. If not specified the user will be authenticated with an azure development application.
         /// </summary>
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
+
+        /// <summary>
+        /// The <see cref="AuthenticationProfile"/> captured from a previous authentication.
+        /// </summary>
+        public AuthenticationProfile AuthenticationProfile { get; set; }
     }
 }

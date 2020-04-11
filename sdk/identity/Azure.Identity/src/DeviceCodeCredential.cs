@@ -64,6 +64,8 @@ namespace Azure.Identity
         public DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, DeviceCodeCredentialOptions options = default)
             : this(deviceCodeCallback, options?.TenantId, options?.ClientId, CredentialPipeline.GetInstance(options))
         {
+            _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
+            _profile = options?.AuthenticationProfile;
         }
 
         internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, CredentialPipeline pipeline)
