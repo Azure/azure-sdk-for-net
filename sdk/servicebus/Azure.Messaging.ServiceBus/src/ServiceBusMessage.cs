@@ -285,9 +285,7 @@ namespace Azure.Messaging.ServiceBus
             var originalBody = message.Body;
             if (!originalBody.IsEmpty)
             {
-                var clonedBody = new byte[originalBody.Length];
-                Array.Copy(originalBody.ToArray(), clonedBody, originalBody.Length);
-                copiedMessage.Body = clonedBody;
+                copiedMessage.Body = originalBody;
             }
             copiedMessage.Properties = new Dictionary<string, object>(message.Properties);
             return copiedMessage;
