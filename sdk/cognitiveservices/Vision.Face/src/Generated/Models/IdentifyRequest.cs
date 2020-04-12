@@ -144,9 +144,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                     throw new ValidationException(ValidationRules.Pattern, "LargePersonGroupId", "^[a-z0-9-_]+$");
                 }
             }
-            if (MaxNumOfCandidatesReturned > 5)
+            if (MaxNumOfCandidatesReturned > 100)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxNumOfCandidatesReturned", 5);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxNumOfCandidatesReturned", 100);
             }
             if (MaxNumOfCandidatesReturned < 1)
             {
