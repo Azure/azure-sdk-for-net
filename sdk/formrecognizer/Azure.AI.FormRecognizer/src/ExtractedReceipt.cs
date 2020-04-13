@@ -221,7 +221,7 @@ namespace Azure.AI.FormRecognizer.Models
                 // https://github.com/Azure/azure-sdk-for-net/issues/10361
                 dateTimeOffsetValue = value.Type switch
                 {
-                    FieldValueType.DateType => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
+                    FieldValueType.DateType => value.ValueDate.HasValue ? value.ValueDate.Value : default,
                     FieldValueType.TimeType => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
                     _ => throw new InvalidOperationException($"The value type {value.Type} was expected to be a Date or Time")
                 };

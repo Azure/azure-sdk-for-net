@@ -118,99 +118,6 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateGetCustomModelsRequest(GetModelOptions? op)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
-            uri.AppendPath("/custom/models", false);
-            if (op != null)
-            {
-                uri.AppendQuery("op", op.Value.ToString(), true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Get information about all custom models. </summary>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models_internal>> GetCustomModelsAsync(GetModelOptions? op = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
-            scope.Start();
-            try
-            {
-                using var message = CreateGetCustomModelsRequest(op);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                        {
-                            Models_internal value = default;
-                            using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            if (document.RootElement.ValueKind == JsonValueKind.Null)
-                            {
-                                value = null;
-                            }
-                            else
-                            {
-                                value = Models_internal.DeserializeModels_internal(document.RootElement);
-                            }
-                            return Response.FromValue(value, message.Response);
-                        }
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get information about all custom models. </summary>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models_internal> GetCustomModels(GetModelOptions? op = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
-            scope.Start();
-            try
-            {
-                using var message = CreateGetCustomModelsRequest(op);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                        {
-                            Models_internal value = default;
-                            using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            if (document.RootElement.ValueKind == JsonValueKind.Null)
-                            {
-                                value = null;
-                            }
-                            else
-                            {
-                                value = Models_internal.DeserializeModels_internal(document.RootElement);
-                            }
-                            return Response.FromValue(value, message.Response);
-                        }
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         internal HttpMessage CreateGetCustomModelRequest(Guid modelId, bool? includeKeys)
         {
             var message = _pipeline.CreateMessage();
@@ -400,7 +307,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response> AnalyzeWithCustomModelAsync(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -413,11 +320,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, fileStream, includeTextDetails);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                var headers = new ServiceAnalyzeWithCustomModelHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -435,7 +341,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeWithCustomModel(Guid modelId, ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -448,11 +354,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeWithCustomModelRequest(modelId, contentType, fileStream, includeTextDetails);
                 _pipeline.Send(message, cancellationToken);
-                var headers = new ServiceAnalyzeWithCustomModelHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -495,7 +400,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders>> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response> AnalyzeWithCustomModelAsync(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceClient.AnalyzeWithCustomModel");
             scope.Start();
@@ -503,11 +408,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                var headers = new ServiceAnalyzeWithCustomModelHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -524,7 +428,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeWithCustomModel(Guid modelId, bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceClient.AnalyzeWithCustomModel");
             scope.Start();
@@ -532,11 +436,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeWithCustomModelRequest(modelId, includeTextDetails, fileStream);
                 _pipeline.Send(message, cancellationToken);
-                var headers = new ServiceAnalyzeWithCustomModelHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -666,7 +569,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response> AnalyzeReceiptAsyncAsync(ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -679,11 +582,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -700,7 +602,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeReceiptAsync(ContentType contentType, Stream fileStream, bool? includeTextDetails = null, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -713,11 +615,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeReceiptAsyncRequest(contentType, fileStream, includeTextDetails);
                 _pipeline.Send(message, cancellationToken);
-                var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -757,7 +658,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders>> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response> AnalyzeReceiptAsyncAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceClient.AnalyzeReceiptAsync");
             scope.Start();
@@ -765,11 +666,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -785,7 +685,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="includeTextDetails"> Include text lines and element references in the result. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> AnalyzeReceiptAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeReceiptAsync(bool? includeTextDetails = null, SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceClient.AnalyzeReceiptAsync");
             scope.Start();
@@ -793,11 +693,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeReceiptAsyncRequest(includeTextDetails, fileStream);
                 _pipeline.Send(message, cancellationToken);
-                var headers = new ServiceAnalyzeReceiptAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -918,7 +817,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public async ValueTask<Response> AnalyzeLayoutAsyncAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -931,11 +830,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                var headers = new ServiceAnalyzeLayoutAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -951,7 +849,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="contentType"> Upload file type. </param>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
+        public Response AnalyzeLayoutAsync(ContentType contentType, Stream fileStream, CancellationToken cancellationToken = default)
         {
             if (fileStream == null)
             {
@@ -964,11 +862,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeLayoutAsyncRequest(contentType, fileStream);
                 _pipeline.Send(message, cancellationToken);
-                var headers = new ServiceAnalyzeLayoutAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -1003,7 +900,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders>> AnalyzeLayoutAsyncAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response> AnalyzeLayoutAsyncAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceClient.AnalyzeLayoutAsync");
             scope.Start();
@@ -1011,11 +908,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                var headers = new ServiceAnalyzeLayoutAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
@@ -1030,7 +926,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary> Extract text and layout information from a given document. The input document must be of one of the supported content types - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos; or &apos;image/tiff&apos;. Alternatively, use &apos;application/json&apos; type to specify the location (Uri or local path) of the document to be analyzed. </summary>
         /// <param name="fileStream"> .json, .pdf, .jpg, .png or .tiff type file stream. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> AnalyzeLayoutAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
+        public Response AnalyzeLayoutAsync(SourcePath_internal fileStream = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceClient.AnalyzeLayoutAsync");
             scope.Start();
@@ -1038,11 +934,10 @@ namespace Azure.AI.FormRecognizer
             {
                 using var message = CreateAnalyzeLayoutAsyncRequest(fileStream);
                 _pipeline.Send(message, cancellationToken);
-                var headers = new ServiceAnalyzeLayoutAsyncHeaders(message.Response);
                 switch (message.Response.Status)
                 {
                     case 202:
-                        return ResponseWithHeaders.FromValue(headers, message.Response);
+                        return message.Response;
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
@@ -1144,7 +1039,183 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateGetCustomModelsNextPageRequest(string nextLink, GetModelOptions? op)
+        internal HttpMessage CreateListCustomModelsRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models", false);
+            uri.AppendQuery("op", "full", true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async ValueTask<Response<Models_internal>> ListCustomModelsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.ListCustomModels");
+            scope.Start();
+            try
+            {
+                using var message = CreateListCustomModelsRequest();
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Models_internal value = default;
+                            using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            }
+                            return Response.FromValue(value, message.Response);
+                        }
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<Models_internal> ListCustomModels(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.ListCustomModels");
+            scope.Start();
+            try
+            {
+                using var message = CreateListCustomModelsRequest();
+                _pipeline.Send(message, cancellationToken);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Models_internal value = default;
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            }
+                            return Response.FromValue(value, message.Response);
+                        }
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateGetCustomModelsRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models", false);
+            uri.AppendQuery("op", "summary", true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async ValueTask<Response<Models_internal>> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
+            scope.Start();
+            try
+            {
+                using var message = CreateGetCustomModelsRequest();
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Models_internal value = default;
+                            using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            }
+                            return Response.FromValue(value, message.Response);
+                        }
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<Models_internal> GetCustomModels(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
+            scope.Start();
+            try
+            {
+                using var message = CreateGetCustomModelsRequest();
+                _pipeline.Send(message, cancellationToken);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Models_internal value = default;
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            }
+                            return Response.FromValue(value, message.Response);
+                        }
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateListCustomModelsNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1157,20 +1228,19 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models_internal>> GetCustomModelsNextPageAsync(string nextLink, GetModelOptions? op = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<Models_internal>> ListCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.ListCustomModels");
             scope.Start();
             try
             {
-                using var message = CreateGetCustomModelsNextPageRequest(nextLink, op);
+                using var message = CreateListCustomModelsNextPageRequest(nextLink);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -1201,20 +1271,19 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models_internal> GetCustomModelsNextPage(string nextLink, GetModelOptions? op = null, CancellationToken cancellationToken = default)
+        public Response<Models_internal> ListCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.ListCustomModels");
             scope.Start();
             try
             {
-                using var message = CreateGetCustomModelsNextPageRequest(nextLink, op);
+                using var message = CreateListCustomModelsNextPageRequest(nextLink);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
