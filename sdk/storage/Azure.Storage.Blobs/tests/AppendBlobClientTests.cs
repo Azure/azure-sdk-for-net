@@ -929,6 +929,112 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SealAsync()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await appendBlob.CreateAsync();
+
+            // Act
+            await appendBlob.SealAsync();
+            Response<BlobProperties> propertiesResponse = await appendBlob.GetPropertiesAsync();
+            Response<BlobDownloadInfo> downloadResponse  = await appendBlob.DownloadAsync();
+
+            // Assert
+            Assert.IsTrue(propertiesResponse.Value.BlobSealed);
+            Assert.IsTrue(downloadResponse.Value.Details.BlobSealed);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SealAsync_Error()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                appendBlob.SealAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SealAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            AccessConditionParameters[] testCases = new[]
+            {
+                new AccessConditionParameters(),
+                new AccessConditionParameters { IfModifiedSince = OldDate },
+                new AccessConditionParameters { IfUnmodifiedSince = NewDate },
+                new AccessConditionParameters { Match = ReceivedETag },
+                new AccessConditionParameters { NoneMatch = GarbageETag },
+                new AccessConditionParameters { LeaseId = ReceivedLeaseId },
+            };
+
+            foreach (AccessConditionParameters parameters in testCases)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await blob.CreateAsync();
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    appendPosAndMaxSize: true);
+
+                // Act
+                Response<BlobInfo> response = await blob.SealAsync(accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.Value.ETag);
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SealAsync_AccessConditionsFailed()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            AccessConditionParameters[] testCases = new[]
+            {
+                new AccessConditionParameters { IfModifiedSince = NewDate },
+                new AccessConditionParameters { IfUnmodifiedSince = OldDate },
+                new AccessConditionParameters { Match = GarbageETag },
+                new AccessConditionParameters { NoneMatch = ReceivedETag },
+                new AccessConditionParameters { LeaseId = garbageLeaseId }
+            };
+
+            foreach (AccessConditionParameters parameters in testCases)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                // AppendBlob needs to exists for us to test CreateAsync() with access conditions
+                await blob.CreateAsync();
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                AppendBlobRequestConditions accessConditions = BuildDestinationAccessConditions(
+                    parameters: parameters,
+                    lease: true,
+                    appendPosAndMaxSize: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    blob.SealAsync(
+                        conditions: accessConditions),
+                    e => { });
+            }
+        }
+
         private AppendBlobRequestConditions BuildDestinationAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,
