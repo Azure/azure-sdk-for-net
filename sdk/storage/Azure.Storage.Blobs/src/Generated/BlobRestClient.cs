@@ -4107,6 +4107,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.TagCount = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
+                        {
+                            _value.BlobSealed = bool.Parse(_header);
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -4242,6 +4246,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-tag-count", out _header))
                         {
                             _value.TagCount = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
+                        {
+                            _value.BlobSealed = bool.Parse(_header);
                         }
 
                         // Create the response
@@ -4596,6 +4604,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-tag-count", out _header))
                         {
                             _value.TagCount = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
+                        {
+                            _value.BlobSealed = bool.Parse(_header);
                         }
 
                         // Create the response
@@ -11976,6 +11988,191 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion AppendBlob.AppendBlockFromUriAsync
+
+            #region AppendBlob.SealAsync
+            /// <summary>
+            /// The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.AppendBlobSealInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.AppendBlobSealInternal>> SealAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string leaseId = default,
+                System.DateTimeOffset? ifModifiedSince = default,
+                System.DateTimeOffset? ifUnmodifiedSince = default,
+                Azure.ETag? ifMatch = default,
+                Azure.ETag? ifNoneMatch = default,
+                bool async = true,
+                string operationName = "AppendBlobClient.Seal",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SealAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        requestId,
+                        leaseId,
+                        ifModifiedSince,
+                        ifUnmodifiedSince,
+                        ifMatch,
+                        ifNoneMatch))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SealAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the AppendBlob.SealAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <returns>The AppendBlob.SealAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SealAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string leaseId = default,
+                System.DateTimeOffset? ifModifiedSince = default,
+                System.DateTimeOffset? ifUnmodifiedSince = default,
+                Azure.ETag? ifMatch = default,
+                Azure.ETag? ifNoneMatch = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "seal", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
+                if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the AppendBlob.SealAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The AppendBlob.SealAsync Azure.Response{Azure.Storage.Blobs.Models.AppendBlobSealInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.AppendBlobSealInternal> SealAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Blobs.Models.AppendBlobSealInternal _value = new Azure.Storage.Blobs.Models.AppendBlobSealInternal();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
+                        {
+                            _value.BlobSealed = bool.Parse(_header);
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion AppendBlob.SealAsync
         }
         #endregion AppendBlob operations
 
@@ -14646,6 +14843,38 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion enum AccountKind
+
+#region class AppendBlobSealInternal
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// AppendBlobSealInternal
+    /// </summary>
+    internal partial class AppendBlobSealInternal
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// If this blob has been sealed
+        /// </summary>
+        public bool BlobSealed { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of AppendBlobSealInternal instances.
+        /// You can use BlobsModelFactory.AppendBlobSealInternal instead.
+        /// </summary>
+        internal AppendBlobSealInternal() { }
+    }
+}
+#endregion class AppendBlobSealInternal
 
 #region enum ArchiveStatus
 namespace Azure.Storage.Blobs.Models
@@ -18052,6 +18281,11 @@ namespace Azure.Storage.Blobs.Models
         public long TagCount { get; internal set; }
 
         /// <summary>
+        /// If this blob has been sealed
+        /// </summary>
+        public bool BlobSealed { get; internal set; }
+
+        /// <summary>
         /// Creates a new BlobProperties instance
         /// </summary>
         public BlobProperties()
@@ -18070,79 +18304,81 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobProperties BlobProperties(
             System.DateTimeOffset lastModified,
-            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             long contentLength,
             string contentType,
             Azure.ETag eTag,
-            Azure.Storage.Blobs.Models.LeaseState leaseState,
+            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             string contentEncoding,
             string contentDisposition,
             string contentLanguage,
             string cacheControl,
             long blobSequenceNumber,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
+            Azure.Storage.Blobs.Models.LeaseState leaseState,
             string acceptRanges,
-            string destinationSnapshot,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             int blobCommittedBlockCount,
-            bool isIncrementalCopy,
+            string destinationSnapshot,
             bool isServerEncrypted,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            bool isIncrementalCopy,
             string encryptionKeySha256,
-            System.Uri copySource,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
             string encryptionScope,
-            string copyProgress,
+            System.Uri copySource,
             string accessTier,
-            string copyId,
+            string copyProgress,
             bool accessTierInferred,
-            string copyStatusDescription,
+            string copyId,
             string archiveStatus,
-            System.DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
             System.DateTimeOffset accessTierChangedOn,
-            Azure.Storage.Blobs.Models.BlobType blobType,
+            System.DateTimeOffset copyCompletedOn,
             string versionId,
-            System.Collections.Generic.IDictionary<string, string> metadata,
+            Azure.Storage.Blobs.Models.BlobType blobType,
             bool isCurrentVersion,
-            System.DateTimeOffset createdOn,
+            System.Collections.Generic.IDictionary<string, string> metadata,
             long tagCount,
+            System.DateTimeOffset createdOn,
+            bool blobSealed,
             byte[] contentHash)
         {
             return new BlobProperties()
             {
                 LastModified = lastModified,
-                LeaseStatus = leaseStatus,
                 ContentLength = contentLength,
                 ContentType = contentType,
                 ETag = eTag,
-                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
                 ContentEncoding = contentEncoding,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
                 CacheControl = cacheControl,
                 BlobSequenceNumber = blobSequenceNumber,
-                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
                 AcceptRanges = acceptRanges,
-                DestinationSnapshot = destinationSnapshot,
+                LeaseDuration = leaseDuration,
                 BlobCommittedBlockCount = blobCommittedBlockCount,
-                IsIncrementalCopy = isIncrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
                 IsServerEncrypted = isServerEncrypted,
-                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
                 EncryptionKeySha256 = encryptionKeySha256,
-                CopySource = copySource,
+                CopyStatus = copyStatus,
                 EncryptionScope = encryptionScope,
-                CopyProgress = copyProgress,
+                CopySource = copySource,
                 AccessTier = accessTier,
-                CopyId = copyId,
+                CopyProgress = copyProgress,
                 AccessTierInferred = accessTierInferred,
-                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
                 ArchiveStatus = archiveStatus,
-                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
                 AccessTierChangedOn = accessTierChangedOn,
-                BlobType = blobType,
+                CopyCompletedOn = copyCompletedOn,
                 VersionId = versionId,
-                Metadata = metadata,
+                BlobType = blobType,
                 IsCurrentVersion = isCurrentVersion,
-                CreatedOn = createdOn,
+                Metadata = metadata,
                 TagCount = tagCount,
+                CreatedOn = createdOn,
+                BlobSealed = blobSealed,
                 ContentHash = contentHash,
             };
         }
@@ -20644,6 +20880,11 @@ namespace Azure.Storage.Blobs.Models
         /// The number of tags associated with the blob
         /// </summary>
         public long TagCount { get; internal set; }
+
+        /// <summary>
+        /// If this blob has been sealed
+        /// </summary>
+        public bool BlobSealed { get; internal set; }
 
         /// <summary>
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.

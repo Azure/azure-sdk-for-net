@@ -1418,6 +1418,16 @@ directive:
     $.BlobItemInternal["x-az-public"] = false;
 ```
 
+### Make AppendBlobSealResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=seal"]
+  transform: >
+    $.put.responses["200"]["x-az-public"] = false;
+    $.put.responses["200"]["x-az-response-name"] = "AppendBlobSealInternal";
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
