@@ -12,14 +12,11 @@ namespace Microsoft.Azure.Management.IotHub.Models
 {
 
     /// <summary>
-    /// Defines values for RoutingSource.
+    /// Defines values for AuthenticationType.
     /// </summary>
-    public static class RoutingSource
+    public static class AuthenticationType
     {
-        public const string Invalid = "Invalid";
-        public const string DeviceMessages = "DeviceMessages";
-        public const string TwinChangeEvents = "TwinChangeEvents";
-        public const string DeviceLifecycleEvents = "DeviceLifecycleEvents";
-        public const string DeviceJobLifecycleEvents = "DeviceJobLifecycleEvents";
+        public const string KeyBased = "keyBased";
+        public const string IdentityBased = "identityBased";
     }
 }

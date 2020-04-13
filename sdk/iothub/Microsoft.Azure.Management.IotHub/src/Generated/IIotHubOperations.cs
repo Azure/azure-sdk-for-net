@@ -24,19 +24,23 @@ namespace Microsoft.Azure.Management.IotHub
     public partial interface IIotHubOperations
     {
         /// <summary>
-        /// Manual Failover Fail over
+        /// Manually initiate a failover for the IoT Hub to its secondary
+        /// region
         /// </summary>
         /// <remarks>
-        /// Perform manual fail over of given hub
+        /// Manually initiate a failover for the IoT Hub to its secondary
+        /// region. To learn more, see https://aka.ms/manualfailover
         /// </remarks>
         /// <param name='iotHubName'>
-        /// IotHub to fail over
+        /// Name of the IoT hub to failover
         /// </param>
         /// <param name='failoverInput'>
-        /// Region to failover to. Must be a azure DR pair
+        /// Region to failover to. Must be the Azure paired region. Get the
+        /// value from the secondary location in the locations property. To
+        /// learn more, see https://aka.ms/manualfailover/region
         /// </param>
         /// <param name='resourceGroupName'>
-        /// resource group which Iot Hub belongs to
+        /// Name of the resource group containing the IoT hub resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,19 +56,23 @@ namespace Microsoft.Azure.Management.IotHub
         /// </exception>
         Task<AzureOperationResponse> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Manual Failover Fail over
+        /// Manually initiate a failover for the IoT Hub to its secondary
+        /// region
         /// </summary>
         /// <remarks>
-        /// Perform manual fail over of given hub
+        /// Manually initiate a failover for the IoT Hub to its secondary
+        /// region. To learn more, see https://aka.ms/manualfailover
         /// </remarks>
         /// <param name='iotHubName'>
-        /// IotHub to fail over
+        /// Name of the IoT hub to failover
         /// </param>
         /// <param name='failoverInput'>
-        /// Region to failover to. Must be a azure DR pair
+        /// Region to failover to. Must be the Azure paired region. Get the
+        /// value from the secondary location in the locations property. To
+        /// learn more, see https://aka.ms/manualfailover/region
         /// </param>
         /// <param name='resourceGroupName'>
-        /// resource group which Iot Hub belongs to
+        /// Name of the resource group containing the IoT hub resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -12,14 +12,13 @@ namespace Microsoft.Azure.Management.IotHub.Models
 {
 
     /// <summary>
-    /// Defines values for RoutingSource.
+    /// Defines values for PrivateLinkServiceConnectionStatus.
     /// </summary>
-    public static class RoutingSource
+    public static class PrivateLinkServiceConnectionStatus
     {
-        public const string Invalid = "Invalid";
-        public const string DeviceMessages = "DeviceMessages";
-        public const string TwinChangeEvents = "TwinChangeEvents";
-        public const string DeviceLifecycleEvents = "DeviceLifecycleEvents";
-        public const string DeviceJobLifecycleEvents = "DeviceJobLifecycleEvents";
+        public const string Pending = "Pending";
+        public const string Approved = "Approved";
+        public const string Rejected = "Rejected";
+        public const string Disconnected = "Disconnected";
     }
 }
