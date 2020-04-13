@@ -8,15 +8,20 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormTable : FormContent
+    public class FormTable
     {
         internal FormTable(DataTable_internal table, ReadResult_internal readResult)
-            : base(new BoundingBox(), readResult.Page, null) // TODO: retrieve text and bounding box.
         {
+            PageNumber = readResult.Page;
             ColumnCount = table.Columns;
             RowCount = table.Rows;
             Cells = ConvertCells(table.Cells, readResult);
         }
+
+        /// <summary>
+        /// The 1-based page number in the input document.
+        /// </summary>
+        public int PageNumber { get; }
 
         /// <summary>
         /// </summary>
