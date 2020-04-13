@@ -33,7 +33,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public DataLakeTestBase(bool async) : this(async, null) { }
 
         public DataLakeTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Live)
         {
         }
 

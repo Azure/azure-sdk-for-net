@@ -1553,6 +1553,11 @@ namespace Azure.Storage.Files.DataLake
                     DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri);
                     string renameSource = "/" + uriBuilder.FileSystemName + "/" + uriBuilder.DirectoryOrFilePath;
 
+                    if (uriBuilder.Sas != null)
+                    {
+                        renameSource += "?" + uriBuilder.Sas;
+                    }
+
                     uriBuilder.FileSystemName = destinationFileSystem ?? uriBuilder.FileSystemName;
                     uriBuilder.DirectoryOrFilePath = destinationPath;
                     DataLakePathClient destPathClient = new DataLakePathClient(uriBuilder.ToUri(), Pipeline);
