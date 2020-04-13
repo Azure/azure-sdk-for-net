@@ -37,10 +37,6 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public int? PageNumber { get; internal set; }
-
-        /// <summary>
-        /// </summary>
         /// <param name="field"></param>
         public static implicit operator T(FormField<T> field) => field.Value;
     }
