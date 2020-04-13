@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Text from the form that labels the form field.
         /// </summary>
-        public FieldText FieldLabel { get; internal set; }
+        public FieldText LabelText { get; internal set; }
 
         /// <summary>
         /// </summary>
