@@ -127,7 +127,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             foreach (var pageResult in pageResults)
             {
-                pages.Add(new FormPage(pageResult.Tables, rawPages[pageResult.Page - 1]));
+                pages.Add(new FormPage(rawPages[pageResult.Page - 1]));
             }
 
             return pages;

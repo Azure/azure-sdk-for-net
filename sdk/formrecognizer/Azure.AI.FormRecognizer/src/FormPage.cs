@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormPage : FormContent
     {
-        internal FormPage(IReadOnlyList<DataTable_internal> tablesResult, ReadResult_internal readResult)
+        internal FormPage(ReadResult_internal readResult)
             : base(null, readResult.Page, null) // TODO: retrieve text and bounding box.
         {
             TextAngle = readResult.Angle;
@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
                 Lines = RawExtractedPage.ConvertLines(readResult.Lines, PageNumber);
             }
 
-            Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
+            //Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
         }
 
         /// <summary>

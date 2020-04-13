@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public enum ExtractedReceiptType
+    [Flags]
+    public enum USReceiptType
     {
         /// <summary>
         /// </summary>
@@ -14,5 +17,17 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         Itemized = 1,
+
+        /// <summary>
+        /// </summary>
+        CreditCard = 2,
+
+        /// <summary>
+        /// </summary>
+        Gas = 4,
+
+        /// <summary>
+        /// </summary>
+        Parking = 8,
     }
 }
