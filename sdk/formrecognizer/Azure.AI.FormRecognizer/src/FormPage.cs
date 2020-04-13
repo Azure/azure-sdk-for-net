@@ -2,17 +2,16 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormPage : FormContent
+    public class FormPage
     {
         internal FormPage(ReadResult_internal readResult)
-            : base(new BoundingBox(), readResult.Page, null) // TODO: retrieve text and bounding box.
         {
+            PageNumber = readResult.Page;
             TextAngle = readResult.Angle;
             Width = readResult.Width;
             Height = readResult.Height;
@@ -20,11 +19,16 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResult.Lines != null)
             {
-                Lines = ConvertLines(readResult.Lines, PageNumber);
+                Lines = ConvertLines(readResult.Lines, readResult.Page);
             }
 
             //Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
         }
+
+        /// <summary>
+        /// The 1-based page number in the input document.
+        /// </summary>
+        public int PageNumber { get; }
 
         /// <summary>
         /// The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].
