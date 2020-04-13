@@ -289,8 +289,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IEnumerable<string> lockTokens,
             TimeSpan timeout)
         {
-            Guid[] lockTokenGuids = lockTokens.Select(token => new Guid(token)).ToArray();
-            if (lockTokenGuids.Any(lockToken => _requestResponseLockedMessages.Contains(lockToken)))
+            bool requestResponse = false;
+            var lockTokenGuids = lockTokens.Select(token => new Guid(token)).ToArray();
+            foreach (var tokenGuid in lockTokenGuids)
+            {
+                if (!requestResponse && _requestResponseLockedMessages.Contains(tokenGuid))
+                {
+                    requestResponse = true;
+                }
+            }
+
+            if (requestResponse)
             {
                 await DisposeMessageRequestResponseAsync(
                     lockTokenGuids,
@@ -436,17 +445,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
-            Guid[] lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => _requestResponseLockedMessages.Contains(lt)))
+            Guid lockTokenGuid = new Guid(lockToken);
+            var lockTokenGuids = new[] { lockTokenGuid };
+            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokens,
+                    lockTokenGuids,
                     timeout,
                     DispositionStatus.Defered,
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessagesAsync(lockTokens, GetDeferOutcome(propertiesToModify), timeout);
+            return DisposeMessagesAsync(lockTokenGuids, GetDeferOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -488,17 +498,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
-            Guid[] lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => _requestResponseLockedMessages.Contains(lt)))
+            Guid lockTokenGuid = new Guid(lockToken);
+            var lockTokenGuids = new[] { lockTokenGuid };
+            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokens,
+                    lockTokenGuids,
                     timeout,
                     DispositionStatus.Abandoned,
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessagesAsync(lockTokens, GetAbandonOutcome(propertiesToModify), timeout);
+            return DisposeMessagesAsync(lockTokenGuids, GetAbandonOutcome(propertiesToModify), timeout);
         }
 
         /// <summary>
@@ -562,11 +573,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), string.Format(Resources.MaxPermittedLengthExceeded, Constants.MaxDeadLetterReasonLength));
             }
 
-            var lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => _requestResponseLockedMessages.Contains(lt)))
+            Guid lockTokenGuid = new Guid(lockToken);
+            var lockTokenGuids = new[] { lockTokenGuid };
+            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
             {
                 return DisposeMessageRequestResponseAsync(
-                    lockTokens,
+                    lockTokenGuids,
                     timeout,
                     DispositionStatus.Suspended,
                     SessionId,
@@ -576,7 +588,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             return DisposeMessagesAsync(
-                lockTokens,
+                lockTokenGuids,
                 GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription),
                 timeout);
         }
@@ -918,8 +930,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
             {
-                IEnumerable<DateTime> lockedUntilUtcTimes = amqpResponseMessage.GetValue<IEnumerable<DateTime>>(ManagementConstants.Properties.Expirations);
-                lockedUntil = lockedUntilUtcTimes.First();
+                DateTime[] lockedUntilUtcTimes = amqpResponseMessage.GetValue<DateTime[]>(ManagementConstants.Properties.Expirations);
+                lockedUntil = lockedUntilUtcTimes[0];
             }
             else
             {
