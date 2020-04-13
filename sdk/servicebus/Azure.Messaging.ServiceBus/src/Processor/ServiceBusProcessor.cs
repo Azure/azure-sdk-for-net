@@ -480,7 +480,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     ServiceBusEventSource.Log.StopProcessingStart(Identifier);
 
-                    await ProcessingStartStopSemaphore.WaitAsync().ConfigureAwait(false);
+                    await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -559,7 +559,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = ServiceBusErrorSource.AcceptMessageSession;
                     useThreadLocalReceiver = true;
-                    await MaxConcurrentAcceptSessionsSemaphore.WaitAsync().ConfigureAwait(false);
+                    await MaxConcurrentAcceptSessionsSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
                     try
                     {
                         try
