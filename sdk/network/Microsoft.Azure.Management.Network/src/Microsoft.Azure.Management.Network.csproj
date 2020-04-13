@@ -7,16 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.19.0-preview</Version>
+		<Version>19.20.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added support for NetworkVirtualAppliance
-            - Added support for FQDN in LocalNetworkGateway and VpnSiteLink
-            - Added support for private IP address and BGP peering addresses in VirtualNetworkGateway
-            - Added support for IPv6 private peering in ExpressRouteCircuitConnection
-            - Added support for IP groups in AzureFirewall
-            - Added client-side validation for Azure Firewall name's length
+            - Added support for IpAllocation
+            - Added support for PrivateDnsZoneGroup
+            - Added support for SecurityPartnerProvider
+            - Added support for ForceFirewallPolicyAssociation in ApplicationGateway
+            - Added support for IntrusionSystemMode in FirewallPolicy
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

@@ -165,7 +165,7 @@ Name of the cloud environment. The default is the Azure Public Cloud
 Force removal of resource group without asking for user confirmation
 
 .EXAMPLE
-./Remove-TestResources.ps1 -BaseName uuid123 -Force
+Remove-TestResources.ps1 -BaseName 'uuid123' -Force
 
 Use the currently logged-in account to delete the resource group by the name of
 'rg-uuid123'

@@ -27,12 +27,8 @@ namespace Azure.Core.Buffers
                 }
                 else
                 {
-                    if (array == null || buffer.Length < buffer.Length)
-                    {
-                        if (array != null)
-                            ArrayPool<byte>.Shared.Return(array);
-                        array = ArrayPool<byte>.Shared.Rent(buffer.Length);
-                    }
+                    array = ArrayPool<byte>.Shared.Rent(buffer.Length);
+
                     if (!buffer.TryCopyTo(array))
                         throw new Exception("could not rent large enough buffer.");
                     await stream.WriteAsync(array, 0, buffer.Length, cancellation).ConfigureAwait(false);
@@ -63,7 +59,7 @@ namespace Azure.Core.Buffers
                     }
                     else
                     {
-                        if (array == null || buffer.Length < segment.Length)
+                        if (array == null || array.Length < segment.Length)
                         {
                             if (array != null)
                                 ArrayPool<byte>.Shared.Return(array);

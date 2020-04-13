@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new Message
         /// </summary>
         public ServiceBusMessage()
-            : this(null)
+            : this(default)
         {
         }
 

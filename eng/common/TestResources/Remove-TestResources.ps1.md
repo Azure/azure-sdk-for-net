@@ -53,7 +53,7 @@ create resources.
 
 ### EXAMPLE 1
 ```
-./Remove-TestResources.ps1 -BaseName uuid123 -Force
+Remove-TestResources.ps1 -BaseName 'uuid123' -Force
 ```
 
 Use the currently logged-in account to delete the resource group by the name of
@@ -61,7 +61,7 @@ Use the currently logged-in account to delete the resource group by the name of
 
 ### EXAMPLE 2
 ```
-eng/Remove-TestResources.ps1 `
+Remove-TestResources.ps1 `
     -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}" `
     -TenantId '$(TenantId)' `
     -ProvisionerApplicationId '$(AppId)' `
@@ -123,7 +123,7 @@ Accept wildcard characters: False
 ```
 
 ### -SubscriptionId
-Optional subscription ID to use for new resources when logging in as a 
+Optional subscription ID to use for new resources when logging in as a
 provisioner.
 You can also use Set-AzContext if not provisioning.
 
@@ -235,7 +235,12 @@ Accept wildcard characters: False
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
 ## RELATED LINKS
 
 [New-TestResources.ps1](./New-TestResources.ps1.md)
-
