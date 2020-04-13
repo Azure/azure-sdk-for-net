@@ -16,7 +16,7 @@ Install-Package Azure.Security.KeyVault.Keys
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
-* An existing Azure Key Vault. If you need to create a Azure Key Vault, you can use the Azure Portal or [Azure CLI][azure_cli].
+* An existing Azure Key Vault. If you need to create an Azure Key Vault, you can use the Azure Portal or [Azure CLI][azure_cli].
 
 If you use the Azure CLI, replace `<your-resource-group-name>` and `<your-key-vault-name>` with your own, unique names:
 
@@ -29,7 +29,7 @@ In order to interact with the Azure Key Vault service, you'll need to create an 
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] shown below,
-or other credential provided with the Azure SDK, you should install the Azure.Identity package:
+or other credentials provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
 Install-Package Azure.Identity
