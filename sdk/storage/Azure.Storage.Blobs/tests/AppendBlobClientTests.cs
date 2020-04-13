@@ -975,6 +975,7 @@ namespace Azure.Storage.Blobs.Test
                 new AccessConditionParameters { Match = ReceivedETag },
                 new AccessConditionParameters { NoneMatch = GarbageETag },
                 new AccessConditionParameters { LeaseId = ReceivedLeaseId },
+                new AccessConditionParameters { AppendPosE = 0 },
             };
 
             foreach (AccessConditionParameters parameters in testCases)
@@ -1010,7 +1011,8 @@ namespace Azure.Storage.Blobs.Test
                 new AccessConditionParameters { IfUnmodifiedSince = OldDate },
                 new AccessConditionParameters { Match = GarbageETag },
                 new AccessConditionParameters { NoneMatch = ReceivedETag },
-                new AccessConditionParameters { LeaseId = garbageLeaseId }
+                new AccessConditionParameters { LeaseId = garbageLeaseId },
+                new AccessConditionParameters { AppendPosE = 1 },
             };
 
             foreach (AccessConditionParameters parameters in testCases)
