@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Azure blob read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureBlobStorageReadSettings")]
     public partial class AzureBlobStorageReadSettings : StoreReadSettings
     {
         /// <summary>
@@ -53,13 +54,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string).</param>
         /// <param name="enablePartitionDiscovery">Indicates whether to enable
         /// partition discovery.</param>
+        /// <param name="partitionRootPath">Specify the root path where
+        /// partition discovery starts from. Type: string (or Expression with
+        /// resultType string).</param>
         /// <param name="modifiedDatetimeStart">The start of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public AzureBlobStorageReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object prefix = default(object), object fileListPath = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public AzureBlobStorageReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object prefix = default(object), object fileListPath = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
@@ -68,6 +72,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Prefix = prefix;
             FileListPath = fileListPath;
             EnablePartitionDiscovery = enablePartitionDiscovery;
+            PartitionRootPath = partitionRootPath;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
             CustomInit();
@@ -120,6 +125,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "enablePartitionDiscovery")]
         public bool? EnablePartitionDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify the root path where partition discovery starts
+        /// from. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "partitionRootPath")]
+        public object PartitionRootPath { get; set; }
 
         /// <summary>
         /// Gets or sets the start of file's modified datetime. Type: string

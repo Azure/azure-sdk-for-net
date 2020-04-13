@@ -16,27 +16,31 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Format write settings.
+    /// The ZipDeflate compression read settings.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("FormatWriteSettings")]
-    public partial class FormatWriteSettings
+    [Newtonsoft.Json.JsonObject("ZipDeflateReadSettings")]
+    public partial class ZipDeflateReadSettings : CompressionReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the FormatWriteSettings class.
+        /// Initializes a new instance of the ZipDeflateReadSettings class.
         /// </summary>
-        public FormatWriteSettings()
+        public ZipDeflateReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FormatWriteSettings class.
+        /// Initializes a new instance of the ZipDeflateReadSettings class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public FormatWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        /// <param name="preserveZipFileNameAsFolder">Preserve the zip file
+        /// name as folder path. Type: boolean (or Expression with resultType
+        /// boolean).</param>
+        public ZipDeflateReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object preserveZipFileNameAsFolder = default(object))
+            : base(additionalProperties)
         {
-            AdditionalProperties = additionalProperties;
+            PreserveZipFileNameAsFolder = preserveZipFileNameAsFolder;
             CustomInit();
         }
 
@@ -46,11 +50,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
+        /// Gets or sets preserve the zip file name as folder path. Type:
+        /// boolean (or Expression with resultType boolean).
         /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
+        [JsonProperty(PropertyName = "preserveZipFileNameAsFolder")]
+        public object PreserveZipFileNameAsFolder { get; set; }
 
     }
 }

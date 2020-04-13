@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Jira Service source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("JiraSource")]
     public partial class JiraSource : TabularSource
     {
         /// <summary>

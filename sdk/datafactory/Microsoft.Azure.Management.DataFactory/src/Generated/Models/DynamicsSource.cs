@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Dynamics source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DynamicsSource")]
     public partial class DynamicsSource : CopySource
     {
         /// <summary>

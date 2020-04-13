@@ -16,31 +16,29 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// The location of azure data lake store dataset.
+    /// Json read settings.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureDataLakeStoreLocation")]
-    public partial class AzureDataLakeStoreLocation : DatasetLocation
+    [Newtonsoft.Json.JsonObject("JsonReadSettings")]
+    public partial class JsonReadSettings : FormatReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AzureDataLakeStoreLocation class.
+        /// Initializes a new instance of the JsonReadSettings class.
         /// </summary>
-        public AzureDataLakeStoreLocation()
+        public JsonReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureDataLakeStoreLocation class.
+        /// Initializes a new instance of the JsonReadSettings class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="folderPath">Specify the folder path of dataset. Type:
-        /// string (or Expression with resultType string)</param>
-        /// <param name="fileName">Specify the file name of dataset. Type:
-        /// string (or Expression with resultType string).</param>
-        public AzureDataLakeStoreLocation(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object folderPath = default(object), object fileName = default(object))
-            : base(additionalProperties, folderPath, fileName)
+        /// <param name="compressionProperties">Compression settings.</param>
+        public JsonReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), CompressionReadSettings compressionProperties = default(CompressionReadSettings))
+            : base(additionalProperties)
         {
+            CompressionProperties = compressionProperties;
             CustomInit();
         }
 
@@ -48,6 +46,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets compression settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "compressionProperties")]
+        public CompressionReadSettings CompressionProperties { get; set; }
 
     }
 }

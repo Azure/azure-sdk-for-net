@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity SQL Data Warehouse source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SqlDWSource")]
     public partial class SqlDWSource : TabularSource
     {
         /// <summary>

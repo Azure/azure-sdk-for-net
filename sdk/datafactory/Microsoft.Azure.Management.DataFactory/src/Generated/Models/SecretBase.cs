@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The base definition of a secret type.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SecretBase")]
     public partial class SecretBase
     {
         /// <summary>

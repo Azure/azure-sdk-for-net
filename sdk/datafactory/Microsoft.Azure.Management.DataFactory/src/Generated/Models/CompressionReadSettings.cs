@@ -16,31 +16,27 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// The location of azure data lake store dataset.
+    /// Compression read settings.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("AzureDataLakeStoreLocation")]
-    public partial class AzureDataLakeStoreLocation : DatasetLocation
+    [Newtonsoft.Json.JsonObject("CompressionReadSettings")]
+    public partial class CompressionReadSettings
     {
         /// <summary>
-        /// Initializes a new instance of the AzureDataLakeStoreLocation class.
+        /// Initializes a new instance of the CompressionReadSettings class.
         /// </summary>
-        public AzureDataLakeStoreLocation()
+        public CompressionReadSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureDataLakeStoreLocation class.
+        /// Initializes a new instance of the CompressionReadSettings class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        /// <param name="folderPath">Specify the folder path of dataset. Type:
-        /// string (or Expression with resultType string)</param>
-        /// <param name="fileName">Specify the file name of dataset. Type:
-        /// string (or Expression with resultType string).</param>
-        public AzureDataLakeStoreLocation(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object folderPath = default(object), object fileName = default(object))
-            : base(additionalProperties, folderPath, fileName)
+        public CompressionReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
         {
+            AdditionalProperties = additionalProperties;
             CustomInit();
         }
 
@@ -48,6 +44,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unmatched properties from the message are deserialized
+        /// this collection
+        /// </summary>
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties { get; set; }
 
     }
 }

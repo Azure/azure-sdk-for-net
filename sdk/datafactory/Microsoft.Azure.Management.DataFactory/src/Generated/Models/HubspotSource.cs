@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Hubspot Service source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("HubspotSource")]
     public partial class HubspotSource : TabularSource
     {
         /// <summary>
