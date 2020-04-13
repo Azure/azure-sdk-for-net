@@ -137,7 +137,7 @@ In some cases, you might want to test against the latest versions of the client 
 
 ## Public API additions
 
-If you make a public API addition, the `eng\Export-API.ps1` script has to be run to update public API listings.
+If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings.
 
 ## API Compatibility Verification
 

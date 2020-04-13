@@ -86,7 +86,7 @@ try {
     if ($LastExitCode -ne 0) {
         $status = git status -s | Out-String
         $status = $status -replace "`n","`n    "
-        LogError "Generated code is not up to date. You may need to run eng\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\Export-API.ps1"
+        LogError "Generated code is not up to date. You may need to run eng\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
     }
 }
 finally {
