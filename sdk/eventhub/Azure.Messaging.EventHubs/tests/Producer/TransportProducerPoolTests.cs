@@ -381,6 +381,10 @@ namespace Azure.Messaging.EventHubs.Tests
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
             public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();
+
+            public override void Clear()
+            {
+            }
         }
     }
 }
