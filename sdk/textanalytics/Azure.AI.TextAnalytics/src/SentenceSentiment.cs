@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the predicted sentiment for the analyzed input.
+        /// Gets the predicted sentiment for the analyzed sentence.
         /// </summary>
         public TextSentiment Sentiment { get; }
 
@@ -30,12 +30,12 @@ namespace Azure.AI.TextAnalytics
         public SentimentConfidenceScores ConfidenceScores { get; }
 
         /// <summary>
-        /// Gets the starting position (in Unicode graphemes) for the matching text in the input.
+        /// Gets the starting position (in Unicode graphemes) for the matching text in the sentence.
         /// </summary>
         public int GraphemeOffset { get; }
 
         /// <summary>
-        /// Gets the length (in Unicode graphemes) of the matching text in the input.
+        /// Gets the length (in Unicode graphemes) of the matching text in the sentence.
         /// </summary>
         public int GraphemeLength { get; }
     }

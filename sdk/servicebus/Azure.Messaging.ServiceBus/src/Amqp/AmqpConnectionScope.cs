@@ -461,13 +461,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
-            catch
+            catch (Exception exception)
             {
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 session?.Abort();
-                throw;
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    null,
+                    session.GetInnerException(),
+                    connection.IsClosing());
             }
         }
 
@@ -570,13 +574,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
-            catch
+            catch (Exception exception)
             {
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 session?.Abort();
-                throw;
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    null,
+                    session.GetInnerException(),
+                    connection.IsClosing());
             }
         }
 
@@ -664,13 +672,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 BeginTrackingLinkAsActive(entityPath, link, refreshTimer);
                 return link;
             }
-            catch
+            catch (Exception exception)
             {
                 // Aborting the session will perform any necessary cleanup of
                 // the associated link as well.
 
                 session?.Abort();
-                throw;
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    null,
+                    session.GetInnerException(),
+                    connection.IsClosing());
             }
         }
 
@@ -699,7 +711,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (!ActiveLinks.TryAdd(link, authorizationRefreshTimer))
             {
-                throw new ServiceBusException(true, entityPath, Resources1.CouldNotCreateLink);
+                throw new ServiceBusException(true, entityPath, Resources.CouldNotCreateLink);
             }
 
             // When the link is closed, stop refreshing authorization and remove it from the
@@ -825,8 +837,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="target">The target AMQP object to open.</param>
         /// <param name="timeout">The timeout to apply when opening the link.</param>
         ///
-        protected virtual Task OpenAmqpObjectAsync(AmqpObject target,
-                                                   TimeSpan timeout) => target.OpenAsync(timeout);
+        protected virtual Task OpenAmqpObjectAsync(
+            AmqpObject target,
+            TimeSpan timeout) =>
+            target.OpenAsync(timeout);
 
         /// <summary>
         ///   Requests authorization for a connection or link using a connection via the CBS mechanism.
@@ -979,7 +993,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if ((transport != ServiceBusTransportType.AmqpTcp) && (transport != ServiceBusTransportType.AmqpWebSockets))
             {
-                throw new ArgumentException(nameof(transport), string.Format(CultureInfo.CurrentCulture, Resources1.UnknownConnectionType, transport));
+                throw new ArgumentException(nameof(transport), string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport));
             }
         }
     }

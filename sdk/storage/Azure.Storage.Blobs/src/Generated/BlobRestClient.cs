@@ -493,7 +493,7 @@ namespace Azure.Storage.Blobs
                 string prefix = default,
                 string marker = default,
                 int? maxresults = default,
-                Azure.Storage.Blobs.Models.ListBlobContainersIncludeType? include = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ListContainersIncludeType> include = default,
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
@@ -563,7 +563,7 @@ namespace Azure.Storage.Blobs
                 string prefix = default,
                 string marker = default,
                 int? maxresults = default,
-                Azure.Storage.Blobs.Models.ListBlobContainersIncludeType? include = default,
+                System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.ListContainersIncludeType> include = default,
                 int? timeout = default,
                 string requestId = default)
             {
@@ -588,7 +588,7 @@ namespace Azure.Storage.Blobs
                 if (prefix != null) { _request.Uri.AppendQuery("prefix", prefix); }
                 if (marker != null) { _request.Uri.AppendQuery("marker", marker); }
                 if (maxresults != null) { _request.Uri.AppendQuery("maxresults", maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-                if (include != null) { _request.Uri.AppendQuery("include", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(include.Value)); }
+                if (include != null) { _request.Uri.AppendQuery("include", string.Join(",", System.Linq.Enumerable.Select(include, item => Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(item)))); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
@@ -1113,6 +1113,169 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Service.SubmitBatchAsync
+
+            #region Service.FilterBlobsAsync
+            /// <summary>
+            /// The Filter Blobs operation enables callers to list blobs across all containers whose tags match a given search expression.  Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="where">Filters the results to return only to return only blobs whose tags match the specified expression.</param>
+            /// <param name="marker">A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
+            /// <param name="maxresults">Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>The result of a Filter Blobs API call</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.FilterBlobSegment>> FilterBlobsAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string where = default,
+                string marker = default,
+                int? maxresults = default,
+                bool async = true,
+                string operationName = "ServiceClient.FilterBlobs",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = FilterBlobsAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        requestId,
+                        where,
+                        marker,
+                        maxresults))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return FilterBlobsAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Service.FilterBlobsAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="where">Filters the results to return only to return only blobs whose tags match the specified expression.</param>
+            /// <param name="marker">A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client.</param>
+            /// <param name="maxresults">Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000.</param>
+            /// <returns>The Service.FilterBlobsAsync Message.</returns>
+            internal static Azure.Core.HttpMessage FilterBlobsAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string where = default,
+                string marker = default,
+                int? maxresults = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Get;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "blobs", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (where != null) { _request.Uri.AppendQuery("where", where); }
+                if (marker != null) { _request.Uri.AppendQuery("marker", marker); }
+                if (maxresults != null) { _request.Uri.AppendQuery("maxresults", maxresults.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Service.FilterBlobsAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Service.FilterBlobsAsync Azure.Response{Azure.Storage.Blobs.Models.FilterBlobSegment}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.FilterBlobSegment> FilterBlobsAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.FilterBlobSegment _value = Azure.Storage.Blobs.Models.FilterBlobSegment.FromXml(_xml.Root);
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.FilterBlobSegment>(response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Service.FilterBlobsAsync
         }
         #endregion Service operations
 
@@ -2202,6 +2365,155 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Container.SetAccessPolicyAsync
+
+            #region Container.RestoreAsync
+            /// <summary>
+            /// Restores a previously-deleted container.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="deletedContainerName">Optional.  Version 2019-12-12 and laster.  Specifies the name of the deleted container to restore.</param>
+            /// <param name="deletedContainerVersion">Optional.  Version 2019-12-12 and laster.  Specifies the version of the deleted container to restore.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> RestoreAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string deletedContainerName = default,
+                string deletedContainerVersion = default,
+                bool async = true,
+                string operationName = "ContainerClient.Restore",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = RestoreAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        requestId,
+                        deletedContainerName,
+                        deletedContainerVersion))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return RestoreAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Container.RestoreAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="deletedContainerName">Optional.  Version 2019-12-12 and laster.  Specifies the name of the deleted container to restore.</param>
+            /// <param name="deletedContainerVersion">Optional.  Version 2019-12-12 and laster.  Specifies the version of the deleted container to restore.</param>
+            /// <returns>The Container.RestoreAsync Message.</returns>
+            internal static Azure.Core.HttpMessage RestoreAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string deletedContainerName = default,
+                string deletedContainerVersion = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("restype", "container", escapeValue: false);
+                _request.Uri.AppendQuery("comp", "undelete", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (deletedContainerName != null) { _request.Headers.SetValue("x-ms-deleted-container-name", deletedContainerName); }
+                if (deletedContainerVersion != null) { _request.Headers.SetValue("x-ms-deleted-container-version", deletedContainerVersion); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Container.RestoreAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Container.RestoreAsync Azure.Response.</returns>
+            internal static Azure.Response RestoreAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 201:
+                    {
+                        return response;
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Container.RestoreAsync
 
             #region Container.AcquireLeaseAsync
             /// <summary>
@@ -3791,6 +4103,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.BlobContentHash = System.Convert.FromBase64String(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-tag-count", out _header))
+                        {
+                            _value.TagCount = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
+                        {
+                            _value.BlobSealed = bool.Parse(_header);
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -3922,6 +4242,14 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-blob-content-md5", out _header))
                         {
                             _value.BlobContentHash = System.Convert.FromBase64String(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-tag-count", out _header))
+                        {
+                            _value.TagCount = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
+                        {
+                            _value.BlobSealed = bool.Parse(_header);
                         }
 
                         // Create the response
@@ -4272,6 +4600,14 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-is-current-version", out _header))
                         {
                             _value.IsCurrentVersion = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-tag-count", out _header))
+                        {
+                            _value.TagCount = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
+                        {
+                            _value.BlobSealed = bool.Parse(_header);
                         }
 
                         // Create the response
@@ -6970,6 +7306,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -6994,6 +7331,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
+                string blobTagsString = default,
                 bool async = true,
                 string operationName = "BlobClient.StartCopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -7021,7 +7359,8 @@ namespace Azure.Storage.Blobs
                         ifMatch,
                         ifNoneMatch,
                         leaseId,
-                        requestId))
+                        requestId,
+                        blobTagsString))
                     {
                         if (async)
                         {
@@ -7071,6 +7410,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <returns>The Blob.StartCopyFromUriAsync Message.</returns>
             internal static Azure.Core.HttpMessage StartCopyFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7090,7 +7430,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
-                string requestId = default)
+                string requestId = default,
+                string blobTagsString = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -7136,6 +7477,7 @@ namespace Azure.Storage.Blobs
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
 
                 return _message;
             }
@@ -7219,6 +7561,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -7243,6 +7586,7 @@ namespace Azure.Storage.Blobs
                 string leaseId = default,
                 string requestId = default,
                 byte[] sourceContentHash = default,
+                string blobTagsString = default,
                 bool async = true,
                 string operationName = "BlobClient.CopyFromUri",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -7270,7 +7614,8 @@ namespace Azure.Storage.Blobs
                         ifNoneMatch,
                         leaseId,
                         requestId,
-                        sourceContentHash))
+                        sourceContentHash,
+                        blobTagsString))
                     {
                         if (async)
                         {
@@ -7320,6 +7665,7 @@ namespace Azure.Storage.Blobs
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="sourceContentHash">Specify the md5 calculated for the range of bytes that must be read from the copy source.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <returns>The Blob.CopyFromUriAsync Message.</returns>
             internal static Azure.Core.HttpMessage CopyFromUriAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -7339,7 +7685,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string leaseId = default,
                 string requestId = default,
-                byte[] sourceContentHash = default)
+                byte[] sourceContentHash = default,
+                string blobTagsString = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -7386,6 +7733,7 @@ namespace Azure.Storage.Blobs
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (sourceContentHash != null) { _request.Headers.SetValue("x-ms-source-content-md5", System.Convert.ToBase64String(sourceContentHash)); }
+                if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
 
                 return _message;
             }
@@ -8217,6 +8565,344 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Blob.QuickQueryAsync
+
+            #region Blob.GetTagsAsync
+            /// <summary>
+            /// The Get Tags operation enables users to get the tags associated with a blob.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Blob tags</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobTags>> GetTagsAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string snapshot = default,
+                string versionId = default,
+                bool async = true,
+                string operationName = "BlobClient.GetTags",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = GetTagsAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        requestId,
+                        snapshot,
+                        versionId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetTagsAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Blob.GetTagsAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
+            /// <returns>The Blob.GetTagsAsync Message.</returns>
+            internal static Azure.Core.HttpMessage GetTagsAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string snapshot = default,
+                string versionId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Get;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "tags", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
+                if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Blob.GetTagsAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Blob.GetTagsAsync Azure.Response{Azure.Storage.Blobs.Models.BlobTags}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobTags> GetTagsAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.BlobTags _value = Azure.Storage.Blobs.Models.BlobTags.FromXml(_xml.Root);
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobTags>(response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Blob.GetTagsAsync
+
+            #region Blob.SetTagsAsync
+            /// <summary>
+            /// The Set Tags operation enables users to set tags on a blob.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="contentLength">The length of the request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
+            /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
+            /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="tags">Blob tags</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response> SetTagsAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                long contentLength,
+                int? timeout = default,
+                string snapshot = default,
+                string versionId = default,
+                byte[] transactionalContentHash = default,
+                byte[] transactionalContentCrc64 = default,
+                string requestId = default,
+                Azure.Storage.Blobs.Models.BlobTags tags = default,
+                bool async = true,
+                string operationName = "BlobClient.SetTags",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SetTagsAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        contentLength,
+                        timeout,
+                        snapshot,
+                        versionId,
+                        transactionalContentHash,
+                        transactionalContentCrc64,
+                        requestId,
+                        tags))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetTagsAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Blob.SetTagsAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="contentLength">The length of the request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
+            /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
+            /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="tags">Blob tags</param>
+            /// <returns>The Blob.SetTagsAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SetTagsAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                long contentLength,
+                int? timeout = default,
+                string snapshot = default,
+                string versionId = default,
+                byte[] transactionalContentHash = default,
+                byte[] transactionalContentCrc64 = default,
+                string requestId = default,
+                Azure.Storage.Blobs.Models.BlobTags tags = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "tags", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
+                if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                if (transactionalContentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(transactionalContentHash)); }
+                if (transactionalContentCrc64 != null) { _request.Headers.SetValue("x-ms-content-crc64", System.Convert.ToBase64String(transactionalContentCrc64)); }
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                // Create the body
+                if (tags != null)
+                {
+                    System.Xml.Linq.XElement _body = Azure.Storage.Blobs.Models.BlobTags.ToXml(tags, "Tags", "");
+                    string _text = _body.ToString(System.Xml.Linq.SaveOptions.DisableFormatting);
+                    _request.Headers.SetValue("Content-Type", "application/xml");
+                    _request.Headers.SetValue("Content-Length", _text.Length.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    _request.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(_text));
+                }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Blob.SetTagsAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Blob.SetTagsAsync Azure.Response.</returns>
+            internal static Azure.Response SetTagsAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 204:
+                    {
+                        return response;
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Blob.SetTagsAsync
         }
         #endregion Blob operations
 
@@ -8256,6 +8942,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -8287,6 +8974,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
                 string requestId = default,
+                string blobTagsString = default,
                 bool async = true,
                 string operationName = "PageBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -8321,7 +9009,8 @@ namespace Azure.Storage.Blobs
                         ifMatch,
                         ifNoneMatch,
                         blobSequenceNumber,
-                        requestId))
+                        requestId,
+                        blobTagsString))
                     {
                         if (async)
                         {
@@ -8378,6 +9067,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="blobSequenceNumber">Set for page blobs only. The sequence number is a user-controlled value that you can use to track requests. The value of the sequence number must be between 0 and 2^63 - 1.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <returns>The PageBlob.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -8404,7 +9094,8 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 long? blobSequenceNumber = default,
-                string requestId = default)
+                string requestId = default,
+                string blobTagsString = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -8454,6 +9145,7 @@ namespace Azure.Storage.Blobs
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
                 if (blobSequenceNumber != null) { _request.Headers.SetValue("x-ms-blob-sequence-number", blobSequenceNumber.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
 
                 return _message;
             }
@@ -10442,6 +11134,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -10470,6 +11163,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
+                string blobTagsString = default,
                 bool async = true,
                 string operationName = "AppendBlobClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -10501,7 +11195,8 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         ifMatch,
                         ifNoneMatch,
-                        requestId))
+                        requestId,
+                        blobTagsString))
                     {
                         if (async)
                         {
@@ -10555,6 +11250,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <returns>The AppendBlob.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -10578,7 +11274,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
-                string requestId = default)
+                string requestId = default,
+                string blobTagsString = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -10625,6 +11322,7 @@ namespace Azure.Storage.Blobs
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
 
                 return _message;
             }
@@ -11290,6 +11988,197 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion AppendBlob.AppendBlockFromUriAsync
+
+            #region AppendBlob.SealAsync
+            /// <summary>
+            /// The Seal operation seals the Append Blob to make it read-only. Seal is supported only on version 2019-12-12 version or later.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.AppendBlobSealInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.AppendBlobSealInternal>> SealAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string leaseId = default,
+                System.DateTimeOffset? ifModifiedSince = default,
+                System.DateTimeOffset? ifUnmodifiedSince = default,
+                Azure.ETag? ifMatch = default,
+                Azure.ETag? ifNoneMatch = default,
+                long? appendPosition = default,
+                bool async = true,
+                string operationName = "AppendBlobClient.Seal",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SealAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        requestId,
+                        leaseId,
+                        ifModifiedSince,
+                        ifUnmodifiedSince,
+                        ifMatch,
+                        ifNoneMatch,
+                        appendPosition))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SealAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the AppendBlob.SealAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
+            /// <returns>The AppendBlob.SealAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SealAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string requestId = default,
+                string leaseId = default,
+                System.DateTimeOffset? ifModifiedSince = default,
+                System.DateTimeOffset? ifUnmodifiedSince = default,
+                Azure.ETag? ifMatch = default,
+                Azure.ETag? ifNoneMatch = default,
+                long? appendPosition = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "seal", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
+                if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+                if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the AppendBlob.SealAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The AppendBlob.SealAsync Azure.Response{Azure.Storage.Blobs.Models.AppendBlobSealInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.AppendBlobSealInternal> SealAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Blobs.Models.AppendBlobSealInternal _value = new Azure.Storage.Blobs.Models.AppendBlobSealInternal();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
+                        {
+                            _value.BlobSealed = bool.Parse(_header);
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion AppendBlob.SealAsync
         }
         #endregion AppendBlob operations
 
@@ -11329,6 +12218,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -11360,6 +12250,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
+                string blobTagsString = default,
                 bool async = true,
                 string operationName = "BlockBlobClient.Upload",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -11394,7 +12285,8 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         ifMatch,
                         ifNoneMatch,
-                        requestId))
+                        requestId,
+                        blobTagsString))
                     {
                         if (async)
                         {
@@ -11451,6 +12343,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <returns>The BlockBlob.UploadAsync Message.</returns>
             internal static Azure.Core.HttpMessage UploadAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -11477,7 +12370,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
-                string requestId = default)
+                string requestId = default,
+                string blobTagsString = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -11530,6 +12424,7 @@ namespace Azure.Storage.Blobs
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
 
                 // Create the body
                 _request.Content = Azure.Core.RequestContent.Create(body);
@@ -12131,6 +13026,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -12162,6 +13058,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
+                string blobTagsString = default,
                 bool async = true,
                 string operationName = "BlockBlobClient.CommitBlockList",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -12196,7 +13093,8 @@ namespace Azure.Storage.Blobs
                         ifUnmodifiedSince,
                         ifMatch,
                         ifNoneMatch,
-                        requestId))
+                        requestId,
+                        blobTagsString))
                     {
                         if (async)
                         {
@@ -12253,6 +13151,7 @@ namespace Azure.Storage.Blobs
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
             /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="blobTagsString">Optional. A URL encoded query param string which specifies the tags to be created with the Blob object. e.g. TagName1=TagValue1&amp;TagName2=TagValue2. The x-ms-tags header may contain up to 2kb of tags.</param>
             /// <returns>The BlockBlob.CommitBlockListAsync Message.</returns>
             internal static Azure.Core.HttpMessage CommitBlockListAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -12279,7 +13178,8 @@ namespace Azure.Storage.Blobs
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
                 Azure.ETag? ifNoneMatch = default,
-                string requestId = default)
+                string requestId = default,
+                string blobTagsString = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -12332,6 +13232,7 @@ namespace Azure.Storage.Blobs
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
                 if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (blobTagsString != null) { _request.Headers.SetValue("x-ms-tags", blobTagsString); }
 
                 // Create the body
                 System.Xml.Linq.XElement _body = Azure.Storage.Blobs.Models.BlockLookupList.ToXml(blocks, "BlockList", "");
@@ -13949,6 +14850,38 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion enum AccountKind
 
+#region class AppendBlobSealInternal
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// AppendBlobSealInternal
+    /// </summary>
+    internal partial class AppendBlobSealInternal
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// If this blob has been sealed
+        /// </summary>
+        public bool BlobSealed { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of AppendBlobSealInternal instances.
+        /// You can use BlobsModelFactory.AppendBlobSealInternal instead.
+        /// </summary>
+        internal AppendBlobSealInternal() { }
+    }
+}
+#endregion class AppendBlobSealInternal
+
 #region enum ArchiveStatus
 namespace Azure.Storage.Blobs.Models
 {
@@ -14869,6 +15802,16 @@ namespace Azure.Storage.Blobs.Models
         public string Name { get; internal set; }
 
         /// <summary>
+        /// Deleted
+        /// </summary>
+        public bool? Deleted { get; internal set; }
+
+        /// <summary>
+        /// Version
+        /// </summary>
+        public string Version { get; internal set; }
+
+        /// <summary>
         /// Properties of a container
         /// </summary>
         public Azure.Storage.Blobs.Models.BlobContainerProperties Properties { get; internal set; }
@@ -14908,6 +15851,16 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.Name = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("Deleted", ""));
+            if (_child != null)
+            {
+                _value.Deleted = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Version", ""));
+            if (_child != null)
+            {
+                _value.Version = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
             {
@@ -14930,12 +15883,16 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobContainerItem BlobContainerItem(
             string name,
-            Azure.Storage.Blobs.Models.BlobContainerProperties properties)
+            Azure.Storage.Blobs.Models.BlobContainerProperties properties,
+            bool? deleted = default,
+            string version = default)
         {
             return new BlobContainerItem()
             {
                 Name = name,
                 Properties = properties,
+                Deleted = deleted,
+                Version = version,
             };
         }
     }
@@ -14994,6 +15951,16 @@ namespace Azure.Storage.Blobs.Models
         /// DenyEncryptionScopeOverride
         /// </summary>
         public bool? PreventEncryptionScopeOverride { get; internal set; }
+
+        /// <summary>
+        /// DeletedTime
+        /// </summary>
+        public System.DateTimeOffset? DeletedTime { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
 
         /// <summary>
         /// ETag
@@ -15080,6 +16047,16 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.PreventEncryptionScopeOverride = bool.Parse(_child.Value);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
+            if (_child != null)
+            {
+                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
+            if (_child != null)
+            {
+                _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -15115,12 +16092,14 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
+            bool? hasImmutabilityPolicy = default,
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
-            bool? hasLegalHold = default,
             string defaultEncryptionScope = default,
             bool? preventEncryptionScopeOverride = default,
+            System.DateTimeOffset? deletedTime = default,
+            int? remainingRetentionDays = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default,
-            bool? hasImmutabilityPolicy = default)
+            bool? hasLegalHold = default)
         {
             return new BlobContainerProperties()
             {
@@ -15129,12 +16108,14 @@ namespace Azure.Storage.Blobs.Models
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
                 PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
                 LeaseStatus = leaseStatus,
-                HasLegalHold = hasLegalHold,
                 DefaultEncryptionScope = defaultEncryptionScope,
                 PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
+                DeletedTime = deletedTime,
+                RemainingRetentionDays = remainingRetentionDays,
                 Metadata = metadata,
-                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                HasLegalHold = hasLegalHold,
             };
         }
     }
@@ -16326,13 +17307,13 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobInfo
 
-#region class BlobItem
+#region class BlobItemInternal
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// An Azure Storage blob
     /// </summary>
-    public partial class BlobItem
+    internal partial class BlobItemInternal
     {
         /// <summary>
         /// Name
@@ -16370,36 +17351,42 @@ namespace Azure.Storage.Blobs.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
-        /// Creates a new BlobItem instance
+        /// Blob tags
         /// </summary>
-        internal BlobItem()
+        public Azure.Storage.Blobs.Models.BlobTags BlobTags { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobItemInternal instance
+        /// </summary>
+        public BlobItemInternal()
             : this(false)
         {
         }
 
         /// <summary>
-        /// Creates a new BlobItem instance
+        /// Creates a new BlobItemInternal instance
         /// </summary>
         /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal BlobItem(bool skipInitialization)
+        internal BlobItemInternal(bool skipInitialization)
         {
             if (!skipInitialization)
             {
                 Properties = new Azure.Storage.Blobs.Models.BlobItemProperties();
                 Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                BlobTags = new Azure.Storage.Blobs.Models.BlobTags();
             }
         }
 
         /// <summary>
-        /// Deserializes XML into a new BlobItem instance.
+        /// Deserializes XML into a new BlobItemInternal instance.
         /// </summary>
         /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized BlobItem instance.</returns>
-        internal static Azure.Storage.Blobs.Models.BlobItem FromXml(System.Xml.Linq.XElement element)
+        /// <returns>A deserialized BlobItemInternal instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobItemInternal FromXml(System.Xml.Linq.XElement element)
         {
             System.Diagnostics.Debug.Assert(element != null);
             System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.BlobItem _value = new Azure.Storage.Blobs.Models.BlobItem(true);
+            Azure.Storage.Blobs.Models.BlobItemInternal _value = new Azure.Storage.Blobs.Models.BlobItemInternal(true);
             _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
             if (_child != null)
             {
@@ -16439,44 +17426,19 @@ namespace Azure.Storage.Blobs.Models
                     _value.Metadata[_pair.Name.LocalName] = _pair.Value;
                 }
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("Tags", ""));
+            if (_child != null)
+            {
+                _value.BlobTags = Azure.Storage.Blobs.Models.BlobTags.FromXml(_child);
+            }
             CustomizeFromXml(element, _value);
             return _value;
         }
 
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItem value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobItem instance for mocking.
-        /// </summary>
-        public static BlobItem BlobItem(
-            string name,
-            bool deleted,
-            Azure.Storage.Blobs.Models.BlobItemProperties properties,
-            string snapshot = default,
-            string versionId = default,
-            bool? isCurrentVersion = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
-        {
-            return new BlobItem()
-            {
-                Name = name,
-                Deleted = deleted,
-                Properties = properties,
-                Snapshot = snapshot,
-                VersionId = versionId,
-                IsCurrentVersion = isCurrentVersion,
-                Metadata = metadata,
-            };
-        }
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItemInternal value);
     }
 }
-#endregion class BlobItem
+#endregion class BlobItemInternal
 
 #region class BlobItemProperties
 namespace Azure.Storage.Blobs.Models
@@ -17320,6 +18282,16 @@ namespace Azure.Storage.Blobs.Models
         public bool IsCurrentVersion { get; internal set; }
 
         /// <summary>
+        /// The number of tags associated with the blob
+        /// </summary>
+        public long TagCount { get; internal set; }
+
+        /// <summary>
+        /// If this blob has been sealed
+        /// </summary>
+        public bool BlobSealed { get; internal set; }
+
+        /// <summary>
         /// Creates a new BlobProperties instance
         /// </summary>
         public BlobProperties()
@@ -17338,78 +18310,82 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobProperties BlobProperties(
             System.DateTimeOffset lastModified,
-            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             long contentLength,
             string contentType,
-            Azure.Storage.Blobs.Models.LeaseState leaseState,
-            byte[] contentHash,
+            Azure.ETag eTag,
+            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             string contentEncoding,
             string contentDisposition,
             string contentLanguage,
             string cacheControl,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             long blobSequenceNumber,
-            string destinationSnapshot,
+            Azure.Storage.Blobs.Models.LeaseState leaseState,
             string acceptRanges,
-            bool isIncrementalCopy,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             int blobCommittedBlockCount,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            string destinationSnapshot,
             bool isServerEncrypted,
-            System.Uri copySource,
+            bool isIncrementalCopy,
             string encryptionKeySha256,
-            string copyProgress,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
             string encryptionScope,
-            string copyId,
+            System.Uri copySource,
             string accessTier,
-            string copyStatusDescription,
+            string copyProgress,
             bool accessTierInferred,
-            System.DateTimeOffset copyCompletedOn,
+            string copyId,
             string archiveStatus,
-            Azure.Storage.Blobs.Models.BlobType blobType,
+            string copyStatusDescription,
             System.DateTimeOffset accessTierChangedOn,
-            System.Collections.Generic.IDictionary<string, string> metadata,
+            System.DateTimeOffset copyCompletedOn,
             string versionId,
-            System.DateTimeOffset createdOn,
+            Azure.Storage.Blobs.Models.BlobType blobType,
             bool isCurrentVersion,
-            Azure.ETag eTag)
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            long tagCount,
+            System.DateTimeOffset createdOn,
+            bool blobSealed,
+            byte[] contentHash)
         {
             return new BlobProperties()
             {
                 LastModified = lastModified,
-                LeaseStatus = leaseStatus,
                 ContentLength = contentLength,
                 ContentType = contentType,
-                LeaseState = leaseState,
-                ContentHash = contentHash,
+                ETag = eTag,
+                LeaseStatus = leaseStatus,
                 ContentEncoding = contentEncoding,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
                 CacheControl = cacheControl,
-                LeaseDuration = leaseDuration,
                 BlobSequenceNumber = blobSequenceNumber,
-                DestinationSnapshot = destinationSnapshot,
+                LeaseState = leaseState,
                 AcceptRanges = acceptRanges,
-                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
                 BlobCommittedBlockCount = blobCommittedBlockCount,
-                CopyStatus = copyStatus,
+                DestinationSnapshot = destinationSnapshot,
                 IsServerEncrypted = isServerEncrypted,
-                CopySource = copySource,
+                IsIncrementalCopy = isIncrementalCopy,
                 EncryptionKeySha256 = encryptionKeySha256,
-                CopyProgress = copyProgress,
+                CopyStatus = copyStatus,
                 EncryptionScope = encryptionScope,
-                CopyId = copyId,
+                CopySource = copySource,
                 AccessTier = accessTier,
-                CopyStatusDescription = copyStatusDescription,
+                CopyProgress = copyProgress,
                 AccessTierInferred = accessTierInferred,
-                CopyCompletedOn = copyCompletedOn,
+                CopyId = copyId,
                 ArchiveStatus = archiveStatus,
-                BlobType = blobType,
+                CopyStatusDescription = copyStatusDescription,
                 AccessTierChangedOn = accessTierChangedOn,
-                Metadata = metadata,
+                CopyCompletedOn = copyCompletedOn,
                 VersionId = versionId,
-                CreatedOn = createdOn,
+                BlobType = blobType,
                 IsCurrentVersion = isCurrentVersion,
-                ETag = eTag,
+                Metadata = metadata,
+                TagCount = tagCount,
+                CreatedOn = createdOn,
+                BlobSealed = blobSealed,
+                ContentHash = contentHash,
             };
         }
     }
@@ -17991,6 +18967,223 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobStaticWebsite
 
+#region class BlobTag
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// BlobTag
+    /// </summary>
+    internal partial class BlobTag
+    {
+        /// <summary>
+        /// Key
+        /// </summary>
+        public string Key { get; set; }
+
+        /// <summary>
+        /// Value
+        /// </summary>
+        public string Value { get; set; }
+
+        /// <summary>
+        /// Creates a new BlobTag instance
+        /// </summary>
+        public BlobTag() { }
+
+        /// <summary>
+        /// Serialize a BlobTag instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobTag instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Tag".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobTag value, string name = "Tag", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Key", ""),
+                value.Key));
+            _element.Add(new System.Xml.Linq.XElement(
+                System.Xml.Linq.XName.Get("Value", ""),
+                value.Value));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobTag instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobTag instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobTag FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobTag _value = new Azure.Storage.Blobs.Models.BlobTag();
+            _child = element.Element(System.Xml.Linq.XName.Get("Key", ""));
+            if (_child != null)
+            {
+                _value.Key = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Value", ""));
+            if (_child != null)
+            {
+                _value.Value = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobTag value);
+    }
+}
+#endregion class BlobTag
+
+#region class BlobTagSet
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// a collection of blob tags
+    /// </summary>
+    internal partial class BlobTagSet
+    {
+        /// <summary>
+        /// a collection of blob tags
+        /// </summary>
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobTag> BlobTagList { get; internal set; }
+
+        /// <summary>
+        /// Creates a new BlobTagSet instance
+        /// </summary>
+        public BlobTagSet()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobTagSet instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobTagSet(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                BlobTagList = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobTag>();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a BlobTagSet instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobTagSet instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "TagSet".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobTagSet value, string name = "TagSet", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            foreach (Azure.Storage.Blobs.Models.BlobTag _child in value.BlobTagList)
+            {
+                _element.Add(Azure.Storage.Blobs.Models.BlobTag.ToXml(_child));
+            }
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobTagSet instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobTagSet instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobTagSet FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            Azure.Storage.Blobs.Models.BlobTagSet _value = new Azure.Storage.Blobs.Models.BlobTagSet(true);
+            _value.BlobTagList = System.Linq.Enumerable.ToList(
+                System.Linq.Enumerable.Select(
+                    element.Elements(System.Xml.Linq.XName.Get("Tag", "")),
+                    e => Azure.Storage.Blobs.Models.BlobTag.FromXml(e)));
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobTagSet value);
+    }
+}
+#endregion class BlobTagSet
+
+#region class BlobTags
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Blob tags
+    /// </summary>
+    internal partial class BlobTags
+    {
+        /// <summary>
+        /// a collection of blob tags
+        /// </summary>
+        public Azure.Storage.Blobs.Models.BlobTagSet BlobTagSet { get; set; }
+
+        /// <summary>
+        /// Creates a new BlobTags instance
+        /// </summary>
+        public BlobTags()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new BlobTags instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal BlobTags(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                BlobTagSet = new Azure.Storage.Blobs.Models.BlobTagSet();
+            }
+        }
+
+        /// <summary>
+        /// Serialize a BlobTags instance as XML.
+        /// </summary>
+        /// <param name="value">The BlobTags instance to serialize.</param>
+        /// <param name="name">An optional name to use for the root element instead of "Tags".</param>
+        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
+        /// <returns>The serialized XML element.</returns>
+        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobTags value, string name = "Tags", string ns = "")
+        {
+            System.Diagnostics.Debug.Assert(value != null);
+            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
+            _element.Add(Azure.Storage.Blobs.Models.BlobTagSet.ToXml(value.BlobTagSet, "TagSet", ""));
+            return _element;
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobTags instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobTags instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobTags FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobTags _value = new Azure.Storage.Blobs.Models.BlobTags(true);
+            _child = element.Element(System.Xml.Linq.XName.Get("TagSet", ""));
+            if (_child != null)
+            {
+                _value.BlobTagSet = Azure.Storage.Blobs.Models.BlobTagSet.FromXml(_child);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobTags value);
+    }
+}
+#endregion class BlobTags
+
 #region enum BlobType
 namespace Azure.Storage.Blobs.Models
 {
@@ -18089,7 +19282,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// BlobItems
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> BlobItems { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItemInternal> BlobItems { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobsFlatSegment instance
@@ -18107,7 +19300,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItem>();
+                BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItemInternal>();
             }
         }
 
@@ -18158,11 +19351,11 @@ namespace Azure.Storage.Blobs.Models
                 _value.BlobItems = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("Blob", "")),
-                        e => Azure.Storage.Blobs.Models.BlobItem.FromXml(e)));
+                        e => Azure.Storage.Blobs.Models.BlobItemInternal.FromXml(e)));
             }
             else
             {
-                _value.BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItem>();
+                _value.BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItemInternal>();
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -18219,7 +19412,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// BlobItems
         /// </summary>
-        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItem> BlobItems { get; internal set; }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobItemInternal> BlobItems { get; internal set; }
 
         /// <summary>
         /// BlobPrefixes
@@ -18242,7 +19435,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItem>();
+                BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItemInternal>();
                 BlobPrefixes = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobPrefix>();
             }
         }
@@ -18299,11 +19492,11 @@ namespace Azure.Storage.Blobs.Models
                 _value.BlobItems = System.Linq.Enumerable.ToList(
                     System.Linq.Enumerable.Select(
                         _child.Elements(System.Xml.Linq.XName.Get("Blob", "")),
-                        e => Azure.Storage.Blobs.Models.BlobItem.FromXml(e)));
+                        e => Azure.Storage.Blobs.Models.BlobItemInternal.FromXml(e)));
             }
             else
             {
-                _value.BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItem>();
+                _value.BlobItems = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobItemInternal>();
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Blobs", ""));
             if (_child != null)
@@ -19252,6 +20445,210 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum EncryptionAlgorithmType
 
+#region class FilterBlobItem
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Blob info from a Filter Blobs API call
+    /// </summary>
+    public partial class FilterBlobItem
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name { get; internal set; }
+
+        /// <summary>
+        /// ContainerName
+        /// </summary>
+        public string ContainerName { get; internal set; }
+
+        /// <summary>
+        /// TagValue
+        /// </summary>
+        public string TagValue { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FilterBlobItem instances.
+        /// You can use BlobsModelFactory.FilterBlobItem instead.
+        /// </summary>
+        internal FilterBlobItem() { }
+
+        /// <summary>
+        /// Deserializes XML into a new FilterBlobItem instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized FilterBlobItem instance.</returns>
+        internal static Azure.Storage.Blobs.Models.FilterBlobItem FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.FilterBlobItem _value = new Azure.Storage.Blobs.Models.FilterBlobItem();
+            _child = element.Element(System.Xml.Linq.XName.Get("Name", ""));
+            if (_child != null)
+            {
+                _value.Name = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ContainerName", ""));
+            if (_child != null)
+            {
+                _value.ContainerName = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("TagValue", ""));
+            if (_child != null)
+            {
+                _value.TagValue = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobItem value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new FilterBlobItem instance for mocking.
+        /// </summary>
+        public static FilterBlobItem FilterBlobItem(
+            string name,
+            string containerName,
+            string tagValue)
+        {
+            return new FilterBlobItem()
+            {
+                Name = name,
+                ContainerName = containerName,
+                TagValue = tagValue,
+            };
+        }
+    }
+}
+#endregion class FilterBlobItem
+
+#region class FilterBlobSegment
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// The result of a Filter Blobs API call
+    /// </summary>
+    public partial class FilterBlobSegment
+    {
+        /// <summary>
+        /// ServiceEndpoint
+        /// </summary>
+        public string ServiceEndpoint { get; internal set; }
+
+        /// <summary>
+        /// Where
+        /// </summary>
+        public string Where { get; internal set; }
+
+        /// <summary>
+        /// Blobs
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> Blobs { get; internal set; }
+
+        /// <summary>
+        /// NextMarker
+        /// </summary>
+        public string NextMarker { get; internal set; }
+
+        /// <summary>
+        /// Creates a new FilterBlobSegment instance
+        /// </summary>
+        internal FilterBlobSegment()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new FilterBlobSegment instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal FilterBlobSegment(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.FilterBlobItem>();
+            }
+        }
+
+        /// <summary>
+        /// Deserializes XML into a new FilterBlobSegment instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized FilterBlobSegment instance.</returns>
+        internal static Azure.Storage.Blobs.Models.FilterBlobSegment FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            System.Xml.Linq.XAttribute _attribute;
+            Azure.Storage.Blobs.Models.FilterBlobSegment _value = new Azure.Storage.Blobs.Models.FilterBlobSegment(true);
+            _attribute = element.Attribute(System.Xml.Linq.XName.Get("ServiceEndpoint", ""));
+            if (_attribute != null)
+            {
+                _value.ServiceEndpoint = _attribute.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Where", ""));
+            if (_child != null)
+            {
+                _value.Where = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Blobs", ""));
+            if (_child != null)
+            {
+                _value.Blobs = System.Linq.Enumerable.ToList(
+                    System.Linq.Enumerable.Select(
+                        _child.Elements(System.Xml.Linq.XName.Get("Blob", "")),
+                        e => Azure.Storage.Blobs.Models.FilterBlobItem.FromXml(e)));
+            }
+            else
+            {
+                _value.Blobs = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.FilterBlobItem>();
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("NextMarker", ""));
+            if (_child != null)
+            {
+                _value.NextMarker = _child.Value;
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.FilterBlobSegment value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new FilterBlobSegment instance for mocking.
+        /// </summary>
+        public static FilterBlobSegment FilterBlobSegment(
+            string serviceEndpoint,
+            string where,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.FilterBlobItem> blobs,
+            string nextMarker = default)
+        {
+            return new FilterBlobSegment()
+            {
+                ServiceEndpoint = serviceEndpoint,
+                Where = where,
+                Blobs = blobs,
+                NextMarker = nextMarker,
+            };
+        }
+    }
+}
+#endregion class FilterBlobSegment
+
 #region class FlattenedContainerItem
 namespace Azure.Storage.Blobs.Models
 {
@@ -19484,6 +20881,16 @@ namespace Azure.Storage.Blobs.Models
         #pragma warning disable CA1819 // Properties should not return arrays
         public byte[] BlobContentHash { get; internal set; }
         #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// The number of tags associated with the blob
+        /// </summary>
+        public long TagCount { get; internal set; }
+
+        /// <summary>
+        /// If this blob has been sealed
+        /// </summary>
+        public bool BlobSealed { get; internal set; }
 
         /// <summary>
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
@@ -19931,49 +21338,6 @@ namespace Azure.Storage.Blobs
 }
 #endregion enum LeaseStatusType
 
-#region enum ListBlobContainersIncludeType
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Include this parameter to specify that the container's metadata be returned as part of the response body.
-    /// </summary>
-    internal enum ListBlobContainersIncludeType
-    {
-        /// <summary>
-        /// metadata
-        /// </summary>
-        Metadata
-    }
-}
-
-namespace Azure.Storage.Blobs
-{
-    internal static partial class BlobRestClient
-    {
-        public static partial class Serialization
-        {
-            public static string ToString(Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value)
-            {
-                return value switch
-                {
-                    Azure.Storage.Blobs.Models.ListBlobContainersIncludeType.Metadata => "metadata",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value.")
-                };
-            }
-
-            public static Azure.Storage.Blobs.Models.ListBlobContainersIncludeType ParseListBlobContainersIncludeType(string value)
-            {
-                return value switch
-                {
-                    "metadata" => Azure.Storage.Blobs.Models.ListBlobContainersIncludeType.Metadata,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobContainersIncludeType value.")
-                };
-            }
-        }
-    }
-}
-#endregion enum ListBlobContainersIncludeType
-
 #region enum ListBlobsIncludeItem
 namespace Azure.Storage.Blobs.Models
 {
@@ -20010,7 +21374,12 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// versions
         /// </summary>
-        Versions
+        Versions,
+
+        /// <summary>
+        /// tags
+        /// </summary>
+        Tags
     }
 }
 
@@ -20030,6 +21399,7 @@ namespace Azure.Storage.Blobs
                     Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Snapshots => "snapshots",
                     Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Uncommittedblobs => "uncommittedblobs",
                     Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Versions => "versions",
+                    Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Tags => "tags",
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobsIncludeItem value.")
                 };
             }
@@ -20044,6 +21414,7 @@ namespace Azure.Storage.Blobs
                     "snapshots" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Snapshots,
                     "uncommittedblobs" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Uncommittedblobs,
                     "versions" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Versions,
+                    "tags" => Azure.Storage.Blobs.Models.ListBlobsIncludeItem.Tags,
                     _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListBlobsIncludeItem value.")
                 };
             }
@@ -20051,6 +21422,56 @@ namespace Azure.Storage.Blobs
     }
 }
 #endregion enum ListBlobsIncludeItem
+
+#region enum ListContainersIncludeType
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// ListContainersIncludeType values
+    /// </summary>
+    public enum ListContainersIncludeType
+    {
+        /// <summary>
+        /// metadata
+        /// </summary>
+        Metadata,
+
+        /// <summary>
+        /// deleted
+        /// </summary>
+        Deleted
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.ListContainersIncludeType value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.ListContainersIncludeType.Metadata => "metadata",
+                    Azure.Storage.Blobs.Models.ListContainersIncludeType.Deleted => "deleted",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListContainersIncludeType value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.ListContainersIncludeType ParseListContainersIncludeType(string value)
+            {
+                return value switch
+                {
+                    "metadata" => Azure.Storage.Blobs.Models.ListContainersIncludeType.Metadata,
+                    "deleted" => Azure.Storage.Blobs.Models.ListContainersIncludeType.Deleted,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.ListContainersIncludeType value.")
+                };
+            }
+        }
+    }
+}
+#endregion enum ListContainersIncludeType
 
 #region class PageBlobInfo
 namespace Azure.Storage.Blobs.Models

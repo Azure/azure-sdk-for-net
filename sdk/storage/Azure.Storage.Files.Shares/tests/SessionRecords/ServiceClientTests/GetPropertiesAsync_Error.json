@@ -13,7 +13,7 @@
         "x-ms-client-request-id": "1a3ce210-a630-d6fa-93c3-60dfe2e4ae17",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:18 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-10-10"
+        "x-ms-version": "2019-12-12"
       },
       "RequestBody": null,
       "StatusCode": 400,

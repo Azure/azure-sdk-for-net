@@ -157,7 +157,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             Argument.AssertNotNull(response, nameof(response));
 
-
             if (!(response.ValueBody?.Value is AmqpMap responseData))
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidMessageBody, typeof(AmqpMap).Name));
@@ -220,7 +219,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         public virtual PartitionProperties CreatePartitionPropertiesFromResponse(AmqpMessage response)
         {
             Argument.AssertNotNull(response, nameof(response));
-
 
             if (!(response.ValueBody?.Value is AmqpMap responseData))
             {

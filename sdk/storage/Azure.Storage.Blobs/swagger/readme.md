@@ -359,12 +359,12 @@ directive:
         $.BlobsFlatSegment.properties.BlobItems = {
             "type": "array",
             "xml": { "name": "Blobs", "wrapped": true },
-            "items": { "$ref": path + "BlobItem" }
+            "items": { "$ref": path + "BlobItemInternal" }
         };
         delete $.BlobsFlatSegment.properties.Segment;
         delete $.BlobFlatListSegment;
     }
-    $.BlobItem.required = [ "Name", "Properties", "Deleted" ];
+    $.BlobItemInternal.required = [ "Name", "Properties", "Deleted" ];
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}?restype=container&comp=list&flat"]
   transform: >
@@ -393,7 +393,7 @@ directive:
         $.BlobsHierarchySegment.properties.BlobItems = {
             "type": "array",
             "xml": { "name": "Blobs", "wrapped": true },
-            "items": { "$ref": path + "BlobItem" }
+            "items": { "$ref": path + "BlobItemInternal" }
         };
         $.BlobsHierarchySegment.properties.BlobPrefixes = {
             "type": "array",
@@ -461,8 +461,8 @@ directive:
         $.BlobItemProperties.properties["Content-MD5"]["x-ms-client-name"] = "ContentHash";
         $.BlobItemProperties.properties.CopySource.format = "url";
         $.BlobItemProperties.required = ["AccessTierInferred"];
-        const path = $.BlobItem.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
-        $.BlobItem.properties.Properties = { "$ref": path };
+        const path = $.BlobItemInternal.properties.Properties.$ref.replace(/[#].*$/, "#/definitions/BlobItemProperties");
+        $.BlobItemInternal.properties.Properties = { "$ref": path };
 
         $.BlobItemProperties.properties.CreatedOn = $.BlobItemProperties.properties["Creation-Time"];
         $.BlobItemProperties.properties.CreatedOn.xml = {"name": "Creation-Time"};
@@ -1404,6 +1404,28 @@ directive:
   transform: >
     $.post.responses["200"]["x-az-public"] = false;
     $.post.responses["206"]["x-az-public"] = false;
+```
+
+### Hide BlobTags/BlobTagSet/BlobTag/BlobItemInternal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.BlobTag["x-az-public"] = false;
+    $.BlobTagSet["x-az-public"] = false;
+    $.BlobTags["x-az-public"] = false;
+    $.BlobItemInternal["x-az-public"] = false;
+```
+
+### Make AppendBlobSealResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=seal"]
+  transform: >
+    $.put.responses["200"]["x-az-public"] = false;
+    $.put.responses["200"]["x-az-response-name"] = "AppendBlobSealInternal";
 ```
 
 ### Treat the API version as a parameter instead of a constant

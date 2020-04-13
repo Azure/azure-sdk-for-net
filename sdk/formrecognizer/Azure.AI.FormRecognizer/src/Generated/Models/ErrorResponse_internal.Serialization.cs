@@ -14,16 +14,16 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static ErrorResponse_internal DeserializeErrorResponse_internal(JsonElement element)
         {
-            ErrorResponse_internal result = new ErrorResponse_internal();
+            FormRecognizerError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    result.Error = FormRecognizerError.DeserializeFormRecognizerError(property.Value);
+                    error = FormRecognizerError.DeserializeFormRecognizerError(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new ErrorResponse_internal(error);
         }
     }
 }

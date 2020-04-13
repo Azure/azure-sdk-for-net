@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Search.Documents.Models
 {
     // Hide the untyped SearchDocumentsResult
-    [CodeGenSchema("SearchDocumentsResult")]
+    [CodeGenModel("SearchDocumentsResult")]
     internal partial class SearchDocumentsResult { }
 
     /// <summary>
@@ -200,11 +200,9 @@ namespace Azure.Search.Documents.Models
         public override IReadOnlyList<SearchResult<T>> Values =>
             _values ??= new ReadOnlyCollection<SearchResult<T>>(_results.Values);
 
-        // TODO: #10590 - Add durable continuation tokens
-        #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
         /// <inheritdoc />
-        public override string ContinuationToken => throw new NotImplementedException();
-        #pragma warning restore CA1065
+        public override string ContinuationToken =>
+            SearchContinuationToken.Serialize(_results.NextUri, _results.NextOptions);
 
         /// <inheritdoc />
         public override Response GetRawResponse() => _results.RawResponse;
@@ -231,7 +229,12 @@ namespace Azure.Search.Documents.Models
         /// <inheritdoc />
         public override async IAsyncEnumerable<Page<SearchResult<T>>> AsPages(string continuationToken = default, int? pageSizeHint = default)
         {
-            SearchResults<T> initial = _results; // TODO: #10590 - Add durable continuation tokens
+            // The first page of our results is always provided so we can
+            // ignore the continuation token.  Users can only provide a token
+            // directly to the Search method.
+            Debug.Assert(continuationToken == null);
+
+            SearchResults<T> initial = _results;
             for (SearchResults<T> results = initial;
                  results != null;
                  results = await results.GetNextPageAsync(async: true, CancellationToken).ConfigureAwait(false))
@@ -262,7 +265,12 @@ namespace Azure.Search.Documents.Models
         /// <inheritdoc />
         public override IEnumerable<Page<SearchResult<T>>> AsPages(string continuationToken = default, int? pageSizeHint = default)
         {
-            SearchResults<T> initial = _results; // TODO: #10590 - Add durable continuation tokens
+            // The first page of our results is always provided so we can
+            // ignore the continuation token.  Users can only provide a token
+            // directly to the Search method.
+            Debug.Assert(continuationToken == null);
+
+            SearchResults<T> initial = _results;
             for (SearchResults<T> results = initial;
                  results != null;
                  results = results.GetNextPageAsync(async: false, CancellationToken).EnsureCompleted())
@@ -422,7 +430,8 @@ namespace Azure.Search.Documents.Models
             ref Utf8JsonReader reader,
             JsonSerializerOptions options)
         {
-            FacetResult facet = new FacetResult();
+            Dictionary<string, object> facet = new Dictionary<string, object>();
+            long? count = default;
             reader.Expects(JsonTokenType.StartObject);
             while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
@@ -430,7 +439,7 @@ namespace Azure.Search.Documents.Models
                 string facetName = reader.ExpectsPropertyName();
                 if (facetName == Constants.CountKey)
                 {
-                    facet.Count = reader.ExpectsNullableLong();
+                    count = reader.ExpectsNullableLong();
                 }
                 else
                 {
@@ -438,7 +447,7 @@ namespace Azure.Search.Documents.Models
                     facet[facetName] = value;
                 }
             }
-            return facet;
+            return new FacetResult(count, facet);
         }
 
         /// <summary>

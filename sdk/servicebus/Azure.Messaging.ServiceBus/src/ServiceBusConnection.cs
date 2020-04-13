@@ -102,7 +102,7 @@ namespace Azure.Messaging.ServiceBus
                 || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKeyName)
                 || string.IsNullOrEmpty(connectionStringProperties.SharedAccessKey))
             {
-                throw new ArgumentException(Resources1.MissingConnectionInformation, nameof(connectionString));
+                throw new ArgumentException(Resources.MissingConnectionInformation, nameof(connectionString));
             }
 
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
@@ -214,7 +214,7 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        internal TransportSender CreateTransportSender(string entityName, ServiceBusRetryPolicy retryPolicy) =>
+        internal virtual TransportSender CreateTransportSender(string entityName, ServiceBusRetryPolicy retryPolicy) =>
             _innerClient.CreateSender(entityName, retryPolicy);
 
         internal virtual TransportReceiver CreateTransportReceiver(
@@ -263,7 +263,7 @@ namespace Azure.Messaging.ServiceBus
                     return new AmqpClient(FullyQualifiedNamespace, credential, options);
 
                 default:
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources1.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.InvalidTransportType, options.TransportType.ToString()), nameof(options.TransportType));
             }
         }
 
@@ -324,7 +324,7 @@ namespace Azure.Messaging.ServiceBus
 
             if ((!connectionOptions.TransportType.IsWebSocketTransport()) && (connectionOptions.Proxy != null))
             {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources1.ProxyMustUseWebSockets), nameof(connectionOptions));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.ProxyMustUseWebSockets), nameof(connectionOptions));
             }
         }
 

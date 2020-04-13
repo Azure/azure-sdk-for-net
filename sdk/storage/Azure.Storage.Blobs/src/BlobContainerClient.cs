@@ -1133,7 +1133,8 @@ namespace Azure.Storage.Blobs
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound
+                || storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -2127,7 +2128,7 @@ namespace Azure.Storage.Blobs
                           .ConfigureAwait(false);
                     if ((traits & BlobTraits.Metadata) != BlobTraits.Metadata)
                     {
-                        IEnumerable<BlobItem> blobItems = response.Value.BlobItems;
+                        IEnumerable<BlobItem> blobItems = response.Value.BlobItems.ToBlobItems();
                         foreach (BlobItem blobItem in blobItems)
                         {
                             blobItem.Metadata = null;

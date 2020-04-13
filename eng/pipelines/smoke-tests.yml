@@ -6,47 +6,71 @@ jobs:
 
     strategy:
       matrix:
-        Linux (Public):
+        Linux (AzureCloud):
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
-          CloudType: public
-        Windows_NetCoreApp (Public):
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureCloud):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: public
-        Windows_NetFramework (Public):
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetFramework (AzureCloud):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: public
-        MacOs (Public):
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        MacOs (AzureCloud):
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
-          CloudType: public
-        Windows_NetCoreApp (Gov):
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureUSGovernment):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-          CloudType: gov
-        Windows_NetFramework (Gov):
+          CloudType: AzureUSGovernment
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetFramework (AzureUSGovernment):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-          CloudType: gov
+          CloudType: AzureUSGovernment
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetCoreApp (AzureChinaCloud):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          CloudType: AzureChinaCloud
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+        Windows_NetFramework (AzureChinaCloud):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          CloudType: AzureChinaCloud
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+
     pool:
       vmImage: $(OSVmImage)
 
+    variables:
+      azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureCloud = 'AzureCloud'; }"
+      azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureCloud = 'AzureUSGovernment'; }"
+      azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureCloud = 'AzureChinaCloud'; }"
+
     steps:
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
         inputs:
           packageType: runtime
           version: "$(DotNetCoreRuntimeVersion)"
 
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           packageType: sdk
@@ -67,46 +91,13 @@ jobs:
       - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
         displayName: dotnet restore
 
-      # Set secret environment variables for different clouds
-      - pwsh: |
-          $variables = @{
-            KEY_VAULT_URI='$(smoke-tests-key-vault-project-url)'
-            EVENT_HUBS_CONNECTION_STRING='$(smoke-tests-event-hubs-connection-string)'
-            BLOB_CONNECTION_STRING='$(smoke-tests-storage-connection-string)'
-            AZURE_CLIENT_SECRET='$(aad-azure-sdk-test-client-secret)'
-            AZURE_TENANT_ID='$(aad-azure-sdk-test-tenant-id)'
-            AZURE_CLIENT_ID='$(aad-azure-sdk-test-client-id)'
-            AZURE_AUTHORITY_HOST='$(aad-azure-sdk-test-authority-uri)'
-            COSMOS_AUTH_KEY='$(smoke-tests-cosmos-key)'
-            COSMOS_URI='$(smoke-tests-cosmos-endpoint)'
-          };
-          foreach ($key in $variables.Keys) {
-            Write-Host "Setting variable '$key'"
-            Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($variables[$key])"
-            Write-Host "##vso[task.setvariable variable=$key;]$($variables[$key])"
-          }
-        displayName: Set secrets for public cloud
-        condition: and(succeeded(), eq(variables['CloudType'], 'public'))
-
-      - pwsh: |
-          $variables = @{
-            KEY_VAULT_URI='$(smoke-tests-key-vault-project-url-gov)'
-            EVENT_HUBS_CONNECTION_STRING='$(smoke-tests-event-hubs-connection-string-gov)'
-            BLOB_CONNECTION_STRING='$(smoke-tests-storage-connection-string-gov)'
-            AZURE_CLIENT_SECRET='$(aad-azure-sdk-test-client-secret-gov)'
-            AZURE_TENANT_ID='$(aad-azure-sdk-test-tenant-id-gov)'
-            AZURE_CLIENT_ID='$(aad-azure-sdk-test-client-id-gov)'
-            AZURE_AUTHORITY_HOST='$(aad-azure-sdk-test-authority-uri-gov)'
-            COSMOS_AUTH_KEY='$(smoke-tests-cosmos-key-gov)'
-            COSMOS_URI='$(smoke-tests-cosmos-endpoint-gov)'
-          };
-          foreach ($key in $variables.Keys) {
-            Write-Host "Setting variable '$key'"
-            Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($variables[$key])"
-            Write-Host "##vso[task.setvariable variable=$key;]$($variables[$key])"
-          }
-        displayName: Set secrets for government cloud
-        condition: and(succeeded(), eq(variables['CloudType'], 'gov'))
+      - template: ../common/TestResources/deploy-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          CloudType: $(CloudType)
+          ArmTemplateParameters: $(ArmTemplateParameters)
 
       - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
+
+      - template: ../common/TestResources/remove-test-resources.yml

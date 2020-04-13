@@ -205,7 +205,7 @@ More on mocking in [mocking samples](samples/Mocking.md)
 
 ## Troubleshooting
 
-Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#Enabling exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](samples/Diagnostics.md#Distributed-tracing)
+Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#handling-exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](Diagnostics.md#Distributed-tracing)
 
 ## Next steps
 
@@ -224,3 +224,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src
 [package]: https://www.nuget.org/packages/Azure.Core/
 [docs]: https://docs.microsoft.com/en-us/dotnet/api/overview/azure/core/client
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/faq/

@@ -40,8 +40,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="name">Name of the resource</param>
         /// <param name="type">Type of the resource</param>
         /// <param name="tags">Tags of the resource.</param>
-        /// <param name="privateEndpointConnections">List of private endpoint
-        /// connections.</param>
         /// <param name="provisioningState">Provisioning state of the topic.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>
@@ -89,7 +87,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of private endpoint connections.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }

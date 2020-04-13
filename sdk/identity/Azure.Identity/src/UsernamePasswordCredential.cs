@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    ///  Enables authentication to Azure Active Directory using a user's  username and password. If the user has MFA enabled this
+    ///  Enables authentication to Azure Active Directory using a user's username and password. If the user has MFA enabled this
     ///  credential will fail to get a token throwing an <see cref="AuthenticationFailedException"/>. Also, this credential requires a high degree of
     ///  trust and is not recommended outside of prototyping when more secure credentials can be used.
     /// </summary>

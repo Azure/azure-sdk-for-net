@@ -367,7 +367,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.ExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -769,7 +769,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(key.SignedService, sas.KeyService);
             Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
             Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
-            Assert.AreEqual(key.SignedVersion, sas.Version);
+            //TODO add this back
+            //Assert.AreEqual(key.SignedVersion, sas.Version);
         }
 
         [Test]
@@ -1055,6 +1056,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.IsFalse(response.Value.IsDirectory);
         }
 
         [Test]
@@ -1491,6 +1493,30 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task AppendDataAsync_EmptyStream()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            // Act
+            using (var stream = new MemoryStream())
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.AppendAsync(stream, 0),
+                    e =>
+                    {
+                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                        Assert.IsTrue(e.Message.Contains("The value for one of the HTTP headers is not in the correct format."));
+                        Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
+                        Assert.AreEqual("0", e.Data["HeaderValue"]);
+                    });
+            }
+        }
+
+        [Test]
         public async Task AppendDataAsync_ProgressReporting()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1858,7 +1884,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(data.Length, response.Value.ContentLength);
-            Assert.IsNotNull(response.Value.Properties.ContentRange);
             Assert.IsNotNull(response.Value.Properties.LastModified);
             Assert.IsNotNull(response.Value.Properties.AcceptRanges);
             Assert.IsNotNull(response.Value.Properties.ETag);

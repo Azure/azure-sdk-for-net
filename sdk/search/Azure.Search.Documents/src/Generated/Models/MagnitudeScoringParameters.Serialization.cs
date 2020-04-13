@@ -29,17 +29,19 @@ namespace Azure.Search.Documents.Models
 
         internal static MagnitudeScoringParameters DeserializeMagnitudeScoringParameters(JsonElement element)
         {
-            MagnitudeScoringParameters result = new MagnitudeScoringParameters();
+            double boostingRangeStart = default;
+            double boostingRangeEnd = default;
+            bool? constantBoostBeyondRange = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boostingRangeStart"))
                 {
-                    result.BoostingRangeStart = property.Value.GetDouble();
+                    boostingRangeStart = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("boostingRangeEnd"))
                 {
-                    result.BoostingRangeEnd = property.Value.GetDouble();
+                    boostingRangeEnd = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("constantBoostBeyondRange"))
@@ -48,11 +50,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.ShouldBoostBeyondRangeByConstant = property.Value.GetBoolean();
+                    constantBoostBeyondRange = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return result;
+            return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, constantBoostBeyondRange);
         }
     }
 }

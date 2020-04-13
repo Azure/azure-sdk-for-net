@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -13,7 +12,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// Sample demonstrates how to set, get, update, and delete a key using the asynchronous methods of the KeyClient.
     /// </summary>
-    [LiveOnly]
     public partial class HelloWorld
     {
         [Test]

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,8 +14,27 @@ namespace Azure.Search.Documents.Models
     public partial class SearchIndexer
     {
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
-        public SearchIndexer()
+        /// <param name="name"> The name of the indexer. </param>
+        /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
+        /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
+        public SearchIndexer(string name, string dataSourceName, string targetIndexName)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (dataSourceName == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceName));
+            }
+            if (targetIndexName == null)
+            {
+                throw new ArgumentNullException(nameof(targetIndexName));
+            }
+
+            Name = name;
+            DataSourceName = dataSourceName;
+            TargetIndexName = targetIndexName;
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
@@ -45,15 +65,15 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the indexer. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> The description of the indexer. </summary>
         public string Description { get; set; }
         /// <summary> The name of the datasource from which this indexer reads data. </summary>
-        public string DataSourceName { get; set; }
+        public string DataSourceName { get; }
         /// <summary> The name of the skillset executing with this indexer. </summary>
         public string SkillsetName { get; set; }
         /// <summary> The name of the index to which this indexer writes data. </summary>
-        public string TargetIndexName { get; set; }
+        public string TargetIndexName { get; }
         /// <summary> The schedule for this indexer. </summary>
         public IndexingSchedule Schedule { get; set; }
         /// <summary> Parameters for indexer execution. </summary>

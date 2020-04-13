@@ -13,10 +13,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class ExtractedReceipt
     {
-        internal ExtractedReceipt(DocumentResult_internal documentResult, IList<ReadResult_internal> readResults)
+        internal ExtractedReceipt(DocumentResult_internal documentResult, IReadOnlyList<ReadResult_internal> readResults)
         {
-            StartPageNumber = documentResult.PageRange.First();
-            EndPageNumber = documentResult.PageRange.Last();
+            StartPageNumber = documentResult.PageRange[0];
+            EndPageNumber = documentResult.PageRange[documentResult.PageRange.Count - 1];
 
             SetReceiptValues(documentResult.Fields);
 
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public IReadOnlyList<RawExtractedPage> RawExtractedPage { get; }
 
-        private void SetReceiptValues(IDictionary<string, FieldValue_internal> fields)
+        private void SetReceiptValues(IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             ReceiptType = ConvertReceiptType(fields);
 
@@ -110,7 +110,7 @@ namespace Azure.AI.FormRecognizer.Models
             ExtractedFields = ConvertExtractedFields(fields);
         }
 
-        private static IReadOnlyDictionary<string, ExtractedReceiptField> ConvertExtractedFields(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyDictionary<string, ExtractedReceiptField> ConvertExtractedFields(IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             Dictionary<string, ExtractedReceiptField> extractedFields = new Dictionary<string, ExtractedReceiptField>();
             foreach (var field in fields)
@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Models
             return extractedFields;
         }
 
-        private static ExtractedReceiptType ConvertReceiptType(IDictionary<string, FieldValue_internal> fields)
+        private static ExtractedReceiptType ConvertReceiptType(IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             ExtractedReceiptType receiptType = ExtractedReceiptType.Unrecognized;
 
@@ -138,7 +138,7 @@ namespace Azure.AI.FormRecognizer.Models
             return receiptType;
         }
 
-        private static string ConvertStringValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static string ConvertStringValue(string fieldName, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             string stringValue = default;
 
@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 // TODO: How should we handle Phone Numbers?
                 // https://github.com/Azure/azure-sdk-for-net/issues/10333
-                Debug.Assert(value.Type == FieldValueType.String || value.Type == FieldValueType.PhoneNumber);
+                Debug.Assert(value.Type == FieldValueType.StringType || value.Type == FieldValueType.PhoneNumberType);
 
                 // TODO: When should we use text and when should we use string?
                 // For now, use text if the value is null.
@@ -158,14 +158,14 @@ namespace Azure.AI.FormRecognizer.Models
             return stringValue;
         }
 
-        private static float? ConvertFloatValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static float? ConvertFloatValue(string fieldName, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             float? floatValue = default;
 
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Number);
+                Debug.Assert(value.Type == FieldValueType.FloatType);
 
                 // TODO: Sometimes ValueNumber isn't populated in ReceiptItems.  The following is a
                 // workaround to get the value from Text if ValueNumber isn't there.
@@ -184,14 +184,14 @@ namespace Azure.AI.FormRecognizer.Models
             return floatValue;
         }
 
-        private static int? ConvertIntValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static int? ConvertIntValue(string fieldName, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             int? intValue = default;
 
             FieldValue_internal value;
             if (fields.TryGetValue(fieldName, out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Number);
+                Debug.Assert(value.Type == FieldValueType.IntegerType);
 
                 // TODO: Sometimes ValueInteger isn't populated in ReceiptItems.  The following is a
                 // workaround to get the value from Text if ValueNumber isn't there.
@@ -210,7 +210,7 @@ namespace Azure.AI.FormRecognizer.Models
             return intValue;
         }
 
-        private static DateTimeOffset? ConvertDateTimeOffsetValue(string fieldName, IDictionary<string, FieldValue_internal> fields)
+        private static DateTimeOffset? ConvertDateTimeOffsetValue(string fieldName, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             DateTimeOffset? dateTimeOffsetValue = default;
 
@@ -221,8 +221,8 @@ namespace Azure.AI.FormRecognizer.Models
                 // https://github.com/Azure/azure-sdk-for-net/issues/10361
                 dateTimeOffsetValue = value.Type switch
                 {
-                    FieldValueType.Date => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
-                    FieldValueType.Time => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
+                    FieldValueType.DateType => value.ValueDate == null ? default : DateTimeOffset.Parse(value.ValueDate, CultureInfo.InvariantCulture),
+                    FieldValueType.TimeType => value.ValueTime == null ? default : DateTimeOffset.Parse(value.ValueTime, CultureInfo.InvariantCulture),
                     _ => throw new InvalidOperationException($"The value type {value.Type} was expected to be a Date or Time")
                 };
             }
@@ -230,21 +230,21 @@ namespace Azure.AI.FormRecognizer.Models
             return dateTimeOffsetValue;
         }
 
-        private static IReadOnlyList<ExtractedReceiptItem> ConvertReceiptItems(IDictionary<string, FieldValue_internal> fields)
+        private static IReadOnlyList<ExtractedReceiptItem> ConvertReceiptItems(IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             List<ExtractedReceiptItem> items = new List<ExtractedReceiptItem>();
 
             FieldValue_internal value;
             if (fields.TryGetValue("Items", out value))
             {
-                Debug.Assert(value.Type == FieldValueType.Array);
+                Debug.Assert(value.Type == FieldValueType.ListType);
 
-                ICollection<FieldValue_internal> arrayValue = value.ValueArray;
+                IReadOnlyList<FieldValue_internal> arrayValue = value.ValueArray;
                 foreach (var receiptItemValue in arrayValue)
                 {
-                    Debug.Assert(receiptItemValue.Type == FieldValueType.Object);
+                    Debug.Assert(receiptItemValue.Type == FieldValueType.DictionaryType);
 
-                    IDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
+                    IReadOnlyDictionary<string, FieldValue_internal> objectValue = receiptItemValue.ValueObject;
 
                     string name = ConvertStringValue("Name", objectValue);
                     int? quantity = ConvertIntValue("Quantity", objectValue);
@@ -259,7 +259,7 @@ namespace Azure.AI.FormRecognizer.Models
             return items;
         }
 
-        private static IReadOnlyList<RawExtractedPage> ConvertRawPages(int startPageNumber, int endPageNumber, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<RawExtractedPage> ConvertRawPages(int startPageNumber, int endPageNumber, IReadOnlyList<ReadResult_internal> readResults)
         {
             List<RawExtractedPage> rawPages = new List<RawExtractedPage>();
             for (int i = startPageNumber - 1; i < endPageNumber - 1; i++)

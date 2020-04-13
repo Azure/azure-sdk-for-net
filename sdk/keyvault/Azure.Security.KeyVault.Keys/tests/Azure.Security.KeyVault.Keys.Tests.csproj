@@ -22,8 +22,4 @@
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Keys.csproj" />
     <ProjectReference Include="..\..\Azure.Security.KeyVault.Secrets\src\Azure.Security.KeyVault.Secrets.csproj" />
   </ItemGroup>
- 
-  <ItemGroup>
-    <Compile Include="..\..\..\core\Azure.Core\src\Shared\HashCodeBuilder.cs" />
-  </ItemGroup>
 </Project>

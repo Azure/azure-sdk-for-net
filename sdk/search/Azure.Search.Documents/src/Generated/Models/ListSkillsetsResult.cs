@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
@@ -13,18 +15,25 @@ namespace Azure.Search.Documents.Models
     internal partial class ListSkillsetsResult
     {
         /// <summary> Initializes a new instance of ListSkillsetsResult. </summary>
-        internal ListSkillsetsResult()
+        /// <param name="skillsets"> The skillsets defined in the Search service. </param>
+        internal ListSkillsetsResult(IEnumerable<Skillset> skillsets)
         {
+            if (skillsets == null)
+            {
+                throw new ArgumentNullException(nameof(skillsets));
+            }
+
+            Skillsets = skillsets.ToArray();
         }
 
         /// <summary> Initializes a new instance of ListSkillsetsResult. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
-        internal ListSkillsetsResult(IList<Skillset> skillsets)
+        internal ListSkillsetsResult(IReadOnlyList<Skillset> skillsets)
         {
             Skillsets = skillsets;
         }
 
         /// <summary> The skillsets defined in the Search service. </summary>
-        public IList<Skillset> Skillsets { get; internal set; } = new List<Skillset>();
+        public IReadOnlyList<Skillset> Skillsets { get; }
     }
 }

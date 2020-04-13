@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -21,6 +20,11 @@ namespace Azure.Core.Tests
         [TestCase("application/json; odata.metadata=minimal", true, "Unicode (UTF-8)")]
         [TestCase("application/json; odata.metadata=full", true, "Unicode (UTF-8)")]
         [TestCase("application/json; odata.metadata=none", true, "Unicode (UTF-8)")]
+        [TestCase("application/x-www-form-urlencoded", true, "Unicode (UTF-8)")]
+        [TestCase("application/x-www-form-urlencoded; charset=utf-8", true, "Unicode (UTF-8)")]
+
+        // No other explicit encoding besides "utf-8" is supported, so falls through to defaulting to "utf-8" based on Content-Type.
+        [TestCase("application/x-www-form-urlencoded; charset=us-ascii", true, "Unicode (UTF-8)")]
 
         public void DetectsTextContentTypes(string contentType, bool isText, string expectedEncoding)
         {

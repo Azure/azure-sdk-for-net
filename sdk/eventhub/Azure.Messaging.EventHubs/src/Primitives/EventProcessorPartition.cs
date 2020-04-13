@@ -21,6 +21,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   The identifier of the partition.
         /// </summary>
         ///
-        public string PartitionId { get; internal set; }
+        public string PartitionId
+        {
+            get;
+            protected internal set;
+        }
     }
 }

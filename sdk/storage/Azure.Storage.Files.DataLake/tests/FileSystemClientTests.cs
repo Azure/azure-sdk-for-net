@@ -119,6 +119,38 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task GetFileClient()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await fileClient.CreateAsync();
+            DataLakeFileClient newFileClient = InstrumentClient(test.FileSystem.GetFileClient(fileClient.Name));
+
+            // Act
+            Response<PathProperties> response = await newFileClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        public async Task GetDirectoryClient()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+            await directoryClient.CreateAsync();
+            DataLakeDirectoryClient newDirectoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryClient.Name));
+
+            // Act
+            Response<PathProperties> response = await newDirectoryClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
         public async Task CreateAsync()
         {
             // Arrange
@@ -332,7 +364,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystem.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -372,7 +404,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystemClient.ExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -462,6 +494,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsTrue(response.Value);
+
+            // Act
+            response = await fileSystemClient.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -489,7 +524,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystem.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]

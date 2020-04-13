@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Diagnostics;
 using Azure.Core.Testing;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
@@ -16,8 +15,8 @@ using Org.BouncyCastle.X509;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
@@ -82,9 +81,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public async Task VerifyCancelCertificateOperation()
         {
-            // Log details why this fails often for live tests on net461.
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
-
             string certName = Recording.GenerateId();
 
             CertificatePolicy certificatePolicy = DefaultPolicy;
@@ -113,9 +109,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public async Task VerifyUnexpectedCancelCertificateOperation()
         {
-            // Log details why this fails often for live tests on net461.
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
-
             string certName = Recording.GenerateId();
 
             CertificatePolicy certificatePolicy = DefaultPolicy;
@@ -557,14 +550,179 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CollectionAssert.AreEqual(mergedServerCertificate.Cer, completedServerCertificate.Cer);
         }
 
-        // Backup Restore
-        // GetCertificates
-        // GetCertificatsIncludePending
-        // GetCertificateVersions
-        // GetDeletedCertificates
-        // GetUpdatePolicy
-        // IssuerCrud
-        // ContactsCrud
+        [Test]
+        public async Task VerifyGetIssuer()
+        {
+            string issuerName = Recording.GenerateId();
+
+            string providerName = "ssladmin";
+
+            CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
+
+            RegisterForCleanupIssuer(issuerName);
+
+            await Client.CreateIssuerAsync(issuer);
+
+            CertificateIssuer getIssuer = await Client.GetIssuerAsync(issuerName);
+
+            Assert.NotNull(getIssuer);
+            Assert.NotNull(getIssuer.Id);
+            Assert.AreEqual(issuer.Provider, getIssuer.Provider);
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10908
+            // https://github.com/Azure/azure-sdk-for-net/issues/10905
+            // Assert.AreEqual(issuer.Name, getIssuer.Name);
+        }
+
+        [Test]
+        public async Task VerifyUpdateIssuer()
+        {
+            string issuerName = Recording.GenerateId();
+
+            string providerName = "ssladmin";
+
+            CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
+
+            RegisterForCleanupIssuer(issuerName);
+
+            await Client.CreateIssuerAsync(issuer);
+
+            string updateProvider = "onecert";
+            issuer = new CertificateIssuer(issuerName, updateProvider);
+            Assert.NotNull(issuer);
+
+            CertificateIssuer updateIssuer = await Client.UpdateIssuerAsync(issuer);
+
+            Assert.NotNull(updateIssuer);
+            Assert.NotNull(updateIssuer.UpdatedOn);
+            Assert.AreEqual(updateProvider, updateIssuer.Provider);
+        }
+
+        [Test]
+        public async Task VerifyGetPropertiesOfIssuersAsync()
+        {
+            string issuerName = Recording.GenerateId();
+            string issuerName1 = Recording.GenerateId();
+
+            string providerName = "ssladmin";
+            string providerName1 = "onecert";
+
+            CertificateIssuer issuer = new CertificateIssuer(issuerName, providerName);
+            CertificateIssuer issuer1 = new CertificateIssuer(issuerName1, providerName1);
+
+            RegisterForCleanupIssuer(issuerName);
+            RegisterForCleanupIssuer(issuerName1);
+
+            await Client.CreateIssuerAsync(issuer);
+            await Client.CreateIssuerAsync(issuer1);
+
+            List<IssuerProperties> issuerProperties = await Client.GetPropertiesOfIssuersAsync().ToEnumerableAsync();
+
+            foreach (IssuerProperties issuerPropertie in issuerProperties)
+            {
+                Assert.NotNull(issuerPropertie);
+                IssuerProperties returnPropertie = issuerProperties.Single(s => s.Id == issuerPropertie.Id);
+                Assert.AreEqual(issuerPropertie.Provider, returnPropertie.Provider);
+                // TODO: https://github.com/Azure/azure-sdk-for-net/issues/10908
+                // https://github.com/Azure/azure-sdk-for-net/issues/10905
+                // Assert.AreEqual(issuerPropertie.Name, returnPropertie.Name);
+            }
+        }
+
+        [Test]
+        public async Task VerifyGetContacts()
+        {
+            IList<CertificateContact> contacts = new List<CertificateContact>();
+            contacts.Add(new CertificateContact
+            {
+                Email = "admin@contoso.com",
+                Name = "Johnathan Doeman",
+                Phone = "2222222222"
+            });
+            contacts.Add(new CertificateContact
+            {
+                Email = "admin@contoso2.com",
+                Name = "John Doe",
+                Phone = "1111111111"
+            });
+
+            RegisterForCleanUpContacts(contacts);
+
+            await Client.SetContactsAsync(contacts);
+
+            Response<IList<CertificateContact>> getContactsResponse = await Client.GetContactsAsync();
+
+            IList<CertificateContact> getContacts = getContactsResponse.Value;
+
+            Assert.NotNull(getContacts);
+            Assert.AreEqual(2, getContacts.Count);
+
+            foreach (CertificateContact contact in contacts)
+            {
+                CertificateContact returnContact = getContacts.Single(s => s.Name == contact.Name);
+                Assert.NotNull(returnContact);
+                Assert.AreEqual(contact.Phone, returnContact.Phone);
+                Assert.AreEqual(contact.Email, returnContact.Email);
+            }
+        }
+
+        [Test]
+        public async Task VerifyGetCertificatePolicy()
+        {
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+
+            Assert.NotNull(original);
+
+            RegisterForCleanup(certName);
+
+            CertificatePolicy policy = await Client.GetCertificatePolicyAsync(certName);
+
+            Assert.NotNull(policy);
+            Assert.AreEqual(DefaultPolicy.KeyType, policy.KeyType);
+            Assert.AreEqual(DefaultPolicy.IssuerName, policy.IssuerName);
+            Assert.AreEqual(DefaultPolicy.ReuseKey, policy.ReuseKey);
+        }
+
+        [Test]
+        public async Task VerifyUpdateCertificatePolicy()
+        {
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = DefaultPolicy;
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+
+            KeyVaultCertificateWithPolicy original = await WaitForCompletion(operation);
+
+            Assert.NotNull(original);
+
+            RegisterForCleanup(certName);
+
+            certificatePolicy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=Azure SDK")
+            {
+                ReuseKey = true,
+                CertificateTransparency = true,
+                Exportable = false,
+                ContentType = CertificateContentType.Pem,
+                KeySize = 3072
+            };
+
+            CertificatePolicy updatePolicy = await Client.UpdateCertificatePolicyAsync(certName, certificatePolicy);
+
+            Assert.NotNull(updatePolicy);
+            Assert.NotNull(updatePolicy.UpdatedOn);
+            Assert.AreEqual(certificatePolicy.Subject, updatePolicy.Subject);
+            Assert.AreEqual(certificatePolicy.ReuseKey, updatePolicy.ReuseKey);
+            Assert.AreEqual(certificatePolicy.Exportable, updatePolicy.Exportable);
+            Assert.AreEqual(certificatePolicy.CertificateTransparency, updatePolicy.CertificateTransparency);
+            Assert.AreEqual(certificatePolicy.ContentType, updatePolicy.ContentType);
+            Assert.AreEqual(certificatePolicy.KeySize, updatePolicy.KeySize);
+        }
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
         {

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// ConnectionState Information.
+    /// ConnectionState information.
     /// </summary>
     public partial class ConnectionState
     {

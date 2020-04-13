@@ -162,6 +162,34 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventChannel>>> ListByPartnerNamespaceWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Delete an event channel.
+        /// </summary>
+        /// <remarks>
+        /// Delete existing event channel.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='partnerNamespaceName'>
+        /// Name of the partner namespace.
+        /// </param>
+        /// <param name='eventChannelName'>
+        /// Name of the event channel.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string partnerNamespaceName, string eventChannelName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List event channels.
         /// </summary>
         /// <remarks>

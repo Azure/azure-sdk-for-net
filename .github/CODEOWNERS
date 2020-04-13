@@ -23,7 +23,7 @@
 /sdk/cognitiveservices/vision.computervision/ @toothache
 /sdk/cognitiveservices/vision.face/ @TFR258 
 
-/sdk/eventgrid/ @kalyanaj 
+/sdk/eventgrid/ @Kishp01 @ahamad-MS
 
 /sdk/eventhub/ @serkantkaraca @jsquire @kinelski
 /sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
@@ -35,7 +35,7 @@
 /sdk/search/ @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
 /sdk/search/Microsoft.*/ @brjohnstmsft @arv100kri @bleroy
 
-/sdk/servicebus/ @nemakam @jsquire
+/sdk/servicebus/ @nemakam @JoshLove-msft @ShivangiReja @jsquire
 
 /sdk/storage/ @seanmcc-msft @amnguye @kasobol-msft @tg-msft @JoshLove-msft
 

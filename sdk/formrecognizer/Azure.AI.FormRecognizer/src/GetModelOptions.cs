@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("Enum0")]
+    [CodeGenModel("Enum0")]
     internal partial struct GetModelOptions
     {
     }

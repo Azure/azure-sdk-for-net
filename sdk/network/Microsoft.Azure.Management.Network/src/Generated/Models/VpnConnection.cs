@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="remoteVpnSite">Id of the connected vpn site.</param>
         /// <param name="routingWeight">Routing weight for vpn
         /// connection.</param>
+        /// <param name="dpdTimeoutSeconds">The dead peer detection timeout for
+        /// a vpn connection in seconds.</param>
         /// <param name="connectionStatus">The connection status. Possible
         /// values include: 'Unknown', 'Connecting', 'Connected',
         /// 'NotConnected'</param>
@@ -71,11 +73,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<VpnSiteLinkConnection> vpnLinkConnections = default(IList<VpnSiteLinkConnection>), string name = default(string), string etag = default(string))
+        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<VpnSiteLinkConnection> vpnLinkConnections = default(IList<VpnSiteLinkConnection>), string name = default(string), string etag = default(string))
             : base(id)
         {
             RemoteVpnSite = remoteVpnSite;
             RoutingWeight = routingWeight;
+            DpdTimeoutSeconds = dpdTimeoutSeconds;
             ConnectionStatus = connectionStatus;
             VpnConnectionProtocolType = vpnConnectionProtocolType;
             IngressBytesTransferred = ingressBytesTransferred;
@@ -111,6 +114,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.routingWeight")]
         public int? RoutingWeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dead peer detection timeout for a vpn connection
+        /// in seconds.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dpdTimeoutSeconds")]
+        public int? DpdTimeoutSeconds { get; set; }
 
         /// <summary>
         /// Gets or sets the connection status. Possible values include:

@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Certificates
         internal const string CertificatesPath = "/certificates/";
         internal const string DeletedCertificatesPath = "/deletedcertificates/";
         private const string IssuersPath = "/certificates/issuers/";
-        private const string ContactsPath = "/contacts/";
+        private const string ContactsPath = "/certificates/contacts/";
 
         private readonly KeyVaultPipeline _pipeline;
 

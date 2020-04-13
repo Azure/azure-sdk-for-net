@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenSchema("ListDataSourcesResult")]
     internal partial class ListDataSourcesResult
     {
     }

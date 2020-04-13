@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
@@ -40,6 +41,17 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
+        public void GetIssuerArgumentValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetIssuerAsync(null));
+            Assert.AreEqual("issuerName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.GetIssuerAsync(string.Empty));
+            Assert.AreEqual("issuerName", ex.ParamName);
+            StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
+        }
+
+        [Test]
         public void UpdateIssuerArgumentValidation()
         {
             ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateIssuerAsync(null));
@@ -59,6 +71,37 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteIssuerAsync(string.Empty));
             Assert.AreEqual("issuerName", ex.ParamName);
+        }
+
+        [Test]
+        public void SetContactsArgumentValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetContactsAsync(null));
+            Assert.AreEqual("contacts", ex.ParamName);
+        }
+
+        [Test]
+        public void GetCertificatePolicyArgumentValidation()
+        {
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.GetCertificatePolicyAsync(null));
+            Assert.AreEqual("certificateName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.GetCertificatePolicyAsync(string.Empty));
+            Assert.AreEqual("certificateName", ex.ParamName);
+            StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
+        }
+
+        [Test]
+        public void UpdateCertificatePolicyArgumentValidation()
+        {
+            CertificatePolicy policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=Azure SDK");
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentNullException>(() => Client.UpdateCertificatePolicyAsync(null, policy));
+            Assert.AreEqual("certificateName", ex.ParamName);
+
+            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.UpdateCertificatePolicyAsync(string.Empty, policy));
+            Assert.AreEqual("certificateName", ex.ParamName);
+            StringAssert.StartsWith("Value cannot be an empty string.", ex.Message);
         }
 
         [Test]

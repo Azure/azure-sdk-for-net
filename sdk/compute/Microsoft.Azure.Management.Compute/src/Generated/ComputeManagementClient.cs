@@ -97,6 +97,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IDedicatedHostsOperations DedicatedHosts { get; private set; }
 
         /// <summary>
+        /// Gets the ISshPublicKeysOperations.
+        /// </summary>
+        public virtual ISshPublicKeysOperations SshPublicKeys { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
@@ -462,6 +467,7 @@ namespace Microsoft.Azure.Management.Compute
             ProximityPlacementGroups = new ProximityPlacementGroupsOperations(this);
             DedicatedHostGroups = new DedicatedHostGroupsOperations(this);
             DedicatedHosts = new DedicatedHostsOperations(this);
+            SshPublicKeys = new SshPublicKeysOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);

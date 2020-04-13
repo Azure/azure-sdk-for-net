@@ -37,12 +37,12 @@ namespace Azure.Identity
         protected VisualStudioCredential() : this(default, default) {}
 
         /// <inheritdoc />
-        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, options, default, default) {}
+        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options) : this(tenantId, CredentialPipeline.GetInstance(options), default, default) {}
 
-        internal VisualStudioCredential(string tenantId, TokenCredentialOptions options, IFileSystemService fileSystem, IProcessService processService)
+        internal VisualStudioCredential(string tenantId, CredentialPipeline pipeline, IFileSystemService fileSystem, IProcessService processService)
         {
             _tenantId = tenantId;
-            _pipeline = CredentialPipeline.GetInstance(options);
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(null);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _processService = processService ?? ProcessService.Default;
         }
@@ -72,7 +72,8 @@ namespace Azure.Identity
                     throw new CredentialUnavailableException("No installed instance of Visual Studio was found");
                 }
 
-                return await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
+                var accessToken = await RunProcessesAsync(processStartInfos, async, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(accessToken);
             }
             catch (OperationCanceledException e)
             {
