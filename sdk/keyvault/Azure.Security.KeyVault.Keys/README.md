@@ -8,7 +8,7 @@ The Azure Key Vault Keys library client supports RSA keys and Elliptic Curve (EC
 ## Getting started
 
 ### Install the package
-Install the Azure Key Vault keys client library for .NET with [NuGet][nuget]:
+Install the Azure Key Vault Keys client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
 Install-Package Azure.Security.KeyVault.Keys
