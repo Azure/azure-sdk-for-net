@@ -22,7 +22,8 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClient"/>.
         /// </summary>
-        public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
+        public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential)
+            : this(endpoint, credential, new FormRecognizerClientOptions())
         {
         }
 
@@ -48,63 +49,69 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            throw new NotImplementedException();
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(contentType, formFileStream, cancellationToken).ConfigureAwait(false);
-            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
+            // ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(contentType, formFileStream, cancellationToken).ConfigureAwait(false);
+            // return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileStream">The stream containing one or more forms to recognize elements from.</param>
-        /// <param name="contentType">The content type of the input file.</param>
+        /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, ContentType contentType, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(contentType, formFileStream, cancellationToken);
-            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
+            // ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(contentType, formFileStream, cancellationToken);
+            // return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
         /// Recognizes layout elements from one or more passed-in forms.
         /// </summary>
         /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
         /// completion will contain layout elements extracted from the form.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formFileUri, CancellationToken cancellationToken = default)
-        {
-            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
-        }
-
-        /// <summary>
-        /// Recognizes layout elements from one or more passed-in forms.
-        /// </summary>
-        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
-        /// completion will contain layout elements extracted from the form.</returns>
-        [ForwardsClientCalls]
-        public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formFileUri, CancellationToken cancellationToken = default)
+        public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
+        }
+
+        /// <summary>
+        /// Recognizes layout elements from one or more passed-in forms.
+        /// </summary>
+        /// <param name="formFileUri">The absolute URI of the remote file to recognize elements from.</param>
+        /// <param name="recognizeOptions"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeContentOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeContentOperation"/>.Value upon successful
+        /// completion will contain layout elements extracted from the form.</returns>
+        [ForwardsClientCalls]
+        public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        {
+            SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 

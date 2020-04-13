@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Models
     public class FormTable : FormContent
     {
         internal FormTable(DataTable_internal table, ReadResult_internal readResult)
-            : base(null, readResult.Page, null) // TODO: retrieve text and bounding box.
+            : base(new BoundingBox(), readResult.Page, null) // TODO: retrieve text and bounding box.
         {
             ColumnCount = table.Columns;
             RowCount = table.Rows;

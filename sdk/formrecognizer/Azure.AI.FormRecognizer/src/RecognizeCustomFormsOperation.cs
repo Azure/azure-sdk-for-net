@@ -110,7 +110,7 @@ namespace Azure.AI.FormRecognizer.Models
 
 #pragma warning disable CA1801 // Remove unused parameter
         private static IReadOnlyList<RecognizedForm> ConvertToRecognizedForms(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
-#pragma warning disable CA1801 // Remove unused parameter
+#pragma warning restore CA1801 // Remove unused parameter
         {
             List<RecognizedForm> pages = new List<RecognizedForm>();
             for (int i = 0; i < pageResults.Count; i++)

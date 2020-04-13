@@ -11,6 +11,10 @@ namespace Azure.AI.FormRecognizer.Models
     [CodeGenModel("ContentType")]
     public enum ContentType
     {
+        /// <summary>application/json</summary>
+        [CodeGenMember("ApplicationJson")]
+        Json,
+
         /// <summary>application/pdf</summary>
         [CodeGenMember("ApplicationPdf")]
         Pdf,

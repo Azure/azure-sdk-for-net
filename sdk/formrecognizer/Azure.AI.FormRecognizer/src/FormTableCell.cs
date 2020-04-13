@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer.Custom;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (references != null)
             {
-                TextContent = ExtractedField.ConvertTextReferences(readResult, references);
+                //TextContent = FormField.ConvertTextReferences(readResult, references);
             }
         }
 
