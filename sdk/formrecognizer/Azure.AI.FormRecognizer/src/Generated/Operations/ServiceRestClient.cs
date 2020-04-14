@@ -118,99 +118,6 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateGetCustomModelsRequest(GetModelOptions? op)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
-            uri.AppendPath("/custom/models", false);
-            if (op != null)
-            {
-                uri.AppendQuery("op", op.Value.ToString(), true);
-            }
-            request.Uri = uri;
-            return message;
-        }
-
-        /// <summary> Get information about all custom models. </summary>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models_internal>> GetCustomModelsAsync(GetModelOptions? op = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
-            scope.Start();
-            try
-            {
-                using var message = CreateGetCustomModelsRequest(op);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                        {
-                            Models_internal value = default;
-                            using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            if (document.RootElement.ValueKind == JsonValueKind.Null)
-                            {
-                                value = null;
-                            }
-                            else
-                            {
-                                value = Models_internal.DeserializeModels_internal(document.RootElement);
-                            }
-                            return Response.FromValue(value, message.Response);
-                        }
-                    default:
-                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get information about all custom models. </summary>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models_internal> GetCustomModels(GetModelOptions? op = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
-            scope.Start();
-            try
-            {
-                using var message = CreateGetCustomModelsRequest(op);
-                _pipeline.Send(message, cancellationToken);
-                switch (message.Response.Status)
-                {
-                    case 200:
-                        {
-                            Models_internal value = default;
-                            using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            if (document.RootElement.ValueKind == JsonValueKind.Null)
-                            {
-                                value = null;
-                            }
-                            else
-                            {
-                                value = Models_internal.DeserializeModels_internal(document.RootElement);
-                            }
-                            return Response.FromValue(value, message.Response);
-                        }
-                    default:
-                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         internal HttpMessage CreateGetCustomModelRequest(Guid modelId, bool? includeKeys)
         {
             var message = _pipeline.CreateMessage();
@@ -1144,7 +1051,183 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
-        internal HttpMessage CreateGetCustomModelsNextPageRequest(string nextLink, GetModelOptions? op)
+        internal HttpMessage CreateListCustomModelsRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models", false);
+            uri.AppendQuery("op", "full", true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async ValueTask<Response<Models_internal>> ListCustomModelsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.ListCustomModels");
+            scope.Start();
+            try
+            {
+                using var message = CreateListCustomModelsRequest();
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Models_internal value = default;
+                            using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            }
+                            return Response.FromValue(value, message.Response);
+                        }
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<Models_internal> ListCustomModels(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.ListCustomModels");
+            scope.Start();
+            try
+            {
+                using var message = CreateListCustomModelsRequest();
+                _pipeline.Send(message, cancellationToken);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Models_internal value = default;
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            }
+                            return Response.FromValue(value, message.Response);
+                        }
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateGetCustomModelsRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendRaw("/formrecognizer/v2.0-preview", false);
+            uri.AppendPath("/custom/models", false);
+            uri.AppendQuery("op", "summary", true);
+            request.Uri = uri;
+            return message;
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async ValueTask<Response<Models_internal>> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
+            scope.Start();
+            try
+            {
+                using var message = CreateGetCustomModelsRequest();
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Models_internal value = default;
+                            using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            }
+                            return Response.FromValue(value, message.Response);
+                        }
+                    default:
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<Models_internal> GetCustomModels(CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
+            scope.Start();
+            try
+            {
+                using var message = CreateGetCustomModelsRequest();
+                _pipeline.Send(message, cancellationToken);
+                switch (message.Response.Status)
+                {
+                    case 200:
+                        {
+                            Models_internal value = default;
+                            using var document = JsonDocument.Parse(message.Response.ContentStream);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = Models_internal.DeserializeModels_internal(document.RootElement);
+                            }
+                            return Response.FromValue(value, message.Response);
+                        }
+                    default:
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateListCustomModelsNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1157,20 +1240,19 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Models_internal>> GetCustomModelsNextPageAsync(string nextLink, GetModelOptions? op = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<Models_internal>> ListCustomModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.ListCustomModels");
             scope.Start();
             try
             {
-                using var message = CreateGetCustomModelsNextPageRequest(nextLink, op);
+                using var message = CreateListCustomModelsNextPageRequest(nextLink);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
@@ -1201,20 +1283,19 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Get information about all custom models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Models_internal> GetCustomModelsNextPage(string nextLink, GetModelOptions? op = null, CancellationToken cancellationToken = default)
+        public Response<Models_internal> ListCustomModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetCustomModels");
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.ListCustomModels");
             scope.Start();
             try
             {
-                using var message = CreateGetCustomModelsNextPageRequest(nextLink, op);
+                using var message = CreateListCustomModelsNextPageRequest(nextLink);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -17,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             FieldValueType type = default;
             string valueString = default;
-            string valueDate = default;
+            DateTimeOffset? valueDate = default;
             string valueTime = default;
             string valuePhoneNumber = default;
             float? valueNumber = default;
@@ -51,7 +52,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    valueDate = property.Value.GetString();
+                    valueDate = property.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (property.NameEquals("valueTime"))
