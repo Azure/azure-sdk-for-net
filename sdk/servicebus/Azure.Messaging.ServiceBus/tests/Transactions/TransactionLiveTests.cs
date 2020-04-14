@@ -45,6 +45,77 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
+        public async Task TransactionalSendMultipleSessions()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                ServiceBusMessage message1 = GetMessage("session1");
+                ServiceBusMessage message2 = GetMessage("session2");
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await sender.SendAsync(message1);
+                    await sender.SendAsync(message2);
+                    ts.Complete();
+                }
+
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
+
+                Assert.NotNull(receivedMessage);
+                Assert.AreEqual(message1.Body.ToArray(), receivedMessage.Body.ToArray());
+                await receiver.CompleteAsync(receivedMessage);
+
+                receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                receivedMessage = await receiver.ReceiveAsync();
+
+                Assert.NotNull(receivedMessage);
+                Assert.AreEqual(message2.Body.ToArray(), receivedMessage.Body.ToArray());
+                await receiver.CompleteAsync(receivedMessage);
+            };
+        }
+
+        [Test]
+        public async Task TransactionalSendNestedMultipleSessions()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                ServiceBusMessage message1 = GetMessage();
+                ServiceBusMessage message2 = GetMessage("session2");
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await sender.SendAsync(message1);
+                    using (var ts2 = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    {
+                        await sender.SendAsync(message2);
+                        ts2.Complete();
+                    }
+                }
+
+                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+
+                Assert.NotNull(receivedMessage);
+                Assert.AreEqual(message1.Body.ToArray(), receivedMessage.Body.ToArray());
+                await receiver.CompleteAsync(receivedMessage);
+
+                receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                receivedMessage = await receiver.ReceiveAsync();
+
+                Assert.NotNull(receivedMessage);
+                Assert.AreEqual(message2.Body.ToArray(), receivedMessage.Body.ToArray());
+                await receiver.CompleteAsync(receivedMessage);
+            };
+        }
+
+        [Test]
         [TestCase(false, false)]
         [TestCase(false, true)]
         [TestCase(true, false)]
