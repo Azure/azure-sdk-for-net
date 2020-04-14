@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Training
             Status = model.ModelInfo.Status;
             CreatedOn = model.ModelInfo.CreatedDateTime;
             LastModified = model.ModelInfo.LastUpdatedDateTime;
-            Models = ConvertToSubmodel(model);
+            Models = ConvertToSubmodels(model);
             TrainingDocuments = model.TrainResult.TrainingDocuments;
         }
 
@@ -49,10 +49,9 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         ///  Meta-data about each of the documents used to train the model.
         /// </summary>
-        // TODO: for composed models, union what comes back on submodels into this single list.
         public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; }
 
-        private static IReadOnlyList<CustomFormSubModel> ConvertToSubmodel(Model_internal model)
+        private static IReadOnlyList<CustomFormSubModel> ConvertToSubmodels(Model_internal model)
         {
             if (model.Keys != null)
                 return ConvertFromUnlabeled(model.Keys);

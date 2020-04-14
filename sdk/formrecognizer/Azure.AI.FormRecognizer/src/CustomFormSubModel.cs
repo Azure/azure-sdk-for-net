@@ -7,8 +7,7 @@ using Azure.AI.FormRecognizer.Models;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// Represents a submodel that extracts fields from a specific type of form.  
-    /// trained on, and the form type.
+    /// Represents a submodel that extracts fields from a specific type of form.
     /// </summary>
     public class CustomFormSubModel
     {

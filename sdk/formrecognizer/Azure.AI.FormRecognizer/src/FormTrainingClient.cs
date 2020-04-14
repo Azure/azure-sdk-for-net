@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual Response<CustomFormModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
         {
-            Response<Model_internal> response = ServiceClient.GetCustomModel(new Guid(modelId), true, cancellationToken);
+            Response<Model_internal> response = ServiceClient.GetCustomModel(new Guid(modelId), includeKeys: true, cancellationToken);
             return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
@@ -126,7 +126,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual async Task<Response<CustomFormModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(new Guid(modelId), true, cancellationToken).ConfigureAwait(false);
+            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(new Guid(modelId), includeKeys: true, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
