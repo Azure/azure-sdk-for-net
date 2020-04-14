@@ -233,13 +233,11 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            // TODO: automate content-type detection
+            // https://github.com/Azure/azure-sdk-for-net/issues/10329
 
-            //// TODO: automate content-type detection
-            //// https://github.com/Azure/azure-sdk-for-net/issues/10329
-
-            //ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: includeTextElements, formFileStream, contentType, cancellationToken);
-            //return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), ContentType.Pdf, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
+            return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>

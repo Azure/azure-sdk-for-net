@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -12,27 +11,26 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormField
     {
-#pragma warning disable CA1801
-        internal FormField(KeyValuePair_internal field, ReadResult_internal readResult)
+        internal FormField(string name, int pageNumber, KeyValuePair_internal field, IReadOnlyList<ReadResult_internal> readResults)
         {
-#pragma warning restore CA1801
-            //Confidence = field.Confidence;
+            Confidence = field.Confidence;
+            Name = name;
 
-            //Name = field.Key.Text;
-            //NameBoundingBox = new BoundingBox(field.Key.BoundingBox);
+            IReadOnlyList<FormContent> labelFormContent = default;
+            if (field.Key.Elements != null)
+            {
+                labelFormContent = ConvertTextReferences(field.Key.Elements, readResults);
+            }
+            LabelText = new FieldText(field.Key.Text, pageNumber, new BoundingBox(field.Key.BoundingBox), labelFormContent);
 
-            //if (field.Key.Elements != null)
-            //{
-            //    NameTextElements = ConvertTextReferences(readResult, field.Key.Elements);
-            //}
+            IReadOnlyList<FormContent> valueFormContent = default;
+            if (field.Value.Elements != null)
+            {
+                valueFormContent = ConvertTextReferences(field.Value.Elements, readResults);
+            }
+            ValueText = new FieldText(field.Value.Text, pageNumber, new BoundingBox(field.Value.BoundingBox), valueFormContent);
 
-            //Value = field.Value.Text;
-            //ValueBoundingBox = new BoundingBox(field.Value.BoundingBox);
-
-            //if (field.Value.Elements != null)
-            //{
-            //    ValueTextElements = ConvertTextReferences(readResult, field.Value.Elements);
-            //}
+            Value = new FieldValue(new FieldValue_internal(FieldValueType.StringType, field.Value.Text, null, null, null, null, null, null, null, field.Value.Text, null, null, null, pageNumber), readResults);
         }
 
         internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)

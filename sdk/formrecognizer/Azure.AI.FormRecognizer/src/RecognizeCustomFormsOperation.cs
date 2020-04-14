@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Models
             List<RecognizedForm> forms = new List<RecognizedForm>();
             foreach (var pageResult in analyzeResult.PageResults)
             {
-                //forms.Add(new RecognizedForm(pageResult, analyzeResult.ReadResults));
+                forms.Add(new RecognizedForm(pageResult, analyzeResult.ReadResults));
             }
             return forms;
         }
