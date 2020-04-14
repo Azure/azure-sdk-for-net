@@ -53,9 +53,9 @@ namespace Azure.AI.FormRecognizer.Models
         {
             List<FormPage> pages = new List<FormPage>();
 
-            for (int i = 0; i< pageResults.Count; i++)
+            for (int i = 0; i < readResults.Count; i++)
             {
-                pages.Add(new FormPage(pageResults[i], readResults[i]));
+                pages.Add(new FormPage(pageResults != null ? pageResults[i] : null, readResults[i]));
             }
 
             return pages;

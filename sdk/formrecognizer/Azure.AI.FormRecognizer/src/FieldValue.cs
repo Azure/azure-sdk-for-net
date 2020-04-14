@@ -69,7 +69,14 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueNumber.HasValue)
             {
-                throw new InvalidOperationException($"Field value is null.");
+                // TODO: Sometimes ValueNumber isn't populated in ReceiptItems.  The following is a
+                // workaround to get the value from Text if ValueNumber isn't there.
+                // https://github.com/Azure/azure-sdk-for-net/issues/10333
+                float parsedFloat;
+                if (float.TryParse(_fieldValue.Text.TrimStart('$'), out parsedFloat))
+                {
+                    return parsedFloat;
+                }
             }
 
             return _fieldValue.ValueNumber.Value;
@@ -107,9 +114,9 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             TimeSpan time = default;
-            if (!TimeSpan.TryParse(_fieldValue.ValueDate, out time))
+            if (!TimeSpan.TryParse(_fieldValue.ValueTime, out time))
             {
-                throw new InvalidOperationException($"Cannot parse Time value {_fieldValue.ValueDate}.");
+                throw new InvalidOperationException($"Cannot parse Time value {_fieldValue.ValueTime}.");
             }
 
             return time;

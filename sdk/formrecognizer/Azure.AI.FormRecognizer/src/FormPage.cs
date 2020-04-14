@@ -19,10 +19,14 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResult.Lines != null)
             {
-                Lines = ConvertLines(readResult.Lines, pageResult.Page);
+                Lines = ConvertLines(readResult.Lines, readResult.Page);
             }
 
-            Tables = ConvertTables(pageResult, readResult);
+            if (pageResult != null)
+            {
+                //TODO: set tables to empty list
+                Tables = ConvertTables(pageResult, readResult);
+            }
         }
 
         /// <summary>

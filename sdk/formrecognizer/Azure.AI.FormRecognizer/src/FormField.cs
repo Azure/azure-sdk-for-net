@@ -41,9 +41,16 @@ namespace Azure.AI.FormRecognizer.Models
             Name = name;
             FieldLabel = null;
 
-            IReadOnlyList<FormContent> formContent = ConvertTextReferences(fieldValue.Elements, readResults);
+            IReadOnlyList<FormContent> formContent = default;
+            if (fieldValue.Elements != null)
+            {
+                formContent = ConvertTextReferences(fieldValue.Elements, readResults);
+            }
 
-            ValueText = new FieldText(fieldValue.Text, formContent[0].PageNumber, new BoundingBox(fieldValue.BoundingBox), formContent);
+            // TODO: FormEnum<T> ?
+            BoundingBox boundingBox = fieldValue.BoundingBox == null ? default : new BoundingBox(fieldValue.BoundingBox);
+
+            ValueText = new FieldText(fieldValue.Text, fieldValue.Page ?? 0, boundingBox, formContent);
             Value = new FieldValue(fieldValue, readResults);
         }
 

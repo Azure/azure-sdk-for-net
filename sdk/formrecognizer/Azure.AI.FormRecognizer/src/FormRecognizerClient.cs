@@ -190,7 +190,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
-        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, string receiptLocale, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, string receiptLocale="en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             recognizeOptions ??= new RecognizeOptions();
 
