@@ -7,27 +7,30 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    [Flags]
     public enum USReceiptType
     {
         /// <summary>
         /// </summary>
-        Unrecognized = 0,
+        Unrecognized,
 
         /// <summary>
         /// </summary>
-        Itemized = 1,
+        Itemized,
 
         /// <summary>
         /// </summary>
-        CreditCard = 2,
+        CreditCard,
 
         /// <summary>
         /// </summary>
-        Gas = 4,
+        Gas,
 
         /// <summary>
         /// </summary>
-        Parking = 8,
+        Parking,
+
+        /// <summary>
+        /// </summary>
+        Other,
     }
 }

@@ -7,14 +7,12 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class USReceiptItem
     {
-#pragma warning disable CA1801 // Remove unused parameter
-        internal USReceiptItem(string name, int? quantity, float? price, float? totalPrice)
-#pragma warning restore CA1801 // Remove unused parameter
+        internal USReceiptItem(FormField<string> name, FormField<float> quantity, FormField<float> price, FormField<float> totalPrice)
         {
-            //Name = name;
-            //Quantity = quantity;
-            //Price = price;
-            //TotalPrice = totalPrice;
+            Name = name;
+            Quantity = quantity;
+            Price = price;
+            TotalPrice = totalPrice;
         }
 
         /// <summary>

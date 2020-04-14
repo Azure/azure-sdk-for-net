@@ -1,6 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
@@ -30,6 +35,25 @@ namespace Azure.AI.FormRecognizer.Models
             //}
         }
 
+        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)
+        {
+            Confidence = fieldValue.Confidence ?? 1.0f;
+            Name = name;
+            FieldLabel = null;
+
+            IReadOnlyList<FormContent> formContent = default;
+            if (fieldValue.Elements != null)
+            {
+                formContent = ConvertTextReferences(fieldValue.Elements, readResults);
+            }
+
+            // TODO: FormEnum<T> ?
+            BoundingBox boundingBox = fieldValue.BoundingBox == null ? default : new BoundingBox(fieldValue.BoundingBox);
+
+            ValueText = new FieldText(fieldValue.Text, fieldValue.Page ?? 0, boundingBox, formContent);
+            Value = new FieldValue(fieldValue, readResults);
+        }
+
         /// <summary>
         /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
@@ -50,109 +74,47 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public float? Confidence { get; }
+        public float Confidence { get; }
 
-        //// TODO: Refactor to move OCR code to a common file, rather than it living in this file.
-        //internal static IReadOnlyList<FormTextElement> ConvertTextReferences(ReadResult_internal readResult, ICollection<string> references)
-        //{
-        //    List<FormTextElement> extractedTexts = new List<FormTextElement>();
-        //    foreach (var reference in references)
-        //    {
-        //        extractedTexts.Add(ResolveTextReference(readResult, reference));
-        //    }
-        //    return extractedTexts;
-        //}
+        internal static IReadOnlyList<FormContent> ConvertTextReferences(IReadOnlyList<string> references, IReadOnlyList<ReadResult_internal> readResults)
+        {
+            List<FormContent> formContent = new List<FormContent>();
+            foreach (var reference in references)
+            {
+                formContent.Add(ResolveTextReference(readResults, reference));
+            }
+            return formContent;
+        }
 
-        //internal static IReadOnlyList<FormTextElement> ConvertTextReferences(IList<ReadResult_internal> readResults, ICollection<string> references)
-        //{
-        //    List<FormTextElement> extractedTexts = new List<FormTextElement>();
-        //    foreach (var reference in references)
-        //    {
-        //        extractedTexts.Add(ResolveTextReference(readResults, reference));
-        //    }
-        //    return extractedTexts;
-        //}
+        private static FormContent ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
+        {
+            // TODO: Add additional validations here.
+            // https://github.com/Azure/azure-sdk-for-net/issues/10363
 
-        //private const string SegmentReadResults = "readResults";
-        //private const string SegmentLines = "lines";
-        //private const string SegmentWords = "words";
+            // Example: the following should result in PageIndex = 3, LineIndex = 7, WordIndex = 12
+            // "#/readResults/3/lines/7/words/12"
+            string[] segments = reference.Split('/');
 
-        //        private static FormTextElement ResolveTextReference(ReadResult_internal readResult, string reference)
-        //        {
-        //            // TODO: Add additional validations here.
-        //            // https://github.com/Azure/azure-sdk-for-net/issues/10363
+            // Line Reference
+            if (segments.Length == 5)
+            {
+                var pageIndex = int.Parse(segments[2], CultureInfo.InvariantCulture);
+                var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
 
-        //            // Example: the following should result in LineIndex = 7, WordIndex = 12
-        //            // "#/readResults/3/lines/7/words/12"
-        //            string[] segments = reference.Split('/');
+                return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
+            }
+            else if (segments.Length == 7)
+            {
+                var pageIndex = int.Parse(segments[2], CultureInfo.InvariantCulture);
+                var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
+                var wordIndex = int.Parse(segments[6], CultureInfo.InvariantCulture);
 
-        //            var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
-        //            var wordIndex = int.Parse(segments[6], CultureInfo.InvariantCulture);
-
-        //            // TODO: Support case where text reference is lines only, without word segment
-        //            // https://github.com/Azure/azure-sdk-for-net/issues/10364
-        //            return new FormTextElement(readResult.Lines.ToList()[lineIndex].Words.ToList()[wordIndex]);
-
-        //            // Code from Chris Stone below
-        //            //if (!string.IsNullOrEmpty(reference) && reference.Length > 2 && reference[0] == '#')
-        //            //{
-        //            //    // offset by 2 to skip the '#/' prefix
-        //            //    var segments = reference.Substring(2).Split('/');
-
-        //            //    // must have an even number of segments
-        //            //    if (segments.Length % 2 == 0)
-        //            //    {
-        //            //        int offset;
-        //            //        for (var i = 0; i < segments.Length; i += 2)
-        //            //        {
-        //            //            // the next segment must be an integer
-        //            //            if (int.TryParse(segments[i + 1], out offset))
-        //            //            {
-        //            //                var segment = segments[i];
-
-        //            //                // We assume we're already on the correct page element
-        //            //                //// this is the root page element
-        //            //                //if (segment == SegmentReadResults)
-        //            //                //{
-        //            //                //    readResult = results[offset];
-        //            //                //}
-        //            //
-        //            //                // this is a text element
-        //            //                if (readResult != default)
-        //            //                {
-        //            //                    if (segment == SegmentLines)
-        //            //                    {
-        //            //                        textElement = new RawExtractedLine(readResult.Lines.ToList()[offset]);
-        //            //                    }
-        //            //                    else if (segment == SegmentWords && textElement is RawExtractedLine)
-        //            //                    {
-        //            //                        textElement = (textElement as RawExtractedLine).Words[offset];
-        //            //                    }
-        //            //                }
-        //            //            }
-        //            //        }
-        //            //    }
-        //            //}
-        //        }
-
-        //        private static FormTextElement ResolveTextReference(IList<ReadResult_internal> readResults, string reference)
-        //        {
-        //            // TODO: Add additional validations here.
-        //            // https://github.com/Azure/azure-sdk-for-net/issues/10363
-
-        //            // Example: the following should result in LineIndex = 7, WordIndex = 12
-        //            // "#/readResults/3/lines/7/words/12"
-        //            string[] segments = reference.Split('/');
-
-        //#pragma warning disable CA1305 // Specify IFormatProvider
-        //            var pageIndex = int.Parse(segments[2]);
-        //            var lineIndex = int.Parse(segments[4]);
-        //            var wordIndex = int.Parse(segments[6]);
-        //#pragma warning restore CA1305 // Specify IFormatProvider
-
-        //            // TODO: Support case where text reference is lines only, without word segment
-        //            // https://github.com/Azure/azure-sdk-for-net/issues/10364
-        //            return new WordTextElement(readResults[pageIndex].Lines[lineIndex].Words[wordIndex]);
-        //        }
+                return new FormWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex], pageIndex + 1);
+            }
+            else
+            {
+                throw new InvalidOperationException($"Failed to parse element reference: {reference}");
+            }
+        }
     }
 }
