@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
             RowIndex = dataTableCell.RowIndex;
             RowSpan = dataTableCell.RowSpan ?? 1;
             TextContent = dataTableCell.Elements != null
-                ? ConvertTextReferences(readResult, dataTableCell.Elements)
+                ? null // TODO: Call ConvertTextReferences
                 : new List<FormContent>();
         }
 
@@ -56,33 +56,5 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         public IReadOnlyList<FormContent> TextContent { get; }
-
-        // TODO: Refactor to move OCR code to a common file, rather than it living in this file.
-        //       Code may be duplicated in FormField.
-        private static IReadOnlyList<FormContent> ConvertTextReferences(ReadResult_internal readResult, IReadOnlyCollection<string> references)
-        {
-            List<FormContent> extractedTexts = new List<FormContent>();
-
-            foreach (var reference in references)
-            {
-                extractedTexts.Add(ResolveTextReference(readResult, reference));
-            }
-
-            return extractedTexts;
-        }
-
-        // TODO: Refactor to move OCR code to a common file, rather than it living in this file.
-        //       Code may be duplicated in FormField.
-        private static FormContent ResolveTextReference(ReadResult_internal readResult, string reference)
-        {
-            // Method content is dummy.
-
-            if (readResult == null || reference == null)
-            {
-                return null;
-            }
-
-            return null;
-        }
     }
 }

@@ -136,7 +136,7 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = new FileStream(TestEnvironment.ReceiptPath, FileMode.Open);
-                operation = await client.StartRecognizeReceiptsAsync(stream, default);
+                operation = await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg);
             }
             else
             {
