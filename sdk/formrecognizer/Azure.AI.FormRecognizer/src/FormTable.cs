@@ -12,10 +12,16 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal FormTable(DataTable_internal table, ReadResult_internal readResult)
         {
+            PageNumber = readResult.Page;
             ColumnCount = table.Columns;
             RowCount = table.Rows;
             Cells = ConvertCells(table.Cells, readResult);
         }
+
+        /// <summary>
+        /// The 1-based page number in the input document.
+        /// </summary>
+        public int PageNumber { get; }
 
         /// <summary>
         /// </summary>
@@ -55,9 +61,10 @@ namespace Azure.AI.FormRecognizer.Models
         private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
         {
             List<FormTableCell> cells = new List<FormTableCell>();
+
             foreach (var result in cellsResult)
             {
-                cells.Add(new FormTableCell(result, readResult, result.Elements));
+                cells.Add(new FormTableCell(result, readResult));
             }
 
             return cells;

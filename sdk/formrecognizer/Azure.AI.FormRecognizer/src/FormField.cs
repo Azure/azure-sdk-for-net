@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Confidence = fieldValue.Confidence ?? 1.0f;
             Name = name;
-            FieldLabel = null;
+            LabelText = null;
 
             IReadOnlyList<FormContent> formContent = default;
             if (fieldValue.Elements != null)
@@ -62,7 +62,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Text from the form that labels the form field.
         /// </summary>
-        public FieldText FieldLabel { get; internal set; }
+        public FieldText LabelText { get; internal set; }
 
         /// <summary>
         /// </summary>

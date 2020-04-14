@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal FormField(FormField field, T value)
         {
             Confidence = field.Confidence;
-            FieldLabel = field.FieldLabel;
+            FieldLabel = field.LabelText;
             Name = field.Name;
             ValueText = field.ValueText;
             Value = value;
