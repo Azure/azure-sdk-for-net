@@ -45,7 +45,7 @@ try {
     }
 
     Write-Host "Checking that solutions are up to date"
-    Join-Path "$PSScriptRoot/../sdk" $ServiceDirectory  `
+    Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
         | Resolve-Path `
         | % { Get-ChildItem $_ -Filter "Azure.*.sln" -Recurse } `
         | % {
@@ -74,7 +74,7 @@ try {
 
     Write-Host "Re-generating clients"
     Invoke-Block {
-        & dotnet msbuild $PSScriptRoot\service.proj /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
+        & dotnet msbuild $PSScriptRoot\..\service.proj /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
 
         # https://github.com/Azure/azure-sdk-for-net/issues/8584
         # & $repoRoot\storage\generate.ps1
@@ -86,7 +86,7 @@ try {
     if ($LastExitCode -ne 0) {
         $status = git status -s | Out-String
         $status = $status -replace "`n","`n    "
-        LogError "Generated code is not up to date. You may need to run eng\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
+        LogError "Generated code is not up to date. You may need to run eng\scripts\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
     }
 }
 finally {
