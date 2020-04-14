@@ -559,9 +559,17 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = ServiceBusErrorSource.AcceptMessageSession;
                     useThreadLocalReceiver = true;
-                    await MaxConcurrentAcceptSessionsSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
                     try
                     {
+                        try
+                        {
+                            await MaxConcurrentAcceptSessionsSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // propagate as TCE so it will be handled by the outer catch block
+                            throw new TaskCanceledException();
+                        }
                         try
                         {
                             receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
