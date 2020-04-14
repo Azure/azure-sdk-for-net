@@ -107,7 +107,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Get detailed information about a custom model.
         /// </summary>
-        /// <param name="modelId">The ID of the model to retrieve</param>
+        /// <param name="modelId">The ID of the model to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
@@ -120,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Get detailed information about a custom model.
         /// </summary>
-        /// <param name="modelId">The ID of the model to retrieve</param>
+        /// <param name="modelId">The ID of the model to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]

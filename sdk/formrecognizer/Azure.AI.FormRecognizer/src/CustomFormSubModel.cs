@@ -7,6 +7,8 @@ using Azure.AI.FormRecognizer.Models;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
+    /// Represents the submodel with model accuracy, any errors while training the model, fields that were
+    /// trained on, and the form type.
     /// </summary>
     public class CustomFormSubModel
     {
@@ -18,14 +20,17 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
+        ///  Identifier of the type of form.
         /// </summary>
         public string FormType { get; internal set; }
 
         /// <summary>
+        /// The average accuracy of the model.
         /// </summary>
         public float? Accuracy { get; internal set; }
 
         /// <summary>
+        /// The fields the model was trained on.
         /// </summary>
         public IReadOnlyDictionary<string, CustomFormModelField> Fields { get; internal set; }
 

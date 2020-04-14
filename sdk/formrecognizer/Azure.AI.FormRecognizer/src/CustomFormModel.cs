@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
+    /// Represents a custom model returned from training.
     /// </summary>
     public class CustomFormModel
     {
@@ -21,26 +22,32 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
+        /// Model identifier.
         /// </summary>
         public string ModelId { get; }
 
         /// <summary>
+        /// The status of the model.
         /// </summary>
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
+        /// Date and time (UTC) when the model was created.
         /// </summary>
         public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
+        /// Date and time (UTC) when the status was last updated.
         /// </summary>
         public DateTimeOffset LastModified { get; }
 
         /// <summary>
+        /// A list of submodels which contains the fields trained on.
         /// </summary>
         public IReadOnlyList<CustomFormSubModel> Models { get; }
 
         /// <summary>
+        ///  Training document information about the custom model.
         /// </summary>
         // TODO: for composed models, union what comes back on submodels into this single list.
         public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; }
