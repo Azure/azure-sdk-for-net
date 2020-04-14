@@ -97,7 +97,7 @@ Once you've initialized a `SecretClient`, you can interact with secrets in Azure
 ## Examples
 The Azure.Security.KeyVault.Secrets package supports synchronous and asynchronous APIs.
 
-The following section provides several code snippets using the [above created](#create-secretclient) `client`, covering some of the most common Azure Key Vault secret service related tasks:
+The following section provides several code snippets using the `client` [created above](#create-secretclient), covering some of the most common Azure Key Vault secret service related tasks:
 
 ### Sync examples
 * [Create a secret](#create-a-secret)

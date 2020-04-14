@@ -280,13 +280,13 @@ When deleting a key asynchronously before you purge it, you can await the `WaitF
 By default, this loops indefinitely but you can cancel it by passing a `CancellationToken`.
 
 ```C# Snippet:DeleteAndPurgeKeyAsync
-DeleteKeyOperation operation = await client.StartDeleteKey("key-name");
+DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
 
 // You only need to wait for completion if you want to purge or recover the key.
 await operation.WaitForCompletionAsync();
 
 DeletedKey key = operation.Value;
-await client.PurgeDeletedKey(key.Name);
+await client.PurgeDeletedKeyAsync(key.Name);
 ```
 
 ## Troubleshooting

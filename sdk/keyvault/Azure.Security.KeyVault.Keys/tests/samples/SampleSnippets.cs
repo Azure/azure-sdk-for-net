@@ -208,13 +208,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public async Task DeleteAndPurgeKey()
         {
             #region Snippet:DeleteAndPurgeKeyAsync
-            DeleteKeyOperation operation = await client.StartDeleteKey("key-name");
+            DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
 
             // You only need to wait for completion if you want to purge or recover the key.
             await operation.WaitForCompletionAsync();
 
             DeletedKey key = operation.Value;
-            await client.PurgeDeletedKey(key.Name);
+            await client.PurgeDeletedKeyAsync(key.Name);
             #endregion
 
             DeleteKeyOperation rsaKeyOperation =  client.StartDeleteKey("rsa-key-name");

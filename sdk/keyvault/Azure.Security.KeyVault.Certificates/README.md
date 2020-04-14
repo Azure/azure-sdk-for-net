@@ -93,7 +93,7 @@ illustrated in the examples below.
 ## Examples
 The Azure.Security.KeyVault.Certificates package supports synchronous and asynchronous APIs.
 
-The following section provides several code snippets using the `client`[created above](#create-certificateclient), covering some of the most common Azure Key Vault certificates service related tasks:
+The following section provides several code snippets using the `client`[created above](#create-certificateclient), covering some of the most common Azure Key Vault certificate service related tasks:
 
 ### Sync examples
 * [Create a certificate](#create-a-certificate)
