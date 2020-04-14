@@ -16,7 +16,14 @@ namespace Azure.Core.Pipeline
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            message.Request.Headers.Add(ClientRequestIdHeader, message.Request.ClientRequestId);
+            if (message.Request.Headers.TryGetValue(ClientRequestIdHeader, out string? value))
+            {
+                message.Request.ClientRequestId = value;
+            }
+            else
+            {
+                message.Request.Headers.Add(ClientRequestIdHeader, message.Request.ClientRequestId);
+            }
             message.Request.Headers.Add(EchoClientRequestId, "true");
         }
     }
