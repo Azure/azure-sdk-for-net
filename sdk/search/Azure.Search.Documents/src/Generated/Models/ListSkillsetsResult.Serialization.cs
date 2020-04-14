@@ -23,7 +23,14 @@ namespace Azure.Search.Documents.Models
                     List<Skillset> array = new List<Skillset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Skillset.DeserializeSkillset(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Skillset.DeserializeSkillset(item));
+                        }
                     }
                     value = array;
                     continue;
