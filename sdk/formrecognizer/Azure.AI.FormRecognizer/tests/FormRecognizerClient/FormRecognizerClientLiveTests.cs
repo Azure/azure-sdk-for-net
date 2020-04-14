@@ -156,9 +156,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, receipt.RecognizedForm.PageRange.FirstPageNumber);
             Assert.AreEqual(1, receipt.RecognizedForm.PageRange.LastPageNumber);
 
-            Assert.AreEqual("Contoso Contoso", receipt.MerchantName);
-            Assert.AreEqual("123 Main Street Redmond, WA 98052", receipt.MerchantAddress);
-            Assert.AreEqual("123-456-7890", receipt.MerchantPhoneNumber);
+            Assert.AreEqual("Contoso Contoso", (string)receipt.MerchantName);
+            Assert.AreEqual("123 Main Street Redmond, WA 98052", (string)receipt.MerchantAddress);
+            Assert.AreEqual("123-456-7890", (string)receipt.MerchantPhoneNumber.ValueText);
 
             Assert.IsNotNull(receipt.TransactionDate);
             Assert.IsNotNull(receipt.TransactionTime);
@@ -189,16 +189,16 @@ namespace Azure.AI.FormRecognizer.Tests
                 var receiptItem = receipt.Items[itemIndex];
                 var expectedItem = expectedItems[itemIndex];
 
-                Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Name, receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity == null? null : (float?)receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Name, (string)receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
+                Assert.That(receiptItem.Price == null? null : (float?)receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
+                Assert.That(receiptItem.TotalPrice == null? null: (float?)receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
             }
 
-            Assert.That(receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
-            Assert.That(receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
+            Assert.That((float?)receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
+            Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
             Assert.IsNull(receipt.Tip);
-            Assert.That(receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+            Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
         }
 
         /// <summary>
