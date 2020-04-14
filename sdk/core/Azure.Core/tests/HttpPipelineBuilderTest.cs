@@ -83,7 +83,7 @@ namespace Azure.Core.Tests
         {
             var policy = new Mock<HttpPipelineSynchronousPolicy>();
             policy.CallBase = true;
-            policy.Setup(p => p.OnReceivedResponse(It.IsAny<HttpMessage>()))
+            policy.Setup(p => p.OnSendingRequest(It.IsAny<HttpMessage>()))
                 .Callback<HttpMessage>(message =>
                 {
                     Assert.AreEqual("ExternalClientId",message.Request.ClientRequestId);
@@ -105,6 +105,37 @@ namespace Azure.Core.Tests
             }
 
             policy.Verify();
+        }
+
+        [Test]
+        public async Task CustomClientRequestIdSetInPerCallPolicyAppliedAsAHeader()
+        {
+            var policy = new Mock<HttpPipelineSynchronousPolicy>();
+            policy.CallBase = true;
+            policy.Setup(p => p.OnSendingRequest(It.IsAny<HttpMessage>()))
+                .Callback<HttpMessage>(message =>
+                {
+                    message.Request.ClientRequestId = "MyPolicyClientId";
+                }).Verifiable();
+
+            var options = new TestOptions();
+            var transport = new MockTransport(new MockResponse(200));
+            options.Transport = transport;
+            options.AddPolicy(policy.Object, HttpPipelinePosition.PerCall);
+
+            var pipeline = HttpPipelineBuilder.Build(options);
+            using (Request request = pipeline.CreateRequest())
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("http://example.com"));
+                request.Headers.Add("x-ms-client-request-id", "ExternalClientId");
+                await pipeline.SendRequestAsync(request, CancellationToken.None);
+            }
+
+            policy.Verify();
+
+            Assert.True(transport.SingleRequest.Headers.TryGetValue("x-ms-client-request-id", out var value));
+            Assert.AreEqual("MyPolicyClientId", value);
         }
 
         private class TestOptions : ClientOptions

@@ -48,11 +48,13 @@ namespace Azure.Core.Pipeline
 
             bool isDistributedTracingEnabled = options.Diagnostics.IsDistributedTracingEnabled;
 
-            policies.Add(ClientRequestIdPolicy.Shared);
+            policies.Add(ReadClientRequestIdPolicy.Shared);
 
             policies.AddRange(perCallPolicies);
 
             policies.AddRange(options.PerCallPolicies);
+
+            policies.Add(ClientRequestIdPolicy.Shared);
 
             DiagnosticsOptions diagnostics = options.Diagnostics;
             if (diagnostics.IsTelemetryEnabled)

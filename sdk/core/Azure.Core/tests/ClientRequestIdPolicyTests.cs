@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
                 }).Verifiable();
 
             var transport = new MockTransport(new MockResponse(200));
-            var pipeline = new HttpPipeline(transport, new[] { ClientRequestIdPolicy.Shared, policy.Object });
+            var pipeline = new HttpPipeline(transport, new[] { ReadClientRequestIdPolicy.Shared, policy.Object });
 
             using (Request request = pipeline.CreateRequest())
             {
