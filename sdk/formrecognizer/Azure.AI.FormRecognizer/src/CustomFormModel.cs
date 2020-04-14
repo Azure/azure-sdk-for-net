@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -19,6 +20,7 @@ namespace Azure.AI.FormRecognizer.Training
             LastModified = model.ModelInfo.LastUpdatedDateTime;
             Models = ConvertToSubmodels(model);
             TrainingDocuments = model.TrainResult?.TrainingDocuments;
+            Errors = ConvertToFormRecognizerError(model.TrainResult);
         }
 
         /// <summary>
@@ -50,6 +52,11 @@ namespace Azure.AI.FormRecognizer.Training
         ///  Meta-data about each of the documents used to train the model.
         /// </summary>
         public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; }
+
+        /// <summary>
+        /// Errors ocurred during the training operation.
+        /// </summary>
+        public IReadOnlyList<FormRecognizerError> Errors { get; }
 
         private static IReadOnlyList<CustomFormSubModel> ConvertToSubmodels(Model_internal model)
         {
@@ -96,6 +103,18 @@ namespace Azure.AI.FormRecognizer.Training
                     $"form-{model.ModelInfo.ModelId}",
                     model.TrainResult.AverageModelAccuracy,
                     fieldMap)};
+        }
+
+        private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult_internal trainResult)
+        {
+            if (trainResult == null)
+                return null;
+            var errors = new List<FormRecognizerError>();
+            foreach (var error in trainResult.Errors)
+            {
+                errors.Add(new FormRecognizerError(error.Code, error.Message));
+            }
+            return errors;
         }
     }
 }

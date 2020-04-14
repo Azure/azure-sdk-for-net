@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -32,10 +31,5 @@ namespace Azure.AI.FormRecognizer.Training
         /// Form fields that this submodel will extract when analyzing this form type.
         /// </summary>
         public IReadOnlyDictionary<string, CustomFormModelField> Fields { get; internal set; }
-
-        /// <summary>
-        /// Errors returned during the training operation.
-        /// </summary>
-        public IReadOnlyList<FormRecognizerError> Errors { get; internal set; }
     }
 }
