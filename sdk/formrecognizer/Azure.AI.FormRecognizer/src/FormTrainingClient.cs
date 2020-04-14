@@ -166,7 +166,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
         {
-            return ServiceClient.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
+            return ServiceClient.GetCustomModelsPageableModelInfo(cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
         {
-            return ServiceClient.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
+            return ServiceClient.GetCustomModelsPageableModelInfoAsync(cancellationToken);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
+            Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(cancellationToken);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
@@ -201,7 +201,7 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
+            Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 

@@ -2,7 +2,7 @@
 
 ## 4.2.0
 ### Breaking Changes
-None
+- Built-in checkpoint store is rolling back to WindowsAzure.Storage due to API timeout issues. (https://github.com/Azure/azure-sdk-for-net/pull/10265)
 
 ### Improvements
 - Custom checkpoint support added. (https://github.com/Azure/azure-sdk-for-net/pull/7448)

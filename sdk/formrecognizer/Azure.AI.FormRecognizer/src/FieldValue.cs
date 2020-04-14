@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Gets the value of the field as a <see cref="DateTimeOffset"/>.
+        /// Gets the value of the field as a <see cref="DateTime"/>.
         /// </summary>
         /// <returns></returns>
         public DateTime AsDate()
@@ -93,13 +93,12 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Date.  Field value's type is {Type}.");
             }
 
-            DateTime date = default;
-            if (!DateTime.TryParse(_fieldValue.ValueDate, out date))
+            if (!_fieldValue.ValueDate.HasValue)
             {
                 throw new InvalidOperationException($"Cannot parse Date value {_fieldValue.ValueDate}.");
             }
 
-            return date;
+            return _fieldValue.ValueDate.Value.UtcDateTime;
         }
 
         /// <summary>
