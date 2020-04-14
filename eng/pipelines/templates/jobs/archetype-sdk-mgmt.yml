@@ -91,3 +91,12 @@ jobs:
       - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
+      - task: PowerShell@2
+        inputs:
+          targetType: "inline"
+          script: |
+            if (Test-Path "src/SDKs/_metadata/") {
+                Write-Error "'src/SDKs/_metadata/' is not empty. This might be caused by outdated build tools. Please follow this guide to update them and make sure the metadata txt file is generated in 'eng/mgmt/mgmtmetadata': https://github.com/Azure/adx-documentation-pr/blob/master/engineering/adx_netsdk_process.md#updating-build-tools"
+            }
+          failOnStderr: true
+          pwsh: true

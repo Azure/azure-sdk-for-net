@@ -480,7 +480,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SendManageLockingTheBatch()
+        public async Task SendInvokesTheTransportProducerWithABatch()
         {
             var batchOptions = new CreateBatchOptions { PartitionKey = "testKey" };
             var batch = new EventDataBatch(new MockTransportBatch(), "ns", "eh", batchOptions.ToSendOptions());
@@ -497,7 +497,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task SendInvokesTheTransportProducerWithABatch()
+        public async Task SendManagesLockingTheBatch()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
@@ -826,6 +826,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public override int Count { get; }
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
             public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
+            public override void Clear() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();
         }
     }

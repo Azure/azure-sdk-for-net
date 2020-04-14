@@ -480,7 +480,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     ServiceBusEventSource.Log.StopProcessingStart(Identifier);
 
-                    await ProcessingStartStopSemaphore.WaitAsync().ConfigureAwait(false);
+                    await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -559,9 +559,21 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = ServiceBusErrorSource.AcceptMessageSession;
                     useThreadLocalReceiver = true;
-                    await MaxConcurrentAcceptSessionsSemaphore.WaitAsync().ConfigureAwait(false);
+                    bool releaseSemaphore = false;
                     try
                     {
+                        try
+                        {
+                            await MaxConcurrentAcceptSessionsSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                            // only attempt to release semaphore if WaitAsync is successful,
+                            // otherwise SemaphoreFullException can occur.
+                            releaseSemaphore = true;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // propagate as TCE so it will be handled by the outer catch block
+                            throw new TaskCanceledException();
+                        }
                         try
                         {
                             receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
@@ -584,7 +596,10 @@ namespace Azure.Messaging.ServiceBus
                     }
                     finally
                     {
-                        MaxConcurrentAcceptSessionsSemaphore.Release();
+                        if (releaseSemaphore)
+                        {
+                            MaxConcurrentAcceptSessionsSemaphore.Release();
+                        }
                     }
                 }
                 else

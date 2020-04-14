@@ -34,10 +34,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// true.</param>
         /// <param name="days">how long this blob can be restored. It should be
         /// great than zero and less than DeleteRetentionPolicy.days.</param>
-        public RestorePolicyProperties(bool enabled, int? days = default(int?))
+        /// <param name="lastEnabledTime">Returns the date and time the restore
+        /// policy was last enabled.</param>
+        public RestorePolicyProperties(bool enabled, int? days = default(int?), System.DateTime? lastEnabledTime = default(System.DateTime?))
         {
             Enabled = enabled;
             Days = days;
+            LastEnabledTime = lastEnabledTime;
             CustomInit();
         }
 
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "days")]
         public int? Days { get; set; }
+
+        /// <summary>
+        /// Gets returns the date and time the restore policy was last enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastEnabledTime")]
+        public System.DateTime? LastEnabledTime { get; private set; }
 
         /// <summary>
         /// Validate the object.

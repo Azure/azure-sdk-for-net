@@ -116,19 +116,13 @@ If for any reason there is an update to the build tools, you will then need to f
 
 ### Live testing
 
-Live tests assume a live resource has been created and appropriate environment
-variables have been set for the test process. To automate setting up live
-resources we use created a script called `New-TestResources.ps1` that deploys
-resources for a given service.
+Before running or recording live tests you need to create
+[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).
+If recording tests, secrets will be sanitized from saved recordings.
+If you will be working on contributions over time, you should consider
+persisting these variables.
 
-To see what resources will be deployed for a live service, check the
-`test-resources.json` ARM template files in the service you wish to deploy for
-testing, for example `sdk\keyvault\test-resources.json`.
-
-To deploy live resources for testing use the steps documented in [`Example 1 of New-TestResources.ps1`](eng/common/TestResources/New-TestResources.ps1.md#example-1)
-to set up a service principal and deploy live testing resources.
-
-To run live tests after deploying live resources:
+To run live tests after creating live resources:
 
 1. Open Developer Command Prompt
 2. Navigate to service directory e.g. _"sdk\keyvault"_
@@ -168,7 +162,7 @@ Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consu
 
 You can also achieve this from the command line.
 
-```nuget.exe sources add -Name “Azure SDK for Net Dev Feed” -Source “https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json”```
+```nuget.exe sources add -Name "Azure SDK for Net Dev Feed" -Source "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json"```
 
 You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages.
 
