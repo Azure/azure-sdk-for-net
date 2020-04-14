@@ -79,39 +79,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         }
 
         [Test]
-        public async Task TransactionalSendNestedMultipleSessions()
+        public async Task TransactionalSendAndReceiveSubscription()
         {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.TopicName);
 
-                ServiceBusMessage message1 = GetMessage();
-                ServiceBusMessage message2 = GetMessage("session2");
+                ServiceBusMessage message = GetMessage();
+                await sender.SendAsync(message);
+                ServiceBusReceiver receiver = client.CreateReceiver(scope.TopicName, scope.SubscriptionNames.First());
+                ServiceBusReceivedMessage received = await receiver.ReceiveAsync();
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await sender.SendAsync(message1);
-                    using (var ts2 = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-                    {
-                        await sender.SendAsync(message2);
-                        ts2.Complete();
-                    }
+                    await sender.SendAsync(GetMessage());
+                    await receiver.CompleteAsync(received);
+                    ts.Complete();
                 }
 
-                ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                received = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
 
-                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
-
-                Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message1.Body.ToArray(), receivedMessage.Body.ToArray());
-                await receiver.CompleteAsync(receivedMessage);
-
-                receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
-                receivedMessage = await receiver.ReceiveAsync();
-
-                Assert.NotNull(receivedMessage);
-                Assert.AreEqual(message2.Body.ToArray(), receivedMessage.Body.ToArray());
-                await receiver.CompleteAsync(receivedMessage);
+                Assert.NotNull(received);
+                await receiver.CompleteAsync(received);
             };
         }
 
