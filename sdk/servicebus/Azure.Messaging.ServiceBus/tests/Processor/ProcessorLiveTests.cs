@@ -309,7 +309,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 if (args.Exception is ServiceBusException sbException)
                 {
-                    if (sbException.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound)
+                    if (sbException.Reason == ServiceBusException.FailureReason.MessagingEntityNotFound ||
+                        // There is a race condition wherein the service closes the connection when getting
+                        // the request for the non-existant queue. If the connection is closed by the time
+                        // our exception handling kicks in, we throw it as a ServiceCommunicationProblem
+                        // as we cannot be sure the error wasn't due to the connection being closed,
+                        // as opposed to what we know is the true cause in this case,
+                        // MessagingEntityNotFound.
+                        sbException.Reason == ServiceBusException.FailureReason.ServiceCommunicationProblem)
                     {
                         exceptionReceivedHandlerCalled = true;
                         return Task.CompletedTask;
