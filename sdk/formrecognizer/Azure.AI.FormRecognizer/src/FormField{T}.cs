@@ -13,6 +13,15 @@ namespace Azure.AI.FormRecognizer.Models
             Value = value;
         }
 
+        internal FormField(FormField field, T value)
+        {
+            Confidence = field.Confidence;
+            FieldLabel = field.FieldLabel;
+            Name = field.Name;
+            ValueText = field.ValueText;
+            Value = value;
+        }
+
         /// <summary>
         /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
@@ -34,10 +43,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         public float? Confidence { get; }
-
-        /// <summary>
-        /// </summary>
-        public int? PageNumber { get; internal set; }
 
         /// <summary>
         /// </summary>

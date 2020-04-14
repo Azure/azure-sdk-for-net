@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
@@ -30,6 +32,15 @@ namespace Azure.AI.FormRecognizer.Models
             //}
         }
 
+        internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)
+        {
+            Confidence = fieldValue.Confidence ?? 1.0f;
+            Name = name;
+            FieldLabel = null;
+            ValueText = new FieldText(fieldValue.Text, new BoundingBox(fieldValue.BoundingBox), null /*fieldValue.Elements  TODO */);
+            Value = new FieldValue(fieldValue);
+        }
+
         /// <summary>
         /// Canonical name; uniquely identifies a field within the form.
         /// </summary>
@@ -50,7 +61,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public float? Confidence { get; }
+        public float Confidence { get; }
 
         //// TODO: Refactor to move OCR code to a common file, rather than it living in this file.
         //internal static IReadOnlyList<FormTextElement> ConvertTextReferences(ReadResult_internal readResult, ICollection<string> references)

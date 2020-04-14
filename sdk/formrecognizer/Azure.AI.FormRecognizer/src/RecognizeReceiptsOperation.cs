@@ -110,8 +110,9 @@ namespace Azure.AI.FormRecognizer.Models
 
                     // TODO: When they support extracting more than one receipt, add a pageable method for this.
                     // https://github.com/Azure/azure-sdk-for-net/issues/10389
-                    //_value = new RecognizedReceipt(update.Value.AnalyzeResult.DocumentResults.First(), update.Value.AnalyzeResult.ReadResults.First());
-                    _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult.DocumentResults.ToList(), update.Value.AnalyzeResult.ReadResults.ToList());
+
+                    //_value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult.DocumentResults.ToList(), update.Value.AnalyzeResult.ReadResults.ToList());
+                    _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult);
                 }
 
                 _response = update.GetRawResponse();
@@ -120,12 +121,17 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<RecognizedReceipt> ConvertToRecognizedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
+        //private static IReadOnlyList<RecognizedReceipt> ConvertToRecognizedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
+        private static IReadOnlyList<RecognizedReceipt> ConvertToRecognizedReceipts(AnalyzeResult_internal analyzeResult)
         {
             List<RecognizedReceipt> receipts = new List<RecognizedReceipt>();
-            for (int i = 0; i < documentResults.Count; i++)
+            for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
             {
-                receipts.Add(new RecognizedReceipt(documentResults[i], readResults));
+                //// pages for this receipt are designated in documentResult.PageRange
+                //DocumentResult_internal documentResult = analyzeResult.DocumentResults[i];
+                //FormPageRange pageRange = new FormPageRange(documentResult.PageRange);
+
+                receipts.Add(new RecognizedReceipt(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return receipts;
         }

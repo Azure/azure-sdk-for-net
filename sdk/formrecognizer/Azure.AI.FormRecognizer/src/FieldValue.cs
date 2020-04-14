@@ -8,14 +8,18 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public struct FieldValue
+    public readonly struct FieldValue
     {
-#pragma warning disable CS0649 // Add readonly modifier
-        private FieldValue_internal _fieldValue;
-#pragma warning restore CS0649 // Add readonly modifier
+        private readonly FieldValue_internal _fieldValue;
+
+        internal FieldValue(FieldValue_internal fieldValue)
+        {
+            Type = fieldValue.Type;
+            _fieldValue = fieldValue;
+        }
 
         /// <summary> Type of field value. </summary>
-        public FieldValueType Type { get; internal set; }
+        public FieldValueType Type { get; }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="string"/>.
@@ -73,31 +77,47 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="DateTimeOffset"/>.
         /// </summary>
         /// <returns></returns>
-#pragma warning disable CA1822
         public DateTime AsDate()
-#pragma warning restore CA1822
         {
-            throw new NotImplementedException();
+            if (Type != FieldValueType.DateType)
+            {
+                throw new InvalidOperationException($"Cannot get field as Date.  Field value's type is {Type}.");
+            }
+
+            DateTime date = default;
+            if (!DateTime.TryParse(_fieldValue.ValueDate, out date))
+            {
+                throw new InvalidOperationException($"Cannot parse Date value {_fieldValue.ValueDate}.");
+            }
+
+            return date;
         }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="TimeSpan"/>.
         /// </summary>
         /// <returns></returns>
-#pragma warning disable CA1822
         public TimeSpan AsTime()
-#pragma warning restore CA1822
         {
-            throw new NotImplementedException();
+            if (Type != FieldValueType.TimeType)
+            {
+                throw new InvalidOperationException($"Cannot get field as Time.  Field value's type is {Type}.");
+            }
+
+            TimeSpan time = default;
+            if (!TimeSpan.TryParse(_fieldValue.ValueDate, out time))
+            {
+                throw new InvalidOperationException($"Cannot parse Time value {_fieldValue.ValueDate}.");
+            }
+
+            return time;
         }
 
         /// <summary>
         /// Gets the value of the field as a phone number <see cref="string"/>.
         /// </summary>
         /// <returns></returns>
-#pragma warning disable CA1822
         public string AsPhoneNumber()
-#pragma warning restore CA1822
         {
             if (Type != FieldValueType.PhoneNumberType)
             {
@@ -110,21 +130,40 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         /// <returns></returns>
-#pragma warning disable CA1822
-        public IReadOnlyList<FieldValue> AsList()
-#pragma warning restore CA1822
+        public IReadOnlyList<FormField> AsList()
         {
-            throw new NotImplementedException();
+            if (Type != FieldValueType.ListType)
+            {
+                throw new InvalidOperationException($"Cannot get field as List.  Field value's type is {Type}.");
+            }
+
+            List<FormField> fieldList = new List<FormField>();
+            foreach (var fieldValue in _fieldValue.ValueArray)
+            {
+                fieldList.Add(new FormField(null, fieldValue));
+            }
+
+            return fieldList;
         }
 
         /// <summary>
         /// </summary>
         /// <returns></returns>
-#pragma warning disable CA1822
-        public IReadOnlyDictionary<string, FieldValue> AsDictionary()
-#pragma warning restore CA1822
+        public IReadOnlyDictionary<string, FormField> AsDictionary()
         {
-            throw new NotImplementedException();
+            if (Type != FieldValueType.DictionaryType)
+            {
+                throw new InvalidOperationException($"Cannot get field as Dictionary.  Field value's type is {Type}.");
+            }
+
+            Dictionary<string, FormField> fieldDictionary = new Dictionary<string, FormField>();
+
+            foreach (var kvp in _fieldValue.ValueObject)
+            {
+                fieldDictionary[kvp.Key] = new FormField(kvp.Key, kvp.Value);
+            }
+
+            return fieldDictionary;
         }
     }
 }
