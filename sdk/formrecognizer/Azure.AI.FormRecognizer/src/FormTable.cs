@@ -61,9 +61,10 @@ namespace Azure.AI.FormRecognizer.Models
         private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
         {
             List<FormTableCell> cells = new List<FormTableCell>();
+
             foreach (var result in cellsResult)
             {
-                cells.Add(new FormTableCell(result, readResult, result.Elements));
+                cells.Add(new FormTableCell(result, readResult));
             }
 
             return cells;
