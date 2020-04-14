@@ -11,11 +11,13 @@ namespace Azure.AI.FormRecognizer.Models
     public readonly struct FieldValue
     {
         private readonly FieldValue_internal _fieldValue;
+        private readonly IReadOnlyList<ReadResult_internal> _readResults;
 
-        internal FieldValue(FieldValue_internal fieldValue)
+        internal FieldValue(FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)
         {
             Type = fieldValue.Type;
             _fieldValue = fieldValue;
+            _readResults = readResults;
         }
 
         /// <summary> Type of field value. </summary>
@@ -140,7 +142,7 @@ namespace Azure.AI.FormRecognizer.Models
             List<FormField> fieldList = new List<FormField>();
             foreach (var fieldValue in _fieldValue.ValueArray)
             {
-                fieldList.Add(new FormField(null, fieldValue));
+                fieldList.Add(new FormField(null, fieldValue, _readResults));
             }
 
             return fieldList;
@@ -160,7 +162,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             foreach (var kvp in _fieldValue.ValueObject)
             {
-                fieldDictionary[kvp.Key] = new FormField(kvp.Key, kvp.Value);
+                fieldDictionary[kvp.Key] = new FormField(kvp.Key, kvp.Value, _readResults);
             }
 
             return fieldDictionary;

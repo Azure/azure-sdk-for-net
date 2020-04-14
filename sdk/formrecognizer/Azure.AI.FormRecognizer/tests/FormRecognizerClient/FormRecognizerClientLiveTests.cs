@@ -62,7 +62,6 @@ namespace Azure.AI.FormRecognizer.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(1, formPage.PageNumber);
             Assert.AreEqual(LengthUnit.Inch, formPage.Unit);
             Assert.AreEqual(8.5, formPage.Width);
             Assert.AreEqual(11, formPage.Height);

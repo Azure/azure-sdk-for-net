@@ -121,16 +121,11 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        //private static IReadOnlyList<RecognizedReceipt> ConvertToRecognizedReceipts(IList<DocumentResult_internal> documentResults, IList<ReadResult_internal> readResults)
         private static IReadOnlyList<RecognizedReceipt> ConvertToRecognizedReceipts(AnalyzeResult_internal analyzeResult)
         {
             List<RecognizedReceipt> receipts = new List<RecognizedReceipt>();
             for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
             {
-                //// pages for this receipt are designated in documentResult.PageRange
-                //DocumentResult_internal documentResult = analyzeResult.DocumentResults[i];
-                //FormPageRange pageRange = new FormPageRange(documentResult.PageRange);
-
                 receipts.Add(new RecognizedReceipt(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return receipts;

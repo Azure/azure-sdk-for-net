@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public float? Confidence { get; }
+        public float Confidence { get; }
 
         /// <summary>
         /// </summary>

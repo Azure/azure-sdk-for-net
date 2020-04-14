@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -35,39 +33,68 @@ namespace Azure.AI.FormRecognizer.Models
 
         internal static FormField<string> ConvertStringField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            // TODO: validate field - do TryGet()
-            FormField field = fields[fieldName];
-            return new FormField<string>(field, field.Value.AsString());
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<string>(field, field.Value.AsString());
+            }
+
+            return null;
         }
 
         internal static FormField<string> ConvertPhoneNumberField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            FormField field = fields[fieldName];
-            return new FormField<string>(field, field.Value.AsPhoneNumber());
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<string>(field, field.Value.AsPhoneNumber());
+            }
+
+            return null;
         }
 
         internal static FormField<int> ConvertIntField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            FormField field = fields[fieldName];
-            return new FormField<int>(field, field.Value.AsInt32());
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<int>(field, field.Value.AsInt32());
+            }
+
+            return null;
         }
 
         internal static FormField<float> ConvertFloatField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            FormField field = fields[fieldName];
-            return new FormField<float>(field, field.Value.AsFloat());
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<float>(field, field.Value.AsFloat());
+            }
+
+            return null;
         }
 
         internal static FormField<DateTime> ConvertDateField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            FormField field = fields[fieldName];
-            return new FormField<DateTime>(field, field.Value.AsDate());
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<DateTime>(field, field.Value.AsDate());
+            }
+
+            return null;
         }
 
         internal static FormField<TimeSpan> ConvertTimeField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
         {
-            FormField field = fields[fieldName];
-            return new FormField<TimeSpan>(field, field.Value.AsTime());
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<TimeSpan>(field, field.Value.AsTime());
+            }
+
+            return null;
         }
     }
 }

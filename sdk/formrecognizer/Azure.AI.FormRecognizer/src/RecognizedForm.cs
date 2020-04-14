@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
             FormType = documentResult.DocType;
             PageRange = new FormPageRange(documentResult.PageRange);
             Fields = PopulateFields(documentResult.Fields, readResults);
-            Pages = PopulatePages(readResults);
+            Pages = PopulatePages(pageResults, readResults);
         }
 
         /// <summary>
@@ -49,13 +49,13 @@ namespace Azure.AI.FormRecognizer.Models
             return fieldDictionary;
         }
 
-        private IReadOnlyList<FormPage> PopulatePages(IReadOnlyList<ReadResult_internal> readResults)
+        private static IReadOnlyList<FormPage> PopulatePages(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
             List<FormPage> pages = new List<FormPage>();
 
-            foreach (var readResult in readResults)
+            for (int i = 0; i< pageResults.Count; i++)
             {
-                pages.Add(new FormPage(readResult));
+                pages.Add(new FormPage(pageResults[i], readResults[i]));
             }
 
             return pages;

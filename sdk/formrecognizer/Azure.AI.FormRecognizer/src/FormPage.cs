@@ -8,10 +8,9 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormPage : FormContent
+    public class FormPage
     {
-        internal FormPage(ReadResult_internal readResult)
-            : base(new BoundingBox(), readResult.Page, null) // TODO: retrieve text and bounding box.
+        internal FormPage(PageResult_internal pageResult, ReadResult_internal readResult)
         {
             TextAngle = readResult.Angle;
             Width = readResult.Width;
@@ -20,10 +19,10 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (readResult.Lines != null)
             {
-                Lines = ConvertLines(readResult.Lines, PageNumber);
+                Lines = ConvertLines(readResult.Lines, pageResult.Page);
             }
 
-            //Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
+            Tables = ConvertTables(pageResult, readResult);
         }
 
         /// <summary>
@@ -69,6 +68,18 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return rawLines;
+        }
+
+        private static IReadOnlyList<FormTable> ConvertTables(PageResult_internal pageResult, ReadResult_internal readResult)
+        {
+            List<FormTable> tables = new List<FormTable>();
+
+            foreach (var table in pageResult.Tables)
+            {
+                tables.Add(new FormTable(table, readResult));
+            }
+
+            return tables;
         }
     }
 }
