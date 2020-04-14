@@ -17,11 +17,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var receiver = new ServiceBusClient(connString).GetReceiver(queueName);
+            var options = new ServiceBusReceiverOptions()
+            {
+                ReceiveMode = ReceiveMode.ReceiveAndDelete
+            };
+            var receiver = new ServiceBusClient(connString).CreateReceiver(queueName, options);
             Assert.AreEqual(queueName, receiver.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, receiver.FullyQualifiedNamespace);
             Assert.IsNotNull(receiver.Identifier);
             Assert.IsFalse(receiver.IsSessionReceiver);
+            Assert.AreEqual(ReceiveMode.ReceiveAndDelete, receiver.ReceiveMode);
         }
     }
 }

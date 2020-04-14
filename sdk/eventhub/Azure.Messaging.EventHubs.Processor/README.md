@@ -35,14 +35,16 @@ To quickly create the needed resources in Azure and to receive connection string
 Install the Azure Event Hubs Event Processor client library for .NET using [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs.Processor -Version 5.0.0
+dotnet add package Azure.Messaging.EventHubs.Processor
 ```
 
-### Obtain an Event Hubs connection string
+### Authenticate the client
+
+#### Obtain an Event Hubs connection string
 
 For the event processor client to interact with an Event Hub, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating an Event Hubs namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get an Event Hubs connection string](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string).
 
-### Obtain an Azure Storage connection string
+#### Obtain an Azure Storage connection string
 
 For the event processor client to make use of Azure Storage blobs, it will need to understand how to connect to a storage account and authorize with it.  The most straightforward method of doing so is to use a connection string, which is generated at the time that the storage account is created.  If you aren't familiar with storage accounts in Azure, you may wish to follow the step-by-step guide to [configure Azure Storage connection strings](https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string).
 

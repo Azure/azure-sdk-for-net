@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("Language")]
+    [CodeGenModel("Language")]
     internal partial struct Language_internal
     {
         // TODO: map this to a string, rather than an enum

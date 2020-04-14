@@ -3,11 +3,11 @@
 
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// </summary>
-    [CodeGenSchema("TrainStatus")]
+    [CodeGenModel("TrainStatus")]
 #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum TrainingStatus
 #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names

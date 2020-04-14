@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "privatedns/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "privatedns/resource-manager" -AutoRestVersion "v2"

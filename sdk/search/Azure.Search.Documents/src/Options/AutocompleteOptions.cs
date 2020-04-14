@@ -12,7 +12,8 @@ namespace Azure.Search.Documents
     /// Options for <see cref="SearchIndexClient.AutocompleteAsync"/> that
     /// allow specifying autocomplete behaviors, like fuzzy matching.
     /// </summary>
-    [CodeGenSchema("AutocompleteRequest")]
+    [CodeGenModel("AutocompleteRequest")]
+    [CodeGenSuppress(nameof(AutocompleteOptions), typeof(string), typeof(string))]
     public partial class AutocompleteOptions : SearchRequestOptions
     {
         /// <summary>
@@ -25,14 +26,14 @@ namespace Azure.Search.Documents
         /// <summary>
         /// The search text on which to base autocomplete results.
         /// </summary>
-        [CodeGenSchemaMember("search")]
+        [CodeGenMember("search")]
         internal string SearchText { get; set; }
 
         /// <summary>
         /// The name of the suggester as specified in the suggesters collection
         /// that's part of the index definition.
         /// </summary>
-        [CodeGenSchemaMember("suggesterName")]
+        [CodeGenMember("suggesterName")]
         internal string SuggesterName { get; set; }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace Azure.Search.Documents
         /// <see cref="AutocompleteMode.OneTermWithContext"/> to use the
         /// current context while producing auto-completed terms.
         /// </summary>
-        [CodeGenSchemaMember("autocompleteMode")]
+        [CodeGenMember("autocompleteMode")]
         public AutocompleteMode? Mode { get; set; }
 
         /// <summary>
@@ -51,14 +52,14 @@ namespace Azure.Search.Documents
         /// <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
-        [CodeGenSchemaMember("filter")]
+        [CodeGenMember("filter")]
         public string Filter { get; set; }
 
         /// <summary>
         /// The number of auto-completed terms to retrieve. This must be a
         /// value between 1 and 100. The default is 5.
         /// </summary>
-        [CodeGenSchemaMember("top")]
+        [CodeGenMember("top")]
         public int? Size { get; set; }
 
         /// <summary>
@@ -72,12 +73,32 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("searchFields")]
+        [CodeGenMember("searchFields")]
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(AutocompleteOptions)}.");
         }
         #pragma warning restore CA1822
+
+        /// <summary>
+        /// Creates a shallow copy of the AutocompleteOptions.
+        /// </summary>
+        /// <returns>The cloned AutocompleteOptions.</returns>
+        internal AutocompleteOptions Clone() =>
+            new AutocompleteOptions
+            {
+                SearchText = SearchText,
+                SuggesterName = SuggesterName,
+                Mode = Mode,
+                Filter = Filter,
+                Size = Size,
+                SearchFields = SearchFields,
+                HighlightPostTag = HighlightPostTag,
+                HighlightPreTag = HighlightPreTag,
+                MinimumCoverage = MinimumCoverage,
+                UseFuzzyMatching = UseFuzzyMatching,
+                ClientRequestId = ClientRequestId
+            };
     }
 }

@@ -116,6 +116,7 @@ namespace Azure.Search.Documents.Tests
         #endregion Utilities
 
         [Test]
+        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task DynamicDocuments()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -139,6 +140,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task StaticDocuments()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -270,6 +272,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [Ignore("Complex fields are not being serialized: https://github.com/Azure/azure-sdk-for-net/issues/10944")]
         public async Task OrderByProgressivelyBreaksTies()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -597,6 +600,141 @@ namespace Azure.Search.Documents.Tests
                 MakeValueFacet(1, "restaurant"),
                 MakeValueFacet(1, "view"),
                 MakeValueFacet(4, "wifi"));
+        }
+
+        [Test]
+        public async Task CanContinueStatic()
+        {
+            const int size = 2001;
+            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            SearchIndexClient client = resources.GetQueryClient();
+            Response<SearchResults<Hotel>> response =
+                await client.SearchAsync<Hotel>(
+                    "*",
+                    new SearchOptions
+                    {
+                        Size = 3000,
+                        OrderBy = new[] { "hotelId asc" },
+                        Select = new[] { "hotelId" }
+                    });
+            List<string> ids = new List<string>();
+
+            // Get the first page
+            Page<SearchResult<Hotel>> page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 1000);
+            ids.AddRange(page.Values.Select(h => h.Document.HotelId));
+            Assert.NotNull(page.ContinuationToken);
+
+            // Get the second page
+            response = await client.SearchAsync<Hotel>(null, new SearchOptions(page.ContinuationToken));
+            page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 1000);
+            ids.AddRange(page.Values.Select(h => h.Document.HotelId));
+            Assert.NotNull(page.ContinuationToken);
+
+            // Get the third page
+            response = await client.SearchAsync<Hotel>(null, new SearchOptions(page.ContinuationToken));
+            page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 1000);
+            ids.AddRange(page.Values.Select(h => h.Document.HotelId));
+            Assert.IsNull(page.ContinuationToken);
+
+            // Verify we saw everything
+            CollectionAssert.AreEquivalent(
+                Enumerable.Range(1, size).Select(i => i.ToString()),
+                ids);
+        }
+
+        [Test]
+        public async Task CanContinueDynamic()
+        {
+            const int size = 2001;
+            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            SearchIndexClient client = resources.GetQueryClient();
+            Response<SearchResults<SearchDocument>> response =
+                await client.SearchAsync(
+                    "*",
+                    new SearchOptions
+                    {
+                        Size = 3000,
+                        OrderBy = new[] { "hotelId asc" },
+                        Select = new[] { "hotelId" }
+                    });
+            List<string> ids = new List<string>();
+
+            // Get the first page
+            Page<SearchResult<SearchDocument>> page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 1000);
+            ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
+            Assert.NotNull(page.ContinuationToken);
+
+            // Get the second page
+            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 1000);
+            ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
+            Assert.NotNull(page.ContinuationToken);
+
+            // Get the third page
+            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 1000);
+            ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
+            Assert.IsNull(page.ContinuationToken);
+
+            // Verify we saw everything
+            CollectionAssert.AreEquivalent(
+                Enumerable.Range(1, size).Select(i => i.ToString()),
+                ids);
+        }
+
+        [Test]
+        public async Task CanContinueWithoutSize()
+        {
+            const int size = 167;
+            await using SearchResources resources = await CreateLargeHotelsIndexAsync(size);
+            SearchIndexClient client = resources.GetQueryClient();
+            Response<SearchResults<SearchDocument>> response =
+                await client.SearchAsync(
+                    "*",
+                    new SearchOptions
+                    {
+                        OrderBy = new[] { "hotelId asc" },
+                        Select = new[] { "hotelId" }
+                    });
+            List<string> ids = new List<string>();
+
+            // Get the first page
+            Page<SearchResult<SearchDocument>> page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 50);
+            ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
+            Assert.NotNull(page.ContinuationToken);
+
+            // Get the second page
+            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 50);
+            ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
+            Assert.NotNull(page.ContinuationToken);
+
+            // Get the third page
+            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 50);
+            ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
+            Assert.NotNull(page.ContinuationToken);
+
+            // Get the final page
+            response = await client.SearchAsync(null, new SearchOptions(page.ContinuationToken));
+            page = await response.Value.GetResultsAsync().AsPages().FirstAsync();
+            Assert.LessOrEqual(page.Values.Count, 50);
+            ids.AddRange(page.Values.Select(d => (string)d.Document["hotelId"]));
+            Assert.IsNull(page.ContinuationToken);
+
+            // Verify we saw everything
+            CollectionAssert.AreEquivalent(
+                Enumerable.Range(1, size).Select(i => i.ToString()),
+                ids);
         }
 
         [Test]

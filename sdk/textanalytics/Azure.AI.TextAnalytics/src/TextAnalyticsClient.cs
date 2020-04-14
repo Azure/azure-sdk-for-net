@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string document, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("document", document);
@@ -189,7 +189,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectedLanguage> DetectLanguage(string document, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("document", document);
@@ -251,7 +251,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(documents, countryHint);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -285,7 +285,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<string> documents, string countryHint = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(documents, countryHint);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -313,7 +313,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageBatchAsync(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
@@ -361,7 +361,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResultCollection> DetectLanguageBatch(IEnumerable<DetectLanguageInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguageBatch)}");
@@ -418,7 +418,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<IReadOnlyCollection<CategorizedEntity>>> RecognizeEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.AddAttribute("document", document);
@@ -479,7 +479,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<IReadOnlyCollection<CategorizedEntity>> RecognizeEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.AddAttribute("document", document);
@@ -543,7 +543,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -579,7 +579,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -610,7 +610,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -661,7 +661,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntitiesBatch)}");
@@ -715,7 +715,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("document", document);
@@ -773,7 +773,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DocumentSentiment> AnalyzeSentiment(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("document", document);
@@ -834,7 +834,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -867,7 +867,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -895,7 +895,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
@@ -943,7 +943,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentimentBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentimentBatch)}");
@@ -999,7 +999,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<IReadOnlyCollection<string>>> ExtractKeyPhrasesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.AddAttribute("document", document);
@@ -1059,7 +1059,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<IReadOnlyCollection<string>> ExtractKeyPhrases(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.AddAttribute("document", document);
@@ -1122,7 +1122,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1157,7 +1157,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1187,7 +1187,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
@@ -1237,7 +1237,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrasesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrasesBatch)}");
@@ -1292,7 +1292,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<IReadOnlyCollection<LinkedEntity>>> RecognizeLinkedEntitiesAsync(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.AddAttribute("document", document);
@@ -1351,7 +1351,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<IReadOnlyCollection<LinkedEntity>> RecognizeLinkedEntities(string document, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(document, nameof(document));
+            Argument.AssertNotNullOrEmpty(document, nameof(document));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.AddAttribute("document", document);
@@ -1413,7 +1413,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1447,7 +1447,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<string> documents, string language = default, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(documents, language);
             options ??= new TextAnalyticsRequestOptions();
 
@@ -1476,7 +1476,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesBatchAsync(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");
@@ -1525,7 +1525,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntitiesBatch(IEnumerable<TextDocumentInput> documents, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(documents, nameof(documents));
+            Argument.AssertNotNullOrEmpty(documents, nameof(documents));
             options ??= new TextAnalyticsRequestOptions();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntitiesBatch)}");

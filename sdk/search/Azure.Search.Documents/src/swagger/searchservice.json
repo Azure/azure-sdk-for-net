@@ -1800,7 +1800,474 @@
       ],
       "x-ms-enum": {
         "name": "AnalyzerName",
-        "modelAsString": true
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "ar.microsoft",
+            "name": "ArMicrosoft",
+            "description": "Microsoft analyzer for Arabic."
+          },
+          {
+            "value": "ar.lucene",
+            "name": "ArLucene",
+            "description": "Lucene analyzer for Arabic."
+          },
+          {
+            "value": "hy.lucene",
+            "name": "HyLucene",
+            "description": "Lucene analyzer for Armenian."
+          },
+          {
+            "value": "bn.microsoft",
+            "name": "BnMicrosoft",
+            "description": "Microsoft analyzer for Bangla."
+          },
+          {
+            "value": "eu.lucene",
+            "name": "EuLucene",
+            "description": "Lucene analyzer for Basque."
+          },
+          {
+            "value": "bg.microsoft",
+            "name": "BgMicrosoft",
+            "description": "Microsoft analyzer for Bulgarian."
+          },
+          {
+            "value": "bg.lucene",
+            "name": "BgLucene",
+            "description": "Lucene analyzer for Bulgarian."
+          },
+          {
+            "value": "ca.microsoft",
+            "name": "CaMicrosoft",
+            "description": "Microsoft analyzer for Catalan."
+          },
+          {
+            "value": "ca.lucene",
+            "name": "CaLucene",
+            "description": "Lucene analyzer for Catalan."
+          },
+          {
+            "value": "zh-Hans.microsoft",
+            "name": "ZhHansMicrosoft",
+            "description": "Microsoft analyzer for Chinese (Simplified)."
+          },
+          {
+            "value": "zh-Hans.lucene",
+            "name": "ZhHansLucene",
+            "description": "Lucene analyzer for Chinese (Simplified)."
+          },
+          {
+            "value": "zh-Hant.microsoft",
+            "name": "ZhHantMicrosoft",
+            "description": "Microsoft analyzer for Chinese (Traditional)."
+          },
+          {
+            "value": "zh-Hant.lucene",
+            "name": "ZhHantLucene",
+            "description": "Lucene analyzer for Chinese (Traditional)."
+          },
+          {
+            "value": "hr.microsoft",
+            "name": "HrMicrosoft",
+            "description": "Microsoft analyzer for Croatian."
+          },
+          {
+            "value": "cs.microsoft",
+            "name": "CsMicrosoft",
+            "description": "Microsoft analyzer for Czech."
+          },
+          {
+            "value": "cs.lucene",
+            "name": "CsLucene",
+            "description": "Lucene analyzer for Czech."
+          },
+          {
+            "value": "da.microsoft",
+            "name": "DaMicrosoft",
+            "description": "Microsoft analyzer for Danish."
+          },
+          {
+            "value": "da.lucene",
+            "name": "DaLucene",
+            "description": "Lucene analyzer for Danish."
+          },
+          {
+            "value": "nl.microsoft",
+            "name": "NlMicrosoft",
+            "description": "Microsoft analyzer for Dutch."
+          },
+          {
+            "value": "nl.lucene",
+            "name": "NlLucene",
+            "description": "Lucene analyzer for Dutch."
+          },
+          {
+            "value": "en.microsoft",
+            "name": "EnMicrosoft",
+            "description": "Microsoft analyzer for English."
+          },
+          {
+            "value": "en.lucene",
+            "name": "EnLucene",
+            "description": "Lucene analyzer for English."
+          },
+          {
+            "value": "et.microsoft",
+            "name": "EtMicrosoft",
+            "description": "Microsoft analyzer for Estonian."
+          },
+          {
+            "value": "fi.microsoft",
+            "name": "FiMicrosoft",
+            "description": "Microsoft analyzer for Finnish."
+          },
+          {
+            "value": "fi.lucene",
+            "name": "FiLucene",
+            "description": "Lucene analyzer for Finnish."
+          },
+          {
+            "value": "fr.microsoft",
+            "name": "FrMicrosoft",
+            "description": "Microsoft analyzer for French."
+          },
+          {
+            "value": "fr.lucene",
+            "name": "FrLucene",
+            "description": "Lucene analyzer for French."
+          },
+          {
+            "value": "gl.lucene",
+            "name": "GlLucene",
+            "description": "Lucene analyzer for Galician."
+          },
+          {
+            "value": "de.microsoft",
+            "name": "DeMicrosoft",
+            "description": "Microsoft analyzer for German."
+          },
+          {
+            "value": "de.lucene",
+            "name": "DeLucene",
+            "description": "Lucene analyzer for German."
+          },
+          {
+            "value": "el.microsoft",
+            "name": "ElMicrosoft",
+            "description": "Microsoft analyzer for Greek."
+          },
+          {
+            "value": "el.lucene",
+            "name": "ElLucene",
+            "description": "Lucene analyzer for Greek."
+          },
+          {
+            "value": "gu.microsoft",
+            "name": "GuMicrosoft",
+            "description": "Microsoft analyzer for Gujarati."
+          },
+          {
+            "value": "he.microsoft",
+            "name": "HeMicrosoft",
+            "description": "Microsoft analyzer for Hebrew."
+          },
+          {
+            "value": "hi.microsoft",
+            "name": "HiMicrosoft",
+            "description": "Microsoft analyzer for Hindi."
+          },
+          {
+            "value": "hi.lucene",
+            "name": "HiLucene",
+            "description": "Lucene analyzer for Hindi."
+          },
+          {
+            "value": "hu.microsoft",
+            "name": "HuMicrosoft",
+            "description": "Microsoft analyzer for Hungarian."
+          },
+          {
+            "value": "hu.lucene",
+            "name": "HuLucene",
+            "description": "Lucene analyzer for Hungarian."
+          },
+          {
+            "value": "is.microsoft",
+            "name": "IsMicrosoft",
+            "description": "Microsoft analyzer for Icelandic."
+          },
+          {
+            "value": "id.microsoft",
+            "name": "IdMicrosoft",
+            "description": "Microsoft analyzer for Indonesian (Bahasa)."
+          },
+          {
+            "value": "id.lucene",
+            "name": "IdLucene",
+            "description": "Lucene analyzer for Indonesian."
+          },
+          {
+            "value": "ga.lucene",
+            "name": "GaLucene",
+            "description": "Lucene analyzer for Irish."
+          },
+          {
+            "value": "it.microsoft",
+            "name": "ItMicrosoft",
+            "description": "Microsoft analyzer for Italian."
+          },
+          {
+            "value": "it.lucene",
+            "name": "ItLucene",
+            "description": "Lucene analyzer for Italian."
+          },
+          {
+            "value": "ja.microsoft",
+            "name": "JaMicrosoft",
+            "description": "Microsoft analyzer for Japanese."
+          },
+          {
+            "value": "ja.lucene",
+            "name": "JaLucene",
+            "description": "Lucene analyzer for Japanese."
+          },
+          {
+            "value": "kn.microsoft",
+            "name": "KnMicrosoft",
+            "description": "Microsoft analyzer for Kannada."
+          },
+          {
+            "value": "ko.microsoft",
+            "name": "KoMicrosoft",
+            "description": "Microsoft analyzer for Korean."
+          },
+          {
+            "value": "ko.lucene",
+            "name": "KoLucene",
+            "description": "Lucene analyzer for Korean."
+          },
+          {
+            "value": "lv.microsoft",
+            "name": "LvMicrosoft",
+            "description": "Microsoft analyzer for Latvian."
+          },
+          {
+            "value": "lv.lucene",
+            "name": "LvLucene",
+            "description": "Lucene analyzer for Latvian."
+          },
+          {
+            "value": "lt.microsoft",
+            "name": "LtMicrosoft",
+            "description": "Microsoft analyzer for Lithuanian."
+          },
+          {
+            "value": "ml.microsoft",
+            "name": "MlMicrosoft",
+            "description": "Microsoft analyzer for Malayalam."
+          },
+          {
+            "value": "ms.microsoft",
+            "name": "MsMicrosoft",
+            "description": "Microsoft analyzer for Malay (Latin)."
+          },
+          {
+            "value": "mr.microsoft",
+            "name": "MrMicrosoft",
+            "description": "Microsoft analyzer for Marathi."
+          },
+          {
+            "value": "nb.microsoft",
+            "name": "NbMicrosoft",
+            "description": "Microsoft analyzer for Norwegian (Bokmål)."
+          },
+          {
+            "value": "no.lucene",
+            "name": "NoLucene",
+            "description": "Lucene analyzer for Norwegian."
+          },
+          {
+            "value": "fa.lucene",
+            "name": "FaLucene",
+            "description": "Lucene analyzer for Persian."
+          },
+          {
+            "value": "pl.microsoft",
+            "name": "PlMicrosoft",
+            "description": "Microsoft analyzer for Polish."
+          },
+          {
+            "value": "pl.lucene",
+            "name": "PlLucene",
+            "description": "Lucene analyzer for Polish."
+          },
+          {
+            "value": "pt-BR.microsoft",
+            "name": "PtBrMicrosoft",
+            "description": "Microsoft analyzer for Portuguese (Brazil)."
+          },
+          {
+            "value": "pt-BR.lucene",
+            "name": "PtBrLucene",
+            "description": "Lucene analyzer for Portuguese (Brazil)."
+          },
+          {
+            "value": "pt-PT.microsoft",
+            "name": "PtPtMicrosoft",
+            "description": "Microsoft analyzer for Portuguese (Portugal)."
+          },
+          {
+            "value": "pt-PT.lucene",
+            "name": "PtPtLucene",
+            "description": "Lucene analyzer for Portuguese (Portugal)."
+          },
+          {
+            "value": "pa.microsoft",
+            "name": "PaMicrosoft",
+            "description": "Microsoft analyzer for Punjabi."
+          },
+          {
+            "value": "ro.microsoft",
+            "name": "RoMicrosoft",
+            "description": "Microsoft analyzer for Romanian."
+          },
+          {
+            "value": "ro.lucene",
+            "name": "RoLucene",
+            "description": "Lucene analyzer for Romanian."
+          },
+          {
+            "value": "ru.microsoft",
+            "name": "RuMicrosoft",
+            "description": "Microsoft analyzer for Russian."
+          },
+          {
+            "value": "ru.lucene",
+            "name": "RuLucene",
+            "description": "Lucene analyzer for Russian."
+          },
+          {
+            "value": "sr-cyrillic.microsoft",
+            "name": "SrCyrillicMicrosoft",
+            "description": "Microsoft analyzer for Serbian (Cyrillic)."
+          },
+          {
+            "value": "sr-latin.microsoft",
+            "name": "SrLatinMicrosoft",
+            "description": "Microsoft analyzer for Serbian (Latin)."
+          },
+          {
+            "value": "sk.microsoft",
+            "name": "SkMicrosoft",
+            "description": "Microsoft analyzer for Slovak."
+          },
+          {
+            "value": "sl.microsoft",
+            "name": "SlMicrosoft",
+            "description": "Microsoft analyzer for Slovenian."
+          },
+          {
+            "value": "es.microsoft",
+            "name": "EsMicrosoft",
+            "description": "Microsoft analyzer for Spanish."
+          },
+          {
+            "value": "es.lucene",
+            "name": "EsLucene",
+            "description": "Lucene analyzer for Spanish."
+          },
+          {
+            "value": "sv.microsoft",
+            "name": "SvMicrosoft",
+            "description": "Microsoft analyzer for Swedish."
+          },
+          {
+            "value": "sv.lucene",
+            "name": "SvLucene",
+            "description": "Lucene analyzer for Swedish."
+          },
+          {
+            "value": "ta.microsoft",
+            "name": "TaMicrosoft",
+            "description": "Microsoft analyzer for Tamil."
+          },
+          {
+            "value": "te.microsoft",
+            "name": "TeMicrosoft",
+            "description": "Microsoft analyzer for Telugu."
+          },
+          {
+            "value": "th.microsoft",
+            "name": "ThMicrosoft",
+            "description": "Microsoft analyzer for Thai."
+          },
+          {
+            "value": "th.lucene",
+            "name": "ThLucene",
+            "description": "Lucene analyzer for Thai."
+          },
+          {
+            "value": "tr.microsoft",
+            "name": "TrMicrosoft",
+            "description": "Microsoft analyzer for Turkish."
+          },
+          {
+            "value": "tr.lucene",
+            "name": "TrLucene",
+            "description": "Lucene analyzer for Turkish."
+          },
+          {
+            "value": "uk.microsoft",
+            "name": "UkMicrosoft",
+            "description": "Microsoft analyzer for Ukrainian."
+          },
+          {
+            "value": "ur.microsoft",
+            "name": "UrMicrosoft",
+            "description": "Microsoft analyzer for Urdu."
+          },
+          {
+            "value": "vi.microsoft",
+            "name": "ViMicrosoft",
+            "description": "Microsoft analyzer for Vietnamese."
+          },
+          {
+            "value": "standard.lucene",
+            "name": "StandardLucene",
+            "description": "Standard Lucene analyzer."
+          },
+          {
+            "value": "standardasciifolding.lucene",
+            "name": "StandardAsciiFoldingLucene",
+            "description": "Standard ASCII Folding Lucene analyzer. See https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers"
+          },
+          {
+            "value": "keyword",
+            "name": "Keyword",
+            "description": "Treats the entire content of a field as a single token. This is useful for data like zip codes, ids, and some product names. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html"
+          },
+          {
+            "value": "pattern",
+            "name": "Pattern",
+            "description": "Flexibly separates text into terms via a regular expression pattern. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html"
+          },
+          {
+            "value": "simple",
+            "name": "Simple",
+            "description": "Divides text at non-letters and converts them to lower case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html"
+          },
+          {
+            "value": "stop",
+            "name": "Stop",
+            "description": "Divides text at non-letters; Applies the lowercase and stopword token filters. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html"
+          },
+          {
+            "value": "whitespace",
+            "name": "Whitespace",
+            "description": "An analyzer that uses the whitespace tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html"
+          }
+        ]
       },
       "description": "Defines the names of all text analyzers supported by Azure Cognitive Search.",
       "externalDocs": {
@@ -2183,7 +2650,8 @@
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
-          "type": "string"
+          "type": "string",
+          "description": "Identifies the concrete type of the analyzer."
         },
         "name": {
           "type": "string",
@@ -2197,7 +2665,7 @@
         "@odata.type",
         "name"
       ],
-      "description": "Abstract base class for analyzers."
+      "description": "Base type for analyzers."
     },
     "CustomAnalyzer": {
       "x-ms-discriminator-value": "#Microsoft.Azure.Search.CustomAnalyzer",
@@ -2322,7 +2790,8 @@
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
-          "type": "string"
+          "type": "string",
+          "description": "Identifies the concrete type of the tokenizer."
         },
         "name": {
           "type": "string",
@@ -2336,7 +2805,7 @@
         "@odata.type",
         "name"
       ],
-      "description": "Abstract base class for tokenizers.",
+      "description": "Base type for tokenizers.",
       "externalDocs": {
         "url": "https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"
       }
@@ -2794,7 +3263,8 @@
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
-          "type": "string"
+          "type": "string",
+          "description": "Identifies the concrete type of the token filter."
         },
         "name": {
           "type": "string",
@@ -2808,7 +3278,7 @@
         "@odata.type",
         "name"
       ],
-      "description": "Abstract base class for token filters.",
+      "description": "Base type for token filters.",
       "externalDocs": {
         "url": "https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"
       }
@@ -3756,7 +4226,8 @@
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
-          "type": "string"
+          "type": "string",
+          "description": "Identifies the concrete type of the char filter."
         },
         "name": {
           "type": "string",
@@ -3770,7 +4241,7 @@
         "@odata.type",
         "name"
       ],
-      "description": "Abstract base class for character filters.",
+      "description": "Base type for character filters.",
       "externalDocs": {
         "url": "https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"
       }
@@ -3857,13 +4328,14 @@
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
-          "type": "string"
+          "type": "string",
+          "description": "Identifies the concrete type of the data change detection policy."
         }
       },
       "required": [
         "@odata.type"
       ],
-      "description": "Abstract base class for data change detection policies."
+      "description": "Base type for data change detection policies."
     },
     "HighWaterMarkChangeDetectionPolicy": {
       "description": "Defines a data change detection policy that captures changes based on the value of a high water mark column.",
@@ -3896,13 +4368,14 @@
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
-          "type": "string"
+          "type": "string",
+          "description": "Identifies the concrete type of the data deletion detection policy."
         }
       },
       "required": [
         "@odata.type"
       ],
-      "description": "Abstract base class for data deletion detection policies."
+      "description": "Base type for data deletion detection policies."
     },
     "SoftDeleteColumnDeletionDetectionPolicy": {
       "description": "Defines a data deletion detection policy that implements a soft-deletion strategy. It determines whether an item should be deleted based on the value of a designated 'soft delete' column.",
@@ -4487,21 +4960,21 @@
             "url": "https://docs.microsoft.com/rest/api/searchservice/Language-support"
           },
           "$ref": "#/definitions/AnalyzerName",
-          "description": "The name of the language analyzer to use for the field. This option can be used only with searchable fields and it can't be set together with either searchAnalyzer or indexAnalyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields."
+          "description": "The name of the analyzer to use for the field. This option can be used only with searchable fields and it can't be set together with either searchAnalyzer or indexAnalyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields."
         },
         "searchAnalyzer": {
           "externalDocs": {
             "url": "https://docs.microsoft.com/rest/api/searchservice/Language-support"
           },
           "$ref": "#/definitions/AnalyzerName",
-          "description": "The name of the analyzer used at search time for the field. This option can be used only with searchable fields. It must be set together with indexAnalyzer and it cannot be set together with the analyzer option. This analyzer can be updated on an existing field. Must be null for complex fields."
+          "description": "The name of the analyzer used at search time for the field. This option can be used only with searchable fields. It must be set together with indexAnalyzer and it cannot be set together with the analyzer option. This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. This analyzer can be updated on an existing field. Must be null for complex fields."
         },
         "indexAnalyzer": {
           "externalDocs": {
             "url": "https://docs.microsoft.com/rest/api/searchservice/Language-support"
           },
           "$ref": "#/definitions/AnalyzerName",
-          "description": "The name of the analyzer used at indexing time for the field. This option can be used only with searchable fields. It must be set together with searchAnalyzer and it cannot be set together with the analyzer option. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields."
+          "description": "The name of the analyzer used at indexing time for the field. This option can be used only with searchable fields. It must be set together with searchAnalyzer and it cannot be set together with the analyzer option.  This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields."
         },
         "synonymMaps": {
           "externalDocs": {
@@ -4551,7 +5024,8 @@
       "discriminator": "type",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "string",
+          "description": "Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case."
         },
         "fieldName": {
           "type": "string",
@@ -4575,7 +5049,7 @@
       "externalDocs": {
         "url": "https://docs.microsoft.com/rest/api/searchservice/Add-scoring-profiles-to-a-search-index"
       },
-      "description": "Abstract base class for functions that can modify document scores during ranking."
+      "description": "Base type for functions that can modify document scores during ranking."
     },
     "DistanceScoringFunction": {
       "x-ms-discriminator-value": "distance",
@@ -5029,16 +5503,18 @@
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
-          "type": "string"
+          "type": "string",
+          "description": "Identifies the concrete type of the cognitive service resource attached to a skillset."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "Description of the cognitive service resource attached to a skillset."
         }
       },
       "required": [
         "@odata.type"
       ],
-      "description": "Abstract base class for describing any cognitive service resource attached to the skillset."
+      "description": "Base type for describing any cognitive service resource attached to a skillset."
     },
     "DefaultCognitiveServicesAccount": {
       "description": "An empty object that represents the default cognitive service resource for a skillset.",
@@ -5059,7 +5535,8 @@
       ],
       "properties": {
         "key": {
-          "type": "string"
+          "type": "string",
+          "description": "The key used to provision the cognitive service resource attached to a skillset."
         }
       },
       "required": [
@@ -5070,7 +5547,8 @@
       "discriminator": "@odata.type",
       "properties": {
         "@odata.type": {
-          "type": "string"
+          "type": "string",
+          "description": "Identifies the concrete type of the skill."
         },
         "name": {
           "type": "string",
@@ -5107,7 +5585,7 @@
       "externalDocs": {
         "url": "https://docs.microsoft.com/azure/search/cognitive-search-predefined-skills"
       },
-      "description": "Abstract base class for skills."
+      "description": "Base type for skills."
     },
     "InputFieldMappingEntry": {
       "properties": {

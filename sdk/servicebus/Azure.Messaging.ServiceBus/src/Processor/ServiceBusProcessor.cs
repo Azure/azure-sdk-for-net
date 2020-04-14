@@ -15,9 +15,13 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// A processor is responsible for receiving <see cref="ServiceBusReceivedMessage" /> from a specific entity.
+    /// A <see cref="ServiceBusProcessor"/> is responsible for processing <see cref="ServiceBusReceivedMessage" /> from a specific
+    /// entity using event handlers. It is constructed by calling
+    ///  <see cref="ServiceBusClient.CreateProcessor(string, ServiceBusProcessorOptions)"/>.
+    /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
+    /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
+    /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
-    ///
     public class ServiceBusProcessor
     {
         private Func<ProcessMessageEventArgs, Task> _processMessage;
@@ -106,7 +110,6 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the client is processing messages; otherwise, <c>false</c>.
         /// </value>
-        ///
         public bool IsProcessing => ActiveReceiveTask != null;
 
         /// <summary>
@@ -115,8 +118,11 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         private readonly ServiceBusConnection _connection;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
-        /// <value>The maximum number of concurrent calls to the callback.</value>
+        /// <summary>Gets or sets the maximum number of concurrent calls to the
+        /// <see cref="ProcessMessageAsync"/> event handler the processor should initiate.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the event handler.</value>
         public int MaxConcurrentCalls
         {
             get => _maxConcurrentCalls;
@@ -128,12 +134,17 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        /// <summary>
+        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public TimeSpan? MaxReceiveWaitTime { get; }
+
         private int _maxConcurrentCalls;
         private int _maxConcurrentAcceptSessions;
         private const int DefaultMaxConcurrentCalls = 1;
         private const int DefaultMaxConcurrentSessions = 8;
 
-        /// <summary>Gets or sets a value that indicates whether the Processor should automatically
+        /// <summary>Gets or sets a value that indicates whether the <see cref="ServiceBusProcessor"/> should automatically
         /// complete messages after the event handler has completed processing. If the event handler
         /// triggers an exception, the message will not be automatically completed.</summary>
         ///
@@ -186,6 +197,7 @@ namespace Azure.Messaging.ServiceBus
             PrefetchCount = options.PrefetchCount;
             MaxAutoLockRenewalDuration = options.MaxAutoLockRenewalDuration;
             MaxConcurrentCalls = options.MaxConcurrentCalls;
+            MaxReceiveWaitTime = options.MaxReceiveWaitTime;
             AutoComplete = options.AutoComplete;
 
             EntityPath = entityPath;
@@ -229,8 +241,8 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        /// The event responsible for processing messages received from the Queue or Subscription. Implementation
-        /// is mandatory.
+        /// The event responsible for processing messages received from the Queue or Subscription.
+        /// Implementation is mandatory.
         /// </summary>
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
@@ -243,7 +255,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processMessage != default)
                 {
-                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _processMessage = value);
 
@@ -255,7 +267,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processMessage != value)
                 {
-                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processMessage = default);
@@ -277,7 +289,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processSessionMessage != default)
                 {
-                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
                 EnsureNotRunningAndInvoke(() => _processSessionMessage = value);
 
@@ -289,7 +301,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processSessionMessage != value)
                 {
-                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processSessionMessage = default);
@@ -311,7 +323,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processErrorAsync != default)
                 {
-                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
@@ -323,7 +335,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (_processErrorAsync != value)
                 {
-                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
@@ -417,7 +429,7 @@ namespace Azure.Messaging.ServiceBus
             }
             else
             {
-                throw new InvalidOperationException(Resources1.RunningMessageProcessorCannotPerformOperation);
+                throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
             }
         }
 
@@ -425,7 +437,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (_processErrorAsync == null)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessErrorAsync)));
             }
         }
 
@@ -435,12 +447,12 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (_processSessionMessage == null)
                 {
-                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessMessageAsync)));
+                    throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
                 }
             }
             else if (_processMessage == null)
             {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessMessageAsync)));
+                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartMessageProcessorWithoutHandler, nameof(ProcessMessageAsync)));
             }
         }
 
@@ -468,7 +480,7 @@ namespace Azure.Messaging.ServiceBus
                 {
                     ServiceBusEventSource.Log.StopProcessingStart(Identifier);
 
-                    await ProcessingStartStopSemaphore.WaitAsync().ConfigureAwait(false);
+                    await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -536,7 +548,7 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken)
         {
             ServiceBusReceiver receiver = null;
-            ExceptionReceivedEventArgsAction action = ExceptionReceivedEventArgsAction.Receive;
+            ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
             bool useThreadLocalReceiver = false;
             CancellationTokenSource renewSessionLockCancellationSource = null;
             Task renewSessionLock = null;
@@ -545,11 +557,23 @@ namespace Azure.Messaging.ServiceBus
                 ServiceBusReceiverOptions receiverOptions = CreateReceiverOptions();
                 if (IsSessionProcessor && _sessionId == null)
                 {
-                    action = ExceptionReceivedEventArgsAction.AcceptMessageSession;
+                    errorSource = ServiceBusErrorSource.AcceptMessageSession;
                     useThreadLocalReceiver = true;
-                    await MaxConcurrentAcceptSessionsSemaphore.WaitAsync().ConfigureAwait(false);
+                    bool releaseSemaphore = false;
                     try
                     {
+                        try
+                        {
+                            await MaxConcurrentAcceptSessionsSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                            // only attempt to release semaphore if WaitAsync is successful,
+                            // otherwise SemaphoreFullException can occur.
+                            releaseSemaphore = true;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            // propagate as TCE so it will be handled by the outer catch block
+                            throw new TaskCanceledException();
+                        }
                         try
                         {
                             receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
@@ -567,12 +591,15 @@ namespace Azure.Messaging.ServiceBus
                         }
                         renewSessionLockCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                         renewSessionLock = RenewSessionLock(
-                            receiver: (ServiceBusSessionReceiver) receiver,
+                            receiver: (ServiceBusSessionReceiver)receiver,
                             renewSessionLockCancellationSource);
                     }
                     finally
                     {
-                        MaxConcurrentAcceptSessionsSemaphore.Release();
+                        if (releaseSemaphore)
+                        {
+                            MaxConcurrentAcceptSessionsSemaphore.Release();
+                        }
                     }
                 }
                 else
@@ -583,8 +610,9 @@ namespace Azure.Messaging.ServiceBus
                 // loop within the context of this thread
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    action = ExceptionReceivedEventArgsAction.Receive;
+                    errorSource = ServiceBusErrorSource.Receive;
                     ServiceBusReceivedMessage message = await receiver.ReceiveAsync(
+                        MaxReceiveWaitTime,
                         cancellationToken).ConfigureAwait(false);
                     if (message == null)
                     {
@@ -622,7 +650,7 @@ namespace Azure.Messaging.ServiceBus
                 if (!(ex is TaskCanceledException))
                 {
                     await RaiseExceptionReceived(
-                            new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
+                            new ProcessErrorEventArgs(ex, errorSource, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
                 }
             }
             finally
@@ -670,7 +698,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusReceivedMessage message,
             CancellationToken processorCancellationToken)
         {
-            ExceptionReceivedEventArgsAction action = ExceptionReceivedEventArgsAction.Receive;
+            ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
             CancellationTokenSource renewLockCancellationTokenSource = null;
             Task renewLock = null;
 
@@ -685,7 +713,7 @@ namespace Azure.Messaging.ServiceBus
                         renewLockCancellationTokenSource);
                 }
 
-                action = ExceptionReceivedEventArgsAction.UserCallback;
+                errorSource = ServiceBusErrorSource.UserCallback;
 
                 if (IsSessionProcessor)
                 {
@@ -708,7 +736,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete)
                 {
-                    action = ExceptionReceivedEventArgsAction.Complete;
+                    errorSource = ServiceBusErrorSource.Complete;
                     // don't pass the processor cancellation token
                     // as we want in flight autocompletion to be able
                     // to finish
@@ -724,7 +752,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 processorCancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 await RaiseExceptionReceived(
-                    new ProcessErrorEventArgs(ex, action, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
+                    new ProcessErrorEventArgs(ex, errorSource, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
 
                 // if the message or session lock was lost, do not attempt to abandon the message
                 if (ReceiveMode == ReceiveMode.PeekLock &&
@@ -792,7 +820,7 @@ namespace Azure.Messaging.ServiceBus
                         await RaiseExceptionReceived(
                             new ProcessErrorEventArgs(
                                 exception,
-                                ExceptionReceivedEventArgsAction.RenewLock,
+                                ServiceBusErrorSource.RenewLock,
                                 FullyQualifiedNamespace,
                                 EntityPath)).ConfigureAwait(false);
                     }
@@ -853,7 +881,7 @@ namespace Azure.Messaging.ServiceBus
                         await RaiseExceptionReceived(
                             new ProcessErrorEventArgs(
                                 exception,
-                                ExceptionReceivedEventArgsAction.RenewLock,
+                                ServiceBusErrorSource.RenewLock,
                                 FullyQualifiedNamespace,
                                 EntityPath)).ConfigureAwait(false);
                     }
@@ -907,7 +935,7 @@ namespace Azure.Messaging.ServiceBus
                     }
                     else
                     {
-                        throw new InvalidOperationException(Resources1.RunningMessageProcessorCannotPerformOperation);
+                        throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
                     }
                 }
                 finally
@@ -917,7 +945,7 @@ namespace Azure.Messaging.ServiceBus
             }
             else
             {
-                throw new InvalidOperationException(Resources1.RunningMessageProcessorCannotPerformOperation);
+                throw new InvalidOperationException(Resources.RunningMessageProcessorCannotPerformOperation);
             }
         }
 

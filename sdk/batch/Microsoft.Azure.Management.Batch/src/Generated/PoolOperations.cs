@@ -123,9 +123,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -397,9 +397,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (poolName == null)
@@ -690,9 +690,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (poolName == null)
@@ -938,9 +938,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (poolName == null)
@@ -1196,9 +1196,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (poolName == null)
@@ -1456,9 +1456,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (poolName == null)
@@ -1734,9 +1734,9 @@ namespace Microsoft.Azure.Management.Batch
                 {
                     throw new ValidationException(ValidationRules.MinLength, "accountName", 3);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-z0-9]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(accountName, "^[a-zA-Z0-9]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-zA-Z0-9]+$");
                 }
             }
             if (poolName == null)

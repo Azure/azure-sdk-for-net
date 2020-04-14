@@ -12,7 +12,8 @@ namespace Azure.Search.Documents
     /// allow specifying filtering, sorting, and other suggestions query
     /// behaviors.
     /// </summary>
-    [CodeGenSchema("SuggestRequest")]
+    [CodeGenModel("SuggestRequest")]
+    [CodeGenSuppress(nameof(SuggestOptions), typeof(string), typeof(string))]
     public partial class SuggestOptions : SearchRequestOptions
     {
         /// <summary>
@@ -26,14 +27,14 @@ namespace Azure.Search.Documents
         /// The search text to use to suggest documents. Must be at least 1
         /// character, and no more than 100 characters.
         /// </summary>
-        [CodeGenSchemaMember("search")]
+        [CodeGenMember("search")]
         internal string SearchText { get; set; }
 
         /// <summary>
         /// The name of the suggester as specified in the suggesters collection
         /// that's part of the index definition.
         /// </summary>
-        [CodeGenSchemaMember("suggesterName")]
+        [CodeGenMember("suggesterName")]
         internal string SuggesterName { get; set; }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace Azure.Search.Documents
         /// <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
-        [CodeGenSchemaMember("filter")]
+        [CodeGenMember("filter")]
         public string Filter { get; set; }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("searchFields")]
+        [CodeGenMember("searchFields")]
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
@@ -73,7 +74,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join Select so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("select")]
+        [CodeGenMember("select")]
         internal string SelectRaw
         {
             get => Select.CommaJoin();
@@ -85,7 +86,7 @@ namespace Azure.Search.Documents
         /// The number of suggestions to retrieve. This must be a value between
         /// 1 and 100. The default is 5.
         /// </summary>
-        [CodeGenSchemaMember("top")]
+        [CodeGenMember("top")]
         public int? Size { get; set; }
 
         /// <summary>
@@ -104,12 +105,33 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join OrderBy so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("orderby")]
+        [CodeGenMember("orderby")]
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(SuggestOptions)}.");
         }
         #pragma warning restore CA1822
+
+        /// <summary>
+        /// Creates a shallow copy of the SuggestOptions.
+        /// </summary>
+        /// <returns>The cloned SuggestOptions.</returns>
+        internal SuggestOptions Clone() =>
+            new SuggestOptions
+            {
+                SearchText = SearchText,
+                SuggesterName = SuggesterName,
+                Filter = Filter,
+                SearchFields = SearchFields,
+                Select = Select,
+                Size = Size,
+                OrderBy = OrderBy,
+                HighlightPostTag = HighlightPostTag,
+                HighlightPreTag = HighlightPreTag,
+                MinimumCoverage = MinimumCoverage,
+                UseFuzzyMatching = UseFuzzyMatching,
+                ClientRequestId = ClientRequestId
+            };
     }
 }

@@ -26,9 +26,9 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of HighWaterMarkChangeDetectionPolicy. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
         /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
-        /// <param name="oDataType"> The model type. </param>
-        internal HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName, string oDataType) : base(oDataType)
+        internal HighWaterMarkChangeDetectionPolicy(string oDataType, string highWaterMarkColumnName) : base(oDataType)
         {
             HighWaterMarkColumnName = highWaterMarkColumnName;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";

@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "devtestlabs/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "devtestlabs/resource-manager" -AutoRestVersion "v2"

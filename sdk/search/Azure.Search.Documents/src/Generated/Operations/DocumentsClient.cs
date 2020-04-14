@@ -17,8 +17,8 @@ namespace Azure.Search.Documents
 {
     internal partial class DocumentsClient
     {
-        private readonly ClientDiagnostics clientDiagnostics;
-        private readonly HttpPipeline pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
         internal DocumentsRestClient RestClient { get; }
         /// <summary> Initializes a new instance of DocumentsClient for mocking. </summary>
         protected DocumentsClient()
@@ -28,14 +28,14 @@ namespace Azure.Search.Documents
         internal DocumentsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, string apiVersion = "2019-05-06-Preview")
         {
             RestClient = new DocumentsRestClient(clientDiagnostics, pipeline, endpoint, indexName, apiVersion);
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<long>> CountAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<long>> CountAsync(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.CountAsync(xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -43,27 +43,27 @@ namespace Azure.Search.Documents
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<long> Count(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual Response<long> Count(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Count(xMsClientRequestId, cancellationToken);
         }
 
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(Guid? xMsClientRequestId, SearchOptions searchRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.SearchPostAsync(xMsClientRequestId, searchRequest, cancellationToken).ConfigureAwait(false);
+            return await RestClient.SearchPostAsync(searchRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchDocumentsResult> SearchPost(Guid? xMsClientRequestId, SearchOptions searchRequest, CancellationToken cancellationToken = default)
+        public virtual Response<SearchDocumentsResult> SearchPost(SearchOptions searchRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.SearchPost(xMsClientRequestId, searchRequest, cancellationToken);
+            return RestClient.SearchPost(searchRequest, xMsClientRequestId, cancellationToken);
         }
 
         /// <summary> Retrieves a document from the index. </summary>
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAsync(key, selectedFields, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -81,63 +81,63 @@ namespace Azure.Search.Documents
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Get(key, selectedFields, xMsClientRequestId, cancellationToken);
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(Guid? xMsClientRequestId, SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.SuggestPostAsync(xMsClientRequestId, suggestRequest, cancellationToken).ConfigureAwait(false);
+            return await RestClient.SuggestPostAsync(suggestRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SuggestDocumentsResult> SuggestPost(Guid? xMsClientRequestId, SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
+        public virtual Response<SuggestDocumentsResult> SuggestPost(SuggestOptions suggestRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.SuggestPost(xMsClientRequestId, suggestRequest, cancellationToken);
+            return RestClient.SuggestPost(suggestRequest, xMsClientRequestId, cancellationToken);
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IndexDocumentsResult>> IndexAsync(Guid? xMsClientRequestId, IndexBatch batch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.IndexAsync(xMsClientRequestId, batch, cancellationToken).ConfigureAwait(false);
+            return await RestClient.IndexAsync(batch, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IndexDocumentsResult> Index(Guid? xMsClientRequestId, IndexBatch batch, CancellationToken cancellationToken = default)
+        public virtual Response<IndexDocumentsResult> Index(IndexBatch batch, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Index(xMsClientRequestId, batch, cancellationToken);
+            return RestClient.Index(batch, xMsClientRequestId, cancellationToken);
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutocompleteResults>> AutocompletePostAsync(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.AutocompletePostAsync(xMsClientRequestId, autocompleteRequest, cancellationToken).ConfigureAwait(false);
+            return await RestClient.AutocompletePostAsync(autocompleteRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutocompleteResults> AutocompletePost(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
+        public virtual Response<AutocompleteResults> AutocompletePost(AutocompleteOptions autocompleteRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.AutocompletePost(xMsClientRequestId, autocompleteRequest, cancellationToken);
+            return RestClient.AutocompletePost(autocompleteRequest, xMsClientRequestId, cancellationToken);
         }
     }
 }

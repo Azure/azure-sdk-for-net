@@ -25,11 +25,11 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of LimitTokenFilter. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="maxTokenCount"> The maximum number of tokens to produce. Default is 1. </param>
         /// <param name="consumeAllTokens"> A value indicating whether all tokens from the input must be consumed even if maxTokenCount is reached. Default is false. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal LimitTokenFilter(int? maxTokenCount, bool? consumeAllTokens, string oDataType, string name) : base(oDataType, name)
+        internal LimitTokenFilter(string oDataType, string name, int? maxTokenCount, bool? consumeAllTokens) : base(oDataType, name)
         {
             MaxTokenCount = maxTokenCount;
             ConsumeAllTokens = consumeAllTokens;

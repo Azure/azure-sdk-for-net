@@ -29,16 +29,16 @@ namespace Azure.Search.Documents.Models
                     case "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy": return SoftDeleteColumnDeletionDetectionPolicy.DeserializeSoftDeleteColumnDeletionDetectionPolicy(element);
                 }
             }
-            string odatatype = default;
+            string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataDeletionDetectionPolicy(odatatype);
+            return new DataDeletionDetectionPolicy(odataType);
         }
     }
 }

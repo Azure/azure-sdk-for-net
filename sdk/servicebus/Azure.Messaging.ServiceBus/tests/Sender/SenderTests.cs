@@ -78,10 +78,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
             var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var sender = new ServiceBusClient(connString).GetSender(queueName);
+            var sender = new ServiceBusClient(connString).CreateSender(queueName);
             Assert.AreEqual(queueName, sender.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             Assert.IsNotNull(sender.Identifier);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ServiceBusSender.SendAsync"/>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task SendBatchManagesLockingTheBatch()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockTransportBatch = new Mock<TransportMessageBatch>();
+            var batch = new ServiceBusMessageBatch(mockTransportBatch.Object);
+            var mockTransportProducer = new Mock<TransportSender>();
+            var mockConnection = new Mock<ServiceBusConnection>();
+
+            mockConnection
+                .Setup(connection => connection.RetryOptions)
+                .Returns(new ServiceBusRetryOptions());
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>()))
+                .Returns(mockTransportProducer.Object);
+
+            mockConnection
+                .Setup(connection => connection.ThrowIfClosed());
+
+            mockTransportBatch
+                .Setup(transport => transport.TryAdd(It.IsAny<ServiceBusMessage>()))
+                .Returns(true);
+
+            mockTransportProducer
+                .Setup(transport => transport.SendBatchAsync(It.IsAny<ServiceBusMessageBatch>(), It.IsAny<CancellationToken>()))
+                .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
+
+            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
+
+            var sender = new ServiceBusSender("dummy", mockConnection.Object);
+            var sendTask = sender.SendBatchAsync(batch);
+
+            Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
+            completionSource.TrySetResult(true);
+
+            await sendTask;
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+
+            cancellationSource.Cancel();
         }
     }
 }

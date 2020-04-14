@@ -6,13 +6,17 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.ContainerRegistry</PackageId>
 		<Description>Provides management capabilities for Azure Container Registry.</Description>
-		<Version>4.0.0</Version>
+		<Version>5.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.ContainerRegistry</AssemblyName>
 		<PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        1) Breaking change: ARM PUT now follows "replace" semantics. This means resource properties will be overridden with new values when doing another PUT on an existing resource.
-        2) Breaking change: Policy APIs "registries/listPolicies" and "registries/updatePolicies" are now deprecated. Instead, policy is now integrated directly into registry properties.
+        1) Add support for repository-scoped permission (Preview)
+        2) Add support for Azure Private Link (Preview)
+        3) Add support for encrtyption using customer-managed keys (Preview)
+        4) Add support for TaskRun (Preview)
+        5) Add support for AgentPool (Preview)
+        6) Breaking change: Exception thrown in case of failure changed from `CloudException` to `ErrorResponseException`
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

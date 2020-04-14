@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus
         public override AccessToken GetToken(
             TokenRequestContext requestContext,
             CancellationToken cancellationToken) =>
-            throw new InvalidOperationException(Resources1.SharedKeyCredentialCannotGenerateTokens);
+            throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus
         public override ValueTask<AccessToken> GetTokenAsync(
             TokenRequestContext requestContext,
             CancellationToken cancellationToken) =>
-            throw new InvalidOperationException(Resources1.SharedKeyCredentialCannotGenerateTokens);
+            throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
         ///   Allows the rotation of Shared Access Signatures.

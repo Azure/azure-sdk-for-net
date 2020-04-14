@@ -38,5 +38,15 @@ namespace Azure.Identity
         {
             return new AzureCliCredential(Pipeline, new AzureCliCredentialClient());
         }
+
+        public virtual TokenCredential CreateVisualStudioCredential(string tenantId)
+        {
+            return new VisualStudioCredential(tenantId, Pipeline, default, default);
+        }
+
+        public virtual TokenCredential CreateVisualStudioCodeCredential(string tenantId)
+        {
+            return new VisualStudioCodeCredential(tenantId, Pipeline, default, default);
+        }
     }
 }

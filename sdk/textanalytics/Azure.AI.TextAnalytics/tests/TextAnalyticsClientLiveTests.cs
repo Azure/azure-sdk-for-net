@@ -939,14 +939,5 @@ namespace Azure.AI.TextAnalytics.Tests
             credential.Update(apiKey);
             await client.DetectLanguageAsync(document);
         }
-
-        [Test]
-        public void ThrowExceptionTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var document = new List<string>();
-
-            Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageBatchAsync(document));
-        }
     }
 }

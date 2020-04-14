@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///   to configure its behavior.
     /// </summary>
     ///
-    internal class PartitionReceiverOptions
+    public class PartitionReceiverOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();

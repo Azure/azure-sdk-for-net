@@ -15,7 +15,8 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity (queue or topic).
+    ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
+    ///   (Queue or Topic). It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
     /// </summary>
     ///
     public class ServiceBusSender : IAsyncDisposable
@@ -210,6 +211,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusEventSource.Log.SendMessageStart(Identifier, messageBatch.Count);
             try
             {
+                messageBatch.Lock();
                 await _innerSender.SendBatchAsync(messageBatch, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -217,6 +219,11 @@ namespace Azure.Messaging.ServiceBus
                 ServiceBusEventSource.Log.SendMessageException(Identifier, ex);
                 throw;
             }
+            finally
+            {
+                messageBatch.Unlock();
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.SendMessageComplete(Identifier);
         }
@@ -224,9 +231,12 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
+        ///
         /// <param name="message">The message to schedule.</param>
         /// <param name="scheduledEnqueueTime">The UTC time at which the message should be available for processing</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>Although the message will not be available to be received until the scheduledEnqueueTime, it can still be peeked before that time.</remarks>
         /// <returns>The sequence number of the message that was scheduled.</returns>
         public virtual async Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,

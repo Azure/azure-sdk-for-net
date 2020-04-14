@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("ErrorResponse")]
+    [CodeGenModel("ErrorResponse")]
     internal partial class ErrorResponse_internal
     {
     }

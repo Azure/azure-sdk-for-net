@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Models
             DataContainer container = default;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
-            string odataetag = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -111,11 +111,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    odataetag = property.Value.GetString();
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataSource(name, description, type, credentials, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, odataetag);
+            return new DataSource(name, description, type, credentials, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, odataEtag);
         }
     }
 }

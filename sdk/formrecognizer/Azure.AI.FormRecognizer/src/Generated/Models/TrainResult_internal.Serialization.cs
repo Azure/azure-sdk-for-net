@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer.Custom;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal static TrainResult_internal DeserializeTrainResult_internal(JsonElement element)
         {
             IReadOnlyList<TrainingDocumentInfo> trainingDocuments = default;
-            IReadOnlyList<FieldPredictionAccuracy> fields = default;
+            IReadOnlyList<CustomFormModelField> fields = default;
             float? averageModelAccuracy = default;
             IReadOnlyList<FormRecognizerError> errors = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +27,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<TrainingDocumentInfo> array = new List<TrainingDocumentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
+                        }
                     }
                     trainingDocuments = array;
                     continue;
@@ -38,10 +45,17 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    List<FieldPredictionAccuracy> array = new List<FieldPredictionAccuracy>();
+                    List<CustomFormModelField> array = new List<CustomFormModelField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FieldPredictionAccuracy.DeserializeFieldPredictionAccuracy(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CustomFormModelField.DeserializeCustomFormModelField(item));
+                        }
                     }
                     fields = array;
                     continue;
@@ -64,7 +78,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        }
                     }
                     errors = array;
                     continue;

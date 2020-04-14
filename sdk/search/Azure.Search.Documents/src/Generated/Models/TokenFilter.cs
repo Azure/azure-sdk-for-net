@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for token filters. </summary>
+    /// <summary> Base type for token filters. </summary>
     public partial class TokenFilter
     {
         /// <summary> Initializes a new instance of TokenFilter. </summary>
@@ -26,15 +26,15 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of TokenFilter. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal TokenFilter(string oDataType, string name)
         {
-            ODataType = oDataType ?? null;
+            ODataType = oDataType;
             Name = name;
         }
 
-        /// <summary> The model type. </summary>
+        /// <summary> Identifies the concrete type of the token filter. </summary>
         internal string ODataType { get; set; }
         /// <summary> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </summary>
         public string Name { get; }

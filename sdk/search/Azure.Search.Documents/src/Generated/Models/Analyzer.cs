@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for analyzers. </summary>
+    /// <summary> Base type for analyzers. </summary>
     public partial class Analyzer
     {
         /// <summary> Initializes a new instance of Analyzer. </summary>
@@ -26,15 +26,15 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Initializes a new instance of Analyzer. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal Analyzer(string oDataType, string name)
         {
-            ODataType = oDataType ?? null;
+            ODataType = oDataType;
             Name = name;
         }
 
-        /// <summary> The model type. </summary>
+        /// <summary> Identifies the concrete type of the analyzer. </summary>
         internal string ODataType { get; set; }
         /// <summary> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </summary>
         public string Name { get; }

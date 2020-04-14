@@ -1,0 +1,35 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-lnphwbdj.search.windows.net/indexes(\u0027mkucleqc\u0027)/docs(\u002712345\u0027)?api-version=2019-05-06-Preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200402.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "7c34fbb2dd26e95ef8b150d6b9aa6381",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "0",
+        "Date": "Thu, 02 Apr 2020 22:03:11 GMT",
+        "elapsed-time": "7",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "7c34fbb2-dd26-e95e-f8b1-50d6b9aa6381",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1565637229",
+    "SearchIndexName": "mkucleqc",
+    "SearchServiceName": "azs-net-lnphwbdj"
+  }
+}

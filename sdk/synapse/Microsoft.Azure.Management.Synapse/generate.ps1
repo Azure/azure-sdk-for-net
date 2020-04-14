@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "synapse/resource-manager" -AutoRestVersion "2.0.4413"
+Start-AutoRestCodeGeneration -ResourceProvider "synapse/resource-manager" -AutoRestVersion "v2"

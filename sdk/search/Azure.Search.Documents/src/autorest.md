@@ -69,24 +69,6 @@ directive:
 Shape the swagger APIs to produce the best C# API possible.  We can consider
 fixing these in the swagger files if they would benefit other languages.
 
-### Add documentation
-Add documentation to nodes that do not have it. These should be fixed in swagger.
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions..properties["@odata.type"]
-  transform: $.description = "The model type.";
-- from: swagger-document
-  where: $.definitions.CognitiveServicesAccount.properties.description
-  transform: $.description = "Description of the cognitive resource attached to a skillset.";
-- from: swagger-document
-  where: $.definitions.CognitiveServicesAccountKey.properties.key
-  transform: $.description = "The key used to provision a cognitive resource attached to a skillset.";
-- from: swagger-document
-  where: $.definitions.ScoringFunction.properties.type
-  transform: $.description = "Required for scoring functions. Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. You can include more than one function in each scoring profile. The function name must be lower case.";
-```
-
 ### Property name changes
 Change the name of some properties so they are properly CamelCased.
 ``` yaml
@@ -94,4 +76,25 @@ modelerfour:
   naming:
     override:
       "@odata.type": ODataType
+```
+
+### Disable parameter grouping
+
+AutoRest C# supports parameter grouping now, temporary disabling to reduce the change size.
+
+``` yaml
+modelerfour:
+  group-parameters: false
+```
+
+### Rename one of SearchMode definitions
+
+SearchMode is duplicated across swaggers. Rename one of them, even though it will be internalized.
+This prevents the serializer from attempting to use undefined values until [Azure/autorest.csharp#583](https://github.com/Azure/autorest.csharp/issues/583) is fixed.
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.Suggester.properties.searchMode
+  transform: $["x-ms-enum"].name = "SuggesterMode";
 ```

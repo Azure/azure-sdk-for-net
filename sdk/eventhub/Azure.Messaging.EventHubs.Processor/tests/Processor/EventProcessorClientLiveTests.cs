@@ -8,10 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Storage.Blobs;
+using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -32,470 +38,558 @@ namespace Azure.Messaging.EventHubs.Tests
     public class EventProcessorClientLiveTests
     {
         /// <summary>
-        /// Body content for the first batch of test messages sent in <see cref="EventProcessorCanReceiveFromSpecifiedInitialEventPosition" />.
-        /// </summary>
-        private const string firstBatchBody = "This message is from before your time.";
-
-        /// <summary>
-        /// Body content for test messages sent.
-        /// </summary>
-        private const string eventBody = "I'm dummy.";
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
         /// </summary>
         ///
         [Test]
-        public async Task PartitionProcessorCanCreateACheckpoint()
+        public async Task EventsCanBeReadByOneProcessorClient()
         {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+
+            // Send a set of events.
+
+            var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the events.
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+
+            // Validate the events that were processed.
+
+            foreach (var sourceEvent in sourceEvents)
+            {
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventsCanBeReadByOneProcessorClientUsingAnIdentityCredential()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+
+            // Send a set of events.
+
+            var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the events.
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var processor = CreateProcessorWithIdentity(scope.ConsumerGroups.First(), scope.EventHubName, options: options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+
+            // Validate the events that were processed.
+
+            foreach (var sourceEvent in sourceEvents)
+            {
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventsCanBeReadByMultipleProcessorClients()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(4);
+            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(6));
+
+            // Send a set of events.
+
+            var sourceEvents = EventGenerator.CreateEvents(500).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the events.
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            // Create multiple processors using the same handlers; events may not appear in the same order, but each event
+            // should be read once.
+
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(500) };
+
+            var processors = new[]
+            {
+                CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options),
+                CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options)
+            };
+
+            foreach (var processor in processors)
+            {
+                processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+                processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+            }
+
+            await Task.WhenAll(processors.Select(processor => processor.StartProcessingAsync(cancellationSource.Token)));
+
+            // Allow the processors to complete, while respecting the test timeout.
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+
+            await Task.WhenAll(processors.Select(processor => processor.StopProcessingAsync(cancellationSource.Token)));
+            cancellationSource.Cancel();
+
+            // Validate the events that were processed.
+
+            foreach (var sourceEvent in sourceEvents)
+            {
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorClientCreatesOwnership()
+        {
+            // Setup the environment.
+
+            var partitionCount = 2;
+            var partitionIds = new HashSet<string>();
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(partitionCount);
+            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+
+            // Discover the partitions.
+
+            await using (var producer = new EventHubProducerClient(connectionString))
+            {
+                foreach (var partitionId in (await producer.GetPartitionIdsAsync()))
+                {
+                    partitionIds.Add(partitionId);
+                }
+            }
+
+            // Send a set of events.
+
+            var sourceEvents = EventGenerator.CreateEvents(200).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the events.
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var storageManager = new InMemoryStorageManager(_ => {});
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var processor = CreateProcessorWithIdentity(scope.ConsumerGroups.First(), scope.EventHubName, storageManager, options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+
+            // Validate that events that were processed.
+
+            var ownership = (await storageManager.ListOwnershipAsync(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, scope.ConsumerGroups.First(), cancellationSource.Token))?.ToList();
+
+            Assert.That(ownership, Is.Not.Null, "The ownership list should have been returned.");
+            Assert.That(ownership.Count, Is.AtLeast(1), "At least one partition should have been owned.");
+
+            foreach (var partitionOwnership in ownership)
+            {
+                Assert.That(partitionIds.Contains(partitionOwnership.PartitionId), Is.True, $"The partition `{ partitionOwnership.PartitionId }` is not valid for the Event Hub.");
+                Assert.That(partitionOwnership.OwnerIdentifier, Is.Empty, "Ownership should have bee relinquished when the processor was stopped.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorClientCanStartFromAnInitialPosition()
+        {
+            // Setup the environment.
+
             await using EventHubScope scope = await EventHubScope.CreateAsync(1);
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-            await using var connection = new EventHubConnection(connectionString);
-            // Send some events.
-
-            EventData lastEvent;
-
-            await using var producer = new EventHubProducerClient(connection);
-            await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
-
-            // Send a few events.  We are only interested in the last one of them.
-
-            var dummyEventsCount = 10;
-
-            using var dummyBatch = await producer.CreateBatchAsync();
-
-            for (int i = 0; i < dummyEventsCount; i++)
-            {
-                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(eventBody)));
-            }
-
-            await producer.SendAsync(dummyBatch);
-
-            var receivedEvents = new List<EventData>();
-
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
-            await foreach (var evt in consumer.ReadEventsAsync(new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(30) }, cancellationSource.Token))
+            // Send a set of events.
+
+            var sourceEvents = EventGenerator.CreateEvents(25).ToList();
+            var lastSourceEvent = sourceEvents.Last();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Read the initial set back, marking the offset and sequence number of the last event in the initial set.
+
+            var startingOffset = 0L;
+
+            await using (var consumer = new EventHubConsumerClient(scope.ConsumerGroups.First(), connectionString))
             {
-                receivedEvents.Add(evt.Data);
-                if (receivedEvents.Count == dummyEventsCount)
+                await foreach  (var partitionEvent in consumer.ReadEventsAsync(new ReadEventOptions { MaximumWaitTime = null }, cancellationSource.Token))
                 {
-                    break;
+                    if (partitionEvent.Data.IsEquivalentTo(lastSourceEvent))
+                    {
+                        startingOffset = partitionEvent.Data.Offset;
+
+                        break;
+                    }
                 }
             }
 
-            Assert.That(receivedEvents.Count, Is.EqualTo(dummyEventsCount));
+            // Send the second set of events to be read by the processor.
 
-            lastEvent = receivedEvents.Last();
+            sourceEvents = EventGenerator.CreateEvents(20).ToList();
+            sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
-            // Create a storage manager so we can retrieve the created checkpoint from it.
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
-            var storageManager = new MockCheckPointStorage();
+            // Attempt to read back the second set of events.
 
-            // Create the event processor manager to manage our event processors.
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
 
-            var eventProcessorManager = new EventProcessorManager
-                (
-                    EventHubConsumerClient.DefaultConsumerGroupName,
-                    connectionString,
-                    storageManager,
-                    onProcessEvent: eventArgs =>
-                    {
-                        if (eventArgs.Data != null)
-                        {
-                            eventArgs.UpdateCheckpointAsync();
-                        }
-                    }
-                );
+            processor.PartitionInitializingAsync += args =>
+            {
+                args.DefaultStartingPosition = EventPosition.FromOffset(startingOffset, false);
+                return Task.CompletedTask;
+            };
 
-            eventProcessorManager.AddEventProcessors(1);
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
 
-            // Start the event processors.
+            await processor.StartProcessingAsync(cancellationSource.Token);
 
-            await eventProcessorManager.StartAllAsync();
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            // Make sure the event processors have enough time to stabilize and receive events.
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
 
-            await eventProcessorManager.WaitStabilization();
+            // Validate the events that were processed.
 
-            // Stop the event processors.
-
-            await eventProcessorManager.StopAllAsync();
-
-            // Validate results.
-
-            IEnumerable<EventProcessorPartitionOwnership> ownershipEnumerable = await storageManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, EventHubConsumerClient.DefaultConsumerGroupName);
-
-            Assert.That(ownershipEnumerable, Is.Not.Null);
-            Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));
+            foreach (var sourceEvent in sourceEvents)
+            {
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+            }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
         /// </summary>
         ///
         [Test]
-        public async Task EventProcessorCanReceiveFromSpecifiedInitialEventPosition()
+        public async Task ProcessorClientBeginsWithTheNextEventAfterCheckpointing()
         {
-            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(1);
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
-            await using var connection = new EventHubConnection(connectionString);
-            int receivedEventsCount = 0;
-
-            // Send some events.
-
-            var expectedEventsCount = 20;
-            var firstBatchEventCount = 30;
-            DateTimeOffset enqueuedTime = DateTimeOffset.MinValue;
-
-            await using var producer = new EventHubProducerClient(connection);
-            // Send a few dummy events.  We are not expecting to receive these.
-
-            using (var dummyBatch = await producer.CreateBatchAsync())
-            {
-                for (int i = 0; i < firstBatchEventCount; i++)
-                {
-                    dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(firstBatchBody)));
-                }
-
-                await producer.SendAsync(dummyBatch);
-            }
-
-            // Wait a reasonable amount of time so the there is a time gap between the first and second batch.
-
-            await Task.Delay(2000);
-
-            // Send the events we expect to receive.
-
-            using (var dummyBatch = await producer.CreateBatchAsync())
-            {
-                for (int i = 0; i < expectedEventsCount; i++)
-                {
-                    dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes(eventBody)));
-                }
-
-                await producer.SendAsync(dummyBatch);
-            }
-
-            // Create the event processor manager to manage the event processor which will receive all events and set the enqueuedTime of the latest event from the first batch.
-
-            using var firstBatchCancellationSource = new CancellationTokenSource();
-            firstBatchCancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-            var receivedFromFirstBatch = 0;
-
-            var eventProcessorManager = new EventProcessorManager
-                (
-                    EventHubConsumerClient.DefaultConsumerGroupName,
-                    connectionString,
-                    onInitialize: eventArgs =>
-                        eventArgs.DefaultStartingPosition = EventPosition.Earliest,
-                    onProcessEvent: eventArgs =>
-                    {
-                        if (eventArgs.Data != null)
-                        {
-                            var dataAsString = Encoding.UTF8.GetString(eventArgs.Data.Body.Span.ToArray());
-                            if (dataAsString == firstBatchBody)
-                            {
-                                enqueuedTime = enqueuedTime > eventArgs.Data.EnqueuedTime ? enqueuedTime : eventArgs.Data.EnqueuedTime;
-                                receivedFromFirstBatch++;
-                                if (receivedFromFirstBatch == firstBatchEventCount)
-                                {
-                                    firstBatchCancellationSource.Cancel();
-                                }
-                            }
-                        }
-                    }
-                );
-
-            eventProcessorManager.AddEventProcessors(1);
-
-            // Start the event processors.
-
-            await eventProcessorManager.StartAllAsync();
-
-            // Wait for the event processors to receive events.
-
-            try
-            {
-                await Task.Delay(Timeout.Infinite, firstBatchCancellationSource.Token);
-            }
-            catch (TaskCanceledException) { /*expected*/ }
-
-
-            // Stop the event processors.
-
-            await eventProcessorManager.StopAllAsync();
-
-            // Validate that we set at least one enqueuedTime
-
-            Assert.That(enqueuedTime, Is.GreaterThan(DateTimeOffset.MinValue));
-
-            // Create the event processor manager to manage the event processor which will receive all events FromEnqueuedTime of enqueuedTime.
-
-            using var secondBatchCancellationSource = new CancellationTokenSource();
-            secondBatchCancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-            var eventProcessorManager2 = new EventProcessorManager
-                (
-                    EventHubConsumerClient.DefaultConsumerGroupName,
-                    connectionString,
-                    onInitialize: eventArgs =>
-                        eventArgs.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTime),
-                    onProcessEvent: eventArgs =>
-                    {
-                        if (eventArgs.Data != null)
-                        {
-                            Interlocked.Increment(ref receivedEventsCount);
-                            if (receivedEventsCount >= expectedEventsCount)
-                            {
-                                secondBatchCancellationSource.Cancel();
-                            }
-                        }
-                    }
-                );
-
-            eventProcessorManager2.AddEventProcessors(1);
-
-            // Start the event processors.
-
-            await eventProcessorManager2.StartAllAsync();
-
-            // Wait for the event processors to receive events.
-
-            try
-            {
-                await Task.Delay(Timeout.Infinite, secondBatchCancellationSource.Token);
-            }
-            catch (TaskCanceledException) { /*expected*/ }
-
-            // Stop the event processors.
-
-            await eventProcessorManager2.StopAllAsync();
-
-            // Validate results.
-
-            Assert.That(receivedEventsCount, Is.EqualTo(expectedEventsCount));
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(2)]
-        [TestCase(4)]
-        [TestCase(15)]
-        public async Task EventProcessorWaitsMaximumWaitTimeForEvents(int maximumWaitTimeInSecs)
-        {
-            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
-            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-            await using var connection = new EventHubConnection(connectionString);
-            var timestamps = new ConcurrentDictionary<string, ConcurrentBag<DateTimeOffset>>();
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-            var receivedCount = 0;
+            cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
-            // Create the event processor manager to manage our event processors.
+            // Send a set of events.
 
-            var eventProcessorManager = new EventProcessorManager
-            (
-                EventHubConsumerClient.DefaultConsumerGroupName,
-                connectionString,
-                clientOptions: new EventProcessorClientOptions { MaximumWaitTime = TimeSpan.FromSeconds(maximumWaitTimeInSecs) },
-                onInitialize: eventArgs =>
-                    timestamps.TryAdd(eventArgs.PartitionId, new ConcurrentBag<DateTimeOffset> { DateTimeOffset.UtcNow }),
-                onProcessEvent: eventArgs =>
-                {
-                    timestamps[eventArgs.Partition.PartitionId].Add(DateTimeOffset.UtcNow);
-                    receivedCount++;
-                    if (receivedCount >= 5)
-                    {
-                        cancellationSource.Cancel();
-                    }
-                }
-            );
+            var segmentEventCount = 25;
+            var beforeCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
+            var afterCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
+            var sourceEvents = Enumerable.Concat(beforeCheckpointEvents, afterCheckpointEvents).ToList();
+            var checkpointEvent = beforeCheckpointEvents.Last();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
 
-            eventProcessorManager.AddEventProcessors(1);
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
 
-            // Start the event processors.
+            // Attempt to read back the first half of the events and checkpoint.
 
-            await eventProcessorManager.StartAllAsync();
-
-            // Make sure the event processors have enough time to receive some events.
-
-            try
+            Func<ProcessEventArgs, Task> processedEventCallback = async args =>
             {
-                await Task.Delay(Timeout.Infinite, cancellationSource.Token);
-            }
-            catch (TaskCanceledException) { /*expected*/ }
-
-
-            // Stop the event processors.
-
-            await eventProcessorManager.StopAllAsync();
-
-            // Validate results.
-
-            foreach (KeyValuePair<string, ConcurrentBag<DateTimeOffset>> kvp in timestamps)
-            {
-                var partitionId = kvp.Key;
-                var partitionTimestamps = kvp.Value.ToList();
-                partitionTimestamps.Sort();
-
-                Assert.That(partitionTimestamps.Count, Is.GreaterThan(1), $"{ partitionId }: more time stamp samples were expected.");
-
-                for (int index = 1; index < partitionTimestamps.Count; index++)
+                if (args.Data.IsEquivalentTo(checkpointEvent))
                 {
-                    var elapsedTime = partitionTimestamps[index].Subtract(partitionTimestamps[index - 1]).TotalSeconds;
-
-                    Assert.That(elapsedTime, Is.GreaterThan(maximumWaitTimeInSecs - 0.1), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too short.");
-                    Assert.That(elapsedTime, Is.LessThan(maximumWaitTimeInSecs + 5), $"{ partitionId }: elapsed time between indexes { index - 1 } and { index } was too long.");
-
-                    ++index;
+                    await args.UpdateCheckpointAsync(cancellationSource.Token);
                 }
+            };
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var beforeCheckpointProcessHandler = CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token, processedEventCallback);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var storageManager = new InMemoryStorageManager(_ => {});
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, storageManager, options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += beforeCheckpointProcessHandler;
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+
+            // Validate a checkpoint was created and that events were processed.
+
+            var checkpoints = (await storageManager.ListCheckpointsAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token))?.ToList();
+            Assert.That(checkpoints, Is.Not.Null, "A checkpoint should have been created.");
+            Assert.That(checkpoints.Count, Is.EqualTo(1), "A single checkpoint should exist.");
+            Assert.That(processedEvents.Count, Is.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
+
+            // Reset state and start the processor again; it should resume from the event following the checkpoint.
+
+            processedEvents.Clear();
+            completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            processor.ProcessEventAsync -= beforeCheckpointProcessHandler;
+            processor.ProcessEventAsync += CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token);
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+
+            foreach (var sourceEvent in afterCheckpointEvents)
+            {
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
+        ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
+        ///   a connection based on a connection string.
         /// </summary>
         ///
-        [Test]
-        [Ignore("Test failing during nightly runs. (Tracked by: #10067)")]
-        public async Task ProcessorDoesNotProcessCheckpointedEventsAgain()
+        /// <param name="consumerGroup">The consumer group for the processor.</param>
+        /// <param name="connectionString">The connection to use for spawning connections.</param>
+        /// <param name="storageManager">The storage manager to set for the processor; if <c>default</c>, a mock storage manager will be created.</param>
+        /// <param name="options">The set of client options to pass.</param>
+        ///
+        /// <returns>The processor instance.</returns>
+        ///
+        private EventProcessorClient CreateProcessor(string consumerGroup,
+                                                     string connectionString,
+                                                     StorageManager storageManager = default,
+                                                     EventProcessorOptions options = default)
         {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            EventHubConnection createConnection() => new EventHubConnection(connectionString);
+
+            storageManager ??= new InMemoryStorageManager(_=> {});
+            return new TestEventProcessorClient(storageManager, consumerGroup, "fakeNamespace", "fakeEventHub", Mock.Of<TokenCredential>(), createConnection, options);
+        }
+
+        /// <summary>
+        ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
+        ///   a connection based on an identity credential.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The consumer group for the processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub for the processor.</param>
+        /// <param name="storageManager">The storage manager to set for the processor; if <c>default</c>, a mock storage manager will be created.</param>
+        /// <param name="options">The set of client options to pass.</param>
+        ///
+        /// <returns>The processor instance.</returns>
+        ///
+        private EventProcessorClient CreateProcessorWithIdentity(string consumerGroup,
+                                                                 string eventHubName,
+                                                                 StorageManager storageManager = default,
+                                                                 EventProcessorOptions options = default)
+        {
+            var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
+            EventHubConnection createConnection() => new EventHubConnection(TestEnvironment.FullyQualifiedNamespace, eventHubName, credential);
+
+            storageManager ??= new InMemoryStorageManager(_=> {});
+            return new TestEventProcessorClient(storageManager, consumerGroup, TestEnvironment.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
+        }
+
+        /// <summary>
+        ///   Sends a set of events using a new producer to do so.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string to use when creating the producer.</param>
+        /// <param name="sourceEvents">The set of events to send.</param>
+        /// <param name="cancellationToken">The token used to signal a cancellation request.</param>
+        ///
+        /// <returns>The count of events that were sent.</returns>
+        ///
+        private async Task<int> SendEvents(string connectionString,
+                                           IEnumerable<EventData> sourceEvents,
+                                           CancellationToken cancellationToken)
+        {
+            var sentCount = 0;
+
+            await using (var producer = new EventHubProducerClient(connectionString))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                var firstEventBatch = Enumerable
-                    .Range(0, 20)
-                    .Select(index => new EventData(Encoding.UTF8.GetBytes($"First event batch: { index }")))
-                    .ToList();
-
-                var secondEventBatch = Enumerable
-                    .Range(0, 10)
-                    .Select(index => new EventData(Encoding.UTF8.GetBytes($"Second event batch: { index }")))
-                    .ToList();
-
-                var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                var firstBatchReceivedEventsCount = 0;
-
-                // Send the first batch of events and checkpoint after the last one.
-
-                var checkpointStorage = new MockCheckPointStorage();
-                var firstProcessor = new EventProcessorClient(checkpointStorage, EventHubConsumerClient.DefaultConsumerGroupName,
-                    TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, () => new EventHubConnection(connectionString), default);
-
-                firstProcessor.ProcessEventAsync += async eventArgs =>
+                foreach (var batch in (await EventGenerator.BuildBatchesAsync(sourceEvents, producer, default, cancellationToken)))
                 {
-                    if (++firstBatchReceivedEventsCount == firstEventBatch.Count)
-                    {
-                        await eventArgs.UpdateCheckpointAsync();
-                        completionSource.SetResult(true);
-                    }
-                };
+                    await producer.SendAsync(batch, cancellationToken).ConfigureAwait(false);
 
-                firstProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-                await using (var producer = new EventHubProducerClient(connectionString))
-                {
-                    using var batch = await producer.CreateBatchAsync();
-
-                    foreach (var eventData in firstEventBatch)
-                    {
-                        batch.TryAdd(eventData);
-                    }
-
-                    await producer.SendAsync(batch);
+                    sentCount += batch.Count;
+                    batch.Dispose();
                 }
-
-                // Establish timed cancellation to ensure that the test doesn't hang.
-
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
-
-                await firstProcessor.StartProcessingAsync(cancellationSource.Token);
-
-                while (!completionSource.Task.IsCompleted
-                    && !cancellationSource.IsCancellationRequested)
-                {
-                    await Task.Delay(25);
-                }
-
-                await firstProcessor.StopProcessingAsync(cancellationSource.Token);
-
-                // Send the second batch of events. Only the new events should be read by the second processor.
-
-                await using (var producer = new EventHubProducerClient(connectionString))
-                {
-                    using var batch = await producer.CreateBatchAsync();
-
-                    foreach (var eventData in secondEventBatch)
-                    {
-                        batch.TryAdd(eventData);
-                    }
-
-                    await producer.SendAsync(batch);
-                }
-
-                completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                var secondBatchReceivedEvents = new List<EventData>();
-
-                var secondProcessor = new EventProcessorClient(checkpointStorage, EventHubConsumerClient.DefaultConsumerGroupName,
-                    TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, () => new EventHubConnection(connectionString), default);
-
-                secondProcessor.ProcessEventAsync += eventArgs =>
-                {
-                    secondBatchReceivedEvents.Add(eventArgs.Data);
-
-                    if (secondBatchReceivedEvents.Count == firstEventBatch.Count)
-                    {
-                        completionSource.SetResult(true);
-                    }
-
-                    return Task.CompletedTask;
-                };
-
-                var wasErrorHandlerCalled = false;
-
-                secondProcessor.ProcessErrorAsync += eventArgs =>
-                {
-                    wasErrorHandlerCalled = true;
-                    return Task.CompletedTask;
-                };
-
-                await secondProcessor.StartProcessingAsync(cancellationSource.Token);
-
-                while (!completionSource.Task.IsCompleted
-                    && !cancellationSource.IsCancellationRequested)
-                {
-                    await Task.Delay(25);
-                }
-
-                await secondProcessor.StopProcessingAsync(cancellationSource.Token);
-
-                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processors should have stopped without cancellation.");
-                Assert.That(wasErrorHandlerCalled, Is.False, "No errors should have happened while resuming from checkpoint.");
-
-                var index = 0;
-
-                foreach (var eventData in secondBatchReceivedEvents)
-                {
-                    Assert.That(eventData.IsEquivalentTo(secondEventBatch[index]), Is.True, "The received and sent event datas do not match.");
-                    index++;
-                }
-
-                Assert.That(index, Is.EqualTo(secondEventBatch.Count), $"The second processor did not receive the expected amount of events.");
             }
+
+            return sentCount;
+        }
+
+        /// <summary>
+        ///  Creates an event handler for the <see cref="EventProcessorClient.ProcessEventsAsync" />
+        ///  event which tracks events against a target count, guarding against duplicates and
+        ///  capturing accepted events.
+        /// </summary>
+        ///
+        /// <param name="targetCount">The desired count of events.  Once the number of processed events reaches this count, the <paramref name="completionSource" /> will be signaled.</param>
+        /// <param name="processedEvents">The set of events that were accepted and marked as processed.</param>
+        /// <param name="completionSource">The completion source to signal when the number of events processed reaches the <paramref name="targetCount" />.</param>
+        /// <param name="cancellationToken">The token used to signal a request for cancellation.</param>
+        /// <param name="acceptedEventCallback">An optional callback function that </param>
+        ///
+        /// <returns>A delegate suitable for use with the <see cref="EventProcessorClient.ProcessEventsAsync" /> event.</returns>
+        ///
+        private Func<ProcessEventArgs, Task> CreateEventTrackingHandler(int targetCount,
+                                                                        ConcurrentDictionary<string, EventData> processedEvents,
+                                                                        TaskCompletionSource<bool> completionSource,
+                                                                        CancellationToken cancellationToken,
+                                                                        Func<ProcessEventArgs, Task> acceptedEventCallback = default) =>
+            async args =>
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                // Guard against empty arguments with no event and duplicates; Event Hubs has an
+                // at-least-once guarantee and may send the same event more than once.
+
+                if (args.HasEvent)
+                {
+                    var eventId = args.Data.Properties[EventGenerator.IdPropertyName].ToString();
+
+                    if (processedEvents.TryAdd(eventId, args.Data))
+                    {
+                        if (acceptedEventCallback != default)
+                        {
+                            await acceptedEventCallback(args).ConfigureAwait(false);
+                        }
+
+                        if (processedEvents.Count >= targetCount)
+                        {
+                           completionSource.TrySetResult(true);
+                        }
+                    }
+                }
+            };
+
+        /// <summary>
+        ///  Creates an event handler for the <see cref="EventProcessorClient.ProcessErrorAsync" />
+        ///  event which performs an <see cref="Assert.Fail" /> when an error is handled.
+        /// </summary>
+        ///
+        /// <returns>A delegate suitable for use with the <see cref="EventProcessorClient.ProcessErrorAsync" /> event.</returns>
+        ///
+        private Func<ProcessErrorEventArgs, Task> CreateAssertingErrorHandler() =>
+            args =>
+            {
+                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
+                return Task.CompletedTask;
+            };
+
+        /// <summary>
+        ///   A mock <see cref="EventProcessorClient" /> used for testing purposes to override
+        ///   connection creation.
+        /// </summary>
+        ///
+        public class TestEventProcessorClient : EventProcessorClient
+        {
+            private readonly Func<EventHubConnection> InjectedConnectionFactory;
+
+            internal TestEventProcessorClient(StorageManager storageManager,
+                                              string consumerGroup,
+                                              string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              TokenCredential credential,
+                                              Func<EventHubConnection> connectionFactory,
+                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+                InjectedConnectionFactory = connectionFactory;
+            }
+
+            protected override EventHubConnection CreateConnection() => InjectedConnectionFactory();
         }
     }
 }

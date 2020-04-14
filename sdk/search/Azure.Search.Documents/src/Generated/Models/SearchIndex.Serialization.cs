@@ -16,22 +16,28 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("fields");
-            writer.WriteStartArray();
-            foreach (var item in Fields)
+            if (Name != null)
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
             }
-            writer.WriteEndArray();
+            if (Fields != null)
+            {
+                writer.WritePropertyName("fields");
+                writer.WriteStartArray();
+                foreach (var item in Fields)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (ScoringProfiles != null)
             {
                 writer.WritePropertyName("scoringProfiles");
                 writer.WriteStartArray();
-                foreach (var item0 in ScoringProfiles)
+                foreach (var item in ScoringProfiles)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -49,9 +55,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("suggesters");
                 writer.WriteStartArray();
-                foreach (var item0 in Suggesters)
+                foreach (var item in Suggesters)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -59,9 +65,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("analyzers");
                 writer.WriteStartArray();
-                foreach (var item0 in Analyzers)
+                foreach (var item in Analyzers)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -69,9 +75,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("tokenizers");
                 writer.WriteStartArray();
-                foreach (var item0 in Tokenizers)
+                foreach (var item in Tokenizers)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -79,9 +85,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("tokenFilters");
                 writer.WriteStartArray();
-                foreach (var item0 in TokenFilters)
+                foreach (var item in TokenFilters)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -89,9 +95,9 @@ namespace Azure.Search.Documents.Models
             {
                 writer.WritePropertyName("charFilters");
                 writer.WriteStartArray();
-                foreach (var item0 in CharFilters)
+                foreach (var item in CharFilters)
                 {
-                    writer.WriteObjectValue(item0);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -121,20 +127,35 @@ namespace Azure.Search.Documents.Models
             IList<TokenFilter> tokenFilters = default;
             IList<CharFilter> charFilters = default;
             EncryptionKey encryptionKey = default;
-            string odataetag = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fields"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<SearchField> array = new List<SearchField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchField.DeserializeSearchField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchField.DeserializeSearchField(item));
+                        }
                     }
                     fields = array;
                     continue;
@@ -148,7 +169,14 @@ namespace Azure.Search.Documents.Models
                     List<ScoringProfile> array = new List<ScoringProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScoringProfile.DeserializeScoringProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScoringProfile.DeserializeScoringProfile(item));
+                        }
                     }
                     scoringProfiles = array;
                     continue;
@@ -180,7 +208,14 @@ namespace Azure.Search.Documents.Models
                     List<Suggester> array = new List<Suggester>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Suggester.DeserializeSuggester(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Suggester.DeserializeSuggester(item));
+                        }
                     }
                     suggesters = array;
                     continue;
@@ -194,7 +229,14 @@ namespace Azure.Search.Documents.Models
                     List<Analyzer> array = new List<Analyzer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Analyzer.DeserializeAnalyzer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Analyzer.DeserializeAnalyzer(item));
+                        }
                     }
                     analyzers = array;
                     continue;
@@ -208,7 +250,14 @@ namespace Azure.Search.Documents.Models
                     List<Tokenizer> array = new List<Tokenizer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Tokenizer.DeserializeTokenizer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Tokenizer.DeserializeTokenizer(item));
+                        }
                     }
                     tokenizers = array;
                     continue;
@@ -222,7 +271,14 @@ namespace Azure.Search.Documents.Models
                     List<TokenFilter> array = new List<TokenFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TokenFilter.DeserializeTokenFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TokenFilter.DeserializeTokenFilter(item));
+                        }
                     }
                     tokenFilters = array;
                     continue;
@@ -236,7 +292,14 @@ namespace Azure.Search.Documents.Models
                     List<CharFilter> array = new List<CharFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CharFilter.DeserializeCharFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CharFilter.DeserializeCharFilter(item));
+                        }
                     }
                     charFilters = array;
                     continue;
@@ -256,11 +319,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    odataetag = property.Value.GetString();
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new SearchIndex(name, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, encryptionKey, odataetag);
+            return new SearchIndex(name, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, encryptionKey, odataEtag);
         }
     }
 }

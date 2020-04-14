@@ -881,6 +881,15 @@ namespace Azure.Messaging.EventHubs.Consumer
                         activeException = (cancellationToken.IsCancellationRequested) ? null : ex;
                         break;
                     }
+                    catch (InvalidOperationException) when (cancellationToken.IsCancellationRequested)
+                    {
+                        // If cancellation was requested, there is a race condition in which publishing may
+                        // try to communicate with the service as the connection is being closed.  This is not
+                        // a failure condition.
+
+                        activeException = null;
+                        break;
+                    }
                     catch (OperationCanceledException ex)
                     {
                         activeException = new TaskCanceledException(ex.Message, ex);
