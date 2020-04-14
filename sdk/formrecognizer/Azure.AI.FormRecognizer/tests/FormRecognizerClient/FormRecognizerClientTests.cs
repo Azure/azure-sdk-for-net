@@ -80,7 +80,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Method not implemented yet.")]
         public void StartRecognizeContentRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
