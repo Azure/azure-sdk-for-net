@@ -137,7 +137,7 @@ In some cases, you might want to test against the latest versions of the client 
 
 ## Public API additions
 
-If you make a public API addition, the `eng\Export-API.ps1` script has to be run to update public API listings.
+If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings.
 
 ## API Compatibility Verification
 
@@ -190,7 +190,7 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
 6. **MANDATORY**: Add or update tests for the newly generated code.
 7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-8. For management libraries run `eng\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
 9. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 10. The pull requests will be reviewed and merged by the Azure SDK team
 
