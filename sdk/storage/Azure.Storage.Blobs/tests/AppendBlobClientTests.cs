@@ -944,8 +944,8 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobDownloadInfo> downloadResponse  = await appendBlob.DownloadAsync();
 
             // Assert
-            Assert.IsTrue(propertiesResponse.Value.BlobSealed);
-            Assert.IsTrue(downloadResponse.Value.Details.BlobSealed);
+            Assert.IsTrue(propertiesResponse.Value.IsSealed);
+            Assert.IsTrue(downloadResponse.Value.Details.IsSealed);
         }
 
         [Test]

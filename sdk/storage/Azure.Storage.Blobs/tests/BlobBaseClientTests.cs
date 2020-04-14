@@ -908,6 +908,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_Seal()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient srcBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await srcBlob.CreateAsync();
+            StartCopyFromUriOptions options = new StartCopyFromUriOptions
+            {
+                SealBlob = true
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.IsSealed);
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

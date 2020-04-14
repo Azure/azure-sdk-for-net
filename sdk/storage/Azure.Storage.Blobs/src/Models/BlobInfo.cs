@@ -219,7 +219,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// If this blob is sealed.
         /// </summary>
-        public bool BlobSealed => _flattened.BlobSealed;
+        public bool IsSealed => _flattened.IsSealed;
     }
 
     /// <summary>
