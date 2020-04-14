@@ -74,7 +74,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 var line = lines[lineIndex];
 
-                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
+                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}. ");
                 Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
             }
