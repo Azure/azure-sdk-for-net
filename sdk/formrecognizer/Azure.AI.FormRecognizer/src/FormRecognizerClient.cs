@@ -58,10 +58,12 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            Response response = ServiceClient.RestClient.AnalyzeLayoutAsync(ContentType.Pdf, formFileStream, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.RestClient.AnalyzeLayoutAsync(ContentType.Pdf, formFileStream, cancellationToken);
+            //Response response = ServiceClient.RestClient.AnalyzeLayoutAsync(ContentType.Pdf, formFileStream, cancellationToken);
 
             // TODO: throw Exception if header is not present.
-            response.Headers.TryGetValue("Operation-Location", out string operationLocation);
+            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
+            string operationLocation = response.Headers.OperationLocation;
             return new RecognizeContentOperation(ServiceClient, operationLocation);
         }
 
@@ -78,10 +80,12 @@ namespace Azure.AI.FormRecognizer
         {
             // TODO: automate content-type detection
             // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            Response response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(ContentType.Pdf, formFileStream, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(ContentType.Pdf, formFileStream, cancellationToken).ConfigureAwait(false);
+            //Response response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(ContentType.Pdf, formFileStream, cancellationToken).ConfigureAwait(false);
 
             // TODO: throw Exception if header is not present.
-            response.Headers.TryGetValue("Operation-Location", out string operationLocation);
+            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
+            string operationLocation = response.Headers.OperationLocation;
             return new RecognizeContentOperation(ServiceClient, operationLocation);
         }
 
@@ -97,10 +101,12 @@ namespace Azure.AI.FormRecognizer
         public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            Response response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
+            //Response response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
 
             // TODO: throw Exception if header is not present.
-            response.Headers.TryGetValue("Operation-Location", out string operationLocation);
+            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
+            string operationLocation = response.Headers.OperationLocation;
             return new RecognizeContentOperation(ServiceClient, operationLocation);
         }
 
@@ -116,10 +122,12 @@ namespace Azure.AI.FormRecognizer
         public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             SourcePath_internal sourcePath = new SourcePath_internal() { Source = formFileUri.ToString() };
-            Response response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
+            //Response response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
 
             // TODO: throw Exception if header is not present.
-            response.Headers.TryGetValue("Operation-Location", out string operationLocation);
+            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
+            string operationLocation = response.Headers.OperationLocation;
             return new RecognizeContentOperation(ServiceClient, operationLocation);
         }
 
