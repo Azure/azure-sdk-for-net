@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// A field that the model was trained on.
+    /// A field that the model will extract from forms it analyzes.
     /// </summary>
     [CodeGenModel("FormFieldsReport")]
     public partial class CustomFormModelField
@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Training
             Label = label;
         }
         /// <summary>
-        /// Name of the field.
+        /// Unique name of the field.
         /// </summary>
         [CodeGenMember("FieldName")]
         public string Name { get; }
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Training
         public float? Accuracy { get; }
 
         /// <summary>
-        /// Name of label for field.
+        /// The form fields label on the form.
         /// </summary>
         public string Label { get; }
     }

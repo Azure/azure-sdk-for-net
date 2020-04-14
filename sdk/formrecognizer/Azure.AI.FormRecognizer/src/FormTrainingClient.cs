@@ -105,7 +105,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// Get detailed information about a custom model.
+        /// Get a description of a custom model, including the types of forms it can recognize and the fields it will extract for each form type.
         /// </summary>
         /// <param name="modelId">The ID of the model to retrieve.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
