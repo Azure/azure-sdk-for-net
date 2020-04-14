@@ -105,26 +105,29 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
+        /// Get detailed information about a custom model.
         /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="modelId">The ID of the model to retrieve</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual Response<CustomFormModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Response<Model_internal> response = ServiceClient.GetCustomModel(new Guid(modelId), true, cancellationToken);
+            return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
         /// <summary>
+        /// Get detailed information about a custom model.
         /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="modelId">The ID of the model to retrieve</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<CustomFormModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(new Guid(modelId), true, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
         #endregion
@@ -158,7 +161,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Get a collection of <see cref="CustomFormModelInfo"/> items describing the models trained on this Cognitive Services Account
         /// and their training status.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
@@ -170,7 +173,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Get a collection of <see cref="CustomFormModelInfo"/> items describing the models trained on this Cognitive Services Account
         /// and their training status.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
@@ -181,7 +184,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Get the number of models trained on this Cognitive Services Account and the account limits.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
@@ -193,7 +196,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Get the number of models trained on this Cognitive Services Account and the account limits.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)

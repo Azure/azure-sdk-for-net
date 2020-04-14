@@ -10,13 +10,22 @@ namespace Azure.AI.FormRecognizer.Training
     [CodeGenModel("FormFieldsReport")]
     public partial class CustomFormModelField
     {
+        internal CustomFormModelField(string name, string label, float accuracy)
+            : this(name, accuracy)
+        {
+            Label = label;
+        }
         /// <summary>
         /// </summary>
         [CodeGenMember("FieldName")]
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         /// <summary> Estimated extraction accuracy for this field. </summary>
         [CodeGenMember("Accuracy")]
         public float? Accuracy { get; }
+
+        /// <summary>
+        /// </summary>
+        public string Label { get; }
     }
 }

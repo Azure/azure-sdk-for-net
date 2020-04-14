@@ -10,8 +10,11 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class CustomFormSubModel
     {
-        internal CustomFormSubModel()
+        internal CustomFormSubModel(string formType, float? accuracy, IReadOnlyDictionary<string, CustomFormModelField> fields)
         {
+            FormType = formType;
+            Accuracy = accuracy;
+            Fields = fields;
         }
 
         /// <summary>
