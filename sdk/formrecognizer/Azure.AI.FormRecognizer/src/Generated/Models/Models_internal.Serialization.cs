@@ -38,7 +38,14 @@ namespace Azure.AI.FormRecognizer.Training
                     List<ModelInfo_internal> array = new List<ModelInfo_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelInfo_internal.DeserializeModelInfo_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelInfo_internal.DeserializeModelInfo_internal(item));
+                        }
                     }
                     modelList = array;
                     continue;

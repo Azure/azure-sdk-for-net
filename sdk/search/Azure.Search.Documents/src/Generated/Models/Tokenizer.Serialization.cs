@@ -42,13 +42,13 @@ namespace Azure.Search.Documents.Models
                     case "#Microsoft.Azure.Search.UaxUrlEmailTokenizer": return UaxUrlEmailTokenizer.DeserializeUaxUrlEmailTokenizer(element);
                 }
             }
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new Tokenizer(odatatype, name);
+            return new Tokenizer(odataType, name);
         }
     }
 }

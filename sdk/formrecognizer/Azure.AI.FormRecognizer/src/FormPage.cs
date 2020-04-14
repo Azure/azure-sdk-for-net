@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -12,22 +11,23 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal FormPage(PageResult_internal pageResult, ReadResult_internal readResult)
         {
+            PageNumber = readResult.Page;
             TextAngle = readResult.Angle;
             Width = readResult.Width;
             Height = readResult.Height;
             Unit = readResult.Unit;
-
-            if (readResult.Lines != null)
-            {
-                Lines = ConvertLines(readResult.Lines, readResult.Page);
-            }
-
-            if (pageResult != null)
-            {
-                //TODO: set tables to empty list
-                Tables = ConvertTables(pageResult, readResult);
-            }
+            Lines = readResult.Lines != null
+                ? ConvertLines(readResult.Lines, readResult.Page)
+                : new List<FormLine>();
+            Tables = pageResult?.Tables != null
+                ? ExtractedLayoutPage.ConvertTables(pageResult.Tables, readResult)
+                : new List<FormTable>();
         }
+
+        /// <summary>
+        /// The 1-based page number in the input document.
+        /// </summary>
+        public int PageNumber { get; }
 
         /// <summary>
         /// The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].
