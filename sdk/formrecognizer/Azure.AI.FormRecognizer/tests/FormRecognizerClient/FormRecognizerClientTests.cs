@@ -123,57 +123,57 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsAsync"/>
         /// method.
         /// </summary>
-        //[Test]
-        //[Ignore("Argument validation not implemented yet.")]
-        //public void StartRecognizeReceiptsRequiresTheReceiptFileStream()
-        //{
-        //    var client = CreateInstrumentedClient();
-        //    Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeReceiptsAsync(null, ContentType.Jpeg));
-        //}
+        [Test]
+        [Ignore("Argument validation not implemented yet.")]
+        public void StartRecognizeReceiptsRequiresTheReceiptFileStream()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeReceiptsAsync(null, ContentType.Jpeg));
+        }
 
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsAsync"/>
         /// method.
         /// </summary>
-        //[Test]
-        //public void StartRecognizeReceiptsRespectsTheCancellationToken()
-        //{
-        //    var client = CreateInstrumentedClient();
+        [Test]
+        public void StartRecognizeReceiptsRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
 
-        //    using var stream = new MemoryStream(Array.Empty<byte>());
-        //    using var cancellationSource = new CancellationTokenSource();
-        //    cancellationSource.Cancel();
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
 
-        //    Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg, cancellationToken: cancellationSource.Token));
-        //}
-
-        /// <summary>
-        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsFromUriAsync"/>
-        /// method.
-        /// </summary>
-        //[Test]
-        //[Ignore("Argument validation not implemented yet.")]
-        //public void StartRecognizeReceiptsFromUriRequiresTheReceiptFileUri()
-        //{
-        //    var client = CreateInstrumentedClient();
-        //    Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeReceiptsFromUriAsync(null));
-        //}
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg, cancellationToken: cancellationSource.Token));
+        }
 
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsFromUriAsync"/>
         /// method.
         /// </summary>
-        //[Test]
-        //public void StartRecognizeReceiptsFromUriRespectsTheCancellationToken()
-        //{
-        //    var client = CreateInstrumentedClient();
-        //    var fakeUri = new Uri("http://localhost");
+        [Test]
+        [Ignore("Argument validation not implemented yet.")]
+        public void StartRecognizeReceiptsFromUriRequiresTheReceiptFileUri()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeReceiptsFromUriAsync(null));
+        }
 
-        //    using var cancellationSource = new CancellationTokenSource();
-        //    cancellationSource.Cancel();
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeReceiptsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeReceiptsFromUriRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var fakeUri = new Uri("http://localhost");
 
-        //    Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
-        //}
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
+        }
 
         /// <summary>
         /// Creates a fake <see cref="FormRecognizerClient" /> and instruments it to make use of the Azure Core

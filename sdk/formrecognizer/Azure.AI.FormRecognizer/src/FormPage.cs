@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormPage
     {
-        internal FormPage(ReadResult_internal readResult, PageResult_internal pageResult = default)
+        internal FormPage(PageResult_internal pageResult, ReadResult_internal readResult)
         {
             PageNumber = readResult.Page;
             TextAngle = readResult.Angle;
@@ -72,6 +72,18 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return rawLines;
+        }
+
+        private static IReadOnlyList<FormTable> ConvertTables(PageResult_internal pageResult, ReadResult_internal readResult)
+        {
+            List<FormTable> tables = new List<FormTable>();
+
+            foreach (var table in pageResult.Tables)
+            {
+                tables.Add(new FormTable(table, readResult));
+            }
+
+            return tables;
         }
     }
 }
