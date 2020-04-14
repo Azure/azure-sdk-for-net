@@ -293,9 +293,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var lockTokenGuids = lockTokens.Select(token => new Guid(token)).ToArray();
             foreach (var tokenGuid in lockTokenGuids)
             {
-                if (!requestResponse && _requestResponseLockedMessages.Contains(tokenGuid))
+                if (_requestResponseLockedMessages.Contains(tokenGuid))
                 {
                     requestResponse = true;
+                    break;
                 }
             }
 
