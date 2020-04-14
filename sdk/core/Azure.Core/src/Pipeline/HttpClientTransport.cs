@@ -188,7 +188,11 @@ namespace Azure.Core.Pipeline
             public override string ClientRequestId
             {
                 get => _clientRequestId ??= Guid.NewGuid().ToString();
-                set => _clientRequestId = value;
+                set
+                {
+                    Argument.AssertNotNull(value, nameof(value));
+                    _clientRequestId = value;
+                }
             }
 
             protected internal override void AddHeader(string name, string value)
