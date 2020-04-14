@@ -107,10 +107,8 @@ namespace Azure.AI.FormRecognizer.Training
 
         private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult_internal trainResult)
         {
-            if (trainResult == null)
-                return null;
             var errors = new List<FormRecognizerError>();
-            foreach (var error in trainResult.Errors)
+            foreach (var error in trainResult?.Errors)
             {
                 errors.Add(new FormRecognizerError(error.Code, error.Message));
             }
