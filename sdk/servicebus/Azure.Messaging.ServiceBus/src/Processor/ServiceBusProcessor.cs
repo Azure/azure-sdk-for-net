@@ -559,11 +559,15 @@ namespace Azure.Messaging.ServiceBus
                 {
                     errorSource = ServiceBusErrorSource.AcceptMessageSession;
                     useThreadLocalReceiver = true;
+                    bool releaseSemaphore = false;
                     try
                     {
                         try
                         {
                             await MaxConcurrentAcceptSessionsSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                            // only attempt to release semaphore if WaitAsync is successful,
+                            // otherwise SemaphoreFullException can occur.
+                            releaseSemaphore = true;
                         }
                         catch (OperationCanceledException)
                         {
@@ -592,7 +596,10 @@ namespace Azure.Messaging.ServiceBus
                     }
                     finally
                     {
-                        MaxConcurrentAcceptSessionsSemaphore.Release();
+                        if (releaseSemaphore)
+                        {
+                            MaxConcurrentAcceptSessionsSemaphore.Release();
+                        }
                     }
                 }
                 else
