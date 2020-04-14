@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
             CreatedOn = model.ModelInfo.CreatedDateTime;
             LastModified = model.ModelInfo.LastUpdatedDateTime;
             Models = ConvertToSubmodels(model);
-            TrainingDocuments = model.TrainResult.TrainingDocuments;
+            TrainingDocuments = model.TrainResult?.TrainingDocuments;
         }
 
         /// <summary>
