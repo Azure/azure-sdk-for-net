@@ -43,12 +43,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Valid for V1 scenarios.</param>
         /// <param name="recoveryAvailabilitySetId">The recovery availability
         /// set.</param>
+        /// <param name="recoveryProximityPlacementGroupId">The recovery
+        /// proximity placement group Id.</param>
         /// <param name="policyId">The Policy Id.</param>
         /// <param name="recoveryBootDiagStorageAccountId">The boot diagnostic
         /// storage account.</param>
         /// <param name="diskEncryptionInfo">The recovery disk encryption
         /// information.</param>
-        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string policyId = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
+        public A2ASwitchProtectionInput(string recoveryContainerId = default(string), IList<A2AVmDiskInputDetails> vmDisks = default(IList<A2AVmDiskInputDetails>), IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default(IList<A2AVmManagedDiskInputDetails>), string recoveryResourceGroupId = default(string), string recoveryCloudServiceId = default(string), string recoveryAvailabilitySetId = default(string), string recoveryProximityPlacementGroupId = default(string), string policyId = default(string), string recoveryBootDiagStorageAccountId = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
         {
             RecoveryContainerId = recoveryContainerId;
             VmDisks = vmDisks;
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RecoveryResourceGroupId = recoveryResourceGroupId;
             RecoveryCloudServiceId = recoveryCloudServiceId;
             RecoveryAvailabilitySetId = recoveryAvailabilitySetId;
+            RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
             PolicyId = policyId;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             DiskEncryptionInfo = diskEncryptionInfo;
@@ -103,6 +106,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryAvailabilitySetId")]
         public string RecoveryAvailabilitySetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the recovery proximity placement group Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "recoveryProximityPlacementGroupId")]
+        public string RecoveryProximityPlacementGroupId { get; set; }
 
         /// <summary>
         /// Gets or sets the Policy Id.
