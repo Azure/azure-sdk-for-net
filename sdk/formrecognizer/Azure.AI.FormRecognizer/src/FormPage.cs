@@ -9,20 +9,19 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormPage
     {
-        internal FormPage(ReadResult_internal readResult)
+        internal FormPage(ReadResult_internal readResult, PageResult_internal pageResult = default)
         {
             PageNumber = readResult.Page;
             TextAngle = readResult.Angle;
             Width = readResult.Width;
             Height = readResult.Height;
             Unit = readResult.Unit;
-
-            if (readResult.Lines != null)
-            {
-                Lines = ConvertLines(readResult.Lines, readResult.Page);
-            }
-
-            //Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
+            Lines = readResult.Lines != null
+                ? ConvertLines(readResult.Lines, readResult.Page)
+                : new List<FormLine>();
+            Tables = pageResult?.Tables != null
+                ? ExtractedLayoutPage.ConvertTables(pageResult.Tables, readResult)
+                : new List<FormTable>();
         }
 
         /// <summary>
