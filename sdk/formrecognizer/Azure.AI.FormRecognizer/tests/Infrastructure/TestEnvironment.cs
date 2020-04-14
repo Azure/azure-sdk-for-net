@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Reflection;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
@@ -32,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// The relative path to the JPG file which contains the receipt to be used for tests.
         /// </summary>
         /// <value>The relative path to the JPG file.</value>
-        public static string ReceiptPath => Path.Combine(AssetsFolderName, ReceiptFilename);
+        public static string ReceiptPath => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), AssetsFolderName, ReceiptFilename);
 
         /// <summary>
         /// The URI string to the JPG file which contains the receipt to be used for tests.
