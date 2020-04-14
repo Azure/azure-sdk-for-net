@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Training
             Status = model.ModelInfo.Status;
             CreatedOn = model.ModelInfo.CreatedDateTime;
             LastModified = model.ModelInfo.LastUpdatedDateTime;
-            Models = ConvertToModels(model.Keys);
+            Models = ConvertToSubmodel(model);
             TrainingDocuments = model.TrainResult.TrainingDocuments;
         }
 
@@ -45,9 +45,15 @@ namespace Azure.AI.FormRecognizer.Training
         // TODO: for composed models, union what comes back on submodels into this single list.
         public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; }
 
-        private static IReadOnlyList<CustomFormSubModel> ConvertToModels(KeysResult_internal keys)
+        private static IReadOnlyList<CustomFormSubModel> ConvertToSubmodel(Model_internal model)
         {
-            return keys != null ? ConvertFromUnlabeled(keys) : ConvertFromLabeled(keys);
+            if (model.Keys != null)
+                return ConvertFromUnlabeled(model.Keys);
+
+            if (model.TrainResult != null)
+                return ConvertFromLabeled(model);
+
+            return null;
         }
 
         private static IReadOnlyList<CustomFormSubModel> ConvertFromUnlabeled(KeysResult_internal keys)
@@ -71,9 +77,19 @@ namespace Azure.AI.FormRecognizer.Training
             return subModels;
         }
 
-        private static IReadOnlyList<CustomFormSubModel> ConvertFromLabeled(KeysResult_internal keys)
+        private static IReadOnlyList<CustomFormSubModel> ConvertFromLabeled(Model_internal model)
         {
-            return null;
+            var fieldMap = new Dictionary<string, CustomFormModelField>();
+            foreach (var formFieldsReport in model.TrainResult.Fields)
+            {
+                fieldMap.Add(formFieldsReport.Name, new CustomFormModelField(formFieldsReport.Name, null, formFieldsReport.Accuracy));
+            }
+
+            return new List<CustomFormSubModel> {
+                new CustomFormSubModel(
+                    $"form-{model.ModelInfo.ModelId}",
+                    model.TrainResult.AverageModelAccuracy,
+                    fieldMap)};
         }
     }
 }
