@@ -1,6 +1,6 @@
 # Listing certificates, certificate versions, and deleted certificates
 
-This sample demonstrates how to list certificates, versions of given certificates, and list deleted certificates in a soft delete-enabled Azure key vault.
+This sample demonstrates how to list certificates, versions of given certificates, and list deleted certificates in a soft delete-enabled Azure Key Vault.
 To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
 
 ## Creating a CertificateClient
