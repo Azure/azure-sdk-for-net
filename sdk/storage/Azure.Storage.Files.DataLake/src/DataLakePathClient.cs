@@ -157,6 +157,11 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
+        /// <summary>
+        /// The options that were used to created this PathClient.
+        /// </summary>
+        private DataLakeClientOptions _options;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -321,6 +326,7 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+            _options = options;
         }
 
         /// <summary>
@@ -1550,17 +1556,33 @@ namespace Azure.Storage.Files.DataLake
                     $"{nameof(sourceConditions)}: {sourceConditions}");
                 try
                 {
-                    DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsUri);
-                    string renameSource = "/" + uriBuilder.FileSystemName + "/" + uriBuilder.DirectoryOrFilePath;
+                    // Build renameSource
+                    DataLakeUriBuilder sourceUriBuilder = new DataLakeUriBuilder(_dfsUri);
+                    string renameSource = "/" + sourceUriBuilder.FileSystemName + "/" + sourceUriBuilder.DirectoryOrFilePath;
 
-                    if (uriBuilder.Sas != null)
+                    if (sourceUriBuilder.Sas != null)
                     {
-                        renameSource += "?" + uriBuilder.Sas;
+                        renameSource += "?" + sourceUriBuilder.Sas;
                     }
 
-                    uriBuilder.FileSystemName = destinationFileSystem ?? uriBuilder.FileSystemName;
-                    uriBuilder.DirectoryOrFilePath = destinationPath;
-                    DataLakePathClient destPathClient = new DataLakePathClient(uriBuilder.ToUri(), Pipeline);
+                    // Build destination URI
+                    DataLakeUriBuilder destUriBuilder = new DataLakeUriBuilder(_dfsUri);
+                    destUriBuilder.FileSystemName = destinationFileSystem ?? destUriBuilder.FileSystemName;
+                    destUriBuilder.DirectoryOrFilePath = destinationPath;
+
+                    // We will get sas with destPath, if it was provided by the user.
+                    destUriBuilder.Sas = null;
+
+                    // Build destPathClient
+                    DataLakePathClient destPathClient;
+                    if (destUriBuilder.Sas != null)
+                    {
+                        destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), _options);
+                    }
+                    else
+                    {
+                        destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline, _options);
+                    }
 
                     Response<PathCreateResult> response = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
@@ -487,15 +488,41 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
 
-            DataLakeSasQueryParameters sasQueryParameters = GetNewDataLakeServiceSasCredentialsPath(test.FileSystem.Name, null);
+            DataLakeSasBuilder sasBuilder = new DataLakeSasBuilder
+            {
+                FileSystemName = test.FileSystem.Name,
+                Path = null,
+                Protocol = SasProtocol.None,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(+1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            sasBuilder.SetPermissions(DataLakeSasPermissions.All);
+            SasQueryParameters sourceSasQueryParameters = sasBuilder.ToSasQueryParameters(GetStorageSharedKeyCredentials());
             string destDirectoryName = GetNewDirectoryName();
-            sourceDirectory = new DataLakeDirectoryClient(new Uri(sourceDirectory.Uri.ToString() + "?" + sasQueryParameters));
+            sourceDirectory = new DataLakeDirectoryClient(
+                new Uri(sourceDirectory.Uri.ToString() + "?" + sourceSasQueryParameters), GetOptions());
+
+            sasBuilder = new DataLakeSasBuilder
+            {
+                FileSystemName = test.FileSystem.Name,
+                Path = null,
+                Protocol = SasProtocol.None,
+                StartsOn = Recording.UtcNow.AddHours(-2),
+                ExpiresOn = Recording.UtcNow.AddHours(+2),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
+            };
+            sasBuilder.SetPermissions(DataLakeSasPermissions.All);
+            SasQueryParameters destSasQueryParameters = sasBuilder.ToSasQueryParameters(GetStorageSharedKeyCredentials());
 
             // Act
-            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(destinationPath: destDirectoryName);
+            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(
+                destinationPath: destDirectoryName + "?" + destSasQueryParameters);
 
             // Assert
-            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+            await destDirectory.GetPropertiesAsync();
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(destDirectory.Uri);
+            Assert.AreEqual(destSasQueryParameters.ToString(), uriBuilder.Sas.ToString());
         }
 
         [Test]
