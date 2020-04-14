@@ -72,7 +72,14 @@ namespace Azure.Search.Documents.Models
                     List<ScoringFunction> array = new List<ScoringFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScoringFunction.DeserializeScoringFunction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScoringFunction.DeserializeScoringFunction(item));
+                        }
                     }
                     functions = array;
                     continue;

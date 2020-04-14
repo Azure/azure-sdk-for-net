@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Models
         {
             int? min = default;
             int? max = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new LengthTokenFilter(odatatype, name, min, max);
+            return new LengthTokenFilter(odataType, name, min, max);
         }
     }
 }
