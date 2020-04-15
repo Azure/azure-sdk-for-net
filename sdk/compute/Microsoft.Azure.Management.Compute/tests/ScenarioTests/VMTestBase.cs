@@ -298,7 +298,7 @@ namespace Compute.Tests
                 Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") ||
                     createOrUpdateResponse.Location.ToLower() == inputVM.Location.ToLower());
 
-                bool hasUserDefinedAvSet = zones == null && !(inputVM.Priority.Equals(VirtualMachinePriorityTypes.Spot) || inputVM.Priority.Equals(VirtualMachinePriorityTypes.Low));
+                bool hasUserDefinedAvSet = zones == null && !(VirtualMachinePriorityTypes.Spot.Equals(inputVM.Priority) || VirtualMachinePriorityTypes.Low.Equals(inputVM.Priority));
                 if (hasUserDefinedAvSet)
                 {
                     Assert.True(createOrUpdateResponse.AvailabilitySet.Id.ToLowerInvariant() == asetId.ToLowerInvariant());
