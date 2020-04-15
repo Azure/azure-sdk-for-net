@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -16,19 +17,21 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = field.Confidence;
             Name = name;
 
+            BoundingBox labelBoundingBox = field.Key.BoundingBox == null ? default : new BoundingBox(field.Key.BoundingBox);
             IReadOnlyList<FormContent> labelFormContent = default;
             if (field.Key.Elements != null)
             {
                 labelFormContent = ConvertTextReferences(field.Key.Elements, readResults);
             }
-            LabelText = new FieldText(field.Key.Text, pageNumber, new BoundingBox(field.Key.BoundingBox), labelFormContent);
+            LabelText = new FieldText(field.Key.Text, pageNumber, labelBoundingBox, labelFormContent);
 
+            BoundingBox valueBoundingBox = field.Value.BoundingBox == null ? default : new BoundingBox(field.Value.BoundingBox);
             IReadOnlyList<FormContent> valueFormContent = default;
             if (field.Value.Elements != null)
             {
                 valueFormContent = ConvertTextReferences(field.Value.Elements, readResults);
             }
-            ValueText = new FieldText(field.Value.Text, pageNumber, new BoundingBox(field.Value.BoundingBox), valueFormContent);
+            ValueText = new FieldText(field.Value.Text, pageNumber, valueBoundingBox, valueFormContent);
 
             Value = new FieldValue(new FieldValue_internal(FieldValueType.StringType, field.Value.Text, null, null, null, null, null, null, null, field.Value.Text, null, null, null, pageNumber), readResults);
         }
@@ -84,35 +87,40 @@ namespace Azure.AI.FormRecognizer.Models
             return formContent;
         }
 
+        private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)");
+        private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)");
+
         private static FormContent ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363
 
             // Example: the following should result in PageIndex = 3, LineIndex = 7, WordIndex = 12
-            // "#/readResults/3/lines/7/words/12"
-            string[] segments = reference.Split('/');
+            // "#/analyzeResult/readResults/3/lines/7/words/12" from DocumentResult
+            // "#/readResults/3/lines/7/words/12" from PageResult
 
-            // Line Reference
-            if (segments.Length == 5)
+            // Word Reference
+            var wordMatch = _wordRegex.Match(reference);
+            if (wordMatch.Groups.Count == 4)
             {
-                var pageIndex = int.Parse(segments[2], CultureInfo.InvariantCulture);
-                var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
-
-                return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
-            }
-            else if (segments.Length == 7)
-            {
-                var pageIndex = int.Parse(segments[2], CultureInfo.InvariantCulture);
-                var lineIndex = int.Parse(segments[4], CultureInfo.InvariantCulture);
-                var wordIndex = int.Parse(segments[6], CultureInfo.InvariantCulture);
+                int pageIndex = int.Parse(wordMatch.Groups[1].Value, CultureInfo.InvariantCulture);
+                int lineIndex = int.Parse(wordMatch.Groups[2].Value, CultureInfo.InvariantCulture);
+                int wordIndex = int.Parse(wordMatch.Groups[3].Value, CultureInfo.InvariantCulture);
 
                 return new FormWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex], pageIndex + 1);
             }
-            else
+
+            // Line Reference
+            var lineMatch = _lineRegex.Match(reference);
+            if (lineMatch.Groups.Count == 3)
             {
-                throw new InvalidOperationException($"Failed to parse element reference: {reference}");
+                int pageIndex = int.Parse(lineMatch.Groups[1].Value, CultureInfo.InvariantCulture);
+                int lineIndex = int.Parse(lineMatch.Groups[2].Value, CultureInfo.InvariantCulture);
+
+                return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
             }
+
+            throw new InvalidOperationException($"Failed to parse element reference: {reference}");
         }
     }
 }

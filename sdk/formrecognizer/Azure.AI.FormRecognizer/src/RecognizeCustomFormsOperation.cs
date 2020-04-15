@@ -110,11 +110,10 @@ namespace Azure.AI.FormRecognizer.Models
 
         private static IReadOnlyList<RecognizedForm> ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
         {
-            return analyzeResult.DocumentResults == null ?
+            return analyzeResult.DocumentResults?.Count == 0 ?
                 ConvertUnsupervisedResult(analyzeResult) :
                 ConvertSupervisedResult(analyzeResult);
         }
-
 
         private static IReadOnlyList<RecognizedForm> ConvertUnsupervisedResult(AnalyzeResult_internal analyzeResult)
         {
