@@ -248,13 +248,17 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 # On-boarding New generated code library
 
 1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g.  `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`)
-2. Modify `autorest.md` to point to you Swagger file. E.g.
+2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
 
 ``` yaml
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
+```
+
+``` yaml
+require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
 ```
 
 3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13).
