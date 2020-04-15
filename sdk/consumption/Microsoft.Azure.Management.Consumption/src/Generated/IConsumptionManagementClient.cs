@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Consumption
 
         /// <summary>
         /// Version of the API to be used with the client request. The current
-        /// version is 2019-04-01-preview.
+        /// version is 2019-10-01.
         /// </summary>
         string ApiVersion { get; }
 
@@ -117,6 +117,11 @@ namespace Microsoft.Azure.Management.Consumption
         IReservationRecommendationsOperations ReservationRecommendations { get; }
 
         /// <summary>
+        /// Gets the IReservationTransactionsOperations.
+        /// </summary>
+        IReservationTransactionsOperations ReservationTransactions { get; }
+
+        /// <summary>
         /// Gets the IPriceSheetOperations.
         /// </summary>
         IPriceSheetOperations PriceSheet { get; }
@@ -135,6 +140,21 @@ namespace Microsoft.Azure.Management.Consumption
         /// Gets the IAggregatedCostOperations.
         /// </summary>
         IAggregatedCostOperations AggregatedCost { get; }
+
+        /// <summary>
+        /// Gets the IEventsOperations.
+        /// </summary>
+        IEventsOperations Events { get; }
+
+        /// <summary>
+        /// Gets the ILotsOperations.
+        /// </summary>
+        ILotsOperations Lots { get; }
+
+        /// <summary>
+        /// Gets the ICreditsOperations.
+        /// </summary>
+        ICreditsOperations Credits { get; }
 
     }
 }

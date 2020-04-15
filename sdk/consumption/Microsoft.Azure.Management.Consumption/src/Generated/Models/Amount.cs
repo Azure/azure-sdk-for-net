@@ -11,34 +11,30 @@
 namespace Microsoft.Azure.Management.Consumption.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A charge summary resource.
+    /// The amount plus currency .
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ChargeSummary")]
-    public partial class ChargeSummary : Resource
+    public partial class Amount
     {
         /// <summary>
-        /// Initializes a new instance of the ChargeSummary class.
+        /// Initializes a new instance of the Amount class.
         /// </summary>
-        public ChargeSummary()
+        public Amount()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ChargeSummary class.
+        /// Initializes a new instance of the Amount class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
-        public ChargeSummary(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(id, name, type, tags)
+        /// <param name="currency">Amount currency.</param>
+        /// <param name="value">Amount.</param>
+        public Amount(string currency = default(string), decimal? value = default(decimal?))
         {
+            Currency = currency;
+            Value = value;
             CustomInit();
         }
 
@@ -46,6 +42,18 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets amount currency.
+        /// </summary>
+        [JsonProperty(PropertyName = "currency")]
+        public string Currency { get; private set; }
+
+        /// <summary>
+        /// Gets amount.
+        /// </summary>
+        [JsonProperty(PropertyName = "value")]
+        public decimal? Value { get; private set; }
 
     }
 }

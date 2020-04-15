@@ -11,34 +11,30 @@
 namespace Microsoft.Azure.Management.Consumption.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A charge summary resource.
+    /// The Sku property
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ChargeSummary")]
-    public partial class ChargeSummary : Resource
+    public partial class SkuProperty
     {
         /// <summary>
-        /// Initializes a new instance of the ChargeSummary class.
+        /// Initializes a new instance of the SkuProperty class.
         /// </summary>
-        public ChargeSummary()
+        public SkuProperty()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ChargeSummary class.
+        /// Initializes a new instance of the SkuProperty class.
         /// </summary>
-        /// <param name="id">Resource Id.</param>
-        /// <param name="name">Resource name.</param>
-        /// <param name="type">Resource type.</param>
-        /// <param name="tags">Resource tags.</param>
-        public ChargeSummary(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(id, name, type, tags)
+        /// <param name="name">The name of sku property.</param>
+        /// <param name="value">The value of sku property.</param>
+        public SkuProperty(string name = default(string), string value = default(string))
         {
+            Name = name;
+            Value = value;
             CustomInit();
         }
 
@@ -46,6 +42,18 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the name of sku property.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the value of sku property.
+        /// </summary>
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; private set; }
 
     }
 }

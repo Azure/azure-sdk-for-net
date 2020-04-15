@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Consumption
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ChargesOperations operations.
+    /// CreditsOperations operations.
     /// </summary>
-    internal partial class ChargesOperations : IServiceOperations<ConsumptionManagementClient>, IChargesOperations
+    internal partial class CreditsOperations : IServiceOperations<ConsumptionManagementClient>, ICreditsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ChargesOperations class.
+        /// Initializes a new instance of the CreditsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ChargesOperations(ConsumptionManagementClient client)
+        internal CreditsOperations(ConsumptionManagementClient client)
         {
             if (client == null)
             {
@@ -51,47 +51,14 @@ namespace Microsoft.Azure.Management.Consumption
         public ConsumptionManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists the charges based for the defined scope.
+        /// The credit summary by billingAccountId and billingProfileId.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='scope'>
-        /// The scope associated with charges operations. This includes
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}'
-        /// for Department scope, and
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}'
-        /// for EnrollmentAccount scope. For department and enrollment accounts, you
-        /// can also add billing period to the scope using
-        /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g.
-        /// to specify billing period at department scope use
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'.
-        /// Also, Modern Commerce Account scopes are
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
-        /// billingAccount scope,
-        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}'
-        /// for billingProfile scope,
-        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}'
-        /// for invoiceSection scope, and
-        /// 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}'
-        /// specific for partners.
+        /// <param name='billingAccountId'>
+        /// BillingAccount ID
         /// </param>
-        /// <param name='startDate'>
-        /// Start date
-        /// </param>
-        /// <param name='endDate'>
-        /// End date
-        /// </param>
-        /// <param name='filter'>
-        /// May be used to filter charges by properties/usageEnd (Utc time),
-        /// properties/usageStart (Utc time). The filter supports 'eq', 'lt', 'gt',
-        /// 'le', 'ge', and 'and'. It does not currently support 'ne', 'or', or 'not'.
-        /// Tag filter is a key value pair string where key and value is separated by a
-        /// colon (:).
-        /// </param>
-        /// <param name='apply'>
-        /// May be used to group charges for billingAccount scope by
-        /// properties/billingProfileId, properties/invoiceSectionId,
-        /// properties/customerId (specific for Partner Led), or for billingProfile
-        /// scope by properties/invoiceSectionId.
+        /// <param name='billingProfileId'>
+        /// Azure Billing Profile ID.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -114,11 +81,15 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ChargesListResult>> ListWithHttpMessagesAsync(string scope, string startDate = default(string), string endDate = default(string), string filter = default(string), string apply = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CreditSummary>> GetWithHttpMessagesAsync(string billingAccountId, string billingProfileId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (scope == null)
+            if (billingAccountId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+            }
+            if (billingProfileId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileId");
             }
             if (Client.ApiVersion == null)
             {
@@ -131,38 +102,20 @@ namespace Microsoft.Azure.Management.Consumption
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("scope", scope);
-                tracingParameters.Add("startDate", startDate);
-                tracingParameters.Add("endDate", endDate);
-                tracingParameters.Add("filter", filter);
-                tracingParameters.Add("apply", apply);
+                tracingParameters.Add("billingAccountId", billingAccountId);
+                tracingParameters.Add("billingProfileId", billingProfileId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Consumption/charges").ToString();
-            _url = _url.Replace("{scope}", scope);
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.Consumption/credits/balanceSummary").ToString();
+            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
+            _url = _url.Replace("{billingProfileId}", System.Uri.EscapeDataString(billingProfileId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (startDate != null)
-            {
-                _queryParameters.Add(string.Format("startDate={0}", System.Uri.EscapeDataString(startDate)));
-            }
-            if (endDate != null)
-            {
-                _queryParameters.Add(string.Format("endDate={0}", System.Uri.EscapeDataString(endDate)));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
-            }
-            if (apply != null)
-            {
-                _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -252,7 +205,7 @@ namespace Microsoft.Azure.Management.Consumption
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ChargesListResult>();
+            var _result = new AzureOperationResponse<CreditSummary>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -265,7 +218,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ChargesListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CreditSummary>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
