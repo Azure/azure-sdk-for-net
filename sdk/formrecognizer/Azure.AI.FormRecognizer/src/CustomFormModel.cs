@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Training
             CreatedOn = model.ModelInfo.CreatedDateTime;
             LastModified = model.ModelInfo.LastUpdatedDateTime;
             Models = ConvertToSubmodels(model);
-            TrainingDocuments = model.TrainResult?.TrainingDocuments;
+            TrainingDocuments = ConvertToTrainigDocuments(model.TrainResult);
             Errors = ConvertToFormRecognizerError(model.TrainResult);
         }
 
@@ -103,6 +103,21 @@ namespace Azure.AI.FormRecognizer.Training
                     $"form-{model.ModelInfo.ModelId}",
                     model.TrainResult.AverageModelAccuracy,
                     fieldMap)};
+        }
+
+        private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainigDocuments(TrainResult_internal trainResult)
+        {
+            var trainingDocs = new List<TrainingDocumentInfo>();
+            foreach (var docs in trainResult?.TrainingDocuments)
+            {
+                trainingDocs.Add(
+                    new TrainingDocumentInfo(
+                        docs.DocumentName,
+                        docs.PageCount,
+                        docs.Errors ?? new List<FormRecognizerError>(),
+                        docs.Status));
+            }
+            return trainingDocs;
         }
 
         private static IReadOnlyList<FormRecognizerError> ConvertToFormRecognizerError(TrainResult_internal trainResult)
