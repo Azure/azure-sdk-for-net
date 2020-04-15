@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockTransportBatch = new Mock<TransportMessageBatch>();
             var batch = new ServiceBusMessageBatch(mockTransportBatch.Object);
-            var mockTransportProducer = new Mock<TransportSender>();
+            var mockTransportSender = new Mock<TransportSender>();
             var mockConnection = new Mock<ServiceBusConnection>();
 
             mockConnection
@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             mockConnection
                 .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>()))
-                .Returns(mockTransportProducer.Object);
+                .Returns(mockTransportSender.Object);
 
             mockConnection
                 .Setup(connection => connection.ThrowIfClosed());
@@ -116,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Setup(transport => transport.TryAdd(It.IsAny<ServiceBusMessage>()))
                 .Returns(true);
 
-            mockTransportProducer
+            mockTransportSender
                 .Setup(transport => transport.SendBatchAsync(It.IsAny<ServiceBusMessageBatch>(), It.IsAny<CancellationToken>()))
                 .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
 

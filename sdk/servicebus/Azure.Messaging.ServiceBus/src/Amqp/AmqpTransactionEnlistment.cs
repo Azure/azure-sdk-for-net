@@ -100,11 +100,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                var faultTolerantController = _connectionScope.TransactionController;
-                var controller = await faultTolerantController.GetOrCreateAsync(_timeout)
+                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
+                Controller controller = await faultTolerantController.GetOrCreateAsync(_timeout)
                     .ConfigureAwait(false);
 
-                await controller.DischargeAsync(this.AmqpTransactionId, fail: true).ConfigureAwait(false);
+                await controller.DischargeAsync(AmqpTransactionId, fail: true).ConfigureAwait(false);
                 singlePhaseEnlistment.Aborted();
                 MessagingEventSource.Log.AmqpTransactionDischarged(_transactionId, AmqpTransactionId, true);
             }

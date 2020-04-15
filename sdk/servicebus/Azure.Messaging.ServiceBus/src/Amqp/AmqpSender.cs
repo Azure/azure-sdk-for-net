@@ -401,20 +401,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
 
-                RequestResponseAmqpLink mgmtLink = await _managementLink.GetOrCreateAsync(
-                    UseMinimum(_connectionScope.SessionTimeout,
-                    timeout.CalculateRemaining(stopWatch.Elapsed)))
-                    .ConfigureAwait(false);
 
-                using AmqpMessage response = await mgmtLink.RequestAsync(
-                    request.AmqpMessage,
-                    timeout.CalculateRemaining(stopWatch.Elapsed))
-                    .ConfigureAwait(false);
+                AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
+                    _connectionScope,
+                    _managementLink,
+                    request,
+                    timeout).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 stopWatch.Stop();
-
-                AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
@@ -482,19 +477,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
 
-            RequestResponseAmqpLink mgmtLink = await _managementLink.GetOrCreateAsync(
-                    UseMinimum(_connectionScope.SessionTimeout,
-                    timeout.CalculateRemaining(stopWatch.Elapsed)))
-                    .ConfigureAwait(false);
-
-            using AmqpMessage response = await mgmtLink.RequestAsync(
-                request.AmqpMessage,
-                timeout.CalculateRemaining(stopWatch.Elapsed))
-                .ConfigureAwait(false);
+            AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
+                    _connectionScope,
+                    _managementLink,
+                    request,
+                    timeout).ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             stopWatch.Stop();
-            AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
 
             if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
             {

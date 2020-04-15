@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await sender.SendAsync(message1);
-                    await sender.SendAsync(message2);
+                    await sender.ScheduleMessageAsync(message2, DateTimeOffset.UtcNow);
                     ts.Complete();
                 }
 
@@ -75,6 +75,57 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 Assert.NotNull(receivedMessage);
                 Assert.AreEqual(message2.Body.ToArray(), receivedMessage.Body.ToArray());
                 await receiver.CompleteAsync(receivedMessage);
+            };
+        }
+
+        [Test]
+        public async Task TransactionalSendMultipleSessionsRollback()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                var options = new ServiceBusClientOptions();
+                options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(5);
+                options.RetryOptions.MaxRetries = 0;
+
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                ServiceBusMessage message1 = GetMessage("session1");
+                ServiceBusMessage message2 = GetMessage("session2");
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await sender.SendAsync(message1);
+                    await sender.ScheduleMessageAsync(message2, DateTimeOffset.UtcNow.AddMinutes(1));
+                }
+                Assert.That(
+                    async () =>
+                    await client.CreateSessionReceiverAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
+                    .And.Property(nameof(ServiceBusException.Reason))
+                    .EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
+            };
+        }
+
+        [Test]
+        public async Task TransactionalCancelScheduleRollback()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var options = new ServiceBusClientOptions();
+                options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(5);
+                options.RetryOptions.MaxRetries = 0;
+
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                ServiceBusMessage message = GetMessage();
+                long seq = await sender.ScheduleMessageAsync(message, DateTimeOffset.UtcNow.AddMinutes(1));
+                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await sender.CancelScheduledMessageAsync(seq);
+                }
+                ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
+                ServiceBusReceivedMessage msg = await receiver.PeekAsync();
+                Assert.NotNull(msg);
             };
         }
 
