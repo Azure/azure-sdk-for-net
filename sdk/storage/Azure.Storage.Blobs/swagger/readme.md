@@ -1428,6 +1428,25 @@ directive:
     $.put.responses["200"]["x-az-response-name"] = "AppendBlobSealInternal";
 ```
 
+### Make BlobSetExpiryResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=expiry"]
+  transform: >
+    $.put.responses["200"]["x-az-public"] = false;
+    $.put.responses["200"]["x-az-response-name"] = "BlobSetExpiryInternal";
+```
+
+### Make BlobExpiryOptions internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.BlobExpiryOptions["x-az-public"] = false;
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
