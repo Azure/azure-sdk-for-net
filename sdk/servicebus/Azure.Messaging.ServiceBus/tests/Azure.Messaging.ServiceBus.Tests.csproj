@@ -27,6 +27,10 @@
     <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System.Transactions" />
+  </ItemGroup>
+
   <!-- Import the Azure.Core test framework (shared source) -->
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 </Project>
