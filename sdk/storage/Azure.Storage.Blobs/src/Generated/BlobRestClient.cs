@@ -8143,6 +8143,8 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="tier">Indicates the tier to be set on the blob.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="rehydratePriority">Optional: Indicates the priority with which to rehydrate an archived blob.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -8157,6 +8159,8 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
                 string version,
+                string snapshot = default,
+                string versionId = default,
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 string requestId = default,
@@ -8175,6 +8179,8 @@ namespace Azure.Storage.Blobs
                         resourceUri,
                         tier,
                         version,
+                        snapshot,
+                        versionId,
                         timeout,
                         rehydratePriority,
                         requestId,
@@ -8214,6 +8220,8 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="tier">Indicates the tier to be set on the blob.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
+            /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="rehydratePriority">Optional: Indicates the priority with which to rehydrate an archived blob.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
@@ -8224,6 +8232,8 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 Azure.Storage.Blobs.Models.AccessTier tier,
                 string version,
+                string snapshot = default,
+                string versionId = default,
                 int? timeout = default,
                 Azure.Storage.Blobs.Models.RehydratePriority? rehydratePriority = default,
                 string requestId = default,
@@ -8247,6 +8257,8 @@ namespace Azure.Storage.Blobs
                 _request.Method = Azure.Core.RequestMethod.Put;
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "tier", escapeValue: false);
+                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
+                if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
 
                 // Add request headers
