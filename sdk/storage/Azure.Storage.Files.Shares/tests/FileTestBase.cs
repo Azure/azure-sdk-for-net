@@ -111,6 +111,15 @@ namespace Azure.Storage.Files.Shares.Tests
                         TestConfigPremiumBlob.AccountKey),
                     GetOptions()));
 
+        public ShareServiceClient GetServiceClient_SoftDelete()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigSoftDelete.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigSoftDelete.AccountName,
+                        TestConfigSoftDelete.AccountKey),
+                    GetOptions()));
+
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(

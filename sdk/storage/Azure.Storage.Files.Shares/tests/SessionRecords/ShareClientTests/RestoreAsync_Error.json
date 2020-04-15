@@ -1,0 +1,46 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://seansoftdeletecanary.file.core.windows.net/test-share-37b52453-1da9-741c-3086-ed1168f50cac?restype=share\u0026comp=undelete",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b31a44224966a948a9ee072e10a3aa8d-6cb8a65140a43e4d-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200412.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "655377ce-3b46-30cd-adf7-c39aa9a9523a",
+        "x-ms-date": "Sun, 12 Apr 2020 20:49:52 GMT",
+        "x-ms-deleted-share-name": "test-share-97a3ce2f-2241-bd76-740e-747321f6f957",
+        "x-ms-deleted-share-version": "01D60F8BB59A4652",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": null,
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "Content-Length": "376",
+        "Content-Type": "application/xml",
+        "Date": "Sun, 12 Apr 2020 20:49:50 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "655377ce-3b46-30cd-adf7-c39aa9a9523a",
+        "x-ms-error-code": "InvalidHeaderValue",
+        "x-ms-request-id": "43ecb9b4-f01a-00e6-260b-114607000000",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
+        "RequestId:43ecb9b4-f01a-00e6-260b-114607000000\n",
+        "Time:2020-04-12T20:49:50.8374673Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-deleted-share-name\u003C/HeaderName\u003E\u003CHeaderValue\u003Etest-share-97a3ce2f-2241-bd76-740e-747321f6f957\u003C/HeaderValue\u003E\u003C/Error\u003E"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1430693400",
+    "Storage_TestConfigSoftDelete": "SoftDeleteTenant\nseansoftdeletecanary\nU2FuaXRpemVk\nhttp://seansoftdeletecanary.blob.core.windows.net\nhttp://seansoftdeletecanary.file.core.windows.net\nhttp://seansoftdeletecanary.queue.core.windows.net\nhttp://seansoftdeletecanary.table.core.windows.net\n\n\n\n\nhttp://seansoftdeletecanary-secondary.blob.core.windows.net\nhttp://seansoftdeletecanary-secondary.file.core.windows.net\nhttp://seansoftdeletecanary-secondary.queue.core.windows.net\nhttp://seansoftdeletecanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seansoftdeletecanary.blob.core.windows.net/;QueueEndpoint=http://seansoftdeletecanary.queue.core.windows.net/;FileEndpoint=http://seansoftdeletecanary.file.core.windows.net/;BlobSecondaryEndpoint=http://seansoftdeletecanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seansoftdeletecanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seansoftdeletecanary-secondary.file.core.windows.net/;AccountName=seansoftdeletecanary;AccountKey=Sanitized\n"
+  }
+}
