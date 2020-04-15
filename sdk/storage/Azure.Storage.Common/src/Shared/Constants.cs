@@ -158,6 +158,7 @@ namespace Azure.Storage
             internal static class Block
             {
                 public const int DefaultConcurrentTransfersCount = 5;
+                public const int DefaultInitalDownloadRangeSize = 256 * Constants.MB; // 256 MB
                 public const int MaxUploadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxStageBytes = 100 * Constants.MB; // 100MB
@@ -267,6 +268,11 @@ namespace Azure.Storage
             /// Max upload bytes.
             /// </summary>
             public const int MaxAppendBytes = 100 * Constants.MB; // 100 MB
+
+            /// <summary>
+            /// Metadata key for isFolder property.
+            /// </summary>
+            public const string IsDirectoryKey = "hdi_isFolder";
         }
 
         /// <summary>
@@ -284,6 +290,8 @@ namespace Azure.Storage
             /// QueueMessageMaxBytes indicates the maximum number of bytes allowed for a message's UTF-8 text.
             /// </summary>
             public const int QueueMessageMaxBytes = 64 * Constants.KB;
+
+            public const int StatusCodeNoContent = 204;
 
             public const string MessagesUri = "messages";
 

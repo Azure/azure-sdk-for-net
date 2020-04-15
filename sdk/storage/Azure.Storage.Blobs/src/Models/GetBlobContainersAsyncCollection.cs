@@ -4,6 +4,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -26,19 +27,18 @@ namespace Azure.Storage.Blobs.Models
         public override async ValueTask<Page<BlobContainerItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
-            bool isAsync,
+            bool async,
             CancellationToken cancellationToken)
         {
-            Task<Response<BlobContainersSegment>> task = _client.GetBlobContainersInternal(
-                continuationToken,
-                _traits,
-                _prefix,
-                pageSizeHint,
-                isAsync,
-                cancellationToken);
-            Response<BlobContainersSegment> response = isAsync ?
-                await task.ConfigureAwait(false) :
-                task.EnsureCompleted();
+
+            Response<BlobContainersSegment> response = await _client.GetBlobContainersInternal(
+                    continuationToken,
+                    _traits,
+                    _prefix,
+                    pageSizeHint,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
+
             return Page<BlobContainerItem>.FromValues(
                 response.Value.BlobContainerItems.ToArray(),
                 response.Value.NextMarker,

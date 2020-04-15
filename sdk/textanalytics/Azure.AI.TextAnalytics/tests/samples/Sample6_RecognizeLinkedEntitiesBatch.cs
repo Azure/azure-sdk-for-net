@@ -20,10 +20,10 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesBatch
-            var inputs = new List<TextDocumentInput>
+            var documents = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             foreach (RecognizeLinkedEntitiesResult result in results)
             {
-                TextDocumentInput document = inputs[i++];
+                TextDocumentInput document = documents[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
@@ -66,12 +66,12 @@ namespace Azure.AI.TextAnalytics.Samples
                         Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}, Entity Id in Data Source: \"{linkedEntity.DataSourceEntityId}\"");
                         foreach (LinkedEntityMatch match in linkedEntity.Matches)
                         {
-                            Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
+                            Debug.WriteLine($"        Match Text: \"{match.Text}\", Confidence score: {match.ConfidenceScore}");
                         }
                     }
 
                     Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
                     Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Debug.WriteLine("");
                 }

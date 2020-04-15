@@ -43,7 +43,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// condition.</param>
         /// <param name="fqdnTags">List of FQDN Tags for this rule
         /// condition.</param>
-        public ApplicationRuleCondition(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<FirewallPolicyRuleConditionApplicationProtocol> protocols = default(IList<FirewallPolicyRuleConditionApplicationProtocol>), IList<string> targetFqdns = default(IList<string>), IList<string> fqdnTags = default(IList<string>))
+        /// <param name="sourceIpGroups">List of source IpGroups for this
+        /// rule.</param>
+        public ApplicationRuleCondition(string name = default(string), string description = default(string), IList<string> sourceAddresses = default(IList<string>), IList<string> destinationAddresses = default(IList<string>), IList<FirewallPolicyRuleConditionApplicationProtocol> protocols = default(IList<FirewallPolicyRuleConditionApplicationProtocol>), IList<string> targetFqdns = default(IList<string>), IList<string> fqdnTags = default(IList<string>), IList<string> sourceIpGroups = default(IList<string>))
             : base(name, description)
         {
             SourceAddresses = sourceAddresses;
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Protocols = protocols;
             TargetFqdns = targetFqdns;
             FqdnTags = fqdnTags;
+            SourceIpGroups = sourceIpGroups;
             CustomInit();
         }
 
@@ -88,6 +91,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "fqdnTags")]
         public IList<string> FqdnTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of source IpGroups for this rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceIpGroups")]
+        public IList<string> SourceIpGroups { get; set; }
 
     }
 }

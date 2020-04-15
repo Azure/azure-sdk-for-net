@@ -1,0 +1,95 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-knxpatht.search.windows.net/indexes(\u0027etamstct\u0027)/docs/search.post.search?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "188",
+        "Content-Type": "application/json",
+        "traceparent": "00-c731aa157c006a438f916eb21a8c2e01-d6259f9552b78341-00",
+        "User-Agent": [
+          "azsdk-net-Search/11.0.0-dev.20200311.1",
+          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "158d50b0f88f6f2d22874a374cb4873b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "facets": [],
+        "filter": "rating eq 5",
+        "highlight": "description,category",
+        "highlightPostTag": "\u003C/b\u003E",
+        "highlightPreTag": "\u003Cb\u003E",
+        "scoringParameters": [],
+        "search": "luxury hotel"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1257",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Wed, 11 Mar 2020 19:45:49 GMT",
+        "elapsed-time": "81",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "158d50b0-f88f-6f2d-2287-4a374cb4873b",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-knxpatht.search.windows.net/indexes(\u0027etamstct\u0027)/$metadata#docs(*)",
+        "value": [
+          {
+            "@search.score": 0.6247139,
+            "@search.highlights": {
+              "category": [
+                "\u003Cb\u003ELuxury\u003C/b\u003E"
+              ],
+              "description": [
+                "Best \u003Cb\u003Ehotel\u003C/b\u003E in town if you like \u003Cb\u003Eluxury\u003C/b\u003E \u003Cb\u003Ehotels\u003C/b\u003E.",
+                "We highly recommend this \u003Cb\u003Ehotel\u003C/b\u003E."
+              ]
+            },
+            "hotelId": "1",
+            "hotelName": "Fancy Stay",
+            "description": "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.",
+            "descriptionFr": "Meilleur h\u00F4tel en ville si vous aimez les h\u00F4tels de luxe. Ils ont une magnifique piscine \u00E0 d\u00E9bordement, un spa et un concierge tr\u00E8s utile. L\u0027emplacement est parfait \u2013 en plein centre, \u00E0 proximit\u00E9 de toutes les attractions touristiques. Nous recommandons fortement cet h\u00F4tel.",
+            "category": "Luxury",
+            "tags": [
+              "pool",
+              "view",
+              "wifi",
+              "concierge"
+            ],
+            "parkingIncluded": false,
+            "smokingAllowed": false,
+            "lastRenovationDate": "2010-06-27T00:00:00Z",
+            "rating": 5,
+            "location": {
+              "type": "Point",
+              "coordinates": [
+                -122.131577,
+                47.678581
+              ],
+              "crs": {
+                "type": "name",
+                "properties": {
+                  "name": "EPSG:4326"
+                }
+              }
+            },
+            "address": null,
+            "rooms": []
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2066752673",
+    "SearchIndexName": "etamstct",
+    "SearchServiceName": "azs-net-knxpatht"
+  }
+}

@@ -1,67 +1,67 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxP2FwaS12ZXJzaW9uPTIwMTktMDEtMDE=",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGk/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"eastus\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "427e2d9c-3691-411b-bbee-b826b593cf11"
+          "cb122873-a91e-4a18-a694-c7fe9d3b8409"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "289"
+          "286"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:23:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAABp+o=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAHRdg=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "af331e09-9ce0-4e51-a809-5c940b59db24",
-          "a3a3f6f3-ded0-4ddf-bb2c-2cb3532e93de"
+          "b59e42a5-6fa1-4130-8640-b0abc466394f",
+          "07065f6c-1736-4a91-9cd5-2a418fd62e73"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "710b6d36-b5df-476f-815e-0ddcc688d01b"
+          "b0edbe99-1c9e-463d-bc7d-1b2749887423"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T012330Z:710b6d36-b5df-476f-815e-0ddcc688d01b"
+          "NORTHEUROPE:20200325T190303Z:b0edbe99-1c9e-463d-bc7d-1b2749887423"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:02 GMT"
+        ],
         "Content-Length": [
-          "2188"
+          "2293"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -70,64 +70,64 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101\",\r\n  \"name\": \"sdktestservice20190101\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAABp+o=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-02-07T00:15:54.6331815Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice20190101.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice20190101-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice20190101.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice20190101.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice20190101.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice20190101.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice20190101.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"40.78.133.78\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi\",\r\n  \"name\": \"sdktestservicemapi\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"East US\",\r\n  \"etag\": \"AAAAAAAHRdg=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-01-15T02:10:29.8101523Z\",\r\n    \"gatewayUrl\": \"https://sdktestservicemapi.preview.int-azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservicemapi-eastus-01.regional.preview.int-azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservicemapi.portal.preview.int-azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservicemapi.developer.preview.int-azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservicemapi.management.preview.int-azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservicemapi.scm.preview.int-azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservicemapi.preview.int-azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"52.170.235.245\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxP2FwaS12ZXJzaW9uPTIwMTktMDEtMDE=",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGk/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dcb50016-68e2-4b18-9ff2-0e07327ffb5f"
+          "cb1d5010-19b5-4aee-9dbb-94ea3193e6d8"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:23:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAABp+o=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAHRdg=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "10d5ff92-2e12-4d6f-b2e2-8653cc4e2edd"
+          "6561d589-d13d-4443-b464-6dc07e3fb705"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "87f91d37-2a2d-46f4-8d97-4d4b73ec7348"
+          "37b9e533-f62a-4f1f-90eb-a47747ac650d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T012330Z:87f91d37-2a2d-46f4-8d97-4d4b73ec7348"
+          "NORTHEUROPE:20200325T190303Z:37b9e533-f62a-4f1f-90eb-a47747ac650d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:02 GMT"
+        ],
         "Content-Length": [
-          "2188"
+          "2293"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -136,127 +136,127 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101\",\r\n  \"name\": \"sdktestservice20190101\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAABp+o=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-02-07T00:15:54.6331815Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice20190101.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice20190101-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice20190101.portal.azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservice20190101.developer.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice20190101.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice20190101.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservice20190101.azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"40.78.133.78\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi\",\r\n  \"name\": \"sdktestservicemapi\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"East US\",\r\n  \"etag\": \"AAAAAAAHRdg=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2020-01-15T02:10:29.8101523Z\",\r\n    \"gatewayUrl\": \"https://sdktestservicemapi.preview.int-azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservicemapi-eastus-01.regional.preview.int-azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservicemapi.portal.preview.int-azure-api.net\",\r\n    \"developerPortalUrl\": \"https://sdktestservicemapi.developer.preview.int-azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservicemapi.management.preview.int-azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservicemapi.scm.preview.int-azure-api.net\",\r\n    \"hostnameConfigurations\": [\r\n      {\r\n        \"type\": \"Proxy\",\r\n        \"hostName\": \"sdktestservicemapi.preview.int-azure-api.net\",\r\n        \"encodedCertificate\": null,\r\n        \"keyVaultId\": null,\r\n        \"certificatePassword\": null,\r\n        \"negotiateClientCertificate\": false,\r\n        \"certificate\": null,\r\n        \"defaultSslBinding\": true\r\n      }\r\n    ],\r\n    \"publicIPAddresses\": [\r\n      \"52.170.235.245\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": [],\r\n    \"disableGateway\": false,\r\n    \"apiVersionConstraint\": {\r\n      \"minApiVersion\": null\r\n    }\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL2FwaXMvYWlkODc3NT9hcGktdmVyc2lvbj0yMDE5LTAxLTAx",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ3NTQ/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"path\": \"openapi4\",\r\n    \"value\": \"{\\n    \\\"openapi\\\": \\\"3.0.0\\\",\\n    \\\"servers\\\": [\\n        {\\n            \\\"url\\\": \\\"http://petstore.swagger.io/v2\\\"\\n        }\\n    ],\\n    \\\"info\\\": {\\n        \\\"description\\\": \\\":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\\\",\\n        \\\"version\\\": \\\"1.0.0\\\",\\n        \\\"title\\\": \\\"Swagger Petstore\\\",\\n        \\\"termsOfService\\\": \\\"http://swagger.io/terms/\\\",\\n        \\\"contact\\\": {\\n            \\\"email\\\": \\\"apiteam@swagger.io\\\"\\n        },\\n        \\\"license\\\": {\\n            \\\"name\\\": \\\"Apache 2.0\\\",\\n            \\\"url\\\": \\\"http://www.apache.org/licenses/LICENSE-2.0.html\\\"\\n        }\\n    },\\n    \\\"tags\\\": [\\n        {\\n            \\\"name\\\": \\\"pet\\\",\\n            \\\"description\\\": \\\"Everything about your Pets\\\",\\n            \\\"externalDocs\\\": {\\n                \\\"description\\\": \\\"Find out more\\\",\\n                \\\"url\\\": \\\"http://swagger.io\\\"\\n            }\\n        },\\n        {\\n            \\\"name\\\": \\\"store\\\",\\n            \\\"description\\\": \\\"Access to Petstore orders\\\"\\n        },\\n        {\\n            \\\"name\\\": \\\"user\\\",\\n            \\\"description\\\": \\\"Operations about user\\\",\\n            \\\"externalDocs\\\": {\\n                \\\"description\\\": \\\"Find out more about our store\\\",\\n                \\\"url\\\": \\\"http://swagger.io\\\"\\n            }\\n        }\\n    ],\\n    \\\"paths\\\": {\\n        \\\"/pet\\\": {\\n            \\\"post\\\": {\\n                \\\"tags\\\": [\\n                    \\\"pet\\\"\\n                ],\\n                \\\"summary\\\": \\\"Add a new pet to the store\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"addPet\\\",\\n                \\\"responses\\\": {\\n                    \\\"405\\\": {\\n                        \\\"description\\\": \\\"Invalid input\\\"\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"petstore_auth\\\": [\\n                            \\\"write:pets\\\",\\n                            \\\"read:pets\\\"\\n                        ]\\n                    }\\n                ],\\n                \\\"requestBody\\\": {\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/Pet\\\"\\n                },\\n                \\\"parameters\\\": []\\n            },\\n            \\\"put\\\": {\\n                \\\"tags\\\": [\\n                    \\\"pet\\\"\\n                ],\\n                \\\"summary\\\": \\\"Update an existing pet\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"updatePet\\\",\\n                \\\"responses\\\": {\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\n                    },\\n                    \\\"404\\\": {\\n                        \\\"description\\\": \\\"Pet not found\\\"\\n                    },\\n                    \\\"405\\\": {\\n                        \\\"description\\\": \\\"Validation exception\\\"\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"petstore_auth\\\": [\\n                            \\\"write:pets\\\",\\n                            \\\"read:pets\\\"\\n                        ]\\n                    }\\n                ],\\n                \\\"requestBody\\\": {\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/Pet\\\"\\n                },\\n                \\\"parameters\\\": []\\n            }\\n        },\\n        \\\"/pet/findByStatus\\\": {\\n            \\\"get\\\": {\\n                \\\"tags\\\": [\\n                    \\\"pet\\\"\\n                ],\\n                \\\"summary\\\": \\\"Finds Pets by status\\\",\\n                \\\"description\\\": \\\"Multiple status values can be provided with comma separated strings\\\",\\n                \\\"operationId\\\": \\\"findPetsByStatus\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"status\\\",\\n                        \\\"in\\\": \\\"query\\\",\\n                        \\\"description\\\": \\\"Status values that need to be considered for filter\\\",\\n                        \\\"required\\\": true,\\n                        \\\"explode\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"array\\\",\\n                            \\\"items\\\": {\\n                                \\\"type\\\": \\\"string\\\",\\n                                \\\"enum\\\": [\\n                                    \\\"available\\\",\\n                                    \\\"pending\\\",\\n                                    \\\"sold\\\"\\n                                ],\\n                                \\\"default\\\": \\\"available\\\"\\n                            }\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"content\\\": {\\n                            \\\"application/xml\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"array\\\",\\n                                    \\\"items\\\": {\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\n                                    }\\n                                }\\n                            },\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"array\\\",\\n                                    \\\"items\\\": {\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\n                                    }\\n                                }\\n                            }\\n                        }\\n                    },\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid status value\\\"\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"petstore_auth\\\": [\\n                            \\\"write:pets\\\",\\n                            \\\"read:pets\\\"\\n                        ]\\n                    }\\n                ]\\n            }\\n        },\\n        \\\"/pet/findByTags\\\": {\\n            \\\"get\\\": {\\n                \\\"tags\\\": [\\n                    \\\"pet\\\"\\n                ],\\n                \\\"summary\\\": \\\"Finds Pets by tags\\\",\\n                \\\"description\\\": \\\"Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.\\\",\\n                \\\"operationId\\\": \\\"findPetsByTags\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"tags\\\",\\n                        \\\"in\\\": \\\"query\\\",\\n                        \\\"description\\\": \\\"Tags to filter by\\\",\\n                        \\\"required\\\": true,\\n                        \\\"explode\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"array\\\",\\n                            \\\"items\\\": {\\n                                \\\"type\\\": \\\"string\\\"\\n                            }\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"content\\\": {\\n                            \\\"application/xml\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"array\\\",\\n                                    \\\"items\\\": {\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\n                                    }\\n                                }\\n                            },\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"array\\\",\\n                                    \\\"items\\\": {\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\n                                    }\\n                                }\\n                            }\\n                        }\\n                    },\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid tag value\\\"\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"petstore_auth\\\": [\\n                            \\\"write:pets\\\",\\n                            \\\"read:pets\\\"\\n                        ]\\n                    }\\n                ],\\n                \\\"deprecated\\\": true\\n            }\\n        },\\n        \\\"/pet/{petId}\\\": {\\n            \\\"get\\\": {\\n                \\\"tags\\\": [\\n                    \\\"pet\\\"\\n                ],\\n                \\\"summary\\\": \\\"Find pet by ID\\\",\\n                \\\"description\\\": \\\"Returns a single pet\\\",\\n                \\\"operationId\\\": \\\"getPetById\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"petId\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"ID of pet to return\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"integer\\\",\\n                            \\\"format\\\": \\\"int64\\\"\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"content\\\": {\\n                            \\\"application/xml\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\n                                }\\n                            },\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\n                                }\\n                            }\\n                        }\\n                    },\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\n                    },\\n                    \\\"404\\\": {\\n                        \\\"description\\\": \\\"Pet not found\\\"\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"api_key\\\": []\\n                    }\\n                ]\\n            },\\n            \\\"post\\\": {\\n                \\\"tags\\\": [\\n                    \\\"pet\\\"\\n                ],\\n                \\\"summary\\\": \\\"Updates a pet in the store with form data\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"updatePetWithForm\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"petId\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"ID of pet that needs to be updated\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"integer\\\",\\n                            \\\"format\\\": \\\"int64\\\"\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"405\\\": {\\n                        \\\"description\\\": \\\"Invalid input\\\"\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"petstore_auth\\\": [\\n                            \\\"write:pets\\\",\\n                            \\\"read:pets\\\"\\n                        ]\\n                    }\\n                ],\\n                \\\"requestBody\\\": {\\n                    \\\"content\\\": {\\n                        \\\"application/x-www-form-urlencoded\\\": {\\n                            \\\"schema\\\": {\\n                                \\\"type\\\": \\\"object\\\",\\n                                \\\"properties\\\": {\\n                                    \\\"name\\\": {\\n                                        \\\"description\\\": \\\"Updated name of the pet\\\",\\n                                        \\\"type\\\": \\\"string\\\"\\n                                    },\\n                                    \\\"status\\\": {\\n                                        \\\"description\\\": \\\"Updated status of the pet\\\",\\n                                        \\\"type\\\": \\\"string\\\"\\n                                    }\\n                                }\\n                            }\\n                        }\\n                    }\\n                }\\n            },\\n            \\\"delete\\\": {\\n                \\\"tags\\\": [\\n                    \\\"pet\\\"\\n                ],\\n                \\\"summary\\\": \\\"Deletes a pet\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"deletePet\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"api_key\\\",\\n                        \\\"in\\\": \\\"header\\\",\\n                        \\\"required\\\": false,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"string\\\"\\n                        }\\n                    },\\n                    {\\n                        \\\"name\\\": \\\"petId\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"Pet id to delete\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"integer\\\",\\n                            \\\"format\\\": \\\"int64\\\"\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\n                    },\\n                    \\\"404\\\": {\\n                        \\\"description\\\": \\\"Pet not found\\\"\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"petstore_auth\\\": [\\n                            \\\"write:pets\\\",\\n                            \\\"read:pets\\\"\\n                        ]\\n                    }\\n                ]\\n            }\\n        },\\n        \\\"/pet/{petId}/uploadImage\\\": {\\n            \\\"post\\\": {\\n                \\\"tags\\\": [\\n                    \\\"pet\\\"\\n                ],\\n                \\\"summary\\\": \\\"uploads an image\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"uploadFile\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"petId\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"ID of pet to update\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"integer\\\",\\n                            \\\"format\\\": \\\"int64\\\"\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"content\\\": {\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/ApiResponse\\\"\\n                                }\\n                            }\\n                        }\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"petstore_auth\\\": [\\n                            \\\"write:pets\\\",\\n                            \\\"read:pets\\\"\\n                        ]\\n                    }\\n                ],\\n                \\\"requestBody\\\": {\\n                    \\\"content\\\": {\\n                        \\\"application/octet-stream\\\": {\\n                            \\\"schema\\\": {\\n                                \\\"type\\\": \\\"string\\\",\\n                                \\\"format\\\": \\\"binary\\\"\\n                            }\\n                        }\\n                    }\\n                }\\n            }\\n        },\\n        \\\"/store/inventory\\\": {\\n            \\\"get\\\": {\\n                \\\"tags\\\": [\\n                    \\\"store\\\"\\n                ],\\n                \\\"summary\\\": \\\"Returns pet inventories by status\\\",\\n                \\\"description\\\": \\\"Returns a map of status codes to quantities\\\",\\n                \\\"operationId\\\": \\\"getInventory\\\",\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"content\\\": {\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"object\\\",\\n                                    \\\"additionalProperties\\\": {\\n                                        \\\"type\\\": \\\"integer\\\",\\n                                        \\\"format\\\": \\\"int32\\\"\\n                                    }\\n                                }\\n                            }\\n                        }\\n                    }\\n                },\\n                \\\"security\\\": [\\n                    {\\n                        \\\"api_key\\\": []\\n                    }\\n                ],\\n                \\\"parameters\\\": []\\n            }\\n        },\\n        \\\"/store/order\\\": {\\n            \\\"post\\\": {\\n                \\\"tags\\\": [\\n                    \\\"store\\\"\\n                ],\\n                \\\"summary\\\": \\\"Place an order for a pet\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"placeOrder\\\",\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"content\\\": {\\n                            \\\"application/xml\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\n                                }\\n                            },\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\n                                }\\n                            }\\n                        }\\n                    },\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid Order\\\"\\n                    }\\n                },\\n                \\\"requestBody\\\": {\\n                    \\\"content\\\": {\\n                        \\\"application/json\\\": {\\n                            \\\"schema\\\": {\\n                                \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\n                            }\\n                        }\\n                    },\\n                    \\\"description\\\": \\\"order placed for purchasing the pet\\\",\\n                    \\\"required\\\": true\\n                },\\n                \\\"parameters\\\": []\\n            }\\n        },\\n        \\\"/store/order/{orderId}\\\": {\\n            \\\"get\\\": {\\n                \\\"tags\\\": [\\n                    \\\"store\\\"\\n                ],\\n                \\\"summary\\\": \\\"Find purchase order by ID\\\",\\n                \\\"description\\\": \\\"For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions\\\",\\n                \\\"operationId\\\": \\\"getOrderById\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"orderId\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"ID of pet that needs to be fetched\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"integer\\\",\\n                            \\\"format\\\": \\\"int64\\\",\\n                            \\\"minimum\\\": 1,\\n                            \\\"maximum\\\": 10\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"content\\\": {\\n                            \\\"application/xml\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\n                                }\\n                            },\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\n                                }\\n                            }\\n                        }\\n                    },\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\n                    },\\n                    \\\"404\\\": {\\n                        \\\"description\\\": \\\"Order not found\\\"\\n                    }\\n                }\\n            },\\n            \\\"delete\\\": {\\n                \\\"tags\\\": [\\n                    \\\"store\\\"\\n                ],\\n                \\\"summary\\\": \\\"Delete purchase order by ID\\\",\\n                \\\"description\\\": \\\"For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors\\\",\\n                \\\"operationId\\\": \\\"deleteOrder\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"orderId\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"ID of the order that needs to be deleted\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"integer\\\",\\n                            \\\"format\\\": \\\"int64\\\",\\n                            \\\"minimum\\\": 1\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\n                    },\\n                    \\\"404\\\": {\\n                        \\\"description\\\": \\\"Order not found\\\"\\n                    }\\n                }\\n            }\\n        },\\n        \\\"/user\\\": {\\n            \\\"post\\\": {\\n                \\\"tags\\\": [\\n                    \\\"user\\\"\\n                ],\\n                \\\"summary\\\": \\\"Create user\\\",\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\n                \\\"operationId\\\": \\\"createUser\\\",\\n                \\\"responses\\\": {\\n                    \\\"default\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\"\\n                    }\\n                },\\n                \\\"requestBody\\\": {\\n                    \\\"content\\\": {\\n                        \\\"application/json\\\": {\\n                            \\\"schema\\\": {\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\n                            }\\n                        }\\n                    },\\n                    \\\"description\\\": \\\"Created user object\\\",\\n                    \\\"required\\\": true\\n                },\\n                \\\"parameters\\\": []\\n            }\\n        },\\n        \\\"/user/createWithArray\\\": {\\n            \\\"post\\\": {\\n                \\\"tags\\\": [\\n                    \\\"user\\\"\\n                ],\\n                \\\"summary\\\": \\\"Creates list of users with given input array\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"createUsersWithArrayInput\\\",\\n                \\\"responses\\\": {\\n                    \\\"default\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\"\\n                    }\\n                },\\n                \\\"requestBody\\\": {\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/UserArray\\\"\\n                },\\n                \\\"parameters\\\": []\\n            }\\n        },\\n        \\\"/user/createWithList\\\": {\\n            \\\"post\\\": {\\n                \\\"tags\\\": [\\n                    \\\"user\\\"\\n                ],\\n                \\\"summary\\\": \\\"Creates list of users with given input array\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"createUsersWithListInput\\\",\\n                \\\"responses\\\": {\\n                    \\\"default\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\"\\n                    }\\n                },\\n                \\\"requestBody\\\": {\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/UserArray\\\"\\n                },\\n                \\\"parameters\\\": []\\n            }\\n        },\\n        \\\"/user/login\\\": {\\n            \\\"get\\\": {\\n                \\\"tags\\\": [\\n                    \\\"user\\\"\\n                ],\\n                \\\"summary\\\": \\\"Logs user into the system\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"loginUser\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"username\\\",\\n                        \\\"in\\\": \\\"query\\\",\\n                        \\\"description\\\": \\\"The user name for login\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"string\\\"\\n                        }\\n                    },\\n                    {\\n                        \\\"name\\\": \\\"password\\\",\\n                        \\\"in\\\": \\\"query\\\",\\n                        \\\"description\\\": \\\"The password for login in clear text\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"string\\\",\\n                            \\\"format\\\": \\\"password\\\"\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"headers\\\": {\\n                            \\\"X-Rate-Limit\\\": {\\n                                \\\"description\\\": \\\"calls per hour allowed by the user\\\",\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"integer\\\",\\n                                    \\\"format\\\": \\\"int32\\\"\\n                                }\\n                            },\\n                            \\\"X-Expires-After\\\": {\\n                                \\\"description\\\": \\\"date in UTC when token expires\\\",\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"string\\\",\\n                                    \\\"format\\\": \\\"date-time\\\"\\n                                }\\n                            }\\n                        },\\n                        \\\"content\\\": {\\n                            \\\"application/xml\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"string\\\"\\n                                }\\n                            },\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"type\\\": \\\"string\\\"\\n                                }\\n                            }\\n                        }\\n                    },\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid username/password supplied\\\"\\n                    }\\n                }\\n            }\\n        },\\n        \\\"/user/logout\\\": {\\n            \\\"get\\\": {\\n                \\\"tags\\\": [\\n                    \\\"user\\\"\\n                ],\\n                \\\"summary\\\": \\\"Logs out current logged in user session\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"logoutUser\\\",\\n                \\\"responses\\\": {\\n                    \\\"default\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\"\\n                    }\\n                },\\n                \\\"parameters\\\": []\\n            }\\n        },\\n        \\\"/user/{username}\\\": {\\n            \\\"get\\\": {\\n                \\\"tags\\\": [\\n                    \\\"user\\\"\\n                ],\\n                \\\"summary\\\": \\\"Get user by user name\\\",\\n                \\\"description\\\": \\\"\\\",\\n                \\\"operationId\\\": \\\"getUserByName\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"username\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"The name that needs to be fetched. Use user1 for testing. \\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"string\\\"\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"200\\\": {\\n                        \\\"description\\\": \\\"successful operation\\\",\\n                        \\\"content\\\": {\\n                            \\\"application/xml\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\n                                }\\n                            },\\n                            \\\"application/json\\\": {\\n                                \\\"schema\\\": {\\n                                    \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\n                                }\\n                            }\\n                        }\\n                    },\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid username supplied\\\"\\n                    },\\n                    \\\"404\\\": {\\n                        \\\"description\\\": \\\"User not found\\\"\\n                    }\\n                }\\n            },\\n            \\\"put\\\": {\\n                \\\"tags\\\": [\\n                    \\\"user\\\"\\n                ],\\n                \\\"summary\\\": \\\"Updated user\\\",\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\n                \\\"operationId\\\": \\\"updateUser\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"username\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"name that need to be updated\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"string\\\"\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid user supplied\\\"\\n                    },\\n                    \\\"404\\\": {\\n                        \\\"description\\\": \\\"User not found\\\"\\n                    }\\n                },\\n                \\\"requestBody\\\": {\\n                    \\\"content\\\": {\\n                        \\\"application/json\\\": {\\n                            \\\"schema\\\": {\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\n                            }\\n                        }\\n                    },\\n                    \\\"description\\\": \\\"Updated user object\\\",\\n                    \\\"required\\\": true\\n                }\\n            },\\n            \\\"delete\\\": {\\n                \\\"tags\\\": [\\n                    \\\"user\\\"\\n                ],\\n                \\\"summary\\\": \\\"Delete user\\\",\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\n                \\\"operationId\\\": \\\"deleteUser\\\",\\n                \\\"parameters\\\": [\\n                    {\\n                        \\\"name\\\": \\\"username\\\",\\n                        \\\"in\\\": \\\"path\\\",\\n                        \\\"description\\\": \\\"The name that needs to be deleted\\\",\\n                        \\\"required\\\": true,\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"string\\\"\\n                        }\\n                    }\\n                ],\\n                \\\"responses\\\": {\\n                    \\\"400\\\": {\\n                        \\\"description\\\": \\\"Invalid username supplied\\\"\\n                    },\\n                    \\\"404\\\": {\\n                        \\\"description\\\": \\\"User not found\\\"\\n                    }\\n                }\\n            }\\n        }\\n    },\\n    \\\"externalDocs\\\": {\\n        \\\"description\\\": \\\"See AsyncAPI example\\\",\\n        \\\"url\\\": \\\"https://mermade.github.io/shins/asyncapi.html\\\"\\n    },\\n    \\\"components\\\": {\\n        \\\"schemas\\\": {\\n            \\\"Order\\\": {\\n                \\\"type\\\": \\\"object\\\",\\n                \\\"properties\\\": {\\n                    \\\"id\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int64\\\"\\n                    },\\n                    \\\"petId\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int64\\\"\\n                    },\\n                    \\\"quantity\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int32\\\"\\n                    },\\n                    \\\"shipDate\\\": {\\n                        \\\"type\\\": \\\"string\\\",\\n                        \\\"format\\\": \\\"date-time\\\"\\n                    },\\n                    \\\"status\\\": {\\n                        \\\"type\\\": \\\"string\\\",\\n                        \\\"description\\\": \\\"Order Status\\\",\\n                        \\\"enum\\\": [\\n                            \\\"placed\\\",\\n                            \\\"approved\\\",\\n                            \\\"delivered\\\"\\n                        ]\\n                    },\\n                    \\\"complete\\\": {\\n                        \\\"type\\\": \\\"boolean\\\",\\n                        \\\"default\\\": false\\n                    }\\n                },\\n                \\\"xml\\\": {\\n                    \\\"name\\\": \\\"Order\\\"\\n                }\\n            },\\n            \\\"Category\\\": {\\n                \\\"type\\\": \\\"object\\\",\\n                \\\"properties\\\": {\\n                    \\\"id\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int64\\\"\\n                    },\\n                    \\\"name\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    }\\n                },\\n                \\\"xml\\\": {\\n                    \\\"name\\\": \\\"Category\\\"\\n                }\\n            },\\n            \\\"User\\\": {\\n                \\\"type\\\": \\\"object\\\",\\n                \\\"properties\\\": {\\n                    \\\"id\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int64\\\"\\n                    },\\n                    \\\"username\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    },\\n                    \\\"firstName\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    },\\n                    \\\"lastName\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    },\\n                    \\\"email\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    },\\n                    \\\"password\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    },\\n                    \\\"phone\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    },\\n                    \\\"userStatus\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int32\\\",\\n                        \\\"description\\\": \\\"User Status\\\"\\n                    }\\n                },\\n                \\\"xml\\\": {\\n                    \\\"name\\\": \\\"User\\\"\\n                }\\n            },\\n            \\\"Tag\\\": {\\n                \\\"type\\\": \\\"object\\\",\\n                \\\"properties\\\": {\\n                    \\\"id\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int64\\\"\\n                    },\\n                    \\\"name\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    }\\n                },\\n                \\\"xml\\\": {\\n                    \\\"name\\\": \\\"Tag\\\"\\n                }\\n            },\\n            \\\"Pet\\\": {\\n                \\\"type\\\": \\\"object\\\",\\n                \\\"required\\\": [\\n                    \\\"name\\\",\\n                    \\\"photoUrls\\\"\\n                ],\\n                \\\"properties\\\": {\\n                    \\\"id\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int64\\\"\\n                    },\\n                    \\\"category\\\": {\\n                        \\\"$ref\\\": \\\"#/components/schemas/Category\\\"\\n                    },\\n                    \\\"name\\\": {\\n                        \\\"type\\\": \\\"string\\\",\\n                        \\\"example\\\": \\\"doggie\\\"\\n                    },\\n                    \\\"photoUrls\\\": {\\n                        \\\"type\\\": \\\"array\\\",\\n                        \\\"xml\\\": {\\n                            \\\"name\\\": \\\"photoUrl\\\",\\n                            \\\"wrapped\\\": true\\n                        },\\n                        \\\"items\\\": {\\n                            \\\"type\\\": \\\"string\\\"\\n                        }\\n                    },\\n                    \\\"tags\\\": {\\n                        \\\"type\\\": \\\"array\\\",\\n                        \\\"xml\\\": {\\n                            \\\"name\\\": \\\"tag\\\",\\n                            \\\"wrapped\\\": true\\n                        },\\n                        \\\"items\\\": {\\n                            \\\"$ref\\\": \\\"#/components/schemas/Tag\\\"\\n                        }\\n                    },\\n                    \\\"status\\\": {\\n                        \\\"type\\\": \\\"string\\\",\\n                        \\\"description\\\": \\\"pet status in the store\\\",\\n                        \\\"enum\\\": [\\n                            \\\"available\\\",\\n                            \\\"pending\\\",\\n                            \\\"sold\\\"\\n                        ]\\n                    }\\n                },\\n                \\\"xml\\\": {\\n                    \\\"name\\\": \\\"Pet\\\"\\n                }\\n            },\\n            \\\"ApiResponse\\\": {\\n                \\\"type\\\": \\\"object\\\",\\n                \\\"properties\\\": {\\n                    \\\"code\\\": {\\n                        \\\"type\\\": \\\"integer\\\",\\n                        \\\"format\\\": \\\"int32\\\"\\n                    },\\n                    \\\"type\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    },\\n                    \\\"message\\\": {\\n                        \\\"type\\\": \\\"string\\\"\\n                    }\\n                }\\n            }\\n        },\\n        \\\"requestBodies\\\": {\\n            \\\"Pet\\\": {\\n                \\\"content\\\": {\\n                    \\\"application/json\\\": {\\n                        \\\"schema\\\": {\\n                            \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\n                        }\\n                    },\\n                    \\\"application/xml\\\": {\\n                        \\\"schema\\\": {\\n                            \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\n                        }\\n                    }\\n                },\\n                \\\"description\\\": \\\"Pet object that needs to be added to the store\\\",\\n                \\\"required\\\": true\\n            },\\n            \\\"UserArray\\\": {\\n                \\\"content\\\": {\\n                    \\\"application/json\\\": {\\n                        \\\"schema\\\": {\\n                            \\\"type\\\": \\\"array\\\",\\n                            \\\"items\\\": {\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\n                            }\\n                        }\\n                    }\\n                },\\n                \\\"description\\\": \\\"List of user object\\\",\\n                \\\"required\\\": true\\n            }\\n        },\\n        \\\"securitySchemes\\\": {\\n            \\\"petstore_auth\\\": {\\n                \\\"type\\\": \\\"oauth2\\\",\\n                \\\"flows\\\": {\\n                    \\\"implicit\\\": {\\n                        \\\"authorizationUrl\\\": \\\"http://petstore.swagger.io/oauth/dialog\\\",\\n                        \\\"scopes\\\": {\\n                            \\\"write:pets\\\": \\\"modify pets in your account\\\",\\n                            \\\"read:pets\\\": \\\"read your pets\\\"\\n                        }\\n                    }\\n                }\\n            },\\n            \\\"api_key\\\": {\\n                \\\"type\\\": \\\"apiKey\\\",\\n                \\\"name\\\": \\\"api_key\\\",\\n                \\\"in\\\": \\\"header\\\"\\n            }\\n        },\\n        \\\"links\\\": {},\\n        \\\"callbacks\\\": {}\\n    },\\n    \\\"security\\\": []\\n}\",\r\n    \"format\": \"openapi+json\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"path\": \"openapi4\",\r\n    \"value\": \"{\\r\\n    \\\"openapi\\\": \\\"3.0.0\\\",\\r\\n    \\\"servers\\\": [\\r\\n        {\\r\\n            \\\"url\\\": \\\"http://petstore.swagger.io/v2\\\"\\r\\n        }\\r\\n    ],\\r\\n    \\\"info\\\": {\\r\\n        \\\"description\\\": \\\":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\\\",\\r\\n        \\\"version\\\": \\\"1.0.0\\\",\\r\\n        \\\"title\\\": \\\"Swagger Petstore\\\",\\r\\n        \\\"termsOfService\\\": \\\"http://swagger.io/terms/\\\",\\r\\n        \\\"contact\\\": {\\r\\n            \\\"email\\\": \\\"apiteam@swagger.io\\\"\\r\\n        },\\r\\n        \\\"license\\\": {\\r\\n            \\\"name\\\": \\\"Apache 2.0\\\",\\r\\n            \\\"url\\\": \\\"http://www.apache.org/licenses/LICENSE-2.0.html\\\"\\r\\n        }\\r\\n    },\\r\\n    \\\"tags\\\": [\\r\\n        {\\r\\n            \\\"name\\\": \\\"pet\\\",\\r\\n            \\\"description\\\": \\\"Everything about your Pets\\\",\\r\\n            \\\"externalDocs\\\": {\\r\\n                \\\"description\\\": \\\"Find out more\\\",\\r\\n                \\\"url\\\": \\\"http://swagger.io\\\"\\r\\n            }\\r\\n        },\\r\\n        {\\r\\n            \\\"name\\\": \\\"store\\\",\\r\\n            \\\"description\\\": \\\"Access to Petstore orders\\\"\\r\\n        },\\r\\n        {\\r\\n            \\\"name\\\": \\\"user\\\",\\r\\n            \\\"description\\\": \\\"Operations about user\\\",\\r\\n            \\\"externalDocs\\\": {\\r\\n                \\\"description\\\": \\\"Find out more about our store\\\",\\r\\n                \\\"url\\\": \\\"http://swagger.io\\\"\\r\\n            }\\r\\n        }\\r\\n    ],\\r\\n    \\\"paths\\\": {\\r\\n        \\\"/pet\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Add a new pet to the store\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"addPet\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"405\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid input\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/Pet\\\"\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            },\\r\\n            \\\"put\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Update an existing pet\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"updatePet\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Pet not found\\\"\\r\\n                    },\\r\\n                    \\\"405\\\": {\\r\\n                        \\\"description\\\": \\\"Validation exception\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/Pet\\\"\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/pet/findByStatus\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Finds Pets by status\\\",\\r\\n                \\\"description\\\": \\\"Multiple status values can be provided with comma separated strings\\\",\\r\\n                \\\"operationId\\\": \\\"findPetsByStatus\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"status\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"Status values that need to be considered for filter\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"explode\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"type\\\": \\\"string\\\",\\r\\n                                \\\"enum\\\": [\\r\\n                                    \\\"available\\\",\\r\\n                                    \\\"pending\\\",\\r\\n                                    \\\"sold\\\"\\r\\n                                ],\\r\\n                                \\\"default\\\": \\\"available\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"array\\\",\\r\\n                                    \\\"items\\\": {\\r\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"array\\\",\\r\\n                                    \\\"items\\\": {\\r\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid status value\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ]\\r\\n            }\\r\\n        },\\r\\n        \\\"/pet/findByTags\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Finds Pets by tags\\\",\\r\\n                \\\"description\\\": \\\"Muliple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.\\\",\\r\\n                \\\"operationId\\\": \\\"findPetsByTags\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"tags\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"Tags to filter by\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"explode\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"type\\\": \\\"string\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"array\\\",\\r\\n                                    \\\"items\\\": {\\r\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"array\\\",\\r\\n                                    \\\"items\\\": {\\r\\n                                        \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid tag value\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"deprecated\\\": true\\r\\n            }\\r\\n        },\\r\\n        \\\"/pet/{petId}\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Find pet by ID\\\",\\r\\n                \\\"description\\\": \\\"Returns a single pet\\\",\\r\\n                \\\"operationId\\\": \\\"getPetById\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"petId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet to return\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Pet not found\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"api_key\\\": []\\r\\n                    }\\r\\n                ]\\r\\n            },\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Updates a pet in the store with form data\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"updatePetWithForm\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"petId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet that needs to be updated\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"405\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid input\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/x-www-form-urlencoded\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"type\\\": \\\"object\\\",\\r\\n                                \\\"properties\\\": {\\r\\n                                    \\\"name\\\": {\\r\\n                                        \\\"description\\\": \\\"Updated name of the pet\\\",\\r\\n                                        \\\"type\\\": \\\"string\\\"\\r\\n                                    },\\r\\n                                    \\\"status\\\": {\\r\\n                                        \\\"description\\\": \\\"Updated status of the pet\\\",\\r\\n                                        \\\"type\\\": \\\"string\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"delete\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Deletes a pet\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"deletePet\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"api_key\\\",\\r\\n                        \\\"in\\\": \\\"header\\\",\\r\\n                        \\\"required\\\": false,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"petId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"Pet id to delete\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Pet not found\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ]\\r\\n            }\\r\\n        },\\r\\n        \\\"/pet/{petId}/uploadImage\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"pet\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"uploads an image\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"uploadFile\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"petId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet to update\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/ApiResponse\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"petstore_auth\\\": [\\r\\n                            \\\"write:pets\\\",\\r\\n                            \\\"read:pets\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                ],\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/octet-stream\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"type\\\": \\\"string\\\",\\r\\n                                \\\"format\\\": \\\"binary\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/store/inventory\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"store\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Returns pet inventories by status\\\",\\r\\n                \\\"description\\\": \\\"Returns a map of status codes to quantities\\\",\\r\\n                \\\"operationId\\\": \\\"getInventory\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"object\\\",\\r\\n                                    \\\"additionalProperties\\\": {\\r\\n                                        \\\"type\\\": \\\"integer\\\",\\r\\n                                        \\\"format\\\": \\\"int32\\\"\\r\\n                                    }\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                },\\r\\n                \\\"security\\\": [\\r\\n                    {\\r\\n                        \\\"api_key\\\": []\\r\\n                    }\\r\\n                ],\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/store/order\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"store\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Place an order for a pet\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"placeOrder\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid Order\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/json\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"description\\\": \\\"order placed for purchasing the pet\\\",\\r\\n                    \\\"required\\\": true\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/store/order/{orderId}\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"store\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Find purchase order by ID\\\",\\r\\n                \\\"description\\\": \\\"For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions\\\",\\r\\n                \\\"operationId\\\": \\\"getOrderById\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"orderId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of pet that needs to be fetched\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\",\\r\\n                            \\\"minimum\\\": 1,\\r\\n                            \\\"maximum\\\": 10\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/Order\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Order not found\\\"\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"delete\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"store\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Delete purchase order by ID\\\",\\r\\n                \\\"description\\\": \\\"For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors\\\",\\r\\n                \\\"operationId\\\": \\\"deleteOrder\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"orderId\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"ID of the order that needs to be deleted\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"integer\\\",\\r\\n                            \\\"format\\\": \\\"int64\\\",\\r\\n                            \\\"minimum\\\": 1\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid ID supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"Order not found\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/user\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Create user\\\",\\r\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\r\\n                \\\"operationId\\\": \\\"createUser\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/json\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"description\\\": \\\"Created user object\\\",\\r\\n                    \\\"required\\\": true\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/createWithArray\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Creates list of users with given input array\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"createUsersWithArrayInput\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/UserArray\\\"\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/createWithList\\\": {\\r\\n            \\\"post\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Creates list of users with given input array\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"createUsersWithListInput\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"$ref\\\": \\\"#/components/requestBodies/UserArray\\\"\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/login\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Logs user into the system\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"loginUser\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"username\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"The user name for login\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"password\\\",\\r\\n                        \\\"in\\\": \\\"query\\\",\\r\\n                        \\\"description\\\": \\\"The password for login in clear text\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\",\\r\\n                            \\\"format\\\": \\\"password\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"headers\\\": {\\r\\n                            \\\"X-Rate-Limit\\\": {\\r\\n                                \\\"description\\\": \\\"calls per hour allowed by the user\\\",\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"integer\\\",\\r\\n                                    \\\"format\\\": \\\"int32\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"X-Expires-After\\\": {\\r\\n                                \\\"description\\\": \\\"date in UTC when token expires\\\",\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"string\\\",\\r\\n                                    \\\"format\\\": \\\"date-time\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        },\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"string\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"type\\\": \\\"string\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid username/password supplied\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/logout\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Logs out current logged in user session\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"logoutUser\\\",\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"default\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"parameters\\\": []\\r\\n            }\\r\\n        },\\r\\n        \\\"/user/{username}\\\": {\\r\\n            \\\"get\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Get user by user name\\\",\\r\\n                \\\"description\\\": \\\"\\\",\\r\\n                \\\"operationId\\\": \\\"getUserByName\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"username\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"The name that needs to be fetched. Use user1 for testing. \\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"200\\\": {\\r\\n                        \\\"description\\\": \\\"successful operation\\\",\\r\\n                        \\\"content\\\": {\\r\\n                            \\\"application/xml\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                                }\\r\\n                            },\\r\\n                            \\\"application/json\\\": {\\r\\n                                \\\"schema\\\": {\\r\\n                                    \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                                }\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid username supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"User not found\\\"\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"put\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Updated user\\\",\\r\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\r\\n                \\\"operationId\\\": \\\"updateUser\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"username\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"name that need to be updated\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid user supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"User not found\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"requestBody\\\": {\\r\\n                    \\\"content\\\": {\\r\\n                        \\\"application/json\\\": {\\r\\n                            \\\"schema\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"description\\\": \\\"Updated user object\\\",\\r\\n                    \\\"required\\\": true\\r\\n                }\\r\\n            },\\r\\n            \\\"delete\\\": {\\r\\n                \\\"tags\\\": [\\r\\n                    \\\"user\\\"\\r\\n                ],\\r\\n                \\\"summary\\\": \\\"Delete user\\\",\\r\\n                \\\"description\\\": \\\"This can only be done by the logged in user.\\\",\\r\\n                \\\"operationId\\\": \\\"deleteUser\\\",\\r\\n                \\\"parameters\\\": [\\r\\n                    {\\r\\n                        \\\"name\\\": \\\"username\\\",\\r\\n                        \\\"in\\\": \\\"path\\\",\\r\\n                        \\\"description\\\": \\\"The name that needs to be deleted\\\",\\r\\n                        \\\"required\\\": true,\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    }\\r\\n                ],\\r\\n                \\\"responses\\\": {\\r\\n                    \\\"400\\\": {\\r\\n                        \\\"description\\\": \\\"Invalid username supplied\\\"\\r\\n                    },\\r\\n                    \\\"404\\\": {\\r\\n                        \\\"description\\\": \\\"User not found\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    },\\r\\n    \\\"externalDocs\\\": {\\r\\n        \\\"description\\\": \\\"See AsyncAPI example\\\",\\r\\n        \\\"url\\\": \\\"https://mermade.github.io/shins/asyncapi.html\\\"\\r\\n    },\\r\\n    \\\"components\\\": {\\r\\n        \\\"schemas\\\": {\\r\\n            \\\"Order\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"petId\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"quantity\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int32\\\"\\r\\n                    },\\r\\n                    \\\"shipDate\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"format\\\": \\\"date-time\\\"\\r\\n                    },\\r\\n                    \\\"status\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"description\\\": \\\"Order Status\\\",\\r\\n                        \\\"enum\\\": [\\r\\n                            \\\"placed\\\",\\r\\n                            \\\"approved\\\",\\r\\n                            \\\"delivered\\\"\\r\\n                        ]\\r\\n                    },\\r\\n                    \\\"complete\\\": {\\r\\n                        \\\"type\\\": \\\"boolean\\\",\\r\\n                        \\\"default\\\": false\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"Order\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"Category\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"name\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"Category\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"User\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"username\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"firstName\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"lastName\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"email\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"password\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"phone\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"userStatus\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int32\\\",\\r\\n                        \\\"description\\\": \\\"User Status\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"User\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"Tag\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"name\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"Tag\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"Pet\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"required\\\": [\\r\\n                    \\\"name\\\",\\r\\n                    \\\"photoUrls\\\"\\r\\n                ],\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"id\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int64\\\"\\r\\n                    },\\r\\n                    \\\"category\\\": {\\r\\n                        \\\"$ref\\\": \\\"#/components/schemas/Category\\\"\\r\\n                    },\\r\\n                    \\\"name\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"example\\\": \\\"doggie\\\"\\r\\n                    },\\r\\n                    \\\"photoUrls\\\": {\\r\\n                        \\\"type\\\": \\\"array\\\",\\r\\n                        \\\"xml\\\": {\\r\\n                            \\\"name\\\": \\\"photoUrl\\\",\\r\\n                            \\\"wrapped\\\": true\\r\\n                        },\\r\\n                        \\\"items\\\": {\\r\\n                            \\\"type\\\": \\\"string\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"tags\\\": {\\r\\n                        \\\"type\\\": \\\"array\\\",\\r\\n                        \\\"xml\\\": {\\r\\n                            \\\"name\\\": \\\"tag\\\",\\r\\n                            \\\"wrapped\\\": true\\r\\n                        },\\r\\n                        \\\"items\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/components/schemas/Tag\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"status\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\",\\r\\n                        \\\"description\\\": \\\"pet status in the store\\\",\\r\\n                        \\\"enum\\\": [\\r\\n                            \\\"available\\\",\\r\\n                            \\\"pending\\\",\\r\\n                            \\\"sold\\\"\\r\\n                        ]\\r\\n                    }\\r\\n                },\\r\\n                \\\"xml\\\": {\\r\\n                    \\\"name\\\": \\\"Pet\\\"\\r\\n                }\\r\\n            },\\r\\n            \\\"ApiResponse\\\": {\\r\\n                \\\"type\\\": \\\"object\\\",\\r\\n                \\\"properties\\\": {\\r\\n                    \\\"code\\\": {\\r\\n                        \\\"type\\\": \\\"integer\\\",\\r\\n                        \\\"format\\\": \\\"int32\\\"\\r\\n                    },\\r\\n                    \\\"type\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    },\\r\\n                    \\\"message\\\": {\\r\\n                        \\\"type\\\": \\\"string\\\"\\r\\n                    }\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"requestBodies\\\": {\\r\\n            \\\"Pet\\\": {\\r\\n                \\\"content\\\": {\\r\\n                    \\\"application/json\\\": {\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                        }\\r\\n                    },\\r\\n                    \\\"application/xml\\\": {\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"$ref\\\": \\\"#/components/schemas/Pet\\\"\\r\\n                        }\\r\\n                    }\\r\\n                },\\r\\n                \\\"description\\\": \\\"Pet object that needs to be added to the store\\\",\\r\\n                \\\"required\\\": true\\r\\n            },\\r\\n            \\\"UserArray\\\": {\\r\\n                \\\"content\\\": {\\r\\n                    \\\"application/json\\\": {\\r\\n                        \\\"schema\\\": {\\r\\n                            \\\"type\\\": \\\"array\\\",\\r\\n                            \\\"items\\\": {\\r\\n                                \\\"$ref\\\": \\\"#/components/schemas/User\\\"\\r\\n                            }\\r\\n                        }\\r\\n                    }\\r\\n                },\\r\\n                \\\"description\\\": \\\"List of user object\\\",\\r\\n                \\\"required\\\": true\\r\\n            }\\r\\n        },\\r\\n        \\\"securitySchemes\\\": {\\r\\n            \\\"petstore_auth\\\": {\\r\\n                \\\"type\\\": \\\"oauth2\\\",\\r\\n                \\\"flows\\\": {\\r\\n                    \\\"implicit\\\": {\\r\\n                        \\\"authorizationUrl\\\": \\\"http://petstore.swagger.io/oauth/dialog\\\",\\r\\n                        \\\"scopes\\\": {\\r\\n                            \\\"write:pets\\\": \\\"modify pets in your account\\\",\\r\\n                            \\\"read:pets\\\": \\\"read your pets\\\"\\r\\n                        }\\r\\n                    }\\r\\n                }\\r\\n            },\\r\\n            \\\"api_key\\\": {\\r\\n                \\\"type\\\": \\\"apiKey\\\",\\r\\n                \\\"name\\\": \\\"api_key\\\",\\r\\n                \\\"in\\\": \\\"header\\\"\\r\\n            }\\r\\n        },\\r\\n        \\\"links\\\": {},\\r\\n        \\\"callbacks\\\": {}\\r\\n    },\\r\\n    \\\"security\\\": []\\r\\n}\",\r\n    \"format\": \"openapi+json\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "916ae263-ab0c-4517-b2e4-f31940408ba2"
+          "819a721a-07a5-46e6-820e-7842b7dc1d83"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "40501"
+          "42627"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:23:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775?api-version=2019-01-01&asyncId=5e3cbc122393691028e5c6bd&asyncCode=201"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754?api-version=2019-12-01&asyncId=5e7baae707b43d0e387945d6&asyncCode=201"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "63631f59-d4c9-406e-bda7-c3a7f8efc0e6"
+          "433ad203-5857-444b-8429-94c76a2776c3"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "2a2f8215-2cb2-43ec-bea6-9d1d916eae0c"
+          "d0afaa5b-9517-4ac9-9c11-a638a851ca09"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T012330Z:2a2f8215-2cb2-43ec-bea6-9d1d916eae0c"
+          "NORTHEUROPE:20200325T190304Z:d0afaa5b-9517-4ac9-9c11-a638a851ca09"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:04 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775?api-version=2019-01-01&asyncId=5e3cbc122393691028e5c6bd&asyncCode=201",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL2FwaXMvYWlkODc3NT9hcGktdmVyc2lvbj0yMDE5LTAxLTAxJmFzeW5jSWQ9NWUzY2JjMTIyMzkzNjkxMDI4ZTVjNmJkJmFzeW5jQ29kZT0yMDE=",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754?api-version=2019-12-01&asyncId=5e7baae707b43d0e387945d6&asyncCode=201",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ3NTQ/YXBpLXZlcnNpb249MjAxOS0xMi0wMSZhc3luY0lkPTVlN2JhYWU3MDdiNDNkMGUzODc5NDVkNiZhc3luY0NvZGU9MjAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:24:00 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAC44=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAAM9M=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e82c4afd-62aa-4747-b7ce-c506c5671f49"
+          "53d77f7a-6704-4707-9646-2646e98a7ffe"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "14998"
         ],
         "x-ms-correlation-request-id": [
-          "a6be4fc2-0430-4a75-b95b-bedefaffc689"
+          "8fe95cc0-b071-46a4-a236-a7adf2417706"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T012401Z:a6be4fc2-0430-4a75-b95b-bedefaffc689"
+          "NORTHEUROPE:20200325T190334Z:8fe95cc0-b071-46a4-a236-a7adf2417706"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:34 GMT"
+        ],
         "Content-Length": [
-          "1018"
+          "1041"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -265,64 +265,64 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid8775\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\",\r\n    \"serviceUrl\": \"http://petstore.swagger.io/v2\",\r\n    \"path\": \"openapi4\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid754\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\",\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://petstore.swagger.io/v2\",\r\n    \"path\": \"openapi4\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL2FwaXMvYWlkODc3NT9hcGktdmVyc2lvbj0yMDE5LTAxLTAx",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ3NTQ/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "61c9d5da-018f-49df-b764-8c44aab49df6"
+          "f850aa63-8431-4375-b9fc-8c9550485d0e"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:24:01 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAC44=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAAM9M=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "891b46f8-3128-4204-ab08-fb66c3629075"
+          "f0e012a7-4e84-472c-b78d-538eac71ffe9"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "14997"
         ],
         "x-ms-correlation-request-id": [
-          "1826851d-3224-4313-9a64-9d09bcb63cb4"
+          "4e7b243e-137f-411a-9073-0ffb3c5a9ee0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T012401Z:1826851d-3224-4313-9a64-9d09bcb63cb4"
+          "NORTHEUROPE:20200325T190334Z:4e7b243e-137f-411a-9073-0ffb3c5a9ee0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:34 GMT"
+        ],
         "Content-Length": [
-          "1018"
+          "1041"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -331,64 +331,64 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid8775\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\",\r\n    \"serviceUrl\": \"http://petstore.swagger.io/v2\",\r\n    \"path\": \"openapi4\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid754\",\r\n  \"properties\": {\r\n    \"displayName\": \"Swagger Petstore\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": \":dog: :cat: :rabbit: This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.\",\r\n    \"subscriptionRequired\": true,\r\n    \"serviceUrl\": \"http://petstore.swagger.io/v2\",\r\n    \"path\": \"openapi4\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775?format=openapi-link&export=true&api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL2FwaXMvYWlkODc3NT9mb3JtYXQ9b3BlbmFwaS1saW5rJmV4cG9ydD10cnVlJmFwaS12ZXJzaW9uPTIwMTktMDEtMDE=",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754?format=openapi-link&export=true&api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ3NTQ/Zm9ybWF0PW9wZW5hcGktbGluayZleHBvcnQ9dHJ1ZSZhcGktdmVyc2lvbj0yMDE5LTEyLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "2f05ddd8-8a59-400a-b83d-058d9d64afed"
+          "3e296db8-2da7-4e45-b500-424cdfcf0141"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:24:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAC44=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
+          "\"AAAAAAAAM9M=\""
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3f9c8f82-5b13-40ea-bac6-6dbf2d498993"
+          "e1b79a2f-e4d0-4e0a-a472-31dc92385631"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "aba22cf7-400d-461a-9556-6dfc37e61b3c"
+          "f0581561-b940-44b4-9a5d-937de039d1e0"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T012402Z:aba22cf7-400d-461a-9556-6dfc37e61b3c"
+          "NORTHEUROPE:20200325T190335Z:f0581561-b940-44b4-9a5d-937de039d1e0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:34 GMT"
+        ],
         "Content-Length": [
-          "407"
+          "396"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -397,67 +397,319 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775\",\r\n  \"format\": \"openapi-link\",\r\n  \"value\": {\r\n    \"link\": \"https://apimsthslzlfkuwwyzgff2qn.blob.core.windows.net/api-export/Swagger Petstore.yaml?sv=2017-04-17&sr=b&sig=GpaSw%2FWbAgJqFldWzOLssed5JMCtJ0Dn7mgj4VVCf10%3D&se=2020-02-07T01:29:02Z&sp=r\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754\",\r\n  \"format\": \"openapi-link\",\r\n  \"value\": {\r\n    \"link\": \"https://apimstefvgp0mngpmb4egru0.blob.core.windows.net/api-export/Swagger Petstore.yaml?sv=2017-04-17&sr=b&sig=NyrD5VMrf217lQpZXd2hC0GV8d%2FuqO6jgxhd1LJFvRs%3D&se=2020-03-25T19:08:34Z&sp=r\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice20190101/apis/aid8775?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZTIwMTkwMTAxL2FwaXMvYWlkODc3NT9hcGktdmVyc2lvbj0yMDE5LTAxLTAx",
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/apis/aid754?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvYXBpcy9haWQ3NTQ/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e47184b7-d654-4f73-8347-80131237e76e"
+          "57007f56-dddd-4990-b15e-87e4074d71c1"
         ],
         "If-Match": [
           "*"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.27817.03",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.11.0.0"
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Fri, 07 Feb 2020 01:24:02 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "2798e2fb-05cf-4065-87ee-070f37091339"
+          "afbee57f-e3ad-43f8-962d-5b966e62f402"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "6bd5e57d-8b9c-4cb0-8c7d-7a54a44e16fa"
+          "99278969-090b-4b6a-a177-223ad540c1ae"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200207T012402Z:6bd5e57d-8b9c-4cb0-8c7d-7a54a44e16fa"
+          "NORTHEUROPE:20200325T190336Z:99278969-090b-4b6a-a177-223ad540c1ae"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "0"
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:35 GMT"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tags?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGFncz9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "11d0a238-4f6d-4bae-93bb-a3f770c66a1b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "42fa159e-c776-4292-a0f9-720ed0d4e296"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14995"
+        ],
+        "x-ms-correlation-request-id": [
+          "056558d9-28ba-439e-a00e-a785b269a436"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200325T190336Z:056558d9-28ba-439e-a00e-a785b269a436"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:36 GMT"
+        ],
+        "Content-Length": [
+          "1015"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tags/pet\",\r\n      \"type\": \"Microsoft.ApiManagement/service/tags\",\r\n      \"name\": \"pet\",\r\n      \"properties\": {\r\n        \"displayName\": \"pet\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tags/store\",\r\n      \"type\": \"Microsoft.ApiManagement/service/tags\",\r\n      \"name\": \"store\",\r\n      \"properties\": {\r\n        \"displayName\": \"store\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tags/user\",\r\n      \"type\": \"Microsoft.ApiManagement/service/tags\",\r\n      \"name\": \"user\",\r\n      \"properties\": {\r\n        \"displayName\": \"user\"\r\n      }\r\n    }\r\n  ],\r\n  \"count\": 3\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tags/pet?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGFncy9wZXQ/YXBpLXZlcnNpb249MjAxOS0xMi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "46dffe8f-f8d6-4af5-9e5b-e49f7b33408b"
+        ],
+        "If-Match": [
+          "*"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "79e8d228-ece0-4ade-a964-6b0d38867871"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "537d09dd-6b95-4b5b-b235-2cfa97615d38"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200325T190336Z:537d09dd-6b95-4b5b-b235-2cfa97615d38"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:36 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tags/store?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGFncy9zdG9yZT9hcGktdmVyc2lvbj0yMDE5LTEyLTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c2d5546f-eb88-42a9-aab4-53a1a183fcee"
+        ],
+        "If-Match": [
+          "*"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "72e865b2-cbca-4197-bb15-250522dc1960"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14997"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b1f7d5d-5303-4d82-8653-71c4f3dcebfa"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200325T190337Z:1b1f7d5d-5303-4d82-8653-71c4f3dcebfa"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:36 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3/resourceGroups/ApiM-SDK-EastUS/providers/Microsoft.ApiManagement/service/sdktestservicemapi/tags/user?api-version=2019-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzRmMzRkOWMtNTBlZC00ZDdhLWExYTgtODhkMmFlZDEzYWMzL3Jlc291cmNlR3JvdXBzL0FwaU0tU0RLLUVhc3RVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZW1hcGkvdGFncy91c2VyP2FwaS12ZXJzaW9uPTIwMTktMTItMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "925b8bee-054d-4db8-b84f-50fae982320d"
+        ],
+        "If-Match": [
+          "*"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/5.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "aa0b6d2b-e8ad-44a1-af6b-bca2bd440840"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14996"
+        ],
+        "x-ms-correlation-request-id": [
+          "74f2722b-5df2-4d44-93d9-25496248abe5"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20200325T190338Z:74f2722b-5df2-4d44-93d9-25496248abe5"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 25 Mar 2020 19:03:37 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
       "ResponseBody": "",
@@ -466,16 +718,16 @@
   ],
   "Names": {
     "OpenApiInJsonTest": [
-      "aid8775"
+      "aid754"
     ]
   },
   "Variables": {
-    "SubscriptionId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
+    "SubscriptionId": "74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3",
     "TestCertificate": "MIIHEwIBAzCCBs8GCSqGSIb3DQEHAaCCBsAEgga8MIIGuDCCA9EGCSqGSIb3DQEHAaCCA8IEggO+MIIDujCCA7YGCyqGSIb3DQEMCgECoIICtjCCArIwHAYKKoZIhvcNAQwBAzAOBAidzys9WFRXCgICB9AEggKQRcdJYUKe+Yaf12UyefArSDv4PBBGqR0mh2wdLtPW3TCs6RIGjP4Nr3/KA4o8V8MF3EVQ8LWd/zJRdo7YP2Rkt/TPdxFMDH9zVBvt2/4fuVvslqV8tpphzdzfHAMQvO34ULdB6lJVtpRUx3WNUSbC3h5D1t5noLb0u0GFXzTUAsIw5CYnFCEyCTatuZdAx2V/7xfc0yF2kw/XfPQh0YVRy7dAT/rMHyaGfz1MN2iNIS048A1ExKgEAjBdXBxZLbjIL6rPxB9pHgH5AofJ50k1dShfSSzSzza/xUon+RlvD+oGi5yUPu6oMEfNB21CLiTJnIEoeZ0Te1EDi5D9SrOjXGmcZjCjcmtITnEXDAkI0IhY1zSjABIKyt1rY8qyh8mGT/RhibxxlSeSOIPsxTmXvcnFP3J+oRoHyWzrp6DDw2ZjRGBenUdExg1tjMqThaE7luNB6Yko8NIObwz3s7tpj6u8n11kB5RzV8zJUZkrHnYzrRFIQF8ZFjI9grDFPlccuYFPYUzSsEQU3l4mAoc0cAkaxCtZg9oi2bcVNTLQuj9XbPK2FwPXaF+owBEgJ0TnZ7kvUFAvN1dECVpBPO5ZVT/yaxJj3n380QTcXoHsav//Op3Kg+cmmVoAPOuBOnC6vKrcKsgDgf+gdASvQ+oBjDhTGOVk22jCDQpyNC/gCAiZfRdlpV98Abgi93VYFZpi9UlcGxxzgfNzbNGc06jWkw8g6RJvQWNpCyJasGzHKQOSCBVhfEUidfB2KEkMy0yCWkhbL78GadPIZG++FfM4X5Ov6wUmtzypr60/yJLduqZDhqTskGQlaDEOLbUtjdlhprYhHagYQ2tPD+zmLN7sOaYA6Y+ZZDg7BYq5KuOQZ2QxgewwDQYJKwYBBAGCNxECMQAwEwYJKoZIhvcNAQkVMQYEBAEAAAAwWwYJKoZIhvcNAQkUMU4eTAB7ADYANwBCADcAQQA1AEMAOQAtAEMAQQAzADIALQA0ADAAQwA0AC0AQQAxADUAMwAtAEEAQgAyADIANwA5ADUARQBGADcAOABBAH0waQYJKwYBBAGCNxEBMVweWgBNAGkAYwByAG8AcwBvAGYAdAAgAFIAUwBBACAAUwBDAGgAYQBuAG4AZQBsACAAQwByAHkAcAB0AG8AZwByAGEAcABoAGkAYwAgAFAAcgBvAHYAaQBkAGUAcjCCAt8GCSqGSIb3DQEHBqCCAtAwggLMAgEAMIICxQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQMwDgQIGa3JOIHoBmsCAgfQgIICmF5H0WCdmEFOmpqKhkX6ipBiTk0Rb+vmnDU6nl2L09t4WBjpT1gIddDHMpzObv3ktWts/wA6652h2wNKrgXEFU12zqhaGZWkTFLBrdplMnx/hr804NxiQa4A+BBIsLccczN21776JjU7PBCIvvmuudsKi8V+PmF2K6Lf/WakcZEq4Iq6gmNxTvjSiXMWZe7Wj4+Izt2aoooDYwfQs4KBlI03HzMSU3omA0rXLtARDXwHAJXW2uFwqihlPdC4gwDd/YFwUvnKn92UmyAvENKUV/uKyH3AF1ZqlUgBzYNXyd8YX9H8rtfho2f6qaJZQC93YU3fs9L1xmWIH5saow8r3K85dGCJsisddNsgwtH/o4imOSs8WJw1EjjdpYhyCjs9gE/7ovZzcvrdXBZditLFN8nRIX5HFGz93PksHAQwZbVnbCwVgTGf0Sy5WstPb340ODE5CrakMPUIiVPQgkujpIkW7r4cIwwyyGKza9ZVEXcnoSWZiFSB7yaEf0SYZEoECZwN52wiMxeosJjaAPpWXFe8x5mHbDZ7/DE+pv+Qlyo7rQIzu4SZ9GCvs33dMC/7+RPy6u32ca87kKBQHR1JeCHeBdklMw+pSFRdHxIxq1l5ktycan943OluTdqND5Vf2RwXdSFv2P53334XNKG82wsfm68w7+EgEClDFLz7FymmIfoFO2z0H0adQvkq/7GcIFBSr1K0KEfT2l6csrMc3NSwzDOFiYJDDf++OYUN4nVKlkVE5j+c9Zo8ZkAlz8I4m756wL7e++xXWgwovlsxkBE5TdwWDZDOE8id6yJf54/o4JwS5SEnnNlvt3gRNdo6yCSUrTHfIr9YhvAdJUXbdSrNm5GZu+2fhgg/UJ7EY8pf5BczhNSDkcAwOzAfMAcGBSsOAwIaBBRzf6NV4Bxf3KRT41VV4sQZ348BtgQU7+VeN+vrmbRv0zCvk7r1ORhJ7YkCAgfQ",
     "TestCertificatePassword": "Password",
-    "SubId": "bab08e11-7b12-4354-9fd1-4b5d64d40b68",
-    "ServiceName": "sdktestservice20190101",
-    "Location": "CentralUS",
-    "ResourceGroup": "Api-Default-CentralUS"
+    "SubId": "74f34d9c-50ed-4d7a-a1a8-88d2aed13ac3",
+    "ServiceName": "sdktestservicemapi",
+    "Location": "eastus",
+    "ResourceGroup": "ApiM-SDK-EastUS"
   }
 }

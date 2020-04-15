@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fkeys\u002f261484886?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fkeys\u002f261484886?api-version=7.1-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fkeys\u002f261484886?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fkeys\u002f261484886?api-version=7.1-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -109,7 +109,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fkeys\u002f261484886\u002fe3e822a1254f4186a23fe25e2634abf7\u002fverify?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fkeys\u002f261484886\u002fe3e822a1254f4186a23fe25e2634abf7\u002fverify?api-version=7.1-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -152,7 +152,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fkeys\u002f261484886?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fkeys\u002f261484886?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application\u002fjson",
@@ -209,7 +209,7 @@
       }
     },
     {
-      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fdeletedkeys\u002f261484886?api-version=7.0",
+      "RequestUri": "https:\u002f\u002fheathskv.vault.azure.net\u002fdeletedkeys\u002f261484886?api-version=7.1-preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application\u002fjson",

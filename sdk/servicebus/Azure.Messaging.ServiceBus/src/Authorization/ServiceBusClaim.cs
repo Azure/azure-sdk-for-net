@@ -12,10 +12,10 @@ namespace Azure.Messaging.ServiceBus.Authorization
         /// <summary>Needed for management operations, such as querying metadata, against the service.</summary>
         public const string Manage = "Manage";
 
-        /// <summary>Needed for sending data, such as publishing events, to the service.</summary>
+        /// <summary>Needed for sending messages to the service.</summary>
         public const string Send = "Send";
 
-        /// <summary>Needed for receiving data, such as events, from the service. </summary>
+        /// <summary>Needed for receiving messages from the service. </summary>
         public const string Listen = "Listen";
     }
 }

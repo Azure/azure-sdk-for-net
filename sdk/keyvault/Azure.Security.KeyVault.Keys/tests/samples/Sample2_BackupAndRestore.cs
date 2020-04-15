@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -13,7 +12,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// This sample demonstrates how to back up and restore a Key from Azure Key Vault using synchronous methods of <see cref="KeyClient">.
     /// </summary>
-    [LiveOnly]
     public partial class BackupAndRestore
     {
         [Test]

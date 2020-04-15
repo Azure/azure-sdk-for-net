@@ -37,18 +37,31 @@ namespace Attestation.Tests.ScenarioTests
                 jwk.X5c = new List<string>() { System.Convert.ToBase64String(certificate.Export(X509ContentType.Cert)) };
                 jwks.Keys = new List<JSONWebKey>() { jwk };
 
-                var instanceParams = new AttestationServiceCreationParams {  PolicySigningCertificates = jwks};
+                var creationParams = new AttestationServiceCreationParams
+                {
+                    Location = testBase.location,
+                    Tags = new Dictionary<string, string>
+                    {
+                        { "Key1", "Value1" },
+                        { "Key2", "Value2" }
+                    },
+                    Properties  = new AttestationServiceCreationSpecificParams
+                    {
+                        PolicySigningCertificates = jwks
+                    }
+                };
                 try
                 {
                     var createdAttestation = testBase.client.AttestationProviders.Create(
                         resourceGroupName: testBase.rgName,
                         providerName: testBase.attestationName,
-                        creationParams: instanceParams
+                        creationParams: creationParams
                     );
                     ValidateAttestationProvider(createdAttestation,
                         testBase.attestationName,
                         testBase.rgName,
-                        testBase.subscriptionId);
+                        testBase.subscriptionId,
+                        creationParams);
 
                    testBase.client.AttestationProviders.Get(
                         resourceGroupName: testBase.rgName,
@@ -65,16 +78,31 @@ namespace Attestation.Tests.ScenarioTests
         }
 
         private void ValidateAttestationProvider(
-            AttestationProvider attestaton,
+            AttestationProvider attestation,
             string expectedAttestationName,
             string expectedResourceGroupName,
-            string expectedSubId)
+            string expectedSubId,
+            AttestationServiceCreationParams creationParams)
         {
-            Assert.NotNull(attestaton);
-            Assert.Equal(expectedAttestationName, attestaton.Name);
+            Assert.NotNull(attestation);
+            Assert.Equal(expectedAttestationName, attestation.Name);
+
             string resourceIdFormat = "subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Attestation/attestationProviders/{2}";
             string expectedResourceId = string.Format(resourceIdFormat, expectedSubId, expectedResourceGroupName, expectedAttestationName);
-            Assert.Equal(expectedResourceId, attestaton.Id);
+            Assert.Equal(expectedResourceId, attestation.Id);
+
+            if (creationParams.Tags != null)
+            {
+                Assert.Equal(attestation.Tags.Count, creationParams.Tags.Count);
+                Assert.False(creationParams.Tags.Except(attestation.Tags).Any());
+                Assert.False(attestation.Tags.Except(creationParams.Tags).Any());
+            }
+            else
+            {
+                Assert.Null(attestation.Tags);
+            }
+
+            Assert.True(creationParams.Location.Equals(attestation.Location, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

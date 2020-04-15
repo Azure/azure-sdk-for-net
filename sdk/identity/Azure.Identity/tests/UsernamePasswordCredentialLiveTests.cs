@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -24,9 +25,9 @@ namespace Azure.Identity.Tests
     //   team members can use the azuresdkplayground.onmicrosoft.com tenant
     //   (c54fac88-3dd3-461f-a7c4-8a368e0340b3)
     // - Set the environment variables
-    //    IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_USERNAME
-    //    IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_PASSWORD
-    //    IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_TENANTID
+    //    AZURE_IDENTITY_TEST_USERNAME
+    //    AZURE_IDENTITY_TEST_PASSWORD
+    //    AZURE_IDENTITY_TEST_TENANTID
     //   to the corresponding values of the newly created temp account.
     // - Run the tests in "Record" mode and copy the updated recordings into the
     //   .\SessionRecords folder.
@@ -55,11 +56,7 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void ClearDiscoveryCache()
         {
-            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.StaticMetadataProvider", true);
-
-            var staticMetadataProvider = Activator.CreateInstance(staticMetadataProviderType);
-
-            staticMetadataProvider.GetType().GetMethod("Clear", BindingFlags.Public | BindingFlags.Instance).Invoke(staticMetadataProvider, null);
+            StaticCachesUtilities.ClearStaticMetadataProviderCache();
         }
 
         // !!!!!! WARNING !!!!!
@@ -73,11 +70,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateUsernamePasswordLive()
         {
-            var username = Recording.GetVariableFromEnvironment("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_USERNAME");
-
-            var password = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_PASSWORD") ?? "SANITIZED";
-
-            var tenantId = Recording.GetVariableFromEnvironment("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_TENANTID");
+            var tenantId = Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_TENANTID");
+            var username = Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_USERNAME");
+            var password = Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
 
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 

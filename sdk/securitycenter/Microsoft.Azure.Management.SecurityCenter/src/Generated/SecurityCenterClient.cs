@@ -97,6 +97,11 @@ namespace Microsoft.Azure.Management.Security
         public virtual ISettingsOperations Settings { get; private set; }
 
         /// <summary>
+        /// Gets the IAdvancedThreatProtectionOperations.
+        /// </summary>
+        public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
+
+        /// <summary>
         /// Gets the IDeviceSecurityGroupsOperations.
         /// </summary>
         public virtual IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; private set; }
@@ -167,11 +172,6 @@ namespace Microsoft.Azure.Management.Security
         public virtual ITopologyOperations Topology { get; private set; }
 
         /// <summary>
-        /// Gets the IAdvancedThreatProtectionOperations.
-        /// </summary>
-        public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
-
-        /// <summary>
         /// Gets the IAutoProvisioningSettingsOperations.
         /// </summary>
         public virtual IAutoProvisioningSettingsOperations AutoProvisioningSettings { get; private set; }
@@ -220,6 +220,21 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the ISubAssessmentsOperations.
         /// </summary>
         public virtual ISubAssessmentsOperations SubAssessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAutomationsOperations.
+        /// </summary>
+        public virtual IAutomationsOperations Automations { get; private set; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataOperations.
+        /// </summary>
+        public virtual IAssessmentsMetadataOperations AssessmentsMetadata { get; private set; }
+
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        public virtual IAssessmentsOperations Assessments { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -466,6 +481,7 @@ namespace Microsoft.Azure.Management.Security
             Pricings = new PricingsOperations(this);
             Alerts = new AlertsOperations(this);
             Settings = new SettingsOperations(this);
+            AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
             DeviceSecurityGroups = new DeviceSecurityGroupsOperations(this);
             IotSecuritySolution = new IotSecuritySolutionOperations(this);
             IotSecuritySolutionAnalytics = new IotSecuritySolutionAnalyticsOperations(this);
@@ -480,7 +496,6 @@ namespace Microsoft.Azure.Management.Security
             Operations = new Operations(this);
             Tasks = new TasksOperations(this);
             Topology = new TopologyOperations(this);
-            AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
             AutoProvisioningSettings = new AutoProvisioningSettingsOperations(this);
             Compliances = new CompliancesOperations(this);
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
@@ -491,6 +506,9 @@ namespace Microsoft.Azure.Management.Security
             RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
             ServerVulnerabilityAssessment = new ServerVulnerabilityAssessmentOperations(this);
             SubAssessments = new SubAssessmentsOperations(this);
+            Automations = new AutomationsOperations(this);
+            AssessmentsMetadata = new AssessmentsMetadataOperations(this);
+            Assessments = new AssessmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -527,6 +545,8 @@ namespace Microsoft.Azure.Management.Security
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResourceDetails>("source"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdditionalData>("assessedResourceType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdditionalData>("assessedResourceType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AutomationAction>("actionType"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AutomationAction>("actionType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

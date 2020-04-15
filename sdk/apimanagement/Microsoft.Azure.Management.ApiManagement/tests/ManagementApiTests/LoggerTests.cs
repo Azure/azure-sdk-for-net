@@ -164,12 +164,12 @@ namespace ApiManagement.Tests.ManagementApiTests
                 {
                     testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, newloggerId, "*");
                     // clean up all properties
-                    var listOfProperties = testBase.client.Property.ListByService(
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
                         testBase.rgName,
                         testBase.serviceName);
                     foreach (var property in listOfProperties)
                     {
-                        testBase.client.Property.Delete(
+                        testBase.client.NamedValue.Delete(
                             testBase.rgName,
                             testBase.serviceName,
                             property.Name,
@@ -287,13 +287,13 @@ namespace ApiManagement.Tests.ManagementApiTests
                 finally
                 {
                     testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, newloggerId, "*");
-                    var listOfProperties = testBase.client.Property.ListByService(
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
                         testBase.rgName,
                         testBase.serviceName);
 
                     foreach (var property in listOfProperties)
                     {
-                        testBase.client.Property.Delete(
+                        testBase.client.NamedValue.Delete(
                             testBase.rgName,
                             testBase.serviceName,
                             property.Name,

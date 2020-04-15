@@ -38,14 +38,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// API key.
-        /// </summary>
-        string ApiKey { get; set; }
-
-        /// <summary>
         /// Supported Cognitive Services endpoints.
         /// </summary>
         string Endpoint { get; set; }
+
+        /// <summary>
+        /// Subscription credentials which uniquely identify client
+        /// subscription.
+        /// </summary>
+        ServiceClientCredentials Credentials { get; }
 
 
         /// <summary>
@@ -155,6 +156,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<Project>> UpdateProjectWithHttpMessagesAsync(System.Guid projectId, Project updatedProject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Exports a project.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id of the project to export.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ProjectExport>> ExportProjectWithHttpMessagesAsync(System.Guid projectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Add the provided images to the set of training images.
@@ -1061,13 +1076,31 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The email address to send notification to when training finishes
         /// (default: null).
         /// </param>
+        /// <param name='trainingParameters'>
+        /// Additional training parameters passed in to control how the project
+        /// is trained.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Iteration>> TrainProjectWithHttpMessagesAsync(System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Iteration>> TrainProjectWithHttpMessagesAsync(System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), TrainingParameters trainingParameters = default(TrainingParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Imports a project.
+        /// </summary>
+        /// <param name='token'>
+        /// Token generated from the export project call.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<Project>> ImportProjectWithHttpMessagesAsync(string token, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services Text Analytics Service client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
-    <Version>1.0.0-preview.3</Version>
+    <Version>1.0.0-preview.5</Version>
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
     <GenerateAPIListing>false</GenerateAPIListing>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -26,5 +26,7 @@
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" />
   </ItemGroup>
 </Project>

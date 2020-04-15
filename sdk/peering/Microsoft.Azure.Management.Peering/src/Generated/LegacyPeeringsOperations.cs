@@ -60,6 +60,9 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='kind'>
         /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
         /// </param>
+        /// <param name='asn'>
+        /// The ASN number associated with a legacy peering.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -81,7 +84,7 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PeeringModel>>> ListWithHttpMessagesAsync(string peeringLocation, string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PeeringModel>>> ListWithHttpMessagesAsync(string peeringLocation, string kind, int? asn = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (peeringLocation == null)
             {
@@ -95,10 +98,7 @@ namespace Microsoft.Azure.Management.Peering
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-01-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -108,6 +108,8 @@ namespace Microsoft.Azure.Management.Peering
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("peeringLocation", peeringLocation);
                 tracingParameters.Add("kind", kind);
+                tracingParameters.Add("asn", asn);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -124,9 +126,13 @@ namespace Microsoft.Azure.Management.Peering
             {
                 _queryParameters.Add(string.Format("kind={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(kind, Client.SerializationSettings).Trim('"'))));
             }
-            if (Client.ApiVersion != null)
+            if (asn != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("asn={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(asn, Client.SerializationSettings).Trim('"'))));
+            }
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

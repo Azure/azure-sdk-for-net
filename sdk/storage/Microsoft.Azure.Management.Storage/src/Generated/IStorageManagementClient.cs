@@ -105,6 +105,16 @@ namespace Microsoft.Azure.Management.Storage
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
 
         /// <summary>
+        /// Gets the IObjectReplicationPoliciesOperations.
+        /// </summary>
+        IObjectReplicationPoliciesOperations ObjectReplicationPolicies { get; }
+
+        /// <summary>
+        /// Gets the IEncryptionScopesOperations.
+        /// </summary>
+        IEncryptionScopesOperations EncryptionScopes { get; }
+
+        /// <summary>
         /// Gets the IBlobServicesOperations.
         /// </summary>
         IBlobServicesOperations BlobServices { get; }

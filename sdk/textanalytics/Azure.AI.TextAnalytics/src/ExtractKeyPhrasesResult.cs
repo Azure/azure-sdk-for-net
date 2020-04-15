@@ -8,8 +8,7 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the extract key phrases operation on a single document,
-    /// containing a collection of the key phrases identified in that document.
+    /// The result of the extract key phrases operation on a document.
     /// </summary>
     public class ExtractKeyPhrasesResult : TextAnalyticsResult
     {
@@ -24,7 +23,7 @@ namespace Azure.AI.TextAnalytics
         internal ExtractKeyPhrasesResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// Gets the collection of key phrases identified in the input document.
+        /// Gets the collection of key phrases identified in the document.
         /// </summary>
         public IReadOnlyCollection<string> KeyPhrases
         {

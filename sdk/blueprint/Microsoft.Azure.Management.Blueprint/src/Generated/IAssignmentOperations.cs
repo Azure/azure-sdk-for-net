@@ -25,15 +25,13 @@ namespace Microsoft.Azure.Management.Blueprint
     {
         /// <summary>
         /// List operations for given blueprint assignment within a
-        /// subscription.
+        /// subscription or a management group.
         /// </summary>
-        /// <param name='scope'>
+        /// <param name='resourceScope'>
         /// The scope of the resource. Valid scopes are: management group
         /// (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'). For
-        /// blueprint assignments management group scope is reserved for future
-        /// use.
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
         /// Name of the blueprint assignment.
@@ -53,17 +51,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<AssignmentOperation>>> ListWithHttpMessagesAsync(string scope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<AssignmentOperation>>> ListWithHttpMessagesAsync(string resourceScope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a blueprint assignment operation.
         /// </summary>
-        /// <param name='scope'>
+        /// <param name='resourceScope'>
         /// The scope of the resource. Valid scopes are: management group
         /// (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}'). For
-        /// blueprint assignments management group scope is reserved for future
-        /// use.
+        /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
         /// Name of the blueprint assignment.
@@ -86,10 +82,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AssignmentOperation>> GetWithHttpMessagesAsync(string scope, string assignmentName, string assignmentOperationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AssignmentOperation>> GetWithHttpMessagesAsync(string resourceScope, string assignmentName, string assignmentOperationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List operations for given blueprint assignment within a
-        /// subscription.
+        /// subscription or a management group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -25,13 +25,12 @@ namespace Azure.Identity.Tests.Mock
 
         public Func<string[], AuthenticationResult> DeviceCodeAuthFactory { get; set; }
 
-
         public override Task<IEnumerable<IAccount>> GetAccountsAsync()
         {
             return Task.FromResult(Accounts);
         }
 
-        public override Task<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, CancellationToken cancellationToken)
+        public override Task<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = UserPassAuthFactory ?? AuthFactory;
 
@@ -43,7 +42,7 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        public override Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, CancellationToken cancellationToken)
+        public override Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = InteractiveAuthFactory ?? AuthFactory;
 
@@ -55,7 +54,7 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        public override Task<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, CancellationToken cancellationToken)
+        public override Task<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
 
@@ -67,7 +66,7 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        public override Task<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, CancellationToken cancellationToken)
+        public override Task<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
         {
             Func<string[], AuthenticationResult> factory = DeviceCodeAuthFactory ?? AuthFactory;
 

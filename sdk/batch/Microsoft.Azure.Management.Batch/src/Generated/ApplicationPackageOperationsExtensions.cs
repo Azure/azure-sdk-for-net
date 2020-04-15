@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.Batch
     public static partial class ApplicationPackageOperationsExtensions
     {
             /// <summary>
-            /// Activates the specified application package.
+            /// Activates the specified application package. This should be done after the
+            /// `ApplicationPackage` was created and uploaded. This needs to be done before
+            /// an `ApplicationPackage` can be used on Pools or Tasks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -48,7 +50,9 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Activates the specified application package.
+            /// Activates the specified application package. This should be done after the
+            /// `ApplicationPackage` was created and uploaded. This needs to be done before
+            /// an `ApplicationPackage` can be used on Pools or Tasks.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -80,7 +84,10 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Creates an application package record.
+            /// Creates an application package record. The record contains the SAS where
+            /// the package should be uploaded to.  Once it is uploaded the
+            /// `ApplicationPackage` needs to be activated using `ApplicationPackageActive`
+            /// before it can be used.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -103,7 +110,10 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Creates an application package record.
+            /// Creates an application package record. The record contains the SAS where
+            /// the package should be uploaded to.  Once it is uploaded the
+            /// `ApplicationPackage` needs to be activated using `ApplicationPackageActive`
+            /// before it can be used.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -4,7 +4,7 @@ namespace Azure
     {
         protected AsyncPageable() { }
         protected AsyncPageable(System.Threading.CancellationToken cancellationToken) { }
-        protected virtual System.Threading.CancellationToken CancellationToken { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        protected virtual System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public abstract System.Collections.Generic.IAsyncEnumerable<Azure.Page<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
@@ -13,6 +13,13 @@ namespace Azure
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public partial class AzureKeyCredential
+    {
+        public AzureKeyCredential(string key) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string Key { get { throw null; } }
+        public void Update(string key) { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ETag : System.IEquatable<Azure.ETag>
@@ -34,8 +41,8 @@ namespace Azure
     {
         private readonly int _dummyPrimitive;
         public HttpRange(long offset = (long)0, long? length = default(long?)) { throw null; }
-        public long? Length { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public long Offset { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public long? Length { get { throw null; } }
+        public long Offset { get { throw null; } }
         public bool Equals(Azure.HttpRange other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
@@ -48,8 +55,8 @@ namespace Azure
     public partial class MatchConditions
     {
         public MatchConditions() { }
-        public Azure.ETag? IfMatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.ETag? IfNoneMatch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public Azure.ETag? IfMatch { get { throw null; } set { } }
+        public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
     public abstract partial class Operation<T> where T : notnull
     {
@@ -74,7 +81,7 @@ namespace Azure
     {
         protected Pageable() { }
         protected Pageable(System.Threading.CancellationToken cancellationToken) { }
-        protected virtual System.Threading.CancellationToken CancellationToken { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        protected virtual System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public abstract System.Collections.Generic.IEnumerable<Azure.Page<T>> AsPages(string? continuationToken = null, int? pageSizeHint = default(int?));
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
@@ -102,18 +109,20 @@ namespace Azure
     public partial class RequestConditions : Azure.MatchConditions
     {
         public RequestConditions() { }
-        public System.DateTimeOffset? IfModifiedSince { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.DateTimeOffset? IfUnmodifiedSince { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
+        public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestFailedException : System.Exception
+    public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(int status, string message) { }
         public RequestFailedException(int status, string message, System.Exception? innerException) { }
         public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) { }
+        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public RequestFailedException(string message) { }
         public RequestFailedException(string message, System.Exception? innerException) { }
-        public string? ErrorCode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int Status { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string? ErrorCode { get { throw null; } }
+        public int Status { get { throw null; } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public abstract partial class Response : System.IDisposable
     {
@@ -152,16 +161,16 @@ namespace Azure.Core
         private object _dummy;
         private int _dummyPrimitive;
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn) { throw null; }
-        public System.DateTimeOffset ExpiresOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Token { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public string Token { get { throw null; } }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
-        public Azure.Core.DiagnosticsOptions Diagnostics { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public Azure.Core.RetryOptions Retry { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
+        public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -175,14 +184,14 @@ namespace Azure.Core
     {
         internal DiagnosticsOptions() { }
         public string? ApplicationId { get { throw null; } set { } }
-        public static string? DefaultApplicationId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool IsDistributedTracingEnabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool IsLoggingContentEnabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool IsLoggingEnabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool IsTelemetryEnabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public int LoggedContentSizeLimit { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.Collections.Generic.IList<string> LoggedHeaderNames { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public System.Collections.Generic.IList<string> LoggedQueryParameters { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static string? DefaultApplicationId { get { throw null; } set { } }
+        public bool IsDistributedTracingEnabled { get { throw null; } set { } }
+        public bool IsLoggingContentEnabled { get { throw null; } set { } }
+        public bool IsLoggingEnabled { get { throw null; } set { } }
+        public bool IsTelemetryEnabled { get { throw null; } set { } }
+        public int LoggedContentSizeLimit { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>
@@ -190,8 +199,8 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public HttpHeader(string name, string value) { throw null; }
-        public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Value { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
         public bool Equals(Azure.Core.HttpHeader other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -225,12 +234,12 @@ namespace Azure.Core
     public sealed partial class HttpMessage : System.IDisposable
     {
         public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) { }
-        public bool BufferResponse { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.Threading.CancellationToken CancellationToken { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public bool BufferResponse { get { throw null; } set { } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
-        public Azure.Core.Request Request { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
-        public Azure.Core.ResponseClassifier ResponseClassifier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
         public void Dispose() { }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
@@ -245,10 +254,10 @@ namespace Azure.Core
     {
         protected Request() { }
         public abstract string ClientRequestId { get; set; }
-        public virtual Azure.Core.RequestContent? Content { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public virtual Azure.Core.RequestContent? Content { get { throw null; } set { } }
         public Azure.Core.RequestHeaders Headers { get { throw null; } }
-        public virtual Azure.Core.RequestMethod Method { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public virtual Azure.Core.RequestUriBuilder Uri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public virtual Azure.Core.RequestMethod Method { get { throw null; } set { } }
+        public virtual Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
         public abstract void Dispose();
@@ -292,15 +301,15 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RequestMethod(string method) { throw null; }
-        public static Azure.Core.RequestMethod Delete { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Get { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Head { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Method { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Options { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Patch { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Post { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Put { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public static Azure.Core.RequestMethod Trace { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Core.RequestMethod Delete { get { throw null; } }
+        public static Azure.Core.RequestMethod Get { get { throw null; } }
+        public static Azure.Core.RequestMethod Head { get { throw null; } }
+        public string Method { get { throw null; } }
+        public static Azure.Core.RequestMethod Options { get { throw null; } }
+        public static Azure.Core.RequestMethod Patch { get { throw null; } }
+        public static Azure.Core.RequestMethod Post { get { throw null; } }
+        public static Azure.Core.RequestMethod Put { get { throw null; } }
+        public static Azure.Core.RequestMethod Trace { get { throw null; } }
         public bool Equals(Azure.Core.RequestMethod other) { throw null; }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -358,10 +367,11 @@ namespace Azure.Core
     public partial class RetryOptions
     {
         internal RetryOptions() { }
-        public System.TimeSpan Delay { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public System.TimeSpan MaxDelay { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public int MaxRetries { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Core.RetryMode Mode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public System.TimeSpan Delay { get { throw null; } set { } }
+        public System.TimeSpan MaxDelay { get { throw null; } set { } }
+        public int MaxRetries { get { throw null; } set { } }
+        public Azure.Core.RetryMode Mode { get { throw null; } set { } }
+        public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
     public abstract partial class TokenCredential
     {
@@ -375,8 +385,8 @@ namespace Azure.Core
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public TokenRequestContext(string[] scopes, string? parentRequestId = null) { throw null; }
-        public string? ParentRequestId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string[] Scopes { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string? ParentRequestId { get { throw null; } }
+        public string[] Scopes { get { throw null; } }
     }
 }
 namespace Azure.Core.Cryptography
@@ -447,7 +457,7 @@ namespace Azure.Core.Pipeline
     public partial class HttpPipeline
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
-        public Azure.Core.ResponseClassifier ResponseClassifier { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
         public Azure.Core.HttpMessage CreateMessage() { throw null; }
         public Azure.Core.Request CreateRequest() { throw null; }
         public void Send(Azure.Core.HttpMessage message, System.Threading.CancellationToken cancellationToken) { }

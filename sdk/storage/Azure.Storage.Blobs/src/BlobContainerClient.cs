@@ -585,7 +585,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -636,7 +636,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -686,7 +686,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExistsAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -737,7 +737,7 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
         /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// already exists, it is not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -1133,7 +1133,8 @@ namespace Azure.Storage.Blobs
                     return Response.FromValue(true, response);
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound
+                || storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -2407,7 +2408,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown
-        /// if the blob already exists.  To override an existing block blob,
+        /// if the blob already exists.  To overwrite an existing block blob,
         /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
         /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
         /// with the override parameter set to true.
@@ -2447,7 +2448,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown
-        /// if the blob already exists.  To override an existing block blob,
+        /// if the blob already exists.  To overwrite an existing block blob,
         /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
         /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
         /// with the override parameter set to true.

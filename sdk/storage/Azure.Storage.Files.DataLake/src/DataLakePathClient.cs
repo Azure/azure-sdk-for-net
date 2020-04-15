@@ -280,6 +280,20 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>.
+        /// </summary>
+        /// <param name="fileSystemClient"><see cref="DataLakeFileSystemClient"/> of the path's File System.</param>
+        /// <param name="path">The path to the <see cref="DataLakePathClient"/>.</param>
+        public DataLakePathClient(DataLakeFileSystemClient fileSystemClient, string path)
+            : this(
+                  (new DataLakeUriBuilder(fileSystemClient.Uri) { DirectoryOrFilePath = path }).ToDfsUri(),
+                  fileSystemClient.Pipeline,
+                  fileSystemClient.Version,
+                  fileSystemClient.ClientDiagnostics)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
         /// class.
         /// </summary>
@@ -432,6 +446,8 @@ namespace Azure.Storage.Files.DataLake
         #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a file or directory.
+        /// If the path already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing path, consider using the <see cref="CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -443,7 +459,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory..
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -462,7 +478,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -476,7 +492,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        protected virtual Response<PathInfo> Create(
+        public virtual Response<PathInfo> Create(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
@@ -515,6 +531,8 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="Create"/> operation creates a file or directory.
+        /// If the path already exists, it will be overwritten.  If you don't intent to overwrite
+        /// an existing path, consider using the <see cref="CreateIfNotExists"/> API.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -526,7 +544,7 @@ namespace Azure.Storage.Files.DataLake
         /// new file or directory.
         /// </param>
         /// <param name="metadata">
-        /// Optional custom metadata to set for this file or directory..
+        /// Optional custom metadata to set for this file or directory.
         /// </param>
         /// <param name="permissions">
         /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
@@ -545,7 +563,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
-        /// conditions on the creation of this file or directory..
+        /// conditions on the creation of this file or directory.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -756,7 +774,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        protected virtual Response<PathInfo> CreateIfNotExists(
+        public virtual Response<PathInfo> CreateIfNotExists(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders = default,
             Metadata metadata = default,
@@ -944,6 +962,12 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="CreateIfNotExists"/>
         /// instead.
         /// </remarks>
+        /// <remarks>
+        /// Note that if you call FileClient.Exists on a path that does not
+        /// represent a file, Exists will return true. Similarly, if you
+        /// call DirectoryClient.Exists on a path that is not a directory,
+        /// Exists will return true.
+        /// </remarks>
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default)
         {
@@ -984,6 +1008,12 @@ namespace Azure.Storage.Files.DataLake
         /// it doesn't exist, use
         /// <see cref="CreateIfNotExistsAsync"/>
         /// instead.
+        /// </remarks>
+        /// <remarks>
+        /// Note that if you call FileClient.Exists on a path that does not
+        /// represent a file, Exists will return true. Similarly, if you
+        /// call DirectoryClient.Exists on a path that is not a directory,
+        /// Exists will return true.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default)
