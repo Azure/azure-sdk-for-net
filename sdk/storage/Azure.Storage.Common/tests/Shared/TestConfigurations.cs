@@ -129,7 +129,7 @@ namespace Azure.Storage.Test
             GetTenant("TargetManagedDiskTenant", s_configurations.Value.TargetManagedDiskTenantName);
 
         /// <summary>
-        /// Gets a tenant to use for any tests related to blob or container soft delete.
+        /// Gets a tenant to use for any tests related to blob, container, or share soft delete.
         /// </summary>
         public static TenantConfiguration DefaultTargetSoftDeleteTenant =>
             GetTenant("TargetBlobAndContainerSoftDeleteTenant", s_configurations.Value.TargetSoftDeleteTenantName);

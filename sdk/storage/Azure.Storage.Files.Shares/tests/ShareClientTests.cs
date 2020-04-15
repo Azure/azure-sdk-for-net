@@ -749,10 +749,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareItem shareItem = shares.Where(s => s.Name == shareName).FirstOrDefault();
 
             // It takes some time for the Share to be deleted.
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await Task.Delay(30000);
-            }
+            await Delay(30000);
 
             // Act
             await share.RestoreAsync(
@@ -773,10 +770,11 @@ namespace Azure.Storage.Files.Shares.Test
             // Arrange
             ShareServiceClient service = GetServiceClient_SoftDelete();
             ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            string fakeVersion = "01D60F8BB59A4652";
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                share.RestoreAsync(GetNewShareName(), "01D60F8BB59A4652"),
+                share.RestoreAsync(GetNewShareName(), fakeVersion),
                 e => Assert.AreEqual(ShareErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
         }
 
