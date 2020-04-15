@@ -1658,6 +1658,53 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryRelativeAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_Hns();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            BlockBlobClient blob = await GetNewBlobClient(test.Container);
+
+            // Delay 1 second, so current times doesn't equal blob creation time.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(1000);
+            }
+
+            // Act
+            Response<BlobInfo> expiryResponse = await blob.SetExpiryRelativeAsync(new TimeSpan(hours: 1, minutes: 0, seconds: 0));
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync().ToListAsync();
+            BlobItem blobItem = blobItems.Where(b => b.Name == blob.Name).FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(expiryResponse.Value.ETag);
+            Assert.IsNotNull(expiryResponse.Value.LastModified);
+            Assert.IsNotNull(blobItem.Properties.ExpiresOn);
+            Assert.AreNotEqual(propertiesResponse.Value.CreatedOn.AddHours(1), propertiesResponse.Value.ExpiresOn);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryRelativeAsync_RelativeToBlobCreationTime()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_Hns();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            BlockBlobClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            await blob.SetExpiryRelativeAsync(
+                timeToExpire: new TimeSpan(hours: 1, minutes: 0, seconds: 0),
+                relativeToBlobCreationTime: true);
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(propertiesResponse.Value.CreatedOn.AddHours(1), propertiesResponse.Value.ExpiresOn);
+        }
+
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
             => new RequestConditions
             {
@@ -1699,6 +1746,19 @@ namespace Azure.Storage.Blobs.Test
             public BlockListTypes BlockListTypes { get; set; }
             public int CommittedCount { get; set; }
             public int UncommittedCount { get; set; }
+        }
+
+        private async Task<BlockBlobClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
+        {
+            blobName ??= GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+            return blob;
         }
     }
 }
