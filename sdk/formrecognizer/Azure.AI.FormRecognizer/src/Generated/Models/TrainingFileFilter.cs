@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary> Initializes a new instance of TrainingFileFilter. </summary>
         /// <param name="prefix"> A case-sensitive prefix string to filter documents in the source path for training. For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for training. </param>
         /// <param name="includeSubFolders"> A flag to indicate if sub folders within the set of prefix folders will also need to be included when searching for content to be preprocessed. </param>
-        internal TrainingFileFilter(string prefix, bool? includeSubFolders)
+        internal TrainingFileFilter(string prefix, bool includeSubFolders)
         {
             Prefix = prefix;
             IncludeSubFolders = includeSubFolders;

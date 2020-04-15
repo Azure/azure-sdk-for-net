@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Training
         public string Prefix { get; set; } = string.Empty;
 
         /// <inheritdoc />
-        public bool? IncludeSubFolders { get; set; } = false;
+        public bool IncludeSubFolders { get; set; } = false;
 
     }
 }
