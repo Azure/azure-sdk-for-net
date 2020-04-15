@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeContentRequiresTheFormFileStream()
         {
             var client = CreateInstrumentedClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeContentAsync(null, ContentType.Jpeg));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeContentAsync(null));
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentAsync(stream, ContentType.Jpeg, cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentAsync(stream, default, cancellationSource.Token));
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, default, cancellationSource.Token));
         }
 
         /// <summary>

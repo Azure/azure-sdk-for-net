@@ -26,19 +26,19 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<ExtractedTable> Tables { get; }
+        public IReadOnlyList<FormTable> Tables { get; }
 
         /// <summary>
         /// </summary>
         public RawExtractedPage RawExtractedPage { get; }
 
-        internal static IReadOnlyList<ExtractedTable> ConvertTables(IReadOnlyList<DataTable_internal> tablesResult, ReadResult_internal readResult)
+        internal static IReadOnlyList<FormTable> ConvertTables(IReadOnlyList<DataTable_internal> tablesResult, ReadResult_internal readResult)
         {
-            List<ExtractedTable> tables = new List<ExtractedTable>();
+            List<FormTable> tables = new List<FormTable>();
 
             foreach (var result in tablesResult)
             {
-                tables.Add(new ExtractedTable(result, readResult));
+                tables.Add(new FormTable(result, readResult));
             }
 
             return tables;

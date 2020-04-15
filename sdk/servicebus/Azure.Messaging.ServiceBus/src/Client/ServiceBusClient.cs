@@ -490,14 +490,11 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionProcessor"/> to.
         /// If left blank, the next available session returned from the service will be used.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
             string queueName,
             ServiceBusProcessorOptions options = default,
-            string sessionId = default,
-            CancellationToken cancellationToken = default)
+            string sessionId = default)
         {
             ValidateEntityName(queueName);
 
@@ -519,15 +516,12 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionProcessor"/> to.
         /// If left blank, the next available session returned from the service will be used.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
             string topicName,
             string subscriptionName,
             ServiceBusProcessorOptions options = default,
-            string sessionId = default,
-            CancellationToken cancellationToken = default)
+            string sessionId = default)
         {
             ValidateEntityName(topicName);
 

@@ -13,11 +13,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         [CodeGenMember("Code")]
-        public string Code { get; set; }
+        public string Code { get; internal set; }
 
         /// <summary>
         /// </summary>
         [CodeGenMember("Message")]
-        public string Message { get; set; }
+        public string Message { get; internal set; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using Azure.AI.FormRecognizer;
-using Azure.AI.FormRecognizer.Custom;
+using Azure.AI.FormRecognizer.Models;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Response to the get custom model operation. </summary>
     internal partial class Model_internal

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -37,15 +38,15 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeContentPopulatesExtractedLayoutPage(bool useStream)
+        public async Task StartRecognizeContentPopulatesFormPage(bool useStream)
         {
             var client = CreateInstrumentedClient();
-            Operation<IReadOnlyList<ExtractedLayoutPage>> operation;
+            Operation<IReadOnlyList<FormPage>> operation;
 
             if (useStream)
             {
                 using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
-                operation = await client.StartRecognizeContentAsync(stream, ContentType.Jpeg);
+                operation = await client.StartRecognizeContentAsync(stream);
             }
             else
             {
@@ -57,34 +58,29 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            var layoutPage = operation.Value.Single();
+            var formPage = operation.Value.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(1, layoutPage.PageNumber);
+            Assert.AreEqual(LengthUnit.Inch, formPage.Unit);
+            Assert.AreEqual(8.5, formPage.Width);
+            Assert.AreEqual(11, formPage.Height);
+            Assert.AreEqual(0, formPage.TextAngle);
+            Assert.AreEqual(18, formPage.Lines.Count);
 
-            var rawPage = layoutPage.RawExtractedPage;
-
-            Assert.AreEqual(1, rawPage.Page);
-            Assert.AreEqual(LengthUnit.Inch, rawPage.Unit);
-            Assert.AreEqual(8.5, rawPage.Width);
-            Assert.AreEqual(11, rawPage.Height);
-            Assert.AreEqual(0, rawPage.Angle);
-            Assert.AreEqual(18, rawPage.Lines.Count);
-
-            var lines = rawPage.Lines.ToList();
+            var lines = formPage.Lines.ToList();
 
             for (var lineIndex = 0; lineIndex < lines.Count; lineIndex++)
             {
                 var line = lines[lineIndex];
 
-                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
+                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}. ");
                 Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
             }
 
-            var table = layoutPage.Tables.Single();
+            var table = formPage.Tables.Single();
 
             Assert.AreEqual(2, table.RowCount);
             Assert.AreEqual(6, table.ColumnCount);
@@ -121,7 +117,8 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater than or equal to zero.");
                 Assert.LessOrEqual(cell.RowIndex, 1, $"Cell with text {cell.Text} should have confidence less than or equal to one.");
 
-                Assert.Greater(cell.RawExtractedItems.Count, 0, $"Cell with text {cell.Text} should have at least one extracted item.");
+                // TODO: enable.
+                // Assert.Greater(cell.TextContent.Count, 0, $"Cell with text {cell.Text} should have text content.");
             }
         }
 
@@ -135,7 +132,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();
-            Operation<IReadOnlyList<ExtractedReceipt>> operation;
+            Operation<IReadOnlyList<RecognizedReceipt>> operation;
 
             if (useStream)
             {
@@ -145,24 +142,25 @@ namespace Azure.AI.FormRecognizer.Tests
             else
             {
                 var uri = new Uri(TestEnvironment.ReceiptUri);
-                operation = await client.StartRecognizeReceiptsFromUriAsync(uri);
+                operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
             await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
-            var receipt = operation.Value.Single();
+            var receipt = operation.Value.Single().AsUSReceipt();
+
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(1, receipt.StartPageNumber);
-            Assert.AreEqual(1, receipt.EndPageNumber);
+            Assert.AreEqual(1, receipt.RecognizedForm.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, receipt.RecognizedForm.PageRange.LastPageNumber);
 
-            Assert.AreEqual("Contoso Contoso", receipt.MerchantName);
-            Assert.AreEqual("123 Main Street Redmond, WA 98052", receipt.MerchantAddress);
-            Assert.AreEqual("123-456-7890", receipt.MerchantPhoneNumber);
+            Assert.AreEqual("Contoso Contoso", (string)receipt.MerchantName);
+            Assert.AreEqual("123 Main Street Redmond, WA 98052", (string)receipt.MerchantAddress);
+            Assert.AreEqual("123-456-7890", (string)receipt.MerchantPhoneNumber.ValueText);
 
             Assert.IsNotNull(receipt.TransactionDate);
             Assert.IsNotNull(receipt.TransactionTime);
@@ -174,9 +172,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(6, date.Month);
             Assert.AreEqual(2019, date.Year);
 
-            Assert.AreEqual(13, time.Hour);
-            Assert.AreEqual(59, time.Minute);
-            Assert.AreEqual(0, time.Second);
+            Assert.AreEqual(13, time.Hours);
+            Assert.AreEqual(59, time.Minutes);
+            Assert.AreEqual(0, time.Seconds);
 
             var expectedItems = new List<(int? Quantity, string Name, float? Price, float? TotalPrice)>()
             {
@@ -193,16 +191,24 @@ namespace Azure.AI.FormRecognizer.Tests
                 var receiptItem = receipt.Items[itemIndex];
                 var expectedItem = expectedItems[itemIndex];
 
-                Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Name, receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity == null? null : (float?)receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Name, (string)receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
+                Assert.That(receiptItem.Price == null? null : (float?)receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
+                Assert.That(receiptItem.TotalPrice == null? null: (float?)receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
             }
 
-            Assert.That(receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
-            Assert.That(receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
+            Assert.That((float?)receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
+            Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
             Assert.IsNull(receipt.Tip);
-            Assert.That(receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+            Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+        }
+
+        [Test]
+        public void CreateFormTrainingClientFromFormRecognizerClient()
+        {
+            FormRecognizerClient client = CreateInstrumentedClient();
+            FormTrainingClient trainingClient = client.GetFormTrainingClient();
+            Assert.IsNotNull(trainingClient);
         }
 
         /// <summary>

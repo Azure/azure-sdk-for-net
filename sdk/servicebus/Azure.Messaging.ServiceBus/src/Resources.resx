@@ -294,4 +294,7 @@
   <data name="UnsupportedTransportEventType" xml:space="preserve">
     <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
   </data>
+  <data name="MessageBatchIsLocked" xml:space="preserve">
+    <value>The message batch is currently being used in communication with the Service Bus service; messages may not be added until the active operation is complete.</value>
+  </data>
 </root>

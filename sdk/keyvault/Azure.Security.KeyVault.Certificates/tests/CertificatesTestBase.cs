@@ -4,11 +4,11 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Identity;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -33,8 +33,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
 
         private readonly ConcurrentQueue<string> _issuerToDelete = new ConcurrentQueue<string>();
-
         private readonly ConcurrentQueue<IEnumerable<CertificateContact>> _contactsToDelete = new ConcurrentQueue<IEnumerable<CertificateContact>>();
+
+        private KeyVaultTestEventListener _listener;
 
         public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
@@ -45,27 +46,28 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             recording ??= Recording;
 
-            CertificateClientOptions options = new CertificateClientOptions(_serviceVersion)
-            {
-                Diagnostics =
-                {
-                    IsLoggingContentEnabled = Debugger.IsAttached,
-                }
-            };
-
             return InstrumentClient
                 (new CertificateClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
                     recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(options)));
+                    recording.InstrumentClientOptions(new CertificateClientOptions(_serviceVersion))));
         }
 
         public override void StartTestRecording()
         {
             base.StartTestRecording();
 
+            _listener = new KeyVaultTestEventListener();
+
             Client = GetClient();
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+        }
+
+        public override void StopTestRecording()
+        {
+            _listener?.Dispose();
+
+            base.StopTestRecording();
         }
 
         [TearDown]

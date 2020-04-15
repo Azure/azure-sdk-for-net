@@ -46,6 +46,13 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract bool TryAdd(ServiceBusMessage message);
 
         /// <summary>
+        ///   Clears the batch, removing all messages and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public abstract void Clear();
+
+        /// <summary>
         ///   Represents the batch as an enumerable set of transport-specific
         ///   representations of a message.
         /// </summary>
