@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// should be used for authenticating requests to the key
         /// vault.</param>
         /// <param name="sku">SKU details</param>
-        /// <param name="accessPolicies">An array of 0 to 16 identities that
+        /// <param name="accessPolicies">An array of 0 to 1024 identities that
         /// have access to the key vault. All identities in the array must use
         /// the same tenant ID as the key vault's tenant ID. When `createMode`
         /// is set to `recover`, access policies are not required. Otherwise,
@@ -122,9 +122,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of 0 to 16 identities that have access to the
-        /// key vault. All identities in the array must use the same tenant ID
-        /// as the key vault's tenant ID. When `createMode` is set to
+        /// Gets or sets an array of 0 to 1024 identities that have access to
+        /// the key vault. All identities in the array must use the same tenant
+        /// ID as the key vault's tenant ID. When `createMode` is set to
         /// `recover`, access policies are not required. Otherwise, access
         /// policies are required.
         /// </summary>
