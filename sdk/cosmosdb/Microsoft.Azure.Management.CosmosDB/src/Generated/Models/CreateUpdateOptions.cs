@@ -53,6 +53,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Gets or sets unmatched properties from the message are deserialized
         /// this collection
         /// </summary>
+        [JsonExtensionData]
         public IDictionary<string, string> AdditionalProperties { get; set; }
 
         /// <summary>
