@@ -125,9 +125,9 @@ namespace Azure.AI.FormRecognizer.Models
             List<FormPage> pages = new List<FormPage>();
             List<ReadResult_internal> rawPages = readResults.ToList();
 
-            foreach (var pageResult in pageResults)
+            for (var pageIndex = 0; pageIndex < pageResults.Count; pageIndex++)
             {
-                pages.Add(new FormPage(pageResult, rawPages[pageResult.Page - 1]));
+                pages.Add(new FormPage(pageResults[pageIndex], rawPages, pageIndex));
             }
 
             return pages;
