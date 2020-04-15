@@ -262,7 +262,8 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392
 ```
 
 3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13).
-4. Add a `*ManagementClientOptions` or `*ClientOptions` (depending if the library is management library) type that inherits from `ClientOptions` and has a service version enum:
+4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
+4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 
 ``` C#
 namespace Azure.Management.Storage
@@ -306,17 +307,7 @@ namespace Azure.Management.Storage
         }
     }
 ```
-NOTE: `ManagementClientPipeline` is a helper clas that builds a client pipeline:
 
-``` C#
-    internal static class ManagementClientPipeline
-    {
-        public static HttpPipeline Build(ClientOptions options, TokenCredential tokenCredential)
-        {
-            return HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(tokenCredential, "https://management.azure.com/.default"));
-        }
-    }
-```
 ### Code Review Process
 
 Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
