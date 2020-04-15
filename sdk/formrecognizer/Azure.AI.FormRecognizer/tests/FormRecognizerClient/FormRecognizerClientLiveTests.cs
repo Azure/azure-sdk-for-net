@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -200,6 +201,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
             Assert.IsNull(receipt.Tip);
             Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+        }
+
+        [Test]
+        public void CreateFormTrainingClientFromFormRecognizerClient()
+        {
+            FormRecognizerClient client = CreateInstrumentedClient();
+            FormTrainingClient trainingClient = client.GetFormTrainingClient();
+            Assert.IsNotNull(trainingClient);
         }
 
         /// <summary>

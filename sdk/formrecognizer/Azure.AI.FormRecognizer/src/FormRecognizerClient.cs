@@ -18,6 +18,8 @@ namespace Azure.AI.FormRecognizer
     public class FormRecognizerClient
     {
         internal readonly ServiceClient ServiceClient;
+        private readonly Uri _endpoint;
+        private readonly AzureKeyCredential _credential;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClient"/>.
@@ -32,9 +34,11 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
+            _endpoint = endpoint;
+            _credential = credential;
             var diagnostics = new ClientDiagnostics(options);
-            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(diagnostics, pipeline, endpoint.ToString());
+            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(_credential, Constants.AuthorizationHeader));
+            ServiceClient = new ServiceClient(diagnostics, pipeline, _endpoint.ToString());
         }
 
         /// <summary>
@@ -304,11 +308,12 @@ namespace Azure.AI.FormRecognizer
 
         #region Training client
         /// <summary>
+        /// Get an instance of a <see cref="FormTrainingClient"/> from <see cref="FormRecognizerClient"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An instance of a <see cref="FormTrainingClient"/>.</returns>
         public virtual FormTrainingClient GetFormTrainingClient()
         {
-            throw new NotImplementedException();
+            return new FormTrainingClient(_endpoint, _credential);
         }
 
         #endregion Training client
