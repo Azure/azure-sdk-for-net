@@ -1,6 +1,6 @@
 # Azure KeyVault Key Encryptor for Microsoft.AspNetCore.DataProtection
 
-The `Azure.AspNetCore.DataProtection.Keys` package allows protecting keys at rest using Azure KeyVault Key Encryption/Wrapping feature.
+The `Azure.Extensions.AspNetCore.DataProtection.Keys` package allows protecting keys at rest using Azure KeyVault Key Encryption/Wrapping feature.
 
 ## Getting started
 
@@ -9,7 +9,7 @@ The `Azure.AspNetCore.DataProtection.Keys` package allows protecting keys at res
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.AspNetCore.DataProtection.Keys -v 1.0.0-preview.1
+dotnet add package Azure.Extensions.AspNetCore.DataProtection.Keys -v 1.0.0-preview.1
 ```
 
 ### Prerequisites
@@ -57,12 +57,12 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fextensions%2FAzure.AspNetCore.DataProtection.Keys%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fextensions%2FAzure.AspNetCore.Extensions.DataProtection.Keys%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.AspNetCore.DataProtection.Keys/src
-[package]: https://www.nuget.org/packages/Azure.AspNetCore.DataProtection.Keys/
-[docs]: https://docs.microsoft.com/dotnet/api/Azure.AspNetCore.DataProtection.Keys
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/src
+[package]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.DataProtection.Keys/
+[docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.AspNetCore.DataProtection.Keys
 [nuget]: https://www.nuget.org/storage-quickstart-create-account?tabs=azure-powershell
 [keyvault_create_cli]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-cli#create-a-key-vault
 [keyvault_create_portal]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault

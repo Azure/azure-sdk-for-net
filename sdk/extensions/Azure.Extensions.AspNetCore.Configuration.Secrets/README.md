@@ -1,6 +1,6 @@
-# Azure Storage Blob Key Store for Microsoft.AspNetCore.DataProtection
+# Azure KeyVault Secrets configuration provider for Microsoft.Extensions.Configuration 
 
-The `Azure.Extensions.Configuration.Secrets` package allows storing configuration values using Azure KeyVault Secrets.
+The `Azure.Extensions.AspNetCore.Configuration.Secrets` package allows storing configuration values using Azure KeyVault Secrets.
 
 ## Getting started
 
@@ -9,7 +9,7 @@ The `Azure.Extensions.Configuration.Secrets` package allows storing configuratio
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Extensions.Configuration.Secrets -v 1.0.0-preview.1
+dotnet add package Azure.Extensions.AspNetCore.Configuration.Secrets -v 1.0.0-preview.1
 ```
 
 ### Prerequisites
@@ -56,12 +56,12 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fextensions%2FAzure.Extensions.Configuration.Secrets%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fextensions%2FAzure.Extensions.AspNetCore.Configuration.Secrets%2FREADME.png)
 
 <!-- LINKS -->
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.Extensions.Configuration.Secrets/src
-[package]: https://www.nuget.org/packages/Azure.Extensions.Configuration.Secrets/
-[docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.Configuration.Secrets
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/src
+[package]: https://www.nuget.org/packages/Azure.Extensions.AspNetCore.Configuration.Secrets/
+[docs]: https://docs.microsoft.com/dotnet/api/Azure.Extensions.AspNetCore.Configuration.Secrets
 [nuget]: https://www.nuget.org/storage-quickstart-create-account?tabs=azure-powershell
 [keyvault_create_cli]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-cli#create-a-key-vault
 [keyvault_create_portal]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
