@@ -4605,6 +4605,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.TagCount = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
+                        if (response.Headers.TryGetValue("x-ms-expiry-time", out _header))
+                        {
+                            _value.ExpiresOn = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-sealed", out _header))
                         {
                             _value.IsSealed = bool.Parse(_header);
@@ -5647,6 +5651,169 @@ namespace Azure.Storage.Blobs
                 }
             }
             #endregion Blob.UndeleteAsync
+
+            #region Blob.SetExpiryAsync
+            /// <summary>
+            /// Sets the time a blob will expire and be deleted.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="expiryOptions">Required. Indicates mode of the expiry time</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="expiresOn">The time to set the blob to expiry</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobSetExpiryInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobSetExpiryInternal>> SetExpiryAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                Azure.Storage.Blobs.Models.BlobExpiryOptions expiryOptions,
+                int? timeout = default,
+                string requestId = default,
+                string expiresOn = default,
+                bool async = true,
+                string operationName = "BlobClient.SetExpiry",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SetExpiryAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        expiryOptions,
+                        timeout,
+                        requestId,
+                        expiresOn))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetExpiryAsync_CreateResponse(clientDiagnostics, _response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the Blob.SetExpiryAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="expiryOptions">Required. Indicates mode of the expiry time</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="expiresOn">The time to set the blob to expiry</param>
+            /// <returns>The Blob.SetExpiryAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SetExpiryAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                Azure.Storage.Blobs.Models.BlobExpiryOptions expiryOptions,
+                int? timeout = default,
+                string requestId = default,
+                string expiresOn = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Put;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("comp", "expiry", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                _request.Headers.SetValue("x-ms-expiry-option", expiryOptions.ToString());
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (expiresOn != null) { _request.Headers.SetValue("x-ms-expiry-time", expiresOn); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the Blob.SetExpiryAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The Blob.SetExpiryAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSetExpiryInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSetExpiryInternal> SetExpiryAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Blobs.Models.BlobSetExpiryInternal _value = new Azure.Storage.Blobs.Models.BlobSetExpiryInternal();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
+                        Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
+
+                        throw _value.CreateException(clientDiagnostics, response);
+                    }
+                }
+            }
+            #endregion Blob.SetExpiryAsync
 
             #region Blob.SetHttpHeadersAsync
             /// <summary>
@@ -17142,6 +17309,99 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion enum strings BlobErrorCode
 
+#region enum strings BlobExpiryOptions
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Required. Indicates mode of the expiry time
+    /// </summary>
+    internal readonly struct BlobExpiryOptions : System.IEquatable<BlobExpiryOptions>
+    {
+        /// <summary>
+        /// The BlobExpiryOptions value.
+        /// </summary>
+        private readonly string _value;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobExpiryOptions"/> structure.
+        /// </summary>
+        /// <param name="value">The string value of the instance.</param>
+        public BlobExpiryOptions(string value) { _value = value ?? throw new System.ArgumentNullException(nameof(value)); }
+
+        /// <summary>
+        /// NeverExpire
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobExpiryOptions NeverExpire { get; } = new BlobExpiryOptions(@"NeverExpire");
+
+        /// <summary>
+        /// RelativeToCreation
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobExpiryOptions RelativeToCreation { get; } = new BlobExpiryOptions(@"RelativeToCreation");
+
+        /// <summary>
+        /// RelativeToNow
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobExpiryOptions RelativeToNow { get; } = new BlobExpiryOptions(@"RelativeToNow");
+
+        /// <summary>
+        /// Absolute
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobExpiryOptions Absolute { get; } = new BlobExpiryOptions(@"Absolute");
+
+        /// <summary>
+        /// Determines if two <see cref="BlobExpiryOptions"/> values are the same.
+        /// </summary>
+        /// <param name="left">The first <see cref="BlobExpiryOptions"/> to compare.</param>
+        /// <param name="right">The second <see cref="BlobExpiryOptions"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+        public static bool operator ==(Azure.Storage.Blobs.Models.BlobExpiryOptions left, Azure.Storage.Blobs.Models.BlobExpiryOptions right) => left.Equals(right);
+
+        /// <summary>
+        /// Determines if two <see cref="BlobExpiryOptions"/> values are different.
+        /// </summary>
+        /// <param name="left">The first <see cref="BlobExpiryOptions"/> to compare.</param>
+        /// <param name="right">The second <see cref="BlobExpiryOptions"/> to compare.</param>
+        /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+        public static bool operator !=(Azure.Storage.Blobs.Models.BlobExpiryOptions left, Azure.Storage.Blobs.Models.BlobExpiryOptions right) => !left.Equals(right);
+
+        /// <summary>
+        /// Converts a string to a <see cref="BlobExpiryOptions"/>.
+        /// </summary>
+        /// <param name="value">The string value to convert.</param>
+        /// <returns>The BlobExpiryOptions value.</returns>
+        public static implicit operator BlobExpiryOptions(string value) => new Azure.Storage.Blobs.Models.BlobExpiryOptions(value);
+
+        /// <summary>
+        /// Check if two <see cref="BlobExpiryOptions"/> instances are equal.
+        /// </summary>
+        /// <param name="obj">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is Azure.Storage.Blobs.Models.BlobExpiryOptions other && Equals(other);
+
+        /// <summary>
+        /// Check if two <see cref="BlobExpiryOptions"/> instances are equal.
+        /// </summary>
+        /// <param name="other">The instance to compare to.</param>
+        /// <returns>True if they're equal, false otherwise.</returns>
+        public bool Equals(Azure.Storage.Blobs.Models.BlobExpiryOptions other) => string.Equals(_value, other._value, System.StringComparison.Ordinal);
+
+        /// <summary>
+        /// Get a hash code for the <see cref="BlobExpiryOptions"/>.
+        /// </summary>
+        /// <returns>Hash code for the BlobExpiryOptions.</returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+        /// <summary>
+        /// Convert the <see cref="BlobExpiryOptions"/> to a string.
+        /// </summary>
+        /// <returns>String representation of the BlobExpiryOptions.</returns>
+        public override string ToString() => _value;
+    }
+}
+#endregion enum strings BlobExpiryOptions
+
 #region class BlobGeoReplication
 namespace Azure.Storage.Blobs.Models
 {
@@ -17600,6 +17860,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionScope { get; internal set; }
 
         /// <summary>
+        /// Expiry-Time
+        /// </summary>
+        public System.DateTimeOffset? ExpiresOn { get; internal set; }
+
+        /// <summary>
         /// IsSealed
         /// </summary>
         public bool? IsSealed { get; internal set; }
@@ -17780,6 +18045,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.EncryptionScope = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("Expiry-Time", ""));
+            if (_child != null)
+            {
+                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("IsSealed", ""));
             if (_child != null)
             {
@@ -17827,7 +18097,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
             bool accessTierInferred,
-            string copyProgress = default,
+            string copyStatusDescription = default,
             string contentType = default,
             string contentEncoding = default,
             string contentLanguage = default,
@@ -17842,8 +18112,8 @@ namespace Azure.Storage.Blobs.Models
             string copyId = default,
             Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
             System.Uri copySource = default,
+            string copyProgress = default,
             long? contentLength = default,
-            string copyStatusDescription = default,
             bool? serverEncrypted = default,
             bool? incrementalCopy = default,
             string destinationSnapshot = default,
@@ -17853,6 +18123,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
             string encryptionScope = default,
+            System.DateTimeOffset? expiresOn = default,
             bool? isSealed = default,
             Azure.ETag? eTag = default,
             System.DateTimeOffset? createdOn = default,
@@ -17863,7 +18134,7 @@ namespace Azure.Storage.Blobs.Models
             return new BlobItemProperties()
             {
                 AccessTierInferred = accessTierInferred,
-                CopyProgress = copyProgress,
+                CopyStatusDescription = copyStatusDescription,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
                 ContentLanguage = contentLanguage,
@@ -17878,8 +18149,8 @@ namespace Azure.Storage.Blobs.Models
                 CopyId = copyId,
                 CopyStatus = copyStatus,
                 CopySource = copySource,
+                CopyProgress = copyProgress,
                 ContentLength = contentLength,
-                CopyStatusDescription = copyStatusDescription,
                 ServerEncrypted = serverEncrypted,
                 IncrementalCopy = incrementalCopy,
                 DestinationSnapshot = destinationSnapshot,
@@ -17889,6 +18160,7 @@ namespace Azure.Storage.Blobs.Models
                 ArchiveStatus = archiveStatus,
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
                 EncryptionScope = encryptionScope,
+                ExpiresOn = expiresOn,
                 IsSealed = isSealed,
                 ETag = eTag,
                 CreatedOn = createdOn,
@@ -18313,6 +18585,11 @@ namespace Azure.Storage.Blobs.Models
         public long TagCount { get; internal set; }
 
         /// <summary>
+        /// The time this blob will expire.
+        /// </summary>
+        public System.DateTimeOffset ExpiresOn { get; internal set; }
+
+        /// <summary>
         /// If this blob has been sealed
         /// </summary>
         public bool IsSealed { get; internal set; }
@@ -18339,39 +18616,40 @@ namespace Azure.Storage.Blobs.Models
             long contentLength,
             string contentType,
             Azure.ETag eTag,
+            byte[] contentHash,
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
-            string contentEncoding,
             string contentDisposition,
             string contentLanguage,
             string cacheControl,
             long blobSequenceNumber,
-            Azure.Storage.Blobs.Models.LeaseState leaseState,
             string acceptRanges,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
+            Azure.Storage.Blobs.Models.LeaseState leaseState,
             int blobCommittedBlockCount,
-            string destinationSnapshot,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             bool isServerEncrypted,
-            bool isIncrementalCopy,
+            string destinationSnapshot,
             string encryptionKeySha256,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            bool isIncrementalCopy,
             string encryptionScope,
-            System.Uri copySource,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
             string accessTier,
-            string copyProgress,
+            System.Uri copySource,
             bool accessTierInferred,
-            string copyId,
+            string copyProgress,
             string archiveStatus,
-            string copyStatusDescription,
+            string copyId,
             System.DateTimeOffset accessTierChangedOn,
-            System.DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
             string versionId,
-            Azure.Storage.Blobs.Models.BlobType blobType,
+            System.DateTimeOffset copyCompletedOn,
             bool isCurrentVersion,
-            System.Collections.Generic.IDictionary<string, string> metadata,
+            Azure.Storage.Blobs.Models.BlobType blobType,
             long tagCount,
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            System.DateTimeOffset expiresOn,
             System.DateTimeOffset createdOn,
             bool isSealed,
-            byte[] contentHash)
+            string contentEncoding)
         {
             return new BlobProperties()
             {
@@ -18379,39 +18657,40 @@ namespace Azure.Storage.Blobs.Models
                 ContentLength = contentLength,
                 ContentType = contentType,
                 ETag = eTag,
+                ContentHash = contentHash,
                 LeaseStatus = leaseStatus,
-                ContentEncoding = contentEncoding,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
                 CacheControl = cacheControl,
                 BlobSequenceNumber = blobSequenceNumber,
-                LeaseState = leaseState,
                 AcceptRanges = acceptRanges,
-                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
                 BlobCommittedBlockCount = blobCommittedBlockCount,
-                DestinationSnapshot = destinationSnapshot,
+                LeaseDuration = leaseDuration,
                 IsServerEncrypted = isServerEncrypted,
-                IsIncrementalCopy = isIncrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
                 EncryptionKeySha256 = encryptionKeySha256,
-                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
                 EncryptionScope = encryptionScope,
-                CopySource = copySource,
+                CopyStatus = copyStatus,
                 AccessTier = accessTier,
-                CopyProgress = copyProgress,
+                CopySource = copySource,
                 AccessTierInferred = accessTierInferred,
-                CopyId = copyId,
+                CopyProgress = copyProgress,
                 ArchiveStatus = archiveStatus,
-                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
                 AccessTierChangedOn = accessTierChangedOn,
-                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
                 VersionId = versionId,
-                BlobType = blobType,
+                CopyCompletedOn = copyCompletedOn,
                 IsCurrentVersion = isCurrentVersion,
-                Metadata = metadata,
+                BlobType = blobType,
                 TagCount = tagCount,
+                Metadata = metadata,
+                ExpiresOn = expiresOn,
                 CreatedOn = createdOn,
                 IsSealed = isSealed,
-                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
             };
         }
     }
@@ -18746,6 +19025,33 @@ namespace Azure.Storage.Blobs.Models
     }
 }
 #endregion class BlobServiceStatistics
+
+#region class BlobSetExpiryInternal
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// BlobSetExpiryInternal
+    /// </summary>
+    internal partial class BlobSetExpiryInternal
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobSetExpiryInternal instances.
+        /// You can use BlobsModelFactory.BlobSetExpiryInternal instead.
+        /// </summary>
+        internal BlobSetExpiryInternal() { }
+    }
+}
+#endregion class BlobSetExpiryInternal
 
 #region class BlobSignedIdentifier
 namespace Azure.Storage.Blobs.Models
