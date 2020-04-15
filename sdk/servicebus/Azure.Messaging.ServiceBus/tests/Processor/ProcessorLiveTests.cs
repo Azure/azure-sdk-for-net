@@ -283,7 +283,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        public async Task OnMessageExceptionHandlerCalledTest()
+        public async Task OnMessageExceptionHandlerCalled()
         {
             var invalidQueueName = "nonexistentqueuename";
             var exceptionReceivedHandlerCalled = false;
@@ -324,7 +324,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await processor.StartProcessingAsync();
                 var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 10)
+                while (stopwatch.Elapsed.TotalSeconds <= 20)
                 {
                     if (exceptionReceivedHandlerCalled)
                     {
