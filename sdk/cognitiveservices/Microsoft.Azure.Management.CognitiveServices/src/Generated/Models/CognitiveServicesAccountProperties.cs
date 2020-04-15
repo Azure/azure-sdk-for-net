@@ -119,5 +119,18 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         [JsonProperty(PropertyName = "apiProperties")]
         public CognitiveServicesAccountApiProperties ApiProperties { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ApiProperties != null)
+            {
+                ApiProperties.Validate();
+            }
+        }
     }
 }
