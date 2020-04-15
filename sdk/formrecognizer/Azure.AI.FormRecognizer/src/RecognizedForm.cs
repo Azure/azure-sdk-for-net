@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -55,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             for (int i = 0; i < readResults.Count; i++)
             {
-                pages.Add(new FormPage(pageResults != null ? pageResults[i] : null, readResults[i]));
+                pages.Add(new FormPage(pageResults != null ? pageResults[i] : null, readResults, i));
             }
 
             return pages;
