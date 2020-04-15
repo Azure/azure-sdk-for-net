@@ -373,6 +373,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -614,6 +618,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -825,6 +833,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -1054,6 +1066,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -1214,6 +1230,8 @@ namespace Microsoft.Azure.Management.EventHub
 
         /// <summary>
         /// Creates or updates an AuthorizationRule for the specified Event Hub.
+        /// Creation/update of the AuthorizationRule will take a few seconds to take
+        /// effect.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group within the azure subscription.
@@ -1289,6 +1307,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -1549,6 +1571,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -1791,6 +1817,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -2018,6 +2048,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -2267,6 +2301,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
