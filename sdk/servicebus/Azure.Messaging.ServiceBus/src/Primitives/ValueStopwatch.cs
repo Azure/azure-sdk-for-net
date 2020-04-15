@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Diagnostics;
+
 namespace Azure.Messaging.ServiceBus.Primitives
 {
-    using System;
-    using System.Diagnostics;
-
     // https://github.com/dotnet/aspnetcore/blob/master/src/Shared/ValueStopwatch/ValueStopwatch.cs
     internal struct ValueStopwatch
     {
