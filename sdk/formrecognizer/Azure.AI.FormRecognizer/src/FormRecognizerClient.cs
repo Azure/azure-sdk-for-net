@@ -290,6 +290,14 @@ namespace Azure.AI.FormRecognizer
 
         #endregion Training client
 
+        /// <summary>
+        /// Used as part of argument validation. Detects the <see cref="ContentType"/> of a stream and
+        /// throws an <see cref="ArgumentException"/> in case of failure.
+        /// </summary>
+        /// <param name="stream">The stream to which the content type detection attempt will be performed.</param>
+        /// <param name="paramName">The original parameter name of the <paramref name="stream"/>. Used to create exceptions in case of failure.</param>
+        /// <returns>The detected <see cref="ContentType"/>.</returns>
+        /// <exception cref="ArgumentException">Happens when detection fails or cannot be performed.</exception>
         private static ContentType DetectContentType(Stream stream, string paramName)
         {
             ContentType contentType;

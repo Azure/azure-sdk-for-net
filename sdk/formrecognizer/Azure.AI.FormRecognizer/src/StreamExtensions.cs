@@ -9,21 +9,29 @@ namespace Azure.AI.FormRecognizer
 {
     internal static class StreamExtensions
     {
-        /// <summary></summary>
+        /// <summary>The set of bytes expected to be present at the start of PDF files.</summary>
         private static byte[] PdfHeader = new byte[] { 0x25, 0x50, 0x44, 0x46 };
 
-        /// <summary></summary>
+        /// <summary>The set of bytes expected to be present at the start of PNG files.</summary>
         private static byte[] PngHeader = new byte[] { 0x89, 0x50, 0x4E, 0x47 };
 
-        /// <summary></summary>
-        private static byte[] JpegHeader = new byte[] { 0xff, 0xd8 };
+        /// <summary>The set of bytes expected to be present at the start of JPEG files.</summary>
+        private static byte[] JpegHeader = new byte[] { 0xFF, 0xD8 };
 
-        /// <summary></summary>
+        /// <summary>The set of bytes expected to be present at the start of TIFF (little-endian) files.</summary>
         private static byte[] TiffLeHeader = new byte[] { 0x49, 0x49, 0x2A, 0x00 };
 
-        /// <summary></summary>
+        /// <summary>The set of bytes expected to be present at the start of TIFF (big-endian) files.</summary>
         private static byte[] TiffBeHeader = new byte[] { 0x4D, 0x4D, 0x00, 0x2A };
 
+        /// <summary>
+        /// Attemps to detect the <see cref="ContentType"/> of a stream of bytes. The algorithm searches through
+        /// the first set of bytes in the stream and compares it to well-known file signatures.
+        /// </summary>
+        /// <param name="stream">The stream to which the content type detection attempt will be performed.</param>
+        /// <param name="contentType">If the detection is successful, outputs the detected content type. Otherwise, <c>default</c>.</param>
+        /// <returns><c>true</c> if the detection was successful. Otherwise, <c>false</c>.</returns>
+        /// <exception cref="NotSupportedException">Happens when <paramref name="stream"/> is not seekable or readable.</exception>
         public static bool TryGetContentType(this Stream stream, out ContentType contentType)
         {
             var originalPosition = stream.Position;
