@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -1520,6 +1521,153 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion GetBlockList
+
+        #region SetExpiry
+        /// <summary>
+        /// Sets the blob's ExpiresOn property.  ExpiresOn is when
+        /// the blob will be deleted.  If <paramref name="relativeToBlobCreationTime"/>
+        /// is true, the ExpiresOn time will be set relative to the
+        /// time the blob was created.  Otherwise, it will be set
+        /// relative to the current time.
+        /// </summary>
+        /// <param name="timeToExpire">
+        /// <see cref="TimeSpan"/>.
+        /// </param>
+        /// <param name="relativeToBlobCreationTime">
+        /// If true, the ExpiresOn property will be set relative to
+        /// the time the blob was created.  Otherwise, it will be set
+        /// relative to the current time.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobInfo}"/> describing the blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobInfo>> SetExpiryRelativeInternal(
+            TimeSpan timeToExpire,
+            bool relativeToBlobCreationTime,
+            bool async,
+            CancellationToken cancellationToken)
+            => await SetExpiryInternal(
+                timeToExpire.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
+                relativeToBlobCreationTime ? BlobExpiryOptions.RelativeToCreation : BlobExpiryOptions.RelativeToNow,
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Sets the blob's ExpiresOn time, when the blob will
+        /// be delete.  If <paramref name="expiresOn"/> is null,
+        /// the blob's existing ExpiresOn property will be
+        /// removed.
+        /// </summary>
+        /// <param name="expiresOn">
+        /// The <see cref="DateTimeOffset"/> to set for when
+        /// the blob will be deleted.  If null, the existing
+        /// ExpiresOn time on the blob will be removed, if it exists.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobInfo}"/> describing the blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobInfo>> SetExpiryAbsoluteInternal(
+            DateTimeOffset? expiresOn,
+            bool async,
+            CancellationToken cancellationToken)
+            => await SetExpiryInternal(
+                expiresOn?.ToString("R", CultureInfo.InvariantCulture),
+                expiresOn.HasValue ? BlobExpiryOptions.Absolute : BlobExpiryOptions.NeverExpire,
+                async,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Sets the Expires On property for this blob.
+        /// The blob will be deleted when Expires On time is reached.
+        /// </summary>
+        /// <param name="expiryTime">
+        /// Relative or absolute time when the blob will be delted.
+        /// </param>
+        /// <param name="expiryOptions">
+        /// ExpiryOptions.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobInfo}"/> describing the blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobInfo>> SetExpiryInternal(
+            string expiryTime,
+            BlobExpiryOptions expiryOptions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlockBlobClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(expiryTime)}: {expiryTime}\n" +
+                    $"{nameof(expiryOptions)}: {expiryOptions}");
+                try
+                {
+                    Response<BlobSetExpiryInternal> response = await BlobRestClient.Blob.SetExpiryAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        Version.ToVersionString(),
+                        expiryOptions,
+                        expiresOn: expiryTime,
+                        async: async,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new BlobInfo
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                }
+            }
+        }
+        #endregion SetExpiry
     }
 
     /// <summary>
