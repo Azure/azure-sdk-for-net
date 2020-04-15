@@ -917,9 +917,9 @@ namespace Azure.Storage.Blobs.Test
             AppendBlobClient srcBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
             await srcBlob.CreateAsync();
-            StartCopyFromUriOptions options = new StartCopyFromUriOptions
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
             {
-                SealBlob = true
+                IsSealed = true
             };
 
             // Act

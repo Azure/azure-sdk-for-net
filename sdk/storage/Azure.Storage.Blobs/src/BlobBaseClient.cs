@@ -1219,7 +1219,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StartCopyFromUri
         /// <summary>
-        /// The <see cref="StartCopyFromUri(Uri, StartCopyFromUriOptions, CancellationToken)"/>
+        /// The <see cref="StartCopyFromUri(Uri, BlobCopyFromUriOptions, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
         /// returned from the <see cref="GetProperties"/> to determine if the
@@ -1259,7 +1259,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual CopyFromUriOperation StartCopyFromUri(
             Uri source,
-            StartCopyFromUriOptions options,
+            BlobCopyFromUriOptions options,
             CancellationToken cancellationToken = default)
         {
             Response<BlobCopyInfo> response = StartCopyFromUriInternal(
@@ -1269,7 +1269,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.RehydratePriority,
-                options?.SealBlob,
+                options?.IsSealed,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1404,7 +1404,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
             Uri source,
-            StartCopyFromUriOptions options,
+            BlobCopyFromUriOptions options,
             CancellationToken cancellationToken = default)
         {
             Response<BlobCopyInfo> response = await StartCopyFromUriInternal(
@@ -1414,7 +1414,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.RehydratePriority,
-                options?.SealBlob,
+                options?.IsSealed,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);

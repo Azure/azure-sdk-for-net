@@ -8,7 +8,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Optional parameters for Start Copy from URL.
     /// </summary>
-    public class StartCopyFromUriOptions
+    public class BlobCopyFromUriOptions
     {
         /// <summary>
         /// Optional custom metadata to set for this append blob.
@@ -43,6 +43,6 @@ namespace Azure.Storage.Blobs.Models
         /// If the destination blob should be sealed.
         /// Only applicable for Append Blobs.
         /// </summary>
-        public bool? SealBlob { get; set; }
+        public bool? IsSealed { get; set; }
     }
 }
