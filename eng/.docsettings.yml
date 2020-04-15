@@ -16,7 +16,10 @@ language: net
 root_check_enabled: True
 required_readme_sections:
   - "Azure .+ client library for .NET"
-  - ^Getting started$
+  - "^Getting started$":
+    - Install Package
+    - Prerequisites
+    - Authenticate the Client
   - ^Key concepts$
   - ^Examples$
   - ^Troubleshooting$
