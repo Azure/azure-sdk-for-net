@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,15 +59,11 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.RestClient.AnalyzeLayoutAsync(ContentType.Pdf, formFileStream, cancellationToken);
-            //Response response = ServiceClient.RestClient.AnalyzeLayoutAsync(ContentType.Pdf, formFileStream, cancellationToken);
+            recognizeOptions ??= new RecognizeOptions();
+            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            // TODO: throw Exception if header is not present.
-            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
-            string operationLocation = response.Headers.OperationLocation;
-            return new RecognizeContentOperation(ServiceClient, operationLocation);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response =  ServiceClient.RestClient.AnalyzeLayoutAsync(contentType, formFileStream, cancellationToken);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -82,15 +77,11 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(ContentType.Pdf, formFileStream, cancellationToken).ConfigureAwait(false);
-            //Response response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(ContentType.Pdf, formFileStream, cancellationToken).ConfigureAwait(false);
+            recognizeOptions ??= new RecognizeOptions();
+            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            // TODO: throw Exception if header is not present.
-            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
-            string operationLocation = response.Headers.OperationLocation;
-            return new RecognizeContentOperation(ServiceClient, operationLocation);
+            ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(contentType, formFileStream, cancellationToken).ConfigureAwait(false);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -106,12 +97,7 @@ namespace Azure.AI.FormRecognizer
         {
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
-            //Response response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
-
-            // TODO: throw Exception if header is not present.
-            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
-            string operationLocation = response.Headers.OperationLocation;
-            return new RecognizeContentOperation(ServiceClient, operationLocation);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -127,12 +113,7 @@ namespace Azure.AI.FormRecognizer
         {
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
-            //Response response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
-
-            // TODO: throw Exception if header is not present.
-            //response.Headers.TryGetValue("Operation-Location", out string operationLocation);
-            string operationLocation = response.Headers.OperationLocation;
-            return new RecognizeContentOperation(ServiceClient, operationLocation);
+            return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
         }
 
         #endregion
@@ -144,18 +125,15 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="receiptLocale"></param>>
-        /// <param name="contentType"></param>
         /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, ContentType contentType, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-
             recognizeOptions ??= new RecognizeOptions();
+            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeReceiptAsyncAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
@@ -166,18 +144,15 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
         /// <param name="receiptLocale"></param>
-        /// <param name="contentType"></param>
         /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, ContentType contentType, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-
             recognizeOptions ??= new RecognizeOptions();
+            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeReceiptAsyncHeaders> response = ServiceClient.RestClient.AnalyzeReceiptAsync(contentType, receiptFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
             return new RecognizeReceiptsOperation(ServiceClient, response.Headers.OperationLocation);
@@ -238,11 +213,9 @@ namespace Azure.AI.FormRecognizer
         public virtual RecognizeCustomFormsOperation StartRecognizeCustomForms(string modelId, Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             recognizeOptions ??= new RecognizeOptions();
+            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), ContentType.Pdf, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
             return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
@@ -278,11 +251,9 @@ namespace Azure.AI.FormRecognizer
         public virtual async Task<RecognizeCustomFormsOperation> StartRecognizeCustomFormsAsync(string modelId, Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             recognizeOptions ??= new RecognizeOptions();
+            ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            // TODO: automate content-type detection
-            // https://github.com/Azure/azure-sdk-for-net/issues/10329
-
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), ContentType.Pdf, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
             return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
@@ -318,5 +289,27 @@ namespace Azure.AI.FormRecognizer
         }
 
         #endregion Training client
+
+        private static ContentType DetectContentType(Stream stream, string paramName)
+        {
+            ContentType contentType;
+
+            if (!stream.CanSeek)
+            {
+                throw new ArgumentException("Content type cannot be detected because stream is not seekable.", paramName);
+            }
+
+            if (!stream.CanRead)
+            {
+                throw new ArgumentException("Content type cannot be detected because stream is not readable.", paramName);
+            }
+
+            if (!stream.TryGetContentType(out contentType))
+            {
+                throw new ArgumentException("Content type of the stream could not be detected.", paramName);
+            }
+
+            return contentType;
+        }
     }
 }
