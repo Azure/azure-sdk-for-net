@@ -1705,6 +1705,78 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(propertiesResponse.Value.CreatedOn.AddHours(1), propertiesResponse.Value.ExpiresOn);
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryRelativeAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_Hns();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetExpiryRelativeAsync(new TimeSpan(hours: 1, minutes: 0, seconds: 0)),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryAbsoluteAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_Hns();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            BlockBlobClient blob = await GetNewBlobClient(test.Container);
+            DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
+
+            // Act
+            Response<BlobInfo> expiryResponse = await blob.SetExpiryAbsoluteAsync(expiresOn);
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync().ToListAsync();
+            BlobItem blobItem = blobItems.Where(b => b.Name == blob.Name).FirstOrDefault();
+
+            // Assert
+            Assert.IsNotNull(expiryResponse.Value.ETag);
+            Assert.IsNotNull(expiryResponse.Value.LastModified);
+            Assert.AreEqual(expiresOn, blobItem.Properties.ExpiresOn);
+            Assert.AreEqual(expiresOn, propertiesResponse.Value.ExpiresOn);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryAbsoluteAsync_RemoveExpiry()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_Hns();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            BlockBlobClient blob = await GetNewBlobClient(test.Container);
+            DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
+            await blob.SetExpiryAbsoluteAsync(expiresOn);
+
+            // Act
+            await blob.SetExpiryAbsoluteAsync();
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(default(DateTimeOffset), propertiesResponse.Value.ExpiresOn);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryAbsoluteAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_Hns();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetExpiryAbsoluteAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)
             => new RequestConditions
             {
