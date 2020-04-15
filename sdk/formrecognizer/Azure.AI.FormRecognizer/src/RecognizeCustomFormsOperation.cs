@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Models
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;
-                    _value = ConvertToRecognizedForms(update.Value.AnalyzeResult.PageResults, update.Value.AnalyzeResult.ReadResults);
+                    _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
                 }
 
                 _response = update.GetRawResponse();
@@ -108,17 +108,31 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-#pragma warning disable CA1801 // Remove unused parameter
-        private static IReadOnlyList<RecognizedForm> ConvertToRecognizedForms(IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
-#pragma warning restore CA1801 // Remove unused parameter
+        private static IReadOnlyList<RecognizedForm> ConvertToRecognizedForms(AnalyzeResult_internal analyzeResult)
         {
-            List<RecognizedForm> pages = new List<RecognizedForm>();
-            for (int i = 0; i < pageResults.Count; i++)
+            return analyzeResult.DocumentResults?.Count == 0 ?
+                ConvertUnsupervisedResult(analyzeResult) :
+                ConvertSupervisedResult(analyzeResult);
+        }
+
+        private static IReadOnlyList<RecognizedForm> ConvertUnsupervisedResult(AnalyzeResult_internal analyzeResult)
+        {
+            List<RecognizedForm> forms = new List<RecognizedForm>();
+            foreach (var pageResult in analyzeResult.PageResults)
             {
-                // TODO: Implement
-                //pages.Add(new RecognizedForm(pageResults[i], readResults[i]));
+                forms.Add(new RecognizedForm(pageResult, analyzeResult.ReadResults));
             }
-            return pages;
+            return forms;
+        }
+
+        private static IReadOnlyList<RecognizedForm> ConvertSupervisedResult(AnalyzeResult_internal analyzeResult)
+        {
+            List<RecognizedForm> forms = new List<RecognizedForm>();
+            foreach (var documentResult in analyzeResult.DocumentResults)
+            {
+                forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
+            }
+            return forms;
         }
     }
 }
