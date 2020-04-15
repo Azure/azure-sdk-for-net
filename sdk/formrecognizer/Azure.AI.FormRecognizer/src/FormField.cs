@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
             ValueText = new FieldText(field.Value.Text, pageNumber, valueBoundingBox, valueFormContent);
 
-            Value = new FieldValue(new FieldValue_internal(FieldValueType.StringType, field.Value.Text, null, null, null, null, null, null, null, field.Value.Text, null, null, null, pageNumber), readResults);
+            Value = new FieldValue(new FieldValue_internal(field.Value.Text), readResults);
         }
 
         internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)

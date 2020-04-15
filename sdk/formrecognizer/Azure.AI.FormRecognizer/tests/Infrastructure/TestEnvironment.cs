@@ -49,7 +49,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public static string RetrieveInvoicePath(int index)
         {
             var filename = string.Format(InvoiceFilenameFormat, index);
-            return Path.Combine(AssetsFolderName, filename);
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), AssetsFolderName, filename);
         }
 
         /// <summary>
