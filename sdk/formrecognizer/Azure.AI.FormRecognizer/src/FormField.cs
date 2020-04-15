@@ -87,8 +87,8 @@ namespace Azure.AI.FormRecognizer.Models
             return formContent;
         }
 
-        private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)");
-        private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)");
+        private static Regex _wordRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)/words/(?<wordIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
+        private static Regex _lineRegex = new Regex(@"/readResults/(?<pageIndex>\d*)/lines/(?<lineIndex>\d*)$", RegexOptions.Compiled, TimeSpan.FromSeconds(2));
 
         private static FormContent ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
         {
@@ -101,21 +101,21 @@ namespace Azure.AI.FormRecognizer.Models
 
             // Word Reference
             var wordMatch = _wordRegex.Match(reference);
-            if (wordMatch.Groups.Count == 4)
+            if (wordMatch.Success && wordMatch.Groups.Count == 4)
             {
-                int pageIndex = int.Parse(wordMatch.Groups[1].Value, CultureInfo.InvariantCulture);
-                int lineIndex = int.Parse(wordMatch.Groups[2].Value, CultureInfo.InvariantCulture);
-                int wordIndex = int.Parse(wordMatch.Groups[3].Value, CultureInfo.InvariantCulture);
+                int pageIndex = int.Parse(wordMatch.Groups["pageIndex"].Value, CultureInfo.InvariantCulture);
+                int lineIndex = int.Parse(wordMatch.Groups["lineIndex"].Value, CultureInfo.InvariantCulture);
+                int wordIndex = int.Parse(wordMatch.Groups["wordIndex"].Value, CultureInfo.InvariantCulture);
 
                 return new FormWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex], pageIndex + 1);
             }
 
             // Line Reference
             var lineMatch = _lineRegex.Match(reference);
-            if (lineMatch.Groups.Count == 3)
+            if (lineMatch.Success && lineMatch.Groups.Count == 3)
             {
-                int pageIndex = int.Parse(lineMatch.Groups[1].Value, CultureInfo.InvariantCulture);
-                int lineIndex = int.Parse(lineMatch.Groups[2].Value, CultureInfo.InvariantCulture);
+                int pageIndex = int.Parse(lineMatch.Groups["pageIndex"].Value, CultureInfo.InvariantCulture);
+                int lineIndex = int.Parse(lineMatch.Groups["lineIndex"].Value, CultureInfo.InvariantCulture);
 
                 return new FormLine(readResults[pageIndex].Lines[lineIndex], pageIndex + 1);
             }
