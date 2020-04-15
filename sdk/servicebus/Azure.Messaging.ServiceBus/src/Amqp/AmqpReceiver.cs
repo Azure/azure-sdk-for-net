@@ -289,25 +289,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IEnumerable<string> lockTokens,
             TimeSpan timeout)
         {
-            bool requestResponse = false;
             var lockTokenGuids = lockTokens.Select(token => new Guid(token)).ToArray();
             foreach (var tokenGuid in lockTokenGuids)
             {
                 if (_requestResponseLockedMessages.Contains(tokenGuid))
                 {
-                    requestResponse = true;
-                    break;
+                    await DisposeMessageRequestResponseAsync(
+                        lockTokenGuids,
+                        timeout,
+                        DispositionStatus.Completed,
+                        _isSessionReceiver,
+                        SessionId).ConfigureAwait(false);
+                    return;
                 }
-            }
-
-            if (requestResponse)
-            {
-                await DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
-                    timeout,
-                    DispositionStatus.Completed,
-                    SessionId).ConfigureAwait(false);
-                return;
             }
             await DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
         }
