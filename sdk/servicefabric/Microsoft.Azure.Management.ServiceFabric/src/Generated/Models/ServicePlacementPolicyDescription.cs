@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.ServiceFabric.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Describes the policy to be used for placement of a Service Fabric
     /// service.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ServicePlacementPolicyDescription")]
     public partial class ServicePlacementPolicyDescription
     {
         /// <summary>
