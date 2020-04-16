@@ -1,6 +1,6 @@
-# Azure KeyVault Key Encryptor for Microsoft.AspNetCore.DataProtection
+# Azure Key Vault Key Encryptor for Microsoft.AspNetCore.DataProtection
 
-The `Azure.Extensions.AspNetCore.DataProtection.Keys` package allows protecting keys at rest using Azure KeyVault Key Encryption/Wrapping feature.
+The `Azure.Extensions.AspNetCore.DataProtection.Keys` package allows protecting keys at rest using Azure Key Vault Key Encryption/Wrapping feature.
 
 ## Getting started
 
@@ -15,7 +15,7 @@ dotnet add package Azure.Extensions.AspNetCore.DataProtection.Keys -v 1.0.0-prev
 ### Prerequisites
 
 You need an [Azure subscription][azure_sub],
-[KeyVault Vault][keyvault_doc] and a Key to use this package.
+[Key Vault][keyvault_doc] and a Key to use this package.
 
 To create a new KeyVault, you can use the [Azure Portal][keyvault_create_portal],
 [Azure PowerShell][keyvault_create_ps], or the [Azure CLI][keyvault_create_cli].

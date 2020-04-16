@@ -2,7 +2,7 @@
 
 Azure Extensions is a set of integration libraries for ASP.NET Core and Microsoft.Extensions packages.
 
-- [Azure.Extensions.AspNetCore.Configuration.Secrets][configuration_secrets] allows Azure KeyVault Secrets to be used as a provider for Microsoft.Extensions.Configuration.
+- [Azure.Extensions.AspNetCore.Configuration.Secrets][configuration_secrets] allows Azure Key Vault Secrets to be used as a provider for Microsoft.Extensions.Configuration.
 
 - [Azure.Extensions.AspNetCore.DataProtection.Keys][dataprotection_keys] allows Azure DataProtection Keys to be used as key protector for Microsoft.AspNetCore.DataProtection.
 

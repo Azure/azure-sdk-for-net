@@ -1,6 +1,6 @@
-# Azure KeyVault Secrets configuration provider for Microsoft.Extensions.Configuration 
+# Azure Key Vault Secrets configuration provider for Microsoft.Extensions.Configuration
 
-The `Azure.Extensions.AspNetCore.Configuration.Secrets` package allows storing configuration values using Azure KeyVault Secrets.
+The `Azure.Extensions.AspNetCore.Configuration.Secrets` package allows storing configuration values using Azure Key Vault Secrets.
 
 ## Getting started
 
@@ -15,7 +15,7 @@ dotnet add package Azure.Extensions.AspNetCore.Configuration.Secrets -v 1.0.0-pr
 ### Prerequisites
 
 You need an [Azure subscription][azure_sub] and
-[Azure KeyVault][keyvault_doc] to use this package.
+[Azure Key Vault][keyvault_doc] to use this package.
 
 To create a new KeyVault, you can use the [Azure Portal][keyvault_create_portal],
 [Azure PowerShell][keyvault_create_ps], or the [Azure CLI][keyvault_create_cli].
@@ -28,7 +28,7 @@ az keyvault secret set --vault-name MyVault --name MySecret --value "hVFkk965BuU
 
 ## Examples
 
-To load initialize configuration from Azure KeyVault secrets call the `AddAzureKeyVault` on `ConfigurationBuilder`:
+To load initialize configuration from Azure Key Vault secrets call the `AddAzureKeyVault` on `ConfigurationBuilder`:
 
 ```C# Snippet:ConfigurationAddAzureKeyVault
 ConfigurationBuilder builder = new ConfigurationBuilder();
