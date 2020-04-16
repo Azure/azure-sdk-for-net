@@ -49,6 +49,11 @@ namespace Azure.Messaging.ServiceBus
         public bool IsDisposed { get; private set; } = false;
 
         /// <summary>
+        /// In the case of a via-sender, the message is sent to <see cref="EntityPath"/> via <see cref="ViaEntityPath"/>; null otherwise.
+        /// </summary>
+        public string ViaEntityPath { get; }
+
+        /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
@@ -78,10 +83,12 @@ namespace Azure.Messaging.ServiceBus
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         /// <param name="entityPath">The entity path to send the message to.</param>
+        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="connection">The connection for the sender.</param>
         ///
         internal ServiceBusSender(
             string entityPath,
+            string viaEntityPath,
             ServiceBusConnection connection)
         {
             Argument.AssertNotNull(connection, nameof(connection));
@@ -90,11 +97,13 @@ namespace Azure.Messaging.ServiceBus
             connection.ThrowIfClosed();
 
             EntityPath = entityPath;
+            ViaEntityPath = viaEntityPath;
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
             _connection = connection;
             _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
             _innerSender = _connection.CreateTransportSender(
                 entityPath,
+                viaEntityPath,
                 _retryPolicy);
         }
 

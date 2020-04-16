@@ -9,8 +9,8 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormTableCell : FormContent
     {
-        internal FormTableCell(DataTableCell_internal dataTableCell, ReadResult_internal readResult, IReadOnlyList<string> references)
-            : base(new BoundingBox(dataTableCell.BoundingBox), readResult.Page, dataTableCell.Text)
+        internal FormTableCell(DataTableCell_internal dataTableCell, IReadOnlyList<ReadResult_internal> readResults, int pageNumber)
+            : base(new BoundingBox(dataTableCell.BoundingBox), pageNumber, dataTableCell.Text)
         {
             ColumnIndex = dataTableCell.ColumnIndex;
             ColumnSpan = dataTableCell.ColumnSpan ?? 1;
@@ -19,11 +19,9 @@ namespace Azure.AI.FormRecognizer.Models
             IsHeader = dataTableCell.IsHeader ?? false;
             RowIndex = dataTableCell.RowIndex;
             RowSpan = dataTableCell.RowSpan ?? 1;
-
-            if (references != null)
-            {
-                //TextContent = FormField.ConvertTextReferences(readResult, references);
-            }
+            TextContent = dataTableCell.Elements != null
+                ? FormField.ConvertTextReferences(dataTableCell.Elements, readResults)
+                : new List<FormContent>();
         }
 
         /// <summary>

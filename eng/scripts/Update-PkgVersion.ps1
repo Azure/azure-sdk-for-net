@@ -36,7 +36,7 @@ Update-PkgVersion.ps1 -ServiceDirectory cognitiveservices -PackageName Microsoft
 [CmdletBinding()]
 Param (
     [ValidateNotNullOrEmpty()]
-    [string] $RepoRoot = "${PSScriptRoot}/..",
+    [string] $RepoRoot = "${PSScriptRoot}/../..",
     [Parameter(Mandatory=$True)]
     [string] $ServiceDirectory,
     [Parameter(Mandatory=$True)]
@@ -45,7 +45,7 @@ Param (
     [string] $NewVersionString
 )
 
-. ${PSScriptRoot}\common\scripts\SemVer.ps1
+. ${PSScriptRoot}\..\common\scripts\SemVer.ps1
 
 # Updated Version in csproj and changelog using computed or set NewVersionString
 function Update-Version([AzureEngSemanticVersion]$SemVer, $Unreleased=$True, $ReplaceVersion=$False)
@@ -60,7 +60,7 @@ function Update-Version([AzureEngSemanticVersion]$SemVer, $Unreleased=$True, $Re
     $CsprojData.Save($PackageCsprojPath)
 
     # Increment Version in ChangeLog file
-    & "${PSScriptRoot}/common/Update-Change-Log.ps1" -Version $SemVer.ToString() -ChangeLogPath $ChangelogPath -Unreleased $Unreleased -ReplaceVersion $ReplaceVersion
+    & "${PSScriptRoot}/../common/Update-Change-Log.ps1" -Version $SemVer.ToString() -ChangeLogPath $ChangelogPath -Unreleased $Unreleased -ReplaceVersion $ReplaceVersion
 }
 
 # Obtain Current Package Version

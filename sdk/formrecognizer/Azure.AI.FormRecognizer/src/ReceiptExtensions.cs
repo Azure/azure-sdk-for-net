@@ -16,8 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <returns></returns>
         public static USReceipt AsUSReceipt(this RecognizedReceipt receipt)
         {
-            throw new NotImplementedException();
+            return new USReceipt(receipt);
         }
-
     }
 }

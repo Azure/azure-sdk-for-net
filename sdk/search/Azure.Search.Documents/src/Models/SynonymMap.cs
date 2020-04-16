@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
+    [CodeGenSuppress(nameof(SynonymMap), typeof(string), typeof(string))]
     public partial class SynonymMap
     {
         private const string DefaultFormat = "soln";

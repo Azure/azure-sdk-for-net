@@ -54,7 +54,7 @@ namespace Azure.Template.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DaysOfWeek other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(DaysOfWeek other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        public bool Equals(DaysOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

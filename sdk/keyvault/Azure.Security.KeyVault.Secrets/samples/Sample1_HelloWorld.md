@@ -5,7 +5,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 
 ## Creating a SecretClient
 
-To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to a Key Vault and credentials.
+To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to an Azure Key Vault and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
@@ -17,7 +17,7 @@ var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 ## Creating a secret
 
 Let's next create a secret holding a bank account credential valid for 1 year.
-If the secret already exists in the Key Vault, a new version of the secret is created.
+If the secret already exists in the Azure Key Vault, a new version of the secret is created.
 
 ```C# Snippet:SecretsSample1CreateSecret
 string secretName = $"BankAccountPassword-{Guid.NewGuid()}";
@@ -30,7 +30,7 @@ client.SetSecret(secret);
 
 ## Getting a secret
 
-Now let's get the bank secret from the Key Vault.
+Now let's get the bank secret from the Azure Key Vault.
 
 ```C# Snippet:SecretsSample1GetSecret
 KeyVaultSecret bankSecret = client.GetSecret(secretName);
@@ -50,8 +50,8 @@ Debug.WriteLine($"Secret's updated expiry time is {updatedSecret.ExpiresOn}");
 
 ## Updating a secret value
 
-Assume the bank forced a password update for security purposes. Let's change the value of the secret in the Key Vault.
-To achieve this, we need to create a new version of the secret in the Key Vault. The update operation cannot change the value of the secret.
+Assume the bank forced a password update for security purposes. Let's change the value of the secret in the Azure Key Vault.
+To achieve this, we need to create a new version of the secret in the Azure Key Vault. The update operation cannot change the value of the secret.
 
 ```C# Snippet:SecretsSample1UpdateSecret
 var secretNewValue = new KeyVaultSecret(secretName, "bhjd4DDgsa");
@@ -62,7 +62,7 @@ client.SetSecret(secretNewValue);
 
 ## Deleting a secret
 
-The bank account was closed. You need to delete its credentials from the Key Vault.
+The bank account was closed. You need to delete its credentials from the Azure Key Vault.
 
 ```C# Snippet:SecretsSample1DeleteSecret
 DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
@@ -70,7 +70,7 @@ DeleteSecretOperation operation = client.StartDeleteSecret(secretName);
 
 ## Purging a deleted secret
 
-If the Key Vault is soft delete-enabled and you want to permanently delete the secret before its `ScheduledPurgeDate`,
+If the Azure Key Vault is soft delete-enabled and you want to permanently delete the secret before its `ScheduledPurgeDate`,
 the deleted secret needs to be purged. Before it can be purged, you need to wait until the secret is fully deleted.
 
 ```C# Snippet:SecretsSample1PurgeSecret

@@ -99,7 +99,7 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
-          filePath: "eng/CodeChecks.ps1"
+          filePath: "eng/scripts/CodeChecks.ps1"
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false

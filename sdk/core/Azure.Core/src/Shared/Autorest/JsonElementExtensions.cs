@@ -73,6 +73,7 @@ namespace Azure.Core
         public static TimeSpan GetTimeSpan(in this JsonElement element, string format) => format switch
         {
             "P" => XmlConvert.ToTimeSpan(element.GetString()),
+            "T" => TimeSpan.ParseExact(element.GetString(), "T", CultureInfo.InvariantCulture),
             _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 

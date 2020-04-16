@@ -2,29 +2,34 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormPage : FormContent
+    public class FormPage
     {
-        internal FormPage(ReadResult_internal readResult)
-            : base(new BoundingBox(), readResult.Page, null) // TODO: retrieve text and bounding box.
+        internal FormPage(PageResult_internal pageResult, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
         {
+            ReadResult_internal readResult = readResults[pageIndex];
+
+            PageNumber = readResult.Page;
             TextAngle = readResult.Angle;
             Width = readResult.Width;
             Height = readResult.Height;
             Unit = readResult.Unit;
-
-            if (readResult.Lines != null)
-            {
-                Lines = ConvertLines(readResult.Lines, PageNumber);
-            }
-
-            //Tables = ExtractedLayoutPage.ConvertTables(tablesResult, readResult);
+            Lines = readResult.Lines != null
+                ? ConvertLines(readResult.Lines, readResult.Page)
+                : new List<FormLine>();
+            Tables = pageResult?.Tables != null
+                ? ConvertTables(pageResult, readResults, pageIndex)
+                : new List<FormTable>();
         }
+
+        /// <summary>
+        /// The 1-based page number in the input document.
+        /// </summary>
+        public int PageNumber { get; }
 
         /// <summary>
         /// The general orientation of the text in clockwise direction, measured in degrees between (-180, 180].
@@ -69,6 +74,18 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return rawLines;
+        }
+
+        private static IReadOnlyList<FormTable> ConvertTables(PageResult_internal pageResult, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
+        {
+            List<FormTable> tables = new List<FormTable>();
+
+            foreach (var table in pageResult.Tables)
+            {
+                tables.Add(new FormTable(table, readResults, pageIndex));
+            }
+
+            return tables;
         }
     }
 }

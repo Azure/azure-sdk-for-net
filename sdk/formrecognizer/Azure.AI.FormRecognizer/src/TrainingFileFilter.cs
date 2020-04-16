@@ -13,5 +13,12 @@ namespace Azure.AI.FormRecognizer.Training
         internal TrainingFileFilter()
         {
         }
+
+        /// <inheritdoc />
+        public string Prefix { get; set; } = string.Empty;
+
+        /// <inheritdoc />
+        public bool IncludeSubFolders { get; set; } = false;
+
     }
 }
