@@ -1,5 +1,5 @@
 # Azure Cognitive Services Form Recognizer client library for .NET
-Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning recognize form fields, text, and tables in form documents.  It includes the following capabilities:
+Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities:
 
 - Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
 - Recognize Form Content - Recognize and extract tables, lines and words in forms documents, without the need to train a model.
@@ -42,10 +42,14 @@ Alternatively, you can use the [Azure CLI][azure_cli] snippet below to get the A
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
-#### Create `FormRecognizerClient` with Azure Key Credential
-Once you have the value for the API key, create an `AzureKeyCredential`.  With the endpoint and key credential, you can create the [FormRecognizerClient][form_recognizer_client_class]:
+#### Create FormRecognizerClient with AzureKeyCredential
+Once you have the value for the API key, create an `AzureKeyCredential`.  With the endpoint and key credential, you can create the [`FormRecognizerClient`][form_recognizer_client_class]:
 
 ```C# Snippet:CreateFormRecognizerClient
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var credential = new AzureKeyCredential(apiKey);
+var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ```
 
 
@@ -56,8 +60,8 @@ Once you have the value for the API key, create an `AzureKeyCredential`.  With t
 `FormRecognizerClient` provides operations for:
 
  - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects.
- - Recognizing form content, including tables, lines and words, without having to train a model.  These values are returned in a collection of `RecognizedPage` objects.
- - Recognizing common fields from US receipts, using a pre-trained receipt model on the Form Recognizer service.  These values are returned in a collection of `RecognizeReceipt` objects.
+ - Recognizing form content, including tables, lines and words, without the need to train a model.  Form content is returned in a collection of `RecognizedPage` objects.
+ - Recognizing common fields from US receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizeReceipt` objects.
 
 ### FormTrainingClient
 
@@ -86,7 +90,39 @@ The following section provides several code snippets illustrating common pattern
 * [Manage Custom Forms](#manage-custom-forms)
 
 ### Recognize Receipts
-```C# Snippet:FormRecognizerSample1CreateClient
+```C# Snippet:FormRecognizerSample1RecognizeReceiptFileStream
+using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
+{
+    Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream, ContentType.Jpeg).WaitForCompletionAsync();
+    foreach (var receipt in receipts.Value)
+    {
+        USReceipt usReceipt = receipt.AsUSReceipt();
+
+        Console.WriteLine($"Recognized USReceipt fields:");
+
+        string merchantName = usReceipt.MerchantName;
+        Console.WriteLine($"    Merchant Name: '{merchantName}', with confidence {usReceipt.MerchantName.Confidence}");
+
+        DateTime transactionDate = usReceipt.TransactionDate;
+        Console.WriteLine($"    Transaction Date: '{transactionDate}', with confidence {usReceipt.TransactionDate.Confidence}");
+
+        IReadOnlyList<USReceiptItem> items = usReceipt.Items;
+        for (int i = 0; i < items.Count; i++)
+        {
+            USReceiptItem item = usReceipt.Items[i];
+            Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', TotalPrice: '{item.TotalPrice.Value}'");
+        }
+
+        float subtotal = usReceipt.Subtotal;
+        Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
+
+        float tax = usReceipt.Tax;
+        Console.WriteLine($"    Tax: '{tax}', with confidence '{usReceipt.Tax.Confidence}'");
+
+        float total = usReceipt.Total;
+        Console.WriteLine($"    Total: '{total}', with confidence '{usReceipt.Total.Confidence}'");
+    }
+}
 ```
 
 ### Recognize Content
