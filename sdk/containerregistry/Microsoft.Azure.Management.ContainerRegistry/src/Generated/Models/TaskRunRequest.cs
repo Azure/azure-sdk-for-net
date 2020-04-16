@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     /// <summary>
     /// The parameters for a task run request.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("TaskRunRequest")]
     public partial class TaskRunRequest : RunRequest
     {
         /// <summary>
@@ -34,10 +35,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// to be queued.</param>
         /// <param name="isArchiveEnabled">The value that indicates whether
         /// archiving is enabled for the run or not.</param>
+        /// <param name="agentPoolName">The dedicated agent pool for the
+        /// run.</param>
         /// <param name="overrideTaskStepProperties">Set of overridable
         /// parameters that can be passed when running a Task.</param>
-        public TaskRunRequest(string taskId, bool? isArchiveEnabled = default(bool?), OverrideTaskStepProperties overrideTaskStepProperties = default(OverrideTaskStepProperties))
-            : base(isArchiveEnabled)
+        public TaskRunRequest(string taskId, bool? isArchiveEnabled = default(bool?), string agentPoolName = default(string), OverrideTaskStepProperties overrideTaskStepProperties = default(OverrideTaskStepProperties))
+            : base(isArchiveEnabled, agentPoolName)
         {
             TaskId = taskId;
             OverrideTaskStepProperties = overrideTaskStepProperties;

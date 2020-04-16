@@ -1,5 +1,5 @@
 # Azure Cognitive Services Text Analytics client library for .NET
-Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes six main functions: 
+Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes the following main functions: 
 * Language Detection
 * Sentiment Analysis
 * Key Phrase Extraction
@@ -10,11 +10,18 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 
 ## Getting started
 
+### Install the package
+Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
+
+```PowerShell
+dotnet add package Azure.AI.TextAnalytics --version 1.0.0-preview.4
+```
+
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * An existing Cognitive Services or Text Analytics resource.
 
-### Create a Cognitive Services or Text Analytics resource
+#### Create a Cognitive Services or Text Analytics resource
 Text Analytics supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Text Analytics access only, create a Text Analytics resource.
 
 You can create either resource using: 
@@ -42,13 +49,6 @@ az cognitiveservices account create \
     --yes
 ```
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
-
-### Install the package
-Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
-
-```PowerShell
-Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.3
-```
 
 ### Authenticate the client
 In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
@@ -304,8 +304,10 @@ Samples are provided for each main functional area, and for each area, samples a
 - [Extract Key Phrases][extract_key_phrases_sample]
 - [Recognize Entities][recognize_entities_sample]
 - [Recognize Linked Entities][recognize_linked_entities_sample]
+- [Create a mock client][mock_client_sample] for testing using the [Moq][moq] library.
 
 ## Contributing
+See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
@@ -341,17 +343,20 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
+[contributing]: ../../../CONTRIBUTING.md
 
 [detect_language_sample]: samples/Sample1_DetectLanguage.md
 [analyze_sentiment_sample]: samples/Sample2_AnalyzeSentiment.md
 [extract_key_phrases_sample]: samples/Sample3_ExtractKeyPhrases.md
 [recognize_entities_sample]: samples/Sample4_RecognizeEntities.md
 [recognize_linked_entities_sample]: samples/Sample6_RecognizeLinkedEntities.md
+[mock_client_sample]: samples/Sample_MockClient.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
+[moq]: https://github.com/Moq/moq4/
 
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

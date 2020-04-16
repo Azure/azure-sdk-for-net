@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// associated with this VirtualHub.</param>
         /// <param name="azureFirewall">The azureFirewall associated with this
         /// VirtualHub.</param>
+        /// <param name="securityPartnerProvider">The securityPartnerProvider
+        /// associated with this VirtualHub.</param>
         /// <param name="virtualNetworkConnections">List of all vnet
         /// connections with this VirtualHub.</param>
         /// <param name="addressPrefix">Address-prefix for this
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="sku">The sku of this VirtualHub.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), IList<HubVirtualNetworkConnection> virtualNetworkConnections = default(IList<HubVirtualNetworkConnection>), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string etag = default(string))
+        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), IList<HubVirtualNetworkConnection> virtualNetworkConnections = default(IList<HubVirtualNetworkConnection>), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -73,6 +75,7 @@ namespace Microsoft.Azure.Management.Network.Models
             P2SVpnGateway = p2SVpnGateway;
             ExpressRouteGateway = expressRouteGateway;
             AzureFirewall = azureFirewall;
+            SecurityPartnerProvider = securityPartnerProvider;
             VirtualNetworkConnections = virtualNetworkConnections;
             AddressPrefix = addressPrefix;
             RouteTable = routeTable;
@@ -119,6 +122,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureFirewall")]
         public SubResource AzureFirewall { get; set; }
+
+        /// <summary>
+        /// Gets or sets the securityPartnerProvider associated with this
+        /// VirtualHub.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityPartnerProvider")]
+        public SubResource SecurityPartnerProvider { get; set; }
 
         /// <summary>
         /// Gets or sets list of all vnet connections with this VirtualHub.

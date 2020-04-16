@@ -10,7 +10,13 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///
+    /// A <see cref="ServiceBusSessionProcessor"/> is responsible for processing
+    /// <see cref="ServiceBusReceivedMessage" /> from a specific entity using event handlers.
+    /// It is constructed by calling
+    ///  <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusProcessorOptions, string)"/>.
+    /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
+    /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
+    /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
     public class ServiceBusSessionProcessor
     {
@@ -41,17 +47,18 @@ namespace Azure.Messaging.ServiceBus
         public int PrefetchCount => _innerProcessor.PrefetchCount;
 
         /// <summary>
-        /// Indicates whether or not this <see cref="ServiceBusProcessor"/> has been closed.
+        /// Indicates whether or not this <see cref="ServiceBusSessionProcessor"/> is currently processing messages.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the client is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the client is processing messages; otherwise, <c>false</c>.
         /// </value>
-        ///
         public bool IsProcessing => _innerProcessor.IsProcessing;
 
-        /// <summary>Gets or sets a value that indicates whether the message-pump should call
-        /// Receiver.CompleteAsync() on messages after the callback has completed processing.</summary>
+        /// <summary>Gets or sets a value that indicates whether the <see cref="ServiceBusSessionProcessor"/> should automatically
+        /// complete messages after the event handler has completed processing. If the event handler
+        /// triggers an exception, the message will not be automatically completed.</summary>
+        ///
         /// <value>true to complete the message processing automatically on successful execution of the operation; otherwise, false.</value>
         public bool AutoComplete => _innerProcessor.AutoComplete;
 
@@ -66,8 +73,11 @@ namespace Azure.Messaging.ServiceBus
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoLockRenewalDuration => _innerProcessor.MaxAutoLockRenewalDuration;
 
-        /// <summary>Gets or sets the maximum number of concurrent calls to the callback the message pump should initiate.</summary>
-        /// <value>The maximum number of concurrent calls to the callback.</value>
+        /// <summary>Gets or sets the maximum number of concurrent calls to the
+        /// <see cref="ProcessMessageAsync"/> event handler the processor should initiate.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the event handler.</value>
         public int MaxConcurrentCalls => _innerProcessor.MaxConcurrentCalls;
 
         /// <summary>
@@ -75,6 +85,11 @@ namespace Azure.Messaging.ServiceBus
         /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         public string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
+
+        /// <summary>
+        /// The maximum amount of time to wait for each Receive call using the processor's underlying receiver. If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public TimeSpan? MaxReceiveWaitTime => _innerProcessor.MaxReceiveWaitTime;
 
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,

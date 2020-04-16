@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
     /// document and a hint indicating the document's country of origin to assist
     /// the text analytics predictive model in detecting the document's language.
     /// </summary>
-    public class DetectLanguageInput
+    public class DetectLanguageInput : TextAnalyticsInput
     {
         /// <summary>
         /// A wildcard that allows to set CountryHint to None
@@ -25,16 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// The id must be unique within the batch of documents analyzed in a
         /// given detect language operation.</param>
         /// <param name="text">The text of the document.</param>
-        public DetectLanguageInput(string id, string text)
-        {
-            Id = id;
-            Text = text;
-        }
-
-        /// <summary>
-        /// Gets the unique, non-empty identifier for this document.
-        /// </summary>
-        public string Id { get; }
+        public DetectLanguageInput(string id, string text) : base(id, text) { }
 
         /// <summary>
         /// Gets or sets a hint to assist the text analytics model in predicting
@@ -44,10 +35,5 @@ namespace Azure.AI.TextAnalytics
         /// To remove this behavior, set to <see cref="None"/>.
         /// </summary>
         public string CountryHint { get; set; }
-
-        /// <summary>
-        /// Gets the text of the document.
-        /// </summary>
-        public string Text { get; }
     }
 }

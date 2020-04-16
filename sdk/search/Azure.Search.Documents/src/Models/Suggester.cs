@@ -8,7 +8,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenModel("Suggester")]
     public partial class Suggester
     {
         private const string AnalyzingInfixMatching = "analyzingInfixMatching";

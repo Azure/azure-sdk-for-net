@@ -37,9 +37,6 @@ namespace Azure.Messaging.EventHubs.Tests
     [TestFixture]
     public class DiagnosticsTests
     {
-        /// <summary>The name of the diagnostics source being tested.</summary>
-        private const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
-
         /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
         ///   class.
@@ -48,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
             var activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -92,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
             var activity = new Activity("SomeActivity").Start();
 
             var eventHubName = "SomeName";
@@ -256,7 +253,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var fakeConnection = new MockConnection("some.endpoint.com", "SomeName");
             var transportMock = new Mock<TransportProducer>();
@@ -290,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnBatchSend()
         {
-            using var testListener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var testListener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var writtenEventsData = 0;
             var batchTransportMock = new Mock<TransportEventBatch>();
@@ -347,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = 12;
@@ -404,7 +401,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            using var listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            using var listener = new ClientDiagnosticListener(EventDataInstrumentation.DiagnosticNamespace);
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = "OMGHAI2U!";

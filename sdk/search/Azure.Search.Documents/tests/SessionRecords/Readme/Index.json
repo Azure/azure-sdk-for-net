@@ -1,0 +1,59 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-gjyupvjq.search.windows.net/indexes(\u0027fgnpacjo\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "api-key": "Sanitized",
+        "Content-Length": "152",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/1.0.0-dev.20200402.1",
+          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "024524334adee593f5ff620e2e46cb84",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "value": [
+          {
+            "@search.action": "upload",
+            "hotelId": "783",
+            "hotelName": "Upload Inn"
+          },
+          {
+            "@search.action": "merge",
+            "hotelId": "12",
+            "hotelName": "Renovated Ranch"
+          }
+        ]
+      },
+      "StatusCode": 403,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Language": "en",
+        "Content-Length": "55",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Thu, 02 Apr 2020 22:03:07 GMT",
+        "elapsed-time": "142",
+        "Expires": "-1",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "02452433-4ade-e593-f5ff-620e2e46cb84",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "",
+          "message": "Authorization failed."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "978400005",
+    "SearchIndexName": "fgnpacjo",
+    "SearchServiceName": "azs-net-gjyupvjq"
+  }
+}

@@ -978,7 +978,7 @@ namespace Storage.Tests
                     storageMgmtClient.BlobServices.SetServiceProperties(rgName, accountName, properties);
                     properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
                     Assert.True(properties.RestorePolicy.Enabled);
-                    Assert.Equal(5,properties.RestorePolicy.Days);
+                    Assert.Equal(5, properties.RestorePolicy.Days);
                     Assert.True(properties.DeleteRetentionPolicy.Enabled);
                     Assert.Equal(30, properties.DeleteRetentionPolicy.Days);
                     Assert.True(properties.ChangeFeed.Enabled);
@@ -1004,6 +1004,202 @@ namespace Storage.Tests
                     // clean up
                     storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
                     resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // Object replication test
+        [Fact]
+        public void ORSTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string sourceAccountName = TestUtilities.GenerateName("sto");
+                string destAccountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var sourceAccount = storageMgmtClient.StorageAccounts.Create(rgName, sourceAccountName, parameters);
+                var destAccount = storageMgmtClient.StorageAccounts.Create(rgName, destAccountName, parameters);
+                Assert.Equal(SkuName.StandardLRS, sourceAccount.Sku.Name);
+                Assert.Equal(SkuName.StandardLRS, destAccount.Sku.Name);
+
+                // implement case
+                try
+                {
+                    //enable changefeed and versioning
+                    BlobServiceProperties properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, sourceAccountName);
+                    properties.ChangeFeed = new ChangeFeed();
+                    properties.ChangeFeed.Enabled = true;
+                    properties.IsVersioningEnabled = true;
+                    storageMgmtClient.BlobServices.SetServiceProperties(rgName, sourceAccountName, properties);
+                    properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, sourceAccountName);
+                    Assert.True(properties.IsVersioningEnabled);
+                    Assert.True(properties.ChangeFeed.Enabled);
+
+                    properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, destAccountName);
+                    properties.ChangeFeed = new ChangeFeed();
+                    properties.ChangeFeed.Enabled = true;
+                    properties.IsVersioningEnabled = true;
+                    storageMgmtClient.BlobServices.SetServiceProperties(rgName, destAccountName, properties);
+                    properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, destAccountName);
+                    Assert.True(properties.IsVersioningEnabled);
+                    Assert.True(properties.ChangeFeed.Enabled);
+
+                    //Create Source and dest container
+                    string sourceContainerName1 = "src1";
+                    string sourceContainerName2 = "src2";
+                    string destContainerName1 = "dest1";
+                    string destContainerName2 = "dest2";
+                    storageMgmtClient.BlobContainers.Create(rgName, sourceAccountName, sourceContainerName1, new BlobContainer());
+                    storageMgmtClient.BlobContainers.Create(rgName, sourceAccountName, sourceContainerName2, new BlobContainer());
+                    storageMgmtClient.BlobContainers.Create(rgName, destAccountName, destContainerName1, new BlobContainer());
+                    storageMgmtClient.BlobContainers.Create(rgName, destAccountName, destContainerName2, new BlobContainer());
+
+                    //new rules
+                    List<string> prefix = new List<string>();
+                    prefix.Add("aa");
+                    prefix.Add("bc d");
+                    prefix.Add("123");
+                    string minCreationTime = "2020-03-19T16:06:00Z";
+                    List<ObjectReplicationPolicyRule> rules = new List<ObjectReplicationPolicyRule>();
+                    rules.Add(
+                        new ObjectReplicationPolicyRule()
+                        {
+                            SourceContainer = sourceContainerName1,
+                            DestinationContainer = destContainerName1,
+                            Filters = new ObjectReplicationPolicyFilter(prefix, minCreationTime),
+                        }
+                    );
+                    rules.Add(
+                        new ObjectReplicationPolicyRule()
+                        {
+                            SourceContainer = sourceContainerName2,
+                            DestinationContainer = destContainerName2
+                        }
+                    );
+
+                    //New policy
+                    ObjectReplicationPolicy policy = new ObjectReplicationPolicy()
+                    {
+                        SourceAccount = sourceAccountName,
+                        DestinationAccount = destAccountName,
+                        Rules = rules,                      
+                    };
+
+                    //Set and list policy
+                    storageMgmtClient.ObjectReplicationPolicies.CreateOrUpdate(rgName, destAccountName, "default", policy);
+                    ObjectReplicationPolicy destpolicy = storageMgmtClient.ObjectReplicationPolicies.List(rgName, destAccountName).First();
+
+                    // Fix the MinCreationTime format, since deserilize the request the string MinCreationTime will be taken as DateTime, so the format will change. But server only allows format "2020-03-19T16:06:00Z"
+                    // This issue can be resolved in the future, when server change MinCreationTime type from string to Datatime
+                    FixMinCreationTimeFormat(destpolicy);
+                    CompareORsPolicy(policy, destpolicy);
+
+                    storageMgmtClient.ObjectReplicationPolicies.CreateOrUpdate(rgName,sourceAccountName, destpolicy.PolicyId, destpolicy);
+                    ObjectReplicationPolicy sourcepolicy = storageMgmtClient.ObjectReplicationPolicies.List(rgName, sourceAccountName).First();
+                    FixMinCreationTimeFormat(sourcepolicy);
+                    CompareORsPolicy(destpolicy, sourcepolicy, skipIDCompare: false);
+
+                    // Get policy
+                    destpolicy = storageMgmtClient.ObjectReplicationPolicies.Get(rgName, destAccountName, destpolicy.PolicyId);
+                    FixMinCreationTimeFormat(destpolicy);
+                    CompareORsPolicy(policy, destpolicy);
+                    sourcepolicy = storageMgmtClient.ObjectReplicationPolicies.Get(rgName, sourceAccountName, destpolicy.PolicyId);
+                    FixMinCreationTimeFormat(sourcepolicy);
+                    CompareORsPolicy(policy, sourcepolicy);
+
+                    // remove policy
+                    storageMgmtClient.ObjectReplicationPolicies.Delete(rgName, sourceAccountName, destpolicy.PolicyId);
+                    storageMgmtClient.ObjectReplicationPolicies.Delete(rgName, destAccountName, destpolicy.PolicyId);
+
+                    //// clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, sourceAccountName);
+                    storageMgmtClient.StorageAccounts.Delete(rgName, destAccountName);
+                }
+                finally
+                {
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fix the MinCreationTime format, since deserilize the request the string MinCreationTime will be taken as DateTime, so the format will change. But server only allows format "2020-03-19T16:06:00Z"
+        /// This issue can be resolved in the future, when server change MinCreationTime type from string to Datatime
+        /// </summary>
+        /// <param name="getPolicy"></param>
+        private static void FixMinCreationTimeFormat(ObjectReplicationPolicy getPolicy)
+        {
+            if (getPolicy !=null && getPolicy.Rules!=null)
+            {
+                foreach(ObjectReplicationPolicyRule rule in getPolicy.Rules)
+                {
+                    if (rule!= null && rule.Filters!= null && !string.IsNullOrEmpty(rule.Filters.MinCreationTime))
+                    {
+                        if (rule.Filters.MinCreationTime.ToUpper()[rule.Filters.MinCreationTime.Length - 1] != 'Z')
+                        {
+                            rule.Filters.MinCreationTime = Convert.ToDateTime(rule.Filters.MinCreationTime + "Z").ToUniversalTime().ToString("s") + "Z";
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Compare 2 ORS policy, check if they are same
+        /// </summary>
+        /// <param name="skipIDCompare">skip compare policyID and rule ID</param>
+        private static void CompareORsPolicy(ObjectReplicationPolicy setPolicy, ObjectReplicationPolicy getPolicy, bool skipIDCompare = true)
+        {
+            Assert.Equal(setPolicy.SourceAccount, getPolicy.SourceAccount);
+            Assert.Equal(setPolicy.DestinationAccount, getPolicy.DestinationAccount);
+            Assert.Equal(setPolicy.Rules.Count, getPolicy.Rules.Count);
+            if (!skipIDCompare)
+            {
+                Assert.Equal(setPolicy.PolicyId, getPolicy.PolicyId);
+            }
+            else
+            { 
+                Assert.NotNull(getPolicy.PolicyId);
+            }
+
+            ObjectReplicationPolicyRule[] setRuleArray = setPolicy.Rules.ToArray();
+            ObjectReplicationPolicyRule[] getRuleArray = getPolicy.Rules.ToArray();
+            for (int i = 0; i < setRuleArray.Length; i++)
+            {
+                ObjectReplicationPolicyRule setrule = setRuleArray[i];
+                ObjectReplicationPolicyRule getrule = getRuleArray[i];
+                Assert.Equal(setrule.SourceContainer, getrule.SourceContainer);
+                Assert.Equal(setrule.DestinationContainer, getrule.DestinationContainer);
+                if (setrule.Filters == null)
+                {
+                    Assert.Null(getrule.Filters);
+                }
+                else
+                {
+                    Assert.Equal(setrule.Filters.MinCreationTime, getrule.Filters.MinCreationTime);
+                    Assert.Equal(setrule.Filters.PrefixMatch, getrule.Filters.PrefixMatch);
+                }
+                if (!skipIDCompare)
+                {
+                    Assert.Equal(setrule.RuleId, getrule.RuleId);
+                }
+                else
+                {
+                    Assert.NotNull(getrule.RuleId);
                 }
             }
         }

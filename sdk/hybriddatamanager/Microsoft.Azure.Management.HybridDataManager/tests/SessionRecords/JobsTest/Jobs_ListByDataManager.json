@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/jobs?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9qb2JzP2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/jobs?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9qb2JzP2FwaS12ZXJzaW9uPTIwMTktMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "20548f10-6352-496c-a061-2516fb8863f8"
+          "6e284b77-f52e-4c3f-85be-8ac240b61e8f"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:21:54 GMT"
+          "Wed, 05 Feb 2020 04:44:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,28 +33,28 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "ea01654d-b569-487d-bf34-03a3e20036e4"
+          "70d82372-250c-47c7-92a6-f0b44348f1af"
         ],
         "x-ms-client-request-id": [
-          "20548f10-6352-496c-a061-2516fb8863f8"
+          "6e284b77-f52e-4c3f-85be-8ac240b61e8f"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11987"
         ],
         "x-ms-correlation-request-id": [
-          "eeaa0474-571a-4330-8c33-8e1c17984daf"
+          "d1c32610-192c-45fc-bab1-0229d799750f"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T092154Z:eeaa0474-571a-4330-8c33-8e1c17984daf"
+          "SOUTHINDIA:20200205T044421Z:d1c32610-192c-45fc-bab1-0229d799750f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Content-Length": [
-          "2126"
+          "1431"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"status\": \"InProgress\",\r\n      \"startTime\": \"2019-04-10T09:18:43.5738907Z\",\r\n      \"properties\": {\r\n        \"isCancellable\": \"Cancellable\",\r\n        \"bytesProcessed\": 0,\r\n        \"itemsProcessed\": 0,\r\n        \"totalBytesToProcess\": 0,\r\n        \"totalItemsToProcess\": 0\r\n      },\r\n      \"name\": \"8ae39e0e-df7b-453e-8599-db47a277e543\",\r\n      \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataTransformation/jobDefinitions/jobdeffromtestcode1/jobs/8ae39e0e-df7b-453e-8599-db47a277e543\",\r\n      \"type\": \"Microsoft.HybridData/dataManagers/jobs\"\r\n    },\r\n    {\r\n      \"status\": \"InProgress\",\r\n      \"startTime\": \"2019-04-10T09:18:27.7961146Z\",\r\n      \"properties\": {\r\n        \"isCancellable\": \"Cancellable\",\r\n        \"bytesProcessed\": 0,\r\n        \"itemsProcessed\": 0,\r\n        \"totalBytesToProcess\": 0,\r\n        \"totalItemsToProcess\": 0\r\n      },\r\n      \"name\": \"0e10d92e-972a-4c3c-aa49-1b96911cb254\",\r\n      \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataTransformation/jobDefinitions/jobdeffromtestcode1/jobs/0e10d92e-972a-4c3c-aa49-1b96911cb254\",\r\n      \"type\": \"Microsoft.HybridData/dataManagers/jobs\"\r\n    },\r\n    {\r\n      \"status\": \"InProgress\",\r\n      \"startTime\": \"2019-04-10T09:17:38.0215948Z\",\r\n      \"properties\": {\r\n        \"isCancellable\": \"Cancellable\",\r\n        \"bytesProcessed\": 0,\r\n        \"itemsProcessed\": 0,\r\n        \"totalBytesToProcess\": 0,\r\n        \"totalItemsToProcess\": 0\r\n      },\r\n      \"name\": \"1fc3cf96-a62f-47b4-ae6b-add6d6543f7a\",\r\n      \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataTransformation/jobDefinitions/jobdeffromtestcode1/jobs/1fc3cf96-a62f-47b4-ae6b-add6d6543f7a\",\r\n      \"type\": \"Microsoft.HybridData/dataManagers/jobs\"\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"status\": \"InProgress\",\r\n      \"startTime\": \"2020-02-05T04:42:59.2771412Z\",\r\n      \"properties\": {\r\n        \"isCancellable\": \"Cancellable\",\r\n        \"bytesProcessed\": 0,\r\n        \"itemsProcessed\": 0,\r\n        \"totalBytesToProcess\": 0,\r\n        \"totalItemsToProcess\": 0\r\n      },\r\n      \"name\": \"99ef93fe-36be-43e4-bebf-de6746730601\",\r\n      \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataTransformation/jobDefinitions/jobdeffromtestcode1/jobs/99ef93fe-36be-43e4-bebf-de6746730601\",\r\n      \"type\": \"Microsoft.HybridData/dataManagers/jobs\"\r\n    },\r\n    {\r\n      \"status\": \"InProgress\",\r\n      \"startTime\": \"2020-02-05T04:42:10.6059757Z\",\r\n      \"properties\": {\r\n        \"isCancellable\": \"Cancellable\",\r\n        \"bytesProcessed\": 0,\r\n        \"itemsProcessed\": 0,\r\n        \"totalBytesToProcess\": 0,\r\n        \"totalItemsToProcess\": 0\r\n      },\r\n      \"name\": \"aeb6aa32-cf46-4fa0-819f-48e0fe376f6e\",\r\n      \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/dataServices/DataTransformation/jobDefinitions/jobdeffromtestcode1/jobs/aeb6aa32-cf46-4fa0-819f-48e0fe376f6e\",\r\n      \"type\": \"Microsoft.HybridData/dataManagers/jobs\"\r\n    }\r\n  ],\r\n  \"nextLink\": \"\"\r\n}",
       "StatusCode": 200
     }
   ],

@@ -12,6 +12,7 @@ steps:
       eng/common/TestResources/Remove-TestResources.ps1
       -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
       -TenantId '$(aad-azure-sdk-test-tenant-id)'
+      -SubscriptionId '$(azure-subscription-id)'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
       -Environment 'AzureCloud'
@@ -25,6 +26,7 @@ steps:
       eng/common/TestResources/Remove-TestResources.ps1
       -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
       -TenantId '$(aad-azure-sdk-test-tenant-id-gov)'
+      -SubscriptionId '$(azure-subscription-id-gov)'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id-gov)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret-gov)'
       -Environment 'AzureUSGovernment'
@@ -38,6 +40,7 @@ steps:
       eng/common/TestResources/Remove-TestResources.ps1
       -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
       -TenantId '$(aad-azure-sdk-test-tenant-id-cn)'
+      -SubscriptionId '$(azure-subscription-id-cn)'
       -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id-cn)'
       -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret-cn)'
       -Environment 'AzureChinaCloud'

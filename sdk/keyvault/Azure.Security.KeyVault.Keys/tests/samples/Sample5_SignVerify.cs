@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -16,7 +15,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// This sample demonstrates how to sign data with both a RSA key and an EC key using the synchronous methods of the <see cref="CryptographyClient">.
     /// </summary>
-    [LiveOnly]
     public partial class Sample5_SignVerify
     {
         [Test]

@@ -8,7 +8,6 @@ namespace Azure.Search.Documents.Models
     /// <summary>
     /// Specifies whether any or all of the search terms must be matched in order to count the document as a match.
     /// </summary>
-    [CodeGenModel("SearchMode")]
     public enum SearchMode
     {
         /// <summary>

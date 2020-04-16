@@ -208,7 +208,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             try
             {
-                while (!cancellationToken.IsCancellationRequested)
+                while ((!cancellationToken.IsCancellationRequested) && (!_closed))
                 {
                     try
                     {

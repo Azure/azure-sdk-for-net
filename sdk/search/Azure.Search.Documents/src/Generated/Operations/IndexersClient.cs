@@ -16,8 +16,8 @@ namespace Azure.Search.Documents
 {
     internal partial class IndexersClient
     {
-        private readonly ClientDiagnostics clientDiagnostics;
-        private readonly HttpPipeline pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
         internal IndexersRestClient RestClient { get; }
         /// <summary> Initializes a new instance of IndexersClient for mocking. </summary>
         protected IndexersClient()
@@ -27,15 +27,15 @@ namespace Azure.Search.Documents
         internal IndexersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             RestClient = new IndexersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Resets the change tracking state associated with an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer to reset. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ResetAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResetAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.ResetAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer to reset. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Reset(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual Response Reset(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Reset(indexerName, xMsClientRequestId, cancellationToken);
         }
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer to run. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RunAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RunAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.RunAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -62,33 +62,33 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer to run. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Run(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual Response Run(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Run(indexerName, xMsClientRequestId, cancellationToken);
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
         /// <param name="indexerName"> The name of the indexer to create or update. </param>
+        /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, SearchIndexer indexer, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, SearchIndexer indexer, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateAsync(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch, indexer, cancellationToken).ConfigureAwait(false);
+            return await RestClient.CreateOrUpdateAsync(indexerName, indexer, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
         /// <param name="indexerName"> The name of the indexer to create or update. </param>
+        /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
-        /// <param name="indexer"> The definition of the indexer to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchIndexer> CreateOrUpdate(string indexerName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, SearchIndexer indexer, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexer> CreateOrUpdate(string indexerName, SearchIndexer indexer, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdate(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch, indexer, cancellationToken);
+            return RestClient.CreateOrUpdate(indexerName, indexer, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
         }
 
         /// <summary> Deletes an indexer. </summary>
@@ -97,7 +97,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(string indexerName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(string indexerName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.DeleteAsync(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string indexerName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+        public virtual Response Delete(string indexerName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Delete(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
         }
@@ -117,7 +117,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchIndexer>> GetAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexer>> GetAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -126,7 +126,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchIndexer> Get(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexer> Get(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Get(indexerName, xMsClientRequestId, cancellationToken);
         }
@@ -135,7 +135,7 @@ namespace Azure.Search.Documents
         /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListIndexersResult>> ListAsync(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListIndexersResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -144,34 +144,34 @@ namespace Azure.Search.Documents
         /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or &apos;*&apos; for all properties. The default is all properties. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListIndexersResult> List(string select, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual Response<ListIndexersResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.List(select, xMsClientRequestId, cancellationToken);
         }
 
         /// <summary> Creates a new indexer. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="indexer"> The definition of the indexer to create. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchIndexer>> CreateAsync(Guid? xMsClientRequestId, SearchIndexer indexer, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexer>> CreateAsync(SearchIndexer indexer, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(xMsClientRequestId, indexer, cancellationToken).ConfigureAwait(false);
+            return await RestClient.CreateAsync(indexer, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Creates a new indexer. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="indexer"> The definition of the indexer to create. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchIndexer> Create(Guid? xMsClientRequestId, SearchIndexer indexer, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexer> Create(SearchIndexer indexer, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(xMsClientRequestId, indexer, cancellationToken);
+            return RestClient.Create(indexer, xMsClientRequestId, cancellationToken);
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IndexerExecutionInfo>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IndexerExecutionInfo>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetStatusAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -180,7 +180,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IndexerExecutionInfo> GetStatus(string indexerName, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public virtual Response<IndexerExecutionInfo> GetStatus(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.GetStatus(indexerName, xMsClientRequestId, cancellationToken);
         }

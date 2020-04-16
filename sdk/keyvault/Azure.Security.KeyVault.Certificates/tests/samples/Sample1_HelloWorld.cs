@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -13,8 +12,6 @@ namespace Azure.Security.KeyVault.Certificates.Samples
     /// <summary>
     /// This sample demonstrates how to create, get, update, and delete a certificate using the synchronous methods of the <see cref="CertificateClient">.
     /// </summary>
-    [LiveOnly]
-    [NonParallelizable]
     public partial class HelloWorld
     {
         [Test]

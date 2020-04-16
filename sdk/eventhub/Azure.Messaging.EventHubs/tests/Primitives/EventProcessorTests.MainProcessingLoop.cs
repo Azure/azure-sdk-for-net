@@ -478,7 +478,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingStartsProcessingForClaimedPartitions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             var firstPartiton = "27";
             var secondPartition = "15";

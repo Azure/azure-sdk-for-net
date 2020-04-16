@@ -911,14 +911,35 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken = default)
         {
-            options ??= new SearchOptions();
-            options.SearchText = searchText;
+            if (options != null && searchText != null)
+            {
+                options = options.Clone();
+                options.SearchText = searchText;
+            }
+            else if (options == null)
+            {
+                options = new SearchOptions() { SearchText = searchText };
+            }
+            return await SearchInternal<T>(
+                options,
+                $"{nameof(SearchIndexClient)}.{nameof(Search)}",
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(Search)}");
+        private async Task<Response<SearchResults<T>>> SearchInternal<T>(
+            SearchOptions options,
+            string operationName,
+            bool async,
+            CancellationToken cancellationToken = default)
+        {
+            Debug.Assert(options != null);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(operationName);
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSearchPostRequest(options.ClientRequestId, options);
+                using HttpMessage message = Protocol.CreateSearchPostRequest(options, options.ClientRequestId);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1178,8 +1199,7 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken = default)
         {
-            options ??= new SuggestOptions();
-            // TODO: This is not thread safe
+            options = options != null ? options.Clone() : new SuggestOptions();
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 
@@ -1187,7 +1207,7 @@ namespace Azure.Search.Documents
             scope.Start();
             try
             {
-                using HttpMessage message = Protocol.CreateSuggestPostRequest(options.ClientRequestId, options);
+                using HttpMessage message = Protocol.CreateSuggestPostRequest(options, options.ClientRequestId);
                 if (async)
                 {
                     await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1303,14 +1323,13 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken)
         {
-            options ??= new AutocompleteOptions();
-            // TODO: Not thread safe
+            options = options != null ? options.Clone() : new AutocompleteOptions();
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 
             return async ?
-                await Protocol.AutocompletePostAsync(options.ClientRequestId, options, cancellationToken).ConfigureAwait(false) :
-                Protocol.AutocompletePost(options.ClientRequestId, options, cancellationToken);
+                await Protocol.AutocompletePostAsync(options, options.ClientRequestId, cancellationToken).ConfigureAwait(false) :
+                Protocol.AutocompletePost(options, options.ClientRequestId, cancellationToken);
         }
         #endregion Autocomplete
 

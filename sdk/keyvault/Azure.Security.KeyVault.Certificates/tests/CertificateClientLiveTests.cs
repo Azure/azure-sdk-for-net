@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Diagnostics;
 using Azure.Core.Testing;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
@@ -16,7 +15,6 @@ using Org.BouncyCastle.X509;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -83,9 +81,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public async Task VerifyCancelCertificateOperation()
         {
-            // Log details why this fails often for live tests on net461.
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
-
             string certName = Recording.GenerateId();
 
             CertificatePolicy certificatePolicy = DefaultPolicy;
@@ -114,9 +109,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public async Task VerifyUnexpectedCancelCertificateOperation()
         {
-            // Log details why this fails often for live tests on net461.
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
-
             string certName = Recording.GenerateId();
 
             CertificatePolicy certificatePolicy = DefaultPolicy;

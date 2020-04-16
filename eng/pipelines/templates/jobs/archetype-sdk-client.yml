@@ -20,7 +20,7 @@ jobs:
           $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
           echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
         displayName: "Setup .NET specific versioning properties"
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
@@ -61,11 +61,11 @@ jobs:
           pip install doc-warden==$(DocWardenVersion)
           ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
         displayName: "Verify Readmes"
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           version: "$(DotNetCoreSDKVersion)"
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
         inputs:
           packageType: runtime
@@ -99,7 +99,7 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
         inputs:
-          filePath: "eng/CodeChecks.ps1"
+          filePath: "eng/scripts/CodeChecks.ps1"
           arguments: -ServiceDirectory ${{parameters.ServiceToBuild}}
           pwsh: true
           failOnStderr:  false

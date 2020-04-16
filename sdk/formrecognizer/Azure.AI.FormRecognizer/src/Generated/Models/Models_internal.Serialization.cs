@@ -7,10 +7,9 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     internal partial class Models_internal
     {
@@ -39,7 +38,14 @@ namespace Azure.AI.FormRecognizer.Custom
                     List<ModelInfo_internal> array = new List<ModelInfo_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelInfo_internal.DeserializeModelInfo_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelInfo_internal.DeserializeModelInfo_internal(item));
+                        }
                     }
                     modelList = array;
                     continue;

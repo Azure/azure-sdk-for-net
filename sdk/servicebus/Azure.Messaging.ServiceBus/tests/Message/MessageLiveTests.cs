@@ -19,8 +19,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var sender = client.GetSender(scope.QueueName);
-                var receiver = client.GetReceiver(scope.QueueName);
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
 
                 /// Only following value types are supported:
                 /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
@@ -82,8 +82,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
                 var maxSizeMessage = new ServiceBusMessage(maxPayload);
 
-                await client.GetSender(scope.QueueName).SendAsync(maxSizeMessage);
-                var receiver = client.GetReceiver(scope.QueueName);
+                await client.CreateSender(scope.QueueName).SendAsync(maxSizeMessage);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveAsync();
                 await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
                 Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToArray());
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var sender = client.GetSender(scope.QueueName);
+                var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage();
                 msg.Body = GetRandomBuffer(100);
                 msg.ContentType = "contenttype";
@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 msg.To = "to";
                 await sender.SendAsync(msg);
 
-                var receiver = await client.GetSessionReceiverAsync(
+                var receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
                     new ServiceBusReceiverOptions
                     {

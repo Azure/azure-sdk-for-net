@@ -1,5 +1,8 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 15.1.0
+- Support create/update/remove/get/list Object Replication Policy on Storage account
+
 ### Changes in 15.0.0
 
 - Support create blob contaienr with EncryptionScope

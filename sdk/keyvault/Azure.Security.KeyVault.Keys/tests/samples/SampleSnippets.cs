@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -15,7 +14,6 @@ namespace Azure.Security.KeyVault.Keys.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    [LiveOnly]
     public partial class Snippets
     {
 #pragma warning disable IDE1006 // Naming Styles
@@ -70,7 +68,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
-            // Because only premium key vault supports HSM backed keys , please ensure your key vault
+            // Because only premium Azure Key Vault supports HSM backed keys , please ensure your Azure Key Vault
             // SKU is premium when you set "hardwareProtected" value to true
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = client.CreateEcKey(echsmkey);
@@ -98,7 +96,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             Console.WriteLine(rsaKey.KeyType);
 
             // Create a hardware Elliptic Curve key
-            // Because only premium key vault supports HSM backed keys , please ensure your key vault
+            // Because only premium Azure Key Vault supports HSM backed keys , please ensure your Azure Key Vault
             // SKU is premium when you set "hardwareProtected" value to true
             var echsmkey = new CreateEcKeyOptions("ec-key-name", hardwareProtected: true);
             KeyVaultKey ecKey = await client.CreateEcKeyAsync(echsmkey);
@@ -210,13 +208,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public async Task DeleteAndPurgeKey()
         {
             #region Snippet:DeleteAndPurgeKeyAsync
-            DeleteKeyOperation operation = client.StartDeleteKey("key-name");
+            DeleteKeyOperation operation = await client.StartDeleteKeyAsync("key-name");
 
             // You only need to wait for completion if you want to purge or recover the key.
             await operation.WaitForCompletionAsync();
 
             DeletedKey key = operation.Value;
-            client.PurgeDeletedKey(key.Name);
+            await client.PurgeDeletedKeyAsync(key.Name);
             #endregion
 
             DeleteKeyOperation rsaKeyOperation =  client.StartDeleteKey("rsa-key-name");

@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
             };
-            var processor = client.GetSessionProcessor("queueName", options);
+            var processor = client.CreateSessionProcessor("queueName", options);
             Assert.AreEqual(options.AutoComplete, processor.AutoComplete);
             Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
