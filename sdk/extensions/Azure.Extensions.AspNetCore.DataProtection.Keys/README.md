@@ -9,7 +9,7 @@ The `Azure.Extensions.AspNetCore.DataProtection.Keys` package allows protecting 
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Extensions.AspNetCore.DataProtection.Keys -v 1.0.0-preview.1
+dotnet add package Azure.Extensions.AspNetCore.DataProtection.Keys -v 1.0.0-preview.2
 ```
 
 ### Prerequisites
@@ -17,7 +17,7 @@ dotnet add package Azure.Extensions.AspNetCore.DataProtection.Keys -v 1.0.0-prev
 You need an [Azure subscription][azure_sub],
 [Key Vault][keyvault_doc] and a Key to use this package.
 
-To create a new KeyVault, you can use the [Azure Portal][keyvault_create_portal],
+To create a new Key Vault, you can use the [Azure Portal][keyvault_create_portal],
 [Azure PowerShell][keyvault_create_ps], or the [Azure CLI][keyvault_create_cli].
 Here's an example using the Azure CLI:
 

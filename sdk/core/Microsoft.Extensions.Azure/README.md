@@ -25,7 +25,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddSingleton<DependencyInjectionEnabledPolicy>();
 
     services.AddAzureClients(builder => {
-        // Register blob service client and initialize it using the Key Vault section of configuration
+        // Register blob service client and initialize it using the KeyVault section of configuration
         builder.AddSecretClient(Configuration.GetSection("KeyVault"))
             // Set the name for this client registration
             .WithName("NamedBlobClient")

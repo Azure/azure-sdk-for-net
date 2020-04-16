@@ -9,7 +9,7 @@ The `Azure.Extensions.AspNetCore.DataProtection.Blobs` package allows storing AS
 Install the package with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Extensions.AspNetCore.DataProtection.Blobs -v 1.0.0-preview.1
+dotnet add package Azure.Extensions.AspNetCore.DataProtection.Blobs -v 1.0.0-preview.2
 ```
 
 ### Prerequisites
