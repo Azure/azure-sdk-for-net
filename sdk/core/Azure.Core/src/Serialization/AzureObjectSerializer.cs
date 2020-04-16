@@ -5,13 +5,12 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-
-namespace Azure.Core.Serialization
+namespace Azure.Core
 {
     /// <summary>
     /// An abstraction from reading typed objects.
     /// </summary>
-    public abstract class AzureObjectSerializer
+    public abstract class ObjectSerializer
     {
         /// <summary>
         /// Convert the provided value to it's binary representation and write it to <see cref="System.IO.Stream"/>.
