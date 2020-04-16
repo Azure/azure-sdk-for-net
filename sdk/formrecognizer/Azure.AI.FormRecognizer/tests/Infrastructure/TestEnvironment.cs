@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
 
         /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the live tests.</summary>
-        public const string ContainerUrlEnvironmentVariableName = "FORM_RECOGNIZER_CONTAINER";
+        public const string BlobContainerSASUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
 
         /// <summary>The name of the folder in which test assets are stored.</summary>
         private const string AssetsFolderName = "Assets";
