@@ -11,13 +11,14 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary>
         /// </summary>
-        /// <param name="textElements"></param>
+        /// <param name="formContent"></param>
+        /// <param name="pageNumber"></param>
         /// <param name="boundingBox"></param>
         /// <param name="text"></param>
-        internal FieldText(string text, BoundingBox boundingBox, IReadOnlyList<FormContent> textElements)
-            : base(boundingBox, 0, text /* TODO */)
+        internal FieldText(string text, int pageNumber, BoundingBox boundingBox, IReadOnlyList<FormContent> formContent)
+            : base(boundingBox, pageNumber, text)
         {
-            TextContent = textElements;
+            TextContent = formContent;
         }
 
         /// <summary>

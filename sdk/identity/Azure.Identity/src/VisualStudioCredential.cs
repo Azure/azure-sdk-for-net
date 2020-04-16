@@ -184,7 +184,9 @@ namespace Azure.Identity
         {
             var content = GetTokenProviderContent(tokenProviderPath);
 
-            JsonElement providersElement = JsonDocument.Parse(content).RootElement.GetProperty("TokenProviders");
+            using JsonDocument document = JsonDocument.Parse(content);
+
+            JsonElement providersElement = document.RootElement.GetProperty("TokenProviders");
 
             var providers = new VisualStudioTokenProvider[providersElement.GetArrayLength()];
             for (int i = 0; i < providers.Length; i++)

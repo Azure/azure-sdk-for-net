@@ -19,8 +19,8 @@ Update-Mgmt-Yml.ps1
 
 #>
 Param (
-    [string] $PackagesPath  = "${PSScriptRoot}/../sdk",
-    [string] $MgmtYmlPath = "${PSScriptRoot}/pipelines/mgmt.yml"
+    [string] $PackagesPath  = "${PSScriptRoot}/../../sdk",
+    [string] $MgmtYmlPath = "${PSScriptRoot}/../pipelines/mgmt.yml"
 )
 
 Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope CurrentUser

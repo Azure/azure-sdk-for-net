@@ -16,8 +16,8 @@ namespace Azure.Search.Documents
 {
     internal partial class IndexersClient
     {
-        private readonly ClientDiagnostics clientDiagnostics;
-        private readonly HttpPipeline pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
         internal IndexersRestClient RestClient { get; }
         /// <summary> Initializes a new instance of IndexersClient for mocking. </summary>
         protected IndexersClient()
@@ -27,8 +27,8 @@ namespace Azure.Search.Documents
         internal IndexersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             RestClient = new IndexersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Resets the change tracking state associated with an indexer. </summary>

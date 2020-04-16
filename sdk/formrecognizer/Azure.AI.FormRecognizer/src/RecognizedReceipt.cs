@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -9,14 +10,17 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class RecognizedReceipt
     {
-        private DocumentResult_internal _documentResult_internal;
-        private IList<ReadResult_internal> _readResults;
-
-
-        internal RecognizedReceipt(DocumentResult_internal documentResult_internal, IList<ReadResult_internal> readResults)
+        internal RecognizedReceipt(DocumentResult_internal documentResult, IReadOnlyList<PageResult_internal> pageResults, IReadOnlyList<ReadResult_internal> readResults)
         {
-            _documentResult_internal = documentResult_internal;
-            _readResults = readResults;
+            // Hard-coding locale for v2.0.
+            ReceiptLocale = "en-US";
+            RecognizedForm = new RecognizedForm(documentResult, pageResults, readResults);
+        }
+
+        internal RecognizedReceipt(RecognizedReceipt receipt)
+        {
+            ReceiptLocale = receipt.ReceiptLocale;
+            RecognizedForm = receipt.RecognizedForm;
         }
 
         /// <summary>
@@ -27,5 +31,70 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public RecognizedForm RecognizedForm { get; internal set; }
 
+        internal static FormField<string> ConvertStringField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
+        {
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<string>(field, field.Value.AsString());
+            }
+
+            return null;
+        }
+
+        internal static FormField<string> ConvertPhoneNumberField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
+        {
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<string>(field, field.Value.AsPhoneNumber());
+            }
+
+            return null;
+        }
+
+        internal static FormField<int> ConvertIntField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
+        {
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<int>(field, field.Value.AsInt32());
+            }
+
+            return null;
+        }
+
+        internal static FormField<float> ConvertFloatField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
+        {
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<float>(field, field.Value.AsFloat());
+            }
+
+            return null;
+        }
+
+        internal static FormField<DateTime> ConvertDateField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
+        {
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<DateTime>(field, field.Value.AsDate());
+            }
+
+            return null;
+        }
+
+        internal static FormField<TimeSpan> ConvertTimeField(string fieldName, IReadOnlyDictionary<string, FormField> fields)
+        {
+            FormField field;
+            if (fields.TryGetValue(fieldName, out field))
+            {
+                return new FormField<TimeSpan>(field, field.Value.AsTime());
+            }
+
+            return null;
+        }
     }
 }

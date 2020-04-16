@@ -5,8 +5,8 @@ param (
     [string] $ServiceDirectory
 )
 
-$generatorProject = "$PSScriptRoot/SnippetGenerator/SnippetGenerator.csproj";
-$root = "$PSScriptRoot/../sdk"
+$generatorProject = "$PSScriptRoot/../SnippetGenerator/SnippetGenerator.csproj";
+$root = "$PSScriptRoot/../../sdk"
 
 # special casing * here because single invocation of SnippetGenerator is much faster than
 # running it per service directory

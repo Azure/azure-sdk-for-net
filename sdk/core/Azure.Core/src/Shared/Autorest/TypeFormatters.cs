@@ -28,6 +28,7 @@ namespace Azure.Core
         public static string ToString(TimeSpan value, string format) => format switch
         {
             "P" => XmlConvert.ToString(value),
+            "T" => value.ToString("T", CultureInfo.InvariantCulture),
             _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 

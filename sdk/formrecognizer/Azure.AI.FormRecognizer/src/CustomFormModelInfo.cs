@@ -12,8 +12,8 @@ namespace Azure.AI.FormRecognizer.Training
         internal CustomFormModelInfo(ModelInfo_internal modelInfo)
         {
             ModelId = modelInfo.ModelId.ToString();
-            CreatedOn = new DateTime(modelInfo.CreatedDateTime.Ticks, DateTimeKind.Utc);
-            LastUpdatedOn = new DateTime(modelInfo.LastUpdatedDateTime.Ticks, DateTimeKind.Utc);
+            CreatedOn = modelInfo.CreatedDateTime;
+            LastModified = modelInfo.LastUpdatedDateTime;
             Status = modelInfo.Status;
         }
 
@@ -27,10 +27,10 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// </summary>
-        public DateTime CreatedOn { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
         /// </summary>
-        public DateTime LastUpdatedOn { get; }
+        public DateTimeOffset LastModified { get; }
     }
 }

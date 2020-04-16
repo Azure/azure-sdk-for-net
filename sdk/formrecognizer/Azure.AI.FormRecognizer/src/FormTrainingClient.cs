@@ -58,22 +58,10 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual TrainingOperation StartTraining(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
 
-            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
-
-            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            //// https://github.com/Azure/autorest.csharp/issues/467
-            //// When this is complete, we will be able to default filter.Path to "".
-            //// Decision to make, do we always send filter, or only if needed?
-            //// Tracking with https://github.com/Azure/azure-sdk-for-net/issues/10359
-            //if (filter != default)
-            //{
-            //    trainRequest.SourceFilter = filter;
-            //}
-
-            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
-            //return new TrainingOperation(ServiceClient, response.Headers.Location);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
+            return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
 
         /// <summary>
@@ -88,43 +76,36 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
 
-            //TrainRequest_internal trainRequest = new TrainRequest_internal() { Source = trainingFiles.AbsoluteUri };
-
-            //// TODO: Q1 - if there's a way to default a property value, set filter.Path ="" and set it here in a nicer way.
-            //// https://github.com/Azure/azure-sdk-for-net/issues/10359
-            //if (filter != default)
-            //{
-            //    trainRequest.SourceFilter = filter;
-            //}
-
-            //ResponseWithHeaders<TrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-            //return new TrainingOperation(ServiceClient, response.Headers.Location);
+            ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
+            return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
 
         /// <summary>
+        /// Get a description of a custom model, including the types of forms it can recognize and the fields it will extract for each form type.
         /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="modelId">The ID of the model to retrieve.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual Response<CustomFormModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Response<Model_internal> response = ServiceClient.GetCustomModel(new Guid(modelId), includeKeys: true, cancellationToken);
+            return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
         /// <summary>
+        /// Get detailed information about a custom model.
         /// </summary>
-        /// <param name="modelId"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="modelId">The ID of the model to retrieve.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<CustomFormModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(new Guid(modelId), includeKeys: true, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
         #endregion
@@ -158,47 +139,47 @@ namespace Azure.AI.FormRecognizer.Training
         /// Get a collection of <see cref="CustomFormModelInfo"/> items describing the models trained on this Cognitive Services Account
         /// and their training status.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual Pageable<CustomFormModelInfo> GetModelInfos(CancellationToken cancellationToken = default)
         {
-            return ServiceClient.GetCustomModelsPageableModelInfo(GetModelOptions.Full, cancellationToken);
+            return ServiceClient.GetCustomModelsPageableModelInfo(cancellationToken);
         }
 
         /// <summary>
         /// Get a collection of <see cref="CustomFormModelInfo"/> items describing the models trained on this Cognitive Services Account
         /// and their training status.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual AsyncPageable<CustomFormModelInfo> GetModelInfosAsync(CancellationToken cancellationToken = default)
         {
-            return ServiceClient.GetCustomModelsPageableModelInfoAsync(GetModelOptions.Full, cancellationToken);
+            return ServiceClient.GetCustomModelsPageableModelInfoAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get the number of models trained on this Cognitive Services Account and the account limits.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual Response<AccountProperties> GetAccountProperties(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(GetModelOptions.Summary, cancellationToken);
+            Response<Models_internal> response = ServiceClient.RestClient.GetCustomModels(cancellationToken);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 
         /// <summary>
         /// Get the number of models trained on this Cognitive Services Account and the account limits.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<AccountProperties>> GetAccountPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(GetModelOptions.Summary, cancellationToken).ConfigureAwait(false);
+            Response<Models_internal> response = await ServiceClient.RestClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new AccountProperties(response.Value.Summary), response.GetRawResponse());
         }
 

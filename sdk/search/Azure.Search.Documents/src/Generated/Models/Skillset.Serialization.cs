@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Models
             string description = default;
             IList<Skill> skills = default;
             CognitiveServicesAccount cognitiveServices = default;
-            string odataetag = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -64,7 +64,14 @@ namespace Azure.Search.Documents.Models
                     List<Skill> array = new List<Skill>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Skill.DeserializeSkill(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Skill.DeserializeSkill(item));
+                        }
                     }
                     skills = array;
                     continue;
@@ -84,11 +91,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    odataetag = property.Value.GetString();
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new Skillset(name, description, skills, cognitiveServices, odataetag);
+            return new Skillset(name, description, skills, cognitiveServices, odataEtag);
         }
     }
 }
