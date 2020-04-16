@@ -80,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Training
                 {
                     string fieldName = "field-" + i;
                     string fieldLabel = cluster.Value[i];
-                    fieldMap.Add(fieldName, new CustomFormModelField(fieldName, fieldLabel, default));
+                    fieldMap.Add(fieldName, new CustomFormModelField(fieldName, fieldLabel, 0.0f));
                 }
                 subModels.Add(new CustomFormSubModel(
                     $"form-{cluster.Key}",

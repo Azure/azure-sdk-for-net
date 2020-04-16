@@ -34,6 +34,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The format to generate the filenames of the forms to be used for tests.</summary>
         private const string InvoiceFilenameFormat = "Invoice_{0}.{1}";
 
+        /// <summary>The name of the JPG file which contains the form to be used for tests.</summary>
+        private const string FormFilename = "form_1.jpg";
+
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
@@ -42,6 +45,16 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         /// <value>The name of the current working directory.</value>
         private static string CurrentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        /// The relative path to the JPG file which contains the form to be used for tests.
+        /// </summary>
+        /// <value>The relative path to the JPG file.</value>
+        public static string FormPath => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), AssetsFolderName, FormFilename);
+
+        /// <summary>
+        /// The URI string to the JPG file which contains the form to be used for tests.
+        /// </summary>
+        /// <value>The URI string to the JPG file.</value>
+        public static string FormtUri => string.Format(FileUriFormat, AssetsFolderName, FormFilename);
 
         /// <summary>
         /// The relative path to the JPG file which contains the receipt to be used for tests.

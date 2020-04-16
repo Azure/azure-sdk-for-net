@@ -23,12 +23,15 @@ namespace Azure.AI.FormRecognizer.Tests
     [LiveOnly]
     public class FormRecognizerClientLiveTests : ClientTestBase
     {
+        private readonly Uri _containerUri;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
+            _containerUri = new Uri(Environment.GetEnvironmentVariable(TestEnvironment.BlobContainerSASUrlEnvironmentVariableName));
         }
 
         /// <summary>
@@ -223,6 +226,61 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
             Assert.IsNull(receipt.Tip);
             Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+        }
+
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and perform analysis of receipts.
+        /// </summary>
+        [Test]
+        [TestCase(true)]
+        //[TestCase(false)]
+        public async Task StartRecognizeCustomFormsLabeled(bool useStream)
+        {
+            var client = CreateInstrumentedClient();
+
+            FormTrainingClient trainingClient = client.GetFormTrainingClient();
+            TrainingOperation trainedModel = await trainingClient.StartTrainingAsync(_containerUri, true);
+            await trainedModel.WaitForCompletionAsync();
+            Assert.IsTrue(trainedModel.HasValue);
+
+            RecognizeCustomFormsOperation operation;
+
+            if (useStream)
+            {
+                using var stream = new FileStream(TestEnvironment.FormPath, FileMode.Open);
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.Value.ModelId, stream);
+            }
+            else
+            {
+                var uri = new Uri(TestEnvironment.FormtUri);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.Value.ModelId, uri);
+            }
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.GreaterOrEqual(operation.Value.Count, 1);
+
+            RecognizedForm form = operation.Value.FirstOrDefault();
+
+            //testing that we shuffle things around correctly so checking only once per property
+
+            Assert.AreEqual("custom:form", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+            Assert.AreEqual(1, form.Pages.Count);
+            Assert.AreEqual(2200, form.Pages[0].Height);
+            Assert.AreEqual(1, form.Pages[0].PageNumber);
+            Assert.AreEqual(LengthUnit.Pixel, form.Pages[0].Unit);
+            Assert.AreEqual(1700, form.Pages[0].Width);
+
+            Assert.IsNotNull(form.Fields);
+            var name = "PurchaseOrderNumber";
+            Assert.IsNotNull(form.Fields[name]);
+            Assert.IsNotNull(form.Fields[name].Confidence);
+            Assert.AreEqual(FieldValueType.StringType, form.Fields[name].Value.Type);
+            Assert.AreEqual("948284", form.Fields[name].ValueText.Text);
         }
 
         [Test]
