@@ -1,5 +1,9 @@
 # Azure Cognitive Services Form Recognizer client library for .NET
-Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to extract text and table data from form documents. It allows you to train custom models using your own forms, to extract field names and values, and table data from them.  It also provides a prebuilt models you can use to extract values from receipts, or tables from any form.
+Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning recognize form fields, text, and tables in form documents.  It includes the following capabilities:
+
+- Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
+- Recognize Form Content - Recognize and extract tables, lines and words in forms documents, without the need to train a model.
+- Recognize Receipts - Recognize and extract common fields from US receipts, using a pre-trained receipt model.
 
 [Source code][formreco_client_src] | <!--[Package (NuGet)]() | [API reference documentation]() |--> [Product documentation][formreco_docs] <!--| [Samples]()-->
 
@@ -8,128 +12,103 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * An existing Form Recognizer resource. If you need to create the resource, you can use the [Azure Portal][azure_portal] or [Azure CLI][azure_cli].
-<!-- 
+
 If you use the Azure CLI, replace `<your-resource-group-name>`, `<your-resource-name>`, `<location>`, and `<sku>` with your values:
 
 ```PowerShell
-az cognitiveservices account create --kind TextAnalytics --resource-group <your-resource-group-name> --name <your-resource-name> --location <location> --sku <sku>
+az cognitiveservices account create --kind FormRecognizer --resource-group <your-resource-group-name> --name <your-resource-name> --location <location> --sku <sku>
 ``` -->
+
 <!-- 
 ### Install the package
-Install the Azure Text Analytics client library for .NET with [NuGet][nuget].  To use the [.NET CLI](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-dotnet-cli), run the following command from PowerShell in the directory that contains your project file:
+Install the Azure Form Recognizer client library for .NET with [NuGet][nuget].  To use the [.NET CLI](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-dotnet-cli), run the following command from PowerShell in the directory that contains your project file:
 
 ```PowerShell
-dotnet add package Azure.AI.TextAnalytics --version 1.0.0-preview.1
+dotnet add package Azure.AI.FormRecognizer --version 1.0.0-preview.1
 ``` 
 For other installation methods, please see the package information on [NuGet][nuget].
--->
+
 
 ### Authenticate a Form Recognizer client
-In order to interact with the Form Recognizer service, you'll need to select either a `ReceiptClient`, `FormLayoutClient`, or `CustomFormClient`, and create an instance of this class.  In the following samples, we will use CustomFormClient as an example.  You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Form Recognizer service, you'll need to create an instance of the `FormRecognizerClient` class.  You will need an **endpoint** and an **API key** to instantiate a client object.  
 
 #### Get Subscription Key
 
-You can obtain the endpoint and subscription key from the resource information in the [Azure Portal][azure_portal].
+You can obtain the endpoint and API key from the resource information in the [Azure Portal][azure_portal].
 
-Alternatively, you can use the [Azure CLI][azure_cli] snippet below to get the subscription key from the Form Recognizer resource.
+Alternatively, you can use the [Azure CLI][azure_cli] snippet below to get the API key from the Form Recognizer resource.
 
 ```PowerShell
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
-#### Create CustomFormClient with Subscription Key Credential
-Once you have the value for the subscription key, create a `FormRecognizerApiKeyCredential`. This will allow you to update the subscription key by using the `UpdateCredential` method without creating a new client.
+#### Create `FormRecognizerClient` with Azure Key Credential
+Once you have the value for the API key, create an `AzureKeyCredential`.  With the endpoint and key credential, you can create the [FormRecognizerClient][form_recognizer_client_class]:
 
-With the value of the endpoint and a `FormRecognizerApiKeyCredential`, you can create the [CustomFormClient][formreco_custom_client_class]:
-
-```C#
-string endpoint = "<endpoint>";
-string subscriptionKey = "<subscriptionKey>";
-var credential = new FormRecognizerApiKeyCredential(subscriptionKey);
-var client = new CustomFormClient(new Uri(endpoint), credential);
+```C# Snippet:CreateFormRecognizerClient
 ```
 
-<!-- #### Create CustomFormClient with Azure Active Directory Credential
-
-Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
-
-To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
-or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
-
-```PowerShell
-Install-Package Azure.Identity
-```
-
-You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Text Analytics by assigning the `"Cognitive Services User"` role to your service principal.
-
-Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
-
-```
-string endpoint = "<endpoint>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new DefaultAzureCredential());
-``` -->
 
 ## Key concepts
 
-### ReceiptClient
-A `ReceiptClient` is the Form Recognizer interface to use for analyzing receipts.  It provides operations to extract receipt field values and locations from receipts from the United States.
+### FormRecognizerClient
 
-### FormLayoutClient
-A `FormLayoutClient` is the Form Recognizer interface to extract layout items from forms.  It provides operations to extract table data and geometry.
+`FormRecognizerClient` provides operations for:
 
-### CustomFormClient
-A `CustomFormClient` is the Form Recognizer interface to use for creating, using, and managing custom machine-learned models. It provides operations for training models on forms you provide, and extracting field values and locations from your custom forms.  It also provides operations for viewing and deleting models, as well as understanding how close you are to reaching subscription limits for the number of models you can train.
+ - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects.
+ - Recognizing form content, including tables, lines and words, without having to train a model.  These values are returned in a collection of `RecognizedPage` objects.
+ - Recognizing common fields from US receipts, using a pre-trained receipt model on the Form Recognizer service.  These values are returned in a collection of `RecognizeReceipt` objects.
+
+### FormTrainingClient
+
+`FormTrainingClient` provides operations for:
+
+- Training custom models to recognize all fields and values found in your custom forms.  A `CustomFormModel` is returned indicating the form types the model will recognize, and the fields it will extract for each form type.
+- Training custom models to recognize specific fields and values you specify by labeling your custom forms.  A `CustomFormModel` is returned indicating the fields the model will extract, as well as the estimated accuracy for each field.
+- Managing models created in your account.
+
+Please note that models can also be trained using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
 
 ### Long-Running Operations
-Long-running operations are operations which consist of an initial request sent to the service to start an operation,followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
-Methods that train models or extract values from forms are modeled as long-running operations.  The client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  Callers should wait for the operation to complete by calling `WaitForCompletionAsync()` on the operation returned from the `Start<operation-name>` method.  A sample code snippet is provided to illustrate using long-running operations [below](#extracting-receipt-values-with-a-long-running-operation).
+Because analyzing and training form documents takes time, these operations are implemented as [*long-running operations*][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
-### Training models
-Using the `CustomFormClient`, you can train a machine-learned model on your own form type.  The resulting model will be able to extract values from the types of forms it was trained on.
-
-#### Training without labels
-A model trained without labels uses unsupervised learning to understand the layout and relationships between field names and values in your forms. The learning algorithm clusters the training forms by type and learns what fields and tables are present in each form type. 
-
-This approach doesn't require manual data labeling or intensive coding and maintenance, and we recommend you try this method first when training custom models.
-
-#### Training with labels
-A model trained with labels uses supervised learning to extract values you specify by adding labels to your training forms.  The learning algorithm uses a label file you provide to learn what fields are found at various locations in the form, and learns to extract just those values.
-
-This approach can result in better-performing models, and those models can work with more complex form structures.
-
-### Extracting values from forms
-Using the `CustomFormClient`, you can use your own trained models to extract field values and locations, as well as table data, from forms of the type you trained your models on.  The output of models trained with and without labels differs as described below.
-
-#### Using models trained without labels
-Models trained without labels consider each form page to be a different form type.  For example, if you train your model on 3-page forms, it will learn that these are three different types of forms.  When you send a form to it for analysis, it will return a collection of three pages, where each page contains the field names, values, and locations, as well as table data, found on that page.
-
-#### Using models trained with labels
-Models trained with labels consider a form as a single unit.  For example, if you train your model on 3-page forms with labels, it will learn to extract field values from the locations you've labeled across all pages in the form.  If you sent a document containing two forms to it for analysis, it would return a collection of two forms, where each form contains the field names, values, and locations, as well as table data, found in that form.  Fields and tables have page numbers to identify the pages where they were found.
-
-### Managing Custom Models
-Using the `CustomFormClient`, you can get, list, and delete the custom models you've trained.  You can also view the count of models you've trained and the maximum number of models your subscription will allow you to store.
+For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#extracting-receipt-values-with-a-long-running-operation).
 
 ## Examples
 The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API.
 
-### Extracting receipt values with a long-running operation
-```C#
-string endpoint = "<endpoint>";
-string subscriptionKey = "<subscriptionKey>";
-var credential = new FormRecognizerApiKeyCredential(subscriptionKey);
-var client = new ReceiptClient(new Uri(endpoint), credential);
+* [Recognize Receipts](#recognize-receipts)
+* [Recognize Content](#recognize-content)
+* [Recognize Custom Forms](#recognize-custom-forms)
+* [Train with Forms Only](#train-with-forms-only)
+* [Train with Forms and Labels](#train-with-forms-and-labels)
+* [Manage Custom Forms](#manage-custom-forms)
 
-using (FileStream stream = new FileStream(@"C:\path\to\receipt.jpg", FileMode.Open))
-{
-    var extractReceiptOperation = client.StartExtractReceipts(stream, FormContentType.Jpeg);
-    await extractReceiptOperation.WaitForCompletionAsync();
-    if (extractReceiptOperation.HasValue)
-    {
-        IReadOnlyList<ExtractedReceipt> result = extractReceiptOperation.Value;
-    }
-}
+### Recognize Receipts
+```C# Snippet:FormRecognizerSample1CreateClient
 ```
+
+### Recognize Content
+```C#
+```
+
+### Recognize Custom Forms
+```C#
+```
+
+### Train with Forms Only
+```C#
+```
+
+### Train with Forms and Labels
+```C#
+```
+
+### Manage Custom Forms
+```C#
+```
+
 
 ## Contributing
 
@@ -151,19 +130,17 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview
 [cognitive_resource]: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account
 
-<!-- [language_detection]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
-[sentiment_analysis]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis
-[key_phrase_extraction]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-keyword-extraction
-[named_entity_recognition]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-entity-linking -->
 
-
-[formreco_custom_client_class]: src/CustomFormClient.cs
+[form_recognizer_client_class]: src/FormRecognizerClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [cognitive_auth]: https://docs.microsoft.com/en-us/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
+
+[labeling_tool]: https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+[dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 <!-- [detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
 [detect_language_sample1]: tests/samples/Sample1_DetectLanguageBatchConvenience.cs
