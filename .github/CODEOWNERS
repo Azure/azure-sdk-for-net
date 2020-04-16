@@ -23,9 +23,9 @@
 /sdk/cognitiveservices/vision.computervision/   @toothache
 /sdk/cognitiveservices/vision.face/             @TFR258 
 
-/sdk/eventgrid/ @Kishp01 @ahamad-MS
+/sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
-/sdk/eventhub/ @serkantkaraca                   @jsquire @kinelski
+/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
 /sdk/eventhub/azure.messaging.eventhubs/        @jsquire @kinelski
 
 /sdk/identity/                                  @schaabs
