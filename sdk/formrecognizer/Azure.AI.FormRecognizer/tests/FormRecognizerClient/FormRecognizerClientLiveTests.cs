@@ -131,24 +131,25 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();
-            Operation<IReadOnlyList<RecognizedReceipt>> operation;
+            IReadOnlyList<RecognizedReceipt> receipts;
 
             if (useStream)
             {
                 using var stream = new FileStream(TestEnvironment.ReceiptPath, FileMode.Open);
-                operation = await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg);
+                var operation = await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg);
+
+                await operation.WaitForCompletionAsync();
+
+                Assert.IsTrue(operation.HasValue);
+                receipts = operation.Value;
             }
             else
             {
                 var uri = new Uri(TestEnvironment.ReceiptUri);
-                operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
+                receipts = (await client.RecognizeReceiptsFromUriAsync(uri, default)).Value;
             }
 
-            await operation.WaitForCompletionAsync();
-
-            Assert.IsTrue(operation.HasValue);
-
-            var receipt = operation.Value.Single().AsUSReceipt();
+            var receipt = receipts.Single().AsUSReceipt();
 
 
             // The expected values are based on the values returned by the service, and not the actual
