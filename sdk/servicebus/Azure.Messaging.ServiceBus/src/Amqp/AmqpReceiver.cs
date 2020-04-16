@@ -298,7 +298,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         lockTokenGuids,
                         timeout,
                         DispositionStatus.Completed,
-                        _isSessionReceiver,
                         SessionId).ConfigureAwait(false);
                     return;
                 }
