@@ -25,6 +25,20 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
+        /// Creates a fake <see cref="FormRecognizerClient" /> and instruments it to make use of the Azure Core
+        /// Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
+        private FormRecognizerClient CreateInstrumentedClient()
+        {
+            var fakeEndpoint = new Uri("http://localhost");
+            var fakeCredential = new AzureKeyCredential("fakeKey");
+            var client = new FormRecognizerClient(fakeEndpoint, fakeCredential);
+
+            return InstrumentClient(client);
+        }
+
+        /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
         [Test]
@@ -175,18 +189,5 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
-        /// <summary>
-        /// Creates a fake <see cref="FormRecognizerClient" /> and instruments it to make use of the Azure Core
-        /// Test Framework functionalities.
-        /// </summary>
-        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient()
-        {
-            var fakeEndpoint = new Uri("http://localhost");
-            var fakeCredential = new AzureKeyCredential("fakeKey");
-            var client = new FormRecognizerClient(fakeEndpoint, fakeCredential);
-
-            return InstrumentClient(client);
-        }
     }
 }
