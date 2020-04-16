@@ -30,16 +30,16 @@ namespace Azure.Template
             _pipeline = pipeline;
         }
 
-        /// <param name="body"> The Model to use. </param>
+        /// <param name="body"> The ServiceModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Model>> OperationAsync(Model body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceModel>> OperationAsync(ServiceModel body = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.OperationAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <param name="body"> The Model to use. </param>
+        /// <param name="body"> The ServiceModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Model> Operation(Model body = null, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceModel> Operation(ServiceModel body = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Operation(body, cancellationToken);
         }
