@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -220,7 +221,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
             var link = default(SendingAmqpLink);
 
             try
@@ -256,7 +257,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Outcome outcome = await link.SendMessageAsync(
                         batchMessage,
                         deliveryTag,
-                        transactionId, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                    transactionId, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                     if (outcome.DescriptorCode != Accepted.Code)
@@ -265,7 +266,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
 
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    stopWatch.Stop();
                 }
             }
             catch (Exception exception)
@@ -378,7 +378,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
-            var stopWatch = Stopwatch.StartNew();
             var sendLink = default(SendingAmqpLink);
             try
             {
@@ -430,7 +429,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout).ConfigureAwait(false);
 
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                    stopWatch.Stop();
 
                     if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                     {
@@ -493,7 +491,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
-            var stopWatch = Stopwatch.StartNew();
             var sendLink = default(SendingAmqpLink);
             try
             {
@@ -516,7 +513,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                stopWatch.Stop();
 
                 if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
                 {

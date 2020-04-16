@@ -214,8 +214,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var link = default(ReceivingAmqpLink);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedMessages = new List<ServiceBusReceivedMessage>();
-            var stopWatch = Stopwatch.StartNew();
-
             try
             {
                 link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
@@ -250,7 +248,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     }
                 }
 
-                stopWatch.Stop();
                 return receivedMessages;
             }
             catch (Exception exception)
@@ -803,8 +800,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            var stopWatch = new Stopwatch();
-            stopWatch.Start();
+            var stopWatch = ValueStopwatch.StartNew();
 
             AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.PeekMessageOperation,
@@ -826,13 +822,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
                 UseMinimum(_connectionScope.SessionTimeout,
-                timeout.CalculateRemaining(stopWatch.Elapsed)))
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime())))
                 .ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             using AmqpMessage responseAmqpMessage = await link.RequestAsync(
                 amqpRequestMessage.AmqpMessage,
-                timeout.CalculateRemaining(stopWatch.Elapsed))
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
                 .ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
