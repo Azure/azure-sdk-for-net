@@ -1674,7 +1674,8 @@ namespace Azure.Storage.Blobs.Test
             }
 
             // Act
-            Response<BlobInfo> expiryResponse = await blob.SetExpiryRelativeAsync(new TimeSpan(hours: 1, minutes: 0, seconds: 0));
+            Response<BlobInfo> expiryResponse = await blob.SetExpiryRelativeAsync(
+                new TimeSpan(hours: 1, minutes: 0, seconds: 0));
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
             IList<BlobItem> blobItems = await test.Container.GetBlobsAsync().ToListAsync();
             BlobItem blobItem = blobItems.Where(b => b.Name == blob.Name).FirstOrDefault();

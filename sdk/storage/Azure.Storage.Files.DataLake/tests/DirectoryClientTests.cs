@@ -16,8 +16,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class DirectoryClientTests : PathTestBase
     {
-        public DirectoryClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public DirectoryClientTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

@@ -21,8 +21,8 @@ namespace Azure.Storage.Files.DataLake.Tests
     {
         private const long Size = 4 * Constants.KB;
 
-        public FileClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public FileClientTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -2801,6 +2801,114 @@ namespace Azure.Storage.Files.DataLake.Tests
             using var actual = new MemoryStream();
             await file.ReadToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryRelativeAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            // Delay 1 second, so current times doesn't equal blob creation time.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(1000);
+            }
+
+            // Act
+            Response<PathInfo> expiryResponse = await file.SetExpiryRelativeAsync(new TimeSpan(hours: 1, minutes: 0, seconds: 0));
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(expiryResponse.Value.ETag);
+            Assert.IsNotNull(expiryResponse.Value.LastModified);
+            Assert.AreNotEqual(propertiesResponse.Value.CreatedOn.AddHours(1), propertiesResponse.Value.ExpiresOn);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryRelativeAsync_RelativeToFileCreationTime()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            // Act
+            Response<PathInfo> expiryResponse = await file.SetExpiryRelativeAsync(
+                timeToExpire: new TimeSpan(hours: 1, minutes: 0, seconds: 0),
+                relativeToBlobCreationTime: true);
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(propertiesResponse.Value.CreatedOn.AddHours(1), propertiesResponse.Value.ExpiresOn);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryRelativeAsync_Error()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.SetExpiryRelativeAsync(new TimeSpan(hours: 1, minutes: 0, seconds: 0)),
+                e => Assert.AreEqual(Blobs.Models.BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+            ;
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryAbsoluteAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
+
+            // Act
+            Response<PathInfo> expiryResponse = await file.SetExpiryAbsoluteAsync(expiresOn);
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(expiryResponse.Value.ETag);
+            Assert.IsNotNull(expiryResponse.Value.LastModified);
+            Assert.AreEqual(expiresOn, propertiesResponse.Value.ExpiresOn);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryAbsoluteAsync_RemoveExpiry()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
+            await file.SetExpiryAbsoluteAsync(expiresOn);
+
+            // Act
+            await file.SetExpiryAbsoluteAsync();
+            Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(default(DateTimeOffset), propertiesResponse.Value.ExpiresOn);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetExpiryAbsoluteAsync_Error()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.SetExpiryAbsoluteAsync(),
+                e => Assert.AreEqual(Blobs.Models.BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
         }
     }
 }

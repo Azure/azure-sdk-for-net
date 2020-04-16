@@ -99,7 +99,15 @@ namespace Azure.Storage.Files.DataLake
                 EncryptionKeySha256 = blobProperties.EncryptionKeySha256,
                 AccessTier = blobProperties.AccessTier,
                 ArchiveStatus = blobProperties.ArchiveStatus,
-                AccessTierChangedOn = blobProperties.AccessTierChangedOn
+                AccessTierChangedOn = blobProperties.AccessTierChangedOn,
+                ExpiresOn = blobProperties.ExpiresOn
+            };
+
+        internal static PathInfo ToPathInfo(this BlobInfo blobInfo) =>
+            new PathInfo
+            {
+                ETag = blobInfo.ETag,
+                LastModified = blobInfo.LastModified
             };
 
         internal static DataLakeLease ToDataLakeLease(this BlobLease blobLease) =>

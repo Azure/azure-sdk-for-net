@@ -3189,5 +3189,221 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Upload
+
+        #region SetExpiry
+        /// <summary>
+        /// Sets the files's ExpiresOn property.  ExpiresOn is when
+        /// the files will be deleted.  If <paramref name="relativeToBlobCreationTime"/>
+        /// is true, the ExpiresOn time will be set relative to the
+        /// time the file was created.  Otherwise, it will be set
+        /// relative to the current time.
+        /// </summary>
+        /// <param name="timeToExpire">
+        /// <see cref="TimeSpan"/>.
+        /// </param>
+        /// <param name="relativeToBlobCreationTime">
+        /// If true, the ExpiresOn property will be set relative to
+        /// the time the file was created.  Otherwise, it will be set
+        /// relative to the current time.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> SetExpiryRelative(
+            TimeSpan timeToExpire,
+            bool relativeToBlobCreationTime = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryRelative)}");
+            try
+            {
+                scope.Start();
+
+                Response<BlobInfo> response = _blockBlobClient.SetExpiryRelative(
+                    timeToExpire,
+                    relativeToBlobCreationTime,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToPathInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Sets the files's ExpiresOn property.  ExpiresOn is when
+        /// the files will be deleted.  If <paramref name="relativeToBlobCreationTime"/>
+        /// is true, the ExpiresOn time will be set relative to the
+        /// time the file was created.  Otherwise, it will be set
+        /// relative to the current time.
+        /// </summary>
+        /// <param name="timeToExpire">
+        /// <see cref="TimeSpan"/>.
+        /// </param>
+        /// <param name="relativeToBlobCreationTime">
+        /// If true, the ExpiresOn property will be set relative to
+        /// the time the file was created.  Otherwise, it will be set
+        /// relative to the current time.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> SetExpiryRelativeAsync(
+            TimeSpan timeToExpire,
+            bool relativeToBlobCreationTime = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryRelative)}");
+            try
+            {
+                scope.Start();
+
+                Response<BlobInfo> response = await _blockBlobClient.SetExpiryRelativeAsync(
+                    timeToExpire,
+                    relativeToBlobCreationTime,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToPathInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Sets the files's ExpiresOn time, when the file will
+        /// be delete.  If <paramref name="expiresOn"/> is null,
+        /// the file's existing ExpiresOn property will be
+        /// removed.
+        /// </summary>
+        /// <param name="expiresOn">
+        /// The <see cref="DateTimeOffset"/> to set for when
+        /// the file will be deleted.  If null, the existing
+        /// ExpiresOn time on the file will be removed, if it exists.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> SetExpiryAbsolute(
+            DateTimeOffset? expiresOn = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryAbsolute)}");
+            try
+            {
+                scope.Start();
+
+                Response<BlobInfo> response = _blockBlobClient.SetExpiryAbsolute(
+                    expiresOn,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToPathInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Sets the files's ExpiresOn time, when the file will
+        /// be delete.  If <paramref name="expiresOn"/> is null,
+        /// the file's existing ExpiresOn property will be
+        /// removed.
+        /// </summary>
+        /// <param name="expiresOn">
+        /// The <see cref="DateTimeOffset"/> to set for when
+        /// the file will be deleted.  If null, the existing
+        /// ExpiresOn time on the file will be removed, if it exists.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> SetExpiryAbsoluteAsync(
+            DateTimeOffset? expiresOn = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryAbsolute)}");
+            try
+            {
+                scope.Start();
+
+                Response<BlobInfo> response = await _blockBlobClient.SetExpiryAbsoluteAsync(
+                    expiresOn,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToPathInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion SetExpiry
     }
 }
