@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="id">The resource id.</param>
         /// <param name="startTime">Gets the start time.</param>
         /// <param name="endTime">Gets the end time.</param>
+        /// <param name="scheduledTime">The scheduled time.</param>
         /// <param name="status">Gets the status. Possible values include:
         /// 'NotSpecified', 'Paused', 'Running', 'Waiting', 'Succeeded',
         /// 'Skipped', 'Suspended', 'Cancelled', 'Failed', 'Faulted',
@@ -51,11 +52,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="run">Gets the reference to workflow run.</param>
         /// <param name="name">Gets the workflow trigger history name.</param>
         /// <param name="type">Gets the workflow trigger history type.</param>
-        public WorkflowTriggerHistory(string id = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string status = default(string), string code = default(string), object error = default(object), string trackingId = default(string), Correlation correlation = default(Correlation), ContentLink inputsLink = default(ContentLink), ContentLink outputsLink = default(ContentLink), bool? fired = default(bool?), ResourceReference run = default(ResourceReference), string name = default(string), string type = default(string))
+        public WorkflowTriggerHistory(string id = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? scheduledTime = default(System.DateTime?), string status = default(string), string code = default(string), object error = default(object), string trackingId = default(string), Correlation correlation = default(Correlation), ContentLink inputsLink = default(ContentLink), ContentLink outputsLink = default(ContentLink), bool? fired = default(bool?), ResourceReference run = default(ResourceReference), string name = default(string), string type = default(string))
             : base(id)
         {
             StartTime = startTime;
             EndTime = endTime;
+            ScheduledTime = scheduledTime;
             Status = status;
             Code = code;
             Error = error;
@@ -86,6 +88,12 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endTime")]
         public System.DateTime? EndTime { get; private set; }
+
+        /// <summary>
+        /// Gets the scheduled time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scheduledTime")]
+        public System.DateTime? ScheduledTime { get; private set; }
 
         /// <summary>
         /// Gets the status. Possible values include: 'NotSpecified', 'Paused',

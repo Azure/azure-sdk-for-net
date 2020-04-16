@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// values include: 'NotSpecified', 'Accepted', 'Running', 'Ready',
         /// 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'</param>
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'</param>
         /// <param name="deploymentParameters">The connector deployment
         /// parameters metadata.</param>
         public ApiResourceMetadata(string source = default(string), string brandColor = default(string), string hideKey = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string apiType = default(string), WsdlService wsdlService = default(WsdlService), string wsdlImportMethod = default(string), string connectionType = default(string), string provisioningState = default(string), ApiDeploymentParameterMetadataSet deploymentParameters = default(ApiDeploymentParameterMetadataSet))
@@ -124,7 +125,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Accepted', 'Running', 'Ready', 'Creating',
         /// 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }

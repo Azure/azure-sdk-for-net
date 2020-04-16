@@ -49,7 +49,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// values include: 'NotSpecified', 'Accepted', 'Running', 'Ready',
         /// 'Creating', 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'</param>
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'</param>
         /// <param name="category">The category. Possible values include:
         /// 'NotSpecified', 'Enterprise', 'Standard', 'Premium'</param>
         public ApiResourceProperties(string name = default(string), IDictionary<string, object> connectionParameters = default(IDictionary<string, object>), ApiResourceMetadata metadata = default(ApiResourceMetadata), IList<string> runtimeUrls = default(IList<string>), ApiResourceGeneralInformation generalInformation = default(ApiResourceGeneralInformation), IList<string> capabilities = default(IList<string>), ApiResourceBackendService backendService = default(ApiResourceBackendService), ApiResourcePolicies policies = default(ApiResourcePolicies), string apiDefinitionUrl = default(string), ApiResourceDefinitions apiDefinitions = default(ApiResourceDefinitions), ResourceReference integrationServiceEnvironment = default(ResourceReference), string provisioningState = default(string), string category = default(string))
@@ -146,7 +147,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// 'NotSpecified', 'Accepted', 'Running', 'Ready', 'Creating',
         /// 'Created', 'Deleting', 'Deleted', 'Canceled', 'Failed',
         /// 'Succeeded', 'Moving', 'Updating', 'Registering', 'Registered',
-        /// 'Unregistering', 'Unregistered', 'Completed'
+        /// 'Unregistering', 'Unregistered', 'Completed', 'Renewing',
+        /// 'Pending', 'Waiting', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
