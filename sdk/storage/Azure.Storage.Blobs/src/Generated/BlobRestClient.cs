@@ -17635,7 +17635,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// An Azure Storage blob
     /// </summary>
-    internal partial class BlobItemInternal
+    public partial class BlobItemInternal
     {
         /// <summary>
         /// Name
@@ -17690,7 +17690,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobItemInternal instance
         /// </summary>
-        public BlobItemInternal()
+        internal BlobItemInternal()
             : this(false)
         {
         }
@@ -17783,6 +17783,42 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItemInternal value);
+    }
+
+    /// <summary>
+    /// BlobsModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class BlobsModelFactory
+    {
+        /// <summary>
+        /// Creates a new BlobItemInternal instance for mocking.
+        /// </summary>
+        public static BlobItemInternal BlobItemInternal(
+            string name,
+            bool deleted,
+            Azure.Storage.Blobs.Models.BlobItemProperties properties,
+            string snapshot = default,
+            string versionId = default,
+            bool? isCurrentVersion = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default,
+            Azure.Storage.Blobs.Models.BlobTags blobTags = default,
+            string objectReplicationPolicyId = default,
+            System.Collections.Generic.IDictionary<string, string> objectReplicationRuleStatus = default)
+        {
+            return new BlobItemInternal()
+            {
+                Name = name,
+                Deleted = deleted,
+                Properties = properties,
+                Snapshot = snapshot,
+                VersionId = versionId,
+                IsCurrentVersion = isCurrentVersion,
+                Metadata = metadata,
+                BlobTags = blobTags,
+                ObjectReplicationPolicyId = objectReplicationPolicyId,
+                ObjectReplicationRuleStatus = objectReplicationRuleStatus,
+            };
+        }
     }
 }
 #endregion class BlobItemInternal
@@ -19393,7 +19429,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// BlobTag
     /// </summary>
-    internal partial class BlobTag
+    public partial class BlobTag
     {
         /// <summary>
         /// Key
@@ -19459,91 +19495,18 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobTag
 
-#region class BlobTagSet
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// a collection of blob tags
-    /// </summary>
-    internal partial class BlobTagSet
-    {
-        /// <summary>
-        /// a collection of blob tags
-        /// </summary>
-        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobTag> BlobTagList { get; internal set; }
-
-        /// <summary>
-        /// Creates a new BlobTagSet instance
-        /// </summary>
-        public BlobTagSet()
-            : this(false)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new BlobTagSet instance
-        /// </summary>
-        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
-        internal BlobTagSet(bool skipInitialization)
-        {
-            if (!skipInitialization)
-            {
-                BlobTagList = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobTag>();
-            }
-        }
-
-        /// <summary>
-        /// Serialize a BlobTagSet instance as XML.
-        /// </summary>
-        /// <param name="value">The BlobTagSet instance to serialize.</param>
-        /// <param name="name">An optional name to use for the root element instead of "TagSet".</param>
-        /// <param name="ns">An optional namespace to use for the root element instead of "".</param>
-        /// <returns>The serialized XML element.</returns>
-        internal static System.Xml.Linq.XElement ToXml(Azure.Storage.Blobs.Models.BlobTagSet value, string name = "TagSet", string ns = "")
-        {
-            System.Diagnostics.Debug.Assert(value != null);
-            System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            foreach (Azure.Storage.Blobs.Models.BlobTag _child in value.BlobTagList)
-            {
-                _element.Add(Azure.Storage.Blobs.Models.BlobTag.ToXml(_child));
-            }
-            return _element;
-        }
-
-        /// <summary>
-        /// Deserializes XML into a new BlobTagSet instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized BlobTagSet instance.</returns>
-        internal static Azure.Storage.Blobs.Models.BlobTagSet FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            Azure.Storage.Blobs.Models.BlobTagSet _value = new Azure.Storage.Blobs.Models.BlobTagSet(true);
-            _value.BlobTagList = System.Linq.Enumerable.ToList(
-                System.Linq.Enumerable.Select(
-                    element.Elements(System.Xml.Linq.XName.Get("Tag", "")),
-                    e => Azure.Storage.Blobs.Models.BlobTag.FromXml(e)));
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobTagSet value);
-    }
-}
-#endregion class BlobTagSet
-
 #region class BlobTags
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Blob tags
     /// </summary>
-    internal partial class BlobTags
+    public partial class BlobTags
     {
         /// <summary>
-        /// a collection of blob tags
+        /// BlobTagSet
         /// </summary>
-        public Azure.Storage.Blobs.Models.BlobTagSet BlobTagSet { get; set; }
+        public System.Collections.Generic.IList<Azure.Storage.Blobs.Models.BlobTag> BlobTagSet { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobTags instance
@@ -19561,7 +19524,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                BlobTagSet = new Azure.Storage.Blobs.Models.BlobTagSet();
+                BlobTagSet = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobTag>();
             }
         }
 
@@ -19576,8 +19539,12 @@ namespace Azure.Storage.Blobs.Models
         {
             System.Diagnostics.Debug.Assert(value != null);
             System.Xml.Linq.XElement _element = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get(name, ns));
-            _element.Add(Azure.Storage.Blobs.Models.BlobTagSet.ToXml(value.BlobTagSet, "TagSet", ""));
-            return _element;
+            System.Xml.Linq.XElement _elements = new System.Xml.Linq.XElement(System.Xml.Linq.XName.Get("TagSet", ""));
+            foreach (Azure.Storage.Blobs.Models.BlobTag _child in value.BlobTagSet)
+            {
+                _elements.Add(Azure.Storage.Blobs.Models.BlobTag.ToXml(_child));
+            }
+            _element.Add(_elements);return _element;
         }
 
         /// <summary>
@@ -19593,7 +19560,14 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("TagSet", ""));
             if (_child != null)
             {
-                _value.BlobTagSet = Azure.Storage.Blobs.Models.BlobTagSet.FromXml(_child);
+                _value.BlobTagSet = System.Linq.Enumerable.ToList(
+                    System.Linq.Enumerable.Select(
+                        _child.Elements(System.Xml.Linq.XName.Get("Tag", "")),
+                        e => Azure.Storage.Blobs.Models.BlobTag.FromXml(e)));
+            }
+            else
+            {
+                _value.BlobTagSet = new System.Collections.Generic.List<Azure.Storage.Blobs.Models.BlobTag>();
             }
             CustomizeFromXml(element, _value);
             return _value;

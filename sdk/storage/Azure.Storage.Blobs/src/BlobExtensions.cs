@@ -17,7 +17,7 @@ namespace Azure.Storage.Blobs
                 return null;
             }
             Dictionary<string, string> tags = new Dictionary<string, string>();
-            foreach (BlobTag blobTag in blobTags.BlobTagSet.BlobTagList)
+            foreach (BlobTag blobTag in blobTags.BlobTagSet)
             {
                 tags[blobTag.Key] = blobTag.Value;
             }
