@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for Content Key Policy key for token validation. A derived
     /// class must be used to create a token key.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ContentKeyPolicyRestrictionTokenKey")]
     public partial class ContentKeyPolicyRestrictionTokenKey
     {
         /// <summary>

@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for Content Key Policy configuration. A derived class must
     /// be used to create a configuration.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ContentKeyPolicyConfiguration")]
     public partial class ContentKeyPolicyConfiguration
     {
         /// <summary>

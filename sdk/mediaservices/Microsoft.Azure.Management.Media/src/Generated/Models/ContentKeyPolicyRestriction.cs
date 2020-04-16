@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for Content Key Policy restrictions. A derived class must be
     /// used to create a restriction.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ContentKeyPolicyRestriction")]
     public partial class ContentKeyPolicyRestriction
     {
         /// <summary>
