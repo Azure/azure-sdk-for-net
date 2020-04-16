@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Base class for specifying a clip time. Use sub classes of this class to
     /// specify the time position in the media.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ClipTime")]
     public partial class ClipTime
     {
         /// <summary>
