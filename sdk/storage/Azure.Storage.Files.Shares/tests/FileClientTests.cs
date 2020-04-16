@@ -1924,7 +1924,7 @@ namespace Azure.Storage.Files.Shares.Test
         [TestCase(33 * Constants.MB)]
         [TestCase(257 * Constants.MB)]
         [TestCase(1 * Constants.GB)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
+        [Explicit("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadAsync_LargeBlobs(int size) =>
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadAndVerify(size, Constants.MB);

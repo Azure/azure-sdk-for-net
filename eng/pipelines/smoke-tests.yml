@@ -6,47 +6,98 @@ jobs:
 
     strategy:
       matrix:
-        Linux:
+        Linux (AzureCloud):
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp:
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureCloud):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetFramework:
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetFramework (AzureCloud):
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-        MacOs:
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        MacOs (AzureCloud):
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+          CloudType: AzureCloud
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureUSGovernment):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          CloudType: AzureUSGovernment
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetFramework (AzureUSGovernment):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          CloudType: AzureUSGovernment
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetCoreApp (AzureChinaCloud):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          CloudType: AzureChinaCloud
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+        Windows_NetFramework (AzureChinaCloud):
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          CloudType: AzureChinaCloud
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
 
     pool:
       vmImage: $(OSVmImage)
 
+    variables:
+      azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureCloud = 'AzureCloud'; }"
+      azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureCloud = 'AzureUSGovernment'; }"
+      azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureCloud = 'AzureChinaCloud'; }"
+
     steps:
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
         inputs:
           packageType: runtime
           version: "$(DotNetCoreRuntimeVersion)"
 
-      - task: DotNetCoreInstaller@2
+      - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - script: dotnet run -p ./common/SmokeTests/SmokeTest/SmokeTest.csproj --framework $(TestTargetFramework)
+      - task: PowerShell@2
+        inputs:
+          targetType: filePath
+          filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+          arguments: -CI
+          workingDirectory: common/SmokeTests/SmokeTest
+          pwsh: true
+        displayName: Use latest dev feed package versions
+
+      - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: Show SmokeTest.csproj
+
+      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: dotnet restore
+
+      - template: ../common/TestResources/deploy-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          CloudType: $(CloudType)
+          ArmTemplateParameters: $(ArmTemplateParameters)
+
+      - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
         displayName: "Run Smoke Tests"
-        env:
-          KEY_VAULT_URI: $(smoke-tests-key-vault-project-url)
-          EVENT_HUBS_CONNECTION_STRING: $(smoke-tests-event-hubs-connection-string)
-          BLOB_CONNECTION_STRING: $(smoke-tests-storage-connection-string)
-          CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
-          DIR_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
-          APP_CLIENT_ID: $(aad-azure-sdk-test-client-id)
-          COSMOS_AUTH_KEY: $(smoke-tests-cosmos-key)
-          COSMOS_URI: $(smoke-tests-cosmos-endpoint)
+
+      - template: ../common/TestResources/remove-test-resources.yml

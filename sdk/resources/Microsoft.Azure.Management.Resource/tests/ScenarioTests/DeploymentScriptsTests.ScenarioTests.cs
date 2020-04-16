@@ -216,9 +216,9 @@ namespace DeploymentScripts.Tests
                 // Validate result
                 Assert.NotNull(getDeploymentScript);
                 Assert.NotNull(getDeploymentScript.Status.Error);
-                Assert.Equal(typeof(DefaultErrorResponse), getDeploymentScript.Status.Error.GetType());
+                Assert.Equal(typeof(ErrorResponse), getDeploymentScript.Status.Error.GetType());
 
-                // Delete deployments script 
+                // Delete deployment script 
                 client.DeploymentScripts.Delete(ResourceGroupName, deploymentScriptName);
                 var list = client.DeploymentScripts.ListByResourceGroup(ResourceGroupName);
                 Assert.Empty(list.Where(p => p.Name.Equals(deploymentScriptName)));

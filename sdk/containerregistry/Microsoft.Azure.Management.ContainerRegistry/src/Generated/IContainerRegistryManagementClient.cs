@@ -74,6 +74,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
         /// Gets the IReplicationsOperations.
         /// </summary>
         IReplicationsOperations Replications { get; }
@@ -84,14 +89,34 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         IWebhooksOperations Webhooks { get; }
 
         /// <summary>
+        /// Gets the IAgentPoolsOperations.
+        /// </summary>
+        IAgentPoolsOperations AgentPools { get; }
+
+        /// <summary>
         /// Gets the IRunsOperations.
         /// </summary>
         IRunsOperations Runs { get; }
 
         /// <summary>
+        /// Gets the ITaskRunsOperations.
+        /// </summary>
+        ITaskRunsOperations TaskRuns { get; }
+
+        /// <summary>
         /// Gets the ITasksOperations.
         /// </summary>
         ITasksOperations Tasks { get; }
+
+        /// <summary>
+        /// Gets the IScopeMapsOperations.
+        /// </summary>
+        IScopeMapsOperations ScopeMaps { get; }
+
+        /// <summary>
+        /// Gets the ITokensOperations.
+        /// </summary>
+        ITokensOperations Tokens { get; }
 
     }
 }

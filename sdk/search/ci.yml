@@ -38,6 +38,8 @@ stages:
     ServiceDirectory: search
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Search.Documents
+      safeName: AzureSearchDocuments
     - name: Microsoft.Azure.Search
       safeName: MicrosoftAzureSearch
     - name: Microsoft.Azure.Search.Common

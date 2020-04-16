@@ -35,80 +35,41 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public virtual Uri ServiceEndpoint { get; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="timeout"></param>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="messageCount"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="receiveLinkName"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public abstract Task<IEnumerable<ServiceBusReceivedMessage>> PeekAsync(
-            TimeSpan timeout,
-            long? fromSequenceNumber,
-            int messageCount = 1,
-            string sessionId = null,
-            string receiveLinkName = null,
-            CancellationToken cancellationToken = default);
+
 
         /// <summary>
-        ///
+        ///   Creates a sender strongly aligned with the active protocol and transport,
+        ///   responsible for sending <see cref="ServiceBusMessage" /> to the entity.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="retryPolicy"></param>
-        /// <param name="receiveLinkName"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public abstract Task<long> ScheduleMessageAsync(
-            ServiceBusMessage message,
-            ServiceBusRetryPolicy retryPolicy,
-            string receiveLinkName = null,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="sequenceNumber"></param>
-        /// <param name="retryPolicy"></param>
-        /// <param name="receiveLinkName"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public abstract Task CancelScheduledMessageAsync(
-            long sequenceNumber,
-            ServiceBusRetryPolicy retryPolicy,
-            string receiveLinkName = null,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
-        ///   Creates a producer strongly aligned with the active protocol and transport,
-        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the entity.
-        /// </summary>
-        ///
+        /// <param name="entityPath">The entity path to send the message to.</param>
+        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportSender CreateSender(ServiceBusRetryPolicy retryPolicy);
+        public abstract TransportSender CreateSender(string entityPath, string viaEntityPath, ServiceBusRetryPolicy retryPolicy);
 
         /// <summary>
-        ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
+        ///   Creates a receiver strongly aligned with the active protocol and transport, responsible
         ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
+        /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
         ///
-        /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
+        /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
         ///
-        public abstract TransportConsumer CreateConsumer(
+        public abstract TransportReceiver CreateReceiver(
+            string entityPath,
             ServiceBusRetryPolicy retryPolicy,
             ReceiveMode receiveMode,
-            uint? prefetchCount,
+            uint prefetchCount,
+            string identifier,
             string sessionId,
             bool isSessionReceiver);
 
@@ -129,28 +90,6 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public virtual async ValueTask DisposeAsync() => await CloseAsync(CancellationToken.None).ConfigureAwait(false);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="lockTokens"></param>
-        /// <param name="timeout"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="receiveLinkName"></param>
-        /// <param name="isSessionReceiver"></param>
-        /// <param name="dispositionStatus"></param>
-        /// <param name="propertiesToModify"></param>
-        /// <param name="deadLetterReason"></param>
-        /// <param name="deadLetterDescription"></param>
-        /// <returns></returns>
-        internal abstract Task DisposeMessageRequestResponseAsync(
-            Guid[] lockTokens,
-            TimeSpan timeout,
-            DispositionStatus dispositionStatus,
-            bool isSessionReceiver,
-            string sessionId = null,
-            string receiveLinkName = null,
-            IDictionary<string, object> propertiesToModify = null,
-            string deadLetterReason = null,
-            string deadLetterDescription = null);
+
     }
 }

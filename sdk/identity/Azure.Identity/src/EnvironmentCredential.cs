@@ -18,6 +18,7 @@ namespace Azure.Identity
     /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant(directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client(application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
+    /// <item><term>AZURE_CLIENT_CERTIFICATE_LOCATION</term><description>A path to the certificate that was generate for the App Registration.</description></item>
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
@@ -57,6 +58,7 @@ namespace Azure.Identity
             string tenantId = EnvironmentVariables.TenantId;
             string clientId = EnvironmentVariables.ClientId;
             string clientSecret = EnvironmentVariables.ClientSecret;
+            string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
 
@@ -66,9 +68,13 @@ namespace Azure.Identity
                 {
                     _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _pipeline);
                 }
-                else if (username != null && password != null && tenantId != null && clientId != null)
+                else if (username != null && password != null)
                 {
-                    _credential = new UsernamePasswordCredential(username, password, clientId, tenantId, _pipeline);
+                    _credential = new UsernamePasswordCredential(username, password, tenantId, clientId, _pipeline);
+                }
+                else if (clientCertificatePath != null)
+                {
+                    _credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath);
                 }
             }
 

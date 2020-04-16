@@ -95,7 +95,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(apiDiagnosticTag.ETag);
 
                     // now update the sampling and other settings of the diagnostic
-                    diagnosticContractParams.EnableHttpCorrelationHeaders = true;
                     diagnosticContractParams.AlwaysLog = "allErrors";
                     diagnosticContractParams.Sampling = new SamplingSettings("fixed", 50);
                     var listOfHeaders = new List<string> { "Content-type" };
@@ -135,7 +134,6 @@ namespace ApiManagement.Tests.ManagementApiTests
                         diagnosticContractParams,
                         apiDiagnosticTag.ETag);
                     Assert.NotNull(updatedApiDiagnostic);
-                    Assert.True(updatedApiDiagnostic.Body.EnableHttpCorrelationHeaders.Value);
                     Assert.Equal("allErrors", updatedApiDiagnostic.Body.AlwaysLog);
                     Assert.NotNull(updatedApiDiagnostic.Body.Sampling);
                     Assert.NotNull(updatedApiDiagnostic.Body.Frontend);
@@ -183,6 +181,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                         apiDiagnosticId,
                         "*");
                     testBase.client.Logger.Delete(testBase.rgName, testBase.serviceName, loggerId, "*");
+
+                    // clean up all properties
+                    var listOfProperties = testBase.client.NamedValue.ListByService(
+                        testBase.rgName,
+                        testBase.serviceName);
+                    foreach (var property in listOfProperties)
+                    {
+                        testBase.client.NamedValue.Delete(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            property.Name,
+                            "*");
+                    }
                 }
             }
         }

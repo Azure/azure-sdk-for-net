@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
         {
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
-            var storageManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer1 = new PartitionLoadBalancer(
                 storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
             var loadbalancer2 = new PartitionLoadBalancer(
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
         {
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
-            var storageManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
                 storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
 
@@ -127,7 +127,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
             const int MinimumpartitionCount = 4;
             const int NumberOfPartitions = 13;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
-            var storageManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
                 storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
 
@@ -193,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
             const int MaximumpartitionCount = 5;
             const int NumberOfPartitions = 14;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
-            var storageManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
                 storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
 
@@ -265,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
             const int MaximumpartitionCount = 5;
             const int NumberOfPartitions = 12;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
-            var storageManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
                 storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
 
@@ -335,7 +335,7 @@ namespace Azure.Messaging.EventHubs.Primitives.Tests
             const int NumberOfPartitions = 4;
             const int MinimumpartitionCount = NumberOfPartitions / 2;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
-            var storageManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
             var loadbalancer = new PartitionLoadBalancer(
                 storageManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
 

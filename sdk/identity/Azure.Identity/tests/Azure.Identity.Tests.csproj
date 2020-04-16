@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netcoreapp3.1</TargetFrameworks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
     <None Update="Data\cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Data\cert.pem" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

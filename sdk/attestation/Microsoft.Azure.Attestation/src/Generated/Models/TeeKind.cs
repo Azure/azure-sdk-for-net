@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Attestation.Models
         /// </summary>
         public const string CyResComponent = "CyResComponent";
         /// <summary>
-        /// Azure Guest Attestation
+        /// VSM Enclave Attestation
         /// </summary>
-        public const string AzureGuest = "AzureGuest";
+        public const string VSMEnclave = "VSMEnclave";
     }
 }

@@ -29,11 +29,12 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Initializes a new instance of the ServiceLevelAgreement class.
         /// </summary>
-        /// <param name="startTime">Time in UTC (ISO 8601 format) when service
-        /// level agreement starts.</param>
-        /// <param name="expirationTime">Time in UTC (ISO 8601 format) when
+        /// <param name="startTime">Time in UTC (ISO 8601 format) when the
+        /// service level agreement starts.</param>
+        /// <param name="expirationTime">Time in UTC (ISO 8601 format) when the
         /// service level agreement expires.</param>
-        /// <param name="slaMinutes">Service Level Agreement in minutes</param>
+        /// <param name="slaMinutes">Service Level Agreement in
+        /// minutes.</param>
         public ServiceLevelAgreement(System.DateTime? startTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), int? slaMinutes = default(int?))
         {
             StartTime = startTime;
@@ -48,21 +49,21 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets time in UTC (ISO 8601 format) when service level agreement
+        /// Gets time in UTC (ISO 8601 format) when the service level agreement
         /// starts.
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public System.DateTime? StartTime { get; private set; }
 
         /// <summary>
-        /// Gets time in UTC (ISO 8601 format) when service level agreement
+        /// Gets time in UTC (ISO 8601 format) when the service level agreement
         /// expires.
         /// </summary>
         [JsonProperty(PropertyName = "expirationTime")]
         public System.DateTime? ExpirationTime { get; private set; }
 
         /// <summary>
-        /// Gets service Level Agreement in minutes
+        /// Gets service Level Agreement in minutes.
         /// </summary>
         [JsonProperty(PropertyName = "slaMinutes")]
         public int? SlaMinutes { get; private set; }

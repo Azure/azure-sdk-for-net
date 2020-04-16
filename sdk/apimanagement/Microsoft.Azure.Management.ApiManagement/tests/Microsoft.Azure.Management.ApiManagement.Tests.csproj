@@ -12,6 +12,7 @@
     <!--<PackageReference Include="Microsoft.Azure.Management.ApiManagement" Version="2.1.0-ForTest" />-->
     <ProjectReference Include="..\src\Microsoft.Azure.Management.ApiManagement.csproj" />
     <PackageReference Include="Microsoft.Azure.Management.EventHub" Version="1.2.0" />
+    <PackageReference Include="Microsoft.Azure.Management.ManagedServiceIdentity" Version="0.11.0" />
 
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.Storage" Version="[6.0.0-preview,7.0)" />

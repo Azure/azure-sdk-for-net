@@ -100,6 +100,16 @@ namespace Microsoft.Azure.Management.Batch
         ICertificateOperations Certificate { get; }
 
         /// <summary>
+        /// Gets the IPrivateLinkResourceOperations.
+        /// </summary>
+        IPrivateLinkResourceOperations PrivateLinkResource { get; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; }
+
+        /// <summary>
         /// Gets the IPoolOperations.
         /// </summary>
         IPoolOperations Pool { get; }

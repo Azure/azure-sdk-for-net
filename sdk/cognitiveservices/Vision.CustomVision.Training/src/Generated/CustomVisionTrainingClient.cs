@@ -41,14 +41,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// API key.
-        /// </summary>
-        public string ApiKey { get; set; }
-
-        /// <summary>
         /// Supported Cognitive Services endpoints.
         /// </summary>
         public string Endpoint { get; set; }
+
+        /// <summary>
+        /// Subscription credentials which uniquely identify client subscription.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CustomVisionTrainingClient class.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </param>
         /// <param name='disposeHttpClient'>
         /// True: will dispose the provided httpClient on calling CustomVisionTrainingClient.Dispose(). False: will not dispose provided httpClient</param>
-        public CustomVisionTrainingClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        protected CustomVisionTrainingClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public CustomVisionTrainingClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected CustomVisionTrainingClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
@@ -83,9 +83,89 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public CustomVisionTrainingClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected CustomVisionTrainingClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomVisionTrainingClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public CustomVisionTrainingClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomVisionTrainingClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling CustomVisionTrainingClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public CustomVisionTrainingClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the CustomVisionTrainingClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Subscription credentials which uniquely identify client subscription.
+        /// </param>
+        /// <param name='rootHandler'>
+        /// Optional. The http client handler used to handle http transport.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public CustomVisionTrainingClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
@@ -97,7 +177,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/customvision/v3.1/training";
+            BaseUri = "{Endpoint}/customvision/v3.2/training";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -155,10 +235,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -179,14 +255,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -203,6 +271,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -308,10 +382,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -334,14 +404,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -358,6 +420,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -460,10 +528,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -484,14 +548,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -508,6 +564,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -630,10 +692,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -684,14 +742,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -708,6 +758,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -813,10 +869,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -839,14 +891,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -863,6 +907,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -965,10 +1015,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -991,14 +1037,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1015,6 +1053,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -1109,10 +1153,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "updatedProject");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1136,14 +1176,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1165,6 +1197,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(updatedProject, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -1220,6 +1258,155 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<Project>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Exports a project.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id of the project to export.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CustomVisionErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<ProjectExport>> ExportProjectWithHttpMessagesAsync(System.Guid projectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("projectId", projectId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ExportProject", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/export";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<ProjectExport>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ProjectExport>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1298,10 +1485,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageData");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1335,14 +1518,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1383,6 +1558,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _multiPartContent.Add(_imageData, "imageData");
             }
             _httpRequest.Content = _multiPartContent;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -1509,10 +1690,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                     throw new ValidationException(ValidationRules.MinItems, "imageIds", 0);
                 }
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1555,14 +1732,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1579,6 +1748,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -1674,10 +1849,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1702,14 +1873,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1726,6 +1889,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -1843,10 +2012,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "batch");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1870,14 +2035,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -1899,6 +2056,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(batch, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -2027,10 +2190,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                     throw new ValidationException(ValidationRules.MinItems, "imageIds", 0);
                 }
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2068,14 +2227,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -2092,6 +2243,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -2208,10 +2365,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "batch");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2235,14 +2388,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -2264,6 +2409,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(batch, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -2382,10 +2533,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "batch");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2409,14 +2556,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -2438,6 +2577,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(batch, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -2559,10 +2704,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                     throw new ValidationException(ValidationRules.MinItems, "regionIds", 0);
                 }
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2595,14 +2736,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -2619,6 +2752,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -2721,10 +2860,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "query");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2755,14 +2890,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -2784,6 +2911,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(query, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -2906,10 +3039,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "query");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2940,14 +3069,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -2969,6 +3090,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(query, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -3120,10 +3247,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3176,14 +3299,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -3200,6 +3315,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -3317,10 +3438,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3358,14 +3475,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -3382,6 +3491,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -3494,10 +3609,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "batch");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3521,14 +3632,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -3550,6 +3653,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(batch, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -3689,10 +3798,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                     throw new ValidationException(ValidationRules.MinItems, "tagIds", 0);
                 }
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3730,14 +3835,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -3754,6 +3851,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -3868,10 +3971,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3919,14 +4018,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -3943,6 +4034,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -4056,10 +4153,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4092,14 +4185,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -4116,6 +4201,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -4232,10 +4323,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "batch");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4259,14 +4346,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -4288,6 +4367,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(batch, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -4394,10 +4479,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4420,14 +4501,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -4444,6 +4517,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -4552,10 +4631,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4580,14 +4655,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -4604,6 +4671,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -4709,10 +4782,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4737,14 +4806,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -4761,6 +4822,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -4858,10 +4925,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "updatedIteration");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4887,14 +4950,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -4916,6 +4971,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(updatedIteration, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -5025,10 +5086,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5053,14 +5110,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -5077,6 +5126,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -5197,10 +5252,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "platform");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5240,14 +5291,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -5264,6 +5307,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -5379,10 +5428,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5422,14 +5467,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -5446,6 +5483,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -5596,10 +5639,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5649,14 +5688,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -5673,6 +5704,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -5792,10 +5829,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -5830,14 +5863,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -5854,6 +5879,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -5976,10 +6007,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "predictionId");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6019,14 +6046,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -6043,6 +6062,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -6148,10 +6173,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6176,14 +6197,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -6200,6 +6213,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -6302,10 +6321,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                     throw new ValidationException(ValidationRules.MinItems, "ids", 0);
                 }
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6338,14 +6353,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -6362,6 +6369,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -6456,10 +6469,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "query");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6483,14 +6492,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -6512,6 +6513,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(query, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -6634,10 +6641,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageData");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6676,14 +6679,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -6724,6 +6719,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _multiPartContent.Add(_imageData, "imageData");
             }
             _httpRequest.Content = _multiPartContent;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -6848,10 +6849,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 imageUrl.Validate();
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -6890,14 +6887,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -6919,6 +6908,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(imageUrl, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -7028,10 +7023,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7064,14 +7055,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -7088,6 +7071,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -7206,10 +7195,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7252,14 +7237,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -7276,6 +7253,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -7388,10 +7371,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7426,14 +7405,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -7450,6 +7421,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -7555,10 +7532,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7583,14 +7556,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -7607,6 +7572,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -7704,10 +7675,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "updatedTag");
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7733,14 +7700,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -7762,6 +7721,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _requestContent = SafeJsonConvert.SerializeObject(updatedTag, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             }
             // Send Request
             if (_shouldTrace)
@@ -7897,10 +7862,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                     throw new ValidationException(ValidationRules.MinItems, "imageIds", 0);
                 }
             }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -7935,14 +7896,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -7959,6 +7912,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -8052,6 +8011,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The email address to send notification to when training finishes (default:
         /// null).
         /// </param>
+        /// <param name='trainingParameters'>
+        /// Additional training parameters passed in to control how the project is
+        /// trained.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -8073,15 +8036,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Iteration>> TrainProjectWithHttpMessagesAsync(System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Iteration>> TrainProjectWithHttpMessagesAsync(System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), TrainingParameters trainingParameters = default(TrainingParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (ApiKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -8095,6 +8054,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 tracingParameters.Add("reservedBudgetInHours", reservedBudgetInHours);
                 tracingParameters.Add("forceTrain", forceTrain);
                 tracingParameters.Add("notificationEmailAddress", notificationEmailAddress);
+                tracingParameters.Add("trainingParameters", trainingParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "TrainProject", tracingParameters);
             }
@@ -8130,14 +8090,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
-            if (ApiKey != null)
-            {
-                if (_httpRequest.Headers.Contains("Training-Key"))
-                {
-                    _httpRequest.Headers.Remove("Training-Key");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
-            }
 
 
             if (customHeaders != null)
@@ -8154,6 +8106,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
 
             // Serialize Request
             string _requestContent = null;
+            if(trainingParameters != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(trainingParameters, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
             // Send Request
             if (_shouldTrace)
             {
@@ -8208,6 +8172,167 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<Iteration>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Imports a project.
+        /// </summary>
+        /// <param name='token'>
+        /// Token generated from the export project call.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CustomVisionErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<Project>> ImportProjectWithHttpMessagesAsync(string token, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (token == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "token");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("token", token);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ImportProject", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/import";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            List<string> _queryParameters = new List<string>();
+            if (token != null)
+            {
+                _queryParameters.Add(string.Format("token={0}", System.Uri.EscapeDataString(token)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<Project>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Project>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

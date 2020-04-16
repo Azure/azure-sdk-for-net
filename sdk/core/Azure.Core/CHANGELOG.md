@@ -1,10 +1,24 @@
 # Release History
 
-## 1.1.0-preview.1 (Unreleased)
+## 1.3.0-preview.1 (Unreleased)
+
+- Read client request ID value used for logging and tracing off the initial request object if available.
+
+## 1.2.0 (2020-04-03)
+
+### Added
+- `AzureKeyCredential` and its respective policy.
+
+### Changed
+- Response trace messages are properly identified.
+- Content type "application/x-www-form-urlencoded" is decoded in trace messages.
+
+## 1.1.0 (2020-03-05)
 
 ### Fixes and improvements
 - Add OPTIONS and TRACE HTTP request methods.
 - Add `NetworkTimeout` property to `RetryOptions` and apply it to network operations like sending request or reading from the response stream.
+- Implement serialization for RequestFailedException.
 
 ## 1.0.2 (2020-01-10)
 

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
@@ -99,8 +100,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             await target.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
 
-            mockLog.Verify(m => m.ListOwnershipAsyncStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup));
-            mockLog.Verify(m => m.ListOwnershipAsyncComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, blobList.Count));
+            mockLog.Verify(m => m.ListOwnershipStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup));
+            mockLog.Verify(m => m.ListOwnershipComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, blobList.Count));
         }
 
         /// <summary>
@@ -117,9 +118,72 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()));
+            Assert.That(async () => await target.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()), Throws.InstanceOf<RequestFailedException>());
 
-            mockLog.Verify(m => m.ListOwnershipAsyncError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, It.Is<string>(e => e.Contains("RequestFailedException"))));
+            mockLog.Verify(m => m.ListOwnershipError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, ex.Message));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate logging.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ClaimOwnershipLogsStartAndComplete()
+        {
+            var partitionOwnership = new List<EventProcessorPartitionOwnership>
+            {
+                new EventProcessorPartitionOwnership
+                {
+                    FullyQualifiedNamespace = FullyQualifiedNamespace,
+                    EventHubName = EventHubName,
+                    ConsumerGroup = ConsumerGroup,
+                    OwnerIdentifier = OwnershipIdentifier,
+                    PartitionId = PartitionId,
+                    LastModifiedTime = DateTime.UtcNow
+                }
+            };
+
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient(),
+                                                  new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            target.Logger = mockLog.Object;
+
+            var result = (await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken())).ToList();
+
+            CollectionAssert.AreEquivalent(partitionOwnership, result);
+            mockLog.Verify(m => m.ClaimOwnershipStart(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
+            mockLog.Verify(m => m.ClaimOwnershipComplete(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate logging.
+        /// </summary>
+        ///
+        [Test]
+        public void ClaimOwnershipLogsErrors()
+        {
+            var partitionOwnership = new List<EventProcessorPartitionOwnership>
+            {
+                new EventProcessorPartitionOwnership
+                {
+                    FullyQualifiedNamespace = FullyQualifiedNamespace,
+                    EventHubName = EventHubName,
+                    ConsumerGroup = ConsumerGroup,
+                    OwnerIdentifier = OwnershipIdentifier,
+                    PartitionId = PartitionId,
+                    LastModifiedTime = DateTime.UtcNow
+                }
+            };
+
+            var expectedException = new DllNotFoundException("BOOM!");
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            var mockContainerClient = new MockBlobContainerClient() { BlobClientUploadBlobException = expectedException };
+            var target = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            target.Logger = mockLog.Object;
+
+            Assert.That(async () => await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken()), Throws.Exception.EqualTo(expectedException));
+            mockLog.Verify(m => m.ClaimOwnershipError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, expectedException.Message));
         }
 
         /// <summary>
@@ -150,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken())).ToList();
 
             CollectionAssert.AreEquivalent(partitionOwnership, result);
-            mockLog.Verify(m => m.OwnershipClaimed(PartitionId, OwnershipIdentifier));
+            mockLog.Verify(m => m.OwnershipClaimed(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
         }
 
         /// <summary>
@@ -184,7 +248,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken())).ToList();
 
             CollectionAssert.AreEquivalent(partitionOwnership, result);
-            mockLog.Verify(m => m.OwnershipClaimed(PartitionId, OwnershipIdentifier));
+            mockLog.Verify(m => m.OwnershipClaimed(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier));
         }
 
         /// <summary>
@@ -218,7 +282,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var result = (await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken())).ToList();
 
             CollectionAssert.IsEmpty(result);
-            mockLog.Verify(m => m.OwnershipNotClaimable(PartitionId, OwnershipIdentifier, It.Is<string>(e => e.Contains(BlobErrorCode.ConditionNotMet.ToString()))));
+            mockLog.Verify(m => m.OwnershipNotClaimable(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, OwnershipIdentifier, It.Is<string>(e => e.Contains(BlobErrorCode.ConditionNotMet.ToString()))));
         }
 
         /// <summary>
@@ -247,7 +311,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken()));
+            Assert.That(async () => await target.ClaimOwnershipAsync(partitionOwnership, new CancellationToken()), Throws.InstanceOf<RequestFailedException>());
         }
 
         /// <summary>
@@ -258,7 +322,146 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public async Task ListCheckpointsLogsStartAndComplete()
         {
             var blobList = new List<BlobItem>{
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/ownership/{Guid.NewGuid().ToString()}",
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, "0"}
+                                           })
+            };
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList },
+                                                  new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            target.Logger = mockLog.Object;
+
+            await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
+
+            mockLog.Verify(m => m.ListCheckpointsStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup));
+            mockLog.Verify(m => m.ListCheckpointsComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, blobList.Count));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ListCheckpointsUsesOffsetAsTheStartingPositionWhenPresent()
+        {
+            var expectedOffset = 13;
+            var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
+
+            var blobList = new List<BlobItem>{
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, expectedOffset.ToString()},
+                                               {BlobMetadataKey.SequenceNumber, "7777"}
+                                           })
+            };
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList }, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
+
+            Assert.That(checkpoints, Is.Not.Null, "A set of checkpoints should have been returned.");
+            Assert.That(checkpoints.Single().StartingPosition, Is.EqualTo(expectedStartingPosition));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ListCheckpointsUsesSequenceNumberAsTheStartingPositionWhenNoOffsetIsPresent()
+        {
+            var expectedSequence = 133;
+            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
+
+            var blobList = new List<BlobItem>{
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{Guid.NewGuid().ToString()}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
+                                           })
+            };
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList }, new BasicRetryPolicy(new EventHubsRetryOptions()));
+            var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
+
+            Assert.That(checkpoints, Is.Not.Null, "A set of checkpoints should have been returned.");
+            Assert.That(checkpoints.Single().StartingPosition, Is.EqualTo(expectedStartingPosition));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ListCheckpointsConsidersDataInvalidWithNoOffsetOrSequenceNumber()
+        {
+            var partitionId = "67";
+
+            var blobList = new List<BlobItem>{
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()}
+                                           })
+            };
+
+            var mockLogger = new Mock<BlobEventStoreEventSource>();
+            var target = new BlobsCheckpointStore(new MockBlobContainerClient() { Blobs = blobList }, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            target.Logger = mockLogger.Object;
+
+            var checkpoints = await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
+
+            Assert.That(checkpoints, Is.Not.Null, "A set of checkpoints should have been returned.");
+            Assert.That(checkpoints.Any(), Is.False, "No valid checkpoints should exist.");
+
+            mockLogger.Verify(log => log.InvalidCheckpointFound(partitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the appropriate events are emitted when errors occur.
+        /// </summary>
+        ///
+        [Test]
+        public void ListCheckpointsLogsErrors()
+        {
+            var expectedException = new DllNotFoundException("BOOM!");
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            var mockContainerClient = new MockBlobContainerClient() { GetBlobsAsyncException = expectedException };
+            var target = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            target.Logger = mockLog.Object;
+
+            Assert.That(async () => await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()), Throws.Exception.EqualTo(expectedException));
+            mockLog.Verify(m => m.ListCheckpointsError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, expectedException.Message));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the appropriate events are emitted on success.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ListCheckpointsLogsInvalidCheckpoint()
+        {
+            var partitionId = Guid.NewGuid().ToString();
+
+            var blobList = new List<BlobItem>{
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespace}/{EventHubName}/{ConsumerGroup}/checkpoint/{partitionId}",
                                            false,
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
@@ -270,9 +473,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             target.Logger = mockLog.Object;
 
             await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken());
-
-            mockLog.Verify(m => m.ListCheckpointsAsyncStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup));
-            mockLog.Verify(m => m.ListCheckpointsAsyncComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, blobList.Count));
+            mockLog.Verify(m => m.InvalidCheckpointFound(partitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup));
         }
 
         /// <summary>
@@ -289,7 +490,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()));
+            Assert.That(async () => await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()), Throws.InstanceOf<RequestFailedException>());
+            mockLog.Verify(m => m.ListCheckpointsError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, ex.Message));
         }
 
         /// <summary>
@@ -297,7 +499,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task UpdateCheckpointLogsCheckpointUpdated()
+        public async Task UpdateCheckpointLogsStartAndComplete()
         {
             var checkpoint = new EventProcessorCheckpoint
             {
@@ -305,8 +507,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 EventHubName = EventHubName,
                 ConsumerGroup = ConsumerGroup,
                 PartitionId = PartitionId,
-                Offset = 0L,
-                SequenceNumber = 0L
             };
 
             var blobList = new List<BlobItem>{
@@ -321,9 +521,36 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            await target.UpdateCheckpointAsync(checkpoint, new CancellationToken());
+            await target.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), new CancellationToken());
+            mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup));
+            mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup));
+        }
 
-            mockLog.Verify(m => m.CheckpointUpdated(PartitionId));
+        /// <summary>
+        ///   Verifies basic functionality of UpdateCheckpointAsync and ensures the appropriate logs are written
+        ///   when exceptions occur.
+        /// </summary>
+        ///
+        [Test]
+        public void UpdateCheckpointLogsErrors()
+        {
+            var checkpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = FullyQualifiedNamespace,
+                EventHubName = EventHubName,
+                ConsumerGroup = ConsumerGroup,
+                PartitionId = PartitionId,
+            };
+
+            var expectedException = new DllNotFoundException("BOOM!");
+            var mockLog = new Mock<BlobEventStoreEventSource>();
+            var mockContainerClient = new MockBlobContainerClient() { BlobClientUploadBlobException = expectedException };
+            var target = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
+
+            target.Logger = mockLog.Object;
+
+            Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), new CancellationToken()), Throws.Exception.EqualTo(expectedException));
+            mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, expectedException.Message));
         }
 
         /// <summary>
@@ -338,9 +565,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 FullyQualifiedNamespace = FullyQualifiedNamespace,
                 EventHubName = EventHubName,
                 ConsumerGroup = ConsumerGroup,
-                PartitionId = PartitionId,
-                Offset = 0L,
-                SequenceNumber = 0L
+                PartitionId = PartitionId
             };
 
             var ex = new RequestFailedException(404, BlobErrorCode.ContainerNotFound.ToString(), BlobErrorCode.ContainerNotFound.ToString(), null);
@@ -349,9 +574,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockLog = new Mock<BlobEventStoreEventSource>();
             target.Logger = mockLog.Object;
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await target.UpdateCheckpointAsync(checkpoint, new CancellationToken()));
+            Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), new CancellationToken()), Throws.InstanceOf<RequestFailedException>());
 
-            mockLog.Verify(m => m.CheckpointUpdateError(PartitionId, It.Is<string>(s => s.Contains(BlobErrorCode.ContainerNotFound.ToString()))));
+            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, ex.Message));
         }
 
         /// <summary>
@@ -881,9 +1106,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 FullyQualifiedNamespace = "ns",
                 EventHubName = "eh",
                 ConsumerGroup = "cg",
-                PartitionId = "pid",
-                Offset = 0,
-                SequenceNumber = 0
+                PartitionId = "pid"
             };
 
             mockRetryPolicy
@@ -902,7 +1125,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
             Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
         }
@@ -927,9 +1150,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 FullyQualifiedNamespace = "ns",
                 EventHubName = "eh",
                 ConsumerGroup = "cg",
-                PartitionId = "pid",
-                Offset = 0,
-                SequenceNumber = 0
+                PartitionId = "pid"
             };
 
             mockContainerClient.BlobClientUploadAsyncCallback = (content, httpHeaders, metadata, conditions, progressHandler, accessTier, transferOptions, token) =>
@@ -944,7 +1165,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
             Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
         }
@@ -965,9 +1186,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 FullyQualifiedNamespace = "ns",
                 EventHubName = "eh",
                 ConsumerGroup = "cg",
-                PartitionId = "pid",
-                Offset = 0,
-                SequenceNumber = 0
+                PartitionId = "pid"
             };
 
             using var cancellationSource = new CancellationTokenSource();
@@ -984,7 +1203,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 }
             };
 
-            await checkpointStore.UpdateCheckpointAsync(checkpoint, cancellationSource.Token);
+            await checkpointStore.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), cancellationSource.Token);
 
             Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
             Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
@@ -1007,15 +1226,13 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 FullyQualifiedNamespace = "ns",
                 EventHubName = "eh",
                 ConsumerGroup = "cg",
-                PartitionId = "pid",
-                Offset = 0,
-                SequenceNumber = 0
+                PartitionId = "pid"
             };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(checkpoint, new EventData(Array.Empty<byte>()), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         private class MockBlobContainerClient : BlobContainerClient

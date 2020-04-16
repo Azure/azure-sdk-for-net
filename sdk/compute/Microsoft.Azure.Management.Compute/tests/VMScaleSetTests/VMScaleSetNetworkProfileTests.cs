@@ -572,7 +572,7 @@ namespace Compute.Tests
                         vmScaleSetCustomizer:
                             (virtualMachineScaleSet) =>
                             {
-                                virtualMachineScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardDS15V2;
+                                virtualMachineScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardDS11V2;
                                 virtualMachineScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations[0].EnableAcceleratedNetworking = true;
                             },
                         createWithPublicIpAddress: false,

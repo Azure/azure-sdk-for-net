@@ -1293,7 +1293,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    var blocks = new BlockLookupList() { Uncommitted = base64BlockIds.ToList() };
+                    var blocks = new BlockLookupList() { Latest = base64BlockIds.ToList() };
                     return await BlobRestClient.BlockBlob.CommitBlockListAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -1538,7 +1538,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlobContainerClient"/>.
         /// </summary>
         /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
-        /// <param name="blobName">The name of the append blob.</param>
+        /// <param name="blobName">The name of the block blob.</param>
         /// <returns>A new <see cref="BlockBlobClient"/> instance.</returns>
         public static BlockBlobClient GetBlockBlobClient(
             this BlobContainerClient client,

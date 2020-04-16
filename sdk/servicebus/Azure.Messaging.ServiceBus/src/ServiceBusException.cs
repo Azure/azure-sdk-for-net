@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <value>The name of the Service Bus entity, if available; otherwise, <c>null</c>.</value>
         ///
-        public string EntityName { get; }
+        public string EntityPath { get; }
 
         /// <summary>
         ///   Gets a message that describes the current exception.
@@ -46,69 +46,21 @@ namespace Azure.Messaging.ServiceBus
         {
             get
             {
-                if (string.IsNullOrEmpty(EntityName))
+                if (string.IsNullOrEmpty(EntityPath))
                 {
-                    return base.Message;
+                    return string.Format(
+                        CultureInfo.InvariantCulture,
+                        "{0} ({1})",
+                        base.Message,
+                        Reason);
                 }
-
-                return string.Format(CultureInfo.InvariantCulture, "{0} ({1})", base.Message, EntityName);
+                return string.Format(
+                    CultureInfo.InvariantCulture,
+                    "{0} ({1} - {2})",
+                    base.Message,
+                    EntityPath,
+                    Reason);
             }
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusException"/> class.
-        /// </summary>
-        ///
-        /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
-        ///
-        public ServiceBusException(bool isTransient,
-                                  string entityName) : this(isTransient, entityName, null, FailureReason.GeneralError, null)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusException"/> class.
-        /// </summary>
-        ///
-        /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
-        /// <param name="reason">The reason for the failure that resulted in the exception.</param>
-        ///
-        public ServiceBusException(bool isTransient,
-                                  string entityName,
-                                  FailureReason reason) : this(isTransient, entityName, null, reason, null)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusException"/> class.
-        /// </summary>
-        ///
-        /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
-        ///
-        public ServiceBusException(bool isTransient,
-                                  string entityName,
-                                  string message) : this(isTransient, entityName, message, FailureReason.GeneralError, null)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusException"/> class.
-        /// </summary>
-        ///
-        /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="reason">The reason for the failure that resulted in the exception.</param>
-        ///
-        public ServiceBusException(bool isTransient,
-                                  string entityName,
-                                  string message,
-                                  FailureReason reason) : this(isTransient, entityName, message, reason, null)
-        {
         }
 
         /// <summary>
@@ -116,13 +68,17 @@ namespace Azure.Messaging.ServiceBus
         ///   to detect whether or not it should be transient.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
+        /// <param name="entityPath">The name of the Service Bus entity to which the exception is associated.</param>
+        /// <param name="innerException"></param>
         ///
-        public ServiceBusException(string entityName,
-                                  string message,
-                                  FailureReason reason) : this(default, entityName, message, reason, null)
+        public ServiceBusException(
+            string message,
+            FailureReason reason,
+            string entityPath = default,
+            Exception innerException = default) :
+            this(default, message, entityPath, reason, innerException)
         {
             switch (reason)
             {
@@ -143,37 +99,26 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
-        ///
-        public ServiceBusException(bool isTransient,
-                                  string entityName,
-                                  string message,
-                                  Exception innerException) : this(isTransient, entityName, message, FailureReason.GeneralError, innerException)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusException"/> class.
-        /// </summary>
-        ///
-        /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
         /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
         ///
         public ServiceBusException(bool isTransient,
-                                  string entityName,
                                   string message,
-                                  FailureReason reason,
-                                  Exception innerException) : base(message, innerException)
+                                  string entityName = default,
+                                  FailureReason reason = FailureReason.GeneralError,
+                                  Exception innerException = default) : base(message, innerException)
         {
             IsTransient = isTransient;
-            EntityName = entityName;
+            EntityPath = entityName;
             Reason = reason;
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public ServiceBusException() { }
 
         /// <summary>
         ///   The set of well-known reasons for an Service Bus operation failure that
@@ -185,22 +130,32 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>The exception was the result of a general error within the client library.</summary>
             GeneralError,
 
-            /// <summary>An operation has been attempted using an Service Bus client instance which has already been closed.</summary>
+            /// <summary>An operation has been attempted using an Service Bus client instance
+            /// which has already been closed.
+            /// </summary>
             ClientClosed,
 
-            /// <summary>A client was forcefully disconnected from an Service Bus entity instance.</summary>
-            ConsumerDisconnected,
-
-            /// <summary>An Service Bus resource, such as an Service Bus entity, consumer group, or partition cannot be found by the Service Bus service.</summary>
-            ResourceNotFound,
+            /// <summary>A Service Bus resource cannot be found by the Service Bus service.</summary>
+            MessagingEntityNotFound,
 
             /// <summary>
-            ///
+            /// The lock on the message is lost. Callers should call attempt to
+            /// receive and process the message again.
             /// </summary>
             MessageLockLost,
 
+            /// <summary>
+            /// The requested message was not found.
+            /// </summary>
+            MessageNotFound,
+
             /// <summary>A message is larger than the maximum size allowed for its transport.</summary>
             MessageSizeExceeded,
+
+            /// <summary>
+            /// The Messaging Entity is disabled. Enable the entity again using Portal.
+            /// </summary>
+            MessagingEntityDisabled,
 
             /// <summary>The quota applied to an Service Bus resource has been exceeded while interacting with the Azure Service Bus service.</summary>
             QuotaExceeded,
@@ -215,9 +170,19 @@ namespace Azure.Messaging.ServiceBus
             ServiceCommunicationProblem,
 
             /// <summary>
-            ///
+            /// The requested session cannot be locked.
             /// </summary>
-            SessionLockLost
+            SessionCannotBeLocked,
+
+            /// <summary>
+            /// The lock on the session has expired.  Callers should request the session again.
+            /// </summary>
+            SessionLockLost,
+
+            /// <summary>
+            /// The user doesn't have access to the entity.
+            /// </summary>
+            Unauthorized
         }
     }
 }

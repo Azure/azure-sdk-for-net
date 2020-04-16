@@ -169,7 +169,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            TokenCredential[] chain = new TokenCredential[4];
+            TokenCredential[] chain = new TokenCredential[7];
 
             if (!options.ExcludeEnvironmentCredential)
             {
@@ -184,6 +184,21 @@ namespace Azure.Identity
             if (!options.ExcludeSharedTokenCacheCredential)
             {
                 chain[i++] = factory.CreateSharedTokenCacheCredential(options.SharedTokenCacheTenantId, options.SharedTokenCacheUsername);
+            }
+
+            if (!options.ExcludeVisualStudioCredential)
+            {
+                chain[i++] = factory.CreateVisualStudioCredential(options.VisualStudioTenantId);
+            }
+
+            if (!options.ExcludeVisualStudioCodeCredential)
+            {
+                chain[i++] = factory.CreateVisualStudioCodeCredential(options.VisualStudioCodeTenantId);
+            }
+
+            if (!options.ExcludeAzureCliCredential)
+            {
+                chain[i++] = factory.CreateAzureCliCredential();
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)

@@ -39,7 +39,7 @@ Azure SDK client libraries typically expose one or more _service client_ types t
 are the main starting points for calling corresponding Azure services. 
 You can easily find these client types as their names end with the word _Client_. 
 For example, ```BlockBlobClient``` can be used to call blob storage service, 
-and ```KeyClient``` can be used to access KeyVault service cryptographic keys. 
+and ```KeyClient``` can be used to access Key Vault service cryptographic keys. 
 
 These client types can be instantiated by calling a simple constructor, 
 or its overload that takes various configuration options. 
@@ -205,7 +205,7 @@ More on mocking in [mocking samples](samples/Mocking.md)
 
 ## Troubleshooting
 
-Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#Enabling exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](samples/Diagnostics.md#Distributed-tracing)
+Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#handling-exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](Diagnostics.md#Distributed-tracing)
 
 ## Next steps
 
@@ -224,3 +224,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src
 [package]: https://www.nuget.org/packages/Azure.Core/
 [docs]: https://docs.microsoft.com/en-us/dotnet/api/overview/azure/core/client
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/faq/

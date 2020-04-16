@@ -23,7 +23,7 @@
         public static DataStore CreateStorSimpleDataStore(this IDataStoresOperations operations, string subscriptionIdOfDataManager,
             string subscriptionIdOfStorSimpleDevice, string resourceGroupOfDataManager, 
             string resourceGroupOfStorSimpleDevice, string dataManagerName,
-            string serviceEncryptionKey, string storSimpleDeviceName, HybridDataManagementClient client)
+            string serviceEncryptionKey, string storSimpleResourceName, HybridDataManagementClient client)
         {
             var storSimpleDataStore = new DataStore();
             var publicKey = client.PublicKeys.ListByDataManager(resourceGroupOfDataManager, dataManagerName).FirstOrDefault();
@@ -37,7 +37,7 @@
                 subscriptionIdOfDataManager, resourceGroupOfDataManager, dataManagerName);
 
             storSimpleDataStore.RepositoryId = $"/subscriptions/{subscriptionIdOfStorSimpleDevice}/resourceGroups/{resourceGroupOfStorSimpleDevice}"
-                +$"/providers/Microsoft.StorSimple/managers/{storSimpleDeviceName}";
+                +$"/providers/Microsoft.StorSimple/managers/{storSimpleResourceName}";
 
             storSimpleDataStore.ExtendedProperties = GetStorSimpleExtendedProperties(storSimpleDataStore.RepositoryId);
 

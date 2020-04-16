@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "devspaces/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "devspaces/resource-manager" -AutoRestVersion "v2"

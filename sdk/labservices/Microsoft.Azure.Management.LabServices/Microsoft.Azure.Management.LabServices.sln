@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.LabServices", "src\Microsoft.Azure.Management.LabServices.csproj", "{B2143F8C-A1B8-4042-ACAB-CB7797E24C9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Management.LabServices.Tests", "tests\Microsoft.Azure.Management.LabServices.Tests.csproj", "{DC1024AF-4E20-4E65-9ED8-09CC26385B8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.LabServices.Tests", "tests\Microsoft.Azure.Management.LabServices.Tests.csproj", "{DC1024AF-4E20-4E65-9ED8-09CC26385B8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,11 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.18.1-preview</Version>
+		<Version>19.20.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added support for Shareable Links in Bastion
+            - Added support for IpAllocation
+            - Added support for PrivateDnsZoneGroup
+            - Added support for SecurityPartnerProvider
+            - Added support for ForceFirewallPolicyAssociation in ApplicationGateway
+            - Added support for IntrusionSystemMode in FirewallPolicy
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

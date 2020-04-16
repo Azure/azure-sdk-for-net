@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "labservices/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "labservices/resource-manager" -AutoRestVersion "v2"

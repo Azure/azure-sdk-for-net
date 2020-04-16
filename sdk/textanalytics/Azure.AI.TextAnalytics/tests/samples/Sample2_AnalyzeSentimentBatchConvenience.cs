@@ -19,9 +19,9 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var inputs = new List<string>
+            var documents = new List<string>
             {
                 "That was the best day of my life!",
                 "This food is very bad.",
@@ -29,14 +29,14 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Pike place market is my favorite Seattle attraction.",
             };
 
-            Debug.WriteLine($"Analyzing sentiment for inputs:");
-            foreach (string input in inputs)
+            Debug.WriteLine($"Analyzing sentiment for documents:");
+            foreach (string document in documents)
             {
-                Debug.WriteLine($"    {input}");
+                Debug.WriteLine($"    {document}");
             }
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentConvenience
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs);
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(documents);
             #endregion
 
             Debug.WriteLine($"Predicted sentiments are:");
@@ -44,9 +44,9 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 DocumentSentiment docSentiment = result.DocumentSentiment;
                 Debug.WriteLine($"Document sentiment is {docSentiment.Sentiment}, with confidence scores: ");
-                Debug.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive:0.00}.");
-                Debug.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral:0.00}.");
-                Debug.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative:0.00}.");
+                Debug.WriteLine($"    Positive confidence score: {docSentiment.ConfidenceScores.Positive}.");
+                Debug.WriteLine($"    Neutral confidence score: {docSentiment.ConfidenceScores.Neutral}.");
+                Debug.WriteLine($"    Negative confidence score: {docSentiment.ConfidenceScores.Negative}.");
             }
         }
     }

@@ -10,7 +10,10 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,27 +34,44 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the ApiManagementServiceIdentity
         /// class.
         /// </summary>
+        /// <param name="type">The type of identity used for the resource. The
+        /// type 'SystemAssigned, UserAssigned' includes both an implicitly
+        /// created identity and a set of user assigned identities. The type
+        /// 'None' will remove any identities from the service. Possible values
+        /// include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
+        /// UserAssigned', 'None'</param>
         /// <param name="principalId">The principal id of the identity.</param>
         /// <param name="tenantId">The client tenant id of the
         /// identity.</param>
-        public ApiManagementServiceIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?))
+        /// <param name="userAssignedIdentities">The list of user identities
+        /// associated with the resource. The user identity
+        /// dictionary key references will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/
+        /// providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
+        public ApiManagementServiceIdentity(string type, System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), IDictionary<string, UserIdentityProperties> userAssignedIdentities = default(IDictionary<string, UserIdentityProperties>))
         {
+            Type = type;
             PrincipalId = principalId;
             TenantId = tenantId;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
-        }
-        /// <summary>
-        /// Static constructor for ApiManagementServiceIdentity class.
-        /// </summary>
-        static ApiManagementServiceIdentity()
-        {
-            Type = "SystemAssigned";
         }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the type of identity used for the resource. The type
+        /// 'SystemAssigned, UserAssigned' includes both an implicitly created
+        /// identity and a set of user assigned identities. The type 'None'
+        /// will remove any identities from the service. Possible values
+        /// include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
+        /// UserAssigned', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; set; }
 
         /// <summary>
         /// Gets the principal id of the identity.
@@ -66,11 +86,27 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public System.Guid? TenantId { get; private set; }
 
         /// <summary>
-        /// The identity type. Currently the only supported type is
-        /// 'SystemAssigned'.
+        /// Gets or sets the list of user identities associated with the
+        /// resource. The user identity
+        /// dictionary key references will be ARM resource ids in the form:
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/
+        /// providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public static string Type { get; private set; }
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, UserIdentityProperties> UserAssignedIdentities { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

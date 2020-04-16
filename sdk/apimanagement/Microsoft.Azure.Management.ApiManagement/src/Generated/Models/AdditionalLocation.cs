@@ -47,7 +47,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// configuration for the location.</param>
         /// <param name="gatewayRegionalUrl">Gateway URL of the API Management
         /// service in the Region.</param>
-        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string))
+        /// <param name="disableGateway">Property only valid for an Api
+        /// Management service deployed in multiple locations. This can be used
+        /// to disable the gateway in this additional location.</param>
+        public AdditionalLocation(string location, ApiManagementServiceSkuProperties sku, IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), string gatewayRegionalUrl = default(string), bool? disableGateway = default(bool?))
         {
             Location = location;
             Sku = sku;
@@ -55,6 +58,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             PrivateIPAddresses = privateIPAddresses;
             VirtualNetworkConfiguration = virtualNetworkConfiguration;
             GatewayRegionalUrl = gatewayRegionalUrl;
+            DisableGateway = disableGateway;
             CustomInit();
         }
 
@@ -106,6 +110,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string GatewayRegionalUrl { get; private set; }
 
         /// <summary>
+        /// Gets or sets property only valid for an Api Management service
+        /// deployed in multiple locations. This can be used to disable the
+        /// gateway in this additional location.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableGateway")]
+        public bool? DisableGateway { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -124,10 +136,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (Sku != null)
             {
                 Sku.Validate();
-            }
-            if (VirtualNetworkConfiguration != null)
-            {
-                VirtualNetworkConfiguration.Validate();
             }
         }
     }
