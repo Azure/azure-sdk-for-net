@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -288,11 +289,11 @@ namespace Azure.Messaging.EventHubs.Processor
                     var partitionId = blob.Name.Substring(prefix.Length);
                     var startingPosition = default(EventPosition?);
 
-                    if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, out var result))
+                    if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
                     {
                         startingPosition = EventPosition.FromOffset(result, false);
                     }
-                    else if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, out result))
+                    else if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
                     {
                         startingPosition = EventPosition.FromSequenceNumber(result, false);
                     }
@@ -363,8 +364,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
             var metadata = new Dictionary<string, string>()
             {
-                { BlobMetadataKey.Offset, eventData.Offset.ToString() },
-                { BlobMetadataKey.SequenceNumber, eventData.SequenceNumber.ToString() }
+                { BlobMetadataKey.Offset, eventData.Offset.ToString(CultureInfo.InvariantCulture) },
+                { BlobMetadataKey.SequenceNumber, eventData.SequenceNumber.ToString(CultureInfo.InvariantCulture) }
             };
 
             Func<CancellationToken, Task> updateCheckpointAsync = async updateCheckpointToken =>
