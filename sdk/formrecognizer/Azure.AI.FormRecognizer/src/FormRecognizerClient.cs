@@ -124,13 +124,12 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="receiptLocale"></param>>
         /// <param name="recognizeOptions"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
@@ -143,13 +142,12 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileStream">The stream containing the one or more receipts to recognize values from.</param>
-        /// <param name="receiptLocale"></param>
         /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
@@ -162,13 +160,12 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="receiptLocale"></param>
         /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptFileUri, string receiptLocale = "en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             recognizeOptions ??= new RecognizeOptions();
 
@@ -181,13 +178,12 @@ namespace Azure.AI.FormRecognizer
         /// Recognizes values from one or more receipts.
         /// </summary>
         /// <param name="receiptFileUri">The absolute URI of the remote file to recognize values from.</param>
-        /// <param name="receiptLocale"></param>
         /// <param name="recognizeOptions">Whether or not to include raw page recognition in addition to layout elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeReceiptsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeReceiptsOperation"/>.Value upon successful
         /// completion will contain the extracted receipt.</returns>
         [ForwardsClientCalls]
-        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, string receiptLocale="en-US", RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
+        public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
             recognizeOptions ??= new RecognizeOptions();
 
@@ -304,17 +300,17 @@ namespace Azure.AI.FormRecognizer
 
             if (!stream.CanSeek)
             {
-                throw new ArgumentException("Content type cannot be detected because stream is not seekable.", paramName);
+                throw new ArgumentException($"Content type cannot be detected because stream is not seekable. It can be manually set in the {nameof(RecognizeOptions)}.", paramName);
             }
 
             if (!stream.CanRead)
             {
-                throw new ArgumentException("Content type cannot be detected because stream is not readable.", paramName);
+                throw new ArgumentException($"Content type cannot be detected because stream is not readable. It can be manually set in the {nameof(RecognizeOptions)}.", paramName);
             }
 
             if (!stream.TryGetContentType(out contentType))
             {
-                throw new ArgumentException("Content type of the stream could not be detected.", paramName);
+                throw new ArgumentException($"Content type of the stream could not be detected. It can be manually set in the {nameof(RecognizeOptions)}.", paramName);
             }
 
             return contentType;

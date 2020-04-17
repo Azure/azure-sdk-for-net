@@ -34,69 +34,59 @@ namespace Azure.AI.FormRecognizer
         /// <exception cref="NotSupportedException">Happens when <paramref name="stream"/> is not seekable or readable.</exception>
         public static bool TryGetContentType(this Stream stream, out ContentType contentType)
         {
-            var originalPosition = stream.Position;
-            var bytesCount = Math.Min(stream.Length, PdfHeader.Length);
-
-            bool hasFoundType = false;
-            contentType = default;
-
-            bool couldBePdf = true;
-            bool couldBePng = true;
-            bool couldBeJpeg = true;
-            bool couldBeTiffLe = true;
-            bool couldBeTiffBe = true;
-
-            Func<byte[], int, bool> isAtEnd = (array, index) => index == array.Length - 1;
-            Func<byte[], int, byte, bool> hasByteAt = (array, index, expected) => index < array.Length && array[index] == expected;
-
-            for (int i = 0; i < bytesCount; i++)
+            if (stream.BeginsWithHeader(PdfHeader))
             {
-                byte currentByte = (byte)stream.ReadByte();
+                contentType = ContentType.Pdf;
+            }
+            else if (stream.BeginsWithHeader(PngHeader))
+            {
+                contentType = ContentType.Png;
+            }
+            else if (stream.BeginsWithHeader(JpegHeader))
+            {
+                contentType = ContentType.Jpeg;
+            }
+            else if (stream.BeginsWithHeader(TiffLeHeader) || stream.BeginsWithHeader(TiffBeHeader))
+            {
+                contentType = ContentType.Tiff;
+            }
+            else
+            {
+                contentType = default;
+                return false;
+            }
 
-                couldBePdf = couldBePdf && hasByteAt(PdfHeader, i, currentByte);
-                if (couldBePdf && isAtEnd(PdfHeader, i))
-                {
-                    contentType = ContentType.Pdf;
-                    hasFoundType = true;
-                    break;
-                }
+            return true;
+        }
 
-                couldBePng = couldBePng && hasByteAt(PngHeader, i, currentByte);
-                if (couldBePng && isAtEnd(PngHeader, i))
-                {
-                    contentType = ContentType.Png;
-                    hasFoundType = true;
-                    break;
-                }
+        /// <summary>
+        /// Determines whether a stream begins with a specified sequence of bytes.
+        /// </summary>
+        /// <param name="stream">The stream to be verified.</param>
+        /// <param name="header">The sequence of bytes expected to be at the start of <paramref name="stream"/>.</param>
+        /// <returns><c>true</c> if the <paramref name="stream"/> begins with the specified <paramref name="header"/>. Otherwise, <c>false</c>.</returns>
+        private static bool BeginsWithHeader(this Stream stream, byte[] header)
+        {
+            var originalPosition = stream.Position;
 
-                couldBeJpeg = couldBeJpeg && hasByteAt(JpegHeader, i, currentByte);
-                if (couldBeJpeg && isAtEnd(JpegHeader, i))
-                {
-                    contentType = ContentType.Jpeg;
-                    hasFoundType = true;
-                    break;
-                }
+            if (stream.Length - originalPosition < header.Length)
+            {
+                return false;
+            }
 
-                couldBeTiffLe = couldBeTiffLe && hasByteAt(TiffLeHeader, i, currentByte);
-                if (couldBeTiffLe && isAtEnd(TiffLeHeader, i))
-                {
-                    contentType = ContentType.Tiff;
-                    hasFoundType = true;
-                    break;
-                }
+            foreach (var headerByte in header)
+            {
+                var streamByte = (byte)stream.ReadByte();
 
-                couldBeTiffBe = couldBeTiffBe && hasByteAt(TiffBeHeader, i, currentByte);
-                if (couldBeTiffBe && isAtEnd(TiffBeHeader, i))
+                if (streamByte != headerByte)
                 {
-                    contentType = ContentType.Tiff;
-                    hasFoundType = true;
-                    break;
+                    stream.Position = originalPosition;
+                    return false;
                 }
             }
 
             stream.Position = originalPosition;
-
-            return hasFoundType;
+            return true;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The name of the PNG file which contains the receipt to be used for tests.</summary>
         private const string PngReceiptFilename = "contoso-allinone.png";
 
-        /// <summary>The format to generate the filenames of the PDF forms to be used for tests.</summary>
+        /// <summary>The format to generate the filenames of the forms to be used for tests.</summary>
         private const string InvoiceFilenameFormat = "Invoice_{0}.{1}";
 
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>

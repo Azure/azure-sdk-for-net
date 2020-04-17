@@ -113,12 +113,11 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedClient();
             var fakeUri = new Uri("http://localhost");
-            var options = new RecognizeOptions { ContentType = ContentType.Pdf };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, options, cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
@@ -171,12 +170,11 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedClient();
             var fakeUri = new Uri("http://localhost");
-            var options = new RecognizeOptions { ContentType = ContentType.Pdf };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, recognizeOptions: options, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
