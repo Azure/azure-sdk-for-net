@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -315,11 +316,7 @@ namespace Azure.Search.Documents.Tests
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
-                new MatchConditions
-                {
-                    IfMatch = new ETag(actualIndexer.ETag),
-                },
-                GetOptions());
+                GetOptions(ifMatch: new ETag(actualIndexer.ETag)));
 
             await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
@@ -354,10 +351,14 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("solr", map.Format);
             Assert.AreEqual("msft=>Microsoft", map.Synonyms);
 
-            map = await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new MatchConditions { IfMatch = new ETag(map.ETag) });
+            map = await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new SearchConditionalOptions { IfMatch = new ETag(map.ETag) });
             Assert.AreEqual(synonymMapName, map.Name);
             Assert.AreEqual("solr", map.Format);
             Assert.AreEqual("ms,msft=>Microsoft", map.Synonyms);
+
+            RequestFailedException ex = await CatchAsync<RequestFailedException>(async () =>
+                await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new SearchConditionalOptions { IfNoneMatch = new ETag(map.ETag) }));
+            Assert.AreEqual((int)HttpStatusCode.PreconditionFailed, ex.Status);
 
             Response<IReadOnlyList<SynonymMap>> mapsResponse = await client.GetSynonymMapsAsync(new[] { nameof(SynonymMap.Name) });
             foreach (SynonymMap namedMap in mapsResponse.Value)
@@ -369,7 +370,7 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 
-            await client.DeleteSynonymMapAsync(map.Name, new MatchConditions { IfMatch = new ETag(map.ETag) });
+            await client.DeleteSynonymMapAsync(map.Name, new SearchConditionalOptions { IfMatch = new ETag(map.ETag) });
         }
 
         /// <summary>
@@ -378,9 +379,10 @@ namespace Azure.Search.Documents.Tests
         /// <returns>
         /// A new <see cref="SearchRequestOptions"/> with a new <see cref="SearchRequestOptions.ClientRequestId"/>.
         /// </returns>
-        private SearchRequestOptions GetOptions() => new SearchRequestOptions
+        private SearchConditionalOptions GetOptions(ETag? ifMatch = default) => new SearchConditionalOptions
         {
             ClientRequestId = Recording.Random.NewGuid(),
+            IfMatch = ifMatch,
         };
 
         /// <summary>
