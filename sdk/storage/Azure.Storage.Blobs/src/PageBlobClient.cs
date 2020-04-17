@@ -222,19 +222,18 @@ namespace Azure.Storage.Blobs.Specialized
             return new PageBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
-        ///// <summary>
-        ///// Creates a new PageBlobClient object identical to the source but with the specified version ID.
-        ///// Pass "" to remove the version ID returning a URL to the base blob.
-        ///// </summary>
-        ///// <param name="versionId">version ID</param>
-        ///// <returns></returns>
-        //public new PageBlobClient WithVersionId(string versionId) => (PageBlobUri)this.WithVersionIdImpl(versionId);
+        /// <summary>
+        /// Creates a new PageBlobClient object identical to the source but with the specified version ID.
+        /// Pass "" to remove the version ID returning a URL to the base blob.
+        /// </summary>
+        /// <param name="versionId">version ID</param>
+        /// <returns></returns>
+        public new PageBlobClient WithVersion(string versionId)
+        {
+            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
 
-        //protected sealed override BlobBaseClient WithVersionIdImpl(string versionId)
-        //{
-        //    var builder = new BlobUriBuilder(this.Uri) { VersionId = versionId };
-        //    return new PageBlobClient(builder.ToUri(), this.Pipeline);
-        //}
+            return new PageBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+        }
 
         #region Create
         /// <summary>

@@ -217,6 +217,25 @@ namespace Azure.Storage.Blobs.Specialized
             return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppendBlobClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="versionId"/> timestamp.
+        ///
+        /// </summary>
+        /// <param name="versionId">The version identifier.</param>
+        /// <returns>A new <see cref="AppendBlobClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null or empty string to remove the version returning a URL
+        /// to the base blob.
+        /// </remarks>
+        public new AppendBlobClient WithVersion(string versionId)
+        {
+            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
+
+            return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+        }
+
         #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a new 0-length

@@ -375,6 +375,33 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="versionId"/> timestamp.
+        ///
+        /// </summary>
+        /// <param name="versionId">The version identifier.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null or empty string to remove the version returning a URL
+        /// to the base blob.
+        /// </remarks>
+        public virtual BlobBaseClient WithVersion(string versionId) => WithVersionCore(versionId);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="BlobBaseClient"/> class
+        /// with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="versionId"/> timestamp.
+        /// </summary>
+        /// <param name="versionId">The version identifier.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        protected virtual BlobBaseClient WithVersionCore(string versionId)
+        {
+            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
+            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+        }
+
+        /// <summary>
         /// Sets the various name fields if they are currently null.
         /// </summary>
         private void SetNameFieldsIfNull()
@@ -2737,7 +2764,8 @@ namespace Azure.Storage.Blobs.Specialized
                         new BlobInfo
                         {
                             LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag
+                            ETag = response.Value.ETag,
+                            VersionId = response.Value.VersionId
                         }, response.GetRawResponse());
                 }
                 catch (Exception ex)
