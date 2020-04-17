@@ -12,9 +12,10 @@ namespace Azure.AI.FormRecognizer.Training
     public partial class CustomFormModelField
     {
         internal CustomFormModelField(string name, string label, float? accuracy)
-            : this(name, accuracy)
         {
+            Name = name;
             Label = label;
+            Accuracy = accuracy;
         }
         /// <summary>
         /// Unique name of the field.
