@@ -562,7 +562,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<GetIndexStatisticsResult>> GetStatisticsAsync(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -579,9 +579,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
-                            GetIndexStatisticsResult value = default;
+                            SearchIndexStatistics value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = GetIndexStatisticsResult.DeserializeGetIndexStatisticsResult(document.RootElement);
+                            value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:
@@ -599,7 +599,7 @@ namespace Azure.Search.Documents
         /// <param name="indexName"> The name of the index for which to retrieve statistics. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GetIndexStatisticsResult> GetStatistics(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexStatistics> GetStatistics(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (indexName == null)
             {
@@ -616,9 +616,9 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
-                            GetIndexStatisticsResult value = default;
+                            SearchIndexStatistics value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = GetIndexStatisticsResult.DeserializeGetIndexStatisticsResult(document.RootElement);
+                            value = SearchIndexStatistics.DeserializeSearchIndexStatistics(document.RootElement);
                             return Response.FromValue(value, message.Response);
                         }
                     default:

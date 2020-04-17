@@ -1630,36 +1630,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [NonParallelizable]
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            await blob.DeleteAsync();
 
-            try
-            {
-                // Arrange
-                await EnableSoftDelete();
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-                await blob.CreateAsync();
-                await blob.DeleteAsync();
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
 
-                // Act
-                IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
-
-                // Assert
-                if (blobs.Count == 0)
-                {
-                    Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
-                }
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Name);
-            }
-            finally
-            {
-                // Cleanup
-                await DisableSoftDelete();
-            }
+            // Assert
+            Assert.AreEqual(blobName, blobs[0].Name);
+            Assert.IsTrue(blobs[0].Deleted);
         }
 
         [Test]
@@ -1750,6 +1736,33 @@ namespace Azure.Storage.Blobs.Test
                 BlobItem blobItem = await test.Container.GetBlobsAsync().FirstAsync();
                 Assert.AreEqual(blobName, blobItem.Name);
             }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsFlatSegmentAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+
+            // Act
+            var blobs = new List<BlobItem>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(states: BlobStates.Version).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.IsNull(blobs[0].IsCurrentVersion);
+            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].VersionId);
+            Assert.IsTrue(blobs[1].IsCurrentVersion);
+            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].VersionId);
         }
 
         [Test]
@@ -1870,36 +1883,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [NonParallelizable]
         public async Task ListBlobsHierarchySegmentAsync_Deleted()
         {
-            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobServiceClient blobServiceClient = GetServiceClient_SoftDelete();
+            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
+            string blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            await blob.DeleteAsync();
 
-            try
-            {
-                // Arrange
-                await EnableSoftDelete();
-                var blobName = GetNewBlobName();
-                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-                await blob.CreateAsync();
-                await blob.DeleteAsync();
+            // Act
+            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
 
-                // Act
-                IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
-
-                // Assert
-                if (blobs.Count == 0)
-                {
-                    Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
-                }
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(blobName, blobs.First().Blob.Name);
-            }
-            finally
-            {
-                // Cleanup
-                await DisableSoftDelete();
-            }
+            // Assert
+            Assert.AreEqual(blobName, blobs[0].Blob.Name);
+            Assert.IsTrue(blobs[0].Blob.Deleted);
         }
 
         [Test]
@@ -1944,6 +1943,33 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.AreEqual(2, blobs.Count);
             Assert.AreEqual(snapshotResponse.Value.Snapshot.ToString(), blobs.First().Blob.Snapshot);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsHierarchySegmentAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> setMetadataResponse = await blob.SetMetadataAsync(metadata);
+
+            // Act
+            var blobs = new List<BlobHierarchyItem>();
+            await foreach (Page<BlobHierarchyItem> page in test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Version).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreEqual(2, blobs.Count);
+            Assert.IsNull(blobs[0].Blob.IsCurrentVersion);
+            Assert.AreEqual(createResponse.Value.VersionId, blobs[0].Blob.VersionId);
+            Assert.IsTrue(blobs[1].Blob.IsCurrentVersion);
+            Assert.AreEqual(setMetadataResponse.Value.VersionId, blobs[1].Blob.VersionId);
         }
 
         [Test]
@@ -2061,6 +2087,51 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.DeleteBlobIfExistsAsync(GetNewBlobName()),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RestoreAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await container.CreateAsync();
+            await container.DeleteAsync();
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
+
+            // It takes some time for the Container to be deleted.
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(30000);
+            }
+
+            // Act
+            Response response = await container.RestoreAsync(containerItem.Name, containerItem.Version);
+
+            // Assert
+            await container.GetPropertiesAsync();
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RestoreAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                container.RestoreAsync(GetNewBlobName(), "01D60F8BB59A4652"),
+                e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 
         #region Secondary Storage

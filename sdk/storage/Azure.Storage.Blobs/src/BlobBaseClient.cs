@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -373,6 +372,33 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
+            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
+        /// class with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="versionId"/> timestamp.
+        ///
+        /// </summary>
+        /// <param name="versionId">The version identifier.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        /// <remarks>
+        /// Pass null or empty string to remove the version returning a URL
+        /// to the base blob.
+        /// </remarks>
+        public virtual BlobBaseClient WithVersion(string versionId) => WithVersionCore(versionId);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="BlobBaseClient"/> class
+        /// with an identical <see cref="Uri"/> source but the specified
+        /// <paramref name="versionId"/> timestamp.
+        /// </summary>
+        /// <param name="versionId">The version identifier.</param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        protected virtual BlobBaseClient WithVersionCore(string versionId)
+        {
+            var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
             return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
@@ -1221,7 +1247,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region StartCopyFromUri
         /// <summary>
-        /// The <see cref="StartCopyFromUri(Uri, StartCopyFromUriOptions, CancellationToken)"/>
+        /// The <see cref="StartCopyFromUri(Uri, BlobCopyFromUriOptions, CancellationToken)"/>
         /// operation copies data at from the <paramref name="source"/> to this
         /// blob.  You can check the <see cref="BlobProperties.CopyStatus"/>
         /// returned from the <see cref="GetProperties"/> to determine if the
@@ -1261,7 +1287,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual CopyFromUriOperation StartCopyFromUri(
             Uri source,
-            StartCopyFromUriOptions options,
+            BlobCopyFromUriOptions options,
             CancellationToken cancellationToken = default)
         {
             Response<BlobCopyInfo> response = StartCopyFromUriInternal(
@@ -1272,6 +1298,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.RehydratePriority,
+                options?.IsSealed,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1355,7 +1382,8 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 destinationConditions,
                 rehydratePriority,
-                false, // async
+                sealBlob: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
             return new CopyFromUriOperation(
@@ -1406,7 +1434,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<CopyFromUriOperation> StartCopyFromUriAsync(
             Uri source,
-            StartCopyFromUriOptions options,
+            BlobCopyFromUriOptions options,
             CancellationToken cancellationToken = default)
         {
             Response<BlobCopyInfo> response = await StartCopyFromUriInternal(
@@ -1417,6 +1445,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.RehydratePriority,
+                options?.IsSealed,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1500,7 +1529,8 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 destinationConditions,
                 rehydratePriority,
-                true, // async
+                sealBlob: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
             return new CopyFromUriOperation(
@@ -1556,6 +1586,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="RehydratePriority"/>
         /// Indicates the priority with which to rehydrate an archived blob.
         /// </param>
+        /// <param name="sealBlob">
+        /// If the destination blob should be sealed.
+        /// Only applicable for Append Blobs.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1579,6 +1613,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions sourceConditions,
             BlobRequestConditions destinationConditions,
             RehydratePriority? rehydratePriority,
+            bool? sealBlob,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1612,6 +1647,7 @@ namespace Azure.Storage.Blobs.Specialized
                         leaseId: destinationConditions?.LeaseId,
                         metadata: metadata,
                         blobTagsString: tags?.ToTagsString(),
+                        sealBlob: sealBlob,
                         async: async,
                         operationName: "BlobBaseClient.StartCopyFromUri",
                         cancellationToken: cancellationToken)
@@ -2738,7 +2774,8 @@ namespace Azure.Storage.Blobs.Specialized
                         new BlobInfo
                         {
                             LastModified = response.Value.LastModified,
-                            ETag = response.Value.ETag
+                            ETag = response.Value.ETag,
+                            VersionId = response.Value.VersionId
                         }, response.GetRawResponse());
                 }
                 catch (Exception ex)
@@ -3289,7 +3326,6 @@ namespace Azure.Storage.Blobs.Specialized
                         pipeline: Pipeline,
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
-                        contentLength: default,
                         tags: tags.ToBlobTags(),
                         async: async,
                         operationName: $"{nameof(BlobBaseClient)}.{nameof(SetTags)}",

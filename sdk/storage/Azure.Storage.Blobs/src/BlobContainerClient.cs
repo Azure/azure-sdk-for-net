@@ -2382,6 +2382,149 @@ namespace Azure.Storage.Blobs
         }
         #endregion GetBlobsByHierarchy
 
+        #region Restore
+        /// <summary>
+        /// Restores a previously created container.  The restored container
+        /// will be renamed to the name of this <see cref="BlobContainerClient"/>.
+        /// If the container associated with this <see cref="BlobContainerClient"/>
+        /// already exists, this call will result in a 409 (conflict).
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response Restore(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            CancellationToken cancellationToken = default)
+            => RestoreInternal(
+                deletedContainerName,
+                deletedContainerVersion,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Restores a previously created container.  The restored container
+        /// will be renamed to the name of this <see cref="BlobContainerClient"/>.
+        /// If the container associated with this <see cref="BlobContainerClient"/>
+        /// already exists, this call will result in a 409 (conflict).
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> RestoreAsync(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            CancellationToken cancellationToken = default)
+            => await RestoreInternal(
+                deletedContainerName,
+                deletedContainerVersion,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Restores a previously created container.  The restored container
+        /// will be renamed to the name of this <see cref="BlobContainerClient"/>.
+        /// If the container associated with this <see cref="BlobContainerClient"/>
+        /// already exists, this call will result in a 409 (conflict).
+        /// This API is only functional is Container Soft Delete is enabled
+        /// for the storage account associated with the container.
+        /// </summary>
+        /// <param name="deletedContainerName">
+        /// The name of the previously deleted container.
+        /// </param>
+        /// <param name="deletedContainerVersion">
+        /// The version of the previously deleted container.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response> RestoreInternal(
+            string deletedContainerName,
+            string deletedContainerVersion,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(deletedContainerName)}: {deletedContainerName}\n" +
+                    $"{nameof(deletedContainerVersion)}: {deletedContainerVersion}");
+
+                try
+                {
+                    return await BlobRestClient.Container.RestoreAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        Version.ToVersionString(),
+                        deletedContainerName: deletedContainerName,
+                        deletedContainerVersion: deletedContainerVersion,
+                        async: async,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(Restore)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+            }
+        }
+        #endregion Restore
+
         #region UploadBlob
         /// <summary>
         /// The <see cref="UploadBlobAsync"/> operation creates a new block

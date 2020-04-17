@@ -21,8 +21,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Certificates.Tests", "Azure.Security.KeyVault.Certificates\tests\Azure.Security.KeyVault.Certificates.Tests.csproj", "{B404190B-C1D4-4655-99D4-45CB6532806B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity.Tests", "..\identity\Azure.Identity\tests\Azure.Identity.Tests.csproj", "{A9EE98A1-2769-4D37-A336-8418184A4448}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Shared.Tests", "Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.shproj", "{1AFA2644-A1D9-419F-B87D-9B519B673F24}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\eng\ApiCompat\ApiCompat.csproj", "{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}"
@@ -75,10 +73,6 @@ Global
 		{B404190B-C1D4-4655-99D4-45CB6532806B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B404190B-C1D4-4655-99D4-45CB6532806B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B404190B-C1D4-4655-99D4-45CB6532806B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9EE98A1-2769-4D37-A336-8418184A4448}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9EE98A1-2769-4D37-A336-8418184A4448}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9EE98A1-2769-4D37-A336-8418184A4448}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9EE98A1-2769-4D37-A336-8418184A4448}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -451,6 +451,29 @@ namespace Azure.Storage.Blobs.Test
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
             }
         }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DownloadAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> uploadResponse;
+            using (var stream = new MemoryStream(data))
+            {
+                uploadResponse = await blob.UploadAsync(stream);
+            }
+
+            // Act
+            BlockBlobClient versionBlob = blob.WithVersion(uploadResponse.Value.VersionId);
+            Response<BlobDownloadInfo> response = await blob.DownloadAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.Details.VersionId);
+        }
         #endregion Sequential Download
 
         #region Parallel Download
@@ -755,7 +778,7 @@ namespace Azure.Storage.Blobs.Test
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             IDictionary<string, string> tags = BuildTags();
-            StartCopyFromUriOptions options = new StartCopyFromUriOptions
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
             {
                 Tags = tags
             };
@@ -962,6 +985,38 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_Seal()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient srcBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            await srcBlob.CreateAsync();
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                IsSealed = true
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.IsSealed);
+        }
+
+        [Test]
         public async Task StartCopyFromUriAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1043,6 +1098,34 @@ namespace Azure.Storage.Blobs.Test
                 accessTier: AccessTier.P20),
                 e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
 
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task StartCopyFromUriAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri);
+
+            // Assert
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
+            }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsTrue(operation.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.VersionId, out var _));
         }
 
         [Test]
@@ -1226,7 +1309,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Headers.RequestId);
-
         }
 
         [Test]
@@ -1307,6 +1389,24 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.DeleteAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_Version()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionBlob = blob.WithVersion(createResponse.Value.VersionId);
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
         }
 
         [Test]
@@ -1755,6 +1855,26 @@ namespace Azure.Storage.Blobs.Test
 
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetPropertiesAsync_Version()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            BlobBaseClient versionBlob = blob.WithVersion(createResponse.Value.VersionId);
+
+            // Act
+            Response<BlobProperties> response = await versionBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
+            Assert.IsFalse(response.Value.IsCurrentVersion);
+        }
+
         private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
         {
             BlobSasQueryParameters sas = new BlobUriBuilder(uri).Sas;
@@ -2042,6 +2162,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task SetMetadataAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            // Act
+            Response<BlobInfo> response = await blob.SetMetadataAsync(metadata);
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
+        }
+
+        [Test]
         public async Task SetMetadataAsync_CPK()
         {
             // Arrange
@@ -2241,6 +2377,22 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blob.CreateSnapshotAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateSnapshotAsync_Version()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
+
         }
 
         [Test]

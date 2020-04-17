@@ -18,9 +18,15 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary>
         /// The current sequence number for a page blob. This header is not
-        /// returned for block blobs or append blobs
+        /// returned for block blobs or append blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// The versionId of the blob version that was created.
+        /// If null, a new blob version was not created.
+        /// </summary>
+        public string VersionId { get; internal set; }
     }
 
     /// <summary>
@@ -226,6 +232,11 @@ namespace Azure.Storage.Blobs.Models
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
         /// </summary>
         public string VersionId => _flattened.VersionId;
+
+        /// <summary>
+        /// If this blob is sealed.
+        /// </summary>
+        public bool IsSealed => _flattened.IsSealed;
     }
 
     /// <summary>
@@ -236,7 +247,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobDownloadInfo instance for mocking.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobDownloadInfo BlobDownloadInfo(
             DateTimeOffset lastModified = default,
             long blobSequenceNumber = default,
@@ -265,10 +275,10 @@ namespace Azure.Storage.Blobs.Models
             string encryptionScope = default,
             long contentLength = default,
             byte[] blobContentHash = default,
+            string versionId = default,
             IDictionary<string, string> metadata = default,
             Stream content = default,
             DateTimeOffset copyCompletionTime = default,
-            string versionId = default,
             long tagCount = default)
         {
             return new BlobDownloadInfo(
@@ -388,9 +398,9 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobDownloadInfo BlobDownloadInfo(
-            System.DateTimeOffset lastModified,
+            DateTimeOffset lastModified,
             long blobSequenceNumber,
-            Azure.Storage.Blobs.Models.BlobType blobType,
+            BlobType blobType,
             byte[] contentCrc64,
             string contentLanguage,
             string copyStatusDescription,

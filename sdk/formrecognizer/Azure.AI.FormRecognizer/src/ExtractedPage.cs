@@ -42,7 +42,7 @@ namespace Azure.AI.FormRecognizer.Custom
         /// <summary>
         /// </summary>
 
-        public IReadOnlyList<ExtractedTable> Tables { get; }
+        public IReadOnlyList<FormTable> Tables { get; }
 
         /// <summary>
         /// </summary>

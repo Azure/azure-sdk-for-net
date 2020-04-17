@@ -39,10 +39,8 @@ namespace Microsoft.Extensions.Azure
             name = name ?? Microsoft.Extensions.Options.Options.DefaultName;
             _cache.TryRemove(name);
             var options = Get(name);
-            if (_onChange != null)
-            {
-                _onChange.Invoke(options, name);
-            }
+
+            _onChange?.Invoke(options, name);
         }
 
         /// <summary>

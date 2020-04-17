@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Identity;
+using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
@@ -30,6 +31,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         private readonly ConcurrentQueue<string> _secretsToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _secretsToPurge = new ConcurrentStack<string>();
 
+        private KeyVaultTestEventListener _listener;
+
         protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
             _serviceVersion = serviceVersion;
@@ -50,8 +53,17 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         {
             base.StartTestRecording();
 
+            _listener = new KeyVaultTestEventListener();
+
             Client = GetClient();
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+        }
+
+        public override void StopTestRecording()
+        {
+            _listener?.Dispose();
+
+            base.StopTestRecording();
         }
 
         [TearDown]

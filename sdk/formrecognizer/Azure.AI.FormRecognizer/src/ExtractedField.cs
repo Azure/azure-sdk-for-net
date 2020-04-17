@@ -49,7 +49,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<RawExtractedItem> NameRawExtractedItems { get; internal set; }
+        public IReadOnlyList<FormContent> NameRawExtractedItems { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -61,12 +61,12 @@ namespace Azure.AI.FormRecognizer.Custom
 
         /// <summary>
         /// </summary>
-        public IReadOnlyList<RawExtractedItem> ValueRawExtractedItems { get; internal set; }
+        public IReadOnlyList<FormContent> ValueRawExtractedItems { get; internal set; }
 
         // TODO: Refactor to move OCR code to a common file, rather than it living in this file.
-        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(ReadResult_internal readResult, IReadOnlyList<string> references)
+        internal static IReadOnlyList<FormContent> ConvertTextReferences(ReadResult_internal readResult, IReadOnlyList<string> references)
         {
-            List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
+            List<FormContent> extractedTexts = new List<FormContent>();
             foreach (var reference in references)
             {
                 extractedTexts.Add(ResolveTextReference(readResult, reference));
@@ -74,9 +74,9 @@ namespace Azure.AI.FormRecognizer.Custom
             return extractedTexts;
         }
 
-        internal static IReadOnlyList<RawExtractedItem> ConvertTextReferences(IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<string> references)
+        internal static IReadOnlyList<FormContent> ConvertTextReferences(IReadOnlyList<ReadResult_internal> readResults, IReadOnlyList<string> references)
         {
-            List<RawExtractedItem> extractedTexts = new List<RawExtractedItem>();
+            List<FormContent> extractedTexts = new List<FormContent>();
             foreach (var reference in references)
             {
                 extractedTexts.Add(ResolveTextReference(readResults, reference));
@@ -88,7 +88,7 @@ namespace Azure.AI.FormRecognizer.Custom
         //private const string SegmentLines = "lines";
         //private const string SegmentWords = "words";
 
-        private static RawExtractedItem ResolveTextReference(ReadResult_internal readResult, string reference)
+        private static FormContent ResolveTextReference(ReadResult_internal readResult, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363
@@ -102,7 +102,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
             // TODO: Support case where text reference is lines only, without word segment
             // https://github.com/Azure/azure-sdk-for-net/issues/10364
-            return new RawExtractedWord(readResult.Lines.ToList()[lineIndex].Words.ToList()[wordIndex]);
+            return new FormWord(readResult.Lines.ToList()[lineIndex].Words.ToList()[wordIndex], readResult.Page);
 
             // Code from Chris Stone below
             //if (!string.IsNullOrEmpty(reference) && reference.Length > 2 && reference[0] == '#')
@@ -146,7 +146,7 @@ namespace Azure.AI.FormRecognizer.Custom
             //}
         }
 
-        private static RawExtractedItem ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
+        private static FormContent ResolveTextReference(IReadOnlyList<ReadResult_internal> readResults, string reference)
         {
             // TODO: Add additional validations here.
             // https://github.com/Azure/azure-sdk-for-net/issues/10363
@@ -163,7 +163,7 @@ namespace Azure.AI.FormRecognizer.Custom
 
             // TODO: Support case where text reference is lines only, without word segment
             // https://github.com/Azure/azure-sdk-for-net/issues/10364
-            return new RawExtractedWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex]);
+            return new FormWord(readResults[pageIndex].Lines[lineIndex].Words[wordIndex], readResults[pageIndex].Page);
         }
     }
 }

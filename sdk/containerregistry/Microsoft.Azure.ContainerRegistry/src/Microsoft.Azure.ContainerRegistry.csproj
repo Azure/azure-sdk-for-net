@@ -3,7 +3,7 @@
   	<PackageId>Microsoft.Azure.ContainerRegistry</PackageId>
     <Description>This is a client library for Azure Container Registry data plane operations. Use this library to retrieve, update and view Registry tags, blobs and manifests. </Description>
     <AssemblyTitle>Microsoft Azure Container Registry</AssemblyTitle>
-    <Version>0.10.1-preview</Version>
+    <Version>1.0.0-preview.1</Version>
     <PackageTags>Microsoft Azure Container Registry;Container Registry; Microsoft; Docker Registry HTTP API V2</PackageTags>
     <PackageReleaseNotes>
       * Manage Azure Container Registry repositories, tags, manifests, blobs, access tokens and refresh tokens.

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
@@ -270,6 +271,28 @@ namespace Azure.Storage.Blobs.Test
             AssertDictionaryEquality(
                 metadata,
                 containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListContainersSegmentAsync_Deleted()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SoftDelete();
+            string containerName = GetNewContainerName();
+            BlobContainerClient containerClient = InstrumentClient(service.GetBlobContainerClient(containerName));
+            await containerClient.CreateAsync();
+            await containerClient.DeleteAsync();
+
+            // Act
+            IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(states: BlobContainerStates.Deleted).ToListAsync();
+            BlobContainerItem containerItem = containers.Where(c => c.Name == containerName).FirstOrDefault();
+
+            // Assert
+            Assert.IsTrue(containerItem.Deleted);
+            Assert.IsNotNull(containerItem.Version);
+            Assert.IsNotNull(containerItem.Properties.DeletedTime);
+            Assert.IsNotNull(containerItem.Properties.RemainingRetentionDays);
         }
 
         [Test]

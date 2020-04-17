@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenModel("ListIndexesResult")]
     internal partial class ListIndexesResult
     {
     }
