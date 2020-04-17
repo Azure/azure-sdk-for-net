@@ -6,11 +6,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200506.1",
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200507.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "d39e6989-ebbd-d44a-7616-f28e7c890577",
-        "x-ms-date": "Thu, 07 May 2020 00:23:50 GMT",
+        "x-ms-client-request-id": "5f6f030d-cd98-f200-ec08-5aff9ea766fc",
+        "x-ms-date": "Thu, 07 May 2020 16:52:05 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
       },
@@ -21,7 +21,7 @@
         "Content-Length": "1024",
         "Content-MD5": "eyObQAWrMwC74Eh3CuRM2g==",
         "Content-Type": "application/octet-stream",
-        "Date": "Thu, 07 May 2020 00:23:50 GMT",
+        "Date": "Thu, 07 May 2020 16:52:05 GMT",
         "ETag": "\u00220x8D7E7D25C0F807B\u0022",
         "Last-Modified": "Thu, 23 Apr 2020 22:04:56 GMT",
         "Server": [
@@ -29,13 +29,13 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "d39e6989-ebbd-d44a-7616-f28e7c890577",
+        "x-ms-client-request-id": "5f6f030d-cd98-f200-ec08-5aff9ea766fc",
         "x-ms-creation-time": "Thu, 23 Apr 2020 22:04:56 GMT",
         "x-ms-is-current-version": "true",
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-or-fd2da1b9-56f5-45ff-9eb6-310e6dfc2c80_105f9aad-f39b-4064-8e47-ccd7937295ca": "complete",
-        "x-ms-request-id": "031f022a-e01e-0088-1205-24a8a9000000",
+        "x-ms-request-id": "0c528f1d-f01e-0084-4d8f-243fa1000000",
         "x-ms-server-encrypted": "true",
         "x-ms-version": "2019-12-12",
         "x-ms-version-id": "2020-04-23T22:04:56.9882747Z"
@@ -48,11 +48,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200506.1",
+          "azsdk-net-Storage.Blobs/12.5.0-dev.20200507.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "d379427d-99c4-2963-ec34-278469cf04ee",
-        "x-ms-date": "Thu, 07 May 2020 00:23:50 GMT",
+        "x-ms-client-request-id": "59fbb8ed-7170-7d11-7ff8-8f2da1298f7c",
+        "x-ms-date": "Thu, 07 May 2020 16:52:05 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-12-12"
       },
@@ -63,7 +63,7 @@
         "Content-Length": "1024",
         "Content-MD5": "eyObQAWrMwC74Eh3CuRM2g==",
         "Content-Type": "application/octet-stream",
-        "Date": "Thu, 07 May 2020 00:23:49 GMT",
+        "Date": "Thu, 07 May 2020 16:52:05 GMT",
         "ETag": "\u00220x8D7E7D296E94236\u0022",
         "Last-Modified": "Thu, 23 Apr 2020 22:06:35 GMT",
         "Server": [
@@ -71,7 +71,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-blob-type": "BlockBlob",
-        "x-ms-client-request-id": "d379427d-99c4-2963-ec34-278469cf04ee",
+        "x-ms-client-request-id": "59fbb8ed-7170-7d11-7ff8-8f2da1298f7c",
         "x-ms-copy-completion-time": "Thu, 23 Apr 2020 22:06:35 GMT",
         "x-ms-copy-id": "028bc3e1-a2c9-4f14-8dd3-72772f99d681",
         "x-ms-copy-progress": "1024/1024",
@@ -81,7 +81,7 @@
         "x-ms-lease-state": "available",
         "x-ms-lease-status": "unlocked",
         "x-ms-or-policy-id": "fd2da1b9-56f5-45ff-9eb6-310e6dfc2c80",
-        "x-ms-request-id": "750cfaff-a01e-002d-0205-2469b1000000",
+        "x-ms-request-id": "375789b4-b01e-0031-3f8f-243bd1000000",
         "x-ms-server-encrypted": "true",
         "x-ms-version": "2019-12-12"
       },
@@ -89,7 +89,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "227283416",
+    "RandomSeed": "447247206",
     "Storage_TestConfigDefault": "ProductionTenant\nortestsaccountcbn1\nU2FuaXRpemVk\nhttps://ortestsaccountcbn1.blob.core.windows.net\nhttp://ortestsaccountcbn1.file.core.windows.net\nhttp://ortestsaccountcbn1.queue.core.windows.net\nhttp://ortestsaccountcbn1.table.core.windows.net\n\n\n\n\nhttp://ortestsaccountcbn1-secondary.blob.core.windows.net\nhttp://ortestsaccountcbn1-secondary.file.core.windows.net\nhttp://ortestsaccountcbn1-secondary.queue.core.windows.net\nhttp://ortestsaccountcbn1-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://ortestsaccountcbn1.blob.core.windows.net/;QueueEndpoint=http://ortestsaccountcbn1.queue.core.windows.net/;FileEndpoint=http://ortestsaccountcbn1.file.core.windows.net/;BlobSecondaryEndpoint=http://ortestsaccountcbn1-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://ortestsaccountcbn1-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://ortestsaccountcbn1-secondary.file.core.windows.net/;AccountName=ortestsaccountcbn1;AccountKey=Sanitized\n",
     "Storage_TestConfigSecondary": "SecondaryTenant\nvbalaorcentral1\nU2FuaXRpemVk\nhttps://vbalaorcentral1.blob.core.windows.net\nhttp://vbalaorcentral1.file.core.windows.net\nhttp://vbalaorcentral1.queue.core.windows.net\nhttp://vbalaorcentral1.table.core.windows.net\n\n\n\n\nhttp://vbalaorcentral1-secondary.blob.core.windows.net\nhttp://vbalaorcentral1-secondary.file.core.windows.net\nhttp://vbalaorcentral1-secondary.queue.core.windows.net\nhttp://vbalaorcentral1-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://vbalaorcentral1.blob.core.windows.net/;QueueEndpoint=http://vbalaorcentral1.queue.core.windows.net/;FileEndpoint=http://vbalaorcentral1.file.core.windows.net/;BlobSecondaryEndpoint=http://vbalaorcentral1-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://vbalaorcentral1-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://vbalaorcentral1-secondary.file.core.windows.net/;AccountName=vbalaorcentral1;AccountKey=Sanitized\n"
   }

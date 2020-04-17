@@ -98,7 +98,7 @@ namespace Azure.Storage.Blobs
         /// Creates a new BlobProperties object backed by BlobPropertiesInternal.
         /// </summary>
         /// <param name="properties">
-        /// The BlobPropertiesInternal returned with the reques
+        /// The BlobPropertiesInternal returned with the request
         /// </param>
         internal static BlobProperties ToBlobProperties(this BlobPropertiesInternal properties) =>
             new BlobProperties()
