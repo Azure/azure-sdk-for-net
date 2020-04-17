@@ -253,7 +253,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = new Uri(TestEnvironment.FormtUri);
+                var uri = new Uri(TestEnvironment.FormUri);
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.Value.ModelId, uri);
             }
 
