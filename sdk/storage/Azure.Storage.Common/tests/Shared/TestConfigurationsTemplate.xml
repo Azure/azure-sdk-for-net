@@ -124,8 +124,8 @@
       <FileServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-    
-    <!-- An account with Blob Soft Delete and Container Soft Delete Enabled -->
+
+    <!-- An account with Blob Soft Delete, Container Soft Delete, and Share Soft Delete Enabled -->
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>SoftDeleteTenant</TenantName>

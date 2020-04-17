@@ -215,6 +215,11 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning disable CA1819 // Properties should not return arrays
         public byte[] BlobContentHash => _flattened.BlobContentHash;
 #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// If this blob is sealed.
+        /// </summary>
+        public bool IsSealed => _flattened.IsSealed;
     }
 
     /// <summary>
