@@ -286,7 +286,21 @@ foreach ($templateFile in $templateFiles) {
         Log "Persist the following environment variables based on your detected shell ($shell):`n"
     }
 
-    $deploymentOutputs = @{}
+    $serviceDirectoryPrefix = $ServiceDirectory.ToUpperInvariant()
+
+    $context = Get-AzContext;
+
+    # Add default values
+    $deploymentOutputs = @{
+        "$($serviceDirectoryPrefix)_CLIENT_ID" = $TestApplicationId;
+        "$($serviceDirectoryPrefix)_CLIENT_SECRET" = $TestApplicationSecret;
+        "$($serviceDirectoryPrefix)_TENANT_ID" = $context.Tenant.Id;
+        "$($serviceDirectoryPrefix)_SUBSCRIPTION_ID" =  $context.Subscription.Id;
+        "$($serviceDirectoryPrefix)_RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
+        "$($serviceDirectoryPrefix)_LOCATION" = $resourceGroup.Location;
+        "$($serviceDirectoryPrefix)_ENVIRONMENT" = $context.Environment;
+    }
+
     foreach ($key in $deployment.Outputs.Keys) {
         $variable = $deployment.Outputs[$key]
 
@@ -295,16 +309,21 @@ foreach ($templateFile in $templateFiles) {
 
         if ($variable.Type -eq 'String' -or $variable.Type -eq 'SecureString') {
             $deploymentOutputs[$key] = $variable.Value
+        }
+    }
 
-            if ($CI) {
-                # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
-                # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
-                Write-Host "Setting variable '$key': ***"
-                Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($variable.Value)"
-                Write-Host "##vso[task.setvariable variable=$key;]$($variable.Value)"
-            } else {
-                Write-Host ($shellExportFormat -f $key, $variable.Value)
-            }
+    foreach ($key in $deploymentOutputs.Keys)
+    {
+        $value = $deploymentOutputs[$key]
+        
+        if ($CI) {
+            # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
+            # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
+            Write-Host "Setting variable '$key': ***"
+            Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($value)"
+            Write-Host "##vso[task.setvariable variable=$key;]$($value)"
+        } else {
+            Write-Host ($shellExportFormat -f $key, $value)
         }
     }
 

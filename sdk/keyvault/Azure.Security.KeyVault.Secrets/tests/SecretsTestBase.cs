@@ -6,7 +6,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
-using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -33,7 +32,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base("keyvault", isAsync)
         {
             _serviceVersion = serviceVersion;
         }
@@ -45,7 +44,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             return InstrumentClient
                 (new SecretClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.GetCredential(new DefaultAzureCredential()),
+                    recording.Credential,
                     recording.InstrumentClientOptions(new SecretClientOptions(_serviceVersion))));
         }
 

@@ -34,7 +34,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        protected KeysTestBase(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base("keyvault", isAsync)
         {
             _serviceVersion = serviceVersion;
         }
@@ -51,7 +51,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(
                 new KeyClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.GetCredential(new DefaultAzureCredential()),
+                    recording.Credential,
                     recording.InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
                 interceptors);
         }

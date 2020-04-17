@@ -20,7 +20,7 @@ namespace Azure.Identity.Tests
     {
         private const string ExpectedServiceName = "VS Code Azure";
 
-        public VisualStudioCodeCredentialLiveTests(bool isAsync) : base(isAsync)
+        public VisualStudioCodeCredentialLiveTests(bool isAsync) : base("identity", isAsync)
         {
             Matcher.ExcludeHeaders.Add("Content-Length");
             Matcher.ExcludeHeaders.Add("client-request-id");
@@ -201,8 +201,8 @@ namespace Azure.Identity.Tests
             }
 
             var clientId = "aebc6443-996d-45c2-90f0-388ff96faa56";
-            var username = Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_USERNAME");
-            var password = Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_PASSWORD");
+            var username = TestEnvironment.GetVariable("AZURE_IDENTITY_TEST_USERNAME");
+            var password = TestEnvironment.GetVariable("AZURE_IDENTITY_TEST_PASSWORD");
 
             var client = PublicClientApplicationBuilder.Create(clientId)
                 .WithTenantId(tenantId)

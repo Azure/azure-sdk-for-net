@@ -17,13 +17,13 @@ namespace Azure.Core.Testing
         private const string RandomSeedVariableKey = "RandomSeed";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
+        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestEnvironment environment)
         {
             Mode = mode;
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
             _matcher = matcher;
-
+            _environment = environment;
 
             switch (Mode)
             {
@@ -56,6 +56,8 @@ namespace Azure.Core.Testing
         private readonly RecordedTestSanitizer _sanitizer;
 
         private readonly RecordMatcher _matcher;
+
+        private readonly TestEnvironment _environment;
 
         private readonly RecordSession _session;
 
@@ -204,7 +206,7 @@ namespace Azure.Core.Testing
 
         public string GetVariableFromEnvironment(string variableName)
         {
-            var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
+            var environmentVariableValue = _environment.GetVariable(variableName);
             switch (Mode)
             {
                 case RecordedTestMode.Record:
@@ -247,10 +249,7 @@ namespace Azure.Core.Testing
             }
         }
 
-        public TokenCredential GetCredential(TokenCredential defaultCredential)
-        {
-            return Mode == RecordedTestMode.Playback ? new TestCredential() : defaultCredential;
-        }
+        public TokenCredential Credential => Mode == RecordedTestMode.Playback ? new TestCredential() : _environment.Credential;
 
         public void DisableIdReuse()
         {

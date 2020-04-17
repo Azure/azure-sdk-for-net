@@ -38,7 +38,7 @@ namespace Azure.Storage.Test.Shared
         private static TestEventListener s_listener;
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
+            : base("storage", async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             Sanitizer = new StorageRecordedTestSanitizer();
             Matcher = new StorageRecordMatcher(Sanitizer);

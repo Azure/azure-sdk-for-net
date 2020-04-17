@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base("keyvault", isAsync)
         {
             _serviceVersion = serviceVersion;
         }
@@ -49,7 +49,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             return InstrumentClient
                 (new CertificateClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.GetCredential(new DefaultAzureCredential()),
+                    recording.Credential,
                     recording.InstrumentClientOptions(new CertificateClientOptions(_serviceVersion))));
         }
 

@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public const string EndpointEnvironmentVariable = "TEXT_ANALYTICS_ENDPOINT";
         public const string ApiKeyEnvironmentVariable = "TEXT_ANALYTICS_API_KEY";
 
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
+        public TextAnalyticsClientLiveTests(bool isAsync) : base("textanalytics", isAsync)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
             Matcher = new RecordMatcher(Sanitizer);

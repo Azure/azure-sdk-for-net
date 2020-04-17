@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
     {
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 
-        public UsernamePasswordCredentialLiveTests(bool isAsync) : base(isAsync)
+        public UsernamePasswordCredentialLiveTests(bool isAsync) : base("identity", isAsync)
         {
             Matcher.ExcludeHeaders.Add("Content-Length");
             Matcher.ExcludeHeaders.Add("client-request-id");
@@ -72,7 +72,7 @@ namespace Azure.Identity.Tests
         {
             var tenantId = Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_TENANTID");
             var username = Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_USERNAME");
-            var password = Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
+            var password = TestEnvironment.GetVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
 
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
