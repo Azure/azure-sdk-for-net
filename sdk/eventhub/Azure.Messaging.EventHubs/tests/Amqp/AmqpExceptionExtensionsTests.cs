@@ -135,5 +135,52 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(translated, Is.Not.Null, "An exception should have been returned.");
             Assert.That(translated, Is.SameAs(generalException), "The general exception should have been returned.");
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ExceptionExtensions.TranslateConnectionCloseDuringLinkCreationException" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TranslateConnectionCloseDuringLinkCreationExceptionValidatesTheInstance()
+        {
+            Assert.That(() => ((InvalidOperationException)null).TranslateConnectionCloseDuringLinkCreationException("dummy"), Throws.ArgumentNullException);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ExceptionExtensions.TranslateConnectionCloseDuringLinkCreationException" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TranslateConnectionCloseDuringLinkCreationExceptionDetectsTheConnectionClosedException()
+        {
+            var sourceException = new InvalidOperationException("Can't create session when the connection is closing");
+            var exception = (sourceException.TranslateConnectionCloseDuringLinkCreationException("dummy") as EventHubsException);
+
+            Assert.That(exception, Is.Not.Null, "The exception should have been translated to an Event Hubs exception.");
+            Assert.That(exception.IsTransient, Is.True, "The translation exception should allow retries.");
+            Assert.That(exception.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceCommunicationProblem), "The translated exception should have the correct failure reason.");
+            Assert.That(exception.InnerException, Is.EqualTo(sourceException), "The translated exception should wrap the source exception.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ExceptionExtensions.TranslateConnectionCloseDuringLinkCreationException" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("nope")]
+        [TestCase("when the connection is closed")]
+        [TestCase("Can't create session")]
+        public void TranslateConnectionCloseDuringLinkCreationExceptionIgnoresNonMatchingExceptions(string sourceMessage)
+        {
+            var sourceException = new InvalidOperationException(sourceMessage);
+            var exception = sourceException.TranslateConnectionCloseDuringLinkCreationException("dummy");
+
+            Assert.That(exception, Is.SameAs(sourceException), "The exception should not have been translated.");
+        }
     }
 }

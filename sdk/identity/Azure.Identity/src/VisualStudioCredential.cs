@@ -214,6 +214,10 @@ namespace Azure.Identity
             {
                 throw new CredentialUnavailableException($"Visual Studio Token provider file not found at {tokenProviderPath}", exception);
             }
+            catch (IOException exception)
+            {
+                throw new CredentialUnavailableException($"Visual Studio Token provider can't be accessed at {tokenProviderPath}", exception);
+            }
         }
 
         private static string[] GetStringArrayPropertyValue(JsonElement element, string name)
