@@ -583,7 +583,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             IsClosed = true;
 
-            var identifier = GetHashCode().ToString();
+            var identifier = GetHashCode().ToString(CultureInfo.InvariantCulture);
             EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubProducerClient), EventHubName, identifier);
 
             // Attempt to close the pool of producers.  In the event that an exception is encountered,

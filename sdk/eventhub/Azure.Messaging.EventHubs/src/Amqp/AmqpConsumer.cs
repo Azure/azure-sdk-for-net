@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -341,7 +342,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             _closed = true;
 
-            var clientId = GetHashCode().ToString();
+            var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
             var clientType = GetType();
 
             try
@@ -401,12 +402,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 link = await ConnectionScope.OpenConsumerLinkAsync(
                     consumerGroup,
                     partitionId,
-                    CurrentEventPosition,
+                    eventStartingPosition,
                     timeout,
                     prefetchCount,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
-                    CancellationToken.None).ConfigureAwait(false);
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (InvalidOperationException ex)
             {
