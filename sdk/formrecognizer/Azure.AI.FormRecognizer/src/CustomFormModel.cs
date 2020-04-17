@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Training
@@ -93,7 +94,7 @@ namespace Azure.AI.FormRecognizer.Training
         private static IReadOnlyList<CustomFormSubModel> ConvertFromLabeled(Model_internal model)
         {
             var fieldMap = new Dictionary<string, CustomFormModelField>();
-            foreach (var formFieldsReport in model.TrainResult.Fields)
+            foreach (var formFieldsReport in model.TrainResult.Fields ?? Enumerable.Empty<CustomFormModelField>())
             {
                 fieldMap.Add(formFieldsReport.Name, new CustomFormModelField(formFieldsReport.Name, null, formFieldsReport.Accuracy));
             }
@@ -108,7 +109,7 @@ namespace Azure.AI.FormRecognizer.Training
         private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainingDocuments(TrainResult_internal trainResult)
         {
             var trainingDocs = new List<TrainingDocumentInfo>();
-            foreach (var docs in trainResult?.TrainingDocuments)
+            foreach (var docs in trainResult?.TrainingDocuments ?? Enumerable.Empty<TrainingDocumentInfo>())
             {
                 trainingDocs.Add(
                     new TrainingDocumentInfo(
