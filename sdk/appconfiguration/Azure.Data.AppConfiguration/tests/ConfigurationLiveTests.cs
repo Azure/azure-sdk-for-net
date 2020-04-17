@@ -8,17 +8,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
+using Azure.Data.AppConfiguration.Samples;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
-    public class ConfigurationLiveTests : RecordedTestBase
+    public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
         private string specialChars = "~`!@#$^&()_+=[]{}|;\"'<>./-";
 
 
-        public ConfigurationLiveTests(bool isAsync) : base("identity", isAsync)
+        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ConfigurationRecordedTestSanitizer();
             Matcher = new ConfigurationRecordMatcher(Sanitizer);
@@ -31,7 +32,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationClient GetClient()
         {
-            var connectionString = Recording.GetVariableFromEnvironment("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
             if (Recording.Mode == RecordedTestMode.Playback)
             {
                 connectionString = connectionString.Replace(";Secret=;", ";Secret=Kg==;");
@@ -43,8 +44,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationClient GetAADClient()
         {
-            string endpoint = Recording.GetVariableFromEnvironment("APPCONFIGURATION_ENDPOINT_STRING");
-            TokenCredential credential = Recording.Credential;
+            string endpoint = TestEnvironment.Endpoint;
+            TokenCredential credential = TestEnvironment.Credential;
             ConfigurationClientOptions options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
             return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }

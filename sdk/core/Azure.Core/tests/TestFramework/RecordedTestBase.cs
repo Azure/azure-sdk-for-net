@@ -17,8 +17,6 @@ namespace Azure.Core.Testing
 
         public RecordedTestMode Mode { get; }
 
-        public TestEnvironment TestEnvironment { get; }
-
 #if DEBUG
         /// <summary>
         /// Flag you can (temporarily) enable to save failed test recordings
@@ -30,15 +28,14 @@ namespace Azure.Core.Testing
         public bool SaveDebugRecordingsOnFailure { get; set; } = false;
 #endif
 
-        protected RecordedTestBase(string serviceName, bool isAsync) : this(serviceName, isAsync, RecordedTestUtilities.GetModeFromEnvironment())
+        protected RecordedTestBase(bool isAsync) : this(isAsync, RecordedTestUtilities.GetModeFromEnvironment())
         {
         }
 
-        protected RecordedTestBase(string serviceName, bool isAsync, RecordedTestMode mode) : base(isAsync)
+        protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
             Matcher = new RecordMatcher(Sanitizer);
-            TestEnvironment = new TestEnvironment(serviceName);
             Mode = mode;
         }
 
@@ -63,7 +60,7 @@ namespace Azure.Core.Testing
             {
                 throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
-            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher, TestEnvironment);
+            Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
         }
 
         [TearDown]

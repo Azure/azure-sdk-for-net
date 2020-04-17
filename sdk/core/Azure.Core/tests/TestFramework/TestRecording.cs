@@ -17,13 +17,12 @@ namespace Azure.Core.Testing
         private const string RandomSeedVariableKey = "RandomSeed";
         internal const string DateTimeOffsetNowVariableKey = "DateTimeOffsetNow";
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher, TestEnvironment environment)
+        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
         {
             Mode = mode;
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
             _matcher = matcher;
-            _environment = environment;
 
             switch (Mode)
             {
@@ -56,8 +55,6 @@ namespace Azure.Core.Testing
         private readonly RecordedTestSanitizer _sanitizer;
 
         private readonly RecordMatcher _matcher;
-
-        private readonly TestEnvironment _environment;
 
         private readonly RecordSession _session;
 
@@ -204,23 +201,6 @@ namespace Azure.Core.Testing
             return Random.Next().ToString();
         }
 
-        public string GetVariableFromEnvironment(string variableName)
-        {
-            var environmentVariableValue = _environment.GetVariable(variableName);
-            switch (Mode)
-            {
-                case RecordedTestMode.Record:
-                    _session.Variables[variableName] = _sanitizer.SanitizeVariable(variableName, environmentVariableValue);
-                    return environmentVariableValue;
-                case RecordedTestMode.Live:
-                    return environmentVariableValue;
-                case RecordedTestMode.Playback:
-                    return _session.Variables[variableName];
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         public string GetVariable(string variableName, string defaultValue)
         {
             switch (Mode)
@@ -249,24 +229,9 @@ namespace Azure.Core.Testing
             }
         }
 
-        public TokenCredential Credential => Mode == RecordedTestMode.Playback ? new TestCredential() : _environment.Credential;
-
         public void DisableIdReuse()
         {
             _previousSession = null;
-        }
-
-        private class TestCredential : TokenCredential
-        {
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
-            }
         }
 
         public DisableRecordingScope DisableRecording()

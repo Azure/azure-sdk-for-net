@@ -15,8 +15,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AnalyzeSentimentBatch()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TextAnalyticsTestEnvironment.Instance.Endpoint;
+            string apiKey = TextAnalyticsTestEnvironment.Instance.ApiKey;
 
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

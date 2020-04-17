@@ -15,7 +15,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void HelloWorld()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = AppConfigurationTestEnvironment.Instance.ConnectionString;
 
             #region Snippet:AzConfigSample1_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);

@@ -13,10 +13,11 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+
     // These tests are intended to be only run live on an azure VM with managed identity enabled.
-    public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase
+    public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase<IdentityTestEnvironment>
     {
-        public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base("identity", isAsync)
+        public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new IdentityRecordedTestSanitizer();
         }
@@ -25,12 +26,12 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateImdsSystemAssignedIdentity()
         {
-            if (string.IsNullOrEmpty(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_ENABLE")))
+            if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
                 Assert.Ignore();
             }
 
-            var vaultUri = new Uri(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT"));
+            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
             var cred = CreateManagedIdentityCredential();
 
@@ -49,14 +50,14 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task ValidateImdsUserAssignedIdentity()
         {
-            if (string.IsNullOrEmpty(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_ENABLE")))
+            if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
             {
                 Assert.Ignore();
             }
 
-            var vaultUri = new Uri(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT"));
+            var vaultUri = new Uri(TestEnvironment.SystemAssignedVault);
 
-            var clientId = Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_CLIENTID");
+            var clientId = TestEnvironment.IMDSClientId;
 
             var cred = CreateManagedIdentityCredential(clientId);
 

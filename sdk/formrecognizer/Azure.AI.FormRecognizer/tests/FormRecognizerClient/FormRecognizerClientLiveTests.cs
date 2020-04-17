@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// Azure subscription.
     /// </remarks>
     [LiveOnly]
-    public class FormRecognizerClientLiveTests : ClientTestBase
+    public class FormRecognizerClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
@@ -45,12 +45,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
                 operation = await client.StartRecognizeContentAsync(stream);
             }
             else
             {
-                var uri = new Uri(TestEnvironment.RetrieveInvoiceUri(1));
+                var uri = new Uri(FormRecognizerTestEnvironment.RetrieveInvoiceUri(1));
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
@@ -135,12 +135,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.ReceiptPath, FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.ReceiptPath, FileMode.Open);
                 operation = await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg);
             }
             else
             {
-                var uri = new Uri(TestEnvironment.ReceiptUri);
+                var uri = new Uri(FormRecognizerTestEnvironment.ReceiptUri);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
@@ -217,11 +217,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         private FormRecognizerClient CreateInstrumentedClient()
         {
-            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.EndpointEnvironmentVariableName);
-            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.ApiKeyEnvironmentVariableName);
-
-            Assert.NotNull(endpointEnvironmentVariable);
-            Assert.NotNull(keyEnvironmentVariable);
+            var endpointEnvironmentVariable = TestEnvironment.Endpoint;
+            var keyEnvironmentVariable = TestEnvironment.ApiKey;
 
             var endpoint = new Uri(endpointEnvironmentVariable);
             var credential = new AzureKeyCredential(keyEnvironmentVariable);

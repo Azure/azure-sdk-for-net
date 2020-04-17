@@ -17,10 +17,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         CertificateClientOptions.ServiceVersion.V7_0,
         CertificateClientOptions.ServiceVersion.V7_1_Preview)]
     [NonParallelizable]
-    public class CertificatesTestBase : RecordedTestBase
+    public class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
-
         protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
         private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
@@ -37,7 +35,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base("keyvault", isAsync)
+        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
             _serviceVersion = serviceVersion;
         }
@@ -48,8 +46,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             return InstrumentClient
                 (new CertificateClient(
-                    new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.Credential,
+                    new Uri(TestEnvironment.KeyVaultUrl),
+                    TestEnvironment.Credential,
                     recording.InstrumentClientOptions(new CertificateClientOptions(_serviceVersion))));
         }
 
@@ -60,7 +58,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
-            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
         public override void StopTestRecording()

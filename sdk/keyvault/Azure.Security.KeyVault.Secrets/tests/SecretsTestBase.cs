@@ -15,10 +15,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         SecretClientOptions.ServiceVersion.V7_0,
         SecretClientOptions.ServiceVersion.V7_1_Preview)]
     [NonParallelizable]
-    public abstract class SecretsTestBase : RecordedTestBase
+    public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
-        public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
-
         protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
         private readonly SecretClientOptions.ServiceVersion _serviceVersion;
 
@@ -32,7 +30,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base("keyvault", isAsync)
+        protected SecretsTestBase(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
             _serviceVersion = serviceVersion;
         }
@@ -43,8 +41,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             return InstrumentClient
                 (new SecretClient(
-                    new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.Credential,
+                    new Uri(TestEnvironment.KeyVaultUrl),
+                    TestEnvironment.Credential,
                     recording.InstrumentClientOptions(new SecretClientOptions(_serviceVersion))));
         }
 
@@ -55,7 +53,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
-            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
         public override void StopTestRecording()

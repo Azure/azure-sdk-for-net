@@ -127,17 +127,12 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The storage account name.
         /// </summary>
-        public string StorageAccountName => TestFixture.Recording.GetVariableFromEnvironment("AZURE_SEARCH_STORAGE_NAME");
+        public string StorageAccountName => TestFixture.TestEnvironment.SearchStorageName;
 
         /// <summary>
         /// The storage account key.
         /// </summary>
-        public string StorageAccountKey => TestFixture.Recording.GetVariableFromEnvironment(StorageAccountKeyVariableName);
-
-        /// <summary>
-        /// The name of the <see cref="StorageAccountKey"/> environment variable.
-        /// </summary>
-        internal const string StorageAccountKeyVariableName = "AZURE_SEARCH_STORAGE_KEY";
+        public string StorageAccountKey => TestFixture.TestEnvironment.SearchStorageKey;
 
         /// <summary>
         /// The storage account connection string.

@@ -3,19 +3,24 @@
 
 using System.IO;
 using System.Reflection;
+using Azure.Core.Testing;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
     /// <summary>
     /// A helper class used to retrieve information to be used for tests.
     /// </summary>
-    public static class TestEnvironment
+    public class FormRecognizerTestEnvironment: TestEnvironment
     {
+        public FormRecognizerTestEnvironment() : base("formrecognizer")
+        {
+        }
+
         /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the live tests.</summary>
-        public const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
+        private const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
 
         /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the live tests.</summary>
-        public const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
+        private const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
 
         /// <summary>The name of the folder in which test assets are stored.</summary>
         private const string AssetsFolderName = "Assets";
@@ -28,6 +33,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
+
+        public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName);
+        public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
 
         /// <summary>
         /// The relative path to the JPG file which contains the receipt to be used for tests.

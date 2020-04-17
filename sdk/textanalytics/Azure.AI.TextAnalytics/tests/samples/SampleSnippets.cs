@@ -17,8 +17,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void CreateTextAnalyticsClient()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TextAnalyticsTestEnvironment.Instance.Endpoint;
+            string apiKey = TextAnalyticsTestEnvironment.Instance.ApiKey;
 
             #region Snippet:CreateTextAnalyticsClient
             //@@ string endpoint = "<endpoint>";
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void CreateTextAnalyticsClientTokenCredential()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
+            string endpoint = TextAnalyticsTestEnvironment.Instance.Endpoint;
 
             #region Snippet:CreateTextAnalyticsClientTokenCredential
             //@@ string endpoint = "<endpoint>";
@@ -42,8 +42,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void BadRequestSnippet()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
+            string endpoint = TextAnalyticsTestEnvironment.Instance.Endpoint;
+            string apiKey = TextAnalyticsTestEnvironment.Instance.ApiKey;
 
             var credentials = new AzureKeyCredential(apiKey);
             var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
