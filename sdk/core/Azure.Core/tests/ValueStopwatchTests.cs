@@ -5,10 +5,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Primitives;
+using Azure.Core.Diagnostics;
 using NUnit.Framework;
 
-namespace Azure.Messaging.ServiceBus.Tests.Primitives
+namespace Azure.Core.Tests.Diagnostics
 {
     public class ValueStopwatchTests
     {
