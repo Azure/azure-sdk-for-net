@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+           cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+           cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -217,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+           cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
             // Discover the partitions.
 
@@ -282,7 +282,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+           cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -363,7 +363,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+           cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
             // Send a set of events.
 
