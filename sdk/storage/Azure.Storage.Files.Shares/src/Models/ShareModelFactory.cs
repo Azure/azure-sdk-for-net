@@ -36,5 +36,22 @@ namespace Azure.Storage.Files.Shares.Models
                 eTag: eTag,
                 quotaInGB: quotaInGB,
                 metadata: metadata);
+
+        /// <summary>
+        /// Creates a new ShareItem instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareItem ShareItem(
+            string name,
+            ShareProperties properties,
+            string snapshot)
+        {
+            return new ShareItem()
+            {
+                Name = name,
+                Properties = properties,
+                Snapshot = snapshot,
+            };
+        }
     }
 }

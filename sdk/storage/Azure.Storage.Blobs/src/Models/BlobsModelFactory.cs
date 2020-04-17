@@ -315,8 +315,8 @@ namespace Azure.Storage.Blobs.Models
             string name,
             bool deleted,
             BlobItemProperties properties,
-            string snapshot = default,
-            IDictionary<string, string> metadata = default)
+            string snapshot,
+            IDictionary<string, string> metadata)
             => new BlobItem()
             {
                 Name = name,

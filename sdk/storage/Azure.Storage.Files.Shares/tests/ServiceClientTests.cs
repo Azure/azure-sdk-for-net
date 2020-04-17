@@ -205,6 +205,25 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListSharesSegmentAsync_Deleted()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SoftDelete();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await share.CreateAsync();
+            await share.DeleteAsync();
+
+            // Act
+            IList<ShareItem> shares = await service.GetSharesAsync(states: ShareStates.Deleted).ToListAsync();
+
+            // Assert
+            ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
+            Assert.IsTrue(shareItem.Deleted);
+            Assert.IsNotNull(shareItem.Version);
+        }
+
+        [Test]
         public async Task ListShareSegmentAsync_Error()
         {
             // Arrange

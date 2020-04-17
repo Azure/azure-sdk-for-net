@@ -1037,6 +1037,134 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion AppendBlockFromUri
+
+        #region Seal
+        /// <summary>
+        /// Seals the append blob, making it read only.
+        /// Any subsequent appends will fail.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// conditions on the sealing of this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobInfo}"/> describing the
+        /// state of the sealed append blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobInfo> Seal(
+            AppendBlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => SealInternal(
+                conditions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Seals the append blob, making it read only.
+        /// Any subsequent appends will fail.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// conditions on the sealing of this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobInfo}"/> describing the
+        /// state of the sealed append blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobInfo>> SealAsync(
+            AppendBlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => await SealInternal(
+                conditions,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Seals the append blob, making it read only.
+        /// Any subsequent appends will fail.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="AppendBlobRequestConditions"/> to add
+        /// conditions on the sealing of this blob.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobInfo}"/> describing the
+        /// state of the sealed append blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobInfo>> SealInternal(
+            AppendBlobRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            {
+                try
+                {
+                    Response<AppendBlobSealInternal> response = await BlobRestClient.AppendBlob.SealAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        Version.ToVersionString(),
+                        leaseId: conditions?.LeaseId,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        appendPosition: conditions?.IfAppendPositionEqual,
+                        async: async,
+                        operationName: $"{nameof(AppendBlobClient)}.{nameof(Seal)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new BlobInfo
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                }
+            }
+        }
+        #endregion Seal
     }
 
     /// <summary>

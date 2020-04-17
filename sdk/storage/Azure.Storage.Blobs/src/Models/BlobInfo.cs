@@ -227,6 +227,12 @@ namespace Azure.Storage.Blobs.Models
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
         /// </summary>
         public string VersionId => _flattened.VersionId;
+
+        /// <summary>
+        /// If this blob is sealed.
+        /// </summary>
+        public bool IsSealed => _flattened.IsSealed;
+
     }
 
     /// <summary>
