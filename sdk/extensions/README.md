@@ -2,11 +2,11 @@
 
 Azure Extensions is a set of integration libraries for ASP.NET Core and Microsoft.Extensions packages.
 
-- [Azure.Extensions.Configuration.Secrets][configuration_secrets] allows Azure KeyVault Secrets to be used as a provider for Microsoft.Extensions.Configuration.
+- [Azure.Extensions.AspNetCore.Configuration.Secrets][configuration_secrets] allows Azure Key Vault Secrets to be used as a provider for Microsoft.Extensions.Configuration.
 
-- [Azure.AspNetCore.DataProtection.Keys][dataprotection_keys] allows Azure DataProtection Keys to be used as key protector for Microsoft.AspNetCore.DataProtection.
+- [Azure.Extensions.AspNetCore.DataProtection.Keys][dataprotection_keys] allows Azure DataProtection Keys to be used as key protector for Microsoft.AspNetCore.DataProtection.
 
-- [Azure.AspNetCore.DataProtection.Blobs][dataprotection_blobs] allows Azure Storage Blob to be used as key store for Microsoft.AspNetCore.DataProtection.
+- [Azure.Extensions.AspNetCore.DataProtection.Blobs][dataprotection_blobs] allows Azure Storage Blob to be used as key store for Microsoft.AspNetCore.DataProtection.
 
 ## Contributing
 
@@ -23,9 +23,9 @@ additional questions or comments.
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FREADME.png)
 
 <!-- LINKS -->
-[configuration_secrets]: ./Azure.Extensions.Configuration.Secrets/README.md
-[dataprotection_keys]: ./Azure.AspNetCore.DataProtection.Keys/README.md
-[dataprotection_blobs]: ./Azure.AspNetCore.DataProtection.Blobs/README.md
+[configuration_secrets]: ./Azure.Extensions.AspNetCore.Configuration.Secrets/README.md
+[dataprotection_keys]: ./Azure.Extensions.AspNetCore.DataProtection.Keys/README.md
+[dataprotection_blobs]: ./Azure.Extensions.AspNetCore.DataProtection.Blobs/README.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
