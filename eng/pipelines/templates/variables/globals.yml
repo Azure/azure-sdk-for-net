@@ -1,5 +1,5 @@
 variables:
-  DocWardenVersion: '1.0.0'
+  DocWardenVersion: '0.6.0'
   DotNetCoreSDKVersion: '3.1.100'
   DotNetCoreRuntimeVersion: '2.1.10'
   OfficialBuildId: $(Build.BuildNumber)
