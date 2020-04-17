@@ -258,21 +258,30 @@ namespace Azure.Search.Documents.Tests
         [Test]
         public async Task CrudSynonymMaps()
         {
-            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            string synonymMapName = Recording.Random.GetName();
 
             SearchServiceClient client = resources.GetServiceClient();
 
-            SynonymMap map = await client.CreateSynonymMapAsync(new SynonymMap("test", "msft=>Microsoft"));
+            SynonymMap map = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, "msft=>Microsoft"));
+            Assert.AreEqual(synonymMapName, map.Name);
+            Assert.AreEqual("solr", map.Format);
             Assert.AreEqual("msft=>Microsoft", map.Synonyms);
 
-            map = await client.CreateOrUpdateSynonymMapAsync(new SynonymMap("test", "ms,msft=>Microsoft"), new MatchConditions { IfMatch = new ETag(map.ETag) });
+            map = await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new MatchConditions { IfMatch = new ETag(map.ETag) });
+            Assert.AreEqual(synonymMapName, map.Name);
+            Assert.AreEqual("solr", map.Format);
             Assert.AreEqual("ms,msft=>Microsoft", map.Synonyms);
 
             Response<IReadOnlyList<SynonymMap>> mapsResponse = await client.GetSynonymMapsAsync(new[] { nameof(SynonymMap.Name) });
             foreach (SynonymMap namedMap in mapsResponse.Value)
             {
-                SynonymMap fetchedMap = await client.GetSynonymMapAsync(namedMap.Name);
-                Assert.AreEqual(map.Synonyms, fetchedMap.Synonyms);
+                if (string.Equals(map.Name, namedMap.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    SynonymMap fetchedMap = await client.GetSynonymMapAsync(namedMap.Name);
+                    Assert.AreEqual(map.Synonyms, fetchedMap.Synonyms);
+                }
             }
 
             await client.DeleteSynonymMapAsync(map.Name, new MatchConditions { IfMatch = new ETag(map.ETag) });
