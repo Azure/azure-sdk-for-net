@@ -33,6 +33,10 @@ namespace Azure.AI.FormRecognizer
         /// </summary>
         public FormRecognizerClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
             _endpoint = endpoint;
             _credential = credential;
             var diagnostics = new ClientDiagnostics(options);
@@ -59,6 +63,8 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual RecognizeContentOperation StartRecognizeContent(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(formFileStream, nameof(formFileStream));
+
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
@@ -77,6 +83,8 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual async Task<RecognizeContentOperation> StartRecognizeContentAsync(Stream formFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(formFileStream, nameof(formFileStream));
+
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
@@ -95,6 +103,8 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual RecognizeContentOperation StartRecognizeContentFromUri(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(formFileUri, nameof(formFileUri));
+
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = ServiceClient.RestClient.AnalyzeLayoutAsync(sourcePath, cancellationToken);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
@@ -111,6 +121,8 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual async Task<RecognizeContentOperation> StartRecognizeContentFromUriAsync(Uri formFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(formFileUri, nameof(formFileUri));
+
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
             ResponseWithHeaders<ServiceAnalyzeLayoutAsyncHeaders> response = await ServiceClient.RestClient.AnalyzeLayoutAsyncAsync(sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeContentOperation(ServiceClient, response.Headers.OperationLocation);
@@ -131,6 +143,8 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsAsync(Stream receiptFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(receiptFileStream, nameof(receiptFileStream));
+
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
 
@@ -149,6 +163,8 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual RecognizeReceiptsOperation StartRecognizeReceipts(Stream receiptFileStream, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(receiptFileStream, nameof(receiptFileStream));
+
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(receiptFileStream, nameof(receiptFileStream));
 
@@ -167,6 +183,8 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual async Task<RecognizeReceiptsOperation> StartRecognizeReceiptsFromUriAsync(Uri receiptFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(receiptFileUri, nameof(receiptFileUri));
+
             recognizeOptions ??= new RecognizeOptions();
 
             SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.ToString());
@@ -185,6 +203,8 @@ namespace Azure.AI.FormRecognizer
         [ForwardsClientCalls]
         public virtual RecognizeReceiptsOperation StartRecognizeReceiptsFromUri(Uri receiptFileUri, RecognizeOptions recognizeOptions = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(receiptFileUri, nameof(receiptFileUri));
+
             recognizeOptions ??= new RecognizeOptions();
 
             SourcePath_internal sourcePath = new SourcePath_internal(receiptFileUri.ToString());

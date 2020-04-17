@@ -229,6 +229,5 @@ namespace Azure.AI.FormRecognizer.Tests
             FormTrainingClient trainingClient = client.GetFormTrainingClient();
             Assert.IsNotNull(trainingClient);
         }
-
     }
 }

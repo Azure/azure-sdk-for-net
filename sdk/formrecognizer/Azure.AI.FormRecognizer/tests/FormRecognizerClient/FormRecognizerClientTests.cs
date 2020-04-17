@@ -42,7 +42,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void ConstructorRequiresTheEndpoint()
         {
             var credential = new AzureKeyCredential("key");
@@ -55,7 +54,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void ConstructorRequiresTheCredential()
         {
             var endpoint = new Uri("http://localhost");
@@ -68,7 +66,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void ConstructorRequiresTheOptions()
         {
             var endpoint = new Uri("http://localhost");
@@ -82,7 +79,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void StartRecognizeContentRequiresTheFormFileStream()
         {
             var client = CreateInstrumentedClient();
@@ -111,7 +107,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void StartRecognizeContentFromUriRequiresTheFormFileUri()
         {
             var client = CreateInstrumentedClient();
@@ -139,7 +134,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void StartRecognizeReceiptsRequiresTheReceiptFileStream()
         {
             var client = CreateInstrumentedClient();
@@ -168,7 +162,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Argument validation not implemented yet.")]
         public void StartRecognizeReceiptsFromUriRequiresTheReceiptFileUri()
         {
             var client = CreateInstrumentedClient();
