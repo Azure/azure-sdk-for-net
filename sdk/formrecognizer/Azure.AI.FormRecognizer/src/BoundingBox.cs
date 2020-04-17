@@ -35,12 +35,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-#pragma warning disable CA1822 // mark as static
-        public PointF this[int index] =>
-#pragma warning restore CA1822 // mark as static
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                throw new NotImplementedException();
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-
+        public PointF this[int index] => Points[index];
     }
 }

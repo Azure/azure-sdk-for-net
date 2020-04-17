@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class Model : IUtf8JsonSerializable
+    public partial class ServiceModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,10 +27,10 @@ namespace Azure.Template.Models
             writer.WriteEndObject();
         }
 
-        internal static Model DeserializeModel(JsonElement element)
+        internal static ServiceModel DeserializeServiceModel(JsonElement element)
         {
             string modelProperty = default;
-            Fruit fruit = default;
+            FruitType fruit = default;
             DaysOfWeek daysOfWeek = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -45,7 +45,7 @@ namespace Azure.Template.Models
                 }
                 if (property.NameEquals("Fruit"))
                 {
-                    fruit = new Fruit(property.Value.GetString());
+                    fruit = new FruitType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("DaysOfWeek"))
@@ -54,7 +54,7 @@ namespace Azure.Template.Models
                     continue;
                 }
             }
-            return new Model(modelProperty, fruit, daysOfWeek);
+            return new ServiceModel(modelProperty, fruit, daysOfWeek);
         }
     }
 }

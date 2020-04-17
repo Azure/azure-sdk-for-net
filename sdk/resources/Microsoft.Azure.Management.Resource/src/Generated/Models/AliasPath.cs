@@ -18,23 +18,23 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// The type of the paths for alias.
     /// </summary>
-    public partial class AliasPathType
+    public partial class AliasPath
     {
         /// <summary>
-        /// Initializes a new instance of the AliasPathType class.
+        /// Initializes a new instance of the AliasPath class.
         /// </summary>
-        public AliasPathType()
+        public AliasPath()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AliasPathType class.
+        /// Initializes a new instance of the AliasPath class.
         /// </summary>
         /// <param name="path">The path of an alias.</param>
         /// <param name="apiVersions">The API versions.</param>
         /// <param name="pattern">The pattern for an alias path.</param>
-        public AliasPathType(string path = default(string), IList<string> apiVersions = default(IList<string>), AliasPatternType1 pattern = default(AliasPatternType1))
+        public AliasPath(string path = default(string), IList<string> apiVersions = default(IList<string>), AliasPattern pattern = default(AliasPattern))
         {
             Path = path;
             ApiVersions = apiVersions;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets the pattern for an alias path.
         /// </summary>
         [JsonProperty(PropertyName = "pattern")]
-        public AliasPatternType1 Pattern { get; set; }
+        public AliasPattern Pattern { get; set; }
 
     }
 }
