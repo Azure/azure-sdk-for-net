@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
-            _containerUri = new Uri(Environment.GetEnvironmentVariable(TestEnvironment.BlobContainerSASUrlEnvironmentVariableName));
+            _containerUri = new Uri(Environment.GetEnvironmentVariable(TestEnvironment.BlobContainerSasUrlEnvironmentVariableName));
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         [Test]
         [TestCase(true)]
-        //[TestCase(false)]
+        [TestCase(false, Ignore = "The form has not been uploaded to GitHub yet.")]
         public async Task StartRecognizeCustomFormsLabeled(bool useStream)
         {
             var client = CreateInstrumentedClient();
