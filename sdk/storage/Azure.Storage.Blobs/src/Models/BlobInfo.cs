@@ -237,6 +237,16 @@ namespace Azure.Storage.Blobs.Models
         /// If this blob is sealed.
         /// </summary>
         public bool IsSealed => _flattened.IsSealed;
+
+        /// <summary>
+        /// x-ms-or
+        /// </summary>
+        public IDictionary<string, IDictionary<string,string> > ObjectReplicationSourceProperties => BlobExtensions.ParseObjectReplicationIds(_flattened.ObjectReplicationRules);
+
+        /// <summary>
+        /// Object Replication Policy Id. This value is only set when the policy id
+        /// </summary>
+        public string ObjectReplicationDestinationPolicy => _flattened.ObjectReplicationPolicyId;
     }
 
     /// <summary>
