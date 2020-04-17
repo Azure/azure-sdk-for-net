@@ -14,10 +14,11 @@ namespace Azure.Identity.Tests
         public string IdentityTenantId => GetVariable("AZURE_IDENTITY_TEST_TENANTID");
         public string Username => GetRecordedVariable("AZURE_IDENTITY_TEST_USERNAME");
         public string Password => GetVariable("AZURE_IDENTITY_TEST_PASSWORD");
-        public string IMDSEnable => GetVariable("IDENTITYTEST_IMDSTEST_ENABLE");
+        public string IMDSEnable => GetOptionalVariable("IDENTITYTEST_IMDSTEST_ENABLE");
         public string IMDSClientId => GetVariable("IDENTITYTEST_IMDSTEST_CLIENTID");
         public string SystemAssignedVault => GetVariable("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT");
 
         public string DangerousRecordedPassword => GetRecordedVariable("AZURE_IDENTITY_TEST_PASSWORD");
+        public string OptionalTenantId => GetOptionalVariable("TENANT_ID");
     }
 }
