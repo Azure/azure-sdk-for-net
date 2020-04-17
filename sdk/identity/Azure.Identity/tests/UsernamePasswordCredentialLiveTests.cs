@@ -72,7 +72,7 @@ namespace Azure.Identity.Tests
         {
             var tenantId = TestEnvironment.IdentityTenantId;
             var username = TestEnvironment.Username;
-            var password = TestEnvironment.DangerousRecordedPassword;
+            var password = TestEnvironment.TestPassword;
 
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
