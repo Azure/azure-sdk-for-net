@@ -39,7 +39,7 @@ Azure SDK client libraries typically expose one or more _service client_ types t
 are the main starting points for calling corresponding Azure services. 
 You can easily find these client types as their names end with the word _Client_. 
 For example, ```BlockBlobClient``` can be used to call blob storage service, 
-and ```KeyClient``` can be used to access KeyVault service cryptographic keys. 
+and ```KeyClient``` can be used to access Key Vault service cryptographic keys. 
 
 These client types can be instantiated by calling a simple constructor, 
 or its overload that takes various configuration options. 
@@ -119,7 +119,7 @@ When a service call fails `Azure.RequestFailedException` would get thrown. The e
 ```C# Snippet:RequestFailedException
 try
 {
-    KeyVaultSecret properties = client.GetSecret("NonexistentSecret");
+    KeyVaultSecret secret = client.GetSecret("NonexistentSecret");
 }
 // handle exception with status code 404
 catch (RequestFailedException e) when (e.Status == 404)
@@ -138,9 +138,9 @@ You can iterate over `AsyncPageable` directly or in pages.
 
 ```C# Snippet:AsyncPageable
 // call a service method, which returns AsyncPageable<T>
-AsyncPageable<SecretProperties> response = client.GetPropertiesOfSecretsAsync();
+AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
 
-await foreach (SecretProperties secretProperties in response)
+await foreach (SecretProperties secretProperties in allSecretProperties)
 {
     Console.WriteLine(secretProperties.Name);
 }
@@ -159,7 +159,7 @@ The `WaitForCompletionAsync` method is an easy way to wait for operation complet
 SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 
 // Start the operation
-DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
 Response<DeletedSecret> response = await operation.WaitForCompletionAsync();
 DeletedSecret value = response.Value;
@@ -205,7 +205,7 @@ More on mocking in [mocking samples](samples/Mocking.md)
 
 ## Troubleshooting
 
-Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#handling-exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](Diagnostics.md#Distributed-tracing)
+Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#handling-exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](samples/Diagnostics.md#Distributed-tracing)
 
 ## Next steps
 

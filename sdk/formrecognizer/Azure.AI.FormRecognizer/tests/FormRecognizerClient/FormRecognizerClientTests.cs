@@ -83,12 +83,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeContentRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
+            var options = new RecognizeOptions { ContentType = ContentType.Pdf };
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentAsync(stream, default, cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentAsync(stream, options, cancellationSource.Token));
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, default, cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeContentFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>
@@ -128,7 +129,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeReceiptsRequiresTheReceiptFileStream()
         {
             var client = CreateInstrumentedClient();
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeReceiptsAsync(null, ContentType.Jpeg));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeReceiptsAsync(null));
         }
 
         /// <summary>
@@ -139,12 +140,13 @@ namespace Azure.AI.FormRecognizer.Tests
         public void StartRecognizeReceiptsRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
+            var options = new RecognizeOptions { ContentType = ContentType.Pdf };
 
             using var stream = new MemoryStream(Array.Empty<byte>());
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg, cancellationToken: cancellationSource.Token));
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsAsync(stream, recognizeOptions: options, cancellationToken: cancellationSource.Token));
         }
 
         /// <summary>

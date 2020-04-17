@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockTransportBatch = new Mock<TransportMessageBatch>();
             var batch = new ServiceBusMessageBatch(mockTransportBatch.Object);
-            var mockTransportProducer = new Mock<TransportSender>();
+            var mockTransportSender = new Mock<TransportSender>();
             var mockConnection = new Mock<ServiceBusConnection>();
 
             mockConnection
@@ -106,8 +106,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Returns(new ServiceBusRetryOptions());
 
             mockConnection
-                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>()))
-                .Returns(mockTransportProducer.Object);
+                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>()))
+                .Returns(mockTransportSender.Object);
 
             mockConnection
                 .Setup(connection => connection.ThrowIfClosed());
@@ -116,13 +116,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Setup(transport => transport.TryAdd(It.IsAny<ServiceBusMessage>()))
                 .Returns(true);
 
-            mockTransportProducer
+            mockTransportSender
                 .Setup(transport => transport.SendBatchAsync(It.IsAny<ServiceBusMessageBatch>(), It.IsAny<CancellationToken>()))
                 .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
 
             Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
-            var sender = new ServiceBusSender("dummy", mockConnection.Object);
+            var sender = new ServiceBusSender("dummy", null, mockConnection.Object);
             var sendTask = sender.SendBatchAsync(batch);
 
             Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -44,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
+                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
                 operation = await client.StartRecognizeContentAsync(stream);
             }
             else
@@ -116,14 +117,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater than or equal to zero.");
                 Assert.LessOrEqual(cell.RowIndex, 1, $"Cell with text {cell.Text} should have confidence less than or equal to one.");
 
-                // TODO: enable.
-                // Assert.Greater(cell.TextContent.Count, 0, $"Cell with text {cell.Text} should have text content.");
+                Assert.Greater(cell.TextContent.Count, 0, $"Cell with text {cell.Text} should have text content.");
             }
         }
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
-        /// Recognizer cognitive service and perform operations.
+        /// Recognizer cognitive service and perform analysis of receipts.
         /// </summary>
         [Test]
         [TestCase(true)]
@@ -135,12 +135,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.ReceiptPath, FileMode.Open);
-                operation = await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg);
+                using var stream = new FileStream(TestEnvironment.JpgReceiptPath, FileMode.Open);
+                operation = await client.StartRecognizeReceiptsAsync(stream);
             }
             else
             {
-                var uri = new Uri(TestEnvironment.ReceiptUri);
+                var uri = new Uri(TestEnvironment.JpgReceiptUri);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
@@ -200,6 +200,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
             Assert.IsNull(receipt.Tip);
             Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+        }
+
+        [Test]
+        public void CreateFormTrainingClientFromFormRecognizerClient()
+        {
+            FormRecognizerClient client = CreateInstrumentedClient();
+            FormTrainingClient trainingClient = client.GetFormTrainingClient();
+            Assert.IsNotNull(trainingClient);
         }
 
         /// <summary>
