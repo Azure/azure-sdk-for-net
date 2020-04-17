@@ -32,6 +32,23 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
+        /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
+        private FormRecognizerClient CreateInstrumentedClient()
+        {
+            var endpointEnvironmentVariable = TestEnvironment.Endpoint;
+            var keyEnvironmentVariable = TestEnvironment.ApiKey;
+
+            var endpoint = new Uri(endpointEnvironmentVariable);
+            var credential = new AzureKeyCredential(keyEnvironmentVariable);
+            var client = new FormRecognizerClient(endpoint, credential);
+
+            return InstrumentClient(client);
+        }
+
+        /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform operations.
         /// </summary>
@@ -210,21 +227,5 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.IsNotNull(trainingClient);
         }
 
-        /// <summary>
-        /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
-        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
-        /// </summary>
-        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient()
-        {
-            var endpointEnvironmentVariable = TestEnvironment.Endpoint;
-            var keyEnvironmentVariable = TestEnvironment.ApiKey;
-
-            var endpoint = new Uri(endpointEnvironmentVariable);
-            var credential = new AzureKeyCredential(keyEnvironmentVariable);
-            var client = new FormRecognizerClient(endpoint, credential);
-
-            return InstrumentClient(client);
-        }
     }
 }
