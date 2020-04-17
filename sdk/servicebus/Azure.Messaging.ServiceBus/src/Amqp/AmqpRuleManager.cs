@@ -1,0 +1,251 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
+using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Filters;
+using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
+
+namespace Azure.Messaging.ServiceBus.Amqp
+{
+    internal class AmqpRuleManager : TransportRuleManager
+    {
+        /// <summary>
+        /// The name of the Service Bus entity to which the receiver is bound.
+        /// </summary>
+        ///
+        private readonly string _entityPath;
+
+        /// <summary>
+        /// The policy to use for determining retry behavior for when an operation fails.
+        /// </summary>
+        private readonly ServiceBusRetryPolicy _retryPolicy;
+
+        /// <summary>
+        /// The AMQP connection scope responsible for managing transport constructs for this instance.
+        /// </summary>
+        ///
+        private readonly AmqpConnectionScope _connectionScope;
+
+        private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
+        /// </summary>
+        ///
+        /// <param name="entityPath">The name of the Service Bus entity from which events will be consumed.</param>
+        /// <param name="connectionScope">The AMQP connection context for operations .</param>
+        /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
+        ///
+        /// <remarks>
+        /// As an internal type, this class performs only basic sanity checks against its arguments.  It
+        /// is assumed that callers are trusted and have performed deep validation.
+        ///
+        /// Any parameters passed are assumed to be owned by this instance and safe to mutate or dispose;
+        /// creation of clones or otherwise protecting the parameters is assumed to be the purview of the
+        /// caller.
+        /// </remarks>
+        public AmqpRuleManager(
+            string entityPath,
+            AmqpConnectionScope connectionScope,
+            ServiceBusRetryPolicy retryPolicy)
+        {
+            Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
+            Argument.AssertNotNull(connectionScope, nameof(connectionScope));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
+
+            _entityPath = entityPath;
+            _connectionScope = connectionScope;
+            _retryPolicy = retryPolicy;
+
+            _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
+                timeout => _connectionScope.OpenManagementLinkAsync(
+                    _entityPath,
+                    timeout,
+                    CancellationToken.None),
+                link =>
+                {
+                    link.Session?.SafeClose();
+                    link.SafeClose();
+                });
+        }
+
+        /// <summary>
+        /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
+        /// </summary>
+        ///
+        /// <param name="description">The rule description that provides the rule to add.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>
+        /// You can add rules to the subscription that decides which messages from the topic should reach the subscription.
+        /// A default <see cref="TrueFilter"/> rule named <see cref="RuleDescription.DefaultRuleName"/> is always added while creation of the Subscription.
+        /// You can add multiple rules with distinct names to the same subscription.
+        /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
+        /// </remarks>
+        ///
+        /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
+        public override async Task AddRuleAsync(
+            RuleDescription description,
+            CancellationToken cancellationToken = default) =>
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                await AddRuleInternalAsync(
+                    description,
+                    timeout).ConfigureAwait(false),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Adds a rule to the current subscription to filter the messages reaching from topic to the subscription.
+        /// </summary>
+        ///
+        /// <param name="description">The rule description that provides the rule to add.</param>
+        /// <param name="timeout"></param>
+        ///
+        /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
+        private async Task AddRuleInternalAsync(
+            RuleDescription description,
+            TimeSpan timeout)
+        {
+            // Create an AmqpRequest Message to add rule
+            var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                     ManagementConstants.Operations.AddRuleOperation,
+                     timeout,
+                     null);
+            amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = description.Name;
+            amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] = AmqpMessageConverter.GetRuleDescriptionMap(description);
+
+            AmqpResponseMessage response = await ManagementUtilities.ExecuteRequestResponseAsync(
+                    _connectionScope,
+                    _managementLink,
+                    amqpRequestMessage,
+                    timeout).ConfigureAwait(false);
+
+            if (response.StatusCode != AmqpResponseStatusCode.OK)
+            {
+                throw response.ToMessagingContractException();
+            }
+        }
+
+        /// <summary>
+        /// Removes the rule on the subscription identified by <paramref name="ruleName" />.
+        /// </summary>
+        ///
+        /// <param name="ruleName">Name of the rule</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
+        public override async Task RemoveRuleAsync(
+            string ruleName,
+            CancellationToken cancellationToken = default) =>
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                await RemoveRuleInternalAsync(
+                    ruleName,
+                    timeout).ConfigureAwait(false),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Removes the rule on the subscription identified by <paramref name="ruleName" />.
+        /// </summary>
+        ///
+        /// <param name="ruleName"></param>
+        /// <param name="timeout"></param>
+        ///
+        /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
+        private async Task RemoveRuleInternalAsync(
+            string ruleName,
+            TimeSpan timeout)
+        {
+            // Create an AmqpRequest Message to remove rule
+            var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                        ManagementConstants.Operations.RemoveRuleOperation,
+                        timeout,
+                        null);
+            amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = ruleName;
+
+            AmqpResponseMessage response = await ManagementUtilities.ExecuteRequestResponseAsync(
+                    _connectionScope,
+                    _managementLink,
+                    amqpRequestMessage,
+                    timeout).ConfigureAwait(false);
+
+            if (response.StatusCode != AmqpResponseStatusCode.OK)
+            {
+                throw response.ToMessagingContractException();
+            }
+        }
+
+        /// <summary>
+        /// Get all rules associated with the subscription.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>Returns a list of rules description</returns>
+        public override async Task<IEnumerable<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
+        {
+            IEnumerable<RuleDescription> rulesDescription = null;
+
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                rulesDescription = await GetRulesInternalAsync(timeout).ConfigureAwait(false),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
+
+            return rulesDescription;
+        }
+
+        /// <summary>
+        /// Get all rules associated with the subscription.
+        /// </summary>
+        ///
+        /// <param name="timeout"></param>
+        ///
+        /// <returns>Returns a list of rules description</returns>
+        private async Task<IEnumerable<RuleDescription>> GetRulesInternalAsync(TimeSpan timeout)
+        {
+            var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                    ManagementConstants.Operations.EnumerateRulesOperation,
+                    timeout,
+                    null);
+            amqpRequestMessage.Map[ManagementConstants.Properties.Top] = int.MaxValue;
+            amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = 0;
+
+            var response = await ManagementUtilities.ExecuteRequestResponseAsync(
+                _connectionScope,
+                _managementLink,
+                amqpRequestMessage,
+                timeout).ConfigureAwait(false);
+            var ruleDescriptions = new List<RuleDescription>();
+            if (response.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                var ruleList = response.GetListValue<AmqpMap>(ManagementConstants.Properties.Rules);
+                foreach (var entry in ruleList)
+                {
+                    var amqpRule = (AmqpRuleDescriptionCodec)entry[ManagementConstants.Properties.RuleDescription];
+                    var ruleDescription = AmqpMessageConverter.GetRuleDescription(amqpRule);
+                    ruleDescriptions.Add(ruleDescription);
+                }
+            }
+            else if (response.StatusCode == AmqpResponseStatusCode.NoContent)
+            {
+                // Do nothing. Return empty list;
+            }
+            else
+            {
+                throw response.ToMessagingContractException();
+            }
+
+            return ruleDescriptions;
+        }
+    }
+}

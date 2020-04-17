@@ -581,11 +581,13 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// The <see cref="ServiceBusRuleManager"/> is used to manage the rules for a subscription.
         /// </summary>
-        internal ServiceBusRuleManager GetRuleManager(string topicName, string subscriptionName)
+        public ServiceBusRuleManager CreateRuleManager(string topicName, string subscriptionName)
         {
             ValidateEntityName(topicName);
 
-            return new ServiceBusRuleManager(topicName, subscriptionName);
+            return new ServiceBusRuleManager(
+                connection: Connection,
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
         }
     }
 }

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    using System;
-
     /// <summary>
     /// Represents the filter actions which are allowed for the transformation
     /// of a message that have been matched by a filter expression.
@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// for example assigning a group ID based on the correlation ID of a message.
     /// </remarks>
     /// <seealso cref="SqlRuleAction"/>
-    internal abstract class RuleAction : IEquatable<RuleAction>
+    public abstract class RuleAction : IEquatable<RuleAction>
     {
         internal RuleAction()
         {
