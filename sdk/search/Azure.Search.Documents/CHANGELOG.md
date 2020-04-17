@@ -2,6 +2,9 @@
 
 ## 1.0.0-preview.3 (Unreleased)
 
+### Breaking Changes
+
+- Removed constructor from `SynonymMap` with `IEnumerable<string>` parameter.
 
 ## 1.0.0-preview.2 (2020-04-06)
 
