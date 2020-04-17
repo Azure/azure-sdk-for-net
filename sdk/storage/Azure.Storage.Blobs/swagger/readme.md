@@ -1466,6 +1466,15 @@ directive:
     };
 ```
 
+### Make BlobPropertiesInternal internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.BlobPropertiesInternal["x-az-public"] = false;
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:
