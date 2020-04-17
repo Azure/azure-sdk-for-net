@@ -62,5 +62,15 @@ namespace Azure.AI.FormRecognizer.Tests
             var filename = string.Format(InvoiceFilenameFormat, index);
             return string.Format(FileUriFormat, AssetsFolderName, filename);
         }
+
+        /// <summary>
+        /// Retrieves the URI string to a specified file.
+        /// </summary>
+        /// <param name="filename">The name of the file to retrieve.</param>
+        /// <returns>The URI string to the specified file.</returns>
+        public static string RetrieveUri(string filename)
+        {
+            return string.Format(FileUriFormat, AssetsFolderName, filename);
+        }
     }
 }

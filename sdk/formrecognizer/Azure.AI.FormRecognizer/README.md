@@ -52,7 +52,6 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ```
 
-
 ## Key concepts
 
 ### FormRecognizerClient
@@ -75,7 +74,7 @@ Please note that models can also be trained using a graphical user interface suc
 
 ### Long-Running Operations
 
-Because analyzing and training form documents takes time, these operations are implemented as [*long-running operations*][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
+Because analyzing and training form documents takes time, these operations are implemented as [**long-running operations**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
 For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#extracting-receipt-values-with-a-long-running-operation).
 
@@ -98,39 +97,74 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
     {
         USReceipt usReceipt = receipt.AsUSReceipt();
 
-        Console.WriteLine($"Recognized USReceipt fields:");
-
         string merchantName = usReceipt.MerchantName;
-        Console.WriteLine($"    Merchant Name: '{merchantName}', with confidence {usReceipt.MerchantName.Confidence}");
-
         DateTime transactionDate = usReceipt.TransactionDate;
+        IReadOnlyList<USReceiptItem> items = usReceipt.Items;
+        float subtotal = usReceipt.Subtotal;
+        float tax = usReceipt.Tax;
+        float total = usReceipt.Total;
+
+        Console.WriteLine($"Recognized USReceipt fields:");
+        Console.WriteLine($"    Merchant Name: '{merchantName}', with confidence {usReceipt.MerchantName.Confidence}");
         Console.WriteLine($"    Transaction Date: '{transactionDate}', with confidence {usReceipt.TransactionDate.Confidence}");
 
-        IReadOnlyList<USReceiptItem> items = usReceipt.Items;
         for (int i = 0; i < items.Count; i++)
         {
             USReceiptItem item = usReceipt.Items[i];
             Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', TotalPrice: '{item.TotalPrice.Value}'");
         }
 
-        float subtotal = usReceipt.Subtotal;
         Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
-
-        float tax = usReceipt.Tax;
         Console.WriteLine($"    Tax: '{tax}', with confidence '{usReceipt.Tax.Confidence}'");
-
-        float total = usReceipt.Total;
         Console.WriteLine($"    Total: '{total}', with confidence '{usReceipt.Total.Confidence}'");
     }
 }
 ```
 
 ### Recognize Content
-```C#
+```C# Snippet:FormRecognizerSample3RecognizeContent
+Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
+foreach (FormPage page in formPages.Value)
+{
+    Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
+
+    for (int i = 0; i < page.Lines.Count; i++)
+    {
+        FormLine line = page.Lines[i];
+        Console.WriteLine($"    Line {i} has {line.Words.Count} word {(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+    }
+
+    for (int i = 0; i < page.Tables.Count; i++)
+    {
+        FormTable table = page.Tables[i];
+        Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+        foreach (FormTableCell cell in table.Cells)
+        {
+            Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
+        }
+    }
+}
 ```
 
 ### Recognize Custom Forms
-```C#
+```C# Snippet:FormRecognizerSample4RecognizeCustomForms
+Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(invoiceUri)).WaitForCompletionAsync();
+foreach (RecognizedForm form in forms.Value)
+{
+    Console.WriteLine($"Form of type: {form.FormType}");
+    foreach (FormField field in form.Fields.Values)
+    {
+        Console.WriteLine($"Field '{field.Name}: ");
+
+        if (field.LabelText != null)
+        {
+            Console.WriteLine($"    Label: '{field.LabelText.Text}");
+        }
+
+        Console.WriteLine($"    Value: '{field.ValueText.Text}");
+        Console.WriteLine($"    Confidence: '{field.Confidence}");
+    }
+}
 ```
 
 ### Train with Forms Only

@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples
     {
         [Test]
-        public async Task RecognizeReceipts()
+        public async Task RecognizeReceiptsFromFile()
         {
             string endpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
             string apiKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY");
@@ -36,28 +36,25 @@ namespace Azure.AI.FormRecognizer.Samples
                 {
                     USReceipt usReceipt = receipt.AsUSReceipt();
 
-                    Console.WriteLine($"Recognized USReceipt fields:");
-
                     string merchantName = usReceipt.MerchantName;
-                    Console.WriteLine($"    Merchant Name: '{merchantName}', with confidence {usReceipt.MerchantName.Confidence}");
-
                     DateTime transactionDate = usReceipt.TransactionDate;
+                    IReadOnlyList<USReceiptItem> items = usReceipt.Items;
+                    float subtotal = usReceipt.Subtotal;
+                    float tax = usReceipt.Tax;
+                    float total = usReceipt.Total;
+
+                    Console.WriteLine($"Recognized USReceipt fields:");
+                    Console.WriteLine($"    Merchant Name: '{merchantName}', with confidence {usReceipt.MerchantName.Confidence}");
                     Console.WriteLine($"    Transaction Date: '{transactionDate}', with confidence {usReceipt.TransactionDate.Confidence}");
 
-                    IReadOnlyList<USReceiptItem> items = usReceipt.Items;
                     for (int i = 0; i < items.Count; i++)
                     {
                         USReceiptItem item = usReceipt.Items[i];
                         Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', TotalPrice: '{item.TotalPrice.Value}'");
                     }
 
-                    float subtotal = usReceipt.Subtotal;
                     Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
-
-                    float tax = usReceipt.Tax;
                     Console.WriteLine($"    Tax: '{tax}', with confidence '{usReceipt.Tax.Confidence}'");
-
-                    float total = usReceipt.Total;
                     Console.WriteLine($"    Total: '{total}', with confidence '{usReceipt.Total.Confidence}'");
                 }
             }
