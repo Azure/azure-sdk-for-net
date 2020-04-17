@@ -16,24 +16,24 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// The type of the pattern for an alias path.
     /// </summary>
-    public partial class AliasPatternType1
+    public partial class AliasPattern
     {
         /// <summary>
-        /// Initializes a new instance of the AliasPatternType1 class.
+        /// Initializes a new instance of the AliasPattern class.
         /// </summary>
-        public AliasPatternType1()
+        public AliasPattern()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AliasPatternType1 class.
+        /// Initializes a new instance of the AliasPattern class.
         /// </summary>
         /// <param name="phrase">The alias pattern phrase.</param>
         /// <param name="variable">The alias pattern variable.</param>
         /// <param name="type">The type of alias pattern. Possible values
         /// include: 'NotSpecified', 'Extract'</param>
-        public AliasPatternType1(string phrase = default(string), string variable = default(string), AliasPatternType? type = default(AliasPatternType?))
+        public AliasPattern(string phrase = default(string), string variable = default(string), AliasPatternType? type = default(AliasPatternType?))
         {
             Phrase = phrase;
             Variable = variable;

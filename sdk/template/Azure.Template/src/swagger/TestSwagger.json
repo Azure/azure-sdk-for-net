@@ -42,6 +42,7 @@
   "definitions": {
     "Model": {
       "type": "object",
+      "x-ms-client-name": "ServiceModel",
       "properties": {
         "ModelProperty": {
           "type": "string",
@@ -55,7 +56,7 @@
             "pear"
           ],
           "x-ms-enum": {
-            "name": "Fruit",
+            "name": "FruitType",
             "modelAsString": true
           }
         },

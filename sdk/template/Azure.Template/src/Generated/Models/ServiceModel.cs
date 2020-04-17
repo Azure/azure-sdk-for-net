@@ -7,23 +7,23 @@
 
 namespace Azure.Template.Models
 {
-    /// <summary> The Model. </summary>
-    public partial class Model
+    /// <summary> The ServiceModel. </summary>
+    public partial class ServiceModel
     {
-        /// <summary> Initializes a new instance of Model. </summary>
+        /// <summary> Initializes a new instance of ServiceModel. </summary>
         /// <param name="fruit"> Fruit. </param>
         /// <param name="daysOfWeek"> Day of week. </param>
-        public Model(Fruit fruit, DaysOfWeek daysOfWeek)
+        public ServiceModel(FruitType fruit, DaysOfWeek daysOfWeek)
         {
             Fruit = fruit;
             DaysOfWeek = daysOfWeek;
         }
 
-        /// <summary> Initializes a new instance of Model. </summary>
+        /// <summary> Initializes a new instance of ServiceModel. </summary>
         /// <param name="modelProperty"> A description about the set of tags. </param>
         /// <param name="fruit"> Fruit. </param>
         /// <param name="daysOfWeek"> Day of week. </param>
-        internal Model(string modelProperty, Fruit fruit, DaysOfWeek daysOfWeek)
+        internal ServiceModel(string modelProperty, FruitType fruit, DaysOfWeek daysOfWeek)
         {
             ModelProperty = modelProperty;
             Fruit = fruit;
@@ -33,7 +33,7 @@ namespace Azure.Template.Models
         /// <summary> A description about the set of tags. </summary>
         public string ModelProperty { get; set; }
         /// <summary> Fruit. </summary>
-        public Fruit Fruit { get; }
+        public FruitType Fruit { get; }
         /// <summary> Day of week. </summary>
         public DaysOfWeek DaysOfWeek { get; }
     }

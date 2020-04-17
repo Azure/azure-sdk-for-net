@@ -1616,8 +1616,10 @@ namespace Azure.Search.Documents
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
+            string select = SynonymMap.CanonicalizePropertyNames(selectProperties).CommaJoin() ?? Constants.All;
+
             Response<ListSynonymMapsResult> result = SynonymMapsClient.List(
-                selectProperties.CommaJoin() ?? Constants.All,
+                select,
                 options?.ClientRequestId,
                 cancellationToken);
 
@@ -1638,8 +1640,10 @@ namespace Azure.Search.Documents
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
         {
+            string select = SynonymMap.CanonicalizePropertyNames(selectProperties).CommaJoin() ?? Constants.All;
+
             Response<ListSynonymMapsResult> result = await SynonymMapsClient.ListAsync(
-                selectProperties.CommaJoin() ?? Constants.All,
+                select,
                 options?.ClientRequestId,
                 cancellationToken)
                 .ConfigureAwait(false);
