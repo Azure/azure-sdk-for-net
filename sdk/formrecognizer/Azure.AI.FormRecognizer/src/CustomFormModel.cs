@@ -73,9 +73,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             var subModels = new List<CustomFormSubModel>();
 
-            var fieldMap = new Dictionary<string, CustomFormModelField>();
             foreach (var cluster in keys.Clusters)
             {
+                var fieldMap = new Dictionary<string, CustomFormModelField>();
                 for (int i = 0; i < cluster.Value.Count; i++)
                 {
                     string fieldName = "field-" + i;
@@ -93,9 +93,13 @@ namespace Azure.AI.FormRecognizer.Training
         private static IReadOnlyList<CustomFormSubModel> ConvertFromLabeled(Model_internal model)
         {
             var fieldMap = new Dictionary<string, CustomFormModelField>();
-            foreach (var formFieldsReport in model.TrainResult.Fields)
+
+            if (model.TrainResult.Fields != null)
             {
-                fieldMap.Add(formFieldsReport.Name, new CustomFormModelField(formFieldsReport.Name, null, formFieldsReport.Accuracy));
+                foreach (var formFieldsReport in model.TrainResult.Fields)
+                {
+                    fieldMap.Add(formFieldsReport.Name, new CustomFormModelField(formFieldsReport.Name, null, formFieldsReport.Accuracy));
+                }
             }
 
             return new List<CustomFormSubModel> {
@@ -108,14 +112,17 @@ namespace Azure.AI.FormRecognizer.Training
         private static IReadOnlyList<TrainingDocumentInfo> ConvertToTrainingDocuments(TrainResult_internal trainResult)
         {
             var trainingDocs = new List<TrainingDocumentInfo>();
-            foreach (var docs in trainResult?.TrainingDocuments)
+            if (trainResult?.TrainingDocuments != null)
             {
-                trainingDocs.Add(
-                    new TrainingDocumentInfo(
-                        docs.DocumentName,
-                        docs.PageCount,
-                        docs.Errors ?? new List<FormRecognizerError>(),
-                        docs.Status));
+                foreach (var docs in trainResult?.TrainingDocuments)
+                {
+                    trainingDocs.Add(
+                        new TrainingDocumentInfo(
+                            docs.DocumentName,
+                            docs.PageCount,
+                            docs.Errors ?? new List<FormRecognizerError>(),
+                            docs.Status));
+                }
             }
             return trainingDocs;
         }
