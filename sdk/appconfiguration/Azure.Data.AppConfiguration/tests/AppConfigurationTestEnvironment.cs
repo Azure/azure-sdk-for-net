@@ -3,7 +3,7 @@
 
 using Azure.Core.Testing;
 
-namespace Azure.Data.AppConfiguration.Samples
+namespace Azure.Data.AppConfiguration
 {
     public class AppConfigurationTestEnvironment : TestEnvironment
     {

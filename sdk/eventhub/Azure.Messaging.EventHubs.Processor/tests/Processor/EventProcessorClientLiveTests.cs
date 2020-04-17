@@ -47,7 +47,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Setup the environment.
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
-            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Setup the environment.
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
-            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
@@ -147,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Setup the environment.
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(4);
-            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(6));
@@ -214,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = new HashSet<string>();
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(partitionCount);
-            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
@@ -257,7 +257,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Validate that events that were processed.
 
-            var ownership = (await storageManager.ListOwnershipAsync(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, scope.ConsumerGroups.First(), cancellationSource.Token))?.ToList();
+            var ownership = (await storageManager.ListOwnershipAsync(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, scope.ConsumerGroups.First(), cancellationSource.Token))?.ToList();
 
             Assert.That(ownership, Is.Not.Null, "The ownership list should have been returned.");
             Assert.That(ownership.Count, Is.AtLeast(1), "At least one partition should have been owned.");
@@ -279,7 +279,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Setup the environment.
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(1);
-            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
@@ -360,7 +360,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Setup the environment.
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(1);
-            var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
@@ -473,11 +473,11 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                  StorageManager storageManager = default,
                                                                  EventProcessorOptions options = default)
         {
-            var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
-            EventHubConnection createConnection() => new EventHubConnection(TestEnvironment.FullyQualifiedNamespace, eventHubName, credential);
+            var credential = new ClientSecretCredential(EventHubsTestEnvironment.Instance.EventHubsTenant, EventHubsTestEnvironment.Instance.EventHubsClient, EventHubsTestEnvironment.Instance.EventHubsSecret);
+            EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
 
             storageManager ??= new InMemoryStorageManager(_=> {});
-            return new TestEventProcessorClient(storageManager, consumerGroup, TestEnvironment.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
+            return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
         }
 
         /// <summary>

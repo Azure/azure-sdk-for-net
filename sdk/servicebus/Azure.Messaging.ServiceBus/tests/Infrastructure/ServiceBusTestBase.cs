@@ -81,9 +81,9 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         protected TokenCredential GetTokenCredential() =>
         new ClientSecretCredential(
-            TestEnvironment.ServiceBusTenant,
-            TestEnvironment.ServiceBusClient,
-            TestEnvironment.ServiceBusSecret);
+            ServiceBusTestEnvironment.Instance.ServiceBusTenant,
+            ServiceBusTestEnvironment.Instance.ServiceBusClient,
+            ServiceBusTestEnvironment.Instance.ServiceBusSecret);
 
         protected ServiceBusClient GetNoRetryClient()
         {
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     }
                 };
             return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
+                ServiceBusTestEnvironment.Instance.ServiceBusConnectionString,
                 options);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 retryOptions.TryTimeout = TimeSpan.FromSeconds(tryTimeout);
             }
             return new ServiceBusClient(
-                TestEnvironment.ServiceBusConnectionString,
+                ServiceBusTestEnvironment.Instance.ServiceBusConnectionString,
                 new ServiceBusClientOptions
                 {
                     RetryOptions = retryOptions

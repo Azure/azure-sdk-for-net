@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
+                await using var sender = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString).CreateSender(scope.QueueName);
                 await sender.SendAsync(GetMessage());
             }
         }
@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, GetTokenCredential());
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace, GetTokenCredential());
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendAsync(GetMessage());
             }
@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                         Mode = ServiceBusRetryMode.Exponential
                     }
                 };
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString, options);
 
                 ServiceBusSender sender = client.CreateSender(scope.TopicName);
                 await sender.SendAsync(GetMessage());
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                         Mode = ServiceBusRetryMode.Exponential
                     }
                 };
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString, options);
 
                 ServiceBusSender sender = client.CreateSender(scope.TopicName);
                 await sender.SendAsync(GetMessage("sessionId"));
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, 3);
@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>()));
@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
@@ -127,7 +127,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
@@ -143,7 +143,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
 
@@ -160,9 +160,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
+                await using var sender = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString).CreateSender(scope.QueueName);
                 Assert.AreEqual(scope.QueueName, sender.EntityPath);
-                Assert.AreEqual(TestEnvironment.FullyQualifiedNamespace, sender.FullyQualifiedNamespace);
+                Assert.AreEqual(ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 await using var sender = client.CreateSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
@@ -191,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
@@ -214,7 +214,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
+                await using var sender = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString).CreateSender(scope.QueueName);
                 for (int i = 0; i < 10; i++)
                 {
                     await Task.Delay(1000);
@@ -228,7 +228,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 // this is apparently supported. The session is ignored by the service but can be used
                 // as additional app data. Not recommended.
@@ -244,7 +244,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
+                await using var sender = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString).CreateSender(scope.QueueName);
                 Assert.That(
                     async () => await sender.SendAsync(GetMessage()),
                     Throws.InstanceOf<InvalidOperationException>());
@@ -257,9 +257,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 var client = new ServiceBusClient(
-                    TestEnvironment.FullyQualifiedNamespace,
+                    ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace,
                     GetTokenCredential());
-                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
+                await using var sender = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString).CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 var messageCt = 10;
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
@@ -307,7 +307,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEntity("FakeEntity");
+                var connectionString = ServiceBusTestEnvironment.Instance.BuildConnectionStringForEntity("FakeEntity");
                 await using var client = new ServiceBusClient(connectionString);
 
                 ServiceBusSender sender = client.CreateSender("FakeEntity");

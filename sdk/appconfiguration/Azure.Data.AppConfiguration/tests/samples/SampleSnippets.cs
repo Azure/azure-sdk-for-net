@@ -29,7 +29,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void CreateClientTokenCredential()
         {
-            var endpoint = Environment.GetEnvironmentVariable("APPCONFIGURATION_ENDPOINT_STRING");
+            var endpoint = AppConfigurationTestEnvironment.Instance.Endpoint;
 
             #region Snippet:CreateConfigurationClientTokenCredential
             //@@ string endpoint = "<endpoint>";

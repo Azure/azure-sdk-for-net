@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string connectionString = ServiceBusTestEnvironment.Instance.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
                 await using var client = GetClient();
 

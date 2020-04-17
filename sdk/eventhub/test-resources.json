@@ -74,27 +74,5 @@
           "scope": "[resourceGroup().id]"
         }
       }
-    ],
-    "outputs": {
-        "EVENT_HUBS_SUBSCRIPTION": {
-            "type": "string",
-            "value": "[parameters('subscriptionId')]"
-        },
-        "EVENT_HUBS_TENANT": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "EVENT_HUBS_CLIENT": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "EVENT_HUBS_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
-        "EVENT_HUBS_RESOURCEGROUP": {
-            "type": "string",
-            "value": "[resourceGroup().name]"
-        }
-    }
+    ]
 }

@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // use double the number of threads so we can make sure we test that we don't
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 enablePartitioning: false,
                 enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 int numMessages = 100;
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
@@ -287,7 +287,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             var invalidQueueName = "nonexistentqueuename";
             var exceptionReceivedHandlerCalled = false;
-            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
             ServiceBusProcessor processor = client.CreateProcessor(invalidQueueName);
 
             processor.ProcessMessageAsync += ProcessMessage;

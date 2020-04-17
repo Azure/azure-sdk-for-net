@@ -8,8 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
-using Azure.Data.AppConfiguration.Samples;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -17,7 +15,6 @@ namespace Azure.Data.AppConfiguration.Tests
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
         private string specialChars = "~`!@#$^&()_+=[]{}|;\"'<>./-";
-
 
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {

@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
@@ -13,17 +12,15 @@ namespace Azure.AspNetCore.DataProtection.Blobs.Tests
 {
     public class ConfigurationSecretsFunctionalTests
     {
-        private static readonly string TenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
-        private static readonly string ClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-        private static readonly string ClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
-        private static readonly string KeyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-
         [Test]
         [Category("Live")]
         public async Task SecretsAreLoadedFromKeyVault()
         {
-            var credential = new ClientSecretCredential(TenantId, ClientId, ClientSecret);
-            var vaultUri = new Uri(KeyVaultUrl);
+            var credential = new ClientSecretCredential(
+                BlobExtensionsTestEnvironment.Instance.TenantId,
+                BlobExtensionsTestEnvironment.Instance.ClientId,
+                BlobExtensionsTestEnvironment.Instance.ClientSecret);
+            var vaultUri = new Uri(BlobExtensionsTestEnvironment.Instance.KeyVaultUrl);
 
             var client = new SecretClient(vaultUri, credential);
             await client.SetSecretAsync("TestSecret1", "1");

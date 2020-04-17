@@ -18,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
 
                 var maxMessageSize = (256 * 1024) - 77;     // 77 bytes is the current serialization hit.
                 var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
             {
-                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage();
                 msg.Body = GetRandomBuffer(100);

@@ -2,44 +2,40 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Identity;
 
 namespace Azure.Core.Testing
 {
-    public class TestEnvironment
+    public partial class TestEnvironment
     {
         private readonly string _prefix;
-        private TestRecording _recording;
-        private bool _playback;
 
         public TestEnvironment(string serviceName)
         {
             _prefix = serviceName.ToUpperInvariant() + "_";
         }
 
+        partial void GetRecordedValue(string name, ref string value, ref bool isPlayback);
+        partial void SetRecordedValue(string name, string value);
+
         protected string GetRecordedOptionalVariable(string name)
         {
             var prefixedName = _prefix + name;
 
-            if (_playback)
+            string value = null;
+            bool isPlayback = false;
+
+            GetRecordedValue(name, ref value, ref isPlayback);
+            if (isPlayback)
             {
-                return _recording.GetVariable(name, null);
+                return value;
             }
 
-            var value = Environment.GetEnvironmentVariable(prefixedName) ??
+            value = Environment.GetEnvironmentVariable(prefixedName) ??
                    Environment.GetEnvironmentVariable(name);
 
-            _recording?.SetVariable(name, value);
+            SetRecordedValue(name, value);
 
             return value;
-        }
-
-        public void SetRecording(TestRecording recording, bool playback)
-        {
-            _recording = recording;
-            _playback = playback;
         }
 
         protected string GetRecordedVariable(string name)
@@ -79,29 +75,12 @@ namespace Azure.Core.Testing
             return value;
         }
 
-        public TokenCredential Credential => _playback ? (TokenCredential)new TestCredential() : new ClientSecretCredential(
-            GetVariable("TENANT_ID"),
-            GetVariable("CLIENT_ID"),
-            GetVariable("CLIENT_SECRET")
-            );
-
         public string SubscriptionId => GetRecordedVariable("SUBSCRIPTION_ID");
         public string ResourceGroup => GetRecordedVariable("RESOURCE_GROUP");
         public string Location => GetRecordedVariable("LOCATION");
         public string AzureEnvironment => GetRecordedVariable("ENVIRONMENT");
         public string TenantId => GetRecordedVariable("TENANT_ID");
-
-        private class TestCredential : TokenCredential
-        {
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
-            }
-        }
+        public string ClientId => GetVariable("CLIENT_ID");
+        public string ClientSecret => GetVariable("CLIENT_SECRET");
     }
 }

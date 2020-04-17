@@ -22,5 +22,4 @@ namespace Azure.Core.Testing
 
         public TEnvironment TestEnvironment { get; }
     }
-
 }
