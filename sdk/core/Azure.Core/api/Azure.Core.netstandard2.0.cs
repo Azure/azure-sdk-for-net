@@ -250,6 +250,14 @@ namespace Azure.Core
         PerCall = 0,
         PerRetry = 1,
     }
+    public abstract partial class ObjectSerializer
+    {
+        protected ObjectSerializer() { }
+        public abstract object Deserialize(System.IO.Stream stream, System.Type returnType);
+        public abstract System.Threading.Tasks.ValueTask<object> DeserializeAsync(System.IO.Stream stream, System.Type returnType);
+        public abstract void Serialize(System.IO.Stream stream, object? value, System.Type inputType);
+        public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType);
+    }
     public abstract partial class Request : System.IDisposable
     {
         protected Request() { }
