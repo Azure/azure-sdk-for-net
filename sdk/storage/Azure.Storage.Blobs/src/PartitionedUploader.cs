@@ -218,7 +218,7 @@ namespace Azure.Storage.Blobs
                 List<string> blockIds = new List<string>();
 
                 // Partition the stream into individual blocks and stage them
-                foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBlocksAsync(
                         content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
                     // Dispose the block after the loop iterates and return its memory to our ArrayPool
@@ -228,7 +228,7 @@ namespace Azure.Storage.Blobs
                         string blockId = GenerateBlockId(block.AbsolutePosition);
                         _client.StageBlock(
                             blockId,
-                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            block,
                             conditions: conditions,
                             progressHandler: progressHandler,
                             cancellationToken: cancellationToken);
@@ -291,7 +291,7 @@ namespace Azure.Storage.Blobs
                 List<Task> runningTasks = new List<Task>();
 
                 // Partition the stream into individual blocks
-                await foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                await foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBlocksAsync(
                     content,
                     blockSize,
                     async: true,
@@ -357,7 +357,7 @@ namespace Azure.Storage.Blobs
         }
 
         private async Task StageBlockAsync(
-            ChunkedStream block,
+            PooledMemoryStream block,
             string blockId,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
@@ -367,7 +367,7 @@ namespace Azure.Storage.Blobs
             {
                 await _client.StageBlockAsync(
                     blockId,
-                    new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                    block,
                     conditions: conditions,
                     progressHandler: progressHandler,
                     cancellationToken: cancellationToken)

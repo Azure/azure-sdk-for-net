@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -82,15 +83,33 @@ namespace Azure.Storage.Blobs.Specialized
     {
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="UploadAsync"/>. Supported value is now larger
+        /// than <see cref="int.MaxValue"/>; please use
+        /// <see cref="BlockBlobMaxUploadBlobBytesLong"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual int BlockBlobMaxUploadBlobBytes => int.MaxValue;
+
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync"/>.
         /// </summary>
-        public virtual int BlockBlobMaxUploadBlobBytes => Constants.Blob.Block.MaxUploadBytes;
+        public virtual long BlockBlobMaxUploadBlobBytesLong => Constants.Blob.Block.MaxUploadBytes;
+
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="StageBlockAsync"/>. Supported value is now larger
+        /// than <see cref="int.MaxValue"/>; please use
+        /// <see cref="BlockBlobMaxStageBlockBytesLong"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual int BlockBlobMaxStageBlockBytes => int.MaxValue;
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public virtual int BlockBlobMaxStageBlockBytes => Constants.Blob.Block.MaxStageBytes;
+        public virtual long BlockBlobMaxStageBlockBytesLong => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Gets the maximum number of blocks allowed in a block blob.
