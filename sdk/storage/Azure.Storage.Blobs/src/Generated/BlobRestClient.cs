@@ -3999,12 +3999,12 @@ namespace Azure.Storage.Blobs
                         {
                             _value.ObjectReplicationPolicyId = _header;
                         }
-                        _value.ObjectReplicationRuleStatus = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
                             {
-                                _value.ObjectReplicationRuleStatus[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
                             }
                         }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
@@ -4151,12 +4151,12 @@ namespace Azure.Storage.Blobs
                         {
                             _value.ObjectReplicationPolicyId = _header;
                         }
-                        _value.ObjectReplicationRuleStatus = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
                             {
-                                _value.ObjectReplicationRuleStatus[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
                             }
                         }
                         if (response.Headers.TryGetValue("Content-Length", out _header))
@@ -4318,8 +4318,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobPropertiesInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobPropertiesInternal>> GetPropertiesAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4466,8 +4466,8 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetPropertiesAsync_CreateResponse(
+            /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobPropertiesInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobPropertiesInternal> GetPropertiesAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -4477,7 +4477,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobProperties _value = new Azure.Storage.Blobs.Models.BlobProperties();
+                        Azure.Storage.Blobs.Models.BlobPropertiesInternal _value = new Azure.Storage.Blobs.Models.BlobPropertiesInternal();
 
                         // Get response headers
                         string _header;
@@ -4501,12 +4501,12 @@ namespace Azure.Storage.Blobs
                         {
                             _value.ObjectReplicationPolicyId = _header;
                         }
-                        _value.ObjectReplicationRuleStatus = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                        _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-or-", System.StringComparison.InvariantCulture))
                             {
-                                _value.ObjectReplicationRuleStatus[_headerPair.Name.Substring(8)] = _headerPair.Value;
+                                _value.ObjectReplicationRules[_headerPair.Name.Substring(8)] = _headerPair.Value;
                             }
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-type", out _header))
@@ -4655,7 +4655,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobProperties>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobPropertiesInternal>(response);
                     }
                     default:
                     {
@@ -8967,7 +8967,6 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
             /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
@@ -8983,7 +8982,6 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
-                string snapshot = default,
                 string versionId = default,
                 byte[] transactionalContentHash = default,
                 byte[] transactionalContentCrc64 = default,
@@ -9003,7 +9001,6 @@ namespace Azure.Storage.Blobs
                         resourceUri,
                         version,
                         timeout,
-                        snapshot,
                         versionId,
                         transactionalContentHash,
                         transactionalContentCrc64,
@@ -9044,7 +9041,6 @@ namespace Azure.Storage.Blobs
             /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
             /// <param name="version">Specifies the version of the operation to use for this request.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
-            /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="versionId">The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer.</param>
             /// <param name="transactionalContentHash">Specify the transactional md5 for the body, to be validated by the service.</param>
             /// <param name="transactionalContentCrc64">Specify the transactional crc64 for the body, to be validated by the service.</param>
@@ -9056,7 +9052,6 @@ namespace Azure.Storage.Blobs
                 System.Uri resourceUri,
                 string version,
                 int? timeout = default,
-                string snapshot = default,
                 string versionId = default,
                 byte[] transactionalContentHash = default,
                 byte[] transactionalContentCrc64 = default,
@@ -9082,7 +9077,6 @@ namespace Azure.Storage.Blobs
                 _request.Uri.Reset(resourceUri);
                 _request.Uri.AppendQuery("comp", "tags", escapeValue: false);
                 if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-                if (snapshot != null) { _request.Uri.AppendQuery("snapshot", snapshot); }
                 if (versionId != null) { _request.Uri.AppendQuery("versionid", versionId); }
 
                 // Add request headers
@@ -17683,9 +17677,9 @@ namespace Azure.Storage.Blobs.Models
         public string ObjectReplicationPolicyId { get; internal set; }
 
         /// <summary>
-        /// ObjectReplicationRuleStatus
+        /// ObjectReplicationRules
         /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> ObjectReplicationRuleStatus { get; internal set; }
+        public System.Collections.Generic.IDictionary<string, string> ObjectReplicationRules { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobItemInternal instance
@@ -17706,7 +17700,7 @@ namespace Azure.Storage.Blobs.Models
                 Properties = new Azure.Storage.Blobs.Models.BlobItemProperties();
                 Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                 BlobTags = new Azure.Storage.Blobs.Models.BlobTags();
-                ObjectReplicationRuleStatus = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+                ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -17769,13 +17763,13 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.ObjectReplicationPolicyId = _child.Value;
             }
-            _value.ObjectReplicationRuleStatus = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            _child = element.Element(System.Xml.Linq.XName.Get("ObjectReplicationRuleStatus", ""));
+            _value.ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            _child = element.Element(System.Xml.Linq.XName.Get("ObjectReplicationRules", ""));
             if (_child != null)
             {
                 foreach (System.Xml.Linq.XElement _pair in _child.Elements())
                 {
-                    _value.ObjectReplicationRuleStatus[_pair.Name.LocalName] = _pair.Value;
+                    _value.ObjectReplicationRules[_pair.Name.LocalName] = _pair.Value;
                 }
             }
             CustomizeFromXml(element, _value);
@@ -17803,7 +17797,7 @@ namespace Azure.Storage.Blobs.Models
             System.Collections.Generic.IDictionary<string, string> metadata = default,
             Azure.Storage.Blobs.Models.BlobTags blobTags = default,
             string objectReplicationPolicyId = default,
-            System.Collections.Generic.IDictionary<string, string> objectReplicationRuleStatus = default)
+            System.Collections.Generic.IDictionary<string, string> objectReplicationRules = default)
         {
             return new BlobItemInternal()
             {
@@ -17816,7 +17810,7 @@ namespace Azure.Storage.Blobs.Models
                 Metadata = metadata,
                 BlobTags = blobTags,
                 ObjectReplicationPolicyId = objectReplicationPolicyId,
-                ObjectReplicationRuleStatus = objectReplicationRuleStatus,
+                ObjectReplicationRules = objectReplicationRules,
             };
         }
     }
@@ -18515,13 +18509,13 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobPrefix
 
-#region class BlobProperties
+#region class BlobPropertiesInternal
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// BlobProperties
+    /// BlobPropertiesInternal
     /// </summary>
-    public partial class BlobProperties
+    public partial class BlobPropertiesInternal
     {
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -18546,7 +18540,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional. Only valid when Object Replication is enabled for the storage container and on the source blob of the replication. When retrieving this header, it will return the header with the policy id and rule id (e.g. x-ms-or-policyid_ruleid), and the value will be the status of the replication (e.g. complete, failed).
         /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> ObjectReplicationRuleStatus { get; internal set; }
+        public System.Collections.Generic.IDictionary<string, string> ObjectReplicationRules { get; internal set; }
 
         /// <summary>
         /// The blob's type.
@@ -18726,12 +18720,12 @@ namespace Azure.Storage.Blobs.Models
         public bool IsSealed { get; internal set; }
 
         /// <summary>
-        /// Creates a new BlobProperties instance
+        /// Creates a new BlobPropertiesInternal instance
         /// </summary>
-        public BlobProperties()
+        public BlobPropertiesInternal()
         {
             Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            ObjectReplicationRuleStatus = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 
@@ -18741,9 +18735,9 @@ namespace Azure.Storage.Blobs.Models
     public static partial class BlobsModelFactory
     {
         /// <summary>
-        /// Creates a new BlobProperties instance for mocking.
+        /// Creates a new BlobPropertiesInternal instance for mocking.
         /// </summary>
-        public static BlobProperties BlobProperties(
+        public static BlobPropertiesInternal BlobPropertiesInternal(
             System.DateTimeOffset lastModified,
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             long contentLength,
@@ -18775,7 +18769,7 @@ namespace Azure.Storage.Blobs.Models
             System.DateTimeOffset accessTierChangedOn,
             Azure.Storage.Blobs.Models.BlobType blobType,
             string versionId,
-            System.Collections.Generic.IDictionary<string, string> objectReplicationRuleStatus,
+            System.Collections.Generic.IDictionary<string, string> objectReplicationRules,
             bool isCurrentVersion,
             string objectReplicationPolicyId,
             long tagCount,
@@ -18785,7 +18779,7 @@ namespace Azure.Storage.Blobs.Models
             bool isSealed,
             byte[] contentHash)
         {
-            return new BlobProperties()
+            return new BlobPropertiesInternal()
             {
                 LastModified = lastModified,
                 LeaseStatus = leaseStatus,
@@ -18818,7 +18812,7 @@ namespace Azure.Storage.Blobs.Models
                 AccessTierChangedOn = accessTierChangedOn,
                 BlobType = blobType,
                 VersionId = versionId,
-                ObjectReplicationRuleStatus = objectReplicationRuleStatus,
+                ObjectReplicationRules = objectReplicationRules,
                 IsCurrentVersion = isCurrentVersion,
                 ObjectReplicationPolicyId = objectReplicationPolicyId,
                 TagCount = tagCount,
@@ -18831,7 +18825,7 @@ namespace Azure.Storage.Blobs.Models
         }
     }
 }
-#endregion class BlobProperties
+#endregion class BlobPropertiesInternal
 
 #region class BlobRetentionPolicy
 namespace Azure.Storage.Blobs.Models
@@ -21155,7 +21149,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional. Only valid when Object Replication is enabled for the storage container and on the source blob of the replication. When retrieving this header, it will return the header with the policy id and rule id (e.g. x-ms-or-policyid_ruleid), and the value will be the status of the replication (e.g. complete, failed).
         /// </summary>
-        public System.Collections.Generic.IDictionary<string, string> ObjectReplicationRuleStatus { get; internal set; }
+        public System.Collections.Generic.IDictionary<string, string> ObjectReplicationRules { get; internal set; }
 
         /// <summary>
         /// The number of bytes present in the response body.
@@ -21324,7 +21318,7 @@ namespace Azure.Storage.Blobs.Models
         public FlattenedDownloadProperties()
         {
             Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-            ObjectReplicationRuleStatus = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
+            ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }

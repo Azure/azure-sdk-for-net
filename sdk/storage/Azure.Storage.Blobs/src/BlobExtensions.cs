@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Linq;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
@@ -91,6 +92,86 @@ namespace Azure.Storage.Blobs
                 encodedTags.Add($"{WebUtility.UrlEncode(tag.Key)}={WebUtility.UrlEncode(tag.Value)}");
             }
             return string.Join("&", encodedTags);
+        }
+
+        /// <summary>
+        /// Creates a new BlobProperties object backed by BlobPropertiesInternal
+        /// </summary>
+        /// <param name="properties">The BlobPropertiesInternal returned with the request</param>
+        internal static BlobProperties ToBlobProperties(BlobPropertiesInternal properties) =>
+            new BlobProperties()
+            {
+                _properties = properties,
+                LastModified = properties.LastModified,
+                CreatedOn = properties.CreatedOn,
+                Metadata = properties.Metadata,
+                ObjectReplicationDestinationPolicy = properties.ObjectReplicationPolicyId,
+                ObjectReplicationSourceProperties = BlobExtensions.ParseObjectReplicationIds(properties.ObjectReplicationRules),
+                BlobType = properties.BlobType,
+                CopyCompletedOn = properties.CopyCompletedOn,
+                CopyStatusDescription = properties.CopyStatusDescription,
+                CopyId = properties.CopyId,
+                CopyProgress = properties.CopyProgress,
+                CopySource = properties.CopySource,
+                CopyStatus = properties.CopyStatus,
+                IsIncrementalCopy = properties.IsIncrementalCopy,
+                DestinationSnapshot = properties.DestinationSnapshot,
+                LeaseDuration = properties.LeaseDuration,
+                LeaseState = properties.LeaseState,
+                LeaseStatus = properties.LeaseStatus,
+                ContentLength = properties.ContentLength,
+                ContentType = properties.ContentType,
+                ETag = properties.ETag,
+                ContentHash = properties.ContentHash,
+                ContentEncoding = properties.ContentEncoding,
+                ContentDisposition = properties.ContentDisposition,
+                ContentLanguage = properties.ContentLanguage,
+                CacheControl = properties.CacheControl,
+                BlobSequenceNumber = properties.BlobSequenceNumber,
+                AcceptRanges = properties.AcceptRanges,
+                BlobCommittedBlockCount = properties.BlobCommittedBlockCount,
+                IsServerEncrypted = properties.IsServerEncrypted,
+                EncryptionKeySha256 = properties.EncryptionKeySha256,
+                EncryptionScope = properties.EncryptionScope,
+                AccessTier = properties.AccessTier,
+                AccessTierInferred = properties.AccessTierInferred,
+                ArchiveStatus = properties.ArchiveStatus,
+                AccessTierChangedOn = properties.AccessTierChangedOn,
+                VersionId = properties.VersionId,
+                IsCurrentVersion = properties.IsCurrentVersion,
+                TagCount = properties.TagCount,
+                ExpiresOn = properties.ExpiresOn,
+                IsSealed = properties.IsSealed,
+            };
+
+        /// <summary>
+        /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID.
+        /// </summary>
+        /// <returns></returns>
+        internal static IDictionary<string, IDictionary<string, string>> ParseObjectReplicationIds(IDictionary<string,string> OrIds)
+        {
+            if (OrIds.Count == 0 ||
+                (OrIds.Count > 0 &&
+                (OrIds.First().Key == "policy-id")))
+            {
+                return default;
+            }
+            IDictionary<string, IDictionary<string, string>> OrProperties = new Dictionary<string, IDictionary<string, string>>();
+            foreach (KeyValuePair<string, string> status in OrIds)
+            {
+                string[] ParsedIds = status.Key.Split('_');
+                if (OrProperties.ContainsKey(ParsedIds[0]))
+                {
+                    OrProperties[ParsedIds[0]].Add(ParsedIds[1], status.Value);
+                }
+                else
+                {
+                    IDictionary<string, string> NewRuleStatus = new Dictionary<string, string>();
+                    NewRuleStatus.Add(ParsedIds[1], status.Value);
+                    OrProperties.Add(ParsedIds[0], NewRuleStatus);
+                }
+            }
+            return OrProperties;
         }
     }
 }

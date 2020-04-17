@@ -452,8 +452,8 @@ directive:
   where: $.definitions
   transform: >
     if (!$.BlobItemProperties) {
-        $.BlobItemProperties = $.BlobProperties;
-        delete $.BlobProperties;
+        $.BlobItemProperties = $.BlobPropertiesInternal;
+        delete $.BlobPropertiesInternal;
         $.BlobItemProperties.properties.ETag = $.BlobItemProperties.properties.Etag;
         $.BlobItemProperties.properties.ETag.xml = { "name":  "Etag" };
         delete $.BlobItemProperties.properties.Etag;
@@ -507,7 +507,7 @@ directive:
         "x-az-create-exception": true,
         "x-az-public": false,
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } } };
-    $.head.responses["200"]["x-az-response-name"] = "BlobProperties";
+    $.head.responses["200"]["x-az-response-name"] = "BlobPropertiesInternal";
     $.head.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.head.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";
@@ -1446,6 +1446,15 @@ directive:
   where: $.parameters
   transform: >
     $.BlobExpiryOptions["x-az-public"] = false;
+```
+
+### Make BlobPropertiesInternal internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.BlobPropertiesInternal["x-az-public"] = false;
 ```
 
 ### Treat the API version as a parameter instead of a constant
