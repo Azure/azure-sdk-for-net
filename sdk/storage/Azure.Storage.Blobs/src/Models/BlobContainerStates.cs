@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+
 using System;
-using Azure.Storage.Blobs.Models;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -12,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
     /// operation.
     /// </summary>
     [Flags]
-    public enum BlobContainerTraits
+    public enum BlobContainerStates
     {
         /// <summary>
         /// Default flag specifying that no flags are set in <see cref="BlobContainerTraits"/>.
@@ -20,9 +22,8 @@ namespace Azure.Storage.Blobs.Models
         None = 0,
 
         /// <summary>
-        /// Flag specifying that the container's metadata should
-        /// be included.
+        /// Flag specifying that deleted containers should be included.
         /// </summary>
-        Metadata = 1,
+        Deleted = 1,
     }
 }

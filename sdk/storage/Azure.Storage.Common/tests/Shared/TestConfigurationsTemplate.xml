@@ -6,6 +6,7 @@
   <TargetOAuthTenant>OAuthTenant</TargetOAuthTenant>
   <TargetHierarchicalNamespaceTenant>NamespaceTenant</TargetHierarchicalNamespaceTenant>
   <TargetManagedDiskTenant>ManagedDiskTenant</TargetManagedDiskTenant>
+    <TargetBlobAndContainerSoftDeleteTenant>SoftDeleteTenant</TargetBlobAndContainerSoftDeleteTenant>
 
   <TenantConfigurations>
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
@@ -123,7 +124,7 @@
       <FileServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-    
+
     <!-- An account with Blob Soft Delete, Container Soft Delete, and Share Soft Delete Enabled -->
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
     <TenantConfiguration>
