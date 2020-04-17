@@ -2965,6 +2965,47 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_Version()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(BuildMetadata());
+            BlobBaseClient versionBlob = blob.WithVersion(metadataResponse.Value.VersionId);
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await versionBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getVersionTagsResponse = await versionBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getVersionTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_VersionError()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            string fakeVersion = "2020-04-17T21:55:48.6692074Z";
+            BlobBaseClient versionBlob = blob.WithVersion(fakeVersion);
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                versionBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                versionBlob.GetTagsAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+            ;
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetTagsAsync_Error()
         {
             // Arrange
