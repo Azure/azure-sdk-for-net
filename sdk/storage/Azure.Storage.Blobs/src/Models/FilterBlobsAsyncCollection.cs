@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<FilterBlobSegment> response = await _client.FilterBlobsInternal(
+            Response<FilterBlobSegment> response = await _client.FindBlobsByTagsInternal(
                 marker: continuationToken,
                 expression: _expression,
                 pageSizeHint: pageSizeHint,

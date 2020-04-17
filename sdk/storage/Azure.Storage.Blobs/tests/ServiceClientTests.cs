@@ -510,7 +510,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task FilterBlobsAsync()
+        public async Task FindBlobsByTagAsync()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -532,11 +532,11 @@ namespace Azure.Storage.Blobs.Test
             string expression = $"\"{tagKey}\"='{tagValue}'";
 
             // It takes a few seconds for Filter Blobs to pick up new changes
-            await Task.Delay(1000);
+            await Task.Delay(2000);
 
             // Act
             List<FilterBlobItem> blobs = new List<FilterBlobItem>();
-            await foreach (Page<FilterBlobItem> page in service.FilterBlobsAsync(expression).AsPages())
+            await foreach (Page<FilterBlobItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
             {
                 blobs.AddRange(page.Values);
             }
@@ -544,6 +544,24 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             FilterBlobItem filterBlob = blobs.Where(r => r.Name == blobName).FirstOrDefault();
             Assert.AreEqual(tagValue, filterBlob.TagValue);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task FindBlobsByTagAsync_Error()
+        {
+            // Arrange
+            // Arrange
+            BlobServiceClient service = InstrumentClient(
+                new BlobServiceClient(
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.FindBlobsByTagsAsync("\"key\" = 'value'").AsPages().FirstAsync(),
+                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+
         }
     }
 }
