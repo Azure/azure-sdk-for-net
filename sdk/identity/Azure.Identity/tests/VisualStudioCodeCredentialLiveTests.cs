@@ -216,7 +216,7 @@ namespace Azure.Identity.Tests
             return retriever.RefreshToken;
         }
 
-        private string GetTenantId() => TestEnvironment.OptionalTenantId;
+        private string GetTenantId() => TestEnvironment.TestTenantId;
 
         private sealed class RefreshTokenRetriever
         {

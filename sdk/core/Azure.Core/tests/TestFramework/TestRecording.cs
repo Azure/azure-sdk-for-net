@@ -211,7 +211,8 @@ namespace Azure.Core.Testing
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
-                    return _session.Variables[variableName];
+                    _session.Variables.TryGetValue(variableName, out string value);
+                    return value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
