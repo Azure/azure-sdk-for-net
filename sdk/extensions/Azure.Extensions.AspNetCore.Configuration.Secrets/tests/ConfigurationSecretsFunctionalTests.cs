@@ -8,7 +8,7 @@ using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
-namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
+namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 {
     public class ConfigurationSecretsFunctionalTests
     {
@@ -17,10 +17,10 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
         public async Task SecretsAreLoadedFromKeyVault()
         {
             var credential = new ClientSecretCredential(
-                BlobExtensionsTestEnvironment.Instance.TenantId,
-                BlobExtensionsTestEnvironment.Instance.ClientId,
-                BlobExtensionsTestEnvironment.Instance.ClientSecret);
-            var vaultUri = new Uri(BlobExtensionsTestEnvironment.Instance.KeyVaultUrl);
+                ConfigurationTestEnvironment.Instance.TenantId,
+                ConfigurationTestEnvironment.Instance.ClientId,
+                ConfigurationTestEnvironment.Instance.ClientSecret);
+            var vaultUri = new Uri(ConfigurationTestEnvironment.Instance.KeyVaultUrl);
 
             var client = new SecretClient(vaultUri, credential);
             await client.SetSecretAsync("TestSecret1", "1");

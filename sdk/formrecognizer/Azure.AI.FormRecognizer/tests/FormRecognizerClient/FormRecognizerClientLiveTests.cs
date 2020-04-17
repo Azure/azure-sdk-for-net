@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
                 operation = await client.StartRecognizeContentAsync(stream);
             }
             else
@@ -135,12 +135,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.ReceiptPath, FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.JpgReceiptPath, FileMode.Open);
                 operation = await client.StartRecognizeReceiptsAsync(stream);
             }
             else
             {
-                var uri = new Uri(TestEnvironment.ReceiptUri);
+                var uri = new Uri(FormRecognizerTestEnvironment.JpgReceiptUri);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 

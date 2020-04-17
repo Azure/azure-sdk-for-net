@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
         public static TextAnalyticsTestEnvironment Instance { get; } = new TextAnalyticsTestEnvironment();
 
-        public string Endpoint => GetVariable("TEXT_ANALYTICS_ENDPOINT");
-        public string ApiKey => GetVariable("TEXT_ANALYTICS_API_KEY");
+        public string Endpoint => GetRecordedVariable("TEXT_ANALYTICS_ENDPOINT");
+        public string ApiKey => GetRecordedVariable("TEXT_ANALYTICS_API_KEY");
     }
 }

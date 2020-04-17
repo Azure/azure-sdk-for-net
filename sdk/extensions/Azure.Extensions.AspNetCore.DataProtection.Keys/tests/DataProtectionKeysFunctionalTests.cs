@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure.Extensions.AspNetCore.DataProtection.Keys.Tests;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys;
 using Microsoft.AspNetCore.DataProtection;
@@ -17,17 +18,15 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 {
     public class DataProtectionKeysFunctionalTests
     {
-        private static readonly string TenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
-        private static readonly string ClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-        private static readonly string ClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
-        private static readonly string KeyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-
         [Test]
         [Category("Live")]
         public async Task ProtectsKeysWithKeyVaultKey()
         {
-            var credential = new ClientSecretCredential(TenantId, ClientId, ClientSecret);
-            var client = new KeyClient(new Uri(KeyVaultUrl), credential);
+            var credential = new ClientSecretCredential(
+                DataProtectionTestEnvironment.Instance.TenantId,
+                DataProtectionTestEnvironment.Instance.ClientId,
+                DataProtectionTestEnvironment.Instance.ClientSecret);
+            var client = new KeyClient(new Uri(DataProtectionTestEnvironment.Instance.KeyVaultUrl), credential);
             var key = await client.CreateKeyAsync("TestEncryptionKey", KeyType.Rsa);
 
             var serviceCollection = new ServiceCollection();

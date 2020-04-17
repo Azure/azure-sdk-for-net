@@ -7,6 +7,7 @@ namespace Azure.Core.Testing
     {
         protected RecordedTestBase(bool isAsync) : base(isAsync)
         {
+            TestEnvironment = new TEnvironment();
         }
 
         protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
