@@ -80,7 +80,7 @@ namespace Azure.Core.Testing
         public string Location => GetRecordedVariable("LOCATION");
         public string AzureEnvironment => GetRecordedVariable("ENVIRONMENT");
         public string TenantId => GetRecordedVariable("TENANT_ID");
-        public string ClientId => GetVariable("CLIENT_ID");
+        public string ClientId => GetRecordedVariable("CLIENT_ID");
         public string ClientSecret => GetVariable("CLIENT_SECRET");
     }
 }
