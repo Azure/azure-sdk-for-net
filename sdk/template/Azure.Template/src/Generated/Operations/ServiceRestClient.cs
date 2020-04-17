@@ -35,7 +35,7 @@ namespace Azure.Template
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateOperationRequest(Model body)
+        internal HttpMessage CreateOperationRequest(ServiceModel body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -54,9 +54,9 @@ namespace Azure.Template
             return message;
         }
 
-        /// <param name="body"> The Model to use. </param>
+        /// <param name="body"> The ServiceModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Model>> OperationAsync(Model body = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<ServiceModel>> OperationAsync(ServiceModel body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
@@ -68,7 +68,7 @@ namespace Azure.Template
                 {
                     case 200:
                         {
-                            Model value = default;
+                            ServiceModel value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -76,7 +76,7 @@ namespace Azure.Template
                             }
                             else
                             {
-                                value = Model.DeserializeModel(document.RootElement);
+                                value = ServiceModel.DeserializeServiceModel(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -91,9 +91,9 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="body"> The Model to use. </param>
+        /// <param name="body"> The ServiceModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Model> Operation(Model body = null, CancellationToken cancellationToken = default)
+        public Response<ServiceModel> Operation(ServiceModel body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
@@ -105,7 +105,7 @@ namespace Azure.Template
                 {
                     case 200:
                         {
-                            Model value = default;
+                            ServiceModel value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -113,7 +113,7 @@ namespace Azure.Template
                             }
                             else
                             {
-                                value = Model.DeserializeModel(document.RootElement);
+                                value = ServiceModel.DeserializeServiceModel(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }

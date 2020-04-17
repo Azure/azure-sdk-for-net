@@ -17,5 +17,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public bool IncludeTextContent { get; set; } = false;
 
+        /// <summary>
+        /// </summary>
+        public ContentType? ContentType { get; set; } = null;
     }
 }

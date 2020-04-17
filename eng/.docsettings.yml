@@ -136,9 +136,9 @@ known_content_issues:
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
   - ['sdk/extensions/README.md','azure-sdk-tools/issues/42']
-  - ['sdk/extensions/Azure.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
-  - ['sdk/extensions/Azure.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
-  - ['sdk/extensions/Azure.Extensions.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
 
