@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormTrainingClientLiveTests(bool isAsync) : base(isAsync)
         {
-            _containerUri = new Uri(Environment.GetEnvironmentVariable(TestEnvironment.BlobContainerSASUrlEnvironmentVariableName));
+            _containerUri = new Uri(Environment.GetEnvironmentVariable(TestEnvironment.BlobContainerSasUrlEnvironmentVariableName));
         }
 
         /// <summary>
@@ -144,7 +144,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(trainedModel.LastModified, resultModel.LastModified);
             Assert.AreEqual(CustomFormModelStatus.Ready, resultModel.Status);
             Assert.AreEqual(trainedModel.Status, resultModel.Status);
-            Assert.AreEqual(trainedModel.Status, resultModel.Status);
             Assert.AreEqual(trainedModel.Errors.Count, resultModel.Errors.Count);
 
             for (int i=0; i< resultModel.TrainingDocuments.Count; i++)
@@ -155,7 +154,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(tm.DocumentName, rm.DocumentName);
                 Assert.AreEqual(tm.PageCount, rm.PageCount);
                 Assert.AreEqual(TrainingStatus.Succeeded, rm.Status);
-                Assert.AreEqual(tm.Status, rm.Status);
                 Assert.AreEqual(tm.Status, rm.Status);
                 Assert.AreEqual(tm.Errors.Count, rm.Errors.Count);
             }
