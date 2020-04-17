@@ -1670,8 +1670,8 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SynonymMap
     {
-        public SynonymMap(string name, System.Collections.Generic.IEnumerable<string> synonyms, string format = "soln") { }
-        public SynonymMap(string name, string synonym, string format = "soln") { }
+        public SynonymMap(string name, System.IO.TextReader reader) { }
+        public SynonymMap(string name, string synonyms) { }
         public Azure.Search.Documents.Models.EncryptionKey EncryptionKey { get { throw null; } set { } }
         public string ETag { get { throw null; } set { } }
         public string Format { get { throw null; } }
