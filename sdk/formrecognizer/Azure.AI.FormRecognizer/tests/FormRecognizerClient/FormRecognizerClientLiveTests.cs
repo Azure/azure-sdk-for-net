@@ -123,6 +123,19 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and perform operations.
+        /// </summary>
+        [Test]
+        public void StartRecognizeContentFromUriThrowsForNonExistingContent()
+        {
+            var client = CreateInstrumentedClient();
+            var invalidUri = new Uri("https://idont.ex.ist");
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
+        }
+
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis of receipts.
         /// </summary>
         [Test]
@@ -200,6 +213,19 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
             Assert.IsNull(receipt.Tip);
             Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+        }
+
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and perform operations.
+        /// </summary>
+        [Test]
+        public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
+        {
+            var client = CreateInstrumentedClient();
+            var invalidUri = new Uri("https://idont.ex.ist");
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
         }
 
         [Test]
