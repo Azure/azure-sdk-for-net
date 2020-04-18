@@ -25,26 +25,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
         public static EventHubsTestEnvironment Instance { get; } = new EventHubsTestEnvironment();
 
-        /// <summary>The environment variable value for the Event Hubs subscription name, lazily evaluated.</summary>
-        private string EventHubsSubscriptionInstance => GetVariable("EVENT_HUBS_SUBSCRIPTION");
+        /// <summary>The environment variable value for the namespace connection string.</summary>
+        private string EventHubsNamespaceConnectionString => GetOptionalVariable("EVENT_HUBS_NAMESPACE_CONNECTION_STRING");
 
-        /// <summary>The environment variable value for the Event Hubs resource group name, lazily evaluated.</summary>
-        private string EventHubsResourceGroupInstance => ResourceGroup;
-
-        /// <summary>The environment variable value for the Azure Active Directory tenant that holds the service principal, lazily evaluated.</summary>
-        private string EventHubsTenantInstance => TenantId;
-
-        /// <summary>The environment variable value for the Azure Active Directory client identifier of the service principal, lazily evaluated.</summary>
-        private string EventHubsClientInstance => ClientId;
-
-        /// <summary>The environment variable value for the Azure Active Directory client secret of the service principal, lazily evaluated.</summary>
-        private string EventHubsSecretInstance => ClientSecret;
-
-        /// <summary>The environment variable value for the namespace connection string, lazily evaluated.</summary>
-        private string EventHubsNamespaceConnectionString => GetVariable("EVENT_HUBS_NAMESPACE_CONNECTION_STRING");
-
-        /// <summary>The environment variable value for the event hub name, lazily evaluated.</summary>
-        private string EventHubsEventHubName => GetVariable("EVENT_HUBS_OVERRIDE_EVENT_HUB_NAME");
+        /// <summary>The environment variable value for the event hub name.</summary>
+        private string EventHubsEventHubName => GetOptionalVariable("EVENT_HUBS_OVERRIDE_EVENT_HUB_NAME");
 
         /// <summary>The active Event Hubs namespace for this test run, lazily created.</summary>
         private readonly Lazy<NamespaceProperties> ActiveEventHubsNamespace;
