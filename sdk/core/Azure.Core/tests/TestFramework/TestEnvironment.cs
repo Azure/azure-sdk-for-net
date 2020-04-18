@@ -5,6 +5,10 @@ using System;
 
 namespace Azure.Core.Testing
 {
+    /// <summary>
+    ///   Represents the ambient environment in which the test suite is
+    ///   being run.
+    /// </summary>
     public partial class TestEnvironment
     {
         private readonly string _prefix;
@@ -14,9 +18,44 @@ namespace Azure.Core.Testing
             _prefix = serviceName.ToUpperInvariant() + "_";
         }
 
-        partial void GetRecordedValue(string name, ref string value, ref bool isPlayback);
-        partial void SetRecordedValue(string name, string value);
+        /// <summary>
+        ///   The name of the Azure subscription containing the resource group to be used for Live tests. Recorded.
+        /// </summary>
+        public string SubscriptionId => GetRecordedVariable("SUBSCRIPTION_ID");
 
+        /// <summary>
+        ///   The name of the Azure resource group to be used for Live tests. Recorded.
+        /// </summary>
+        public string ResourceGroup => GetRecordedVariable("RESOURCE_GROUP");
+
+        /// <summary>
+        ///   The location of the Azure resource group to be used for Live tests (e.g. westus2). Recorded.
+        /// </summary>
+        public string Location => GetRecordedVariable("LOCATION");
+
+        /// <summary>
+        ///   The environment of the Azure resource group to be used for Live tests (e.g. AzureCloud). Recorded.
+        /// </summary>
+        public string AzureEnvironment => GetRecordedVariable("ENVIRONMENT");
+
+        /// <summary>
+        ///   The name of the Azure Active Directory tenant that holds the service principal to use during Live tests. Recorded.
+        /// </summary>
+        public string TenantId => GetRecordedVariable("TENANT_ID");
+
+        /// <summary>
+        ///   The client id of the Azure Active Directory service principal to use during Live tests. Recorded.
+        /// </summary>
+        public string ClientId => GetRecordedVariable("CLIENT_ID");
+
+        /// <summary>
+        ///   The client secret of the Azure Active Directory service principal to use during Live tests. Not recorded.
+        /// </summary>
+        public string ClientSecret => GetVariable("CLIENT_SECRET");
+
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// </summary>
         protected string GetRecordedOptionalVariable(string name)
         {
             var prefixedName = _prefix + name;
@@ -38,19 +77,21 @@ namespace Azure.Core.Testing
             return value;
         }
 
+        /// <summary>
+        /// Returns and records an environment variable value when running live or recorded value during playback.
+        /// Throws when variable is not found.
+        /// </summary>
         protected string GetRecordedVariable(string name)
         {
             var value = GetRecordedOptionalVariable(name);
-            if (value == null)
-            {
-                var prefixedName = _prefix + name;
-                throw new InvalidOperationException(
-                    $"Unable to find environment variable {prefixedName} or {name} required by test." + Environment.NewLine +
-                    "Make sure the test environment was initialized using eng/common/TestResources/New-TestResources.ps1 script.");
-            }
-
+            EnsureValue(name, value);
             return value;
         }
+
+        /// <summary>
+        /// Returns an environment variable value.
+        /// Throws when variable is not found.
+        /// </summary>
         protected string GetOptionalVariable(string name)
         {
             var prefixedName = _prefix + name;
@@ -61,9 +102,19 @@ namespace Azure.Core.Testing
             return value;
         }
 
+        /// <summary>
+        /// Returns an environment variable value.
+        /// Throws when variable is not found.
+        /// </summary>
         protected string GetVariable(string name)
         {
             var value = GetOptionalVariable(name);
+            EnsureValue(name, value);
+            return value;
+        }
+
+        private void EnsureValue(string name, string value)
+        {
             if (value == null)
             {
                 var prefixedName = _prefix + name;
@@ -71,16 +122,9 @@ namespace Azure.Core.Testing
                     $"Unable to find environment variable {prefixedName} or {name} required by test." + Environment.NewLine +
                     "Make sure the test environment was initialized using eng/common/TestResources/New-TestResources.ps1 script.");
             }
-
-            return value;
         }
 
-        public string SubscriptionId => GetRecordedVariable("SUBSCRIPTION_ID");
-        public string ResourceGroup => GetRecordedVariable("RESOURCE_GROUP");
-        public string Location => GetRecordedVariable("LOCATION");
-        public string AzureEnvironment => GetRecordedVariable("ENVIRONMENT");
-        public string TenantId => GetRecordedVariable("TENANT_ID");
-        public string ClientId => GetRecordedVariable("CLIENT_ID");
-        public string ClientSecret => GetVariable("CLIENT_SECRET");
+        partial void GetRecordedValue(string name, ref string value, ref bool isPlayback);
+        partial void SetRecordedValue(string name, string value);
     }
 }

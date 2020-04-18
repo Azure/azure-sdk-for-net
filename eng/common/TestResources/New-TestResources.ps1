@@ -286,19 +286,19 @@ foreach ($templateFile in $templateFiles) {
         Log "Persist the following environment variables based on your detected shell ($shell):`n"
     }
 
-    $serviceDirectoryPrefix = $ServiceDirectory.ToUpperInvariant()
+    $serviceDirectoryPrefix = $serviceName.ToUpperInvariant() + "_"
 
     $context = Get-AzContext;
 
     # Add default values
     $deploymentOutputs = @{
-        "$($serviceDirectoryPrefix)_CLIENT_ID" = $TestApplicationId;
-        "$($serviceDirectoryPrefix)_CLIENT_SECRET" = $TestApplicationSecret;
-        "$($serviceDirectoryPrefix)_TENANT_ID" = $context.Tenant.Id;
-        "$($serviceDirectoryPrefix)_SUBSCRIPTION_ID" =  $context.Subscription.Id;
-        "$($serviceDirectoryPrefix)_RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
-        "$($serviceDirectoryPrefix)_LOCATION" = $resourceGroup.Location;
-        "$($serviceDirectoryPrefix)_ENVIRONMENT" = $context.Environment;
+        "$($serviceDirectoryPrefix)CLIENT_ID" = $TestApplicationId;
+        "$($serviceDirectoryPrefix)CLIENT_SECRET" = $TestApplicationSecret;
+        "$($serviceDirectoryPrefix)TENANT_ID" = $context.Tenant.Id;
+        "$($serviceDirectoryPrefix)SUBSCRIPTION_ID" =  $context.Subscription.Id;
+        "$($serviceDirectoryPrefix)RESOURCE_GROUP" = $resourceGroup.ResourceGroupName;
+        "$($serviceDirectoryPrefix)LOCATION" = $resourceGroup.Location;
+        "$($serviceDirectoryPrefix)ENVIRONMENT" = $context.Environment;
     }
 
     foreach ($key in $deployment.Outputs.Keys) {
