@@ -21,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public async Task GetKeysAsync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = KeyVaultTestEnvironment.Instance.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             // Instantiate a key client that will be used to call the service. Notice that the client is using default Azure
             // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',

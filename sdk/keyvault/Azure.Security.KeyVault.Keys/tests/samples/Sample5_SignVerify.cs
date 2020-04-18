@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 #endif
 
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = KeyVaultTestEnvironment.Instance.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
 #region Snippet:KeysSample5KeyClient
             var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());

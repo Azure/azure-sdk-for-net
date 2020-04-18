@@ -15,7 +15,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public async Task ReadRevisionHistory()
         {
-            var connectionString = AppConfigurationTestEnvironment.Instance.ConnectionString;
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample4_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);

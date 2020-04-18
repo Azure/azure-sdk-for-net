@@ -23,7 +23,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = KeyVaultTestEnvironment.Instance.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateCertificateClient
             // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,

@@ -16,7 +16,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public async Task HelloWorldExtended()
         {
-            var connectionString = AppConfigurationTestEnvironment.Instance.ConnectionString;
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample2_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);

@@ -28,29 +28,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         /// </summary>
         public static ServiceBusTestEnvironment Instance { get; } = new ServiceBusTestEnvironment();
 
-        /// <summary>The environment variable value for the Service Bus subscription name, lazily evaluated.</summary>
-        private string ServiceBusAzureSubscriptionInstance => GetVariable("SERVICE_BUS_SUBSCRIPTION");
-
-        /// <summary>The environment variable value for the Service Bus resource group name, lazily evaluated.</summary>
-        private string ServiceBusResourceGroupInstance => ResourceGroup;
-
-        /// <summary>The environment variable value for the Azure Active Directory tenant that holds the service principal, lazily evaluated.</summary>
-        private string ServiceBusTenantInstance => TenantId;
-
-        /// <summary>The environment variable value for the Azure Active Directory client identifier of the service principal, lazily evaluated.</summary>
-        private string ServiceBusClientInstance => ClientId;
-
-        /// <summary>The environment variable value for the Azure Active Directory client secret of the service principal, lazily evaluated.</summary>
-        private string ServiceBusSecretInstance => ClientSecret;
-
         /// <summary>The environment variable value for the override connection string to indicate an existing namespace should be used, lazily evaluated.</summary>
         private string ServiceBusOverrideConnectionString => GetVariable("SERVICE_BUS_NAMESPACE_CONNECTION_STRING");
-
-        /// <summary>The environment variable value for the override name of an existing queue should be used when a queue scope is requested, lazily evaluated.</summary>
-        private string ServiceBusOverrideQueueName => GetVariable("SERVICE_BUS_OVERRIDE_QUEUE");
-
-        /// <summary>The environment variable value for the override name of an existing queue should be used when a topic scope is requested, lazily evaluated.</summary>
-        private string ServiceBusOverrideTopicName => GetVariable("SERVICE_BUS_OVERRIDE_TOPIC");
 
         /// <summary>The active Service Bus namespace for this test run, lazily created.</summary>
         private readonly Lazy<NamespaceProperties> ActiveServiceBusNamespace;
@@ -87,51 +66,6 @@ namespace Azure.Messaging.ServiceBus.Tests
         public string ServiceBusNamespace => ActiveServiceBusNamespace.Value.Name;
 
         /// <summary>
-        ///   The name of the Azure subscription containing the Service Bus namespace instance to be used for
-        ///   Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "SERVICE_BUS_SUBSCRIPTION" environment variable.</value>
-        ///
-        public string ServiceBusAzureSubscription => ServiceBusAzureSubscriptionInstance;
-
-        /// <summary>
-        ///   The name of the resource group containing the Service Bus namespace instance to be used for
-        ///   Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "SERVICE_BUS_RESOURCEGROUP" environment variable.</value>
-        ///
-        public string ServiceBusResourceGroup => ServiceBusResourceGroupInstance;
-
-        /// <summary>
-        ///   The name of the Azure Active Directory tenant that holds the service principal to use for management
-        ///   of the Service Bus namespace during Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "SERVICE_BUS_TENANT" environment variable.</value>
-        ///
-        public string ServiceBusTenant => ServiceBusTenantInstance;
-
-        /// <summary>
-        ///   The name of the Azure Active Directory client identifier of the service principal to use for management
-        ///   of the Service Bus namespace during Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "SERVICE_BUS_CLIENT" environment variable.</value>
-        ///
-        public string ServiceBusClient => ServiceBusClientInstance;
-
-        /// <summary>
-        ///   The name of the Azure Active Directory client secret of the service principal to use for management
-        ///   of the Service Bus namespace during Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "SERVICE_BUS_SECRET" environment variable.</value>
-        ///
-        public string ServiceBusSecret => ServiceBusSecretInstance;
-
-        /// <summary>
         ///   The fully qualified namespace for the Service Bus namespace represented by this scope.
         /// </summary>
         ///
@@ -161,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///   the scope.
         /// </summary>
         ///
-        public string OverrideQueueName => ServiceBusOverrideQueueName;
+        public string OverrideQueueName => GetOptionalVariable("SERVICE_BUS_OVERRIDE_QUEUE");
 
         /// <summary>
         ///   The name of an existing Service Bus topic to consider an override and use when
@@ -169,7 +103,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///   the scope.
         /// </summary>
         ///
-        public string OverrideTopicName => ServiceBusOverrideTopicName;
+        public string OverrideTopicName => GetOptionalVariable("SERVICE_BUS_OVERRIDE_TOPIC");
 
         /// <summary>
         ///   Builds a connection string for a specific Service Bus entity instance under the namespace used for

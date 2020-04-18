@@ -11,7 +11,6 @@ namespace Azure.Security.KeyVault.Tests
         {
         }
 
-        public static KeyVaultTestEnvironment Instance { get; } = new KeyVaultTestEnvironment();
         public string KeyVaultUrl => GetRecordedVariable("AZURE_KEYVAULT_URL");
     }
 }

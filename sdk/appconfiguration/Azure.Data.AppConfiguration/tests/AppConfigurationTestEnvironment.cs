@@ -11,7 +11,6 @@ namespace Azure.Data.AppConfiguration
         {
         }
 
-        public static AppConfigurationTestEnvironment Instance { get; } = new AppConfigurationTestEnvironment();
         public string ConnectionString => GetRecordedVariable("APPCONFIGURATION_CONNECTION_STRING");
         public string Endpoint => GetRecordedVariable("APPCONFIGURATION_ENDPOINT_STRING");
     }

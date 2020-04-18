@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void GetSettingIfChanged()
         {
-            string connectionString = AppConfigurationTestEnvironment.Instance.ConnectionString;
+            string connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample5_CreateConfigurationClient
             ConfigurationClient client = new ConfigurationClient(connectionString);

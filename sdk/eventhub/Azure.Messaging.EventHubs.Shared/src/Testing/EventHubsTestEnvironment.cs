@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The name of the namespace is read from the "EVENT_HUBS_SUBSCRIPTION" environment variable.</value>
         ///
-        public string EventHubsSubscription => EventHubsSubscriptionInstance;
+        public string EventHubsSubscription => SubscriptionId;
 
         /// <summary>
         ///   The name of the resource group containing the Event Hubs namespace instance to be used for
@@ -96,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The name of the namespace is read from the "EVENT_HUBS_RESOURCEGROUP" environment variable.</value>
         ///
-        public string EventHubsResourceGroup => EventHubsResourceGroupInstance;
+        public string EventHubsResourceGroup => ResourceGroup;
 
         /// <summary>
         ///   The name of the Azure Active Directory tenant that holds the service principal to use for management
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The name of the namespace is read from the "EVENT_HUBS_TENANT" environment variable.</value>
         ///
-        public string EventHubsTenant => EventHubsTenantInstance;
+        public string EventHubsTenant => TenantId;
 
         /// <summary>
         ///   The name of the Azure Active Directory client identifier of the service principal to use for management
@@ -114,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The name of the namespace is read from the "EVENT_HUBS_CLIENT" environment variable.</value>
         ///
-        public string EventHubsClient => EventHubsClientInstance;
+        public string EventHubsClient => ClientId;
 
         /// <summary>
         ///   The name of the Azure Active Directory client secret of the service principal to use for management
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <value>The name of the namespace is read from the "EVENT_HUBS_SECRET" environment variable.</value>
         ///
-        public string EventHubsSecret => EventHubsSecretInstance;
+        public string EventHubsSecret => ClientSecret;
 
         /// <summary>
         ///   The fully qualified namespace for the Event Hubs namespace represented by this scope.

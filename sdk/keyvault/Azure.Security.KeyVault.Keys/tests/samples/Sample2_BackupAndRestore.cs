@@ -20,7 +20,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void BackupAndRestoreSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = KeyVaultTestEnvironment.Instance.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:KeysSample2KeyClient
             var client = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential());

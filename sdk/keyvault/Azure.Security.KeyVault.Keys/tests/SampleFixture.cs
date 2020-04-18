@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 {
     [LiveOnly]
     [NonParallelizable]
-    public class SampleFixture
+    public class SampleFixture: SamplesBase<KeyVaultTestEnvironment>
     {
         private KeyVaultTestEventListener _listener;
 

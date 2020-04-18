@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                string connectionString = ServiceBusTestEnvironment.Instance.ServiceBusConnectionString;
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
                 #region Snippet:ServiceBusSendAndReceive
                 //@@ string connectionString = "<connection_string>";
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                string connectionString = ServiceBusTestEnvironment.Instance.ServiceBusConnectionString;
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
                 await using var client = new ServiceBusClient(connectionString);
 
@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                string connectionString = ServiceBusTestEnvironment.Instance.ServiceBusConnectionString;
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
                 #region Snippet:ServiceBusSendAndReceiveBatch
                 //@@ string connectionString = "<connection_string>";
@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                string connectionString = ServiceBusTestEnvironment.Instance.ServiceBusConnectionString;
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
                 await using var client = new ServiceBusClient(connectionString);

@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public void GetSecretsSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = KeyVaultTestEnvironment.Instance.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:SecretsSample3SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());

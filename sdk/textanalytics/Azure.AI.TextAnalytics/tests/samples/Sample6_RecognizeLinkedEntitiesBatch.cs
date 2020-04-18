@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void ExtractEntityLinkingBatch()
         {
-            string endpoint = TextAnalyticsTestEnvironment.Instance.Endpoint;
-            string apiKey = TextAnalyticsTestEnvironment.Instance.ApiKey;
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

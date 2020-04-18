@@ -2,20 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
 {
-    [LiveOnly]
-    [NonParallelizable]
-    public partial class ConfigurationSamples
+    public partial class ConfigurationSamples: SamplesBase<AppConfigurationTestEnvironment>
     {
         [Test]
         public void HelloWorld()
         {
-            var connectionString = AppConfigurationTestEnvironment.Instance.ConnectionString;
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample1_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);

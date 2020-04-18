@@ -60,8 +60,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         public static async Task<ServiceBusTestEnvironment.NamespaceProperties> CreateNamespaceAsync()
         {
-            var azureSubscription = ServiceBusTestEnvironment.Instance.ServiceBusAzureSubscription;
-            var resourceGroup = ServiceBusTestEnvironment.Instance.ServiceBusResourceGroup;
+            var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
+            var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
             string CreateName() => $"net-servicebus-{ Guid.NewGuid().ToString("D").Substring(0, 30) }";
@@ -87,8 +87,8 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         public static async Task DeleteNamespaceAsync(string namespaceName)
         {
-            var azureSubscription = ServiceBusTestEnvironment.Instance.ServiceBusAzureSubscription;
-            var resourceGroup = ServiceBusTestEnvironment.Instance.ServiceBusResourceGroup;
+            var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
+            var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
             using (var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription })
@@ -133,8 +133,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
-            var azureSubscription = ServiceBusTestEnvironment.Instance.ServiceBusAzureSubscription;
-            var resourceGroup = ServiceBusTestEnvironment.Instance.ServiceBusResourceGroup;
+            var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
+            var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
@@ -177,8 +177,8 @@ namespace Azure.Messaging.ServiceBus.Tests
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
             topicSubscriptions ??= new[] { "default-subscription" };
 
-            var azureSubscription = ServiceBusTestEnvironment.Instance.ServiceBusAzureSubscription;
-            var resourceGroup = ServiceBusTestEnvironment.Instance.ServiceBusResourceGroup;
+            var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
+            var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
             var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
@@ -260,8 +260,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
-                var credential = new ClientCredential(ServiceBusTestEnvironment.Instance.ServiceBusClient, ServiceBusTestEnvironment.Instance.ServiceBusSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ ServiceBusTestEnvironment.Instance.ServiceBusTenant }");
+                var credential = new ClientCredential(ServiceBusTestEnvironment.Instance.ClientId, ServiceBusTestEnvironment.Instance.ClientSecret);
+                var context = new AuthenticationContext($"https://login.windows.net/{ ServiceBusTestEnvironment.Instance.TenantId }");
                 var result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential);
 
                 if ((string.IsNullOrEmpty(result?.AccessToken)))
@@ -479,8 +479,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 try
                 {
-                    var azureSubscription = ServiceBusTestEnvironment.Instance.ServiceBusAzureSubscription;
-                    var resourceGroup = ServiceBusTestEnvironment.Instance.ServiceBusResourceGroup;
+                    var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
+                    var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
                     var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
                     using var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription };
@@ -576,8 +576,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 try
                 {
-                    var azureSubscription = ServiceBusTestEnvironment.Instance.ServiceBusAzureSubscription;
-                    var resourceGroup = ServiceBusTestEnvironment.Instance.ServiceBusResourceGroup;
+                    var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
+                    var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
                     var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
                     using var client = new ServiceBusManagementClient(new TokenCredentials(token)) { SubscriptionId = azureSubscription };

@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: sessionEnabled))
             {
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = GetMessage(
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message1 = GetMessage("session1");
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(5);
                 options.RetryOptions.MaxRetries = 0;
 
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString, options);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message1 = GetMessage("session1");
@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 options.RetryOptions.TryTimeout = TimeSpan.FromSeconds(5);
                 options.RetryOptions.MaxRetries = 0;
 
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString, options);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, options);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = GetMessage();
@@ -134,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.TopicName);
 
                 ServiceBusMessage message = GetMessage();
@@ -164,7 +164,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: sessionEnabled))
             {
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 ServiceBusMessage message = GetMessage(
@@ -193,7 +193,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: partitioned, enableSession: sessionEnabled))
             {
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 string body = Guid.NewGuid().ToString("N");
@@ -245,7 +245,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
             {
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
@@ -312,7 +312,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
@@ -355,9 +355,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client1 = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client1 = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client1.CreateSender(scope.QueueName);
-                var client2 = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client2 = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusReceiver receiver = client2.CreateReceiver(scope.QueueName);
 
                 ServiceBusMessage message1 = GetMessage();
@@ -385,7 +385,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
 
@@ -419,7 +419,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
         [Test]
         public async Task TransactionalSendViaCommitTest()
         {
-            var client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
             await using var intermediateQueue = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false);
             await using var destination1 = await ServiceBusScope.CreateWithTopic(enablePartitioning: true, enableSession: false);
             await using var destination2 = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false);

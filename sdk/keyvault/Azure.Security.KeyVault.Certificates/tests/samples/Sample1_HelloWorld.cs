@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         public void HelloWorldSync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = KeyVaultTestEnvironment.Instance.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CertificatesSample1CertificateClient
             var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());

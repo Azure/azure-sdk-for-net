@@ -8,6 +8,7 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
@@ -26,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public void CreateClient()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = KeyVaultTestEnvironment.Instance.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CreateKeyClient
             // Create a new key client using the default credential from Azure.Identity using environment variables previously set,

@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void SetClearReadOnly()
         {
-            var connectionString = AppConfigurationTestEnvironment.Instance.ConnectionString;
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample3_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);

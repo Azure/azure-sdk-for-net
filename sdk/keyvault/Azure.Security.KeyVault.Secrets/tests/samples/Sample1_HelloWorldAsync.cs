@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         public async Task HelloWorldAsync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = KeyVaultTestEnvironment.Instance.KeyVaultUrl;
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 

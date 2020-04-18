@@ -13,8 +13,8 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void AnalyzeSentiment()
         {
-            string endpoint = TextAnalyticsTestEnvironment.Instance.Endpoint;
-            string apiKey = TextAnalyticsTestEnvironment.Instance.ApiKey;
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             #region Snippet:TextAnalyticsSample2CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
