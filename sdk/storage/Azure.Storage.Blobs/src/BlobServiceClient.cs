@@ -1416,7 +1416,7 @@ namespace Azure.Storage.Blobs
         /// match a given search expression. Filter blobs searches across all containers within a
         /// storage account but can be scoped within the expression to a single container.
         /// </summary>
-        /// <param name="expression">
+        /// <param name="tagFilterSqlExpression">
         /// The where parameter enables the caller to query blobs whose tags match a given expression.
         /// The given expression must evaluate to true for a blob to be returned in the results.
         /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
@@ -1434,16 +1434,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual Pageable<FilterBlobItem> FindBlobsByTags(
-            string expression,
+            string tagFilterSqlExpression,
             CancellationToken cancellationToken = default) =>
-            new FilterBlobsAsyncCollection(this, expression).ToSyncCollection(cancellationToken);
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
         /// match a given search expression. Filter blobs searches across all containers within a
         /// storage account but can be scoped within the expression to a single container.
         /// </summary>
-        /// <param name="expression">
+        /// <param name="tagFilterSqlExpression">
         /// The where parameter enables the caller to query blobs whose tags match a given expression.
         /// The given expression must evaluate to true for a blob to be returned in the results.
         /// The[OData - ABNF] filter syntax rule defines the formal grammar for the value of the where query parameter;
@@ -1461,9 +1461,9 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         public virtual AsyncPageable<FilterBlobItem> FindBlobsByTagsAsync(
-            string expression,
+            string tagFilterSqlExpression,
             CancellationToken cancellationToken = default) =>
-            new FilterBlobsAsyncCollection(this, expression).ToAsyncCollection(cancellationToken);
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToAsyncCollection(cancellationToken);
 
         internal async Task<Response<FilterBlobSegment>> FindBlobsByTagsInternal(
             string marker,

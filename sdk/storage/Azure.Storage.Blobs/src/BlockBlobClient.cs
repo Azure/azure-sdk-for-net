@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Specialized
     {
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync(Stream, UploadBlockBlobOptions, CancellationToken)"/>.
+        /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>.
         /// </summary>
         public virtual int BlockBlobMaxUploadBlobBytes => Constants.Blob.Block.MaxUploadBytes;
 
@@ -340,11 +340,11 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(Stream, UploadBlockBlobOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>
         /// operation creates a new block  blob,  or updates the content of an existing block blob.
         /// Updating an existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="Upload(Stream, UploadBlockBlobOptions, CancellationToken)"/>;
+        /// Partial updates are not supported with <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
         /// block blob, use the <see cref="StageBlock"/> and
@@ -372,12 +372,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
-            UploadBlockBlobOptions options,
+            UploadBlobOptions options,
             CancellationToken cancellationToken = default)
         {
             PartitionedUploader uploader = new PartitionedUploader(
                 client: this,
-                transferOptions: default,
+                transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.Upload(
@@ -392,11 +392,11 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, UploadBlockBlobOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>
         /// operation creates a new block  blob,  or updates the content of an existing block blob.
         /// Updating an existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="UploadAsync(Stream, UploadBlockBlobOptions, CancellationToken)"/>;
+        /// Partial updates are not supported with <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
         /// block blob, use the <see cref="StageBlock"/> and
@@ -424,12 +424,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
-            UploadBlockBlobOptions options,
+            UploadBlobOptions options,
             CancellationToken cancellationToken = default)
         {
             PartitionedUploader uploader = new PartitionedUploader(
                 client: this,
-                transferOptions: default,
+                transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadAsync(
