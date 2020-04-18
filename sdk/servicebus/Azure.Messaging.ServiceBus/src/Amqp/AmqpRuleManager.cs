@@ -33,7 +33,32 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private readonly AmqpConnectionScope _connectionScope;
 
+        /// <summary>
+        /// Indicates whether or not this instance has been closed.
+        /// </summary>
+        private bool _closed = false;
+
+        /// <summary>
+        /// Indicates whether or not this rule manager has been closed.
+        /// </summary>
+        ///
+        /// <value>
+        /// <c>true</c> if the rule manager is closed; otherwise, <c>false</c>.
+        /// </value>
+        public override bool IsClosed => _closed;
+
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
+
+        static AmqpRuleManager()
+        {
+            AmqpCodec.RegisterKnownTypes(AmqpTrueFilterCodec.Name, AmqpTrueFilterCodec.Code, () => new AmqpTrueFilterCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpFalseFilterCodec.Name, AmqpFalseFilterCodec.Code, () => new AmqpFalseFilterCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpCorrelationFilterCodec.Name, AmqpCorrelationFilterCodec.Code, () => new AmqpCorrelationFilterCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpSqlFilterCodec.Name, AmqpSqlFilterCodec.Code, () => new AmqpSqlFilterCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpEmptyRuleActionCodec.Name, AmqpEmptyRuleActionCodec.Code, () => new AmqpEmptyRuleActionCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpSqlRuleActionCodec.Name, AmqpSqlRuleActionCodec.Code, () => new AmqpSqlRuleActionCodec());
+            AmqpCodec.RegisterKnownTypes(AmqpRuleDescriptionCodec.Name, AmqpRuleDescriptionCodec.Code, () => new AmqpRuleDescriptionCodec());
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
@@ -246,6 +271,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
 
             return ruleDescriptions;
+        }
+
+        /// <summary>
+        /// Closes the connection to the transport rule manager instance.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        public override async Task CloseAsync(CancellationToken cancellationToken)
+        {
+            if (_closed)
+            {
+                return;
+            }
+
+            _closed = true;
+
+            if (_managementLink?.TryGetOpenedObject(out var _) == true)
+            {
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                await _managementLink.CloseAsync().ConfigureAwait(false);
+            }
+
+            _managementLink?.Dispose();
+
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,7 +16,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// Manages rules for subscriptions.
     /// </summary>
-    public class ServiceBusRuleManager
+    public class ServiceBusRuleManager : IAsyncDisposable
     {
         /// <summary>
         /// The path of the Service Bus entity that the rule manager is connected to, specific to the
@@ -28,6 +29,15 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
         internal string Identifier { get; private set; }
+
+        /// <summary>
+        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been disposed.
+        /// </summary>
+        ///
+        /// <value>
+        /// <c>true</c> if the client is disposed; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsDisposed { get; private set; } = false;
 
         /// <summary>
         /// The active connection to the Azure Service Bus service, enabling client communications for metadata
@@ -109,7 +119,7 @@ namespace Azure.Messaging.ServiceBus
             RuleDescription description,
             CancellationToken cancellationToken = default)
         {
-            //  Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
             Argument.AssertNotNull(description, nameof(description));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             EntityNameFormatter.CheckValidRuleName(description.Name);
@@ -143,7 +153,7 @@ namespace Azure.Messaging.ServiceBus
             string ruleName,
             CancellationToken cancellationToken = default)
         {
-            //  Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.RemoveRuleStart(Identifier, ruleName);
@@ -174,7 +184,7 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task<IEnumerable<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
 
-            //  Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
+            Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);
             IEnumerable<RuleDescription> rulesDescription;
@@ -193,5 +203,54 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusEventSource.Log.GetRuleComplete(Identifier);
             return rulesDescription;
         }
+
+        /// <summary>
+        /// Performs the task needed to clean up resources used by the <see cref="ServiceBusRuleManager" />.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        public virtual async ValueTask DisposeAsync()
+        {
+            IsDisposed = true;
+
+            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusReceiver), Identifier);
+            try
+            {
+                await InnerRuleManager.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusReceiver), Identifier, ex);
+                throw;
+            }
+
+            ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusSender), Identifier);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        ///
+        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        /// Converts the instance to string representation.
+        /// </summary>
+        ///
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
     }
 }

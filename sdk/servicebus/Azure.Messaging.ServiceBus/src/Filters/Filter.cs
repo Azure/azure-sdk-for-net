@@ -19,7 +19,9 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <seealso cref="TrueFilter"/>
     /// <seealso cref="CorrelationFilter "/>
     /// <seealso cref="FalseFilter"/>
+#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Filter : IEquatable<Filter>
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         internal Filter()
         {

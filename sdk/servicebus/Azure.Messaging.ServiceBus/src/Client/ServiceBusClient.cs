@@ -561,6 +561,18 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// The <see cref="ServiceBusRuleManager"/> is used to manage the rules for a subscription.
+        /// </summary>
+        public ServiceBusRuleManager CreateRuleManager(string topicName, string subscriptionName)
+        {
+            ValidateEntityName(topicName);
+
+            return new ServiceBusRuleManager(
+                connection: Connection,
+                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
+        }
+
+        /// <summary>
         /// Validates that the specified entity name matches the entity path in the Connection,
         /// if an entity path is specified in the connection.
         /// </summary>
@@ -576,18 +588,6 @@ namespace Azure.Messaging.ServiceBus
             {
                 throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
             }
-        }
-
-        /// <summary>
-        /// The <see cref="ServiceBusRuleManager"/> is used to manage the rules for a subscription.
-        /// </summary>
-        public ServiceBusRuleManager CreateRuleManager(string topicName, string subscriptionName)
-        {
-            ValidateEntityName(topicName);
-
-            return new ServiceBusRuleManager(
-                connection: Connection,
-                entityPath: EntityNameFormatter.FormatSubscriptionPath(topicName, subscriptionName));
         }
     }
 }
