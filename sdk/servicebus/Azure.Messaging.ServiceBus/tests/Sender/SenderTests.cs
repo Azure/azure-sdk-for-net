@@ -17,34 +17,54 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
     public class SenderTests : ServiceBusTestBase
     {
         [Test]
-        public void SendNullShouldThrow()
+        public void SendNullMessageShouldThrow()
         {
             var mock = new Mock<ServiceBusSender>()
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(message: null));
         }
 
-        //[Test]
-        //public async Task Send_DelegatesToSendRange()
-        //{
-        //    var mock = new Mock<ServiceBusSender>()
-        //    {
-        //        CallBase = true
-        //    };
-        //    mock
-        //       .Setup(m => m.SendBatchAsync(
-        //           It.Is<IEnumerable<ServiceBusMessage>>(value => value.Count() == 1),
-        //           It.IsAny<CancellationToken>()))
-        //       .Returns(Task.CompletedTask)
-        //       .Verifiable("The single send should delegate to the batch send.");
-
-        //    await mock.Object.SendAsync(new ServiceBusMessage());
-        //}
+        [Test]
+        public void SendNullMessageListShouldThrow()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(messages: null));
+        }
 
         [Test]
-        public void SendRangeNullShouldThrow()
+        public async Task SendEmptyListShouldNotThrow()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+            await mock.Object.SendAsync(new List<ServiceBusMessage>());
+        }
+
+        [Test]
+        public async Task Send_DelegatesToSendList()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+            mock
+               .Setup(m => m.SendAsync(
+                   It.Is<IEnumerable<ServiceBusMessage>>(value => value.Count() == 1),
+                   It.IsAny<CancellationToken>()))
+               .Returns(Task.CompletedTask)
+               .Verifiable("The single send should delegate to the list send.");
+
+            await mock.Object.SendAsync(new ServiceBusMessage());
+        }
+
+        [Test]
+        public void SendNullBatchShouldThrow()
         {
             var mock = new Mock<ServiceBusSender>()
             {
@@ -52,24 +72,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             };
             Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendBatchAsync(null));
         }
-
-        //[Test]
-        // TODO figure out a better way to test this without making InnerSender internal
-        //public async Task SendRange_DelegatesToInnerSender()
-        //{
-        //    var mock = new Mock<ServiceBusSender>()
-        //    {
-        //        CallBase = true
-        //    };
-
-        //    var msgs = GetMessages(10);
-        //    var mockSender = new Mock<TransportSender>();
-        //    mock.SetupGet(m => m.InnerSender).Returns(mockSender.Object);
-        //    mock.Setup(m => m.CreateDiagnosticScope()).Returns(default(DiagnosticScope));
-        //    await mock.Object.SendBatchAsync(msgs);
-        //    mockSender.Verify(m => m.SendAsync(msgs, default), "Send should delegate to Inner Sender");
-
-        //}
 
         [Test]
         public void ClientProperties()
