@@ -31,11 +31,11 @@ namespace Azure.Messaging.ServiceBus
         internal string Identifier { get; private set; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been disposed.
+        ///   Indicates whether or not this <see cref="ServiceBusRuleManager"/> has been disposed.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the client is disposed; otherwise, <c>false</c>.
+        /// <c>true</c> if the rule manager is disposed; otherwise, <c>false</c>.
         /// </value>
         public bool IsDisposed { get; private set; } = false;
 
@@ -213,18 +213,18 @@ namespace Azure.Messaging.ServiceBus
         {
             IsDisposed = true;
 
-            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusReceiver), Identifier);
+            ServiceBusEventSource.Log.ClientDisposeStart(typeof(ServiceBusRuleManager), Identifier);
             try
             {
                 await InnerRuleManager.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusReceiver), Identifier, ex);
+                ServiceBusEventSource.Log.ClientDisposeException(typeof(ServiceBusRuleManager), Identifier, ex);
                 throw;
             }
 
-            ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusSender), Identifier);
+            ServiceBusEventSource.Log.ClientDisposeComplete(typeof(ServiceBusRuleManager), Identifier);
         }
 
         /// <summary>
