@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        public abstract Task<IEnumerable<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken);
+        public abstract Task<IList<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken);
 
         /// <summary>
         /// Closes the connection to the transport rule manager instance.

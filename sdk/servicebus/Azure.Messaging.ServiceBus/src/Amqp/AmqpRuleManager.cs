@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     internal class AmqpRuleManager : TransportRuleManager
     {
         /// <summary>
-        /// The name of the Service Bus entity to which the receiver is bound.
+        /// The name of the Service Bus entity to which the rule manager is bound.
         /// </summary>
         ///
         private readonly string _entityPath;
@@ -61,11 +61,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
+        /// Initializes a new instance of the <see cref="AmqpRuleManager"/> class.
         /// </summary>
         ///
-        /// <param name="entityPath">The name of the Service Bus entity from which events will be consumed.</param>
-        /// <param name="connectionScope">The AMQP connection context for operations .</param>
+        /// <param name="entityPath">The name of the Service Bus entity to which the rule manager is bound.</param>
+        /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         ///
         /// <remarks>
@@ -132,7 +132,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="description">The rule description that provides the rule to add.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
         private async Task AddRuleInternalAsync(
@@ -182,8 +182,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Removes the rule on the subscription identified by <paramref name="ruleName" />.
         /// </summary>
         ///
-        /// <param name="ruleName"></param>
-        /// <param name="timeout"></param>
+        /// <param name="ruleName">Name of the rule</param>
+        /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         ///
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
         private async Task RemoveRuleInternalAsync(
@@ -216,9 +216,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        public override async Task<IEnumerable<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
+        public override async Task<IList<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
-            IEnumerable<RuleDescription> rulesDescription = null;
+            IList<RuleDescription> rulesDescription = null;
 
             await _retryPolicy.RunOperation(
                 async (timeout) =>
@@ -233,10 +233,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Get all rules associated with the subscription.
         /// </summary>
         ///
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The per-try timeout specified in the RetryOptions.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        private async Task<IEnumerable<RuleDescription>> GetRulesInternalAsync(TimeSpan timeout)
+        private async Task<IList<RuleDescription>> GetRulesInternalAsync(TimeSpan timeout)
         {
             var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.EnumerateRulesOperation,

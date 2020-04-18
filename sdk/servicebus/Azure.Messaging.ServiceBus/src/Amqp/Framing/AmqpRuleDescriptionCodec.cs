@@ -15,23 +15,11 @@ namespace Azure.Messaging.ServiceBus.Amqp.Framing
 
         public AmqpRuleDescriptionCodec() : base(Name, Code) { }
 
-        public AmqpFilterCodec Filter
-        {
-            get;
-            set;
-        }
+        public AmqpFilterCodec Filter { get; set; }
 
-        public AmqpRuleActionCodec Action
-        {
-            get;
-            set;
-        }
+        public AmqpRuleActionCodec Action { get; set; }
 
-        public string RuleName
-        {
-            get;
-            set;
-        }
+        public string RuleName { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 

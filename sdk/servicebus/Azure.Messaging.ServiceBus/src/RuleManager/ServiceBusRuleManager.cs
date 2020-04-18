@@ -181,13 +181,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>Returns a list of rules description</returns>
-        public virtual async Task<IEnumerable<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<IList<RuleDescription>> GetRulesAsync(CancellationToken cancellationToken = default)
         {
 
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.GetRuleStart(Identifier);
-            IEnumerable<RuleDescription> rulesDescription;
+            IList<RuleDescription> rulesDescription;
 
             try
             {
