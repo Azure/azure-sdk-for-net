@@ -215,7 +215,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndex updatedIndex = await client.CreateOrUpdateIndexAsync(
                 createdIndex,
                 allowIndexDowntime: true,
-                accessConditions: new MatchConditions { IfMatch = new ETag(createdIndex.ETag) });
+                options: new SearchConditionalOptions { IfMatch = createdIndex.ETag });
 
             Assert.AreEqual(createdIndex.Name, updatedIndex.Name);
             Assert.That(updatedIndex.Fields, Is.EqualTo(updatedIndex.Fields).Using(SearchFieldComparer.Shared));
@@ -316,7 +316,7 @@ namespace Azure.Search.Documents.Tests
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
-                GetOptions(ifMatch: new ETag(actualIndexer.ETag)));
+                GetOptions(ifMatch: actualIndexer.ETag));
 
             await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
@@ -351,13 +351,13 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("solr", map.Format);
             Assert.AreEqual("msft=>Microsoft", map.Synonyms);
 
-            map = await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new SearchConditionalOptions { IfMatch = new ETag(map.ETag) });
+            map = await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new SearchConditionalOptions { IfMatch = map.ETag });
             Assert.AreEqual(synonymMapName, map.Name);
             Assert.AreEqual("solr", map.Format);
             Assert.AreEqual("ms,msft=>Microsoft", map.Synonyms);
 
             RequestFailedException ex = await CatchAsync<RequestFailedException>(async () =>
-                await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new SearchConditionalOptions { IfNoneMatch = new ETag(map.ETag) }));
+                await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new SearchConditionalOptions { IfNoneMatch = map.ETag }));
             Assert.AreEqual((int)HttpStatusCode.PreconditionFailed, ex.Status);
 
             Response<IReadOnlyList<SynonymMap>> mapsResponse = await client.GetSynonymMapsAsync(new[] { nameof(SynonymMap.Name) });
@@ -370,7 +370,7 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 
-            await client.DeleteSynonymMapAsync(map.Name, new SearchConditionalOptions { IfMatch = new ETag(map.ETag) });
+            await client.DeleteSynonymMapAsync(map.Name, new SearchConditionalOptions { IfMatch = map.ETag });
         }
 
         /// <summary>

@@ -43,14 +43,14 @@ namespace Azure.Search.Documents.Models
         /// <param name="description"> The description of the skillset. </param>
         /// <param name="skills"> A list of skills in the skillset. </param>
         /// <param name="cognitiveServicesAccount"> Details about cognitive services to be used when running skills. </param>
-        /// <param name="eTag"> The ETag of the skillset. </param>
-        internal Skillset(string name, string description, IList<Skill> skills, CognitiveServicesAccount cognitiveServicesAccount, string eTag)
+        /// <param name="Etag"> The ETag of the skillset. </param>
+        internal Skillset(string name, string description, IList<Skill> skills, CognitiveServicesAccount cognitiveServicesAccount, string Etag)
         {
             Name = name;
             Description = description;
             Skills = skills;
             CognitiveServicesAccount = cognitiveServicesAccount;
-            ETag = eTag;
+            _etag = Etag;
         }
 
         /// <summary> The name of the skillset. </summary>
@@ -61,7 +61,5 @@ namespace Azure.Search.Documents.Models
         public IList<Skill> Skills { get; }
         /// <summary> Details about cognitive services to be used when running skills. </summary>
         public CognitiveServicesAccount CognitiveServicesAccount { get; set; }
-        /// <summary> The ETag of the skillset. </summary>
-        public string ETag { get; set; }
     }
 }
