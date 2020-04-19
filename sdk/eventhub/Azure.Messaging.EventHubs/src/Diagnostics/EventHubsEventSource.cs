@@ -877,6 +877,29 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has experienced an exception while attempting to claim ownership of a partition.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
+        /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="partitionId">The identifier of the partition for which the attempt to claim ownership failed.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(45, Level = EventLevel.Error, Message = "An exception occurred while attempting to claim partition ownership for the processor instance with identifier '{0}' for Event Hub: {1}, Consumer Group: {2}, and partition: {3}.  Error Message: '{4}'")]
+        public virtual void EventProcessorClaimOwnershipError(string identifier,
+                                                              string eventHubName,
+                                                              string consumerGroup,
+                                                              string partitionId,
+                                                              string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(45, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
         ///   Indicates that an exception was encountered in an unexpected code path, not directly associated with
         ///   an Event Hubs operation.
         /// </summary>

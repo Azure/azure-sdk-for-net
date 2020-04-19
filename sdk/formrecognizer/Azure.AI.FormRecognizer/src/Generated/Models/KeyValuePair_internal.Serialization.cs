@@ -10,27 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal partial class KeyValuePair_internal : IUtf8JsonSerializable
+    internal partial class KeyValuePair_internal
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Label != null)
-            {
-                writer.WritePropertyName("label");
-                writer.WriteStringValue(Label);
-            }
-            writer.WritePropertyName("key");
-            writer.WriteObjectValue(Key);
-            writer.WritePropertyName("value");
-            writer.WriteObjectValue(Value);
-            writer.WritePropertyName("confidence");
-            writer.WriteNumberValue(Confidence);
-            writer.WriteEndObject();
-        }
         internal static KeyValuePair_internal DeserializeKeyValuePair_internal(JsonElement element)
         {
-            KeyValuePair_internal result = new KeyValuePair_internal();
+            string label = default;
+            KeyValueElement_internal key = default;
+            KeyValueElement_internal value = default;
+            float confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"))
@@ -39,26 +26,26 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Label = property.Value.GetString();
+                    label = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("key"))
                 {
-                    result.Key = KeyValueElement_internal.DeserializeKeyValueElement_internal(property.Value);
+                    key = KeyValueElement_internal.DeserializeKeyValueElement_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("value"))
                 {
-                    result.Value = KeyValueElement_internal.DeserializeKeyValueElement_internal(property.Value);
+                    value = KeyValueElement_internal.DeserializeKeyValueElement_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("confidence"))
                 {
-                    result.Confidence = property.Value.GetSingle();
+                    confidence = property.Value.GetSingle();
                     continue;
                 }
             }
-            return result;
+            return new KeyValuePair_internal(label, key, value, confidence);
         }
     }
 }

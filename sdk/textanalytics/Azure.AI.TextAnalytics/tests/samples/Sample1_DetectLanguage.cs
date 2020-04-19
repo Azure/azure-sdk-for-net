@@ -17,13 +17,13 @@ namespace Azure.AI.TextAnalytics.Samples
             string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:TextAnalyticsSample1CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
             #region Snippet:DetectLanguage
-            string input = "Este documento está en español.";
+            string document = "Este documento está en español.";
 
-            DetectedLanguage language = client.DetectLanguage(input);
+            DetectedLanguage language = client.DetectLanguage(document);
 
             Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
             #endregion

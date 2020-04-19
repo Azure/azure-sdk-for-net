@@ -360,7 +360,7 @@ namespace Compute.Tests
         // Create VMSS in Automatic Mode
         // Perform an extension rolling upgrade
         // Delete ResourceGroup
-        [Fact(Skip = "TODO: Re-record due to version update")]
+        [Fact]
         [Trait("Name", "TestVMScaleSetExtensionUpgradeAPIs")]
         public void TestVMScaleSetExtensionUpgradeAPIs()
         {

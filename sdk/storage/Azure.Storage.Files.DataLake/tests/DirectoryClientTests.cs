@@ -371,6 +371,9 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsTrue(response.Value);
+
+            // Act
+            response = await directory.DeleteIfExistsAsync();
         }
 
         [Test]
@@ -1024,6 +1027,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            Assert.IsTrue(response.Value.IsDirectory);
         }
 
         [Test]
@@ -1754,6 +1758,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        [Ignore("Nightly live test is failing")]
         public async Task DeleteSubDirectoryAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

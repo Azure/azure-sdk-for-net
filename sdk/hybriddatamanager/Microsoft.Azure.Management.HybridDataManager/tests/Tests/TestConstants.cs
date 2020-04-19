@@ -11,11 +11,13 @@ namespace HybridData.Tests.Tests
         public const string DefaultDataSourceType = "StorSimple8000Series";
         public const string DefaultDataSinkName = "TestAzureStorage1";
         public const string DefaultDataSourceName = "TestStorSimpleSource1";
-        public const string DefaultStorSimpleDeviceName = "dmsdatasource";
-        public const string DefaultStorSimpleDeviceResourceGroup = "dmsdatasource";
+        public const string DefaultStorSimpleResourceName = "BLR8600";
+        public const string DefaultStorSimpleResourceSubscriptionId = "c5fc377d-0085-41b9-86b7-cc96dc56d1e9";
+        public const string DefaultStorSimpleDeviceName = "8600-SHG0997877L71FC";
+        public const string DefaultStorSimpleDeviceResourceGroup = "ForDMS";
         public const string DefaultStorageContainerName = "containerfromtest";
         public const string DefaultStorageAccountName = "dmsdatasink";
-        public const string DefaultStorSimpleVolumeName = "dmsbvtvol";
+        public const string DefaultStorSimpleVolumeName = "TestAutomation";
         public const string DefaultJobDefinitiontName = "jobdeffromtestcode1";
         #endregion
 

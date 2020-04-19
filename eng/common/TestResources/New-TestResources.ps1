@@ -33,6 +33,10 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
+    [Parameter(ParameterSetName = 'Provisioner')]
+    [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
+    [string] $SubscriptionId,
+
     [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationId,
@@ -45,11 +49,13 @@ param (
     [int] $DeleteAfterHours,
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
-    [string] $Location = 'westus2',
+    [string] $Location = '',
 
     [Parameter()]
-    [ValidateNotNullOrEmpty()]
+    [ValidateSet('AzureCloud', 'AzureUSGovernment', 'AzureChinaCloud')]
+    [string] $Environment = 'AzureCloud',
+
+    [Parameter()]
     [hashtable] $AdditionalParameters,
 
     [Parameter()]
@@ -102,7 +108,7 @@ trap {
 }
 
 # Enumerate test resources to deploy. Fail if none found.
-$root = [System.IO.Path]::Combine("$PSScriptRoot/../sdk", $ServiceDirectory) | Resolve-Path
+$root = [System.IO.Path]::Combine("$PSScriptRoot/../../../sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
 
@@ -119,6 +125,19 @@ if (!$templateFiles) {
     exit
 }
 
+# If no location is specified use safe default locations for the given
+# environment. If no matching environment is found $Location remains an empty
+# string.
+if (!$Location) {
+    $Location = @{
+        'AzureCloud' = 'westus2';
+        'AzureUSGovernment' = 'usgovvirginia';
+        'AzureChinaCloud' = 'chinaeast2';
+    }[$Environment]
+
+    Write-Verbose "Location was not set. Using default location for environment: '$Location'"
+}
+
 # Log in if requested; otherwise, the user is expected to already be authenticated via Connect-AzAccount.
 if ($ProvisionerApplicationId) {
     $null = Disable-AzContextAutosave -Scope Process
@@ -127,8 +146,13 @@ if ($ProvisionerApplicationId) {
     $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
 
+    # Use the given subscription ID if provided.
+    $subscriptionArgs = if ($SubscriptionId) {
+        @{SubscriptionId = $SubscriptionId}
+    }
+
     $provisionerAccount = Retry {
-        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal -Environment $Environment @subscriptionArgs
     }
 
     $exitActions += {
@@ -153,7 +177,15 @@ $resourceGroupName = if ($CI) {
     $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
     Write-Verbose "Generated base name '$BaseName' for CI build"
 
-    "rg-{0}-$BaseName" -f ($ServiceDirectory -replace '[\\\/]', '-').Substring(0, [Math]::Min($ServiceDirectory.Length, 90 - $BaseName.Length - 4)).Trim('-')
+    # If the ServiceDirectory is an absolute path use the last directory name
+    # (e.g. D:\foo\bar\ -> bar)
+    $serviceName = if (Split-Path -IsAbsolute  $ServiceDirectory) {
+        Split-Path -Leaf $ServiceDirectory
+    } else {
+        $ServiceDirectory
+    }
+
+    "rg-{0}-$BaseName" -f ($serviceName -replace '[\\\/:]', '-').Substring(0, [Math]::Min($serviceName.Length, 90 - $BaseName.Length - 4)).Trim('-')
 } else {
     "rg-$BaseName"
 }
@@ -355,6 +387,10 @@ The tenant ID of a service principal when a provisioner is specified. The same
 Tenant ID is used for Test Application and Provisioner Application. This value
 is passed to the ARM template as 'tenantId'.
 
+.PARAMETER SubscriptionId
+Optional subscription ID to use for new resources when logging in as a
+provisioner. You can also use Set-AzContext if not provisioning.
+
 .PARAMETER ProvisionerApplicationId
 The AAD Application ID used to provision test resources when a provisioner is
 specified.
@@ -385,8 +421,16 @@ timestamp is less than the current time.
 This isused for CI automation.
 
 .PARAMETER Location
-Optional location where resources should be created. By default this is
-'westus2'.
+Optional location where resources should be created. If left empty, the default
+is based on the cloud to which the template is being deployed:
+
+* AzureCloud -> 'westus2'
+* AzureUSGovernment -> 'usgovvirginia'
+* AzureChinaCloud -> 'chinaeast2'
+
+.PARAMETER Environment
+Name of the cloud environment. The default is the Azure Public Cloud
+('PublicCloud')
 
 .PARAMETER AdditionalParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
@@ -399,11 +443,10 @@ Deployment (CI/CD) build (only Azure Pipelines is currently supported).
 Force creation of resources instead of being prompted.
 
 .EXAMPLE
-$subscriptionId = "REPLACE_WITH_SUBSCRIPTION_ID"
-Connect-AzAccount -Subscription $subscriptionId
+Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
 $testAadApp = New-AzADServicePrincipal -Role Owner -DisplayName 'azure-sdk-live-test-app'
-.\eng\common\LiveTestResources\New-TestResources.ps1 `
-    -BaseName 'myalias' `
+New-TestResources.ps1 `
+    -BaseName 'uuid123' `
     -ServiceDirectory 'keyvault' `
     -TestApplicationId $testAadApp.ApplicationId.ToString() `
     -TestApplicationSecret (ConvertFrom-SecureString $testAadApp.Secret -AsPlainText)
@@ -415,7 +458,7 @@ Requires PowerShell 7 to use ConvertFrom-SecureString -AsPlainText or convert
 the SecureString to plaintext by another means.
 
 .EXAMPLE
-eng/New-TestResources.ps1 `
+New-TestResources.ps1 `
     -BaseName 'Generated' `
     -ServiceDirectory '$(ServiceDirectory)' `
     -TenantId '$(TenantId)' `
@@ -431,14 +474,6 @@ eng/New-TestResources.ps1 `
 Run this in an Azure DevOps CI (with approrpiate variables configured) before
 executing live tests. The script will output variables as secrets (to enable
 log redaction).
-
-.OUTPUTS
-Entries from the ARM templates' "output" section in environment variable syntax
-(e.g. $env:RESOURCE_NAME='<< resource name >>') that can be used for running
-live tests.
-
-If run in -CI mode the environment variables will be output in syntax that Azure
-DevOps can consume.
 
 .LINK
 Remove-TestResources.ps1

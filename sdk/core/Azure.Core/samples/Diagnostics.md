@@ -30,6 +30,14 @@ SecretClientOptions options = new SecretClientOptions()
 };
 ```
 
+### Changing log level
+
+The `CreateConsoleLogger` method has an optional parameter that specifies a minimum log level to display messages for.
+
+```C# Snippet:ConsoleLoggingLevel
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Warning);
+```
+
 ### Logging redacted headers and query parameters
 
 Some sensitive headers and query parameters are not logged by default and are displayed as "REDACTED", to include them in logs use the `Diagnostics.LoggedHeaderNames` and `Diagnostics.LoggedQueryParameters` client options.
@@ -69,9 +77,12 @@ The `AzureEventSourceListener` class can also be used with a custom callback tha
 
 ```C# Snippet:LoggingCallback
 using AzureEventSourceListener listener = new AzureEventSourceListener(
-    (e, message) => Console.WriteLine($"{DateTime.Now} {message}"),
+    (e, message) => Console.WriteLine("[{0:HH:mm:ss:fff}][{1}] {2}", DateTimeOffset.Now, e.Level, message),
     level: EventLevel.Verbose);
 ```
+
+When targeting .NET Standard 2.1, .NET Core 2.2, or newer, you might instead use `e.TimeStamp` to log the time the event was written instead of rendered, like above. It's in UTC format, so if you want to log the local time like in the example call `ToLocaleTime()` first.
+For help diagnosing multi-threading issues, you might also log `e.OSThreadId` which is also available on those same targets.
 
 ## Distributed tracing
 

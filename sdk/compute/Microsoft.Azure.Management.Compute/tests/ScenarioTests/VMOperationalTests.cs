@@ -91,7 +91,8 @@ namespace Compute.Tests
                     m_CrpClient.VirtualMachines.Redeploy(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
 
-                    var runCommandImput = new RunCommandInput() {
+                    var runCommandImput = new RunCommandInput()
+                    {
                         CommandId = "RunPowerShellScript",
                         Script = new List<string>() {
                             "param(",
@@ -360,6 +361,61 @@ namespace Compute.Tests
                     var deleteRg1Response = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg1Name);
                 }
 
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VM
+        /// Call SimulateEviction on that VM
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMOperations_SimulateEviction()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;
+                string asName = TestUtilities.GenerateName("as");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachine inputVM1;
+
+                bool passed = false;
+                try
+                {
+                    // Create Storage Account, so that both the VMs can share it
+                    var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
+
+                    VirtualMachine vm1 = CreateVM(rg1Name,
+                                                   asName,
+                                                   storageAccountOutput.Name,
+                                                   imageRef,
+                                                   out inputVM1,
+                                                   (virtualMachine) =>
+                                                   {
+                                                       virtualMachine.Priority = VirtualMachinePriorityTypes.Spot;
+                                                       virtualMachine.AvailabilitySet = null;
+                                                       virtualMachine.BillingProfile = new BillingProfile { MaxPrice = -1 };
+                                                   },
+                                                   vmSize: VirtualMachineSizeTypes.StandardA1);
+                    m_CrpClient.VirtualMachines.SimulateEviction(rg1Name, vm1.Name);
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    var deleteRg1Response = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg1Name);
+                }
                 Assert.True(passed);
             }
         }

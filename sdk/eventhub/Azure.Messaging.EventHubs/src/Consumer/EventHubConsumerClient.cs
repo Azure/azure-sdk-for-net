@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                                       EventHubConsumerClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -895,10 +895,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                         activeException = ex;
                         break;
                     }
-                    catch (Exception ex) when
-                        (ex is OutOfMemoryException
-                        || ex is StackOverflowException
-                        || ex is ThreadAbortException)
+                    catch (Exception ex) when (ex.IsFatalException())
                     {
                         channel.Writer.TryComplete(ex);
                         throw;

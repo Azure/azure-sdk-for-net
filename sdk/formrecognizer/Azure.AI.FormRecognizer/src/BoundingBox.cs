@@ -1,15 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    public class BoundingBox
+    /// <summary>
+    /// </summary>
+    public readonly struct BoundingBox
     {
-        internal BoundingBox(ICollection<float> boundingBox)
+        internal BoundingBox(IReadOnlyList<float> boundingBox)
         {
             // TODO: improve perf here?
             // https://github.com/Azure/azure-sdk-for-net/issues/10358
@@ -24,6 +27,14 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        public PointF[] Points { get; }
+        /// <summary>
+        /// </summary>
+        internal PointF[] Points { get; }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public PointF this[int index] => Points[index];
     }
 }

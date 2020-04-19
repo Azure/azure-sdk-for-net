@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     public partial class TrainingFileFilter : IUtf8JsonSerializable
     {
@@ -20,38 +20,9 @@ namespace Azure.AI.FormRecognizer.Custom
                 writer.WritePropertyName("prefix");
                 writer.WriteStringValue(Prefix);
             }
-            if (IncludeSubFolders != null)
-            {
-                writer.WritePropertyName("includeSubFolders");
-                writer.WriteBooleanValue(IncludeSubFolders.Value);
-            }
+            writer.WritePropertyName("includeSubFolders");
+            writer.WriteBooleanValue(IncludeSubFolders);
             writer.WriteEndObject();
-        }
-        internal static TrainingFileFilter DeserializeTrainingFileFilter(JsonElement element)
-        {
-            TrainingFileFilter result = new TrainingFileFilter();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("prefix"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.Prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("includeSubFolders"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result.IncludeSubFolders = property.Value.GetBoolean();
-                    continue;
-                }
-            }
-            return result;
         }
     }
 }

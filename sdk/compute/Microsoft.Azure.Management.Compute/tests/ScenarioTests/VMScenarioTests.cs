@@ -49,7 +49,7 @@ namespace Compute.Tests
         /// 
         /// To record this test case, you need to run it in region which support XMF VMSizeFamily like eastus2.
         /// </summary>
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         [Trait("Name", "TestVMScenarioOperations_ManagedDisks")]
         public void TestVMScenarioOperations_ManagedDisks()
         {
@@ -77,7 +77,7 @@ namespace Compute.Tests
             try
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "northeurope");
-                TestVMScenarioOperationsInternal("TestVMScenarioOperations_DiffDisks", vmSize: VirtualMachineSizeTypes.StandardDS5V2, hasManagedDisks: true,
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_DiffDisks", vmSize: VirtualMachineSizeTypes.StandardDS148V2, hasManagedDisks: true,
                    hasDiffDisks: true, osDiskStorageAccountType: StorageAccountTypes.StandardLRS);
             }
             finally

@@ -12,13 +12,33 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Extracted information from a single page. </summary>
     internal partial class PageResult_internal
     {
+        /// <summary> Initializes a new instance of PageResult_internal. </summary>
+        /// <param name="page"> Page number. </param>
+        internal PageResult_internal(int page)
+        {
+            Page = page;
+        }
+
+        /// <summary> Initializes a new instance of PageResult_internal. </summary>
+        /// <param name="page"> Page number. </param>
+        /// <param name="clusterId"> Cluster identifier. </param>
+        /// <param name="keyValuePairs"> List of key-value pairs extracted from the page. </param>
+        /// <param name="tables"> List of data tables extracted from the page. </param>
+        internal PageResult_internal(int page, int? clusterId, IReadOnlyList<KeyValuePair_internal> keyValuePairs, IReadOnlyList<DataTable_internal> tables)
+        {
+            Page = page;
+            ClusterId = clusterId;
+            KeyValuePairs = keyValuePairs;
+            Tables = tables;
+        }
+
         /// <summary> Page number. </summary>
-        public int Page { get; set; }
+        public int Page { get; }
         /// <summary> Cluster identifier. </summary>
-        public int? ClusterId { get; set; }
+        public int? ClusterId { get; }
         /// <summary> List of key-value pairs extracted from the page. </summary>
-        public IList<KeyValuePair_internal> KeyValuePairs { get; set; }
+        public IReadOnlyList<KeyValuePair_internal> KeyValuePairs { get; }
         /// <summary> List of data tables extracted from the page. </summary>
-        public IList<DataTable_internal> Tables { get; set; }
+        public IReadOnlyList<DataTable_internal> Tables { get; }
     }
 }

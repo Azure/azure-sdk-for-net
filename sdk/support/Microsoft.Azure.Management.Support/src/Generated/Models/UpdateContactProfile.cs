@@ -31,18 +31,18 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Initializes a new instance of the UpdateContactProfile class.
         /// </summary>
-        /// <param name="firstName">First name</param>
-        /// <param name="lastName">Last name</param>
+        /// <param name="firstName">First name.</param>
+        /// <param name="lastName">Last name.</param>
         /// <param name="preferredContactMethod">Preferred contact method.
         /// Possible values include: 'email', 'phone'</param>
-        /// <param name="primaryEmailAddress">Primary email address</param>
+        /// <param name="primaryEmailAddress">Primary email address.</param>
         /// <param name="additionalEmailAddresses">Email addresses listed will
-        /// be copied on any correspondence about the support ticket</param>
+        /// be copied on any correspondence about the support ticket.</param>
         /// <param name="phoneNumber">Phone number. This is required if
         /// preferred contact method is phone.</param>
         /// <param name="preferredTimeZone">Time zone of the user. This is the
         /// name of the time zone from [Microsoft Time Zone Index
-        /// Values](https://support.microsoft.com/en-us/help/973627/microsoft-time-zone-index-values).</param>
+        /// Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values).</param>
         /// <param name="country">Country of the user. This is the ISO 3166-1
         /// alpha-3 code.</param>
         /// <param name="preferredSupportLanguage">Preferred language of
@@ -75,13 +75,13 @@ namespace Microsoft.Azure.Management.Support.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets first name
+        /// Gets or sets first name.
         /// </summary>
         [JsonProperty(PropertyName = "firstName")]
         public string FirstName { get; set; }
 
         /// <summary>
-        /// Gets or sets last name
+        /// Gets or sets last name.
         /// </summary>
         [JsonProperty(PropertyName = "lastName")]
         public string LastName { get; set; }
@@ -94,14 +94,14 @@ namespace Microsoft.Azure.Management.Support.Models
         public string PreferredContactMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets primary email address
+        /// Gets or sets primary email address.
         /// </summary>
         [JsonProperty(PropertyName = "primaryEmailAddress")]
         public string PrimaryEmailAddress { get; set; }
 
         /// <summary>
         /// Gets or sets email addresses listed will be copied on any
-        /// correspondence about the support ticket
+        /// correspondence about the support ticket.
         /// </summary>
         [JsonProperty(PropertyName = "additionalEmailAddresses")]
         public IList<string> AdditionalEmailAddresses { get; set; }
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Support.Models
         /// <summary>
         /// Gets or sets time zone of the user. This is the name of the time
         /// zone from [Microsoft Time Zone Index
-        /// Values](https://support.microsoft.com/en-us/help/973627/microsoft-time-zone-index-values).
+        /// Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values).
         /// </summary>
         [JsonProperty(PropertyName = "preferredTimeZone")]
         public string PreferredTimeZone { get; set; }

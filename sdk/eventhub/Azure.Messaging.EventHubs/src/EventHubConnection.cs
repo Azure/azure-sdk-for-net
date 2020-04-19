@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs
                                   TokenCredential credential,
                                   EventHubConnectionOptions connectionOptions = default)
         {
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 

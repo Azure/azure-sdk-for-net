@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Azure Service Bus is a fully managed enterprise integration message broker. Service Bus can decouple applications and services. Service Bus offers a reliable and secure platform for asynchronous transfer of data and state. This client library allows for both sending and receiving events using Azure Service Bus. For more information about Service Bus, see https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview</Description>
-    <Version>5.0.0-preview.1</Version>
-    <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
+    <Description>Azure Service Bus is a fully managed enterprise integration message broker. Service Bus can decouple applications and services. Service Bus offers a reliable and secure platform for asynchronous transfer of data and state. This client library allows for both sending and receiving messages using Azure Service Bus. For more information about Service Bus, see https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview</Description>
+    <Version>7.0.0-preview.2</Version>
+    <PackageTags>Azure;Service Bus;ServiceBus;.NET;AMQP;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
     <EnableApiCompat>false</EnableApiCompat>
@@ -19,7 +19,6 @@
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <PackageReference Include="System.Reflection.TypeExtensions" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Threading.Channels" />
@@ -34,11 +33,6 @@
   <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
-
-  <!-- Import Service Bus shared source -->
-  <!--<Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Azure.Messaging.ServiceBus.Shared.Core.projitems" Label="Core" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Azure.Messaging.ServiceBus.Shared.Diagnostics.projitems" Label="Diagnostics" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.ServiceBus.Shared\src\Azure.Messaging.ServiceBus.Shared.Authorization.projitems" Label="Authorization" />-->
 
   <!-- Import Azure.Core shared source -->
   <ItemGroup>

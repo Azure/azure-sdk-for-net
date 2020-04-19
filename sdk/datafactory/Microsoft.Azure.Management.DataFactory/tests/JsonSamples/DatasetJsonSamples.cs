@@ -1855,5 +1855,25 @@ namespace DataFactory.Tests.JsonSamples
         },
     }
 }";
+
+        [JsonSample]
+        public const string SharePointOnlineListResource = @"
+{
+    name: ""SharePointOnlineListResourceDataset"",
+    properties:
+    {
+        type: ""SharePointOnlineListResource"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+            listName: ""listName""
+        }
+    }
+}
+";
     }
 }

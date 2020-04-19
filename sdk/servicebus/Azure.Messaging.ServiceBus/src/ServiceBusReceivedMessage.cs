@@ -2,50 +2,168 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///
     /// </summary>
-    public class ServiceBusReceivedMessage : ServiceBusMessage
+    public class ServiceBusReceivedMessage
     {
-        private Guid _lockTokenGuid;
+
+        internal ServiceBusMessage SentMessage { get; set; } = new ServiceBusMessage();
+
+        /// <summary>
+        /// Gets the body of the message.
+        /// </summary>
+        public ReadOnlyMemory<byte> Body => SentMessage.Body;
+
+        /// <summary>
+        /// Gets or sets the MessageId to identify the message.
+        /// </summary>
+        /// <remarks>
+        ///    The message identifier is an application-defined value that uniquely identifies the
+        ///    message and its payload. The identifier is a free-form string and can reflect a GUID
+        ///    or an identifier derived from the application context. If enabled, the
+        ///    <a href="https://docs.microsoft.com/azure/service-bus-messaging/duplicate-detection">duplicate detection</a>
+        ///    feature identifies and removes second and further submissions of messages with the
+        ///    same MessageId.
+        /// </remarks>
+        public string MessageId => SentMessage.MessageId;
+
+        /// <summary>Gets a partition key for sending a message to a partitioned entity.</summary>
+        /// <value>The partition key. Maximum length is 128 characters.</value>
+        /// <remarks>
+        ///    For <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-partitioning">partitioned entities</a>,
+        ///    setting this value enables assigning related messages to the same internal partition, so that submission sequence
+        ///    order is correctly recorded. The partition is chosen by a hash function over this value and cannot be chosen
+        ///    directly. For session-aware entities, the <see cref="SessionId"/> property overrides this value.
+        /// </remarks>
+        public string PartitionKey => SentMessage.PartitionKey;
+
+        /// <summary>Gets a partition key for sending a message into an entity via a partitioned transfer queue.</summary>
+        /// <value>The partition key. Maximum length is 128 characters. </value>
+        /// <remarks>
+        ///    If a message is sent via a transfer queue in the scope of a transaction, this value selects the
+        ///    transfer queue partition: This is functionally equivalent to <see cref="PartitionKey"/> and ensures that
+        ///    messages are kept together and in order as they are transferred.
+        ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</a>.
+        /// </remarks>
+        public string ViaPartitionKey => SentMessage.ViaPartitionKey;
+
+        /// <summary>Gets the session identifier for a session-aware entity.</summary>
+        /// <value>The session identifier. Maximum length is 128 characters.</value>
+        /// <remarks>
+        ///    For session-aware entities, this application-defined value specifies the session
+        ///    affiliation of the message. Messages with the same session identifier are subject
+        ///    to summary locking and enable exact in-order processing and demultiplexing.
+        ///    For session-unaware entities, this value is ignored.
+        ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-sessions">Message Sessions</a>.
+        /// </remarks>
+        public string SessionId => SentMessage.SessionId;
+
+        /// <summary>Gets a session identifier augmenting the <see cref="ReplyTo"/> address.</summary>
+        /// <value>Session identifier. Maximum length is 128 characters.</value>
+        /// <remarks>
+        ///    This value augments the ReplyTo information and specifies which SessionId should be set
+        ///    for the reply when sent to the reply entity. See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>
+        /// </remarks>
+        public string ReplyToSessionId => SentMessage.ReplyToSessionId;
+
+        /// <summary>
+        /// Gets the message’s "time to live" value.
+        /// </summary>
+        /// <value>The message’s time to live value.</value>
+        /// <remarks>
+        ///     This value is the relative duration after which the message expires, starting from the instant
+        ///      the message has been accepted and stored by the broker, as captured in "SystemPropertiesCollection.EnqueuedTimeUtc"/>.
+        ///      When not set explicitly, the assumed value is the DefaultTimeToLive for the respective queue or topic.
+        ///      A message-level <see cref="TimeToLive"/> value cannot be longer than the entity's DefaultTimeToLive
+        ///      setting and it is silently adjusted if it does.
+        ///      See <a href="https://docs.microsoft.com/azure/service-bus-messaging/message-expiration">Expiration</a>
+        /// </remarks>
+        public TimeSpan TimeToLive => SentMessage.TimeToLive;
+
+        /// <summary>Gets the a correlation identifier.</summary>
+        /// <value>Correlation identifier.</value>
+        /// <remarks>
+        ///    Allows an application to specify a context for the message for the purposes of correlation,
+        ///    for example reflecting the MessageId of a message that is being replied to.
+        ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
+        /// </remarks>
+        public string CorrelationId => SentMessage.CorrelationId;
+
+        /// <summary>Gets an application specific label.</summary>
+        /// <value>The application specific label</value>
+        /// <remarks>
+        ///   This property enables the application to indicate the purpose of the message to the receiver in a standardized
+        ///   fashion, similar to an email subject line. The mapped AMQP property is "subject".
+        /// </remarks>
+        public string Label => SentMessage.Label;
+
+        /// <summary>Gets the "to" address.</summary>
+        /// <value>The "to" address.</value>
+        /// <remarks>
+        ///    This property is reserved for future use in routing scenarios and presently ignored by the broker itself.
+        ///     Applications can use this value in rule-driven
+        ///     <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-auto-forwarding">auto-forward chaining</a> scenarios to indicate the
+        ///     intended logical destination of the message.
+        /// </remarks>
+        public string To => SentMessage.To;
+
+        /// <summary>Gets the content type descriptor.</summary>
+        /// <value>RFC2045 Content-Type descriptor.</value>
+        /// <remarks>
+        ///   Optionally describes the payload of the message, with a descriptor following the format of
+        ///   RFC2045, Section 5, for example "application/json".
+        /// </remarks>
+        public string ContentType => SentMessage.ContentType;
+
+        /// <summary>Gets the address of an entity to send replies to.</summary>
+        /// <value>The reply entity address.</value>
+        /// <remarks>
+        ///    This optional and application-defined value is a standard way to express a reply path
+        ///    to the receiver of the message. When a sender expects a reply, it sets the value to the
+        ///    absolute or relative path of the queue or topic it expects the reply to be sent to.
+        ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messages-payloads?#message-routing-and-correlation">Message Routing and Correlation</a>.
+        /// </remarks>
+        public string ReplyTo => SentMessage.ReplyTo;
+
+        /// <summary>Gets the date and time in UTC at which the message will be enqueued. This
+        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.</summary>
+        /// <value>The scheduled enqueue time in UTC. This value is for delayed message sending.
+        /// It is utilized to delay messages sending to a specific time in the future.</value>
+        /// <remarks> Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
+        /// depends on the queue's workload and its state.</remarks>
+        public DateTimeOffset ScheduledEnqueueTime => SentMessage.ScheduledEnqueueTime;
+
+        // TODO: Calculate the size of the properties and body
+        /// <summary>
+        /// Gets the total size of the message body in bytes.
+        /// </summary>
+        public long Size => SentMessage.Size;
+
+        /// <summary>
+        /// Gets the "user properties" bag, which can be used for custom message metadata.
+        /// </summary>
+        /// <remarks>
+        /// Only following value types are supported:
+        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
+        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
+        /// </remarks>
+        public IDictionary<string, object> Properties => SentMessage.Properties;
 
         /// <summary>
         /// User property key representing deadletter reason, when a message is received from a deadletter subqueue of an entity.
         /// </summary>
-        public const string DeadLetterReasonHeader = "DeadLetterReason";
+        internal const string DeadLetterReasonHeader = "DeadLetterReason";
 
         /// <summary>
         /// User property key representing detailed error description, when a message is received from a deadletter subqueue of an entity.
         /// </summary>
-        public static string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
-
-        /// <summary>
-        /// Creates a new message from the specified payload.
-        /// </summary>
-        /// <param name="body">The payload of the message in bytes</param>
-        internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body) :
-            base(body)
-        {
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="body"></param>
-        /// <returns></returns>
-        public static ServiceBusReceivedMessage Create(ReadOnlyMemory<byte> body) =>
-            new ServiceBusReceivedMessage(body);
-
-        /// <summary>
-        /// Creates a new message from the specified payload.
-        /// </summary>
-        public ServiceBusReceivedMessage() :
-            base()
-        {
-        }
+        internal const string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
 
         /// <summary>
         /// Gets the lock token for the current message.
@@ -114,22 +232,10 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         public DateTimeOffset EnqueuedTime { get; internal set; }
 
-        internal Guid LockTokenGuid
-        {
-            get
-            {
-                //this.ThrowIfNotReceived();
-                return _lockTokenGuid;
-            }
+        internal Guid LockTokenGuid { get; set; }
 
-            set => _lockTokenGuid = value;
-        }
+        internal object BodyObject { get; set;}
 
-        internal object BodyObject
-        {
-            get;
-            set;
-        }
         /// <summary>Gets the date and time in UTC at which the message is set to expire.</summary>
         /// <value>The message expiration time in UTC. This property is read-only.</value>
         /// <exception cref="System.InvalidOperationException">If the message has not been received. For example if a new message was created but not yet sent and received.</exception>
@@ -148,6 +254,64 @@ namespace Azure.Messaging.ServiceBus
 
                 return EnqueuedTime.Add(TimeToLive);
             }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string DeadLetterReason
+        {
+            get
+            {
+                if (Properties.TryGetValue(DeadLetterReasonHeader, out object reason))
+                {
+                    return reason as string;
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public string DeadLetterErrorDescription
+        {
+            get
+            {
+                if (Properties.TryGetValue(DeadLetterErrorDescriptionHeader, out object description))
+                {
+                    return description as string;
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified payload.
+        /// </summary>
+        /// <param name="body">The payload of the message in bytes</param>
+        internal ServiceBusReceivedMessage(ReadOnlyMemory<byte> body)
+        {
+            SentMessage = new ServiceBusMessage(body);
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified payload.
+        /// </summary>
+        internal ServiceBusReceivedMessage()
+        {
+        }
+
+        /////// <summary>
+        ///// Gets the <see cref="SystemPropertiesCollection"/>, which is used to store properties that are set by the system.
+        ///// </summary>
+        //public SystemPropertiesCollection SystemProperties { get; internal set; }
+
+        /// <summary>Returns a string that represents the current message.</summary>
+        /// <returns>The string representation of the current message.</returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.CurrentCulture, "{{MessageId:{0}}}", MessageId);
         }
     }
 }

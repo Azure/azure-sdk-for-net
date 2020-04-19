@@ -14,24 +14,28 @@ Deletes the resource group deployed for a service directory from Azure.
 
 ### Default (Default)
 ```
-Remove-TestResources.ps1 [-BaseName] <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-TestResources.ps1 [-BaseName] <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ### Default+Provisioner
 ```
-Remove-TestResources.ps1 [-BaseName] <String> -TenantId <String> -ProvisionerApplicationId <String>
- -ProvisionerApplicationSecret <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-TestResources.ps1 [-BaseName] <String> -TenantId <String> [-SubscriptionId <String>]
+ -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ResourceGroup+Provisioner
 ```
-Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> -ProvisionerApplicationId <String>
- -ProvisionerApplicationSecret <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-TestResources.ps1 -ResourceGroupName <String> -TenantId <String> [-SubscriptionId <String>]
+ -ProvisionerApplicationId <String> -ProvisionerApplicationSecret <String> [-Environment <String>] [-Force]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### ResourceGroup
 ```
-Remove-TestResources.ps1 -ResourceGroupName <String> [-Force] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-TestResources.ps1 -ResourceGroupName <String> [-Environment <String>] [-Force] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -49,7 +53,7 @@ create resources.
 
 ### EXAMPLE 1
 ```
-./Remove-TestResources.ps1 -BaseName uuid123 -Force
+Remove-TestResources.ps1 -BaseName 'uuid123' -Force
 ```
 
 Use the currently logged-in account to delete the resource group by the name of
@@ -57,7 +61,7 @@ Use the currently logged-in account to delete the resource group by the name of
 
 ### EXAMPLE 2
 ```
-eng/Remove-TestResources.ps1 `
+Remove-TestResources.ps1 `
     -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}" `
     -TenantId '$(TenantId)' `
     -ProvisionerApplicationId '$(AppId)' `
@@ -118,6 +122,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -SubscriptionId
+Optional subscription ID to use for new resources when logging in as a
+provisioner.
+You can also use Set-AzContext if not provisioning.
+
+```yaml
+Type: String
+Parameter Sets: Default+Provisioner, ResourceGroup+Provisioner
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ProvisionerApplicationId
 A service principal ID to provision test resources when a provisioner is specified.
 
@@ -144,6 +165,23 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Environment
+Name of the cloud environment.
+The default is the Azure Public Cloud
+('PublicCloud')
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: AzureCloud
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -197,7 +235,12 @@ Accept wildcard characters: False
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
 ## RELATED LINKS
 
 [New-TestResources.ps1](./New-TestResources.ps1.md)
-

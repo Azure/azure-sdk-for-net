@@ -166,12 +166,12 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         public Task<bool> LeaseStoreExistsAsync()
         {
-            return this.eventHubContainer.ExistsAsync(this.defaultRequestOptions, this.operationContext);
+            return this.eventHubContainer.ExistsAsync(null, this.operationContext);
         }
 
         public Task<bool> CreateLeaseStoreIfNotExistsAsync()
         {
-            return this.eventHubContainer.CreateIfNotExistsAsync(this.defaultRequestOptions, this.operationContext);
+            return this.eventHubContainer.CreateIfNotExistsAsync(null, this.operationContext);
         }
 
         public async Task<bool> DeleteLeaseStoreAsync()

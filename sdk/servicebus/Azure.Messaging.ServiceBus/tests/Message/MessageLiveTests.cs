@@ -19,8 +19,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                var sender = client.GetSender(scope.QueueName);
-                var receiver = client.GetReceiver(scope.QueueName);
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
 
                 /// Only following value types are supported:
                 /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
@@ -82,11 +82,67 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
                 var maxSizeMessage = new ServiceBusMessage(maxPayload);
 
-                await client.GetSender(scope.QueueName).SendAsync(maxSizeMessage);
-                var receiver = client.GetReceiver(scope.QueueName);
+                await client.CreateSender(scope.QueueName).SendAsync(maxSizeMessage);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 var receivedMaxSizeMessage = await receiver.ReceiveAsync();
                 await receiver.CompleteAsync(receivedMaxSizeMessage.LockToken);
                 Assert.AreEqual(maxPayload, receivedMaxSizeMessage.Body.ToArray());
+            }
+        }
+
+        [Test]
+        public async Task CreateFromReceivedMessageCopiesProperties()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var msg = new ServiceBusMessage();
+                msg.Body = GetRandomBuffer(100);
+                msg.ContentType = "contenttype";
+                msg.CorrelationId = "correlationid";
+                msg.Label = "label";
+                msg.MessageId = "messageId";
+                msg.PartitionKey = "key";
+                msg.Properties.Add("testProp", "my prop");
+                msg.ReplyTo = "replyto";
+                msg.ReplyToSessionId = "replytosession";
+                msg.ScheduledEnqueueTime = DateTimeOffset.Now;
+                msg.SessionId = "key";
+                msg.TimeToLive = TimeSpan.FromSeconds(60);
+                msg.To = "to";
+                await sender.SendAsync(msg);
+
+                var receiver = await client.CreateSessionReceiverAsync(
+                    scope.QueueName,
+                    new ServiceBusReceiverOptions
+                    {
+                        ReceiveMode = ReceiveMode.ReceiveAndDelete
+                    });
+                var received = await receiver.ReceiveAsync();
+                AssertMessagesEqual(msg, received);
+                var toSend = ServiceBusMessage.CreateFrom(received);
+                AssertMessagesEqual(toSend, received);
+
+                void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
+                {
+                    Assert.IsTrue(received.Body.ToArray().SequenceEqual(sentMessage.Body.ToArray()));
+                    Assert.AreEqual(received.ContentType, sentMessage.ContentType);
+                    Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
+                    Assert.AreEqual(received.Label, sentMessage.Label);
+                    Assert.AreEqual(received.ContentType, sentMessage.ContentType);
+                    Assert.AreEqual(received.CorrelationId, sentMessage.CorrelationId);
+                    Assert.AreEqual(received.MessageId, sentMessage.MessageId);
+                    Assert.AreEqual(received.PartitionKey, sentMessage.PartitionKey);
+                    Assert.AreEqual((string)received.Properties["testProp"], (string)sentMessage.Properties["testProp"]);
+                    Assert.AreEqual(received.ReplyTo, sentMessage.ReplyTo);
+                    Assert.AreEqual(received.ReplyToSessionId, sentMessage.ReplyToSessionId);
+                    Assert.AreEqual(received.ScheduledEnqueueTime.UtcDateTime.Second, sentMessage.ScheduledEnqueueTime.UtcDateTime.Second);
+                    Assert.AreEqual(received.SessionId, sentMessage.SessionId);
+                    Assert.AreEqual(received.TimeToLive, sentMessage.TimeToLive);
+                    Assert.AreEqual(received.To, sentMessage.To);
+                    Assert.AreEqual(received.ViaPartitionKey, sentMessage.ViaPartitionKey);
+                }
             }
         }
     }

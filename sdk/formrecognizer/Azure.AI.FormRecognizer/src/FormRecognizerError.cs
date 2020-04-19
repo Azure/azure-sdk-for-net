@@ -5,8 +5,19 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenSchema("ErrorInformation")]
+    /// <summary>
+    /// </summary>
+    [CodeGenModel("ErrorInformation")]
     public partial class FormRecognizerError
     {
+        /// <summary>
+        /// </summary>
+        [CodeGenMember("Code")]
+        public string Code { get; internal set; }
+
+        /// <summary>
+        /// </summary>
+        [CodeGenMember("Message")]
+        public string Message { get; internal set; }
     }
 }

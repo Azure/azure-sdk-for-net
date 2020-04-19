@@ -172,6 +172,30 @@ namespace Azure.Storage.Files.DataLake.Models
         public DateTimeOffset AccessTierChangedOn { get; internal set; }
 
         /// <summary>
+        /// If this path represents a directory.
+        /// </summary>
+        public bool IsDirectory
+        {
+            get => Metadata.TryGetValue(Constants.DataLake.IsDirectoryKey, out string isDirectoryValue)
+                && bool.TryParse(isDirectoryValue, out bool isDirectory)
+                && isDirectory;
+
+            internal set
+            {
+                // True
+                if (value)
+                {
+                    Metadata[Constants.DataLake.IsDirectoryKey] = bool.TrueString.ToLowerInvariant();
+                }
+                // False
+                else
+                {
+                    Metadata.Remove(Constants.DataLake.IsDirectoryKey);
+                }
+            }
+        }
+
+        /// <summary>
         /// Prevent direct instantiation of PathProperties instances.
         /// You can use DataLakeModelFactory.PathProperties instead.
         /// </summary>

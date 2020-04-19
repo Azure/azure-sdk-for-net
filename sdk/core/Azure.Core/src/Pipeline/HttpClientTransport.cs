@@ -170,11 +170,11 @@ namespace Azure.Core.Pipeline
             private readonly HttpRequestMessage _requestMessage;
 
             private PipelineContentAdapter? _requestContent;
+            private string? _clientRequestId;
 
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
-                ClientRequestId = Guid.NewGuid().ToString();
             }
 
             public override RequestMethod Method
@@ -185,7 +185,15 @@ namespace Azure.Core.Pipeline
 
             public override RequestContent? Content { get; set; }
 
-            public override string ClientRequestId { get; set; }
+            public override string ClientRequestId
+            {
+                get => _clientRequestId ??= Guid.NewGuid().ToString();
+                set
+                {
+                    Argument.AssertNotNull(value, nameof(value));
+                    _clientRequestId = value;
+                }
+            }
 
             protected internal override void AddHeader(string name, string value)
             {

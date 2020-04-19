@@ -188,6 +188,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to The event batch is currently being used in communication with the Event Hubs service; events may not be added until the active operation is complete..
+        /// </summary>
+        internal static string EventBatchIsLocked
+        {
+            get
+            {
+                return ResourceManager.GetString("EventBatchIsLocked", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Could not create a reader of events for Event Hub: &apos;{0}&apos;, partition: &apos;{1}&apos;, consumer group: &apos;{2}&apos;..
         /// </summary>
         internal static string FailedToCreateReader
@@ -239,6 +250,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("InvalidEventPositionForFilter", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The value '{0}' is not a well-formed Event Hubs fully qualified namespace..
+        /// </summary>
+        internal static string InvalidFullyQualifiedNamespace
+        {
+            get
+            {
+                return ResourceManager.GetString("InvalidFullyQualifiedNamespace", resourceCulture);
             }
         }
 
@@ -584,6 +606,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Executing a load balancing cycle..
+        /// </summary>
+        internal static string OperationLoadBalancing
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationLoadBalancing", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Attempting to claim a new ownership in the storage service..
         /// </summary>
         internal static string OperationClaimOwnership
@@ -617,6 +650,28 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Performing the main Event Processor loop..
+        /// </summary>
+        internal static string OperationEventProcessingLoop
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationEventProcessingLoop", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Surrendering ownership of a partition..
+        /// </summary>
+        internal static string OperationSurrenderOwnership
+        {
+            get
+            {
+                return ResourceManager.GetString("OperationSurrenderOwnership", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to The last enqueued event properties cannot be read when an event is not available..
         /// </summary>
         internal static string CannotReadLastEnqueuedEventPropertiesWithoutEvent
@@ -624,6 +679,17 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("CannotReadLastEnqueuedEventPropertiesWithoutEvent", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to One or more exceptions occured during event processing.  Please see the inner exceptions for more detail..
+        /// </summary>
+        internal static string AggregateEventProcessingExceptionMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("AggregateEventProcessingExceptionMessage", resourceCulture);
             }
         }
     }
