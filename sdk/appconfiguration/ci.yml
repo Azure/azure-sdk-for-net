@@ -11,6 +11,8 @@ resources:
       type: git
       name: internal/azure-sdk-build-tools
 
+
+
 trigger:
   branches:
     include:
