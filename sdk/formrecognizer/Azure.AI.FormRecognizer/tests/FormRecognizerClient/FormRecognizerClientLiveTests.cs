@@ -23,7 +23,13 @@ namespace Azure.AI.FormRecognizer.Tests
     [LiveOnly]
     public class FormRecognizerClientLiveTests : ClientTestBase
     {
+        private const string EndpointEnvironmentVariable = TestEnvironment.EndpointEnvironmentVariableName;
+        private const string KeyEnvironmentVariable = TestEnvironment.ApiKeyEnvironmentVariableName;
+        private const string BlobContainerSasUrlEnvironmentVariable = TestEnvironment.BlobContainerSasUrlEnvironmentVariableName;
+
         private readonly Uri _containerUri;
+        private readonly Uri _endpoint;
+        private readonly AzureKeyCredential _credential;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
@@ -31,7 +37,12 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
-            _containerUri = new Uri(Environment.GetEnvironmentVariable(TestEnvironment.BlobContainerSasUrlEnvironmentVariableName));
+            _containerUri = new Uri(Environment.GetEnvironmentVariable(BlobContainerSasUrlEnvironmentVariable));
+            _endpoint = new Uri(Environment.GetEnvironmentVariable(EndpointEnvironmentVariable));
+            _credential = new AzureKeyCredential(Environment.GetEnvironmentVariable(KeyEnvironmentVariable));
+
+            Assert.NotNull(_endpoint);
+            Assert.NotNull(_credential);
         }
 
         /// <summary>
@@ -41,17 +52,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         private FormRecognizerClient CreateInstrumentedClient()
         {
-            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.EndpointEnvironmentVariableName);
-            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.ApiKeyEnvironmentVariableName);
-
-            Assert.NotNull(endpointEnvironmentVariable);
-            Assert.NotNull(keyEnvironmentVariable);
-
-            var endpoint = new Uri(endpointEnvironmentVariable);
-            var credential = new AzureKeyCredential(keyEnvironmentVariable);
-            var client = new FormRecognizerClient(endpoint, credential);
-
-            return InstrumentClient(client);
+            return InstrumentClient(new FormRecognizerClient(_endpoint, _credential));
         }
 
         /// <summary>
@@ -238,23 +239,19 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeCustomFormsLabeled(bool useStream)
         {
             var client = CreateInstrumentedClient();
-
-            FormTrainingClient trainingClient = client.GetFormTrainingClient();
-            TrainingOperation trainedModel = await trainingClient.StartTrainingAsync(_containerUri, true);
-            await trainedModel.WaitForCompletionAsync();
-            Assert.IsTrue(trainedModel.HasValue);
-
             RecognizeCustomFormsOperation operation;
+
+            string modelId = await GetModelIdAsync(true);
 
             if (useStream)
             {
                 using var stream = new FileStream(TestEnvironment.FormPath, FileMode.Open);
-                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.Value.ModelId, stream);
+                operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
             }
             else
             {
                 var uri = new Uri(TestEnvironment.FormUri);
-                operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.Value.ModelId, uri);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri);
             }
 
             await operation.WaitForCompletionAsync();
@@ -289,6 +286,22 @@ namespace Azure.AI.FormRecognizer.Tests
             FormRecognizerClient client = CreateInstrumentedClient();
             FormTrainingClient trainingClient = client.GetFormTrainingClient();
             Assert.IsNotNull(trainingClient);
+        }
+
+        /// <summary>
+        ///  For testing purposes, we are training our models using the client library functionalities.
+        ///  Please note that models can also be trained using a graphical user interface
+        ///  such as the Form Recognizer Labeling Tool found here:
+        ///  <a href="'https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
+        /// </summary>
+        private async Task<string> GetModelIdAsync(bool labeled = false)
+        {
+            FormTrainingClient trainingClient = InstrumentClient(new FormTrainingClient(_endpoint, _credential));
+            TrainingOperation trainedModel = await trainingClient.StartTrainingAsync(_containerUri, labeled);
+            await trainedModel.WaitForCompletionAsync();
+            Assert.IsTrue(trainedModel.HasValue);
+
+            return trainedModel.Value.ModelId;
         }
     }
 }
