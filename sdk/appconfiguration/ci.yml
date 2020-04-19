@@ -33,6 +33,7 @@ pr:
     - sdk/appconfiguration/
 
     
+
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
