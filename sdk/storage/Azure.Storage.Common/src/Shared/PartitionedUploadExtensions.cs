@@ -38,10 +38,19 @@ namespace Azure.Storage.Shared
             return false;
         }
 
+        //internal static async IAsyncEnumerable<PartitionViewStream> GetStreamedBlocksAsync(Stream stream,
+        //    long blockSize,
+        //    bool async,
+        //    ArrayPool<byte> arrayPool,
+        //    [EnumeratorCancellation]CancellationToken cancellationToken)
+        //{
+
+        //}
+
         /// <summary>
-        /// Partition a stream into a series of blocks using our ArrayPool.
+        /// Partition a stream into a series of blocks buffered as needed by an array pool.
         /// </summary>
-        internal static async IAsyncEnumerable<PooledMemoryStream> GetBlocksAsync(
+        internal static async IAsyncEnumerable<PooledMemoryStream> GetBufferedBlocksAsync(
             Stream stream,
             long blockSize,
             bool async,
@@ -53,9 +62,22 @@ namespace Azure.Storage.Shared
 
             // The minimum amount of data we'll accept from a stream before
             // splitting another block.
-            long minimumBlockSize = blockSize / 2;
+            long acceptableBlockSize = blockSize / 2;
+
+            // if we know the data length, assert boundaries before spending resources uploading beyond service capabilities
+            if (stream.CanSeek)
+            {
+                long minRequiredBlockSize = (long)Math.Ceiling((double)stream.Length / Constants.Blob.Block.MaxBlocks);
+                if (blockSize < minRequiredBlockSize)
+                {
+                    throw new ArgumentException($"Max block size {blockSize} not large enough for Storage to hold {stream.Length}.");
+                }
+                // bring min up to our min required by the service
+                acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
+            }
 
             // Read the next block
+            bool streamFinished = false;
             do
             {
                 try
@@ -89,8 +111,10 @@ namespace Azure.Storage.Shared
                     //    // until we can't read any more
                     //} while (offset < minimumBlockSize && read != 0);
 
-                    var partition = await PooledMemoryStream.BufferStreamPartitionInternal(
+                    PooledMemoryStream partition;
+                    (partition, streamFinished) = await PooledMemoryStream.BufferStreamPartitionInternal(
                         stream,
+                        acceptableBlockSize,
                         blockSize,
                         absolutePosition,
                         arrayPool,
@@ -126,7 +150,7 @@ namespace Azure.Storage.Shared
                 }
 
                 // Continue reading blocks until we've exhausted the stream
-            } while (read != 0);
+            } while (!streamFinished);
         }
     }
 }

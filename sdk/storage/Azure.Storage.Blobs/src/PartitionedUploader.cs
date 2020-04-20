@@ -74,7 +74,7 @@ namespace Azure.Storage.Blobs
             if (transferOptions.InitialTransferLength.HasValue
                 && transferOptions.InitialTransferLength.Value > 0)
             {
-                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
+                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferSize.Value, Constants.Blob.Block.MaxUploadBytes);
             }
             else
             {
@@ -218,7 +218,7 @@ namespace Azure.Storage.Blobs
                 List<string> blockIds = new List<string>();
 
                 // Partition the stream into individual blocks and stage them
-                foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
                         content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
                     // Dispose the block after the loop iterates and return its memory to our ArrayPool
@@ -291,7 +291,7 @@ namespace Azure.Storage.Blobs
                 List<Task> runningTasks = new List<Task>();
 
                 // Partition the stream into individual blocks
-                await foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                await foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
                     content,
                     blockSize,
                     async: true,

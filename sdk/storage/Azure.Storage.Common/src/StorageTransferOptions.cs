@@ -12,10 +12,9 @@ namespace Azure.Storage
     public struct StorageTransferOptions : IEquatable<StorageTransferOptions>
     {
         /// <summary>
-        /// The maximum length of an transfer in bytes. This value is capped at
-        /// <see cref="int.MaxValue"/>, which is not the largest value supported
-        /// by Azure Storage. Use <see cref="MaximumTransferSize"/> for full
-        /// access of supported values.
+        /// The maximum length of an transfer in bytes. This property is a backwards-compatible
+        /// facade for <see cref="MaximumTransferSize"/>, which supports long values. Use
+        /// <see cref="MaximumTransferSize"/> for full access of supported values.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? MaximumTransferLength
@@ -37,9 +36,9 @@ namespace Azure.Storage
         /// <summary>
         /// The size of the first range request in bytes. Blobs smaller than this limit will
         /// be downloaded in a single request. Blobs larger than this limit will continue being
-        /// downloaded in chunks of size <see cref="MaximumTransferSize"/>. This value is capped
-        /// at <see cref="int.MaxValue"/>, which is not the largest value supported by Azure
-        /// Storage. Use <see cref="InitialTransferSize"/> for full access of supported values.
+        /// downloaded in chunks of size <see cref="MaximumTransferSize"/>. This property is a
+        /// backwards-compatible facade for <see cref="MaximumTransferSize"/>, which supports
+        /// long values. Use <see cref="InitialTransferSize"/> for full access of supported values.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? InitialTransferLength
