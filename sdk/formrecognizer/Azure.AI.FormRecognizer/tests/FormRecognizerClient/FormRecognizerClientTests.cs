@@ -25,18 +25,23 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         /// <summary>
+        /// Creates a fake <see cref="FormRecognizerClient" />.
+        /// </summary>
+        /// <returns>The fake <see cref="FormRecognizerClient" />.</returns>
+        private FormRecognizerClient CreateClient()
+        {
+            var fakeEndpoint = new Uri("http://localhost");
+            var fakeCredential = new AzureKeyCredential("fakeKey");
+
+            return new FormRecognizerClient(fakeEndpoint, fakeCredential);
+        }
+
+        /// <summary>
         /// Creates a fake <see cref="FormRecognizerClient" /> and instruments it to make use of the Azure Core
         /// Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient()
-        {
-            var fakeEndpoint = new Uri("http://localhost");
-            var fakeCredential = new AzureKeyCredential("fakeKey");
-            var client = new FormRecognizerClient(fakeEndpoint, fakeCredential);
-
-            return InstrumentClient(client);
-        }
+        private FormRecognizerClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
 
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
@@ -219,14 +224,13 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Failing due to an issue with the Core test framework.")]
         public void StartRecognizeCustomFormsValidatesTheModelIdFormat()
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateClient();
             using var stream = new MemoryStream(Array.Empty<byte>());
             var options = new RecognizeOptions { ContentType = ContentType.Jpeg };
 
-            Assert.ThrowsAsync<FormatException>(async () => await client.StartRecognizeCustomFormsAsync("1975-04-04", stream, options));
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsAsync("1975-04-04", stream, options));
         }
 
         /// <summary>
@@ -281,14 +285,13 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        [Ignore("Failing due to an issue with the Core test framework.")]
         public void StartRecognizeCustomFormsFromUriValidatesTheModelIdFormat()
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateClient();
             var uri = new Uri("https://thatistheques.ti.on");
             var options = new RecognizeOptions { ContentType = ContentType.Jpeg };
 
-            Assert.ThrowsAsync<FormatException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("1975-04-04", uri, options));
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("1975-04-04", uri, options));
         }
 
         /// <summary>

@@ -231,10 +231,12 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(formFileStream, nameof(formFileStream));
 
+            Guid guid = ValidateModelId(modelId, nameof(modelId));
+
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
             return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
@@ -253,10 +255,12 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(formFileUri, nameof(formFileUri));
 
+            Guid guid = ValidateModelId(modelId, nameof(modelId));
+
             recognizeOptions ??= new RecognizeOptions();
 
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(guid, includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
             return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
@@ -275,10 +279,12 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(formFileStream, nameof(formFileStream));
 
+            Guid guid = ValidateModelId(modelId, nameof(modelId));
+
             recognizeOptions ??= new RecognizeOptions();
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(guid, contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
             return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
@@ -297,10 +303,12 @@ namespace Azure.AI.FormRecognizer
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(formFileUri, nameof(formFileUri));
 
+            Guid guid = ValidateModelId(modelId, nameof(modelId));
+
             recognizeOptions ??= new RecognizeOptions();
 
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
-            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
+            ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(guid, includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
             return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
         }
 
@@ -317,6 +325,30 @@ namespace Azure.AI.FormRecognizer
         }
 
         #endregion Training client
+
+        /// <summary>
+        /// Used as part of argument validation. Attempts to create a <see cref="Guid"/> from a <c>string</c> and
+        /// throws an <see cref="ArgumentException"/> in case of failure.
+        /// </summary>
+        /// <param name="modelId">The model identifier to be parsed into a <see cref="Guid"/>.</param>
+        /// <param name="paramName">The original parameter name of the <paramref name="modelId"/>. Used to create exceptions in case of failure.</param>
+        /// <returns>The <see cref="Guid"/> instance created from the <paramref name="modelId"/>.</returns>
+        /// <exception cref="ArgumentException">Happens when parsing fails.</exception>
+        private static Guid ValidateModelId(string modelId, string paramName)
+        {
+            Guid guid;
+
+            try
+            {
+                guid = new Guid(modelId);
+            }
+            catch (Exception ex) when (ex is FormatException || ex is OverflowException)
+            {
+                throw new ArgumentException($"The {paramName} must be a valid GUID.", paramName, ex);
+            }
+
+            return guid;
+        }
 
         /// <summary>
         /// Used as part of argument validation. Detects the <see cref="ContentType"/> of a stream and
