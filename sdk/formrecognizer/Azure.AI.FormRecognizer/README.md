@@ -9,30 +9,51 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 
 ## Getting started
 
-### Prerequisites
-* An [Azure subscription][azure_sub].
-* An existing Form Recognizer resource. If you need to create the resource, you can use the [Azure Portal][azure_portal] or [Azure CLI][azure_cli].
-
-If you use the Azure CLI, replace `<your-resource-group-name>`, `<your-resource-name>`, `<location>`, and `<sku>` with your values:
-
-```PowerShell
-az cognitiveservices account create --kind FormRecognizer --resource-group <your-resource-group-name> --name <your-resource-name> --location <location> --sku <sku>
-``` -->
-
-<!-- 
 ### Install the package
-Install the Azure Form Recognizer client library for .NET with [NuGet][nuget].  To use the [.NET CLI](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-dotnet-cli), run the following command from PowerShell in the directory that contains your project file:
+Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
 dotnet add package Azure.AI.FormRecognizer --version 1.0.0-preview.1
 ``` 
-For other installation methods, please see the package information on [NuGet][nuget].
 
+### Prerequisites
+* An [Azure subscription][azure_sub].
+* An existing Cognitive Services or Form Recognizer resource.
+
+### Create a Cognitive Services or Form Recognizer resource
+Form Recognizer supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Form Recognizer access only, create a Form Recognizer resource.
+
+You can create either resource using: 
+
+**Option 1:** [Azure Portal][cognitive_resource_portal].
+
+**Option 2:** [Azure CLI][cognitive_resource_cli]. 
+
+
+Below is an example of how you can create a Form Recognizer resource using the CLI:
+
+```PowerShell
+# Create a new resource group to hold the form recognizer resource -
+# if using an existing resource group, skip this step
+az group create --name <your-resource-name> --location <location>
+```
+
+```PowerShell
+# Create form recognizer 
+az cognitiveservices account create \
+    --name <your-resource-name> \
+    --resource-group <your-resource-group-name> \
+    --kind FormRecognizer \
+    --sku <sku> \
+    --location <location> \
+    --yes
+```
+For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
 ### Authenticate a Form Recognizer client
-In order to interact with the Form Recognizer service, you'll need to create an instance of the `FormRecognizerClient` class.  You will need an **endpoint** and an **API key** to instantiate a client object.  
+In order to interact with the Form Recognizer service, you'll need to create an instance of the `FormRecognizerClient`[form_recognizer_client_class] class.  You will need an **endpoint** and an **API key** to instantiate a client object.  
 
-#### Get Subscription Key
+#### Get API Key
 
 You can obtain the endpoint and API key from the resource information in the [Azure Portal][azure_portal].
 
@@ -237,15 +258,15 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftextanalytics%2FAzure.AI.TextAnalytics%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fformrecognizer%2FAzure.AI.FormRecognizer%2FREADME.png)
 
 
 <!-- LINKS -->
 [formreco_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/src
 [formreco_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/
-[formreco_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
-<!-- [formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics -->
-<!-- [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples -->
+[formreco_refdocs]: https://aka.ms/azsdk-net-formrecognizer-ref-docs
+[formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer -->
+[formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview
 [cognitive_resource]: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account
 
