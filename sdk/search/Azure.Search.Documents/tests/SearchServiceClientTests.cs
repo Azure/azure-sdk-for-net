@@ -174,6 +174,62 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task UpdateIndex()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+
+            string indexName = Recording.Random.GetName();
+            SearchIndex initialIndex = SearchResources.GetHotelIndex(indexName);
+
+            SearchServiceClient client = resources.GetServiceClient();
+            SearchIndex createdIndex = await client.CreateIndexAsync(initialIndex);
+
+            string analyzerName = "asciiTags";
+
+            // TODO: Will need to change when https://github.com/Azure/autorest.csharp/issues/521 is fixed.
+            createdIndex.Analyzers = new List<Analyzer>
+            {
+                new PatternAnalyzer(analyzerName)
+                {
+                    Pattern = @"[0-9a-z]+",
+                    Flags =
+                    {
+                        RegexFlags.CaseInsensitive,
+                        RegexFlags.Multiline,
+                    },
+                    Stopwords = new List<string>
+                    {
+                        "a",
+                        "and",
+                        "the",
+                    },
+                },
+            };
+
+            createdIndex.Fields.Add(
+                new SearchableField("asciiTags", collection: true)
+                {
+                    Analyzer = analyzerName,
+                    IsFacetable = true,
+                    IsFilterable = true,
+                });
+
+            SearchIndex updatedIndex = await client.CreateOrUpdateIndexAsync(
+                createdIndex,
+                allowIndexDowntime: true,
+                accessConditions: new MatchConditions { IfMatch = new ETag(createdIndex.ETag) });
+
+            Assert.AreEqual(createdIndex.Name, updatedIndex.Name);
+            Assert.That(updatedIndex.Fields, Is.EqualTo(updatedIndex.Fields).Using(SearchFieldComparer.Shared));
+            Assert.AreEqual(createdIndex.Suggesters.Count, updatedIndex.Suggesters.Count);
+            Assert.AreEqual(createdIndex.Suggesters[0].Name, updatedIndex.Suggesters[0].Name);
+            Assert.AreEqual(createdIndex.ScoringProfiles.Count, updatedIndex.ScoringProfiles.Count);
+            Assert.AreEqual(createdIndex.ScoringProfiles[0].Name, updatedIndex.ScoringProfiles[0].Name);
+            Assert.AreEqual(createdIndex.Analyzers.Count, updatedIndex.Analyzers.Count);
+            Assert.AreEqual(createdIndex.Analyzers[0].Name, updatedIndex.Analyzers[0].Name);
+        }
+
+        [Test]
         public void GetIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
