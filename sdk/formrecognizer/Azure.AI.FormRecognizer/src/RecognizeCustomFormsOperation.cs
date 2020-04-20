@@ -112,35 +112,7 @@ namespace Azure.AI.FormRecognizer.Models
                     _hasCompleted = true;
                     _value = new List<RecognizedForm>();
 
-                    IReadOnlyList<FormRecognizerError> errorList = update.Value.AnalyzeResult.Errors;
-
-                    string errorMessage = default;
-                    string errorCode = default;
-
-                    if (errorList.Count > 0)
-                    {
-                        var firstError = errorList[0];
-
-                        errorMessage = firstError.Message;
-                        errorCode = firstError.Code;
-                    }
-                    else
-                    {
-                        errorMessage = "RecognizeCustomForms operation failed.";
-                    }
-
-                    var errorInfo = new Dictionary<string, string>();
-                    int index = 0;
-
-                    foreach (var error in errorList)
-                    {
-                        errorInfo.Add($"error-{index}", $"{error.Code}: {error.Message}");
-                        index++;
-                    }
-
-                    throw async
-                        ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
-                        : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
+                    throw await CreateExceptionForFailedOperationAsync(async, _diagnostics, _response, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
                 }
             }
 
@@ -172,6 +144,37 @@ namespace Azure.AI.FormRecognizer.Models
                 forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return forms;
+        }
+
+        private static async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, ClientDiagnostics diagnostics, Response response, IReadOnlyList<FormRecognizerError> errors)
+        {
+            string errorMessage = default;
+            string errorCode = default;
+
+            if (errors.Count > 0)
+            {
+                var firstError = errors[0];
+
+                errorMessage = firstError.Message;
+                errorCode = firstError.Code;
+            }
+            else
+            {
+                errorMessage = "RecognizeCustomForms operation failed.";
+            }
+
+            var errorInfo = new Dictionary<string, string>();
+            int index = 0;
+
+            foreach (var error in errors)
+            {
+                errorInfo.Add($"error-{index}", $"{error.Code}: {error.Message}");
+                index++;
+            }
+
+            return async
+                ? await diagnostics.CreateRequestFailedExceptionAsync(response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
+                : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
         }
     }
 }
