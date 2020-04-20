@@ -219,6 +219,21 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
+        [Ignore("Failing due to an issue with the Core test framework.")]
+        public void StartRecognizeCustomFormsValidatesTheModelIdFormat()
+        {
+            var client = CreateInstrumentedClient();
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            var options = new RecognizeOptions { ContentType = ContentType.Jpeg };
+
+            Assert.ThrowsAsync<FormatException>(async () => await client.StartRecognizeCustomFormsAsync("1975-04-04", stream, options));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
         public void StartRecognizeCustomFormsRespectsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
@@ -259,6 +274,21 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedClient();
             Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", null));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        [Ignore("Failing due to an issue with the Core test framework.")]
+        public void StartRecognizeCustomFormsFromUriValidatesTheModelIdFormat()
+        {
+            var client = CreateInstrumentedClient();
+            var uri = new Uri("https://thatistheques.ti.on");
+            var options = new RecognizeOptions { ContentType = ContentType.Jpeg };
+
+            Assert.ThrowsAsync<FormatException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("1975-04-04", uri, options));
         }
 
         /// <summary>
