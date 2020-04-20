@@ -6,5 +6,7 @@ namespace Azure.AI.FormRecognizer
     internal static class Constants
     {
         public const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+
+        public const float DefaultConfidenceValue = 1.0f;
     }
 }
