@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public static StorageTestEnvironment Instance { get; } = new StorageTestEnvironment();
 
         /// <summary>The environment variable value for the storage account connection string, lazily evaluated.</summary>
-        private string StorageAccountConnectionString => GetVariable("EVENT_PROCESSOR_STORAGE_CONNECTION_STRING");
+        private string StorageAccountConnectionString => GetOptionalVariable("EVENT_PROCESSOR_STORAGE_CONNECTION_STRING");
 
         /// <summary>The active Azure storage connection for this test run, lazily created.</summary>
         private readonly Lazy<StorageProperties> ActiveStorageAccount;
