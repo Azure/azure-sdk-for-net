@@ -103,7 +103,7 @@ namespace Azure.AI.FormRecognizer.Training
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Guid guid = ValidateModelId(modelId, nameof(modelId));
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
             Response<Model_internal> response = ServiceClient.GetCustomModel(guid, includeKeys: true, cancellationToken);
             return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
@@ -120,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Training
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Guid guid = ValidateModelId(modelId, nameof(modelId));
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
             Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(guid, includeKeys: true, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
@@ -137,7 +137,7 @@ namespace Azure.AI.FormRecognizer.Training
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Guid guid = ValidateModelId(modelId, nameof(modelId));
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
             return ServiceClient.DeleteCustomModel(guid, cancellationToken);
         }
@@ -153,7 +153,7 @@ namespace Azure.AI.FormRecognizer.Training
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Guid guid = ValidateModelId(modelId, nameof(modelId));
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
 
             return await ServiceClient.DeleteCustomModelAsync(guid, cancellationToken).ConfigureAwait(false);
         }
@@ -207,29 +207,5 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         #endregion
-
-        /// <summary>
-        /// Used as part of argument validation. Attempts to create a <see cref="Guid"/> from a <c>string</c> and
-        /// throws an <see cref="ArgumentException"/> in case of failure.
-        /// </summary>
-        /// <param name="modelId">The model identifier to be parsed into a <see cref="Guid"/>.</param>
-        /// <param name="paramName">The original parameter name of the <paramref name="modelId"/>. Used to create exceptions in case of failure.</param>
-        /// <returns>The <see cref="Guid"/> instance created from the <paramref name="modelId"/>.</returns>
-        /// <exception cref="ArgumentException">Happens when parsing fails.</exception>
-        private static Guid ValidateModelId(string modelId, string paramName)
-        {
-            Guid guid;
-
-            try
-            {
-                guid = new Guid(modelId);
-            }
-            catch (Exception ex) when (ex is FormatException || ex is OverflowException)
-            {
-                throw new ArgumentException($"The {paramName} must be a valid GUID.", paramName, ex);
-            }
-
-            return guid;
-        }
     }
 }
