@@ -23,12 +23,26 @@ namespace Azure.AI.FormRecognizer.Tests
     [LiveOnly]
     public class FormRecognizerClientLiveTests : ClientTestBase
     {
+        private const string EndpointEnvironmentVariable = TestEnvironment.EndpointEnvironmentVariableName;
+        private const string KeyEnvironmentVariable = TestEnvironment.ApiKeyEnvironmentVariableName;
+        private const string BlobContainerSasUrlEnvironmentVariable = TestEnvironment.BlobContainerSasUrlEnvironmentVariableName;
+
+        private readonly Uri _containerUri;
+        private readonly Uri _endpoint;
+        private readonly AzureKeyCredential _credential;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
+            _containerUri = new Uri(Environment.GetEnvironmentVariable(BlobContainerSasUrlEnvironmentVariable));
+            _endpoint = new Uri(Environment.GetEnvironmentVariable(EndpointEnvironmentVariable));
+            _credential = new AzureKeyCredential(Environment.GetEnvironmentVariable(KeyEnvironmentVariable));
+
+            Assert.NotNull(_endpoint);
+            Assert.NotNull(_credential);
         }
 
         /// <summary>
@@ -38,17 +52,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         private FormRecognizerClient CreateInstrumentedClient()
         {
-            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.EndpointEnvironmentVariableName);
-            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.ApiKeyEnvironmentVariableName);
-
-            Assert.NotNull(endpointEnvironmentVariable);
-            Assert.NotNull(keyEnvironmentVariable);
-
-            var endpoint = new Uri(endpointEnvironmentVariable);
-            var credential = new AzureKeyCredential(keyEnvironmentVariable);
-            var client = new FormRecognizerClient(endpoint, credential);
-
-            return InstrumentClient(client);
+            return InstrumentClient(new FormRecognizerClient(_endpoint, _credential));
         }
 
         /// <summary>
@@ -251,12 +255,79 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
         }
 
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and perform analysis based on a custom labeled model.
+        /// </summary>
+        [Test]
+        [TestCase(true)]
+        [TestCase(false, Ignore = "The form has not been uploaded to GitHub yet.")]
+        public async Task StartRecognizeCustomFormsLabeled(bool useStream)
+        {
+            var client = CreateInstrumentedClient();
+            RecognizeCustomFormsOperation operation;
+
+            string modelId = await GetModelIdAsync(true);
+
+            if (useStream)
+            {
+                using var stream = new FileStream(TestEnvironment.FormPath, FileMode.Open);
+                operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+            }
+            else
+            {
+                var uri = new Uri(TestEnvironment.FormUri);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri);
+            }
+
+            await operation.WaitForCompletionAsync();
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.GreaterOrEqual(operation.Value.Count, 1);
+
+            RecognizedForm form = operation.Value.FirstOrDefault();
+
+            //testing that we shuffle things around correctly so checking only once per property
+
+            Assert.AreEqual("custom:form", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+            Assert.AreEqual(1, form.Pages.Count);
+            Assert.AreEqual(2200, form.Pages[0].Height);
+            Assert.AreEqual(1, form.Pages[0].PageNumber);
+            Assert.AreEqual(LengthUnit.Pixel, form.Pages[0].Unit);
+            Assert.AreEqual(1700, form.Pages[0].Width);
+
+            Assert.IsNotNull(form.Fields);
+            var name = "PurchaseOrderNumber";
+            Assert.IsNotNull(form.Fields[name]);
+            Assert.IsNotNull(form.Fields[name].Confidence);
+            Assert.AreEqual(FieldValueType.StringType, form.Fields[name].Value.Type);
+            Assert.AreEqual("948284", form.Fields[name].ValueText.Text);
+        }
+
         [Test]
         public void CreateFormTrainingClientFromFormRecognizerClient()
         {
             FormRecognizerClient client = CreateInstrumentedClient();
             FormTrainingClient trainingClient = client.GetFormTrainingClient();
             Assert.IsNotNull(trainingClient);
+        }
+
+        /// <summary>
+        ///  For testing purposes, we are training our models using the client library functionalities.
+        ///  Please note that models can also be trained using a graphical user interface
+        ///  such as the Form Recognizer Labeling Tool found here:
+        ///  <a href="'https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
+        /// </summary>
+        private async Task<string> GetModelIdAsync(bool labeled = false)
+        {
+            FormTrainingClient trainingClient = InstrumentClient(new FormTrainingClient(_endpoint, _credential));
+            TrainingOperation trainedModel = await trainingClient.StartTrainingAsync(_containerUri, labeled);
+            await trainedModel.WaitForCompletionAsync();
+            Assert.IsTrue(trainedModel.HasValue);
+
+            return trainedModel.Value.ModelId;
         }
     }
 }
