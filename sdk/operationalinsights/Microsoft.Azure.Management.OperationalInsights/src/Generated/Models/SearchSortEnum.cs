@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
 
     /// <summary>
-    /// Defines values for EntityStatus.
+    /// Defines values for SearchSortEnum.
     /// </summary>
-    public static class EntityStatus
+    public static class SearchSortEnum
     {
-        public const string Creating = "Creating";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Canceled = "Canceled";
-        public const string Deleting = "Deleting";
-        public const string ProvisioningAccount = "ProvisioningAccount";
+        public const string Asc = "asc";
+        public const string Desc = "desc";
     }
 }
