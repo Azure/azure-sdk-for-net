@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         internal FormField(string name, FieldValue_internal fieldValue, IReadOnlyList<ReadResult_internal> readResults)
         {
-            Confidence = fieldValue.Confidence ?? 1.0f;
+            Confidence = fieldValue.Confidence ?? Constants.DefaultConfidenceValue;
             Name = name;
             LabelText = null;
 
