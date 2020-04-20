@@ -1574,6 +1574,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertDictionaryEquality(tags, blobItems[0].Tags);
+            Assert.AreEqual(tags.Count, blobItems[0].Properties.TagCount);
         }
 
         [Test]
@@ -1826,6 +1827,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertDictionaryEquality(tags, blobHierachyItems[0].Blob.Tags);
+            Assert.AreEqual(tags.Count, blobHierachyItems[0].Blob.Properties.TagCount);
         }
 
         [Test]
