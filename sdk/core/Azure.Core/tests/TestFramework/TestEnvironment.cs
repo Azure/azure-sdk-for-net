@@ -76,7 +76,7 @@ namespace Azure.Core.Testing
                 else
                 {
                     // Don't take a hard dependency on Azure.Identity
-                    var type = Type.GetType("Azure.Identity.ClientSecretCredential");
+                    var type = Type.GetType("Azure.Identity.ClientSecretCredential, Azure.Identity");
                     if (type == null)
                     {
                         throw new InvalidOperationException("Azure.Identity must be referenced to use Credential in Live environment.");

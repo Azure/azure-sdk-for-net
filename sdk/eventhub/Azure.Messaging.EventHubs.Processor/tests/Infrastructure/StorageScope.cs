@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
             var storageAccount = StorageTestEnvironment.Instance.StorageAccountName;
             var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
-            var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.EventHubsSubscription };
+            var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId };
 
             try
             {
@@ -104,7 +104,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
-            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.EventHubsSubscription })
+            using (var client = new StorageManagementClient(new TokenCredentials(token)) { SubscriptionId = EventHubsTestEnvironment.Instance.SubscriptionId })
             {
                 BlobContainer container = await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.BlobContainers.CreateAsync(resourceGroup, storageAccount, CreateName(), PublicAccess.None)).ConfigureAwait(false);
                 return new StorageScope(container.Name);
@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         public static async Task<StorageTestEnvironment.StorageProperties> CreateStorageAccountAsync()
         {
-            var subscription = EventHubsTestEnvironment.Instance.EventHubsSubscription;
+            var subscription = EventHubsTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
             var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
 
@@ -147,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         public static async Task DeleteStorageAccountAsync(string accountName)
         {
-            var subscription = EventHubsTestEnvironment.Instance.EventHubsSubscription;
+            var subscription = EventHubsTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = EventHubsTestEnvironment.Instance.ResourceGroup;
             var token = await ResourceManager.AquireManagementTokenAsync().ConfigureAwait(false);
 
