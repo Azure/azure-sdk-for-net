@@ -16,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="operation"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(this Task<RecognizeReceiptsOperation> operation, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(this Task<RecognizeReceiptsOperation> operation, CancellationToken cancellationToken = default)
         {
             var o = await operation.ConfigureAwait(false);
             return await o.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="operation"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async ValueTask<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(this Task<RecognizeCustomFormsOperation> operation, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<RecognizedForm>>> WaitForCompletionAsync(this Task<RecognizeCustomFormsOperation> operation, CancellationToken cancellationToken = default)
         {
             var o = await operation.ConfigureAwait(false);
             return await o.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="operation"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async ValueTask<Response<IReadOnlyList<FormPage>>> WaitForCompletionAsync(this Task<RecognizeContentOperation> operation, CancellationToken cancellationToken = default)
+        public static async Task<Response<IReadOnlyList<FormPage>>> WaitForCompletionAsync(this Task<RecognizeContentOperation> operation, CancellationToken cancellationToken = default)
         {
             var o = await operation.ConfigureAwait(false);
             return await o.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);

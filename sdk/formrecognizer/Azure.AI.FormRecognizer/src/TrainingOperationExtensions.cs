@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="operation"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async ValueTask<Response<CustomFormModel>> WaitForCompletionAsync(this Task<TrainingOperation> operation, CancellationToken cancellationToken = default)
+        public static async Task<Response<CustomFormModel>> WaitForCompletionAsync(this Task<TrainingOperation> operation, CancellationToken cancellationToken = default)
         {
             var o = await operation.ConfigureAwait(false);
             return await o.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
