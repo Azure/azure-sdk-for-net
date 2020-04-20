@@ -47,16 +47,14 @@ namespace Microsoft.Azure.Management.AlertsManagement
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// client API version
+        /// The ID of the target subscription.
         /// </summary>
-        public string ApiVersion { get; private set; }
+        public string SubscriptionId1 { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -95,6 +93,11 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// Gets the IActionRulesOperations.
         /// </summary>
         public virtual IActionRulesOperations ActionRules { get; private set; }
+
+        /// <summary>
+        /// Gets the ISmartDetectorAlertRulesOperations.
+        /// </summary>
+        public virtual ISmartDetectorAlertRulesOperations SmartDetectorAlertRules { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AlertsManagementClient class.
@@ -341,8 +344,8 @@ namespace Microsoft.Azure.Management.AlertsManagement
             Alerts = new AlertsOperations(this);
             SmartGroups = new SmartGroupsOperations(this);
             ActionRules = new ActionRulesOperations(this);
+            SmartDetectorAlertRules = new SmartDetectorAlertRulesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-05-05-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -374,6 +377,8 @@ namespace Microsoft.Azure.Management.AlertsManagement
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ActionRuleProperties>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ActionRuleProperties>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AlertsMetaDataProperties>("metadataIdentifier"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AlertsMetaDataProperties>("metadataIdentifier"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

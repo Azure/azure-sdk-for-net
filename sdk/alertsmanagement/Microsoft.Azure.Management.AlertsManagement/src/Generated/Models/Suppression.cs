@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.AlertsManagement.Models
     /// <remarks>
     /// Action rule with suppression configuration
     /// </remarks>
+    [Newtonsoft.Json.JsonObject("Suppression")]
     public partial class Suppression : ActionRuleProperties
     {
         /// <summary>
