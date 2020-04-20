@@ -95,7 +95,7 @@ namespace Azure.AI.FormRecognizer.Models
 
             if (!_fieldValue.ValueDate.HasValue)
             {
-                throw new InvalidOperationException($"Cannot parse Date value {_fieldValue.ValueDate}.");
+                throw new InvalidOperationException($"Field value is null.");
             }
 
             return _fieldValue.ValueDate.Value.UtcDateTime;
@@ -112,13 +112,12 @@ namespace Azure.AI.FormRecognizer.Models
                 throw new InvalidOperationException($"Cannot get field as Time.  Field value's type is {Type}.");
             }
 
-            TimeSpan time = default;
-            if (!TimeSpan.TryParse(_fieldValue.ValueTime, out time))
+            if (!_fieldValue.ValueTime.HasValue)
             {
-                throw new InvalidOperationException($"Cannot parse Time value {_fieldValue.ValueTime}.");
+                throw new InvalidOperationException($"Field value is null.");
             }
 
-            return time;
+            return _fieldValue.ValueTime.Value;
         }
 
         /// <summary>
