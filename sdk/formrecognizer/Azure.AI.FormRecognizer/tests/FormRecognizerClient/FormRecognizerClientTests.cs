@@ -204,8 +204,9 @@ namespace Azure.AI.FormRecognizer.Tests
                 : typeof(ArgumentException);
 
             using var stream = new MemoryStream(Array.Empty<byte>());
+            var options = new RecognizeOptions { ContentType = ContentType.Jpeg };
 
-            Assert.ThrowsAsync(expectedType, async () => await client.StartRecognizeCustomFormsAsync(modelId, stream));
+            Assert.ThrowsAsync(expectedType, async () => await client.StartRecognizeCustomFormsAsync(modelId, stream, options));
         }
 
         /// <summary>
@@ -289,9 +290,8 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateClient();
             var uri = new Uri("https://thatistheques.ti.on");
-            var options = new RecognizeOptions { ContentType = ContentType.Jpeg };
 
-            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("1975-04-04", uri, options));
+            Assert.ThrowsAsync<ArgumentException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("1975-04-04", uri));
         }
 
         /// <summary>
