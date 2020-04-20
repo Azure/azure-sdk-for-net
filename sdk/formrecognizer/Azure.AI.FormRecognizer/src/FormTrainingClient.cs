@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -39,6 +37,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         public FormTrainingClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
+
             var diagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             ServiceClient = new ServiceClient(diagnostics, pipeline, endpoint.ToString());
@@ -58,6 +60,8 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual TrainingOperation StartTraining(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(trainingFiles, nameof(trainingFiles));
+
             var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
 
             ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
@@ -76,11 +80,17 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual async Task<TrainingOperation> StartTrainingAsync(Uri trainingFiles, bool useLabels = false, TrainingFileFilter filter = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(trainingFiles, nameof(trainingFiles));
+
             var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
 
             ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
             return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
+
+        #endregion
+
+        #region Management Ops
 
         /// <summary>
         /// Get a description of a custom model, including the types of forms it can recognize and the fields it will extract for each form type.
@@ -91,7 +101,11 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual Response<CustomFormModel> GetCustomModel(string modelId, CancellationToken cancellationToken = default)
         {
-            Response<Model_internal> response = ServiceClient.GetCustomModel(new Guid(modelId), includeKeys: true, cancellationToken);
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+            Response<Model_internal> response = ServiceClient.GetCustomModel(guid, includeKeys: true, cancellationToken);
             return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
@@ -104,13 +118,14 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual async Task<Response<CustomFormModel>> GetCustomModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(new Guid(modelId), includeKeys: true, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(guid, includeKeys: true, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
-        #endregion
-
-        #region Management Ops
         /// <summary>
         /// Delete the model with the specified model ID.
         /// </summary>
@@ -120,7 +135,11 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
-            return ServiceClient.DeleteCustomModel(new Guid(modelId), cancellationToken);
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+            return ServiceClient.DeleteCustomModel(guid, cancellationToken);
         }
 
         /// <summary>
@@ -132,7 +151,11 @@ namespace Azure.AI.FormRecognizer.Training
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
-            return await ServiceClient.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+            return await ServiceClient.DeleteCustomModelAsync(guid, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
