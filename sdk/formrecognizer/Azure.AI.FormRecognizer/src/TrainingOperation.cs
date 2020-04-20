@@ -103,8 +103,6 @@ namespace Azure.AI.FormRecognizer.Training
                     ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetCustomModel(new Guid(Id), includeKeys: true, cancellationToken);
 
-                // TODO: Handle correctly according to returned status code
-                // https://github.com/Azure/azure-sdk-for-net/issues/10386
                 if (update.Value.ModelInfo.Status != CustomFormModelStatus.Training)
                 {
                     _hasCompleted = true;
