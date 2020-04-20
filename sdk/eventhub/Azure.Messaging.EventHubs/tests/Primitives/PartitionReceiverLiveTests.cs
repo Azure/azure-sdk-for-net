@@ -326,7 +326,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
-                var credential = new ClientSecretCredential(EventHubsTestEnvironment.Instance.EventHubsTenant, EventHubsTestEnvironment.Instance.EventHubsClient, EventHubsTestEnvironment.Instance.EventHubsSecret);
+                var credential = EventHubsTestEnvironment.Instance.Credential;
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
@@ -748,7 +748,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
                 var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var credential = new ClientSecretCredential(EventHubsTestEnvironment.Instance.EventHubsTenant, EventHubsTestEnvironment.Instance.EventHubsClient, EventHubsTestEnvironment.Instance.EventHubsSecret);
+                var credential = EventHubsTestEnvironment.Instance.Credential;
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 // Send events to the second partition, which should not be visible to the receiver.

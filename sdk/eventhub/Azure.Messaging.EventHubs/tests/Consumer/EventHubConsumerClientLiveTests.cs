@@ -341,7 +341,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
-                var credential = new ClientSecretCredential(EventHubsTestEnvironment.Instance.EventHubsTenant, EventHubsTestEnvironment.Instance.EventHubsClient, EventHubsTestEnvironment.Instance.EventHubsSecret);
+                var credential = EventHubsTestEnvironment.Instance.Credential;
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
@@ -691,7 +691,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
-                var credential = new ClientSecretCredential(EventHubsTestEnvironment.Instance.EventHubsTenant, EventHubsTestEnvironment.Instance.EventHubsClient, EventHubsTestEnvironment.Instance.EventHubsSecret);
+                var credential = EventHubsTestEnvironment.Instance.Credential;
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
@@ -1680,7 +1680,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
-                var credential = new ClientSecretCredential(EventHubsTestEnvironment.Instance.EventHubsTenant, EventHubsTestEnvironment.Instance.EventHubsClient, EventHubsTestEnvironment.Instance.EventHubsSecret);
+                var credential = EventHubsTestEnvironment.Instance.Credential;
                 var sourceEvents = EventGenerator.CreateEvents(100).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))

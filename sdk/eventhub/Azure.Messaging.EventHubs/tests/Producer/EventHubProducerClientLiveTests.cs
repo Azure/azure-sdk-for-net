@@ -433,7 +433,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var credential = new ClientSecretCredential(EventHubsTestEnvironment.Instance.EventHubsTenant, EventHubsTestEnvironment.Instance.EventHubsClient, EventHubsTestEnvironment.Instance.EventHubsSecret);
+                var credential = EventHubsTestEnvironment.Instance.Credential;
 
                 await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {

@@ -66,51 +66,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public string EventHubsNamespace => ActiveEventHubsNamespace.Value.Name;
 
         /// <summary>
-        ///   The name of the Azure subscription containing the Event Hubs namespace instance to be used for
-        ///   Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "EVENT_HUBS_SUBSCRIPTION" environment variable.</value>
-        ///
-        public string EventHubsSubscription => SubscriptionId;
-
-        /// <summary>
-        ///   The name of the resource group containing the Event Hubs namespace instance to be used for
-        ///   Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "EVENT_HUBS_RESOURCEGROUP" environment variable.</value>
-        ///
-        public string EventHubsResourceGroup => ResourceGroup;
-
-        /// <summary>
-        ///   The name of the Azure Active Directory tenant that holds the service principal to use for management
-        ///   of the Event Hubs namespace during Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "EVENT_HUBS_TENANT" environment variable.</value>
-        ///
-        public string EventHubsTenant => TenantId;
-
-        /// <summary>
-        ///   The name of the Azure Active Directory client identifier of the service principal to use for management
-        ///   of the Event Hubs namespace during Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "EVENT_HUBS_CLIENT" environment variable.</value>
-        ///
-        public string EventHubsClient => ClientId;
-
-        /// <summary>
-        ///   The name of the Azure Active Directory client secret of the service principal to use for management
-        ///   of the Event Hubs namespace during Live tests.
-        /// </summary>
-        ///
-        /// <value>The name of the namespace is read from the "EVENT_HUBS_SECRET" environment variable.</value>
-        ///
-        public string EventHubsSecret => ClientSecret;
-
-        /// <summary>
         ///   The fully qualified namespace for the Event Hubs namespace represented by this scope.
         /// </summary>
         ///

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Core.Testing
 {
@@ -11,6 +13,7 @@ namespace Azure.Core.Testing
     /// </summary>
     public partial class TestEnvironment
     {
+        private TokenCredential _credential;
         private readonly string _prefix;
 
         public TestEnvironment(string serviceName)
@@ -53,6 +56,44 @@ namespace Azure.Core.Testing
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
 
+
+        public TokenCredential Credential
+        {
+            get
+            {
+                if (_credential != null)
+                {
+                    return _credential;
+                }
+
+                var playback = false;
+                GetIsPlayback(ref playback);
+
+                if (playback)
+                {
+                    _credential = new TestCredential();
+                }
+                else
+                {
+                    // Don't take a hard dependency on Azure.Identity
+                    var type = Type.GetType("Azure.Identity.ClientSecretCredential");
+                    if (type == null)
+                    {
+                        throw new InvalidOperationException("Azure.Identity must be referenced to use Credential in Live environment.");
+                    }
+
+                    _credential = (TokenCredential) Activator.CreateInstance(
+                        type,
+                        GetVariable("TENANT_ID"),
+                        GetVariable("CLIENT_ID"),
+                        GetVariable("CLIENT_SECRET")
+                    );
+                }
+
+                return _credential;
+            }
+        }
+
         /// <summary>
         /// Returns and records an environment variable value when running live or recorded value during playback.
         /// </summary>
@@ -63,7 +104,8 @@ namespace Azure.Core.Testing
             string value = null;
             bool isPlayback = false;
 
-            GetRecordedValue(name, ref value, ref isPlayback);
+            GetIsPlayback(ref isPlayback);
+            GetRecordedValue(name, ref value);
             if (isPlayback)
             {
                 return value;
@@ -124,7 +166,21 @@ namespace Azure.Core.Testing
             }
         }
 
-        partial void GetRecordedValue(string name, ref string value, ref bool isPlayback);
+        partial void GetRecordedValue(string name, ref string value);
+        partial void GetIsPlayback(ref bool isPlayback);
         partial void SetRecordedValue(string name, string value);
+
+        private class TestCredential : TokenCredential
+        {
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
+            }
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
+            }
+        }
     }
 }

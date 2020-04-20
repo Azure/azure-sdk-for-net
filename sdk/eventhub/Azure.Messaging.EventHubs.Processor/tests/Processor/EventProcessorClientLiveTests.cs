@@ -473,7 +473,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                  StorageManager storageManager = default,
                                                                  EventProcessorOptions options = default)
         {
-            var credential = new ClientSecretCredential(EventHubsTestEnvironment.Instance.EventHubsTenant, EventHubsTestEnvironment.Instance.EventHubsClient, EventHubsTestEnvironment.Instance.EventHubsSecret);
+            var credential = EventHubsTestEnvironment.Instance.Credential;
             EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
 
             storageManager ??= new InMemoryStorageManager(_=> {});

@@ -76,9 +76,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 Assert.That(async () => await sample.RunAsync(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
                                                               scope.EventHubName,
-                                                              EventHubsTestEnvironment.Instance.EventHubsTenant,
-                                                              EventHubsTestEnvironment.Instance.EventHubsClient,
-                                                              EventHubsTestEnvironment.Instance.EventHubsSecret), Throws.Nothing);
+                                                              EventHubsTestEnvironment.Instance.TenantId,
+                                                              EventHubsTestEnvironment.Instance.ClientId,
+                                                              EventHubsTestEnvironment.Instance.ClientSecret), Throws.Nothing);
             }
         }
     }
