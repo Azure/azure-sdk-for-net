@@ -14,33 +14,37 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// A List custom alert rule.
+    /// Number of device to cloud messages (MQTT protocol) is not in allowed
+    /// range.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("ListCustomAlertRule")]
-    public partial class ListCustomAlertRule : CustomAlertRule
+    [Newtonsoft.Json.JsonObject("MqttD2CMessagesNotInAllowedRange")]
+    public partial class MqttD2CMessagesNotInAllowedRange : TimeWindowCustomAlertRule
     {
         /// <summary>
-        /// Initializes a new instance of the ListCustomAlertRule class.
+        /// Initializes a new instance of the MqttD2CMessagesNotInAllowedRange
+        /// class.
         /// </summary>
-        public ListCustomAlertRule()
+        public MqttD2CMessagesNotInAllowedRange()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ListCustomAlertRule class.
+        /// Initializes a new instance of the MqttD2CMessagesNotInAllowedRange
+        /// class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
+        /// <param name="minThreshold">The minimum threshold.</param>
+        /// <param name="maxThreshold">The maximum threshold.</param>
+        /// <param name="timeWindowSize">The time window size in iso8601
+        /// format.</param>
         /// <param name="displayName">The display name of the custom
         /// alert.</param>
         /// <param name="description">The description of the custom
         /// alert.</param>
-        /// <param name="valueType">The value type of the items in the list.
-        /// Possible values include: 'IpCidr', 'String'</param>
-        public ListCustomAlertRule(bool isEnabled, string displayName = default(string), string description = default(string), string valueType = default(string))
-            : base(isEnabled, displayName, description)
+        public MqttD2CMessagesNotInAllowedRange(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize, string displayName = default(string), string description = default(string))
+            : base(isEnabled, minThreshold, maxThreshold, timeWindowSize, displayName, description)
         {
-            ValueType = valueType;
             CustomInit();
         }
 
@@ -48,13 +52,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the value type of the items in the list. Possible values
-        /// include: 'IpCidr', 'String'
-        /// </summary>
-        [JsonProperty(PropertyName = "valueType")]
-        public string ValueType { get; private set; }
 
         /// <summary>
         /// Validate the object.

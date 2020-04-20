@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -696,7 +696,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AscLocation");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -917,7 +917,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jitNetworkAccessPolicyName");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1149,7 +1149,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 body.Validate();
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1375,7 +1375,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "jitNetworkAccessPolicyName");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1600,7 +1600,7 @@ namespace Microsoft.Azure.Management.Security
                 }
             }
             string jitNetworkAccessPolicyInitiateType = "initiate";
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             JitNetworkAccessPolicyInitiateRequest body = new JitNetworkAccessPolicyInitiateRequest();
             if (virtualMachines != null || justification != null)
             {
