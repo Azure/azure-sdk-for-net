@@ -10,12 +10,13 @@ namespace Azure.Core.Testing
 {
     public partial class TestEnvironment
     {
-
         private TestRecording _recording;
         private bool _playback;
+        private TokenCredential _credential;
 
         public void SetRecording(TestRecording recording, bool playback)
         {
+            _credential = null;
             _recording = recording;
             _playback = playback;
         }
@@ -36,11 +37,31 @@ namespace Azure.Core.Testing
             _recording?.SetVariable(name, value);
         }
 
-        public TokenCredential Credential => _playback ? (TokenCredential)new TestCredential() : new ClientSecretCredential(
-            GetVariable("TENANT_ID"),
-            GetVariable("CLIENT_ID"),
-            GetVariable("CLIENT_SECRET")
-        );
+        public TokenCredential Credential
+        {
+            get
+            {
+                if (_credential != null)
+                {
+                    return _credential;
+                }
+
+                if (_playback)
+                {
+                    _credential = new TestCredential();
+                }
+                else
+                {
+                    _credential = new ClientSecretCredential(
+                        GetVariable("TENANT_ID"),
+                        GetVariable("CLIENT_ID"),
+                        GetVariable("CLIENT_SECRET")
+                    );
+                }
+
+                return _credential;
+            }
+        }
 
         private class TestCredential : TokenCredential
         {
