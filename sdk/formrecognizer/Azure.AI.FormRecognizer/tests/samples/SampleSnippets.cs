@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -24,6 +27,27 @@ namespace Azure.AI.FormRecognizer.Samples
             //@@ string apiKey = "<apiKey>";
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [Test]
+        public async Task BadRequestSnippet()
+        {
+            string endpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
+            string apiKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY");
+
+            var credential = new AzureKeyCredential(apiKey);
+            var client = new FormRecognizerClient(new Uri(endpoint), credential);
+
+            #region Snippet:FormRecognizerBadRequest
+            try
+            {
+                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
+            }
+            catch (RequestFailedException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
             #endregion
         }
     }

@@ -84,7 +84,7 @@ The following section provides several code snippets illustrating common pattern
 * [Recognize Receipts](#recognize-receipts)
 * [Recognize Content](#recognize-content)
 * [Recognize Custom Forms](#recognize-custom-forms)
-* [Train with Forms Only](#train-with-forms-only)
+* [Train with Forms](#train-with-forms)
 * [Train with Forms and Labels](#train-with-forms-and-labels)
 * [Manage Custom Forms](#manage-custom-forms)
 
@@ -167,7 +167,7 @@ foreach (RecognizedForm form in forms.Value)
 }
 ```
 
-### Train with Forms Only
+### Train with Forms
 ```C#
 ```
 
@@ -178,6 +178,55 @@ foreach (RecognizedForm form in forms.Value)
 ### Manage Custom Forms
 ```C#
 ```
+
+## Troubleshooting
+
+### General
+When you interact with the Cognitive Services Form Recognizer client library using the .NET SDK, errors returned by the service will result in a `RequestFailedException` with the same HTTP status code returned by the [REST API][formreco_rest_api] request.
+
+For example, if you submit a receipt image with an invalid `Uri`, a `400` error is returned, indicating "Bad Request".
+
+```C# Snippet:FormRecognizerBadRequest
+try
+{
+    DetectedLanguage result = client.DetectLanguage(document);
+}
+catch (RequestFailedException e)
+{
+    Console.WriteLine(e.ToString());
+}
+```
+
+You will notice that additional information is logged, like the client request ID of the operation.
+
+```
+Message:
+    Azure.RequestFailedException: Service request failed.
+    Status: 400 (Bad Request)
+
+Content:
+    {"error":{"code":"FailedToDownloadImage","innerError":{"requestId":"8ca04feb-86db-4552-857c-fde903251518"},"message":"Failed to download image from input URL."}}
+
+Headers:
+    Transfer-Encoding: chunked
+    x-envoy-upstream-service-time: REDACTED
+    apim-request-id: REDACTED
+    Strict-Transport-Security: REDACTED
+    X-Content-Type-Options: REDACTED
+    Date: Mon, 20 Apr 2020 22:48:35 GMT
+    Content-Type: application/json; charset=utf-8
+```
+
+### Setting up console logging
+The simplest way to see the logs is to enable the console logging.
+To create an Azure SDK log listener that outputs messages to console use the AzureEventSourceListener.CreateConsoleLogger method.
+
+```C#
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 
 ## Contributing
@@ -211,6 +260,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [labeling_tool]: https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
+
+[logging]: ../../core/Azure.Core/samples/Diagnostics.md
 
 <!-- [detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
 [detect_language_sample1]: tests/samples/Sample1_DetectLanguageBatchConvenience.cs
