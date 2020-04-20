@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,10 +36,21 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         /// Initializes a new instance of the LinkedService class.
         /// </summary>
         /// <param name="resourceId">The resource id of the resource that will
-        /// be linked to the workspace.</param>
-        public LinkedService(string resourceId)
+        /// be linked to the workspace. This should be used for linking
+        /// resources which require read access</param>
+        /// <param name="writeAccessResourceId">The resource id of the resource
+        /// that will be linked to the workspace. This should be used for
+        /// linking resources which require write access</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// linked service. Possible values include: 'Succeeded', 'Deleting',
+        /// 'ProvisioningAccount', 'Updating'</param>
+        /// <param name="tags">Resource tags.</param>
+        public LinkedService(string resourceId = default(string), string writeAccessResourceId = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             ResourceId = resourceId;
+            WriteAccessResourceId = writeAccessResourceId;
+            ProvisioningState = provisioningState;
+            Tags = tags;
             CustomInit();
         }
 
@@ -48,23 +61,33 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
 
         /// <summary>
         /// Gets or sets the resource id of the resource that will be linked to
-        /// the workspace.
+        /// the workspace. This should be used for linking resources which
+        /// require read access
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceId")]
         public string ResourceId { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets the resource id of the resource that will be linked to
+        /// the workspace. This should be used for linking resources which
+        /// require write access
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ResourceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ResourceId");
-            }
-        }
+        [JsonProperty(PropertyName = "properties.writeAccessResourceId")]
+        public string WriteAccessResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the provisioning state of the linked service. Possible
+        /// values include: 'Succeeded', 'Deleting', 'ProvisioningAccount',
+        /// 'Updating'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
     }
 }
