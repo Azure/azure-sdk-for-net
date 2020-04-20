@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -15,7 +14,9 @@ namespace Azure.AI.FormRecognizer.Models
         internal USReceipt(RecognizedReceipt receipt)
             : base(receipt)
         {
-            ReceiptType = ConvertUSReceiptType();
+            float receiptTypeConfidence;
+            ReceiptType = ConvertUSReceiptType(out receiptTypeConfidence);
+            ReceiptTypeConfidence = receiptTypeConfidence;
 
             MerchantAddress = ConvertStringField("MerchantAddress", RecognizedForm.Fields);
             MerchantName = ConvertStringField("MerchantName", RecognizedForm.Fields);
@@ -33,6 +34,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         public USReceiptType ReceiptType { get; internal set; }
+
+        /// <summary>
+        /// </summary>
+        public float ReceiptTypeConfidence { get; internal set; }
 
         /// <summary>
         /// </summary>
@@ -77,13 +82,16 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         public FormField<TimeSpan> TransactionTime { get; internal set; }
 
-        private USReceiptType ConvertUSReceiptType()
+        private USReceiptType ConvertUSReceiptType(out float receiptTypeConfidence)
         {
             USReceiptType receiptType = USReceiptType.Unrecognized;
+            receiptTypeConfidence = Constants.DefaultConfidenceValue;
 
             FormField value;
             if (RecognizedForm.Fields.TryGetValue("ReceiptType", out value))
             {
+                receiptTypeConfidence = value.Confidence;
+
                 receiptType = value.Value.AsString() switch
                 {
                     "Itemized" => USReceiptType.Itemized,
