@@ -103,7 +103,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response<Model_internal> response = ServiceClient.GetCustomModel(new Guid(modelId), includeKeys: true, cancellationToken);
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+            Response<Model_internal> response = ServiceClient.GetCustomModel(guid, includeKeys: true, cancellationToken);
             return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
@@ -118,7 +120,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(new Guid(modelId), includeKeys: true, cancellationToken).ConfigureAwait(false);
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+            Response<Model_internal> response = await ServiceClient.GetCustomModelAsync(guid, includeKeys: true, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(new CustomFormModel(response.Value), response.GetRawResponse());
         }
 
@@ -133,7 +137,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return ServiceClient.DeleteCustomModel(new Guid(modelId), cancellationToken);
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+            return ServiceClient.DeleteCustomModel(guid, cancellationToken);
         }
 
         /// <summary>
@@ -147,7 +153,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return await ServiceClient.DeleteCustomModelAsync(new Guid(modelId), cancellationToken).ConfigureAwait(false);
+            Guid guid = ClientCommon.ValidateModelId(modelId, nameof(modelId));
+
+            return await ServiceClient.DeleteCustomModelAsync(guid, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

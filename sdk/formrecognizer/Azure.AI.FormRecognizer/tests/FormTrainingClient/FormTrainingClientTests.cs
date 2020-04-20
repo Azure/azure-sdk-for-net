@@ -61,6 +61,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.ThrowsAsync<ArgumentNullException>(() => client.GetCustomModelAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => client.GetCustomModelAsync(string.Empty));
+            Assert.ThrowsAsync<ArgumentException>(() => client.GetCustomModelAsync("1975-04-04"));
         }
 
         [Test]
@@ -70,6 +71,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.ThrowsAsync<ArgumentNullException>(() => client.DeleteModelAsync(null));
             Assert.ThrowsAsync<ArgumentException>(() => client.DeleteModelAsync(string.Empty));
+            Assert.ThrowsAsync<ArgumentException>(() => client.DeleteModelAsync("1975-04-04"));
         }
     }
 }
