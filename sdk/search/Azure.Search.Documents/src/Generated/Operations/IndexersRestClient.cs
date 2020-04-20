@@ -20,8 +20,8 @@ namespace Azure.Search.Documents
     {
         private string endpoint;
         private string apiVersion;
-        private ClientDiagnostics clientDiagnostics;
-        private HttpPipeline pipeline;
+        private ClientDiagnostics _clientDiagnostics;
+        private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of IndexersRestClient. </summary>
         public IndexersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
@@ -37,13 +37,13 @@ namespace Azure.Search.Documents
 
             this.endpoint = endpoint;
             this.apiVersion = apiVersion;
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateResetRequest(string indexerName, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -71,18 +71,18 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Reset");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Reset");
             scope.Start();
             try
             {
                 using var message = CreateResetRequest(indexerName, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 204:
                         return message.Response;
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -103,18 +103,18 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Reset");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Reset");
             scope.Start();
             try
             {
                 using var message = CreateResetRequest(indexerName, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 204:
                         return message.Response;
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -126,7 +126,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateRunRequest(string indexerName, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -154,18 +154,18 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Run");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Run");
             scope.Start();
             try
             {
                 using var message = CreateRunRequest(indexerName, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 202:
                         return message.Response;
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -186,18 +186,18 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Run");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Run");
             scope.Start();
             try
             {
                 using var message = CreateRunRequest(indexerName, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 202:
                         return message.Response;
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -209,7 +209,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateCreateOrUpdateRequest(string indexerName, SearchIndexer indexer, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
@@ -257,12 +257,12 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using var message = CreateCreateOrUpdateRequest(indexerName, indexer, xMsClientRequestId, ifMatch, ifNoneMatch);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -270,11 +270,18 @@ namespace Azure.Search.Documents
                         {
                             SearchIndexer value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -302,12 +309,12 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.CreateOrUpdate");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.CreateOrUpdate");
             scope.Start();
             try
             {
                 using var message = CreateCreateOrUpdateRequest(indexerName, indexer, xMsClientRequestId, ifMatch, ifNoneMatch);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -315,11 +322,18 @@ namespace Azure.Search.Documents
                         {
                             SearchIndexer value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -331,7 +345,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateDeleteRequest(string indexerName, Guid? xMsClientRequestId, string ifMatch, string ifNoneMatch)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -369,19 +383,19 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Delete");
             scope.Start();
             try
             {
                 using var message = CreateDeleteRequest(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 204:
                     case 404:
                         return message.Response;
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -404,19 +418,19 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Delete");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Delete");
             scope.Start();
             try
             {
                 using var message = CreateDeleteRequest(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 204:
                     case 404:
                         return message.Response;
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -428,7 +442,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateGetRequest(string indexerName, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -456,23 +470,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Get");
             scope.Start();
             try
             {
                 using var message = CreateGetRequest(indexerName, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SearchIndexer value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -493,23 +514,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Get");
             scope.Start();
             try
             {
                 using var message = CreateGetRequest(indexerName, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SearchIndexer value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -521,7 +549,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateListRequest(string select, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -546,23 +574,30 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<ListIndexersResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.List");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.List");
             scope.Start();
             try
             {
                 using var message = CreateListRequest(select, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             ListIndexersResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -578,23 +613,30 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListIndexersResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.List");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.List");
             scope.Start();
             try
             {
                 using var message = CreateListRequest(select, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             ListIndexersResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = ListIndexersResult.DeserializeListIndexersResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -606,7 +648,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateCreateRequest(SearchIndexer indexer, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -636,23 +678,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Create");
             scope.Start();
             try
             {
                 using var message = CreateCreateRequest(indexer, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 201:
                         {
                             SearchIndexer value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -673,23 +722,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexer));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.Create");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Create");
             scope.Start();
             try
             {
                 using var message = CreateCreateRequest(indexer, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 201:
                         {
                             SearchIndexer value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchIndexer.DeserializeSearchIndexer(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -701,7 +757,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateGetStatusRequest(string indexerName, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -729,23 +785,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.GetStatus");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.GetStatus");
             scope.Start();
             try
             {
                 using var message = CreateGetStatusRequest(indexerName, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             IndexerExecutionInfo value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -766,23 +829,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(indexerName));
             }
 
-            using var scope = clientDiagnostics.CreateScope("IndexersClient.GetStatus");
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.GetStatus");
             scope.Start();
             try
             {
                 using var message = CreateGetStatusRequest(indexerName, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             IndexerExecutionInfo value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)

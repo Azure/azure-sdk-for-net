@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Tracks the status of a long-running operation for recognizing values from receipts.
     /// </summary>
-    public class RecognizeReceiptsOperation : Operation<IReadOnlyList<ExtractedReceipt>>
+    public class RecognizeReceiptsOperation : Operation<IReadOnlyList<RecognizedReceipt>>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceClient _serviceClient;
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Models
         private Response _response;
 
         /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
-        private IReadOnlyList<ExtractedReceipt> _value;
+        private IReadOnlyList<RecognizedReceipt> _value;
 
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
@@ -32,13 +32,16 @@ namespace Azure.AI.FormRecognizer.Models
         public override string Id { get; }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<ExtractedReceipt> Value => OperationHelpers.GetValue(ref _value);
+        public override IReadOnlyList<RecognizedReceipt> Value => OperationHelpers.GetValue(ref _value);
 
         /// <inheritdoc/>
         public override bool HasCompleted => _hasCompleted;
 
         /// <inheritdoc/>
         public override bool HasValue => _value != null;
+
+        /// <inheritdoc/>
+        public override Response GetRawResponse() => _response;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RecognizeReceiptsOperation"/> class.
@@ -69,14 +72,11 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <inheritdoc/>
-        public override Response GetRawResponse() => _response;
-
-        /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<IReadOnlyList<ExtractedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <inheritdoc/>
@@ -110,8 +110,9 @@ namespace Azure.AI.FormRecognizer.Models
 
                     // TODO: When they support extracting more than one receipt, add a pageable method for this.
                     // https://github.com/Azure/azure-sdk-for-net/issues/10389
-                    //_value = new ExtractedReceipt(update.Value.AnalyzeResult.DocumentResults.First(), update.Value.AnalyzeResult.ReadResults.First());
-                    _value = ConvertToExtractedReceipts(update.Value.AnalyzeResult.DocumentResults, update.Value.AnalyzeResult.ReadResults);
+
+                    //_value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult.DocumentResults.ToList(), update.Value.AnalyzeResult.ReadResults.ToList());
+                    _value = ConvertToRecognizedReceipts(update.Value.AnalyzeResult);
                 }
 
                 _response = update.GetRawResponse();
@@ -120,12 +121,12 @@ namespace Azure.AI.FormRecognizer.Models
             return GetRawResponse();
         }
 
-        private static IReadOnlyList<ExtractedReceipt> ConvertToExtractedReceipts(IReadOnlyList<DocumentResult_internal> documentResults, IReadOnlyList<ReadResult_internal> readResults)
+        private static IReadOnlyList<RecognizedReceipt> ConvertToRecognizedReceipts(AnalyzeResult_internal analyzeResult)
         {
-            List<ExtractedReceipt> receipts = new List<ExtractedReceipt>();
-            for (int i = 0; i < documentResults.Count; i++)
+            List<RecognizedReceipt> receipts = new List<RecognizedReceipt>();
+            for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
             {
-                receipts.Add(new ExtractedReceipt(documentResults[i], readResults));
+                receipts.Add(new RecognizedReceipt(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return receipts;
         }

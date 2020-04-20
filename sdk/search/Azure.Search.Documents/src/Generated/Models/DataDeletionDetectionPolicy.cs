@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
         internal DataDeletionDetectionPolicy(string oDataType)
         {
-            ODataType = oDataType ?? null;
+            ODataType = oDataType;
         }
 
         /// <summary> Identifies the concrete type of the data deletion detection policy. </summary>

@@ -39,7 +39,7 @@ namespace Azure.AI.FormRecognizer.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Language_internal other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Language_internal other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        public bool Equals(Language_internal other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

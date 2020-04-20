@@ -12,14 +12,12 @@ namespace Azure.AI.FormRecognizer
     {
         internal const ServiceVersion LatestVersion = ServiceVersion.V2_0_Preview;
 
-        private readonly ServiceVersion _version;
-
         /// <summary>
         /// </summary>
         /// <param name="version"></param>
         public FormRecognizerClientOptions(ServiceVersion version = LatestVersion)
         {
-            _version = version;
+            Version = version;
         }
 
         /// <summary>
@@ -35,7 +33,6 @@ namespace Azure.AI.FormRecognizer
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
-
         /// <summary>
         /// </summary>
         public ServiceVersion Version { get; }
@@ -48,6 +45,8 @@ namespace Azure.AI.FormRecognizer
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
             };
         }
+
+        internal FormRecognizerClientOptions Clone() => new FormRecognizerClientOptions(Version) { };
 
     }
 }

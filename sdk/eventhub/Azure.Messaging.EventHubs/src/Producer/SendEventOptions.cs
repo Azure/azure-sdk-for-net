@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="partitionKey">The hashing key to use for influencing the partition to which the events are routed.</param>
         ///
         internal SendEventOptions(string partitionId,
-                             string partitionKey)
+                                  string partitionKey)
         {
             PartitionId = partitionId;
             PartitionKey = partitionKey;

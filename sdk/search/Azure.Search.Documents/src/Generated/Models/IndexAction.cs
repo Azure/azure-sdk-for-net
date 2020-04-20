@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
         internal IndexAction(IndexActionType? actionType, IDictionary<string, object> additionalProperties)
         {
             ActionType = actionType;
-            AdditionalProperties = additionalProperties;
+            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
         }
 
         /// <summary> The operation to perform on a document in an indexing batch. </summary>

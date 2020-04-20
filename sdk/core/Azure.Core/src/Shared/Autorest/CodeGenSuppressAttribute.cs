@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Core
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct, AllowMultiple = true)]
     internal class CodeGenSuppressAttribute : Attribute
     {
         public string Member { get; }

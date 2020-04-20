@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Models
         {
             PhoneticEncoder? encoder = default;
             bool? replace = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PhoneticTokenFilter(odatatype, name, encoder, replace);
+            return new PhoneticTokenFilter(odataType, name, encoder, replace);
         }
     }
 }

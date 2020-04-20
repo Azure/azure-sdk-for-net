@@ -23,7 +23,14 @@ namespace Azure.Search.Documents.Models
                     List<TokenInfo> array = new List<TokenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TokenInfo.DeserializeTokenInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TokenInfo.DeserializeTokenInfo(item));
+                        }
                     }
                     tokens = array;
                     continue;
