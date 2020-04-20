@@ -191,5 +191,15 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
+
+        [Test]
+        public void FormRecognizerClientOptionsClone()
+        {
+            var options = new FormRecognizerClientOptions();
+            FormRecognizerClientOptions clone = options.Clone();
+            Assert.IsNotNull(clone);
+            Assert.AreNotSame(options, clone);
+            Assert.AreEqual(options.Version, clone.Version);
+        }
     }
 }

@@ -187,6 +187,9 @@ namespace Azure.AI.FormRecognizer.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
+            Assert.AreEqual(USReceiptType.Itemized, receipt.ReceiptType);
+            Assert.That(receipt.ReceiptTypeConfidence, Is.EqualTo(0.66).Within(0.01));
+
             Assert.AreEqual(1, receipt.RecognizedForm.PageRange.FirstPageNumber);
             Assert.AreEqual(1, receipt.RecognizedForm.PageRange.LastPageNumber);
 
