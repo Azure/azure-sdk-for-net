@@ -306,6 +306,41 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("948284", form.Fields[name].ValueText.Text);
         }
 
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and perform operations.
+        /// </summary>
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool labeled)
+        {
+            var client = CreateInstrumentedClient();
+            var invalidUri = new Uri("https://idont.ex.ist");
+            var modelId = await GetModelIdAsync(labeled);
+
+            var operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, invalidUri);
+            RequestFailedException capturedException = default;
+
+            try
+            {
+                await operation.WaitForCompletionAsync();
+            }
+            catch (RequestFailedException ex)
+            {
+                capturedException = ex;
+            }
+
+            string expectedErrorCode = labeled ? "3003" : "2003";
+
+            Assert.NotNull(capturedException);
+            Assert.AreEqual(expectedErrorCode, capturedException.ErrorCode);
+
+            Assert.True(operation.HasCompleted);
+            Assert.True(operation.HasValue);
+            Assert.AreEqual(0, operation.Value.Count);
+        }
+
         [Test]
         public void CreateFormTrainingClientFromFormRecognizerClient()
         {
@@ -318,7 +353,7 @@ namespace Azure.AI.FormRecognizer.Tests
         ///  For testing purposes, we are training our models using the client library functionalities.
         ///  Please note that models can also be trained using a graphical user interface
         ///  such as the Form Recognizer Labeling Tool found here:
-        ///  <a href="'https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
+        ///  <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
         /// </summary>
         private async Task<string> GetModelIdAsync(bool labeled = false)
         {
