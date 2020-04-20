@@ -17,6 +17,8 @@ namespace Azure.AI.FormRecognizer
     public class FormRecognizerClient
     {
         internal readonly ServiceClient ServiceClient;
+        internal readonly ClientDiagnostics Diagnostics;
+
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _credential;
 
@@ -35,9 +37,9 @@ namespace Azure.AI.FormRecognizer
         {
             _endpoint = endpoint;
             _credential = credential;
-            var diagnostics = new ClientDiagnostics(options);
+            Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(_credential, Constants.AuthorizationHeader));
-            ServiceClient = new ServiceClient(diagnostics, pipeline, _endpoint.ToString());
+            ServiceClient = new ServiceClient(Diagnostics, pipeline, _endpoint.ToString());
         }
 
         /// <summary>
@@ -212,7 +214,7 @@ namespace Azure.AI.FormRecognizer
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken);
-            return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -231,7 +233,7 @@ namespace Azure.AI.FormRecognizer
 
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
             ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = ServiceClient.RestClient.AnalyzeWithCustomModel(new Guid(modelId), includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken);
-            return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -250,7 +252,7 @@ namespace Azure.AI.FormRecognizer
             ContentType contentType = recognizeOptions.ContentType ?? DetectContentType(formFileStream, nameof(formFileStream));
 
             ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), contentType, formFileStream, includeTextDetails: recognizeOptions.IncludeTextContent, cancellationToken).ConfigureAwait(false);
-            return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, modelId, response.Headers.OperationLocation);
         }
 
         /// <summary>
@@ -269,12 +271,13 @@ namespace Azure.AI.FormRecognizer
 
             SourcePath_internal sourcePath = new SourcePath_internal(formFileUri.ToString());
             ResponseWithHeaders<ServiceAnalyzeWithCustomModelHeaders> response = await ServiceClient.RestClient.AnalyzeWithCustomModelAsync(new Guid(modelId), includeTextDetails: recognizeOptions.IncludeTextContent, sourcePath, cancellationToken).ConfigureAwait(false);
-            return new RecognizeCustomFormsOperation(ServiceClient, modelId, response.Headers.OperationLocation);
+            return new RecognizeCustomFormsOperation(ServiceClient, Diagnostics, modelId, response.Headers.OperationLocation);
         }
 
         #endregion
 
         #region Training client
+
         /// <summary>
         /// Get an instance of a <see cref="FormTrainingClient"/> from <see cref="FormRecognizerClient"/>.
         /// </summary>

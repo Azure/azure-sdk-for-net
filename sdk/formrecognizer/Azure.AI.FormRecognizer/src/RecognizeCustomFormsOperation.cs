@@ -21,6 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         private readonly string _modelId;
         private readonly ServiceClient _serviceClient;
+        private readonly ClientDiagnostics _diagnostics;
 
         // TODO: use this.
         private CancellationToken _cancellationToken;
@@ -51,11 +52,13 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         /// <param name="operations"></param>
+        /// <param name="diagnostics"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal RecognizeCustomFormsOperation(ServiceClient operations, string modelId, string operationLocation)
+        internal RecognizeCustomFormsOperation(ServiceClient operations, ClientDiagnostics diagnostics, string modelId, string operationLocation)
         {
             _serviceClient = operations;
+            _diagnostics = diagnostics;
             _modelId = modelId;
 
             // TODO: Add validation here
@@ -73,6 +76,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Id = operationId;
             _serviceClient = client.ServiceClient;
+            _diagnostics = client.Diagnostics;
             _cancellationToken = cancellationToken;
         }
 
@@ -96,13 +100,48 @@ namespace Azure.AI.FormRecognizer.Models
                 // https://github.com/Azure/azure-sdk-for-net/issues/10386
                 // TODO: Add reasonable null checks.
 
-                if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
+                _response = update.GetRawResponse();
+
+                if (update.Value.Status == OperationStatus.Succeeded)
                 {
                     _hasCompleted = true;
                     _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
                 }
+                else if (update.Value.Status == OperationStatus.Failed)
+                {
+                    _hasCompleted = true;
+                    _value = new List<RecognizedForm>();
 
-                _response = update.GetRawResponse();
+                    IReadOnlyList<FormRecognizerError> errorList = update.Value.AnalyzeResult.Errors;
+
+                    string errorMessage = default;
+                    string errorCode = default;
+
+                    if (errorList.Count > 0)
+                    {
+                        var firstError = errorList[0];
+
+                        errorMessage = firstError.Message;
+                        errorCode = firstError.Code;
+                    }
+                    else
+                    {
+                        errorMessage = "RecognizeCustomForms operation failed.";
+                    }
+
+                    var errorInfo = new Dictionary<string, string>();
+                    int index = 0;
+
+                    foreach (var error in errorList)
+                    {
+                        errorInfo.Add($"error-{index}", $"{error.Code}: {error.Message}");
+                        index++;
+                    }
+
+                    throw async
+                        ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
+                        : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
+                }
             }
 
             return GetRawResponse();
