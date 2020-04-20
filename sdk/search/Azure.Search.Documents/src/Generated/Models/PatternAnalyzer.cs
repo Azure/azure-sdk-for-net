@@ -22,6 +22,7 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Stopwords = new List<string>();
             ODataType = "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 
@@ -37,7 +38,7 @@ namespace Azure.Search.Documents.Models
             LowerCaseTerms = lowerCaseTerms;
             Pattern = pattern;
             FlagsInternal = flagsInternal;
-            Stopwords = stopwords;
+            Stopwords = stopwords ?? new List<string>();
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternAnalyzer";
         }
 
@@ -45,7 +46,5 @@ namespace Azure.Search.Documents.Models
         public bool? LowerCaseTerms { get; set; }
         /// <summary> A regular expression pattern to match token separators. Default is an expression that matches one or more whitespace characters. </summary>
         public string Pattern { get; set; }
-        /// <summary> A list of stopwords. </summary>
-        public IList<string> Stopwords { get; set; }
     }
 }

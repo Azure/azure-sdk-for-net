@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("flags");
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (Stopwords != null)
+            if (Stopwords != null && Stopwords.Any())
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();

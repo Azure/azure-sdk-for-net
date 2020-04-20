@@ -28,8 +28,14 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary>
-        /// Regular expression flags for <see cref="Pattern"/>.
+        /// Gets regular expression flags for <see cref="Pattern"/>.
         /// </summary>
         public IList<RegexFlags> Flags { get; } = new List<RegexFlags>();
+
+        /// <summary>
+        /// Gets a list of stopwords.
+        /// </summary>
+        [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
+        public IList<string> Stopwords { get; }
     }
 }

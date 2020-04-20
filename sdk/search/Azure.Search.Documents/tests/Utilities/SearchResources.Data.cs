@@ -68,11 +68,11 @@ namespace Azure.Search.Documents.Tests
                         },
                     },
                 },
-                Suggesters = new[]
+                Suggesters =
                 {
                     new Suggester("sg", "description", "hotelName"),
                 },
-                ScoringProfiles = new[]
+                ScoringProfiles =
                 {
                     new ScoringProfile("nearest")
                     {

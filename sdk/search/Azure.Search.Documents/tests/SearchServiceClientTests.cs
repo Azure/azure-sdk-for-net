@@ -186,9 +186,7 @@ namespace Azure.Search.Documents.Tests
 
             string analyzerName = "asciiTags";
 
-            // TODO: Will need to change when https://github.com/Azure/autorest.csharp/issues/521 is fixed.
-            createdIndex.Analyzers = new List<Analyzer>
-            {
+            createdIndex.Analyzers.Add(
                 new PatternAnalyzer(analyzerName)
                 {
                     Pattern = @"[0-9a-z]+",
@@ -197,14 +195,13 @@ namespace Azure.Search.Documents.Tests
                         RegexFlags.CaseInsensitive,
                         RegexFlags.Multiline,
                     },
-                    Stopwords = new List<string>
+                    Stopwords =
                     {
                         "a",
                         "and",
                         "the",
                     },
-                },
-            };
+                });
 
             createdIndex.Fields.Add(
                 new SearchableField("asciiTags", collection: true)
