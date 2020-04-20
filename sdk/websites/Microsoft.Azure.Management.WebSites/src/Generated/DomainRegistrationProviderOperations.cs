@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// under the resource provider
         /// </summary>
         /// <remarks>
-        /// Implements Csm operations Api to exposes the list of available Csm Apis
-        /// under the resource provider
+        /// Description for Implements Csm operations Api to exposes the list of
+        /// available Csm Apis under the resource provider
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </return>
         public async Task<AzureOperationResponse<IPage<CsmOperationDescription>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -220,8 +220,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// under the resource provider
         /// </summary>
         /// <remarks>
-        /// Implements Csm operations Api to exposes the list of available Csm Apis
-        /// under the resource provider
+        /// Description for Implements Csm operations Api to exposes the list of
+        /// available Csm Apis under the resource provider
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

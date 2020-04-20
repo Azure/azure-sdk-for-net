@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all deleted apps for a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all deleted apps for a subscription.
+        /// Description for Get all deleted apps for a subscription.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all deleted apps for a subscription at location
         /// </summary>
         /// <remarks>
-        /// Get all deleted apps for a subscription at location
+        /// Description for Get all deleted apps for a subscription at location
         /// </remarks>
         /// <param name='location'>
         /// </param>
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -410,7 +410,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get deleted app for a subscription at location.
         /// </summary>
         /// <remarks>
-        /// Get deleted app for a subscription at location.
+        /// Description for Get deleted app for a subscription at location.
         /// </remarks>
         /// <param name='location'>
         /// </param>
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -601,7 +601,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all deleted apps for a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all deleted apps for a subscription.
+        /// Description for Get all deleted apps for a subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -772,7 +772,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get all deleted apps for a subscription at location
         /// </summary>
         /// <remarks>
-        /// Get all deleted apps for a subscription at location
+        /// Description for Get all deleted apps for a subscription at location
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get available application frameworks and their versions
         /// </summary>
         /// <remarks>
-        /// Get available application frameworks and their versions
+        /// Description for Get available application frameworks and their versions
         /// </remarks>
         /// <param name='osTypeSelected'>
         /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
@@ -75,9 +75,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ApplicationStack>>> GetAvailableStacksWithHttpMessagesAsync(string osTypeSelected = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ApplicationStackResource>>> GetAvailableStacksWithHttpMessagesAsync(string osTypeSelected = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ApplicationStack>>();
+            var _result = new AzureOperationResponse<IPage<ApplicationStackResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ApplicationStack>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ApplicationStackResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -227,8 +227,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// exposes resource metric definitions
         /// </summary>
         /// <remarks>
-        /// Gets all available operations for the Microsoft.Web resource provider. Also
-        /// exposes resource metric definitions
+        /// Description for Gets all available operations for the Microsoft.Web
+        /// resource provider. Also exposes resource metric definitions
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// </return>
         public async Task<AzureOperationResponse<IPage<CsmOperationDescription>>> ListOperationsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -391,7 +391,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get available application frameworks and their versions
         /// </summary>
         /// <remarks>
-        /// Get available application frameworks and their versions
+        /// Description for Get available application frameworks and their versions
         /// </remarks>
         /// <param name='osTypeSelected'>
         /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
@@ -418,13 +418,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ApplicationStack>>> GetAvailableStacksOnPremWithHttpMessagesAsync(string osTypeSelected = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ApplicationStackResource>>> GetAvailableStacksOnPremWithHttpMessagesAsync(string osTypeSelected = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -538,7 +538,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ApplicationStack>>();
+            var _result = new AzureOperationResponse<IPage<ApplicationStackResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -551,7 +551,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ApplicationStack>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ApplicationStackResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -574,7 +574,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get available application frameworks and their versions
         /// </summary>
         /// <remarks>
-        /// Get available application frameworks and their versions
+        /// Description for Get available application frameworks and their versions
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -600,7 +600,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ApplicationStack>>> GetAvailableStacksNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ApplicationStackResource>>> GetAvailableStacksNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -709,7 +709,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ApplicationStack>>();
+            var _result = new AzureOperationResponse<IPage<ApplicationStackResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -722,7 +722,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ApplicationStack>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ApplicationStackResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -746,8 +746,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// exposes resource metric definitions
         /// </summary>
         /// <remarks>
-        /// Gets all available operations for the Microsoft.Web resource provider. Also
-        /// exposes resource metric definitions
+        /// Description for Gets all available operations for the Microsoft.Web
+        /// resource provider. Also exposes resource metric definitions
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -918,7 +918,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get available application frameworks and their versions
         /// </summary>
         /// <remarks>
-        /// Get available application frameworks and their versions
+        /// Description for Get available application frameworks and their versions
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -944,7 +944,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ApplicationStack>>> GetAvailableStacksOnPremNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ApplicationStackResource>>> GetAvailableStacksOnPremNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1053,7 +1053,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<ApplicationStack>>();
+            var _result = new AzureOperationResponse<IPage<ApplicationStackResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1066,7 +1066,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ApplicationStack>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<ApplicationStackResource>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

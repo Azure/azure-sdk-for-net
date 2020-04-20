@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all ResourceHealthMetadata for all sites in the subscription.
         /// </summary>
         /// <remarks>
-        /// List all ResourceHealthMetadata for all sites in the subscription.
+        /// Description for List all ResourceHealthMetadata for all sites in the
+        /// subscription.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,7 +84,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -229,8 +230,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// subscription.
         /// </summary>
         /// <remarks>
-        /// List all ResourceHealthMetadata for all sites in the resource group in the
-        /// subscription.
+        /// Description for List all ResourceHealthMetadata for all sites in the
+        /// resource group in the subscription.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -281,7 +282,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -429,8 +430,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// collection
         /// </summary>
         /// <remarks>
-        /// Gets the category of ResourceHealthMetadata to use for the given site as a
-        /// collection
+        /// Description for Gets the category of ResourceHealthMetadata to use for the
+        /// given site as a collection
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -488,7 +489,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -637,7 +638,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the category of ResourceHealthMetadata to use for the given site
         /// </summary>
         /// <remarks>
-        /// Gets the category of ResourceHealthMetadata to use for the given site
+        /// Description for Gets the category of ResourceHealthMetadata to use for the
+        /// given site
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -695,7 +697,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -845,8 +847,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// collection
         /// </summary>
         /// <remarks>
-        /// Gets the category of ResourceHealthMetadata to use for the given site as a
-        /// collection
+        /// Description for Gets the category of ResourceHealthMetadata to use for the
+        /// given site as a collection
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -912,7 +914,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1063,7 +1065,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the category of ResourceHealthMetadata to use for the given site
         /// </summary>
         /// <remarks>
-        /// Gets the category of ResourceHealthMetadata to use for the given site
+        /// Description for Gets the category of ResourceHealthMetadata to use for the
+        /// given site
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -1129,7 +1132,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            string apiVersion = "2019-08-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1280,7 +1283,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all ResourceHealthMetadata for all sites in the subscription.
         /// </summary>
         /// <remarks>
-        /// List all ResourceHealthMetadata for all sites in the subscription.
+        /// Description for List all ResourceHealthMetadata for all sites in the
+        /// subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1452,8 +1456,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// subscription.
         /// </summary>
         /// <remarks>
-        /// List all ResourceHealthMetadata for all sites in the resource group in the
-        /// subscription.
+        /// Description for List all ResourceHealthMetadata for all sites in the
+        /// resource group in the subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1625,8 +1629,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// collection
         /// </summary>
         /// <remarks>
-        /// Gets the category of ResourceHealthMetadata to use for the given site as a
-        /// collection
+        /// Description for Gets the category of ResourceHealthMetadata to use for the
+        /// given site as a collection
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1798,8 +1802,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// collection
         /// </summary>
         /// <remarks>
-        /// Gets the category of ResourceHealthMetadata to use for the given site as a
-        /// collection
+        /// Description for Gets the category of ResourceHealthMetadata to use for the
+        /// given site as a collection
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

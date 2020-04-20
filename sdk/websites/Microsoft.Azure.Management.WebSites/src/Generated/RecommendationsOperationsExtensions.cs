@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List all recommendations for a subscription.
             /// </summary>
             /// <remarks>
-            /// List all recommendations for a subscription.
+            /// Description for List all recommendations for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List all recommendations for a subscription.
             /// </summary>
             /// <remarks>
-            /// List all recommendations for a subscription.
+            /// Description for List all recommendations for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -81,7 +81,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reset all recommendation opt-out settings for a subscription.
             /// </summary>
             /// <remarks>
-            /// Reset all recommendation opt-out settings for a subscription.
+            /// Description for Reset all recommendation opt-out settings for a
+            /// subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -95,7 +96,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reset all recommendation opt-out settings for a subscription.
             /// </summary>
             /// <remarks>
-            /// Reset all recommendation opt-out settings for a subscription.
+            /// Description for Reset all recommendation opt-out settings for a
+            /// subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -113,8 +115,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// future.
             /// </summary>
             /// <remarks>
-            /// Disables the specified rule so it will not apply to a subscription in the
-            /// future.
+            /// Description for Disables the specified rule so it will not apply to a
+            /// subscription in the future.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,8 +134,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// future.
             /// </summary>
             /// <remarks>
-            /// Disables the specified rule so it will not apply to a subscription in the
-            /// future.
+            /// Description for Disables the specified rule so it will not apply to a
+            /// subscription in the future.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -154,8 +156,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// range.
             /// </summary>
             /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
+            /// Description for Get past recommendations for an app, optionally specified
+            /// by the time range.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,8 +189,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// range.
             /// </summary>
             /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
+            /// Description for Get past recommendations for an app, optionally specified
+            /// by the time range.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -225,7 +227,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Get all recommendations for an app.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -255,7 +257,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Get all recommendations for an app.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -291,7 +293,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Disable all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Disable all recommendations for an app.
+            /// Description for Disable all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -313,7 +315,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Disable all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Disable all recommendations for an app.
+            /// Description for Disable all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -338,7 +340,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reset all recommendation opt-out settings for an app.
             /// </summary>
             /// <remarks>
-            /// Reset all recommendation opt-out settings for an app.
+            /// Description for Reset all recommendation opt-out settings for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -360,7 +362,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reset all recommendation opt-out settings for an app.
             /// </summary>
             /// <remarks>
-            /// Reset all recommendation opt-out settings for an app.
+            /// Description for Reset all recommendation opt-out settings for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -385,7 +387,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a recommendation rule for an app.
             /// </summary>
             /// <remarks>
-            /// Get a recommendation rule for an app.
+            /// Description for Get a recommendation rule for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -416,7 +418,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a recommendation rule for an app.
             /// </summary>
             /// <remarks>
-            /// Get a recommendation rule for an app.
+            /// Description for Get a recommendation rule for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -453,7 +455,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Disables the specific rule for a web site permanently.
             /// </summary>
             /// <remarks>
-            /// Disables the specific rule for a web site permanently.
+            /// Description for Disables the specific rule for a web site permanently.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -478,7 +480,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Disables the specific rule for a web site permanently.
             /// </summary>
             /// <remarks>
-            /// Disables the specific rule for a web site permanently.
+            /// Description for Disables the specific rule for a web site permanently.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -507,8 +509,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// range.
             /// </summary>
             /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
+            /// Description for Get past recommendations for an app, optionally specified
+            /// by the time range.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -540,8 +542,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// range.
             /// </summary>
             /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
+            /// Description for Get past recommendations for an app, optionally specified
+            /// by the time range.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -578,7 +580,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Get all recommendations for an app.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -608,7 +610,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Get all recommendations for an app.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -644,7 +646,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Disable all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Disable all recommendations for an app.
+            /// Description for Disable all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -664,7 +666,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Disable all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Disable all recommendations for an app.
+            /// Description for Disable all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -687,7 +689,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reset all recommendation opt-out settings for an app.
             /// </summary>
             /// <remarks>
-            /// Reset all recommendation opt-out settings for an app.
+            /// Description for Reset all recommendation opt-out settings for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -707,7 +709,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Reset all recommendation opt-out settings for an app.
             /// </summary>
             /// <remarks>
-            /// Reset all recommendation opt-out settings for an app.
+            /// Description for Reset all recommendation opt-out settings for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -730,7 +732,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a recommendation rule for an app.
             /// </summary>
             /// <remarks>
-            /// Get a recommendation rule for an app.
+            /// Description for Get a recommendation rule for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -761,7 +763,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a recommendation rule for an app.
             /// </summary>
             /// <remarks>
-            /// Get a recommendation rule for an app.
+            /// Description for Get a recommendation rule for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -798,7 +800,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Disables the specific rule for a web site permanently.
             /// </summary>
             /// <remarks>
-            /// Disables the specific rule for a web site permanently.
+            /// Description for Disables the specific rule for a web site permanently.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -821,7 +823,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Disables the specific rule for a web site permanently.
             /// </summary>
             /// <remarks>
-            /// Disables the specific rule for a web site permanently.
+            /// Description for Disables the specific rule for a web site permanently.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -847,7 +849,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List all recommendations for a subscription.
             /// </summary>
             /// <remarks>
-            /// List all recommendations for a subscription.
+            /// Description for List all recommendations for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -864,7 +866,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// List all recommendations for a subscription.
             /// </summary>
             /// <remarks>
-            /// List all recommendations for a subscription.
+            /// Description for List all recommendations for a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -888,8 +890,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// range.
             /// </summary>
             /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
+            /// Description for Get past recommendations for an app, optionally specified
+            /// by the time range.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -907,8 +909,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// range.
             /// </summary>
             /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
+            /// Description for Get past recommendations for an app, optionally specified
+            /// by the time range.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -931,7 +933,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Get all recommendations for an app.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -948,7 +950,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Get all recommendations for an app.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -972,8 +974,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// range.
             /// </summary>
             /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
+            /// Description for Get past recommendations for an app, optionally specified
+            /// by the time range.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -991,8 +993,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// range.
             /// </summary>
             /// <remarks>
-            /// Get past recommendations for an app, optionally specified by the time
-            /// range.
+            /// Description for Get past recommendations for an app, optionally specified
+            /// by the time range.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1015,7 +1017,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Get all recommendations for an app.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1032,7 +1034,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all recommendations for an app.
             /// </summary>
             /// <remarks>
-            /// Get all recommendations for an app.
+            /// Description for Get all recommendations for an app.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
