@@ -184,5 +184,97 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeReceiptsFromUriAsync(fakeUri, cancellationToken: cancellationSource.Token));
         }
 
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void StartRecognizeCustomFormsRequiresTheModelId(string modelId)
+        {
+            var client = CreateInstrumentedClient();
+            var expectedType = modelId == null
+                ? typeof(ArgumentNullException)
+                : typeof(ArgumentException);
+
+            using var stream = new MemoryStream(Array.Empty<byte>());
+
+            Assert.ThrowsAsync(expectedType, async () => await client.StartRecognizeCustomFormsAsync(modelId, stream));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsRequiresTheFormFileStream()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeCustomFormsAsync("00000000-0000-0000-0000-000000000000", null));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var options = new RecognizeOptions { ContentType = ContentType.Pdf };
+
+            using var stream = new MemoryStream(Array.Empty<byte>());
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsAsync("00000000-0000-0000-0000-000000000000", stream, recognizeOptions: options, cancellationToken: cancellationSource.Token));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        public void StartRecognizeCustomFormsFromUriRequiresTheModelId(string modelId)
+        {
+            var client = CreateInstrumentedClient();
+            var expectedType = modelId == null
+                ? typeof(ArgumentNullException)
+                : typeof(ArgumentException);
+
+            var uri = new Uri("https://tobeornot.to.be");
+
+            Assert.ThrowsAsync(expectedType, async () => await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsFromUriRequiresTheFormFileStream()
+        {
+            var client = CreateInstrumentedClient();
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", null));
+        }
+
+        /// <summary>
+        /// Verifies functionality of the <see cref="FormRecognizerClient.StartRecognizeCustomFormsFromUriAsync"/>
+        /// method.
+        /// </summary>
+        [Test]
+        public void StartRecognizeCustomFormsFromUriRespectsTheCancellationToken()
+        {
+            var client = CreateInstrumentedClient();
+            var fakeUri = new Uri("http://localhost");
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", fakeUri, cancellationToken: cancellationSource.Token));
+        }
     }
 }
