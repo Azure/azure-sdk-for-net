@@ -2422,9 +2422,17 @@ namespace Azure.Messaging.EventHubs.Tests
                 return Task.FromResult(default(PartitionProperties));
             }
 
-            internal override TransportConsumer CreateTransportConsumer(string consumerGroup, string partitionId, EventPosition eventPosition, EventHubsRetryPolicy retryPolicy, bool trackLastEnqueuedEventProperties = true, long? ownerLevel = default, uint? prefetchCount = default) => TransportConsumerFactory();
+            internal override TransportConsumer CreateTransportConsumer(string consumerGroup,
+                                                                        string partitionId, EventPosition eventPosition,
+                                                                        EventHubsRetryPolicy retryPolicy,
+                                                                        bool trackLastEnqueuedEventProperties = true,
+                                                                        long? ownerLevel = default,
+                                                                        uint? prefetchCount = default) => TransportConsumerFactory();
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
+            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
+                                                                    string eventHubName,
+                                                                    EventHubTokenCredential credential,
+                                                                    EventHubConnectionOptions options)
             {
                 var client = new Mock<TransportClient>();
 

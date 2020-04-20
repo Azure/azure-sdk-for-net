@@ -17969,6 +17969,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionScope { get; internal set; }
 
         /// <summary>
+        /// TagCount
+        /// </summary>
+        public int? TagCount { get; internal set; }
+
+        /// <summary>
         /// Expiry-Time
         /// </summary>
         public System.DateTimeOffset? ExpiresOn { get; internal set; }
@@ -18154,6 +18159,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.EncryptionScope = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("TagCount", ""));
+            if (_child != null)
+            {
+                _value.TagCount = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Expiry-Time", ""));
             if (_child != null)
             {
@@ -18232,6 +18242,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
             string encryptionScope = default,
+            int? tagCount = default,
             System.DateTimeOffset? expiresOn = default,
             bool? isSealed = default,
             Azure.ETag? eTag = default,
@@ -18269,6 +18280,7 @@ namespace Azure.Storage.Blobs.Models
                 ArchiveStatus = archiveStatus,
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
                 EncryptionScope = encryptionScope,
+                TagCount = tagCount,
                 ExpiresOn = expiresOn,
                 IsSealed = isSealed,
                 ETag = eTag,

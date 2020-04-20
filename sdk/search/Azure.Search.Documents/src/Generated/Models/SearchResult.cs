@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
         {
             Score = score;
             Highlights = highlights;
-            AdditionalProperties = additionalProperties;
+            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
         }
 
         /// <summary> The relevance score of the document compared to other documents returned by the query. </summary>

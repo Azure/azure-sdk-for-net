@@ -8,15 +8,22 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class FormTable : FormContent
+    public class FormTable
     {
-        internal FormTable(DataTable_internal table, ReadResult_internal readResult)
-            : base(null, readResult.Page, null) // TODO: retrieve text and bounding box.
+        internal FormTable(DataTable_internal table, IReadOnlyList<ReadResult_internal> readResults, int pageIndex)
         {
+            ReadResult_internal readResult = readResults[pageIndex];
+
+            PageNumber = readResult.Page;
             ColumnCount = table.Columns;
             RowCount = table.Rows;
-            Cells = ConvertCells(table.Cells, readResult);
+            Cells = ConvertCells(table.Cells, readResults, readResult.Page);
         }
+
+        /// <summary>
+        /// The 1-based page number in the input document.
+        /// </summary>
+        public int PageNumber { get; }
 
         /// <summary>
         /// </summary>
@@ -53,12 +60,13 @@ namespace Azure.AI.FormRecognizer.Models
             }
         }
 
-        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, ReadResult_internal readResult)
+        private static IReadOnlyList<FormTableCell> ConvertCells(IReadOnlyList<DataTableCell_internal> cellsResult, IReadOnlyList<ReadResult_internal> readResults, int pageNumber)
         {
             List<FormTableCell> cells = new List<FormTableCell>();
-            foreach (var result in cellsResult)
+
+            foreach (var cellResult in cellsResult)
             {
-                cells.Add(new FormTableCell(result, readResult, result.Elements));
+                cells.Add(new FormTableCell(cellResult, readResults, pageNumber));
             }
 
             return cells;

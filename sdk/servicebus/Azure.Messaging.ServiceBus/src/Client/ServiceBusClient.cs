@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// If the connection string specifies a specific entity name, any subsequent calls to
-        /// <see cref="CreateSender"/>, <see cref="CreateReceiver(string)"/>,
+        /// <see cref="CreateSender(string)"/>, <see cref="CreateReceiver(string)"/>,
         /// <see cref="CreateProcessor(string)"/> etc. must still specify the same entity name.
         /// </remarks>
         public ServiceBusClient(string connectionString) :
@@ -117,7 +117,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// If the connection string specifies a specific entity name, any subsequent calls to
-        /// <see cref="CreateSender"/>, <see cref="CreateReceiver(string)"/>,
+        /// <see cref="CreateSender(string)"/>, <see cref="CreateReceiver(string)"/>,
         /// <see cref="CreateProcessor(string)"/> etc. must still specify the same entity name.
         /// </remarks>
         public ServiceBusClient(string connectionString, ServiceBusClientOptions options)
@@ -175,6 +175,34 @@ namespace Azure.Messaging.ServiceBus
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
+                viaEntityPath: null,
+                connection: Connection);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
+        /// queue or topic via a different queue or topic.
+        /// </summary>
+        ///
+        /// <param name="queueOrTopicName">The queue or topic to create a <see cref="ServiceBusSender"/> for.</param>
+        /// <param name="viaQueueOrTopicName"></param>
+        ///
+        /// <remarks>
+        /// This is mainly to be used when sending messages in a transaction.
+        /// When messages need to be sent across entities in a single transaction, this can be used to ensure
+        /// all the messages land initially in the same entity/partition for local transactions, and then
+        /// let Service Bus handle transferring the message to the actual destination.
+        /// </remarks>
+        ///
+        /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
+        public ServiceBusSender CreateSender(string queueOrTopicName, string viaQueueOrTopicName)
+        {
+            ValidateEntityName(viaQueueOrTopicName);
+            ValidateEntityName(queueOrTopicName);
+
+            return new ServiceBusSender(
+                entityPath: queueOrTopicName,
+                viaEntityPath: viaQueueOrTopicName,
                 connection: Connection);
         }
 
@@ -490,14 +518,11 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionProcessor"/> to.
         /// If left blank, the next available session returned from the service will be used.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
             string queueName,
             ServiceBusProcessorOptions options = default,
-            string sessionId = default,
-            CancellationToken cancellationToken = default)
+            string sessionId = default)
         {
             ValidateEntityName(queueName);
 
@@ -519,15 +544,12 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
         /// <param name="sessionId">An optional session ID to scope the <see cref="ServiceBusSessionProcessor"/> to.
         /// If left blank, the next available session returned from the service will be used.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
             string topicName,
             string subscriptionName,
             ServiceBusProcessorOptions options = default,
-            string sessionId = default,
-            CancellationToken cancellationToken = default)
+            string sessionId = default)
         {
             ValidateEntityName(topicName);
 

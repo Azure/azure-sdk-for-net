@@ -10,12 +10,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class FormPageRange
     {
-        internal FormPageRange(IList<int> pageRange)
+        internal FormPageRange(int first, int last)
         {
-            // TODO: validate that PageRange.Length == 2.
-            // https://github.com/Azure/azure-sdk-for-net/issues/10547
-            FirstPageNumber = pageRange.First();
-            LastPageNumber = pageRange.Last();
+            FirstPageNumber = first;
+            LastPageNumber = last;
         }
 
         /// <summary>

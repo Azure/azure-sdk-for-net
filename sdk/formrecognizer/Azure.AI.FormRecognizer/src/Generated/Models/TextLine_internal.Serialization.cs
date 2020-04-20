@@ -50,7 +50,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<TextWord_internal> array = new List<TextWord_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextWord_internal.DeserializeTextWord_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TextWord_internal.DeserializeTextWord_internal(item));
+                        }
                     }
                     words = array;
                     continue;
