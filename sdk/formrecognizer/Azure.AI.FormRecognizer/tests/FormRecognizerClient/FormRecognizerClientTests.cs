@@ -274,7 +274,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// method.
         /// </summary>
         [Test]
-        public void StartRecognizeCustomFormsFromUriRequiresTheFormFileStream()
+        public void StartRecognizeCustomFormsFromUriRequiresTheFormFileUri()
         {
             var client = CreateInstrumentedClient();
             Assert.ThrowsAsync<ArgumentNullException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", null));
