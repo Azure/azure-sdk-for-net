@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The action that should be triggered.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AutomationAction")]
     public partial class AutomationAction
     {
         /// <summary>
