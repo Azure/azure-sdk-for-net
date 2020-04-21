@@ -15,13 +15,20 @@ namespace Azure.AI.FormRecognizer.Training
     /// </summary>
     public class TrainingOperation : Operation<CustomFormModel>
     {
+        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
+        private readonly ServiceClient _serviceClient;
+
+        /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
+
+        /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
         private CustomFormModel _value;
+
+        /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
 
-        // TODO: use this.
+        /// <summary>The <see cref="CancellationToken"/> to use for all status checking.</summary>
         private CancellationToken _cancellationToken;
-        private readonly ServiceClient _serviceClient;
 
         /// <summary>
         /// Get the ID of the training operation. This value can be used to poll for the status of the training outcome.
@@ -64,9 +71,10 @@ namespace Azure.AI.FormRecognizer.Training
         {
         }
 
-        internal TrainingOperation(string location, ServiceClient allOperations)
+        internal TrainingOperation(string location, ServiceClient allOperations, CancellationToken cancellationToken)
         {
             _serviceClient = allOperations;
+            _cancellationToken = cancellationToken;
 
             // TODO: validate this
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -78,12 +86,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        /// <param name="cancellationToken"></param>
-        public TrainingOperation(string operationId, FormTrainingClient client, CancellationToken cancellationToken = default)
+        public TrainingOperation(string operationId, FormTrainingClient client)
         {
             Id = operationId;
             _serviceClient = client.ServiceClient;
-            _cancellationToken = cancellationToken;
         }
 
         /// <inheritdoc/>
@@ -98,6 +104,11 @@ namespace Azure.AI.FormRecognizer.Training
         {
             if (!_hasCompleted)
             {
+                if (cancellationToken == default)
+                {
+                    cancellationToken = _cancellationToken;
+                }
+
                 // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
                 Response<Model_internal> update = async
                     ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
