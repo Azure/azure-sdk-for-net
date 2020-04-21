@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace Azure.Search.Documents
 {
@@ -70,44 +69,5 @@ namespace Azure.Search.Documents
                 new List<string>() :
                 // TODO: #10600 - Verify we don't need to worry about escaping
                 new List<string>(value.Split(','));
-
-        /// <summary>
-        /// Joins a collection of items using <see cref="object.ToString"/> with the given <paramref name="separator"/>.
-        /// </summary>
-        /// <typeparam name="T">The non-nullable type of item to join.</typeparam>
-        /// <param name="items">The collection of items to join.</param>
-        /// <param name="separator">The separator between items to join. The default is a comma.</param>
-        /// <returns>
-        /// A collection of items using <see cref="object.ToString"/> with the given <paramref name="separator"/>,
-        /// or null if <paramref name="items"/> is null or empty, or contains only null or empty values.
-        /// </returns>
-        public static string JoinAsString<T>(this IEnumerable<T> items, char separator = ',')
-            where T : notnull
-        {
-            if (items != null && items.Count() > 0)
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (T item in items)
-                {
-                    string value = item.ToString();
-                    if (!string.IsNullOrEmpty(value))
-                    {
-                        if (sb.Length > 0)
-                        {
-                            sb.Append(separator);
-                        }
-
-                        sb.Append(value);
-                    }
-                }
-
-                if (sb.Length > 0)
-                {
-                    return sb.ToString();
-                }
-            }
-
-            return null;
-        }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.Search.Documents.Models
         [CodeGenMember("flags")]
         private string FlagsInternal
         {
-            get => Flags.JoinAsString(separator: '|');
+            get => string.Join("|", Flags);
             set
             {
                 Flags.Clear();
