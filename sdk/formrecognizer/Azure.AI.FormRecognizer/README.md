@@ -326,11 +326,11 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository:
 
-- [Recognize Receipts from File][recognize_receipts_file]
-- [Recognize Receipts from URI][recognize_receipts_uri]
+- [Recognize Receipts from a File][recognize_receipts_file]
+- [Recognize Receipts from a URI][recognize_receipts_uri]
 - [Recognize Form Content][recognize_content]
 - [Recognize Custom Forms][recognize_custom_forms]
-- [Train Model with Forms Only][train_model_with_forms]
+- [Train Model with Forms][train_model_with_forms]
 - [Train Model with Forms and Labels][train_model_with_forms_and_labels]
 - [Manage Custom Models][manage_custom_models]
 
@@ -349,10 +349,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/src
 [formreco_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/
 [formreco_refdocs]: https://aka.ms/azsdk-net-formrecognizer-ref-docs
-[formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer -->
+[formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview
-
 [cognitive_resource]: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account
 
 
