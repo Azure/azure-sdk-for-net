@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Security
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdaptiveNetworkHardenings", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "Alerts", "2019-01-01"),

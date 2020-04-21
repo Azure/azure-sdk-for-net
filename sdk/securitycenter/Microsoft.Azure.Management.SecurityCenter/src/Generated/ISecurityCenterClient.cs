@@ -132,11 +132,6 @@ namespace Microsoft.Azure.Management.Security
         IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
 
         /// <summary>
-        /// Gets the IAdaptiveApplicationControlsOperations.
-        /// </summary>
-        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
-
-        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         ILocationsOperations Locations { get; }
@@ -215,6 +210,11 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IAssessmentsOperations.
         /// </summary>
         IAssessmentsOperations Assessments { get; }
+
+        /// <summary>
+        /// Gets the IAdaptiveApplicationControlsOperations.
+        /// </summary>
+        IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; }
 
         /// <summary>
         /// Gets the IAdaptiveNetworkHardeningsOperations.
