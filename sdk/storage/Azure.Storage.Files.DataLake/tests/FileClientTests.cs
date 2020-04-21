@@ -2838,7 +2838,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             Response<PathInfo> expiryResponse = await file.SetExpiryRelativeAsync(
                 timeToExpire: new TimeSpan(hours: 1, minutes: 0, seconds: 0),
-                relativeToBlobCreationTime: true);
+                setExpiryRelativeTo: DataLakeFileSetExpiryRelativeTo.FileCreationTime);
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
 
             // Assert

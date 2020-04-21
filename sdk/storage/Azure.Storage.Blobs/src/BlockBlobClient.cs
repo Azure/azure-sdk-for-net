@@ -1774,18 +1774,15 @@ namespace Azure.Storage.Blobs.Specialized
         #region SetExpiry
         /// <summary>
         /// Sets the blob's ExpiresOn property.  ExpiresOn is when
-        /// the blob will be deleted.  If <paramref name="relativeToBlobCreationTime"/>
-        /// is true, the ExpiresOn time will be set relative to the
-        /// time the blob was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// the blob will be deleted.
         /// </summary>
         /// <param name="timeToExpire">
         /// <see cref="TimeSpan"/>.
         /// </param>
-        /// <param name="relativeToBlobCreationTime">
-        /// If true, the ExpiresOn property will be set relative to
-        /// the time the blob was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// <param name="setExpiryRelativeTo">
+        /// Specifies if the blob's ExpiresOn property should be
+        /// set relative to the blob's creation time, or the current
+        /// time.  Defaults to current time.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1800,28 +1797,25 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobInfo> SetExpiryRelative(
             TimeSpan timeToExpire,
-            bool relativeToBlobCreationTime = default,
+            BlobSetExpiryRelativeTo setExpiryRelativeTo = BlobSetExpiryRelativeTo.CurrentTime,
             CancellationToken cancellationToken = default)
             => SetExpiryRelativeInternal(
                 timeToExpire,
-                relativeToBlobCreationTime,
+                setExpiryRelativeTo,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Sets the blob's ExpiresOn property.  ExpiresOn is when
-        /// the blob will be deleted.  If <paramref name="relativeToBlobCreationTime"/>
-        /// is true, the ExpiresOn time will be set relative to the
-        /// time the blob was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// the blob will be deleted.
         /// </summary>
         /// <param name="timeToExpire">
         /// <see cref="TimeSpan"/>.
         /// </param>
-        /// <param name="relativeToBlobCreationTime">
-        /// If true, the ExpiresOn property will be set relative to
-        /// the time the blob was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// <param name="setExpiryRelativeTo">
+        /// Specifies if the blob's ExpiresOn property should be
+        /// set relative to the blob's creation time, or the current
+        /// time.  Defaults to current time.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1836,28 +1830,25 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobInfo>> SetExpiryRelativeAsync(
             TimeSpan timeToExpire,
-            bool relativeToBlobCreationTime = default,
+            BlobSetExpiryRelativeTo setExpiryRelativeTo = BlobSetExpiryRelativeTo.CurrentTime,
             CancellationToken cancellationToken = default)
             => await SetExpiryRelativeInternal(
                 timeToExpire,
-                relativeToBlobCreationTime,
+                setExpiryRelativeTo,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Sets the blob's ExpiresOn property.  ExpiresOn is when
-        /// the blob will be deleted.  If <paramref name="relativeToBlobCreationTime"/>
-        /// is true, the ExpiresOn time will be set relative to the
-        /// time the blob was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// the blob will be deleted.
         /// </summary>
         /// <param name="timeToExpire">
         /// <see cref="TimeSpan"/>.
         /// </param>
-        /// <param name="relativeToBlobCreationTime">
-        /// If true, the ExpiresOn property will be set relative to
-        /// the time the blob was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// <param name="setExpiryRelativeTo">
+        /// Specifies if the blob's ExpiresOn property should be
+        /// set relative to the blob's creation time, or the current
+        /// time.  Defaults to current time.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1875,12 +1866,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async Task<Response<BlobInfo>> SetExpiryRelativeInternal(
             TimeSpan timeToExpire,
-            bool relativeToBlobCreationTime,
+            BlobSetExpiryRelativeTo setExpiryRelativeTo,
             bool async,
             CancellationToken cancellationToken)
             => await SetExpiryInternal(
                 timeToExpire.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
-                relativeToBlobCreationTime ? BlobExpiryOptions.RelativeToCreation : BlobExpiryOptions.RelativeToNow,
+                setExpiryRelativeTo == BlobSetExpiryRelativeTo.BlobCreationTime ? BlobExpiryOptions.RelativeToCreation : BlobExpiryOptions.RelativeToNow,
                 $"{nameof(BlockBlobClient)}.{nameof(SetExpiryRelative)}",
                 async,
                 cancellationToken).ConfigureAwait(false);

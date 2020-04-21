@@ -334,5 +334,10 @@ namespace Azure.Storage.Files.DataLake
                 Permissions = dataLakeAccessPolicy.Permissions
             };
         }
+
+        internal static BlobSetExpiryRelativeTo ToBlobSetExpiryRelativeTo(this DataLakeFileSetExpiryRelativeTo setExpiryRelativeTo)
+            => setExpiryRelativeTo == DataLakeFileSetExpiryRelativeTo.CurrentTime
+            ? BlobSetExpiryRelativeTo.CurrentTime
+            : BlobSetExpiryRelativeTo.BlobCreationTime;
     }
 }

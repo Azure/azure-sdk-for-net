@@ -1846,7 +1846,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await blob.SetExpiryRelativeAsync(
                 timeToExpire: new TimeSpan(hours: 1, minutes: 0, seconds: 0),
-                relativeToBlobCreationTime: true);
+                setExpiryRelativeTo: BlobSetExpiryRelativeTo.BlobCreationTime);
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
 
             // Assert

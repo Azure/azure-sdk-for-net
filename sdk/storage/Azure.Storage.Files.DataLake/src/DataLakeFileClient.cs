@@ -3193,18 +3193,15 @@ namespace Azure.Storage.Files.DataLake
         #region SetExpiry
         /// <summary>
         /// Sets the files's ExpiresOn property.  ExpiresOn is when
-        /// the files will be deleted.  If <paramref name="relativeToBlobCreationTime"/>
-        /// is true, the ExpiresOn time will be set relative to the
-        /// time the file was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// the files will be deleted.
         /// </summary>
         /// <param name="timeToExpire">
         /// <see cref="TimeSpan"/>.
         /// </param>
-        /// <param name="relativeToBlobCreationTime">
-        /// If true, the ExpiresOn property will be set relative to
-        /// the time the file was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// <param name="setExpiryRelativeTo">
+        /// Specifies if the files's ExpiresOn property should be
+        /// set relative to the files's creation time, or the current
+        /// time.  Defaults to current time.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3219,7 +3216,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<PathInfo> SetExpiryRelative(
             TimeSpan timeToExpire,
-            bool relativeToBlobCreationTime = default,
+            DataLakeFileSetExpiryRelativeTo setExpiryRelativeTo = DataLakeFileSetExpiryRelativeTo.CurrentTime,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryRelative)}");
@@ -3229,7 +3226,7 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<BlobInfo> response = _blockBlobClient.SetExpiryRelative(
                     timeToExpire,
-                    relativeToBlobCreationTime,
+                    setExpiryRelativeTo.ToBlobSetExpiryRelativeTo(),
                     cancellationToken);
 
                 return Response.FromValue(
@@ -3249,18 +3246,15 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// Sets the files's ExpiresOn property.  ExpiresOn is when
-        /// the files will be deleted.  If <paramref name="relativeToBlobCreationTime"/>
-        /// is true, the ExpiresOn time will be set relative to the
-        /// time the file was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// the files will be deleted.
         /// </summary>
         /// <param name="timeToExpire">
         /// <see cref="TimeSpan"/>.
         /// </param>
-        /// <param name="relativeToBlobCreationTime">
-        /// If true, the ExpiresOn property will be set relative to
-        /// the time the file was created.  Otherwise, it will be set
-        /// relative to the current time.
+        /// <param name="setExpiryRelativeTo">
+        /// Specifies if the files's ExpiresOn property should be
+        /// set relative to the files's creation time, or the current
+        /// time.  Defaults to current time.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3275,7 +3269,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual async Task<Response<PathInfo>> SetExpiryRelativeAsync(
             TimeSpan timeToExpire,
-            bool relativeToBlobCreationTime = default,
+            DataLakeFileSetExpiryRelativeTo setExpiryRelativeTo = DataLakeFileSetExpiryRelativeTo.CurrentTime,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryRelative)}");
@@ -3285,7 +3279,7 @@ namespace Azure.Storage.Files.DataLake
 
                 Response<BlobInfo> response = await _blockBlobClient.SetExpiryRelativeAsync(
                     timeToExpire,
-                    relativeToBlobCreationTime,
+                    setExpiryRelativeTo.ToBlobSetExpiryRelativeTo(),
                     cancellationToken)
                     .ConfigureAwait(false);
 
