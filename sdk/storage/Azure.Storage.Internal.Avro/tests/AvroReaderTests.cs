@@ -48,7 +48,7 @@ namespace Azure.Storage.Internal.Avro.Tests
             foreach (TestCase testCase in testCases)
             {
                 // Arrange
-                using FileStream stream = File.OpenRead($"Resources\\{testCase.Path}");
+                using FileStream stream = File.OpenRead($"Resources{Path.DirectorySeparatorChar}{testCase.Path}");
                 AvroReader avroReader = new AvroReader(stream);
 
                 // Act
