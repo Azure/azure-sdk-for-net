@@ -23,9 +23,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.</summary>
         private const int DefaultPerTestExecutionLimitMinutes = 5;
 
-        /// <summary> The shared instance of the <see cref="EventHubsTestEnvironment"/>. </summary>
-        public static EventHubsTestEnvironment Instance { get; } = new EventHubsTestEnvironment();
-
         /// <summary>The environment variable value for the namespace connection string.</summary>
         private string EventHubsNamespaceConnectionString => GetOptionalVariable("EVENT_HUBS_NAMESPACE_CONNECTION_STRING");
 
@@ -61,6 +58,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             }, LazyThreadSafetyMode.PublicationOnly);
         }
+
+        /// <summary> The shared instance of the <see cref="EventHubsTestEnvironment"/>. </summary>
+        public static EventHubsTestEnvironment Instance { get; } = new EventHubsTestEnvironment();
 
         /// <summary>
         ///   Indicates whether or not an ephemeral namespace was created for the current test execution.

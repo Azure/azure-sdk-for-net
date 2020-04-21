@@ -105,9 +105,9 @@ namespace Azure.Core.Testing
             bool isPlayback = false;
 
             GetIsPlayback(ref isPlayback);
-            GetRecordedValue(name, ref value);
             if (isPlayback)
             {
+                GetRecordedValue(name, ref value);
                 return value;
             }
 
