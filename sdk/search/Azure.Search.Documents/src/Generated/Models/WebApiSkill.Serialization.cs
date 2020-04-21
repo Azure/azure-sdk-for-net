@@ -76,9 +76,9 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndArray();
             writer.WritePropertyName("outputs");
             writer.WriteStartArray();
-            foreach (var item0 in Outputs)
+            foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item0);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Models
             TimeSpan? timeout = default;
             int? batchSize = default;
             int? degreeOfParallelism = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             string description = default;
             string context = default;
@@ -114,7 +114,14 @@ namespace Azure.Search.Documents.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetString());
+                        }
                     }
                     httpHeaders = dictionary;
                     continue;
@@ -157,7 +164,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -192,7 +199,14 @@ namespace Azure.Search.Documents.Models
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
+                        }
                     }
                     inputs = array;
                     continue;
@@ -202,13 +216,20 @@ namespace Azure.Search.Documents.Models
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
+                        }
                     }
                     outputs = array;
                     continue;
                 }
             }
-            return new WebApiSkill(odatatype, name, description, context, inputs, outputs, uri, httpHeaders, httpMethod, timeout, batchSize, degreeOfParallelism);
+            return new WebApiSkill(odataType, name, description, context, inputs, outputs, uri, httpHeaders, httpMethod, timeout, batchSize, degreeOfParallelism);
         }
     }
 }

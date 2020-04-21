@@ -65,7 +65,14 @@ namespace Azure.Search.Documents.Models
                     List<ItemError> array = new List<ItemError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ItemError.DeserializeItemError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ItemError.DeserializeItemError(item));
+                        }
                     }
                     errors = array;
                     continue;
@@ -75,7 +82,14 @@ namespace Azure.Search.Documents.Models
                     List<ItemWarning> array = new List<ItemWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ItemWarning.DeserializeItemWarning(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ItemWarning.DeserializeItemWarning(item));
+                        }
                     }
                     warnings = array;
                     continue;

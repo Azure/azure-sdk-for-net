@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -179,7 +180,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
 
             // Cleanup
             await share.DeleteAsync(false);
@@ -509,7 +510,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareProperties> response = await share.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -732,6 +733,49 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.DeleteAsync(false),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RestoreAsync()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SoftDelete();
+            string shareName = GetNewShareName();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateAsync();
+            await share.DeleteAsync();
+            IList<ShareItem> shares = await service.GetSharesAsync(states: ShareStates.Deleted).ToListAsync();
+            ShareItem shareItem = shares.Where(s => s.Name == shareName).FirstOrDefault();
+
+            // It takes some time for the Share to be deleted.
+            await Delay(30000);
+
+            // Act
+            await share.RestoreAsync(
+                shareItem.Name,
+                shareItem.Version);
+
+            // Assert
+            await share.GetPropertiesAsync();
+
+            // Cleanup
+            await share.DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task RestoreAsync_Error()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SoftDelete();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            string fakeVersion = "01D60F8BB59A4652";
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                share.RestoreAsync(GetNewShareName(), fakeVersion),
+                e => Assert.AreEqual(ShareErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
         }
 
         [Test]

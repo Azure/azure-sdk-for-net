@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
         internal FacetResult(long? count, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Count = count;
-            AdditionalProperties = additionalProperties;
+            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
         }
 
         /// <summary> The approximate count of documents falling within the bucket described by this facet. </summary>

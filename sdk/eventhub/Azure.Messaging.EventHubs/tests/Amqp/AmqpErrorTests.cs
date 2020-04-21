@@ -41,6 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { AmqpErrorCode.ResourceLimitExceeded, typeof(EventHubsException), EventHubsException.FailureReason.QuotaExceeded };
             yield return new object[] { AmqpErrorCode.NotAllowed, typeof(InvalidOperationException), null };
             yield return new object[] { AmqpErrorCode.NotImplemented, typeof(NotSupportedException), null };
+            yield return new object[] { AmqpErrorCode.IllegalState, typeof(EventHubsException), EventHubsException.FailureReason.ClientClosed };
         }
 
         /// <summary>

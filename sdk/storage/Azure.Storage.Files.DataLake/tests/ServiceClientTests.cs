@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             IList<FileSystemItem> items = await service.GetFileSystemsAsync(FileSystemTraits.Metadata).ToListAsync();
 
             // Assert
-            AssertMetadataEquality(
+            AssertDictionaryEquality(
                 metadata,
                 items.Where(i => i.Name == test.FileSystem.Name).FirstOrDefault().Properties.Metadata);
         }

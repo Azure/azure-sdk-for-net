@@ -30,7 +30,7 @@ high level we will do the following versioning changes:
 - After a GA release we bump the minor version and switch to preview 1. `1.0.0` -> `1.1.0-preview.1`
 - Prior to a hot-fix release we bump the patch version. `1.0.0` -> `1.0.1`
 
-Versions are automatically bumped up in package project `.csproj` files as well as package changelog `CHANGELOG.md` as part of the release process. To increment a version locally make use of the `eng\Update-PkgVersion.ps1` script.
+Versions are automatically bumped up in package project `.csproj` files as well as package changelog `CHANGELOG.md` as part of the release process. To increment a version locally make use of the `eng\scripts\Update-PkgVersion.ps1` script.
 
 ## Assembly Versioning
 

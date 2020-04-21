@@ -5,7 +5,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 
 ## Creating a KeyClient
 
-To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
+To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to an Azure Key Vault and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
@@ -16,7 +16,7 @@ var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 
 ## Creating a key
 
-First, create an RSA key which will be used to wrap and unwrap another key
+First, create an RSA key which will be used to wrap and unwrap another key.
 
 ```C# Snippet:KeysSample6CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
@@ -57,7 +57,7 @@ Debug.WriteLine($"Encrypted data using the algorithm {wrapResult.Algorithm}, wit
 
 ## Unwrapping a key
 
-Now unwrap the encrypted key. Note that the same algorithm must always be used for both wrap and unwrap
+Now unwrap the encrypted key. Note that the same algorithm must always be used for both wrap and unwrap.
 
 ```C# Snippet:KeysSample6UnwrapKey
 UnwrapResult unwrapResult = cryptoClient.UnwrapKey(KeyWrapAlgorithm.RsaOaep, wrapResult.EncryptedKey);

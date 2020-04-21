@@ -170,6 +170,9 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_Hns() =>
             GetServiceClientFromSharedKeyConfig(TestConfigHierarchicalNamespace);
 
+        public BlobServiceClient GetServiceClient_SoftDelete() =>
+            GetServiceClientFromSharedKeyConfig(TestConfigSoftDelete);
+
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)
@@ -528,6 +531,12 @@ namespace Azure.Storage.Test.Shared
             } while (properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
+        public Dictionary<string, string> BuildTags()
+            => new Dictionary<string, string>
+            {
+                { "tagKey0", "tagValue0" },
+                { "tagKey1", "tagValue1" }
+            };
 
         public class DisposingContainer : IAsyncDisposable
         {

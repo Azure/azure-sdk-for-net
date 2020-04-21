@@ -1406,7 +1406,7 @@ directive:
     $.post.responses["206"]["x-az-public"] = false;
 ```
 
-### Hide BlobTags/BlobTagSet/BlobTag/BlobItemInternal
+### Hide BlobTags, BlobTagSet, BlobTag, BlobItemInternal, and FilterBlobSegment
 ``` yaml
 directive:
 - from: swagger-document
@@ -1416,6 +1416,7 @@ directive:
     $.BlobTagSet["x-az-public"] = false;
     $.BlobTags["x-az-public"] = false;
     $.BlobItemInternal["x-az-public"] = false;
+    $.FilterBlobSegment["x-az-public"] = false;
 ```
 
 ### Make AppendBlobSealResult internal

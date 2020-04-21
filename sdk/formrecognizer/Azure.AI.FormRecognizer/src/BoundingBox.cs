@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// </summary>
-    public class BoundingBox
+    public readonly struct BoundingBox
     {
         internal BoundingBox(IReadOnlyList<float> boundingBox)
         {
@@ -28,6 +29,12 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// </summary>
-        public PointF[] Points { get; }
+        internal PointF[] Points { get; }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public PointF this[int index] => Points[index];
     }
 }

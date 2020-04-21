@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         internal SuggestResult(string text, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Text = text;
-            AdditionalProperties = additionalProperties;
+            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
         }
 
         /// <summary> The text of the suggestion result. </summary>

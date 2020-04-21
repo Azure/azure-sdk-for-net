@@ -48,6 +48,13 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract bool TryAdd(EventData eventData);
 
         /// <summary>
+        ///   Clears the batch, removing all events and resetting the
+        ///   available size.
+        /// </summary>
+        ///
+        public abstract void Clear();
+
+        /// <summary>
         ///   Represents the batch as an enumerable set of transport-specific
         ///   representations of an event.
         /// </summary>

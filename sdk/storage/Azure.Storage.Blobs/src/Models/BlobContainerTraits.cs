@@ -8,7 +8,8 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Specifies options for listing blob containers with the
-    /// <see cref="BlobServiceClient.GetBlobContainersAsync"/> operation.
+    /// <see cref="BlobServiceClient.GetBlobContainersAsync(BlobContainerTraits, BlobContainerStates, string, System.Threading.CancellationToken)"/>
+    /// operation.
     /// </summary>
     [Flags]
     public enum BlobContainerTraits

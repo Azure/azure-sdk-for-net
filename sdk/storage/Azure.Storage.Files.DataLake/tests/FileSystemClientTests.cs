@@ -266,7 +266,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<FileSystemProperties> response = await fileSystem.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
 
             // Cleanup
             await fileSystem.DeleteAsync();
@@ -658,7 +658,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
