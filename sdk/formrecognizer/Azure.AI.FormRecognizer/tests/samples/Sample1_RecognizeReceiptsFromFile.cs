@@ -12,7 +12,6 @@ using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    [LiveOnly]
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]

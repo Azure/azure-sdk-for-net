@@ -14,7 +14,6 @@ namespace Azure.AI.FormRecognizer.Samples
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    [LiveOnly]
     public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
