@@ -105,15 +105,14 @@ The following section provides several code snippets illustrating common pattern
 * [Recognize Receipts](#recognize-receipts)
 * [Recognize Content](#recognize-content)
 * [Recognize Custom Forms](#recognize-custom-forms)
-* [Train with Forms](#train-with-forms)
-* [Train with Forms and Labels](#train-with-forms-and-labels)
+* [Train a Model](#train-with-forms)
 * [Manage Custom Forms](#manage-custom-forms)
 
 ### Recognize Receipts
 ```C# Snippet:FormRecognizerSample1RecognizeReceiptFileStream
 using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 {
-    Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream, ContentType.Jpeg).WaitForCompletionAsync();
+    Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
     foreach (var receipt in receipts.Value)
     {
         USReceipt usReceipt = receipt.AsUSReceipt();
@@ -188,16 +187,80 @@ foreach (RecognizedForm form in forms.Value)
 }
 ```
 
-### Train with Forms
-```C#
+### Train a Model
+```C# Snippet:FormRecognizerSample5TrainModelWithForms
+// For instructions on setting up forms for training in an Azure Storage Blob Container, see
+// https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
+
+FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+
+Console.WriteLine($"Custom Model Info:");
+Console.WriteLine($"    Model Id: {model.ModelId}");
+Console.WriteLine($"    Model Status: {model.Status}");
+Console.WriteLine($"    Created On: {model.CreatedOn}");
+Console.WriteLine($"    Last Modified: {model.LastModified}");
+
+foreach (CustomFormSubModel subModel in model.Models)
+{
+    Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
+    foreach (CustomFormModelField field in subModel.Fields.Values)
+    {
+        Console.Write($"    FieldName: {field.Name}");
+        if (field.Label != null)
+        {
+            Console.Write($", FieldLabel: {field.Label}");
+        }
+        Console.WriteLine("");
+    }
+}
 ```
 
-### Train with Forms and Labels
-```C#
-```
+### Manage Custom Models
+```C# Snippet:FormRecognizerSample7ManageCustomModels
+FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-### Manage Custom Forms
-```C#
+// Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
+AccountProperties accountProperties = client.GetAccountProperties();
+Console.WriteLine($"Account has {accountProperties.CustomModelCount} models.");
+Console.WriteLine($"It can have at most {accountProperties.CustomModelLimit} models.");
+
+// List the first ten or fewer models currently stored in the account.
+Pageable<CustomFormModelInfo> models = client.GetModelInfos();
+
+foreach (CustomFormModelInfo modelInfo in models.Take(10))
+{
+    Console.WriteLine($"Custom Model Info:");
+    Console.WriteLine($"    Model Id: {modelInfo.ModelId}");
+    Console.WriteLine($"    Model Status: {modelInfo.Status}");
+    Console.WriteLine($"    Created On: {modelInfo.CreatedOn}");
+    Console.WriteLine($"    Last Modified: {modelInfo.LastModified}");
+}
+
+// Create a new model to store in the account
+CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+
+// Get the model that was just created
+CustomFormModel modelCopy = client.GetCustomModel(model.ModelId);
+
+Console.WriteLine($"Custom Model {modelCopy.ModelId} recognizes the following form types:");
+
+foreach (CustomFormSubModel subModel in modelCopy.Models)
+{
+    Console.WriteLine($"SubModel Form Type: {subModel.FormType}");
+    foreach (CustomFormModelField field in subModel.Fields.Values)
+    {
+        Console.Write($"    FieldName: {field.Name}");
+        if (field.Label != null)
+        {
+            Console.Write($", FieldLabel: {field.Label}");
+        }
+        Console.WriteLine("");
+    }
+}
+
+// Delete the model from the account.
+client.DeleteModel(model.ModelId);
 ```
 
 ## Troubleshooting
@@ -210,7 +273,7 @@ For example, if you submit a receipt image with an invalid `Uri`, a `400` error 
 ```C# Snippet:FormRecognizerBadRequest
 try
 {
-    DetectedLanguage result = client.DetectLanguage(document);
+    Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
 }
 catch (RequestFailedException e)
 {

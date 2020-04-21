@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
@@ -24,10 +25,12 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string receiptUri = TestEnvironment.ReceiptUri;
+            string receiptUri = TestEnvironment.JpgReceiptUri;
 
             #region Snippet:FormRecognizerSample2RecognizeReceiptUri
-            Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
+            CancellationToken ct1;
+            CancellationToken ct2;
+            Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri), cancellationToken: ct1).WaitForCompletionAsync(cancellationToken: ct2);
             foreach (var receipt in receipts.Value)
             {
                 USReceipt usReceipt = receipt.AsUSReceipt();

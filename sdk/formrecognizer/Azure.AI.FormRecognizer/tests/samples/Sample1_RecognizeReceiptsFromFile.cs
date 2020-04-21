@@ -26,12 +26,12 @@ namespace Azure.AI.FormRecognizer.Samples
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
-            string receiptPath = TestEnvironment.ReceiptPath;
+            string receiptPath = TestEnvironment.JpgReceiptPath;
 
             #region Snippet:FormRecognizerSample1RecognizeReceiptFileStream
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
-                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream, ContentType.Jpeg).WaitForCompletionAsync();
+                Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
                 foreach (var receipt in receipts.Value)
                 {
                     USReceipt usReceipt = receipt.AsUSReceipt();
