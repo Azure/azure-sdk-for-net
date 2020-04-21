@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -267,7 +268,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobContainerItem> containers = await service.GetBlobContainersAsync(BlobContainerTraits.Metadata).ToListAsync();
 
             // Assert
-            AssertMetadataEquality(
+            AssertDictionaryEquality(
                 metadata,
                 containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata);
         }
@@ -505,6 +506,62 @@ namespace Azure.Storage.Blobs.Test
             await service.DeleteBlobContainerAsync(name);
             Assert.ThrowsAsync<RequestFailedException>(
                 async () => await container.GetPropertiesAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task FindBlobsByTagAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = GetNewBlobName();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            string tagKey = "myTagKey";
+            string tagValue = "myTagValue";
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { tagKey, tagValue }
+            };
+            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            string expression = $"\"{tagKey}\"='{tagValue}'";
+
+            // It takes a few seconds for Filter Blobs to pick up new changes
+            await Task.Delay(2000);
+
+            // Act
+            List<FilterBlobItem> blobs = new List<FilterBlobItem>();
+            await foreach (Page<FilterBlobItem> page in service.FindBlobsByTagsAsync(expression).AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+
+            // Assert
+            FilterBlobItem filterBlob = blobs.Where(r => r.Name == blobName).FirstOrDefault();
+            Assert.AreEqual(tagValue, filterBlob.TagValue);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task FindBlobsByTagAsync_Error()
+        {
+            // Arrange
+            // Arrange
+            BlobServiceClient service = InstrumentClient(
+                new BlobServiceClient(
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.FindBlobsByTagsAsync("\"key\" = 'value'").AsPages().FirstAsync(),
+                e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
+
         }
     }
 }

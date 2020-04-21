@@ -224,6 +224,11 @@ namespace Azure.Storage.Blobs.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
+        /// The number of tags associated with the blob.
+        /// </summary>
+        public long TagCount => _flattened.TagCount;
+
+        /// <summary>
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header indicates the blob version, and may be used in subsequent requests to access this version of the blob.
         /// </summary>
         public string VersionId => _flattened.VersionId;
@@ -232,7 +237,6 @@ namespace Azure.Storage.Blobs.Models
         /// If this blob is sealed.
         /// </summary>
         public bool IsSealed => _flattened.IsSealed;
-
     }
 
     /// <summary>
@@ -274,7 +278,8 @@ namespace Azure.Storage.Blobs.Models
             string versionId = default,
             IDictionary<string, string> metadata = default,
             Stream content = default,
-            DateTimeOffset copyCompletionTime = default)
+            DateTimeOffset copyCompletionTime = default,
+            long tagCount = default)
         {
             return new BlobDownloadInfo(
                 new FlattenedDownloadProperties()
@@ -305,11 +310,12 @@ namespace Azure.Storage.Blobs.Models
                     EncryptionKeySha256 = encryptionKeySha256,
                     EncryptionScope = encryptionScope,
                     ContentLength = contentLength,
-                    VersionId = versionId,
                     BlobContentHash = blobContentHash,
                     Metadata = metadata,
                     Content = content,
-                    CopyCompletionTime = copyCompletionTime
+                    CopyCompletionTime = copyCompletionTime,
+                    VersionId = versionId,
+                    TagCount = tagCount
                 }
             );
         }
@@ -317,6 +323,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobDownloadInfo instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobDownloadInfo BlobDownloadInfo(
             DateTimeOffset lastModified,
             long blobSequenceNumber,

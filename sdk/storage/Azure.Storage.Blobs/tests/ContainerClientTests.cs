@@ -438,7 +438,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
 
             // Cleanup
             await container.DeleteAsync();
@@ -789,7 +789,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1556,6 +1556,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsFlatSegmentAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            // Act
+            IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(BlobTraits.Tags).ToListAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, blobItems[0].Tags);
+            Assert.AreEqual(tags.Count, blobItems[0].Properties.TagCount);
+        }
+
+        [Test]
         [AsyncOnly]
         public async Task ListBlobsFlatSegmentAsync_MaxResults()
         {
@@ -1586,7 +1608,7 @@ namespace Azure.Storage.Blobs.Test
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(traits: BlobTraits.Metadata).ToListAsync();
 
             // Assert
-            AssertMetadataEquality(metadata, blobs.First().Metadata);
+            AssertDictionaryEquality(metadata, blobs.First().Metadata);
         }
 
         [Test]
@@ -1787,6 +1809,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListBlobsHierarchySegmentAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient appendBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            IDictionary<string, string> tags = BuildTags();
+            CreateAppendBlobOptions options = new CreateAppendBlobOptions
+            {
+                Tags = tags
+            };
+            await appendBlob.CreateAsync(options);
+
+            // Act
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(BlobTraits.Tags).ToListAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, blobHierachyItems[0].Blob.Tags);
+            Assert.AreEqual(tags.Count, blobHierachyItems[0].Blob.Properties.TagCount);
+        }
+
+        [Test]
         [AsyncOnly]
         public async Task ListBlobsHierarchySegmentAsync_MaxResults()
         {
@@ -1819,7 +1863,7 @@ namespace Azure.Storage.Blobs.Test
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(traits: BlobTraits.Metadata).FirstAsync();
 
             // Assert
-            AssertMetadataEquality(metadata, item.Blob.Metadata);
+            AssertDictionaryEquality(metadata, item.Blob.Metadata);
         }
 
         [Test]

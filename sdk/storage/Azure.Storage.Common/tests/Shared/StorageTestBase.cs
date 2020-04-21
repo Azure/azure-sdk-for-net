@@ -295,7 +295,7 @@ namespace Azure.Storage.Test.Shared
             return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
         }
 
-        public virtual void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
+        public virtual void AssertDictionaryEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
             Assert.IsNotNull(expected, "Expected metadata is null");
             Assert.IsNotNull(actual, "Actual metadata is null");

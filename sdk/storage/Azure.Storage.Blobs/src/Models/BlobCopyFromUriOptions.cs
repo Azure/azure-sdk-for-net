@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -14,6 +15,11 @@ namespace Azure.Storage.Blobs.Models
         /// Optional custom metadata to set for this append blob.
         /// </summary>
         public Metadata Metadata { get; set; }
+
+        /// <summary>
+        /// Options tags to set for this append blob.
+        /// </summary>
+        public Tags Tags { get; set; }
 
         /// <summary>
         /// Optional <see cref="AccessTier"/>

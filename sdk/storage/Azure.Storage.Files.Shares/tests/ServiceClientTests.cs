@@ -199,7 +199,7 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreNotEqual(0, shares.Count);
             Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
             Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
-            AssertMetadataEquality(
+            AssertDictionaryEquality(
                 metadata,
                 shares.Where(s => s.Name == test.Share.Name).FirstOrDefault().Properties.Metadata);
         }

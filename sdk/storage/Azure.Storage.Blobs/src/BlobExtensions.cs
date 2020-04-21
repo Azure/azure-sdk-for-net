@@ -3,14 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using Azure.Storage.Blobs.Models;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
 {
     internal static partial class BlobExtensions
     {
-        internal static IDictionary<string, string> ToTags(this BlobTags blobTags)
+        internal static IDictionary<string, string> ToTagDictionary(this BlobTags blobTags)
         {
             if (blobTags?.BlobTagSet == null)
             {
@@ -23,6 +25,20 @@ namespace Azure.Storage.Blobs
             }
 
             return tags;
+        }
+
+        internal static BlobTags ToBlobTags(this Tags tags)
+        {
+            BlobTags blobTags = new BlobTags();
+            foreach (KeyValuePair<string, string> tag in tags)
+            {
+                blobTags.BlobTagSet.Add(new BlobTag
+                {
+                    Key = tag.Key,
+                    Value = tag.Value
+                });
+            }
+            return blobTags;
         }
 
         internal static BlobItem ToBlobItem(this BlobItemInternal blobItemInternal)
@@ -43,7 +59,7 @@ namespace Azure.Storage.Blobs
                 Metadata = blobItemInternal.Metadata?.Count > 0
                     ? blobItemInternal.Metadata
                     : null,
-                Tags = blobItemInternal.BlobTags.ToTags()
+                Tags = blobItemInternal.BlobTags.ToTagDictionary()
             };
         }
 
@@ -60,6 +76,21 @@ namespace Azure.Storage.Blobs
                 blobItems.Add(blobItemInternal.ToBlobItem());
             }
             return blobItems;
+        }
+
+        internal static string ToTagsString(this Tags tags)
+        {
+            if (tags == null)
+            {
+                return null;
+            }
+
+            List<string> encodedTags = new List<string>();
+            foreach (KeyValuePair<string, string> tag in tags)
+            {
+                encodedTags.Add($"{WebUtility.UrlEncode(tag.Key)}={WebUtility.UrlEncode(tag.Value)}");
+            }
+            return string.Join("&", encodedTags);
         }
     }
 }

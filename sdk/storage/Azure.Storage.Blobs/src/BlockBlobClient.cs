@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -30,7 +32,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The maximum size of a block blob is therefore slightly more than 4.75
     /// TB (100 MB X 50,000 blocks).  If you are writing a block blob that is
     /// no more than 256 MB in size, you can upload it in its entirety with a
-    /// single write operation; see <see cref="BlockBlobClient.UploadAsync"/>.
+    /// single write operation; see <see cref="BlockBlobClient.UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>.
     ///
     /// When you upload a block to a blob in your storage account, it is
     /// associated with the specified block blob, but it does not become part
@@ -82,7 +84,7 @@ namespace Azure.Storage.Blobs.Specialized
     {
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync"/>.
+        /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>.
         /// </summary>
         public virtual int BlockBlobMaxUploadBlobBytes => Constants.Blob.Block.MaxUploadBytes;
 
@@ -338,15 +340,120 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload"/> operation creates a new block  blob,
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// The <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// operation creates a new block  blob,  or updates the content of an existing block blob.
+        /// Updating an existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="Upload"/>;
+        /// Partial updates are not supported with <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
         /// block blob, use the <see cref="StageBlock"/> and
-        /// <see cref="CommitBlockList" /> operations.
+        /// <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)" /> operations.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> Upload(
+            Stream content,
+            UploadBlobOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            PartitionedUploader uploader = new PartitionedUploader(
+                client: this,
+                transferOptions: options?.TransferOptions ?? default,
+                operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
+
+            return uploader.Upload(
+                content,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                options?.Conditions,
+                options?.ProgressHandler,
+                options?.AccessTier,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// operation creates a new block  blob,  or updates the content of an existing block blob.
+        /// Updating an existing block blob overwrites any existing metadata on the blob.
+        ///
+        /// Partial updates are not supported with <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>;
+        /// the content of the existing blob is overwritten with the content
+        /// of the new blob.  To perform a partial update of the content of a
+        /// block blob, use the <see cref="StageBlock"/> and
+        /// <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)" /> operations.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+            Stream content,
+            UploadBlobOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            PartitionedUploader uploader = new PartitionedUploader(
+                client: this,
+                transferOptions: options?.TransferOptions ?? default,
+                operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
+
+            return await uploader.UploadAsync(
+                content,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                options?.Conditions,
+                options?.ProgressHandler,
+                options?.AccessTier,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
+        /// operation creates a new block  blob, or updates the content of an existing block blob.  Updating an
+        /// existing block blob overwrites any existing metadata on the blob.
+        ///
+        /// Partial updates are not supported with <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>;
+        /// the content of the existing blob is overwritten with the content
+        /// of the new blob.  To perform a partial update of the content of a
+        /// block blob, use the <see cref="StageBlock"/> and
+        /// <see cref="CommitBlockList(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)" /> operations.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
@@ -384,6 +491,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -402,6 +510,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 httpHeaders,
                 metadata,
+                default,
                 conditions,
                 progressHandler,
                 accessTier,
@@ -409,15 +518,15 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync"/> operation creates a new block  blob,
-        /// or updates the content of an existing block blob.  Updating an
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
+        /// operation creates a new block  blob, or updates the content of an existing block blob.  Updating an
         /// existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="UploadAsync"/>;
+        /// Partial updates are not supported with <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
         /// block blob, use the <see cref="StageBlockAsync"/> and
-        /// <see cref="CommitBlockListAsync" /> operations.
+        /// <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)" /> operations.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
@@ -455,6 +564,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -473,6 +583,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 httpHeaders,
                 metadata,
+                default,
                 conditions,
                 progressHandler,
                 accessTier,
@@ -484,11 +595,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// or updates the content of an existing block blob.  Updating an
         /// existing block blob overwrites any existing metadata on the blob.
         ///
-        /// Partial updates are not supported with <see cref="UploadAsync"/>;
+        /// Partial updates are not supported with <see cref="UploadInternal"/>;
         /// the content of the existing blob is overwritten with the content
         /// of the new blob.  To perform a partial update of the content of a
-        /// block blob, use the <see cref="StageBlockAsync"/> and
-        /// <see cref="CommitBlockListAsync" /> operations.
+        /// block blob, use the <see cref="StageBlockInternal"/> and
+        /// <see cref="CommitBlockListInternal" /> operations.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
         /// </summary>
@@ -501,6 +612,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
+        /// </param>
+        /// <param name="tags">
+        /// Optional tags to set for this block blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlockBlobClient"/> to add
@@ -536,6 +650,7 @@ namespace Azure.Storage.Blobs.Specialized
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
+            Tags tags,
             BlobRequestConditions conditions,
             AccessTier? accessTier,
             IProgress<long> progressHandler,
@@ -578,6 +693,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        blobTagsString: tags?.ToTagsString(),
                         async: async,
                         operationName: operationName ?? $"{nameof(BlockBlobClient)}.{nameof(Upload)}",
                         cancellationToken: cancellationToken)
@@ -600,7 +716,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="StageBlock"/> operation creates a new block as
         /// part of a block blob's "staging area" to be eventually committed
-        /// via the <see cref="CommitBlockList"/> operation.
+        /// via the <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/> operation.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
         /// </summary>
@@ -665,7 +781,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="StageBlockAsync"/> operation creates a new block as
         /// part of a block blob's "staging area" to be eventually committed
-        /// via the <see cref="CommitBlockListAsync"/> operation.
+        /// via the <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/> operation.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
         /// </summary>
@@ -730,7 +846,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="StageBlockInternal"/> operation creates a new block
         /// as part of a block blob's "staging area" to be eventually committed
-        /// via the <see cref="CommitBlockListAsync"/> operation.
+        /// via the <see cref="CommitBlockListInternal"/> operation.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-block" />.
         /// </summary>
@@ -1105,12 +1221,65 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region CommitBlockList
         /// <summary>
-        /// The <see cref="CommitBlockList"/> operation writes a blob by
-        /// specifying the list of block IDs that make up the blob.  In order
+        /// The <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>
+        /// operation writes a blob by specifying the list of block IDs that make up the blob.  In order
         /// to be written as part of a blob, a block must have been
         /// successfully written to the server in a prior <see cref="StageBlock"/>
-        /// operation.  You can call <see cref="CommitBlockList"/> to
-        /// update a blob by uploading only those blocks that have changed,
+        /// operation.  You can call <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>
+        /// to update a blob by uploading only those blocks that have changed,
+        /// then committing the new and existing blocks together.  You can do
+        /// this by specifying whether to commit a block from the committed
+        /// block list or from the uncommitted block list, or to commit the
+        /// most recently uploaded version of the block, whichever list it
+        /// may belong to.  Any blocks not specified in the block list and
+        /// permanently deleted.
+        ///
+        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>.
+        /// </summary>
+        /// <param name="base64BlockIds">
+        /// Specify the Uncommitted Base64 encoded block IDs to indicate that
+        /// the blob service should search only the uncommitted block list for
+        /// the named blocks.  If the block is not found in the uncommitted
+        /// block list, it will not be written as part of the blob, and a
+        /// <see cref="RequestFailedException"/> will be thrown.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> CommitBlockList(
+            IEnumerable<string> base64BlockIds,
+            CommitBlockListOptions options,
+            CancellationToken cancellationToken = default) =>
+            CommitBlockListInternal(
+                base64BlockIds,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                options?.Conditions,
+                options?.AccessTier,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CommitBlockList(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
+        /// operation writes a blob by specifying the list of block IDs that make up the blob.
+        /// In order to be written as part of a blob, a block must have been
+        /// successfully written to the server in a prior <see cref="StageBlock"/>
+        /// operation.  You can call <see cref="CommitBlockList(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
+        /// to update a blob by uploading only those blocks that have changed,
         /// then committing the new and existing blocks together.  You can do
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
@@ -1147,13 +1316,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobAppendInfo}"/> describing the
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContentInfo> CommitBlockList(
             IEnumerable<string> base64BlockIds,
             BlobHttpHeaders httpHeaders = default,
@@ -1165,6 +1335,7 @@ namespace Azure.Storage.Blobs.Specialized
                 base64BlockIds,
                 httpHeaders,
                 metadata,
+                default,
                 conditions,
                 accessTier,
                 false, // async
@@ -1172,12 +1343,65 @@ namespace Azure.Storage.Blobs.Specialized
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CommitBlockListAsync"/> operation writes a blob by
-        /// specifying the list of block IDs that make up the blob.  In order
+        /// The <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>
+        /// operation writes a blob by specifying the list of block IDs that make up the blob.  In order
         /// to be written as part of a blob, a block must have been
+        /// successfully written to the server in a prior <see cref="StageBlock"/>
+        /// operation.  You can call <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>
+        /// to update a blob by uploading only those blocks that have changed,
+        /// then committing the new and existing blocks together.  You can do
+        /// this by specifying whether to commit a block from the committed
+        /// block list or from the uncommitted block list, or to commit the
+        /// most recently uploaded version of the block, whichever list it
+        /// may belong to.  Any blocks not specified in the block list and
+        /// permanently deleted.
+        ///
+        /// For more information, see  <see href="https://docs.microsoft.com/rest/api/storageservices/put-block-list"/>.
+        /// </summary>
+        /// <param name="base64BlockIds">
+        /// Specify the Uncommitted Base64 encoded block IDs to indicate that
+        /// the blob service should search only the uncommitted block list for
+        /// the named blocks.  If the block is not found in the uncommitted
+        /// block list, it will not be written as part of the blob, and a
+        /// <see cref="RequestFailedException"/> will be thrown.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
+            IEnumerable<string> base64BlockIds,
+            CommitBlockListOptions options,
+            CancellationToken cancellationToken = default) =>
+            await CommitBlockListInternal(
+                base64BlockIds,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                options?.Conditions,
+                options?.AccessTier,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
+        /// operation writes a blob bys pecifying the list of block IDs that make up the blob.
+        /// In order to be written as part of a blob, a block must have been
         /// successfully written to the server in a prior <see cref="StageBlockAsync"/>
-        /// operation.  You can call <see cref="CommitBlockListAsync"/> to
-        /// update a blob by uploading only those blocks that have changed,
+        /// operation.  You can call <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
+        /// to update a blob by uploading only those blocks that have changed,
         /// then committing the new and existing blocks together.  You can do
         /// this by specifying whether to commit a block from the committed
         /// block list or from the uncommitted block list, or to commit the
@@ -1221,6 +1445,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
             BlobHttpHeaders httpHeaders = default,
@@ -1232,6 +1457,7 @@ namespace Azure.Storage.Blobs.Specialized
                 base64BlockIds,
                 httpHeaders,
                 metadata,
+                default,
                 conditions,
                 accessTier,
                 true, // async
@@ -1243,7 +1469,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// specifying the list of block IDs that make up the blob.  In order
         /// to be written as part of a blob, a block must have been
         /// successfully written to the server in a prior <see cref="StageBlockAsync"/>
-        /// operation.  You can call <see cref="CommitBlockListAsync"/> to
+        /// operation.  You can call <see cref="CommitBlockListInternal"/> to
         /// update a blob by uploading only those blocks that have changed,
         /// then committing the new and existing blocks together.  You can do
         /// this by specifying whether to commit a block from the committed
@@ -1268,6 +1494,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
         /// </param>
+        /// <param name="tags">
+        /// Optional tags to set for this block blob.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlockBlobClient"/> to add
         /// conditions on committing this block list.
@@ -1291,10 +1520,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> CommitBlockListInternal(
+        internal virtual async Task<Response<BlobContentInfo>> CommitBlockListInternal(
             IEnumerable<string> base64BlockIds,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
+            Tags tags,
             BlobRequestConditions conditions,
             AccessTier? accessTier,
             bool async,
@@ -1335,6 +1565,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
+                        blobTagsString: tags?.ToTagsString(),
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}",
                         cancellationToken: cancellationToken)
@@ -1359,8 +1590,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
-        /// given blob with <see cref="CommitBlockList"/>.  The
-        /// Uncommitted Block list has blocks that have been uploaded for a
+        /// given blob with <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
         /// blob using <see cref="StageBlock"/>, but that have not yet
         /// been committed.  These blocks are stored in Azure in association
         /// with a blob, but do not yet form part of the blob.
@@ -1409,8 +1640,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
-        /// given blob with <see cref="CommitBlockListAsync"/>.  The
-        /// Uncommitted Block list has blocks that have been uploaded for a
+        /// given blob with <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
         /// blob using <see cref="StageBlockAsync"/>, but that have not yet
         /// been committed.  These blocks are stored in Azure in association
         /// with a blob, but do not yet form part of the blob.
@@ -1459,7 +1690,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
-        /// given blob with <see cref="CommitBlockListAsync"/>.  The
+        /// given blob with <see cref="CommitBlockListInternal"/>.  The
         /// Uncommitted Block list has blocks that have been uploaded for a
         /// blob using <see cref="StageBlockAsync"/>, but that have not yet
         /// been committed.  These blocks are stored in Azure in association

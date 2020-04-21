@@ -528,6 +528,12 @@ namespace Azure.Storage.Test.Shared
             } while (properties.Value.DeleteRetentionPolicy.Enabled);
         }
 
+        public Dictionary<string, string> BuildTags()
+            => new Dictionary<string, string>
+            {
+                { "tagKey0", "tagValue0" },
+                { "tagKey1", "tagValue1" }
+            };
 
         public class DisposingContainer : IAsyncDisposable
         {
