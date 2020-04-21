@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         KeyClientOptions.ServiceVersion.V7_0,
         KeyClientOptions.ServiceVersion.V7_1_Preview)]
     [NonParallelizable]
-    public abstract class KeysTestBase : RecordedTestBase
+    public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
@@ -50,8 +50,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             return InstrumentClient(
                 new KeyClient(
-                    new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
-                    recording.GetCredential(new DefaultAzureCredential()),
+                    new Uri(TestEnvironment.KeyVaultUrl),
+                    TestEnvironment.Credential,
                     recording.InstrumentClientOptions(new KeyClientOptions(_serviceVersion))),
                 interceptors);
         }
@@ -63,7 +63,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             _listener = new KeyVaultTestEventListener();
 
             Client = GetClient();
-            VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
+            VaultUri = new Uri(TestEnvironment.KeyVaultUrl);
         }
 
         public override void StopTestRecording()

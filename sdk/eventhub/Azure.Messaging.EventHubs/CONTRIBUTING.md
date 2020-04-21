@@ -31,19 +31,19 @@ Tests in the Event Hubs client library are split into two categories:
 
 The Live tests read information from the following environment variables:
 
-`EVENT_HUBS_RESOURCEGROUP`  
+`EVENTHUB_RESOURCE_GROUP`  
  The name of the Azure resource group that contains the Event Hubs namespace
 
-`EVENT_HUBS_SUBSCRIPTION`  
+`EVENTHUB_SUBSCRIPTION_ID`  
  The identifier (GUID) of the Azure subscription to which the service principal belongs
 
-`EVENT_HUBS_TENANT`  
+`EVENTHUB_TENANT_ID`  
  The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
 
-`EVENT_HUBS_CLIENT`  
+`EVENTHUB_CLIENT_ID`  
  The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
 
-`EVENT_HUBS_SECRET`  
+`EVENTHUB_CLIENT_SECRET`  
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
  
 `EVENT_HUBS_PER_TEST_LIMIT_MINUTES`

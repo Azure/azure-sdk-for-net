@@ -21,12 +21,8 @@ namespace Azure.AI.FormRecognizer.Tests
     /// Azure subscription.
     /// </remarks>
     [LiveOnly]
-    public class FormRecognizerClientLiveTests : ClientTestBase
+    public class FormRecognizerClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
     {
-        private const string EndpointEnvironmentVariable = TestEnvironment.EndpointEnvironmentVariableName;
-        private const string KeyEnvironmentVariable = TestEnvironment.ApiKeyEnvironmentVariableName;
-        private const string BlobContainerSasUrlEnvironmentVariable = TestEnvironment.BlobContainerSasUrlEnvironmentVariableName;
-
         private readonly Uri _containerUri;
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _credential;
@@ -37,9 +33,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
-            _containerUri = new Uri(Environment.GetEnvironmentVariable(BlobContainerSasUrlEnvironmentVariable));
-            _endpoint = new Uri(Environment.GetEnvironmentVariable(EndpointEnvironmentVariable));
-            _credential = new AzureKeyCredential(Environment.GetEnvironmentVariable(KeyEnvironmentVariable));
+            _containerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            _endpoint = new Uri(TestEnvironment.Endpoint);
+            _credential = new AzureKeyCredential(TestEnvironment.ApiKey);
 
             Assert.NotNull(_endpoint);
             Assert.NotNull(_credential);
@@ -69,12 +65,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
                 operation = await client.StartRecognizeContentAsync(stream);
             }
             else
             {
-                var uri = new Uri(TestEnvironment.RetrieveInvoiceUri(1));
+                var uri = new Uri(FormRecognizerTestEnvironment.RetrieveInvoiceUri(1));
                 operation = await client.StartRecognizeContentFromUriAsync(uri);
             }
 
@@ -176,12 +172,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.JpgReceiptPath, FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.JpgReceiptPath, FileMode.Open);
                 operation = await client.StartRecognizeReceiptsAsync(stream);
             }
             else
             {
-                var uri = new Uri(TestEnvironment.JpgReceiptUri);
+                var uri = new Uri(FormRecognizerTestEnvironment.JpgReceiptUri);
                 operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
@@ -275,12 +271,12 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.FormPath, FileMode.Open);
+                using var stream = new FileStream(FormRecognizerTestEnvironment.FormPath, FileMode.Open);
                 operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
             }
             else
             {
-                var uri = new Uri(TestEnvironment.FormUri);
+                var uri = new Uri(FormRecognizerTestEnvironment.FormUri);
                 operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri);
             }
 

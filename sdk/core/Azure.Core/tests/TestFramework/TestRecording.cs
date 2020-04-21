@@ -24,7 +24,6 @@ namespace Azure.Core.Testing
             _sanitizer = sanitizer;
             _matcher = matcher;
 
-
             switch (Mode)
             {
                 case RecordedTestMode.Record:
@@ -202,23 +201,6 @@ namespace Azure.Core.Testing
             return Random.Next().ToString();
         }
 
-        public string GetVariableFromEnvironment(string variableName)
-        {
-            var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
-            switch (Mode)
-            {
-                case RecordedTestMode.Record:
-                    _session.Variables[variableName] = _sanitizer.SanitizeVariable(variableName, environmentVariableValue);
-                    return environmentVariableValue;
-                case RecordedTestMode.Live:
-                    return environmentVariableValue;
-                case RecordedTestMode.Playback:
-                    return _session.Variables[variableName];
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         public string GetVariable(string variableName, string defaultValue)
         {
             switch (Mode)
@@ -229,7 +211,8 @@ namespace Azure.Core.Testing
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
-                    return _session.Variables[variableName];
+                    _session.Variables.TryGetValue(variableName, out string value);
+                    return value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -247,27 +230,9 @@ namespace Azure.Core.Testing
             }
         }
 
-        public TokenCredential GetCredential(TokenCredential defaultCredential)
-        {
-            return Mode == RecordedTestMode.Playback ? new TestCredential() : defaultCredential;
-        }
-
         public void DisableIdReuse()
         {
             _previousSession = null;
-        }
-
-        private class TestCredential : TokenCredential
-        {
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
-            }
         }
 
         public DisableRecordingScope DisableRecording()
