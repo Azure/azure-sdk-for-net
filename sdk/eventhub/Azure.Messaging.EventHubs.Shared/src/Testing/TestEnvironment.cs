@@ -16,6 +16,27 @@ namespace Azure.Messaging.EventHubs.Tests
     ///
     public static class TestEnvironment
     {
+        /// <summary>The name of the shared access key to be used for accessing an Event Hubs namespace.</summary>
+        public const string EventHubsDefaultSharedAccessKey = "RootManageSharedAccessKey";
+
+        /// <summary>The default value for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.</summary>
+        private const int DefaultPerTestExecutionLimitMinutes = 5;
+
+        /// <summary>The environment variable value, or default, for the maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung, lazily evaluated.</summary>
+        private static readonly Lazy<TimeSpan> EventHubsPerTestExecutionLimit =
+            new Lazy<TimeSpan>(() =>
+            {
+                var interval = DefaultPerTestExecutionLimitMinutes;
+
+                if (int.TryParse(Environment.GetEnvironmentVariable("EVENT_HUBS_PER_TEST_LIMIT_MINUTES"), out var environmentVariable))
+                {
+                    interval = environmentVariable;
+                }
+
+                return TimeSpan.FromMinutes(interval);
+
+            }, LazyThreadSafetyMode.PublicationOnly);
+
         /// <summary>The environment variable value for the Event Hubs subscription name, lazily evaluated.</summary>
         private static readonly Lazy<string> EventHubsSubscriptionInstance =
             new Lazy<string>(() => ReadAndVerifyEnvironmentVariable("EVENT_HUBS_SUBSCRIPTION"), LazyThreadSafetyMode.PublicationOnly);
@@ -51,9 +72,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>The connection string for the active Event Hubs namespace for this test run, lazily created.</summary>
         private static readonly Lazy<ConnectionStringProperties> ParsedConnectionString =
             new Lazy<ConnectionStringProperties>(() => ConnectionStringParser.Parse(EventHubsConnectionString), LazyThreadSafetyMode.ExecutionAndPublication);
-
-        /// <summary>The name of the shared access key to be used for accessing an Event Hubs namespace.</summary>
-        public const string EventHubsDefaultSharedAccessKey = "RootManageSharedAccessKey";
 
         /// <summary>
         ///   Indicates whether or not an ephemeral namespace was created for the current test execution.
@@ -156,6 +174,14 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <value>The shared access key, as contained within the associated connection string.</value>
         ///
         public static string SharedAccessKey => ParsedConnectionString.Value.SharedAccessKey;
+
+        /// <summary>
+        ///   The shared access key for the Event Hubs namespace represented by this scope.
+        /// </summary>
+        ///
+        /// <value>The shared access key, as contained within the associated connection string.</value>
+        ///
+        public static TimeSpan TestExecutionTimeLimit => EventHubsPerTestExecutionLimit.Value;
 
         /// <summary>
         ///   Builds a connection string for a specific Event Hub instance under the Event Hubs namespace used for
