@@ -17,9 +17,9 @@ root_check_enabled: True
 required_readme_sections:
   - "Azure .+ client library for .NET"
   - "^Getting started$":
-    - Install Package
+    - Install the [Pp]ackage
     - Prerequisites
-    - Authenticate the Client
+    - Authenticate the [Cc]lient
   - ^Key concepts$
   - ^Examples$
   - ^Troubleshooting$
@@ -74,7 +74,6 @@ known_presence_issues:
   - ['sdk/eventhub','#5499']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer','#5499']
 
-# List for changelogs begins here
   - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query/CHANGELOG.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/CHANGELOG.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.FileStaging/CHANGELOG.md','#5499']

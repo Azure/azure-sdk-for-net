@@ -38,7 +38,7 @@ Install the Azure Service Bus client library for .NET with [NuGet](https://www.n
 dotnet add package Azure.Messaging.ServiceBus --version 7.0.0-preview.1
 ```
 
-### Authenticating the client
+### Authenticate the client
 
 For the Service Bus client library to interact with a queue or topic, it will need to understand how to connect and authorize with it.  The easiest means for doing so is to use a connection string, which is created automatically when creating a Service Bus namespace.  If you aren't familiar with shared access policies in Azure, you may wish to follow the step-by-step guide to [get a Service Bus connection string](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quickstart-topics-subscriptions-portal#get-the-connection-string).
 
