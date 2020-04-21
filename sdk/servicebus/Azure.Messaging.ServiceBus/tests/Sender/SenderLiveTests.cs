@@ -260,10 +260,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                     TestEnvironment.FullyQualifiedNamespace,
                     TestEnvironment.Credential);
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 var messageCt = 10;
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
-                await sender.SendBatchAsync(batch);
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCt);
+                await sender.SendAsync(messages);
 
                 var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions()
                 {

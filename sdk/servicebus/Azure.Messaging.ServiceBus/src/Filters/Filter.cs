@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Messaging.ServiceBus.Filters
 {
-    using System;
-
     /// <summary>
     /// Describes a filter expression that is evaluated against a Message.
     /// </summary>
@@ -19,7 +19,9 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <seealso cref="TrueFilter"/>
     /// <seealso cref="CorrelationFilter "/>
     /// <seealso cref="FalseFilter"/>
-    internal abstract class Filter : IEquatable<Filter>
+#pragma warning disable AZC0012 // Avoid single word type names
+    public abstract class Filter : IEquatable<Filter>
+#pragma warning restore AZC0012 // Avoid single word type names
     {
         internal Filter()
         {

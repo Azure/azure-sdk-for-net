@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -129,12 +130,42 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
+            await SendAsync(
+                new ServiceBusMessage[] { message },
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Sends a set of messages to the associated Service Bus entity using a batched approach.
+        ///   If the size of the messages exceed the maximum size of a single batch,
+        ///   an exception will be triggered and the send will fail. In order to ensure that the messages
+        ///   being sent will fit in a batch, use <see cref="SendBatchAsync"/> instead.
+        /// </summary>
+        ///
+        /// <param name="messages">The set of messages to send.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public virtual async Task SendAsync(
+            IEnumerable<ServiceBusMessage> messages,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            IList<ServiceBusMessage> messageList = messages.ToList();
+            if (messageList.Count == 0)
+            {
+                return;
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.SendMessageStart(Identifier, messageCount: 1);
+            ServiceBusEventSource.Log.SendMessageStart(Identifier, messageCount: messageList.Count);
             try
             {
-                await _innerSender.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _innerSender.SendAsync(
+                    messageList,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -144,6 +175,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.SendMessageComplete(Identifier);
         }
+
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using a try-based pattern.  If a message would
         ///   exceed the maximum allowable size of the batch, the batch will not allow adding the message and signal that scenario using its
@@ -302,8 +334,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />,
-        ///   including ensuring that the client itself has been closed.
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>

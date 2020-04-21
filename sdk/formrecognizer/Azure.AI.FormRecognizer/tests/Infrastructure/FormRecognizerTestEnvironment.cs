@@ -39,6 +39,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The format to generate the filenames of the forms to be used for tests.</summary>
         private const string InvoiceFilenameFormat = "Invoice_{0}.{1}";
 
+        /// <summary>The name of the JPG file which contains the form to be used for tests.</summary>
+        private const string FormFilename = "form_1.jpg";
+
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
@@ -53,22 +56,34 @@ namespace Azure.AI.FormRecognizer.Tests
         private static string CurrentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         /// <summary>
+        /// The relative path to the JPG file which contains the form to be used for tests.
+        /// </summary>
+        /// <value>The relative path to the JPG file.</value>
+        public static string FormPath => CreatePath(FormFilename);
+
+        /// <summary>
+        /// The URI string to the JPG file which contains the form to be used for tests.
+        /// </summary>
+        /// <value>The URI string to the JPG file.</value>
+        public static string FormUri => CreateUri(FormFilename);
+
+        /// <summary>
         /// The relative path to the JPG file which contains the receipt to be used for tests.
         /// </summary>
         /// <value>The relative path to the JPG file.</value>
-        public static string JpgReceiptPath => Path.Combine(CurrentWorkingDirectory, AssetsFolderName, JpgReceiptFilename);
+        public static string JpgReceiptPath => CreatePath(JpgReceiptFilename);
 
         /// <summary>
         /// The relative path to the PNG file which contains the receipt to be used for tests.
         /// </summary>
         /// <value>The relative path to the PNG file.</value>
-        public static string PngReceiptPath => Path.Combine(CurrentWorkingDirectory, AssetsFolderName, PngReceiptFilename);
+        public static string PngReceiptPath => CreatePath(PngReceiptFilename);
 
         /// <summary>
         /// The URI string to the JPG file which contains the receipt to be used for tests.
         /// </summary>
         /// <value>The URI string to the JPG file.</value>
-        public static string JpgReceiptUri => string.Format(FileUriFormat, AssetsFolderName, JpgReceiptFilename);
+        public static string JpgReceiptUri => CreateUri(JpgReceiptFilename);
 
         /// <summary>
         /// Retrieves the relative path to a PDF or TIFF form available in the test assets.
@@ -86,7 +101,7 @@ namespace Azure.AI.FormRecognizer.Tests
             };
 
             var filename = string.Format(InvoiceFilenameFormat, index, extension);
-            return Path.Combine(CurrentWorkingDirectory, AssetsFolderName, filename);
+            return CreatePath(filename);
         }
 
         /// <summary>
@@ -97,7 +112,17 @@ namespace Azure.AI.FormRecognizer.Tests
         public static string RetrieveInvoiceUri(int index)
         {
             var filename = string.Format(InvoiceFilenameFormat, index, "pdf");
-            return string.Format(FileUriFormat, AssetsFolderName, filename);
+            return CreateUri(filename);
+        }
+
+        private static string CreatePath(string fileName, string assetFolder = default)
+        {
+            return Path.Combine(CurrentWorkingDirectory, assetFolder ?? AssetsFolderName, fileName);
+        }
+
+        private static string CreateUri(string fileName, string assetFolder = default, string fileUriFormat = default)
+        {
+            return string.Format(fileUriFormat ?? FileUriFormat, assetFolder ?? AssetsFolderName, fileName);
         }
     }
 }

@@ -850,7 +850,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         // Read the events.
 
                         using var cancellationSource = new CancellationTokenSource();
-                        cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
+                        cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                         foreach (string partition in partitionIds)
                         {
@@ -917,7 +917,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // Read the events.
 
                     using var cancellationSource = new CancellationTokenSource();
-                    cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
+                    cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                     foreach (string partition in partitionIds)
                     {
@@ -987,7 +987,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // Read the events.
 
                     using var cancellationSource = new CancellationTokenSource();
-                    cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
+                    cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                     foreach (string partition in partitionIds)
                     {

@@ -47,6 +47,13 @@
             "metadata": {
                 "description": "The location of the resources. By default, this is the same as the resource group."
             }
+        },
+        "perTestExecutionLimitMinutes": {
+            "type": "string",
+            "defaultValue": "10",
+            "metadata": {
+                "description": "The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung."
+            }
         }
     },
     "variables": {
@@ -75,4 +82,10 @@
         }
       }
     ]
+    "outputs": {
+        "EVENT_HUBS_PER_TEST_LIMIT_MINUTES": {
+            "type": "string",
+            "value": "[parameters('perTestExecutionLimitMinutes')]"
+        }
+    }
 }

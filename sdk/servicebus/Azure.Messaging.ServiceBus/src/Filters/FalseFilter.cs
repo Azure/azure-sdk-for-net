@@ -6,7 +6,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Matches none the messages arriving to be selected for the subscription.
     /// </summary>
-    internal sealed class FalseFilter : SqlFilter
+    public sealed class FalseFilter : SqlFilter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FalseFilter" /> class.
