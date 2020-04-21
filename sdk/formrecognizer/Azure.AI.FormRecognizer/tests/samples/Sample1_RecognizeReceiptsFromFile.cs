@@ -13,19 +13,19 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.Samples
 {
     [LiveOnly]
-    public partial class FormRecognizerSamples
+    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
         public async Task RecognizeReceiptsFromFile()
         {
-            string endpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             #region Snippet:FormRecognizerSample1CreateClient
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
 
-            string receiptPath = TestEnvironment.JpgReceiptPath;
+            string receiptPath = FormRecognizerTestEnvironment.JpgReceiptPath;
 
             #region Snippet:FormRecognizerSample1RecognizeReceiptFileStream
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))

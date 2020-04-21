@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Tests;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -14,13 +15,13 @@ namespace Azure.AI.FormRecognizer.Samples
     /// Samples that are used in the associated README.md file.
     /// </summary>
     [LiveOnly]
-    public partial class Snippets
+    public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
         public void CreateFormRecognizerClient()
         {
-            string endpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             #region Snippet:CreateFormRecognizerClient
             //@@ string endpoint = "<endpoint>";
@@ -33,8 +34,8 @@ namespace Azure.AI.FormRecognizer.Samples
         [Test]
         public async Task BadRequestSnippet()
         {
-            string endpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);

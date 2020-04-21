@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -11,14 +11,14 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.Samples
 {
     [LiveOnly]
-    public partial class FormRecognizerSamples
+    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
         public async Task TrainModelWithForms()
         {
-            string endpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY");
-            string trainingFileUrl = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
             #region Snippet:FormRecognizerSample5TrainModelWithForms
             // For instructions on setting up forms for training in an Azure Storage Blob Container, see

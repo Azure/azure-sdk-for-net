@@ -13,17 +13,17 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.Samples
 {
     [LiveOnly]
-    public partial class FormRecognizerSamples
+    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
         public async Task RecognizeCustomForms()
         {
-            string endpoint = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
-            string apiKey = Environment.GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY");
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string invoiceUri = TestEnvironment.CreateUri("Invoice_1.pdf");
+            string invoiceUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
             string modelId = "<your model id>";
 
             #region Snippet:FormRecognizerSample4RecognizeCustomForms
