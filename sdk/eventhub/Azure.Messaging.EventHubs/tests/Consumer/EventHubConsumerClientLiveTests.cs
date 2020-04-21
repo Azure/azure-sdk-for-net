@@ -254,10 +254,10 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                var sourceEvents = EventGenerator.CreateEvents(500).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(200).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
                 {
@@ -342,7 +342,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
                 var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
-                var sourceEvents = EventGenerator.CreateEvents(500).ToList();
+                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var seedEvents = EventGenerator.CreateEvents(50).ToList();
@@ -529,7 +529,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var seedEvents = EventGenerator.CreateEvents(50).ToList();
@@ -586,7 +586,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var seedEvents = EventGenerator.CreateEvents(50).ToList();
@@ -615,6 +615,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var readState = await ReadEventsFromPartitionAsync(consumer, partition, sourceEvents.Count, cancellationSource.Token, startingPosition);
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.That(readState.Events.Count, Is.EqualTo(sourceEvents.Count), "The number of events received should match.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
@@ -688,7 +689,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
 
                 var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
@@ -829,10 +830,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
 
                 var clientOptions = new EventHubConsumerClientOptions();
-                clientOptions.RetryOptions.TryTimeout = TimeSpan.FromMinutes(2);
+                clientOptions.RetryOptions.MaximumRetries = 0;
+                clientOptions.RetryOptions.MaximumDelay = TimeSpan.FromMilliseconds(5);
+                clientOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(45);
                 clientOptions.ConnectionOptions.Proxy = new WebProxy("http://1.2.3.4:9999");
                 clientOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
 
@@ -840,6 +843,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var invalidProxyConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.EventHubsConnectionString, scope.EventHubName, clientOptions))
                 {
                     var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
+
+                    // The sockets implementation in .NET Core on some platforms, such as Linux, does not trigger a specific socket exception and
+                    // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
+                    // invoke a timeout exception in these cases.
 
                     Assert.That(async () => await ReadNothingAsync(invalidProxyConsumer, partition, cancellationSource.Token, iterationCount: 25), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -1320,7 +1327,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerIsNotCompromisedByBeingSupercededByAnExclusiveReader()
+        public async Task ConsumerIsNotCompromisedByBeingSupercededByAnotherReaderWithHigherLevel()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
@@ -1398,11 +1405,9 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
 
-                var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
-
-                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential))
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.EventHubsConnectionString, scope.EventHubName))
                 {
                     var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                     var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(250) };
@@ -1594,12 +1599,14 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 var invalidProxyOptions = new EventHubConsumerClientOptions();
-                invalidProxyOptions.RetryOptions.TryTimeout = TimeSpan.FromMinutes(2);
+                invalidProxyOptions.RetryOptions.MaximumRetries = 0;
+                invalidProxyOptions.RetryOptions.MaximumDelay = TimeSpan.FromMilliseconds(5);
+                invalidProxyOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(45);
                 invalidProxyOptions.ConnectionOptions.Proxy = new WebProxy("http://1.2.3.4:9999");
                 invalidProxyOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
 
@@ -1607,6 +1614,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var invalidProxyConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, invalidProxyOptions))
                 {
                     var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
+
+                    // The sockets implementation in .NET Core on some platforms, such as Linux, does not trigger a specific socket exception and
+                    // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
+                    // invoke a timeout exception in these cases.
 
                     Assert.That(async () => await invalidProxyConsumer.GetPartitionIdsAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     Assert.That(async () => await invalidProxyConsumer.GetEventHubPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
@@ -1667,7 +1678,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
 
                 var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
                 var sourceEvents = EventGenerator.CreateEvents(100).ToList();
@@ -1774,6 +1785,7 @@ namespace Azure.Messaging.EventHubs.Tests
             startingPosition ??= EventPosition.Earliest;
 
             var result = new ReadState();
+            var shouldKeepReading = true;
 
             try
             {
@@ -1793,7 +1805,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         if ((result.Events.TryAdd(eventId, partitionEvent)) && (result.Events.Count >= expectedEventCount))
                         {
-                            break;
+                            shouldKeepReading = false;
                         }
                     }
 
@@ -1801,6 +1813,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     // decision on whether iteration should continue.
 
                     if ((iterationCallback != null) && (!(await iterationCallback(result).ConfigureAwait(false))))
+                    {
+                        shouldKeepReading = false;
+                    }
+
+                    if (!shouldKeepReading)
                     {
                         break;
                     }
@@ -2042,7 +2059,6 @@ namespace Azure.Messaging.EventHubs.Tests
             monitor.ReadTask = ReadEventsFromPartitionAsync(consumer, partition, int.MaxValue, cancellationToken, startingPosition, readOptions, readCallback);
             return monitor;
         }
-
 
         /// <summary>
         ///   The results of reading events.

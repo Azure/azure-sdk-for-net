@@ -86,9 +86,17 @@ namespace Azure.Storage.Blobs
             {
                 items.Add(ListBlobsIncludeItem.Snapshots);
             }
+            if ((traits & BlobTraits.Tags) == BlobTraits.Tags)
+            {
+                items.Add(ListBlobsIncludeItem.Tags);
+            }
             if ((states & BlobStates.Uncommitted) == BlobStates.Uncommitted)
             {
                 items.Add(ListBlobsIncludeItem.Uncommittedblobs);
+            }
+            if ((states & BlobStates.Version) == BlobStates.Version)
+            {
+                items.Add(ListBlobsIncludeItem.Versions);
             }
             return items.Count > 0 ? items : null;
         }

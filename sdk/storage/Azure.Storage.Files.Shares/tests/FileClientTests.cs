@@ -273,7 +273,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -434,7 +434,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -458,7 +458,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareFileProperties> response = await file.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1210,7 +1210,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Response<ShareFileProperties> response = await dest.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
         [Test]
@@ -1430,7 +1430,7 @@ namespace Azure.Storage.Files.Shares.Test
 
                 // Properties are equal
                 Assert.AreEqual(getPropertiesResponse.Value.LastModified, downloadResponse.Value.Details.LastModified);
-                AssertMetadataEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
+                AssertDictionaryEquality(getPropertiesResponse.Value.Metadata, downloadResponse.Value.Details.Metadata);
                 Assert.AreEqual(getPropertiesResponse.Value.ContentType, downloadResponse.Value.ContentType);
                 Assert.AreEqual(getPropertiesResponse.Value.ETag, downloadResponse.Value.Details.ETag);
                 Assert.AreEqual(getPropertiesResponse.Value.ContentEncoding, downloadResponse.Value.Details.ContentEncoding);

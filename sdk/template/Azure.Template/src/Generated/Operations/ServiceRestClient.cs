@@ -19,8 +19,8 @@ namespace Azure.Template
     internal partial class ServiceRestClient
     {
         private string host;
-        private ClientDiagnostics clientDiagnostics;
-        private HttpPipeline pipeline;
+        private ClientDiagnostics _clientDiagnostics;
+        private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "http://localhost:3000")
@@ -31,13 +31,13 @@ namespace Azure.Template
             }
 
             this.host = host;
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateOperationRequest(Model body)
+        internal HttpMessage CreateOperationRequest(ServiceModel body)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
@@ -54,27 +54,34 @@ namespace Azure.Template
             return message;
         }
 
-        /// <param name="body"> The Model to use. </param>
+        /// <param name="body"> The ServiceModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Model>> OperationAsync(Model body = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<ServiceModel>> OperationAsync(ServiceModel body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
             {
                 using var message = CreateOperationRequest(body);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
-                            Model value = default;
+                            ServiceModel value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = Model.DeserializeModel(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = ServiceModel.DeserializeServiceModel(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -84,27 +91,34 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="body"> The Model to use. </param>
+        /// <param name="body"> The ServiceModel to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Model> Operation(Model body = null, CancellationToken cancellationToken = default)
+        public Response<ServiceModel> Operation(ServiceModel body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("ServiceClient.Operation");
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.Operation");
             scope.Start();
             try
             {
                 using var message = CreateOperationRequest(body);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
-                            Model value = default;
+                            ServiceModel value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = Model.DeserializeModel(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = ServiceModel.DeserializeServiceModel(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)

@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal CharFilter(string oDataType, string name)
         {
-            ODataType = oDataType ?? null;
+            ODataType = oDataType;
             Name = name;
         }
 

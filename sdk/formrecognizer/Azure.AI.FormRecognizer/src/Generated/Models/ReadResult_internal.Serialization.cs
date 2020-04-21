@@ -67,7 +67,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<TextLine_internal> array = new List<TextLine_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextLine_internal.DeserializeTextLine_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TextLine_internal.DeserializeTextLine_internal(item));
+                        }
                     }
                     lines = array;
                     continue;

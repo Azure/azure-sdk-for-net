@@ -184,7 +184,8 @@ namespace Azure.Messaging.ServiceBus
         {
             IEnumerable<ServiceBusReceivedMessage> result = await ReceiveBatchAsync(
                 maxMessages: 1,
-                maxWaitTime: maxWaitTime)
+                maxWaitTime: maxWaitTime,
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             foreach (ServiceBusReceivedMessage message in result)
@@ -236,7 +237,8 @@ namespace Azure.Messaging.ServiceBus
         {
             IEnumerable<ServiceBusReceivedMessage> result = await PeekBatchAtAsync(
                 sequenceNumber: sequenceNumber,
-                maxMessages: 1)
+                maxMessages: 1,
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             foreach (ServiceBusReceivedMessage message in result)

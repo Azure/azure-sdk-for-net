@@ -199,9 +199,28 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreNotEqual(0, shares.Count);
             Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
             Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
-            AssertMetadataEquality(
+            AssertDictionaryEquality(
                 metadata,
                 shares.Where(s => s.Name == test.Share.Name).FirstOrDefault().Properties.Metadata);
+        }
+
+        [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task ListSharesSegmentAsync_Deleted()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_SoftDelete();
+            ShareClient share = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await share.CreateAsync();
+            await share.DeleteAsync();
+
+            // Act
+            IList<ShareItem> shares = await service.GetSharesAsync(states: ShareStates.Deleted).ToListAsync();
+
+            // Assert
+            ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
+            Assert.IsTrue(shareItem.Deleted);
+            Assert.IsNotNull(shareItem.Version);
         }
 
         [Test]

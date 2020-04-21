@@ -20,7 +20,7 @@ namespace Azure.Core.Samples
             SecretClient client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 
             // Start the operation
-            DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
             Response<DeletedSecret> response = await operation.WaitForCompletionAsync();
             DeletedSecret value = response.Value;
@@ -39,7 +39,7 @@ namespace Azure.Core.Samples
 
             #region Snippet:OperationUpdateStatus
             // Start the operation
-            DeleteSecretOperation operation = client.StartDeleteSecret("SecretName");
+            DeleteSecretOperation operation = await client.StartDeleteSecretAsync("SecretName");
 
             await operation.UpdateStatusAsync();
 

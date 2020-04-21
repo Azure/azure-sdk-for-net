@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
         {
             long? count = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -29,7 +29,15 @@ namespace Azure.Search.Documents.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary ??= new Dictionary<string, object>();
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                }
             }
             additionalProperties = additionalPropertiesDictionary;
             return new FacetResult(count, additionalProperties);

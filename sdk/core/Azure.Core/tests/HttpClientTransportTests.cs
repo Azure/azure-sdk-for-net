@@ -703,6 +703,14 @@ namespace Azure.Core.Tests
             Assert.True(disposeTrackingContent.IsDisposed);
         }
 
+        [Test]
+        public void ClientRequestIdSetterThrowsOnNull()
+        {
+            var transport = new HttpClientTransport();
+            var request = transport.CreateRequest();
+            Assert.Throws<ArgumentNullException>(() => request.ClientRequestId = null);
+        }
+
         public class DisposeTrackingContent : RequestContent
         {
             public override Task WriteToAsync(Stream stream, CancellationToken cancellation)

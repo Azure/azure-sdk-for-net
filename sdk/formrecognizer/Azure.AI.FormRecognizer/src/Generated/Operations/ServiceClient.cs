@@ -19,8 +19,8 @@ namespace Azure.AI.FormRecognizer
 {
     internal partial class ServiceClient
     {
-        private readonly ClientDiagnostics clientDiagnostics;
-        private readonly HttpPipeline pipeline;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly HttpPipeline _pipeline;
         internal ServiceRestClient RestClient { get; }
         /// <summary> Initializes a new instance of ServiceClient for mocking. </summary>
         protected ServiceClient()
@@ -30,8 +30,8 @@ namespace Azure.AI.FormRecognizer
         internal ServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
         {
             RestClient = new ServiceRestClient(clientDiagnostics, pipeline, endpoint);
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary> Create and train a custom model. The request must include a source parameter that is either an externally accessible Azure storage blob container Uri (preferably a Shared Access Signature Uri) or valid path to a data folder in a locally mounted drive. When local paths are specified, they must follow the Linux/Unix path format and be an absolute path rooted to the input mount configuration setting value e.g., if &apos;{Mounts:Input}&apos; configuration setting value is &apos;/input&apos; then a valid source path would be &apos;/input/contosodataset&apos;. All data to be trained is expected to be under the source folder or sub folders under it. Models are trained using documents that are of the following content type - &apos;application/pdf&apos;, &apos;image/jpeg&apos;, &apos;image/png&apos;, &apos;image/tiff&apos;. Other type of content is ignored. </summary>
@@ -249,36 +249,48 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary> Get information about all custom models. </summary>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ModelInfo_internal> GetCustomModelsAsync(GetModelOptions? op = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models_internal>> GetCustomModelsAsync(CancellationToken cancellationToken = default)
+        {
+            return await RestClient.GetCustomModelsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<Models_internal> GetCustomModels(CancellationToken cancellationToken = default)
+        {
+            return RestClient.GetCustomModels(cancellationToken);
+        }
+
+        /// <summary> Get information about all custom models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ModelInfo_internal> ListCustomModelsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ModelInfo_internal>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await RestClient.GetCustomModelsAsync(op, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.ListCustomModelsAsync(cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
             }
             async Task<Page<ModelInfo_internal>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = await RestClient.GetCustomModelsNextPageAsync(nextLink, op, cancellationToken).ConfigureAwait(false);
+                var response = await RestClient.ListCustomModelsNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> Get information about all custom models. </summary>
-        /// <param name="op"> Specify whether to return summary or full list of models. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ModelInfo_internal> GetCustomModels(GetModelOptions? op = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ModelInfo_internal> ListCustomModels(CancellationToken cancellationToken = default)
         {
             Page<ModelInfo_internal> FirstPageFunc(int? pageSizeHint)
             {
-                var response = RestClient.GetCustomModels(op, cancellationToken);
+                var response = RestClient.ListCustomModels(cancellationToken);
                 return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
             }
             Page<ModelInfo_internal> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                var response = RestClient.GetCustomModelsNextPage(nextLink, op, cancellationToken);
+                var response = RestClient.ListCustomModelsNextPage(nextLink, cancellationToken);
                 return Page.FromValues(response.Value.ModelList, response.Value.NextLink, response.GetRawResponse());
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);

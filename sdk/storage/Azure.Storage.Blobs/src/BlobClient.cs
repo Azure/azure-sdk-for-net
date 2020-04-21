@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -11,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
 {
@@ -591,6 +593,54 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
         /// <summary>
+        /// The <see cref="Upload(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// operation creates a new block blob or updates the content of an
+        /// existing block blob.  Updating an existing block blob overwrites
+        /// any existing metadata on the blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> Upload(
+            Stream content,
+            UploadBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            StagedUploadAsync(
+                content,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                options?.Conditions,
+                options?.ProgressHandler,
+                options?.AccessTier,
+                options.TransferOptions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
         /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
         /// operation creates a new block blob or updates the content of an
         /// existing block blob.  Updating an existing block blob overwrites
@@ -641,6 +691,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -654,6 +705,7 @@ namespace Azure.Storage.Blobs
                 content,
                 httpHeaders,
                 metadata,
+                default,
                 conditions,
                 progressHandler,
                 accessTier,
@@ -661,6 +713,59 @@ namespace Azure.Storage.Blobs
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Upload(string, UploadBlobOptions, CancellationToken)"/>
+        /// operation creates a new block blob or updates the content of an
+        /// existing block blob.  Updating an existing block blob overwrites
+        /// any existing metadata on the blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// </summary>
+        /// <param name="path">
+        /// A file path containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> Upload(
+            string path,
+            UploadBlobOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                return StagedUploadAsync(
+                    stream,
+                    options?.HttpHeaders,
+                    options?.Metadata,
+                    options?.Tags,
+                    options?.Conditions,
+                    options?.ProgressHandler,
+                    options?.AccessTier,
+                    options.TransferOptions,
+                    async: false,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+            }
+        }
 
         /// <summary>
         /// The <see cref="Upload(string, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
@@ -713,6 +818,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContentInfo> Upload(
             string path,
             BlobHttpHeaders httpHeaders = default,
@@ -729,6 +835,7 @@ namespace Azure.Storage.Blobs
                     stream,
                     httpHeaders,
                     metadata,
+                    default,
                     conditions,
                     progressHandler,
                     accessTier,
@@ -738,6 +845,54 @@ namespace Azure.Storage.Blobs
                     .EnsureCompleted();
             }
         }
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
+        /// operation creates a new block blob or updates the content of an
+        /// existing block blob.  Updating an existing block blob overwrites
+        /// any existing metadata on the blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+            Stream content,
+            UploadBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            await StagedUploadAsync(
+                content,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Tags,
+                options?.Conditions,
+                options?.ProgressHandler,
+                options?.AccessTier,
+                options.TransferOptions,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
@@ -791,6 +946,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -804,12 +960,66 @@ namespace Azure.Storage.Blobs
                 content,
                 httpHeaders,
                 metadata,
+                default,
                 conditions,
                 progressHandler,
                 accessTier,
                 transferOptions: transferOptions,
                 async: true,
                 cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>
+        /// operation creates a new block blob or updates the content of an
+        /// existing block blob.  Updating an existing block blob overwrites
+        /// any existing metadata on the blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob" />.
+        /// </summary>
+        /// <param name="path">
+        /// A file path containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+            string path,
+            UploadBlobOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                return await StagedUploadAsync(
+                    stream,
+                    options?.HttpHeaders,
+                    options?.Metadata,
+                    options?.Tags,
+                    options?.Conditions,
+                    options?.ProgressHandler,
+                    options?.AccessTier,
+                    options.TransferOptions,
+                    async: true,
+                    cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+            }
+        }
 
         /// <summary>
         /// The <see cref="UploadAsync(string, BlobHttpHeaders, Metadata, BlobRequestConditions, IProgress{long}, AccessTier?, StorageTransferOptions, CancellationToken)"/>
@@ -863,6 +1073,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             string path,
             BlobHttpHeaders httpHeaders = default,
@@ -879,6 +1090,7 @@ namespace Azure.Storage.Blobs
                     stream,
                     httpHeaders,
                     metadata,
+                    default,
                     conditions,
                     progressHandler,
                     accessTier,
@@ -904,6 +1116,9 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
+        /// </param>
+        /// <param name="tags">
+        /// Optional tags to set for this block blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
@@ -939,6 +1154,7 @@ namespace Azure.Storage.Blobs
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
+            Tags tags,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
@@ -955,11 +1171,27 @@ namespace Azure.Storage.Blobs
 
             if (async)
             {
-                return await uploader.UploadAsync(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
+                return await uploader.UploadAsync(
+                    content,
+                    blobHttpHeaders,
+                    metadata,
+                    tags,
+                    conditions,
+                    progressHandler,
+                    accessTier,
+                    cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                return uploader.Upload(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken);
+                return uploader.Upload(
+                    content,
+                    blobHttpHeaders,
+                    metadata,
+                    tags,
+                    conditions,
+                    progressHandler,
+                    accessTier,
+                    cancellationToken);
             }
         }
 
@@ -978,6 +1210,9 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this block blob.
+        /// </param>
+        /// <param name="tags">
+        /// Optional tags to set for this block blob.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
@@ -1013,6 +1248,7 @@ namespace Azure.Storage.Blobs
             string path,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
+            Tags tags,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             AccessTier? accessTier = default,
@@ -1026,6 +1262,7 @@ namespace Azure.Storage.Blobs
                     stream,
                     blobHttpHeaders,
                     metadata,
+                    tags,
                     conditions,
                     progressHandler,
                     accessTier,

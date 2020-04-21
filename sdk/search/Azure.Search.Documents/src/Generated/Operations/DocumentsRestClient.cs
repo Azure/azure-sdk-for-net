@@ -22,8 +22,8 @@ namespace Azure.Search.Documents
         private string endpoint;
         private string indexName;
         private string apiVersion;
-        private ClientDiagnostics clientDiagnostics;
-        private HttpPipeline pipeline;
+        private ClientDiagnostics _clientDiagnostics;
+        private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of DocumentsRestClient. </summary>
         public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, string apiVersion = "2019-05-06-Preview")
@@ -44,13 +44,13 @@ namespace Azure.Search.Documents
             this.endpoint = endpoint;
             this.indexName = indexName;
             this.apiVersion = apiVersion;
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateCountRequest(Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -73,12 +73,12 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async ValueTask<Response<long>> CountAsync(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
             {
                 using var message = CreateCountRequest(xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -89,7 +89,7 @@ namespace Azure.Search.Documents
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -104,12 +104,12 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<long> Count(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
             {
                 using var message = CreateCountRequest(xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -120,7 +120,7 @@ namespace Azure.Search.Documents
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -132,7 +132,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateSearchPostRequest(SearchOptions searchRequest, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -165,23 +165,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(searchRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
             scope.Start();
             try
             {
                 using var message = CreateSearchPostRequest(searchRequest, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SearchDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -202,23 +209,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(searchRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
             scope.Start();
             try
             {
                 using var message = CreateSearchPostRequest(searchRequest, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SearchDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -230,7 +244,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateGetRequest(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -266,28 +280,42 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Get");
             scope.Start();
             try
             {
                 using var message = CreateGetRequest(key, selectedFields, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             IReadOnlyDictionary<string, object> value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, property.Value.GetObject());
+                                value = null;
                             }
-                            value = dictionary;
+                            else
+                            {
+                                Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                                foreach (var property in document.RootElement.EnumerateObject())
+                                {
+                                    if (property.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        dictionary.Add(property.Name, null);
+                                    }
+                                    else
+                                    {
+                                        dictionary.Add(property.Name, property.Value.GetObject());
+                                    }
+                                }
+                                value = dictionary;
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -309,28 +337,42 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Get");
             scope.Start();
             try
             {
                 using var message = CreateGetRequest(key, selectedFields, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             IReadOnlyDictionary<string, object> value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, property.Value.GetObject());
+                                value = null;
                             }
-                            value = dictionary;
+                            else
+                            {
+                                Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                                foreach (var property in document.RootElement.EnumerateObject())
+                                {
+                                    if (property.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        dictionary.Add(property.Name, null);
+                                    }
+                                    else
+                                    {
+                                        dictionary.Add(property.Name, property.Value.GetObject());
+                                    }
+                                }
+                                value = dictionary;
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -342,7 +384,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateSuggestPostRequest(SuggestOptions suggestRequest, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -375,23 +417,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(suggestRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
             scope.Start();
             try
             {
                 using var message = CreateSuggestPostRequest(suggestRequest, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SuggestDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -412,23 +461,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(suggestRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
             scope.Start();
             try
             {
                 using var message = CreateSuggestPostRequest(suggestRequest, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SuggestDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -440,7 +496,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateIndexRequest(IndexBatch batch, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -473,12 +529,12 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(batch));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Index");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Index");
             scope.Start();
             try
             {
                 using var message = CreateIndexRequest(batch, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -486,11 +542,18 @@ namespace Azure.Search.Documents
                         {
                             IndexDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -511,12 +574,12 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(batch));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Index");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Index");
             scope.Start();
             try
             {
                 using var message = CreateIndexRequest(batch, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -524,11 +587,18 @@ namespace Azure.Search.Documents
                         {
                             IndexDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -540,7 +610,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateAutocompletePostRequest(AutocompleteOptions autocompleteRequest, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -573,23 +643,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(autocompleteRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
             scope.Start();
             try
             {
                 using var message = CreateAutocompletePostRequest(autocompleteRequest, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             AutocompleteResults value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -610,23 +687,30 @@ namespace Azure.Search.Documents
                 throw new ArgumentNullException(nameof(autocompleteRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
             scope.Start();
             try
             {
                 using var message = CreateAutocompletePostRequest(autocompleteRequest, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             AutocompleteResults value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)

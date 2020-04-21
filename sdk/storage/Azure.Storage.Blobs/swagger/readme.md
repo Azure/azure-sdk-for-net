@@ -1406,7 +1406,7 @@ directive:
     $.post.responses["206"]["x-az-public"] = false;
 ```
 
-### Hide BlobTags/BlobTagSet/BlobTag/BlobItemInternal
+### Hide BlobTags, BlobTagSet, BlobTag, BlobItemInternal, and FilterBlobSegment
 ``` yaml
 directive:
 - from: swagger-document
@@ -1416,6 +1416,7 @@ directive:
     $.BlobTagSet["x-az-public"] = false;
     $.BlobTags["x-az-public"] = false;
     $.BlobItemInternal["x-az-public"] = false;
+    $.FilterBlobSegment["x-az-public"] = false;
 ```
 
 ### Make AppendBlobSealResult internal
@@ -1426,6 +1427,25 @@ directive:
   transform: >
     $.put.responses["200"]["x-az-public"] = false;
     $.put.responses["200"]["x-az-response-name"] = "AppendBlobSealInternal";
+```
+
+### Make BlobSetExpiryResult internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=expiry"]
+  transform: >
+    $.put.responses["200"]["x-az-public"] = false;
+    $.put.responses["200"]["x-az-response-name"] = "BlobSetExpiryInternal";
+```
+
+### Make BlobExpiryOptions internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    $.BlobExpiryOptions["x-az-public"] = false;
 ```
 
 ### Treat the API version as a parameter instead of a constant

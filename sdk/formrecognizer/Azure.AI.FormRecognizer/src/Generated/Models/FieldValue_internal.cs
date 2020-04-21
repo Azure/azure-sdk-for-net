@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -34,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="confidence"> Confidence score. </param>
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this field. </param>
         /// <param name="page"> The 1-based page number in the input document. </param>
-        internal FieldValue_internal(FieldValueType type, string valueString, string valueDate, string valueTime, string valuePhoneNumber, float? valueNumber, int? valueInteger, IReadOnlyList<FieldValue_internal> valueArray, IReadOnlyDictionary<string, FieldValue_internal> valueObject, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, int? page)
+        internal FieldValue_internal(FieldValueType type, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, float? valueNumber, int? valueInteger, IReadOnlyList<FieldValue_internal> valueArray, IReadOnlyDictionary<string, FieldValue_internal> valueObject, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, int? page)
         {
             Type = type;
             ValueString = valueString;
@@ -57,9 +58,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> String value. </summary>
         public string ValueString { get; }
         /// <summary> Date value. </summary>
-        public string ValueDate { get; }
+        public DateTimeOffset? ValueDate { get; }
         /// <summary> Time value. </summary>
-        public string ValueTime { get; }
+        public TimeSpan? ValueTime { get; }
         /// <summary> Phone number value. </summary>
         public string ValuePhoneNumber { get; }
         /// <summary> Floating point value. </summary>

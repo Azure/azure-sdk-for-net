@@ -102,6 +102,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            CreatePageBlobOptions options = new CreatePageBlobOptions
+            {
+                Tags = BuildTags()
+            };
+
+            // Act
+            await blob.CreateAsync(Constants.KB, options);
+            Response<IDictionary<string, string>> response = await blob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(options.Tags, response.Value);
+        }
+
+        [Test]
         public async Task CreateAsync_SequenceNumber()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -133,7 +153,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> getPropertiesResponse = await blob.GetPropertiesAsync();
-            AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata);
+            AssertDictionaryEquality(metadata, getPropertiesResponse.Value.Metadata);
             Assert.AreEqual(BlobType.Page, getPropertiesResponse.Value.BlobType);
         }
 
@@ -169,6 +189,22 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task CreateAsync_VersionId()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+
+            // Assert
+            Assert.IsNotNull(response.Value.VersionId);
         }
 
         /// <summary>
@@ -2101,6 +2137,35 @@ namespace Azure.Storage.Blobs.Test
             builder = new BlobUriBuilder(blob.Uri);
 
             Assert.AreEqual("", builder.Snapshot);
+        }
+
+        [Test]
+        public void WithVersion()
+        {
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+
+            BlobServiceClient service = GetServiceClient_SharedKey();
+
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            PageBlobClient blob = InstrumentClient(container.GetPageBlobClient(blobName));
+
+            var builder = new BlobUriBuilder(blob.Uri);
+
+            Assert.AreEqual("", builder.VersionId);
+
+            blob = InstrumentClient(blob.WithVersion("foo"));
+
+            builder = new BlobUriBuilder(blob.Uri);
+
+            Assert.AreEqual("foo", builder.VersionId);
+
+            blob = InstrumentClient(blob.WithVersion(null));
+
+            builder = new BlobUriBuilder(blob.Uri);
+
+            Assert.AreEqual("", builder.VersionId);
         }
 
         [Test]

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -22,12 +23,36 @@ namespace Azure.AI.FormRecognizer.Tests
     [LiveOnly]
     public class FormRecognizerClientLiveTests : ClientTestBase
     {
+        private const string EndpointEnvironmentVariable = TestEnvironment.EndpointEnvironmentVariableName;
+        private const string KeyEnvironmentVariable = TestEnvironment.ApiKeyEnvironmentVariableName;
+        private const string BlobContainerSasUrlEnvironmentVariable = TestEnvironment.BlobContainerSasUrlEnvironmentVariableName;
+
+        private readonly Uri _containerUri;
+        private readonly Uri _endpoint;
+        private readonly AzureKeyCredential _credential;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
+            _containerUri = new Uri(Environment.GetEnvironmentVariable(BlobContainerSasUrlEnvironmentVariable));
+            _endpoint = new Uri(Environment.GetEnvironmentVariable(EndpointEnvironmentVariable));
+            _credential = new AzureKeyCredential(Environment.GetEnvironmentVariable(KeyEnvironmentVariable));
+
+            Assert.NotNull(_endpoint);
+            Assert.NotNull(_credential);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
+        private FormRecognizerClient CreateInstrumentedClient()
+        {
+            return InstrumentClient(new FormRecognizerClient(_endpoint, _credential));
         }
 
         /// <summary>
@@ -44,8 +69,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1), FileMode.Open);
-                operation = await client.StartRecognizeContentAsync(stream, ContentType.Jpeg);
+                using var stream = new FileStream(TestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
+                operation = await client.StartRecognizeContentAsync(stream);
             }
             else
             {
@@ -62,7 +87,6 @@ namespace Azure.AI.FormRecognizer.Tests
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the form. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(1, formPage.PageNumber);
             Assert.AreEqual(LengthUnit.Inch, formPage.Unit);
             Assert.AreEqual(8.5, formPage.Width);
             Assert.AreEqual(11, formPage.Height);
@@ -75,7 +99,7 @@ namespace Azure.AI.FormRecognizer.Tests
             {
                 var line = lines[lineIndex];
 
-                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}.");
+                Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}. ");
                 Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
             }
@@ -123,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
-        /// Recognizer cognitive service and perform operations.
+        /// Recognizer cognitive service and perform analysis of receipts.
         /// </summary>
         [Test]
         [TestCase(true)]
@@ -131,34 +155,38 @@ namespace Azure.AI.FormRecognizer.Tests
         public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
         {
             var client = CreateInstrumentedClient();
-            Operation<IReadOnlyList<ExtractedReceipt>> operation;
+            Operation<IReadOnlyList<RecognizedReceipt>> operation;
 
             if (useStream)
             {
-                using var stream = new FileStream(TestEnvironment.ReceiptPath, FileMode.Open);
-                operation = await client.StartRecognizeReceiptsAsync(stream, ContentType.Jpeg);
+                using var stream = new FileStream(TestEnvironment.JpgReceiptPath, FileMode.Open);
+                operation = await client.StartRecognizeReceiptsAsync(stream);
             }
             else
             {
-                var uri = new Uri(TestEnvironment.ReceiptUri);
-                operation = await client.StartRecognizeReceiptsFromUriAsync(uri);
+                var uri = new Uri(TestEnvironment.JpgReceiptUri);
+                operation = await client.StartRecognizeReceiptsFromUriAsync(uri, default);
             }
 
             await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasValue);
 
-            var receipt = operation.Value.Single();
+            var receipt = operation.Value.Single().AsUSReceipt();
+
 
             // The expected values are based on the values returned by the service, and not the actual
             // values present in the receipt. We are not testing the service here, but the SDK.
 
-            Assert.AreEqual(1, receipt.StartPageNumber);
-            Assert.AreEqual(1, receipt.EndPageNumber);
+            Assert.AreEqual(USReceiptType.Itemized, receipt.ReceiptType);
+            Assert.That(receipt.ReceiptTypeConfidence, Is.EqualTo(0.66).Within(0.01));
 
-            Assert.AreEqual("Contoso Contoso", receipt.MerchantName);
-            Assert.AreEqual("123 Main Street Redmond, WA 98052", receipt.MerchantAddress);
-            Assert.AreEqual("123-456-7890", receipt.MerchantPhoneNumber);
+            Assert.AreEqual(1, receipt.RecognizedForm.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, receipt.RecognizedForm.PageRange.LastPageNumber);
+
+            Assert.AreEqual("Contoso Contoso", (string)receipt.MerchantName);
+            Assert.AreEqual("123 Main Street Redmond, WA 98052", (string)receipt.MerchantAddress);
+            Assert.AreEqual("123-456-7890", (string)receipt.MerchantPhoneNumber.ValueText);
 
             Assert.IsNotNull(receipt.TransactionDate);
             Assert.IsNotNull(receipt.TransactionTime);
@@ -170,9 +198,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(6, date.Month);
             Assert.AreEqual(2019, date.Year);
 
-            Assert.AreEqual(13, time.Hour);
-            Assert.AreEqual(59, time.Minute);
-            Assert.AreEqual(0, time.Second);
+            Assert.AreEqual(13, time.Hours);
+            Assert.AreEqual(59, time.Minutes);
+            Assert.AreEqual(0, time.Seconds);
 
             var expectedItems = new List<(int? Quantity, string Name, float? Price, float? TotalPrice)>()
             {
@@ -189,36 +217,91 @@ namespace Azure.AI.FormRecognizer.Tests
                 var receiptItem = receipt.Items[itemIndex];
                 var expectedItem = expectedItems[itemIndex];
 
-                Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
-                Assert.AreEqual(expectedItem.Name, receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
-                Assert.That(receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Quantity, receiptItem.Quantity == null? null : (float?)receiptItem.Quantity, $"{receiptItem.Quantity} mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Name, (string)receiptItem.Name, $"{receiptItem.Name} mismatch in item with index {itemIndex}.");
+                Assert.That(receiptItem.Price == null? null : (float?)receiptItem.Price, Is.EqualTo(expectedItem.Price).Within(0.0001), $"{receiptItem.Price} mismatch in item with index {itemIndex}.");
+                Assert.That(receiptItem.TotalPrice == null? null: (float?)receiptItem.TotalPrice, Is.EqualTo(expectedItem.TotalPrice).Within(0.0001), $"{receiptItem.TotalPrice} mismatch in item with index {itemIndex}.");
             }
 
-            Assert.That(receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
-            Assert.That(receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
+            Assert.That((float?)receipt.Subtotal, Is.EqualTo(1098.99).Within(0.0001));
+            Assert.That((float?)receipt.Tax, Is.EqualTo(104.40).Within(0.0001));
             Assert.IsNull(receipt.Tip);
-            Assert.That(receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
+            Assert.That((float?)receipt.Total, Is.EqualTo(1203.39).Within(0.0001));
         }
 
         /// <summary>
-        /// Creates a <see cref="FormRecognizerClient" /> with the endpoint and API key provided via environment
-        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
-        /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient()
+        [Test]
+        [TestCase(true)]
+        [TestCase(false, Ignore = "The form has not been uploaded to GitHub yet.")]
+        public async Task StartRecognizeCustomFormsLabeled(bool useStream)
         {
-            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.EndpointEnvironmentVariableName);
-            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.ApiKeyEnvironmentVariableName);
+            var client = CreateInstrumentedClient();
+            RecognizeCustomFormsOperation operation;
 
-            Assert.NotNull(endpointEnvironmentVariable);
-            Assert.NotNull(keyEnvironmentVariable);
+            string modelId = await GetModelIdAsync(true);
 
-            var endpoint = new Uri(endpointEnvironmentVariable);
-            var credential = new AzureKeyCredential(keyEnvironmentVariable);
-            var client = new FormRecognizerClient(endpoint, credential);
+            if (useStream)
+            {
+                using var stream = new FileStream(TestEnvironment.FormPath, FileMode.Open);
+                operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+            }
+            else
+            {
+                var uri = new Uri(TestEnvironment.FormUri);
+                operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri);
+            }
 
-            return InstrumentClient(client);
+            await operation.WaitForCompletionAsync();
+
+            Assert.IsTrue(operation.HasValue);
+            Assert.GreaterOrEqual(operation.Value.Count, 1);
+
+            RecognizedForm form = operation.Value.FirstOrDefault();
+
+            //testing that we shuffle things around correctly so checking only once per property
+
+            Assert.AreEqual("custom:form", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+            Assert.AreEqual(1, form.Pages.Count);
+            Assert.AreEqual(2200, form.Pages[0].Height);
+            Assert.AreEqual(1, form.Pages[0].PageNumber);
+            Assert.AreEqual(LengthUnit.Pixel, form.Pages[0].Unit);
+            Assert.AreEqual(1700, form.Pages[0].Width);
+
+            Assert.IsNotNull(form.Fields);
+            var name = "PurchaseOrderNumber";
+            Assert.IsNotNull(form.Fields[name]);
+            Assert.IsNotNull(form.Fields[name].Confidence);
+            Assert.AreEqual(FieldValueType.StringType, form.Fields[name].Value.Type);
+            Assert.AreEqual("948284", form.Fields[name].ValueText.Text);
+        }
+
+        [Test]
+        public void CreateFormTrainingClientFromFormRecognizerClient()
+        {
+            FormRecognizerClient client = CreateInstrumentedClient();
+            FormTrainingClient trainingClient = client.GetFormTrainingClient();
+            Assert.IsNotNull(trainingClient);
+        }
+
+        /// <summary>
+        ///  For testing purposes, we are training our models using the client library functionalities.
+        ///  Please note that models can also be trained using a graphical user interface
+        ///  such as the Form Recognizer Labeling Tool found here:
+        ///  <a href="'https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
+        /// </summary>
+        private async Task<string> GetModelIdAsync(bool labeled = false)
+        {
+            FormTrainingClient trainingClient = InstrumentClient(new FormTrainingClient(_endpoint, _credential));
+            TrainingOperation trainedModel = await trainingClient.StartTrainingAsync(_containerUri, labeled);
+            await trainedModel.WaitForCompletionAsync();
+            Assert.IsTrue(trainedModel.HasValue);
+
+            return trainedModel.Value.ModelId;
         }
     }
 }
