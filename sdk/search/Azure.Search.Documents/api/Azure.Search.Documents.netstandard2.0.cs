@@ -1109,10 +1109,10 @@ namespace Azure.Search.Documents.Models
     public partial class PatternAnalyzer : Azure.Search.Documents.Models.Analyzer
     {
         public PatternAnalyzer(string name) : base (default(string)) { }
-        public Azure.Search.Documents.Models.RegexFlags? Flags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.RegexFlags> Flags { get { throw null; } }
         public bool? LowerCaseTerms { get { throw null; } set { } }
         public string Pattern { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Stopwords { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Stopwords { get { throw null; } }
     }
     public partial class PatternCaptureTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
@@ -1135,7 +1135,7 @@ namespace Azure.Search.Documents.Models
     public partial class PatternTokenizer : Azure.Search.Documents.Models.Tokenizer
     {
         public PatternTokenizer(string name) : base (default(string)) { }
-        public Azure.Search.Documents.Models.RegexFlags? Flags { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.RegexFlags> Flags { get { throw null; } }
         public int? Group { get { throw null; } set { } }
         public string Pattern { get { throw null; } set { } }
     }
@@ -1268,18 +1268,18 @@ namespace Azure.Search.Documents.Models
     {
         public SearchIndex(string name) { }
         public SearchIndex(string name, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchField> fields) { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.Analyzer> Analyzers { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.CharFilter> CharFilters { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.Analyzer> Analyzers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.CharFilter> CharFilters { get { throw null; } }
         public Azure.Search.Documents.Models.CorsOptions CorsOptions { get { throw null; } set { } }
         public string DefaultScoringProfile { get { throw null; } set { } }
         public Azure.Search.Documents.Models.EncryptionKey EncryptionKey { get { throw null; } set { } }
         public string ETag { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchField> Fields { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.ScoringProfile> ScoringProfiles { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.Suggester> Suggesters { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.TokenFilter> TokenFilters { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.Tokenizer> Tokenizers { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.ScoringProfile> ScoringProfiles { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.Suggester> Suggesters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.TokenFilter> TokenFilters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.Tokenizer> Tokenizers { get { throw null; } }
     }
     public partial class SearchIndexer
     {
