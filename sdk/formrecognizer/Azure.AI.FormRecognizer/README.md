@@ -124,6 +124,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         IReadOnlyList<USReceiptItem> items = usReceipt.Items;
         float subtotal = usReceipt.Subtotal;
         float tax = usReceipt.Tax;
+        float tip = usReceipt.Tip;
         float total = usReceipt.Total;
 
         Console.WriteLine($"Recognized USReceipt fields:");
@@ -138,6 +139,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 
         Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
         Console.WriteLine($"    Tax: '{tax}', with confidence '{usReceipt.Tax.Confidence}'");
+        Console.WriteLine($"    Tip: '{tip}', with confidence '{usReceipt.Tip.Confidence}'");
         Console.WriteLine($"    Total: '{total}', with confidence '{usReceipt.Total.Confidence}'");
     }
 }
