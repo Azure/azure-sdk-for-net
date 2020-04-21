@@ -108,9 +108,6 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
 
-                // TODO: Handle correctly according to returned status code
-                // https://github.com/Azure/azure-sdk-for-net/issues/10386
-
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {
                     _hasCompleted = true;

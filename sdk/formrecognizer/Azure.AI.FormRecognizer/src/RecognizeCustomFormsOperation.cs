@@ -18,6 +18,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceClient _serviceClient;
 
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
+
         /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
         private Response _response;
 
@@ -56,11 +59,13 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         /// <param name="operations"></param>
+        /// <param name="diagnostics"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal RecognizeCustomFormsOperation(ServiceClient operations, string modelId, string operationLocation)
+        internal RecognizeCustomFormsOperation(ServiceClient operations, ClientDiagnostics diagnostics, string modelId, string operationLocation)
         {
             _serviceClient = operations;
+            _diagnostics = diagnostics;
             _modelId = modelId;
 
             // TODO: Add validation here
@@ -77,6 +82,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             Id = operationId;
             _serviceClient = client.ServiceClient;
+            _diagnostics = client.Diagnostics;
         }
 
         /// <summary>
@@ -102,17 +108,22 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(Id), cancellationToken);
 
-                // TODO: Handle correctly according to returned status code
-                // https://github.com/Azure/azure-sdk-for-net/issues/10386
                 // TODO: Add reasonable null checks.
 
-                if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
+                _response = update.GetRawResponse();
+
+                if (update.Value.Status == OperationStatus.Succeeded)
                 {
                     _hasCompleted = true;
                     _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
                 }
+                else if (update.Value.Status == OperationStatus.Failed)
+                {
+                    _hasCompleted = true;
+                    _value = new List<RecognizedForm>();
 
-                _response = update.GetRawResponse();
+                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
+                }
             }
 
             return GetRawResponse();
@@ -143,6 +154,37 @@ namespace Azure.AI.FormRecognizer.Models
                 forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return forms;
+        }
+
+        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
+        {
+            string errorMessage = default;
+            string errorCode = default;
+
+            if (errors.Count > 0)
+            {
+                var firstError = errors[0];
+
+                errorMessage = firstError.Message;
+                errorCode = firstError.Code;
+            }
+            else
+            {
+                errorMessage = "RecognizeCustomForms operation failed.";
+            }
+
+            var errorInfo = new Dictionary<string, string>();
+            int index = 0;
+
+            foreach (var error in errors)
+            {
+                errorInfo.Add($"error-{index}", $"{error.Code}: {error.Message}");
+                index++;
+            }
+
+            return async
+                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
+                : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
         }
     }
 }
