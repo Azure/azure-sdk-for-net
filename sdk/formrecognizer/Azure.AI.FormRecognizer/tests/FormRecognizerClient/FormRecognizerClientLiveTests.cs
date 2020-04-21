@@ -96,8 +96,12 @@ namespace Azure.AI.FormRecognizer.Tests
                 var line = lines[lineIndex];
 
                 Assert.NotNull(line.Text, $"Text should not be null in line {lineIndex}. ");
-                Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 Assert.AreEqual(4, line.BoundingBox.Points.Count(), $"There should be exactly 4 points in the bounding box in line {lineIndex}.");
+                Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
+                foreach (var item in line.Words)
+                {
+                    Assert.Greater(item.Confidence, 0);
+                }
             }
 
             var table = formPage.Tables.Single();
@@ -134,8 +138,8 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
                 Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
 
-                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater than or equal to zero.");
-                Assert.LessOrEqual(cell.RowIndex, 1, $"Cell with text {cell.Text} should have confidence less than or equal to one.");
+                Assert.Greater(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater than zero.");
+                Assert.LessOrEqual(cell.RowIndex, 1, $"Cell with text {cell.Text} should have a row index less than or equal to one.");
 
                 Assert.Greater(cell.TextContent.Count, 0, $"Cell with text {cell.Text} should have text content.");
             }
@@ -231,8 +235,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         [Test]
         [TestCase(true)]
-        [TestCase(false, Ignore = "The form has not been uploaded to GitHub yet.")]
-        public async Task StartRecognizeCustomFormsLabeled(bool useStream)
+        [TestCase(false)]
+        public async Task StartRecognizeCustomFormsWithLabels(bool useStream)
         {
             var client = CreateInstrumentedClient();
             RecognizeCustomFormsOperation operation;
