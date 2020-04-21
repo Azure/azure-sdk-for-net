@@ -10,7 +10,7 @@ namespace Azure.AI.FormRecognizer.Models
         internal FormWord(TextWord_internal textWord, int pageNumber)
             : base(new BoundingBox(textWord.BoundingBox), pageNumber, textWord.Text)
         {
-            Confidence = textWord.Confidence;
+            Confidence = textWord.Confidence != null ? textWord.Confidence : Constants.DefaultConfidenceValue;
         }
 
         /// <summary>
