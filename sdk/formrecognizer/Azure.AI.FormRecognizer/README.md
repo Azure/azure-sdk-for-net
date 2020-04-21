@@ -105,8 +105,8 @@ The following section provides several code snippets illustrating common pattern
 * [Recognize Receipts](#recognize-receipts)
 * [Recognize Content](#recognize-content)
 * [Recognize Custom Forms](#recognize-custom-forms)
-* [Train a Model](#train-with-forms)
-* [Manage Custom Forms](#manage-custom-forms)
+* [Train a Model](#train-a-model)
+* [Manage Custom Models](#manage-custom-models)
 
 ### Recognize Receipts
 Recognize data from US sales receipts using a prebuilt model.
