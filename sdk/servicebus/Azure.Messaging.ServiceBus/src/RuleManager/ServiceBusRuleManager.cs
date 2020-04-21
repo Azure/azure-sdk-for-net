@@ -19,10 +19,10 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusRuleManager : IAsyncDisposable
     {
         /// <summary>
-        /// The path of the Service Bus entity that the rule manager is connected to, specific to the
+        /// The path of the Service Bus subscription that the rule manager is connected to, specific to the
         /// Service Bus namespace that contains it.
         /// </summary>
-        public string EntityPath { get; private set; }
+        public string SubscriptionPath { get; private set; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
@@ -57,22 +57,22 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="entityPath"></param>
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
         ///
         internal ServiceBusRuleManager(
             ServiceBusConnection connection,
-            string entityPath)
+            string subscriptionPath)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(connection.RetryOptions, nameof(connection.RetryOptions));
-            Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
+            Argument.AssertNotNullOrWhiteSpace(subscriptionPath, nameof(subscriptionPath));
             connection.ThrowIfClosed();
 
-            Identifier = DiagnosticUtilities.GenerateIdentifier(entityPath);
+            Identifier = DiagnosticUtilities.GenerateIdentifier(subscriptionPath);
             _connection = connection;
-            EntityPath = entityPath;
+            SubscriptionPath = subscriptionPath;
             InnerRuleManager = _connection.CreateTransportRuleManager(
-                entityPath: EntityPath,
+                subscriptionPath: SubscriptionPath,
                 retryPolicy: connection.RetryOptions.ToRetryPolicy());
         }
 

@@ -78,13 +78,13 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   responsible for adding, removing and getting rules from the Service Bus subscription.
         /// </summary>
         ///
-        /// <param name="entityPath">The name of the Service Bus entity to which the rule manager is bound.</param>
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
         ///
         public abstract TransportRuleManager CreateRuleManager(
-            string entityPath,
+            string subscriptionPath,
             ServiceBusRetryPolicy retryPolicy);
 
         /// <summary>

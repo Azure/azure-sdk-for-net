@@ -17,10 +17,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
     internal class AmqpRuleManager : TransportRuleManager
     {
         /// <summary>
-        /// The name of the Service Bus entity to which the rule manager is bound.
+        /// The path of the Service Bus subscription to which the rule manager is bound.
         /// </summary>
         ///
-        private readonly string _entityPath;
+        private readonly string _subscriptionPath;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Initializes a new instance of the <see cref="AmqpRuleManager"/> class.
         /// </summary>
         ///
-        /// <param name="entityPath">The name of the Service Bus entity to which the rule manager is bound.</param>
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         ///
@@ -77,21 +77,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// caller.
         /// </remarks>
         public AmqpRuleManager(
-            string entityPath,
+            string subscriptionPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy)
         {
-            Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
+            Argument.AssertNotNullOrEmpty(subscriptionPath, nameof(subscriptionPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            _entityPath = entityPath;
+            _subscriptionPath = subscriptionPath;
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => _connectionScope.OpenManagementLinkAsync(
-                    _entityPath,
+                    _subscriptionPath,
                     timeout,
                     CancellationToken.None),
                 link =>

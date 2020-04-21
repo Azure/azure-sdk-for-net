@@ -180,19 +180,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   responsible for adding, removing and getting rules from the Service Bus subscription.
         /// </summary>
         ///
-        /// <param name="entityPath">The name of the Service Bus entity to which the rule manager is bound.</param>
+        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
         public override TransportRuleManager CreateRuleManager(
-            string entityPath,
+            string subscriptionPath,
             ServiceBusRetryPolicy retryPolicy)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
             return new AmqpRuleManager
             (
-                entityPath,
+                subscriptionPath,
                 ConnectionScope,
                 retryPolicy
             );
