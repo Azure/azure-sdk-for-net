@@ -51,7 +51,6 @@ namespace Azure.AI.FormRecognizer.Models
         public RecognizeReceiptsOperation(string operationId, FormRecognizerClient client)
         {
             // TODO: Add argument validation here.
-            // TODO: include cancellation token argument.
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
@@ -69,6 +68,13 @@ namespace Azure.AI.FormRecognizer.Models
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeReceiptsOperation"/> class.
+        /// </summary>
+        protected RecognizeReceiptsOperation()
+        {
         }
 
         /// <inheritdoc/>
