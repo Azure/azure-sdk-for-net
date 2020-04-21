@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
-        public async Task RecognizeContent()
+        public async Task RecognizeContentFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             string invoiceUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
 
-            #region Snippet:FormRecognizerSample3RecognizeContent
+            #region Snippet:FormRecognizerSample2RecognizeContentFromUri
 
             Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
             foreach (FormPage page in formPages.Value)

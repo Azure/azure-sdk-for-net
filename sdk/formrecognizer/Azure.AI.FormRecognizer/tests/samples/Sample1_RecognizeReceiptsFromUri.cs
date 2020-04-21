@@ -23,6 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             string receiptUri = FormRecognizerTestEnvironment.JpgReceiptUri;
 
+            #region Snippet:FormRecognizerSample1RecognizeReceiptFileFromUri
             Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
             foreach (var receipt in receipts.Value)
             {
@@ -51,6 +52,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 Console.WriteLine($"    Tip: '{tip}', with confidence '{usReceipt.Tip.Confidence}'");
                 Console.WriteLine($"    Total: '{total}', with confidence '{usReceipt.Total.Confidence}'");
             }
+            #endregion
         }
     }
 }

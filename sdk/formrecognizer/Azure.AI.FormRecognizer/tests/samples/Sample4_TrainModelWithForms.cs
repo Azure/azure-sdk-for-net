@@ -13,20 +13,18 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
-        public async Task TrainModelWithFormsAndLabels()
+        public async Task TrainModelWithForms()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
-            // For instructions to set up forms for training in an Azure Storage Blob Container, please see:
-            // https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
-
-            // For instructions to create a label file for your training forms, please see:
-            // https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+            #region Snippet:FormRecognizerSample4TrainModelWithForms
+            // For instructions on setting up forms for training in an Azure Storage Blob Container, see
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
 
             FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl), useLabels: true).WaitForCompletionAsync();
+            CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
 
             Console.WriteLine($"Custom Model Info:");
             Console.WriteLine($"    Model Id: {model.ModelId}");
@@ -40,13 +38,14 @@ namespace Azure.AI.FormRecognizer.Samples
                 foreach (CustomFormModelField field in subModel.Fields.Values)
                 {
                     Console.Write($"    FieldName: {field.Name}");
-                    if (field.Accuracy != null)
+                    if (field.Label != null)
                     {
-                        Console.Write($", Accuracy: {field.Accuracy}");
+                        Console.Write($", FieldLabel: {field.Label}");
                     }
                     Console.WriteLine("");
                 }
             }
+            #endregion
 
             // Delete the model on completion.
             client.DeleteModel(model.ModelId);

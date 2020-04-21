@@ -1,7 +1,7 @@
 # Azure Cognitive Services Form Recognizer client library for .NET
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to recognize form fields, text, and tables in form documents.  It includes the following capabilities:
 
-- Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
+- Recognize Custom Forms - Recognize and extract form fields and other content from your custom forms, using models you trained with your own form types.
 - Recognize Form Content - Recognize and extract tables, lines and words in forms documents, without the need to train a model.
 - Recognize Receipts - Recognize and extract common fields from US receipts, using a pre-trained receipt model.
 
@@ -80,7 +80,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 `FormRecognizerClient` provides operations for:
 
  - Recognizing form fields and content, using custom models trained to recognize your custom forms.  These values are returned in a collection of `RecognizedForm` objects.
- - Recognizing form content, including tables, lines and words, without the need to train a model.  Form content is returned in a collection of `RecognizedPage` objects.
+ - Recognizing form content, including tables, lines and words, without the need to train a model.  Form content is returned in a collection of `FormPage` objects.
  - Recognizing common fields from US receipts, using a pre-trained receipt model on the Form Recognizer service.  These fields and meta-data are returned in a collection of `RecognizeReceipt` objects.
 
 ### FormTrainingClient
@@ -148,7 +148,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 ### Recognize Content
 Recognize text and table data, along with their bounding box coordinates, from documents.
 
-```C# Snippet:FormRecognizerSample3RecognizeContent
+```C# Snippet:FormRecognizerSample2RecognizeContentFromUri
 Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
 foreach (FormPage page in formPages.Value)
 {
@@ -175,8 +175,8 @@ foreach (FormPage page in formPages.Value)
 ### Recognize Custom Forms
 Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
 
-```C# Snippet:FormRecognizerSample4RecognizeCustomForms
-Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(invoiceUri)).WaitForCompletionAsync();
+```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms.Value)
 {
     Console.WriteLine($"Form of type: {form.FormType}");
@@ -198,7 +198,7 @@ foreach (RecognizedForm form in forms.Value)
 ### Train a Model
 Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
 
-```C# Snippet:FormRecognizerSample5TrainModelWithForms
+```C# Snippet:FormRecognizerSample4TrainModelWithForms
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
 
@@ -229,7 +229,7 @@ foreach (CustomFormSubModel subModel in model.Models)
 ### Manage Custom Models
 Manage the custom models stored in your account.
 
-```C# Snippet:FormRecognizerSample7ManageCustomModels
+```C# Snippet:FormRecognizerSample6ManageCustomModels
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
@@ -326,15 +326,13 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 ## Next steps
 
-Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository:
+Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
 
-- [Recognize Receipts from a File][recognize_receipts_file]
-- [Recognize Receipts from a URI][recognize_receipts_uri]
-- [Recognize Form Content][recognize_content]
-- [Recognize Custom Forms][recognize_custom_forms]
-- [Train Model with Forms][train_model_with_forms]
-- [Train Model with Forms and Labels][train_model_with_forms_and_labels]
-- [Manage Custom Models][manage_custom_models]
+- [Recognize receipts][recognize_receipts]
+- [Recognize form content][recognize_content]
+- [Recognize custom forms][recognize_custom_forms]
+- [Train a model][train_a_model]
+- [Manage custom models][manage_custom_models]
 
 ## Contributing
 
@@ -352,7 +350,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_docs]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/
 [formreco_refdocs]: https://aka.ms/azsdk-net-formrecognizer-ref-docs
 [formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer
-[formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples
+[formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview
 [cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
@@ -373,13 +371,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md
 
-[recognize_receipts_file]: tests/samples/Sample1_RecognizeReceiptsFromFile.cs
-[recognize_receipts_uri]: tests/samples/Sample2_RecognizeReceiptsFromUri.cs
-[recognize_content]: tests/samples/Sample3_RecognizeContent.cs
-[recognize_custom_forms]: tests/samples/Sample4_RecognizeCustomForms.cs
-[train_model_with_forms]: tests/samples/Sample5_TrainModelWithForms.cs
-[train_model_with_forms_and_labels]: tests/samples/Sample6_TrainModelWithFormsAndLabels.cs
-[manage_custom_models]: tests/samples/Sample7_ManageCustomModels.cs
+[recognize_receipts]: samples/Sample1_RecognizeReceipts.md
+[recognize_content]: samples/Sample2_RecognizeFormContent.md
+[recognize_custom_forms]: samples/Sample3_RecognizeCustomForms.md
+[train_a_model]: samples/Sample4_TrainModel.md
+[manage_custom_models]: samples/Sample5_ManageCustomModels.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

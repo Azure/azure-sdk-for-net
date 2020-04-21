@@ -14,19 +14,19 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
-        public async Task RecognizeCustomForms()
+        public async Task RecognizeCustomFormsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string invoiceUri = FormRecognizerTestEnvironment.CreateUri("Invoice_1.pdf");
+            string formUri = FormRecognizerTestEnvironment.CreateUri("Form_1.jpg");
             string modelId = "<your model id>";
 
-            #region Snippet:FormRecognizerSample4RecognizeCustomForms
+            #region Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
 
-            Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(invoiceUri)).WaitForCompletionAsync();
+            Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
             foreach (RecognizedForm form in forms.Value)
             {
                 Console.WriteLine($"Form of type: {form.FormType}");
