@@ -5,7 +5,7 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
 - Recognize Form Content - Recognize and extract tables, lines and words in forms documents, without the need to train a model.
 - Recognize Receipts - Recognize and extract common fields from US receipts, using a pre-trained receipt model.
 
-[Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package]] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
+[Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
 ## Getting started
 
