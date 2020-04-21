@@ -8,5 +8,7 @@ namespace Azure.AI.FormRecognizer.Models
     [CodeGenModel("DataTableCell")]
     internal partial class DataTableCell_internal
     {
+        /// <inheritdoc />
+        public float? Confidence { get; }
     }
 }

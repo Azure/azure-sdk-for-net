@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
             int? columnSpan = default;
             string text = default;
             IReadOnlyList<float> boundingBox = default;
-            float confidence = default;
+            float? confidence = default;
             IReadOnlyList<string> elements = default;
             bool? isHeader = default;
             bool? isFooter = default;
@@ -72,6 +72,10 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("confidence"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     confidence = property.Value.GetSingle();
                     continue;
                 }
