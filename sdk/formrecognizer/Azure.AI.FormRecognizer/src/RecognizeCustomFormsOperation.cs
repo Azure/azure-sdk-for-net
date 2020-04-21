@@ -15,16 +15,23 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class RecognizeCustomFormsOperation : Operation<IReadOnlyList<RecognizedForm>>
     {
-        private Response _response;
-        private IReadOnlyList<RecognizedForm> _value;
-        private bool _hasCompleted;
-
-        private readonly string _modelId;
+        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceClient _serviceClient;
+
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
 
-        // TODO: use this.
-        private CancellationToken _cancellationToken;
+        /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
+        private Response _response;
+
+        /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
+        private IReadOnlyList<RecognizedForm> _value;
+
+        /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
+        private bool _hasCompleted;
+
+        /// <summary>The id of the model to use for recognizing form values.</summary>
+        private readonly string _modelId;
 
         /// <inheritdoc/>
         public override string Id { get; }
@@ -71,13 +78,18 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        /// <param name="cancellationToken"></param>
-        public RecognizeCustomFormsOperation(string operationId, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public RecognizeCustomFormsOperation(string operationId, FormRecognizerClient client)
         {
             Id = operationId;
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
-            _cancellationToken = cancellationToken;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeCustomFormsOperation"/> class.
+        /// </summary>
+        protected RecognizeCustomFormsOperation()
+        {
         }
 
         /// <inheritdoc/>

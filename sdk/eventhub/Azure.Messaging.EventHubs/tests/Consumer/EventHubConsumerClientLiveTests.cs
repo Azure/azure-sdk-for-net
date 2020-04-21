@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+               cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+               cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var options = new EventHubConsumerClientOptions();
                 options.RetryOptions.MaximumRetries = 7;
@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var singleEvent = EventGenerator.CreateEventFromBody(Array.Empty<byte>());
@@ -141,7 +141,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var singleEvent = EventGenerator.CreateEvents(1).Single();
@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var buffer = new byte[100000];
                 new Random().NextBytes(buffer);
@@ -212,7 +212,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -254,7 +254,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateEvents(200).ToList();
@@ -292,7 +292,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -339,7 +339,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
@@ -379,7 +379,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateEvents(200).ToList();
@@ -417,7 +417,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateEvents(200).ToList();
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var seedEvents = EventGenerator.CreateEvents(50).ToList();
@@ -529,7 +529,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var seedEvents = EventGenerator.CreateEvents(50).ToList();
@@ -586,7 +586,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var seedEvents = EventGenerator.CreateEvents(50).ToList();
@@ -642,7 +642,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1, new[] { customConsumerGroup }))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
@@ -689,7 +689,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
@@ -729,7 +729,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateEvents(15).ToList();
@@ -775,7 +775,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+               cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.EventHubsConnectionString, scope.EventHubName))
                 {
@@ -801,7 +801,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+               cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var invalidConsumerGroup = "ThisIsFake";
 
@@ -830,7 +830,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var clientOptions = new EventHubConsumerClientOptions();
                 clientOptions.RetryOptions.MaximumRetries = 0;
@@ -865,7 +865,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var exclusiveOptions = DefaultReadOptions.Clone();
                 exclusiveOptions.OwnerLevel = 20;
@@ -903,7 +903,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
                 higherOptions.OwnerLevel = 40;
@@ -944,7 +944,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
                 higherOptions.OwnerLevel = 40;
@@ -1001,7 +1001,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1, consumerGroups))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
                 higherOptions.OwnerLevel = 40;
@@ -1050,7 +1050,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var exclusiveOptions = DefaultReadOptions.Clone();
                 exclusiveOptions.OwnerLevel = 20;
@@ -1107,7 +1107,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
                 higherOptions.OwnerLevel = 40;
@@ -1167,7 +1167,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var exclusiveOptions = DefaultReadOptions.Clone();
                 exclusiveOptions.OwnerLevel = 20;
@@ -1232,7 +1232,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1, consumerGroups))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var exclusiveOptions = DefaultReadOptions.Clone();
                 exclusiveOptions.OwnerLevel = 20;
@@ -1289,7 +1289,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateEvents(50).ToList();
@@ -1332,7 +1332,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var higherOptions = DefaultReadOptions.Clone();
                 higherOptions.OwnerLevel = 40;
@@ -1405,7 +1405,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.EventHubsConnectionString, scope.EventHubName))
                 {
@@ -1451,7 +1451,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.EventHubsConnectionString, scope.EventHubName, clientOptions))
                 {
@@ -1481,7 +1481,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var clientOptions = new EventHubConsumerClientOptions { ConnectionOptions = new EventHubConnectionOptions { TransportType = transportType } };
@@ -1515,7 +1515,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.EventHubsConnectionString, scope.EventHubName))
                 {
@@ -1542,7 +1542,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.EventHubsConnectionString, scope.EventHubName))
                 {
@@ -1578,7 +1578,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(2));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, TestEnvironment.EventHubsConnectionString, scope.EventHubName))
                 {
@@ -1599,7 +1599,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(3));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
 
@@ -1638,7 +1638,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateEvents(100).ToList();
@@ -1678,7 +1678,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
                 var sourceEvents = EventGenerator.CreateEvents(100).ToList();
@@ -1719,7 +1719,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromMinutes(4));
+                cancellationSource.CancelAfter(TestEnvironment.TestExecutionTimeLimit);
 
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
                 var sourceEvents = EventGenerator.CreateEvents(100).ToList();

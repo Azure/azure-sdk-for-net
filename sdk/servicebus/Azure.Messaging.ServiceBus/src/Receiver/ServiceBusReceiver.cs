@@ -884,8 +884,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />,
-        /// including ensuring that the client itself has been closed.
+        /// Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
