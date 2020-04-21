@@ -17,52 +17,6 @@ namespace Azure.Storage.Internal.Avro
 {
     internal static class AvroParser
     {
-        public static List<object> Parse(Stream stream, CancellationToken cancellationToken = default) =>
-            ReadObjectContainerFileAsync(stream, async: false, cancellationToken).EnsureCompleted();
-
-        public static async Task<List<object>> ParseAsync(Stream stream, CancellationToken cancellationToken = default) =>
-            await ReadObjectContainerFileAsync(stream, async: true, cancellationToken).ConfigureAwait(false);
-
-        private static async Task<List<object>> ReadObjectContainerFileAsync(
-            Stream stream,
-            bool async,
-            CancellationToken cancellationToken = default)
-        {
-            // Four bytes, ASCII 'O', 'b', 'j', followed by 1.
-            byte[] header = await ReadFixedBytesAsync(stream, AvroConstants.InitBytes.Length, async, cancellationToken).ConfigureAwait(false);
-            Debug.Assert(header[0] == AvroConstants.InitBytes[0]);
-            Debug.Assert(header[1] == AvroConstants.InitBytes[1]);
-            Debug.Assert(header[2] == AvroConstants.InitBytes[2]);
-            Debug.Assert(header[3] == AvroConstants.InitBytes[3]);
-
-            // File metadata is written as if defined by the following map schema:
-            // { "type": "map", "values": "bytes"}
-            Dictionary<string, string> metadata = await ReadMapAsync(stream, ReadStringAsync, async, cancellationToken).ConfigureAwait(false);
-            Debug.Assert(metadata[AvroConstants.CodecKey] == "null");
-
-            // The 16-byte, randomly-generated sync marker for this file.
-            byte[] syncMarker = await ReadFixedBytesAsync(stream, AvroConstants.SyncMarkerSize, async, cancellationToken).ConfigureAwait(false);
-
-            // Parse the schema
-            using JsonDocument schema = JsonDocument.Parse(metadata[AvroConstants.SchemaKey]);
-            AvroType itemType = AvroType.FromSchema(schema.RootElement);
-
-            // File data blocks
-            var data = new List<object>();
-            while (stream.Position < stream.Length)
-            {
-                long length = await ReadLongAsync(stream, async, cancellationToken).ConfigureAwait(false);
-                await ReadLongAsync(stream, async, cancellationToken).ConfigureAwait(false); // Ignore the block size
-                while (length-- > 0)
-                {
-                    object value = await itemType.ReadAsync(stream, async, cancellationToken).ConfigureAwait(false);
-                    data.Add(value);
-                }
-                await ReadFixedBytesAsync(stream, AvroConstants.SyncMarkerSize, async, cancellationToken).ConfigureAwait(false); // Ignore the sync check
-            }
-            return data;
-        }
-
         public static async Task<byte[]> ReadFixedBytesAsync(
             Stream stream,
             int length,
