@@ -147,7 +147,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
-        /// Recognizer cognitive service and perform operations.
+        /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
         public void StartRecognizeContentFromUriThrowsForNonExistingContent()
@@ -244,7 +244,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
-        /// Recognizer cognitive service and perform operations.
+        /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
         public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
@@ -308,7 +308,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
-        /// Recognizer cognitive service and perform operations.
+        /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [Test]
         [TestCase(true)]
