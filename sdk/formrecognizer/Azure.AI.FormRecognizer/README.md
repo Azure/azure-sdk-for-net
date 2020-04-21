@@ -109,6 +109,8 @@ The following section provides several code snippets illustrating common pattern
 * [Manage Custom Forms](#manage-custom-forms)
 
 ### Recognize Receipts
+Recognize data from US sales receipts using a prebuilt model.
+
 ```C# Snippet:FormRecognizerSample1RecognizeReceiptFileStream
 using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 {
@@ -142,6 +144,8 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 ```
 
 ### Recognize Content
+Recognize text and table data, along with their bounding box coordinates, from documents.
+
 ```C# Snippet:FormRecognizerSample3RecognizeContent
 Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
 foreach (FormPage page in formPages.Value)
@@ -167,6 +171,8 @@ foreach (FormPage page in formPages.Value)
 ```
 
 ### Recognize Custom Forms
+Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
+
 ```C# Snippet:FormRecognizerSample4RecognizeCustomForms
 Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(invoiceUri)).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms.Value)
@@ -188,6 +194,8 @@ foreach (RecognizedForm form in forms.Value)
 ```
 
 ### Train a Model
+Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
+
 ```C# Snippet:FormRecognizerSample5TrainModelWithForms
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
 // https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
@@ -217,6 +225,8 @@ foreach (CustomFormSubModel subModel in model.Models)
 ```
 
 ### Manage Custom Models
+Manage the custom models stored in your account.
+
 ```C# Snippet:FormRecognizerSample7ManageCustomModels
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
@@ -312,6 +322,17 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
+## Next steps
+
+Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository:
+
+- [Recognize Receipts from File][recognize_receipts_file]
+- [Recognize Receipts from URI][recognize_receipts_uri]
+- [Recognize Form Content][recognize_content]
+- [Recognize Custom Forms][recognize_custom_forms]
+- [Train Model with Forms Only][train_model_with_forms]
+- [Train Model with Forms and Labels][train_model_with_forms_and_labels]
+- [Manage Custom Models][manage_custom_models]
 
 ## Contributing
 
@@ -331,6 +352,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer -->
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview
+
 [cognitive_resource]: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account
 
 
@@ -341,32 +363,22 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
+[cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
+
 
 [labeling_tool]: https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md
 
-<!-- [detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
-[detect_language_sample1]: tests/samples/Sample1_DetectLanguageBatchConvenience.cs
-[detect_language_sample2]: tests/samples/Sample1_DetectLanguageBatch.cs
-[detect_language_sample_async]: tests/samples/Sample1_DetectLanguageAsync.cs
-[analyze_sentiment_sample0]: tests/samples/Sample2_AnalyzeSentiment.cs
-[analyze_sentiment_sample1]: tests/samples/Sample2_AnalyzeSentimentBatchConvenience.cs
-[analyze_sentiment_sample2]: tests/samples/Sample2_AnalyzeSentimentBatch.cs
-[extract_key_phrases_sample0]: tests/samples/Sample3_ExtractKeyPhrases.cs
-[extract_key_phrases_sample1]: tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs
-[extract_key_phrases_sample2]: tests/samples/Sample3_ExtractKeyPhrasesBatch.cs
-[recognize_entities_sample0]: tests/samples/Sample4_RecognizeEntities.cs
-[recognize_entities_sample1]: tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs
-[recognize_entities_sample2]: tests/samples/Sample4_RecognizeEntitiesBatch.cs
-[recognize_entities_sample_async]: tests/samples/Sample4_RecognizeEntitiesAsync.cs
-[recognize_pii_entities_sample0]: tests/samples/Sample5_RecognizePiiEntities.cs
-[recognize_pii_entities_sample1]: tests/samples/Sample5_RecognizePiiEntitiesBatch.cs
-[recognize_pii_entities_sample2]: tests/samples/Sample5_RecognizePiiEntitiesBatchConvenience.cs
-[recognize_linked_entities_sample0]: tests/samples/Sample6_RecognizeLinkedEntities.cs
-[recognize_linked_entities_sample1]: tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs
-[recognize_linked_entities_sample2]: tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenience.cs -->
+[recognize_receipts_file]: tests/samples/Sample1_RecognizeReceiptsFromFile.cs
+[recognize_receipts_uri]: tests/samples/Sample2_RecognizeReceiptsFromUri.cs
+[recognize_content]: tests/samples/Sample3_RecognizeContent.cs
+[recognize_custom_forms]: tests/samples/Sample4_RecognizeCustomForms.cs
+[train_model_with_forms]: tests/samples/Sample5_TrainModelWithForms.cs
+[train_model_with_forms_and_labels]: tests/samples/Sample6_TrainModelWithFormsAndLabels.cs
+[manage_custom_models]: tests/samples/Sample7_ManageCustomModels.cs
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
