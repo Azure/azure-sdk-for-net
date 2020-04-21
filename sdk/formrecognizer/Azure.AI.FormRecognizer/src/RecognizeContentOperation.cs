@@ -29,9 +29,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
 
-        /// <summary>The <see cref="CancellationToken"/> to use for all status checking.</summary>
-        private CancellationToken _cancellationToken;
-
         /// <inheritdoc/>
         public override string Id { get; }
 
@@ -62,11 +59,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="serviceClient">The client for communicating with the Form Recognizer Azure Cognitive Service through its REST API.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
-        /// <param name="cancellationToken"></param>
-        internal RecognizeContentOperation(ServiceClient serviceClient, string operationLocation, CancellationToken cancellationToken)
+        internal RecognizeContentOperation(ServiceClient serviceClient, string operationLocation)
         {
             _serviceClient = serviceClient;
-            _cancellationToken = cancellationToken;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -109,11 +104,6 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                if (cancellationToken == default)
-                {
-                    cancellationToken = _cancellationToken;
-                }
-
                 Response<AnalyzeOperationResult_internal> update = async
                     ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);

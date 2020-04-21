@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.Training
             var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
 
             ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = ServiceClient.RestClient.TrainCustomModelAsync(trainRequest);
-            return new TrainingOperation(response.Headers.Location, ServiceClient, cancellationToken);
+            return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.AI.FormRecognizer.Training
             var trainRequest = new TrainRequest_internal(trainingFiles.AbsoluteUri, filter, useLabels);
 
             ResponseWithHeaders<ServiceTrainCustomModelAsyncHeaders> response = await ServiceClient.RestClient.TrainCustomModelAsyncAsync(trainRequest).ConfigureAwait(false);
-            return new TrainingOperation(response.Headers.Location, ServiceClient, cancellationToken);
+            return new TrainingOperation(response.Headers.Location, ServiceClient);
         }
 
         #endregion

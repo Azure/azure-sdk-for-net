@@ -30,9 +30,6 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>The id of the model to use for recognizing form values.</summary>
         private readonly string _modelId;
 
-        /// <summary>The <see cref="CancellationToken"/> to use for all status checking.</summary>
-        private CancellationToken _cancellationToken;
-
         /// <inheritdoc/>
         public override string Id { get; }
 
@@ -61,12 +58,10 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="operations"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        /// <param name="cancellationToken"></param>
-        internal RecognizeCustomFormsOperation(ServiceClient operations, string modelId, string operationLocation, CancellationToken cancellationToken)
+        internal RecognizeCustomFormsOperation(ServiceClient operations, string modelId, string operationLocation)
         {
             _serviceClient = operations;
             _modelId = modelId;
-            _cancellationToken = cancellationToken;
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -103,11 +98,6 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                if (cancellationToken == default)
-                {
-                    cancellationToken = _cancellationToken;
-                }
-
                 Response<AnalyzeOperationResult_internal> update = async
                     ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(Id), cancellationToken);

@@ -27,9 +27,6 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
         private bool _hasCompleted;
 
-        /// <summary>The <see cref="CancellationToken"/> to use for all status checking.</summary>
-        private CancellationToken _cancellationToken;
-
         /// <summary>
         /// Get the ID of the training operation. This value can be used to poll for the status of the training outcome.
         /// </summary>
@@ -71,10 +68,9 @@ namespace Azure.AI.FormRecognizer.Training
         {
         }
 
-        internal TrainingOperation(string location, ServiceClient allOperations, CancellationToken cancellationToken)
+        internal TrainingOperation(string location, ServiceClient allOperations)
         {
             _serviceClient = allOperations;
-            _cancellationToken = cancellationToken;
 
             // TODO: validate this
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
@@ -104,11 +100,6 @@ namespace Azure.AI.FormRecognizer.Training
         {
             if (!_hasCompleted)
             {
-                if (cancellationToken == default)
-                {
-                    cancellationToken = _cancellationToken;
-                }
-
                 // Include keys is always set to true -- the service does not have a use case for includeKeys: false.
                 Response<Model_internal> update = async
                     ? await _serviceClient.GetCustomModelAsync(new Guid(Id), includeKeys: true, cancellationToken).ConfigureAwait(false)
