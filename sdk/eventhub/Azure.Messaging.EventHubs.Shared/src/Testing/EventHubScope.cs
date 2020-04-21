@@ -198,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                       IEnumerable<string> consumerGroups,
                                                       [CallerMemberName] string caller = "")
         {
-            if (!string.IsNullOrEmpty(EventHubsTestEnvironment.Instance.EventHubName))
+            if (!string.IsNullOrEmpty(EventHubsTestEnvironment.Instance.EventHubNameOverride))
             {
                 return BuildScopeFromExistingEventHub();
             }
@@ -223,10 +223,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 (
                     EventHubsTestEnvironment.Instance.ResourceGroup,
                     EventHubsTestEnvironment.Instance.EventHubsNamespace,
-                    EventHubsTestEnvironment.Instance.EventHubName
+                    EventHubsTestEnvironment.Instance.EventHubNameOverride
                  );
 
-                return new EventHubScope(EventHubsTestEnvironment.Instance.EventHubName, consumerGroups.Select(c => c.Name).ToList(), shouldRemoveEventHubAtScopeCompletion: false);
+                return new EventHubScope(EventHubsTestEnvironment.Instance.EventHubNameOverride, consumerGroups.Select(c => c.Name).ToList(), shouldRemoveEventHubAtScopeCompletion: false);
             }
         }
 

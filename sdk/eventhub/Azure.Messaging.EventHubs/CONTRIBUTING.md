@@ -46,8 +46,8 @@ The Live tests read information from the following environment variables:
 `EVENTHUB_CLIENT_SECRET`  
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
  
-`EVENT_HUBS_PER_TEST_LIMIT_MINUTES`
-The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.  If not provided, a default suitable for local runs is assumed.
+`EVENTHUB_PER_TEST_LIMIT_MINUTES`
+The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung.  If not provided, a default suitable for most local development environment runs is assumed.
 
 To make setting up your environment easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/live-tests-azure-setup.ps1) is included in the repository and will create and/or configure the needed Azure resources.  To use this script, open a PowerShell instance and login to your Azure account using `Login-AzAccount`, then execute the script.  You will need to provide some information, after which the script will configure the Azure resources and then output the set of environment variables with the correct values for running tests.
 
