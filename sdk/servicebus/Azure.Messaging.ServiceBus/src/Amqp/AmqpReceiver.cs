@@ -1191,7 +1191,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 await _receiveLink.CloseAsync().ConfigureAwait(false);
             }
 
+            if (_managementLink?.TryGetOpenedObject(out var _) == true)
+            {
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                await _managementLink.CloseAsync().ConfigureAwait(false);
+            }
+
             _receiveLink?.Dispose();
+            _managementLink?.Dispose();
 
         }
 
