@@ -120,7 +120,7 @@ namespace Azure.AI.FormRecognizer.Tests
             return Path.Combine(CurrentWorkingDirectory, assetFolder ?? AssetsFolderName, fileName);
         }
 
-        private static string CreateUri(string fileName, string assetFolder = default, string fileUriFormat = default)
+        public static string CreateUri(string fileName, string assetFolder = default, string fileUriFormat = default)
         {
             return string.Format(fileUriFormat ?? FileUriFormat, assetFolder ?? AssetsFolderName, fileName);
         }
