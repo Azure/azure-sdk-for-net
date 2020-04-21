@@ -49,7 +49,6 @@ namespace Azure.AI.FormRecognizer.Models
         public RecognizeContentOperation(string operationId, FormRecognizerClient client)
         {
             // TODO: Add argument validation here.
-            // TODO: include cancellation token argument.
 
             Id = operationId;
             _serviceClient = client.ServiceClient;
@@ -67,6 +66,13 @@ namespace Azure.AI.FormRecognizer.Models
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
             Id = operationLocation.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class.
+        /// </summary>
+        protected RecognizeContentOperation()
+        {
         }
 
         /// <inheritdoc/>
@@ -101,9 +107,6 @@ namespace Azure.AI.FormRecognizer.Models
                 Response<AnalyzeOperationResult_internal> update = async
                     ? await _serviceClient.GetAnalyzeLayoutResultAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeLayoutResult(new Guid(Id), cancellationToken);
-
-                // TODO: Handle correctly according to returned status code
-                // https://github.com/Azure/azure-sdk-for-net/issues/10386
 
                 if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
                 {

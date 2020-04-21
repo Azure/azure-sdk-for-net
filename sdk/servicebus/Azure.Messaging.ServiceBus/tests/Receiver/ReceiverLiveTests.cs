@@ -181,10 +181,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageCount = 10;
 
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(messages);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var remainingMessages = messageCount;

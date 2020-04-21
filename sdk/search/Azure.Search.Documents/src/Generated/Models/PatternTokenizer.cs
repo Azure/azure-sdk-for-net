@@ -28,20 +28,18 @@ namespace Azure.Search.Documents.Models
         /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more whitespace characters. </param>
-        /// <param name="flags"> Regular expression flags. </param>
+        /// <param name="flagsInternal"> Regular expression flags. </param>
         /// <param name="group"> The zero-based ordinal of the matching group in the regular expression pattern to extract into tokens. Use -1 if you want to use the entire pattern to split the input into tokens, irrespective of matching groups. Default is -1. </param>
-        internal PatternTokenizer(string oDataType, string name, string pattern, RegexFlags? flags, int? group) : base(oDataType, name)
+        internal PatternTokenizer(string oDataType, string name, string pattern, string flagsInternal, int? group) : base(oDataType, name)
         {
             Pattern = pattern;
-            Flags = flags;
+            FlagsInternal = flagsInternal;
             Group = group;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternTokenizer";
         }
 
         /// <summary> A regular expression pattern to match token separators. Default is an expression that matches one or more whitespace characters. </summary>
         public string Pattern { get; set; }
-        /// <summary> Regular expression flags. </summary>
-        public RegexFlags? Flags { get; set; }
         /// <summary> The zero-based ordinal of the matching group in the regular expression pattern to extract into tokens. Use -1 if you want to use the entire pattern to split the input into tokens, irrespective of matching groups. Default is -1. </summary>
         public int? Group { get; set; }
     }

@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Azure.Core.Testing;
 using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -11,16 +12,20 @@ namespace Azure.AI.FormRecognizer.Tests
     /// <summary>
     /// A helper class used to retrieve information to be used for tests.
     /// </summary>
-    public static class TestEnvironment
+    public class FormRecognizerTestEnvironment: TestEnvironment
     {
+        public FormRecognizerTestEnvironment() : base("formrecognizer")
+        {
+        }
+
         /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the live tests.</summary>
-        public const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
+        private const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
 
         /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the live tests.</summary>
-        public const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
+        private const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
 
         /// <summary>The name of the environment variable for the Blob Container SAS Url use for storing documents used for live tests.</summary>
-        public const string BlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
+        private const string BlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
 
         /// <summary>The name of the folder in which test assets are stored.</summary>
         private const string AssetsFolderName = "Assets";
@@ -35,10 +40,14 @@ namespace Azure.AI.FormRecognizer.Tests
         private const string InvoiceFilenameFormat = "Invoice_{0}.{1}";
 
         /// <summary>The name of the JPG file which contains the form to be used for tests.</summary>
-        private const string FormFilename = "form_1.jpg";
+        private const string FormFilename = "Form_1.jpg";
 
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
+
+        public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName);
+        public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
+        public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName);
 
         /// <summary>
         /// The name of the directory where the running assembly is located.

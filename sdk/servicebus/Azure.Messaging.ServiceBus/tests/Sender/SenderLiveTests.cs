@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, GetTokenCredential());
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendAsync(GetMessage());
             }
@@ -258,12 +258,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 var client = new ServiceBusClient(
                     TestEnvironment.FullyQualifiedNamespace,
-                    GetTokenCredential());
+                    TestEnvironment.Credential);
                 await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 var messageCt = 10;
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
-                await sender.SendBatchAsync(batch);
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCt);
+                await sender.SendAsync(messages);
 
                 var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions()
                 {

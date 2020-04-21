@@ -111,7 +111,24 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = new EventData(new byte[] { 0x21 });
 
             Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
-            Assert.That(mockBatch.TryAddCalledWith, Is.SameAs(eventData), "The event data should have been passed with delegation.");
+            Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
+        }
+
+        /// <summary>
+        ///   Verifies property accessors for the <see cref="EventDataBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddClonesTheEvent()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var eventData = new EventData(new byte[] { 0x21 });
+
+            Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
+            Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
+            Assert.That(mockBatch.TryAddCalledWith, Is.Not.SameAs(eventData), "The event data should have been cloned.");
         }
 
         /// <summary>

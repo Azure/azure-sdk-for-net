@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,7 +22,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Fields != null)
+            if (Fields != null && Fields.Any())
             {
                 writer.WritePropertyName("fields");
                 writer.WriteStartArray();
@@ -31,7 +32,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ScoringProfiles != null)
+            if (ScoringProfiles != null && ScoringProfiles.Any())
             {
                 writer.WritePropertyName("scoringProfiles");
                 writer.WriteStartArray();
@@ -51,7 +52,7 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("corsOptions");
                 writer.WriteObjectValue(CorsOptions);
             }
-            if (Suggesters != null)
+            if (Suggesters != null && Suggesters.Any())
             {
                 writer.WritePropertyName("suggesters");
                 writer.WriteStartArray();
@@ -61,7 +62,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Analyzers != null)
+            if (Analyzers != null && Analyzers.Any())
             {
                 writer.WritePropertyName("analyzers");
                 writer.WriteStartArray();
@@ -71,7 +72,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Tokenizers != null)
+            if (Tokenizers != null && Tokenizers.Any())
             {
                 writer.WritePropertyName("tokenizers");
                 writer.WriteStartArray();
@@ -81,7 +82,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TokenFilters != null)
+            if (TokenFilters != null && TokenFilters.Any())
             {
                 writer.WritePropertyName("tokenFilters");
                 writer.WriteStartArray();
@@ -91,7 +92,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CharFilters != null)
+            if (CharFilters != null && CharFilters.Any())
             {
                 writer.WritePropertyName("charFilters");
                 writer.WriteStartArray();

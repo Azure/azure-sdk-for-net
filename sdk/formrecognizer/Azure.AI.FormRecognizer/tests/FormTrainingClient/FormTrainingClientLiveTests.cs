@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// Azure subscription.
     /// </remarks>
     [LiveOnly]
-    public class FormTrainingClientLiveTests : ClientTestBase
+    public class FormTrainingClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
     {
         private readonly Uri _containerUri;
         /// <summary>
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormTrainingClientLiveTests(bool isAsync) : base(isAsync)
         {
-            _containerUri = new Uri(Environment.GetEnvironmentVariable(TestEnvironment.BlobContainerSasUrlEnvironmentVariableName));
+            _containerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
         }
 
         /// <summary>
@@ -37,11 +37,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
         private FormTrainingClient CreateInstrumentedClient()
         {
-            var endpointEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.EndpointEnvironmentVariableName);
-            var keyEnvironmentVariable = Environment.GetEnvironmentVariable(TestEnvironment.ApiKeyEnvironmentVariableName);
-
-            Assert.NotNull(endpointEnvironmentVariable);
-            Assert.NotNull(keyEnvironmentVariable);
+            var endpointEnvironmentVariable = TestEnvironment.Endpoint;
+            var keyEnvironmentVariable = TestEnvironment.ApiKey;
 
             var endpoint = new Uri(endpointEnvironmentVariable);
             var credential = new AzureKeyCredential(keyEnvironmentVariable);
