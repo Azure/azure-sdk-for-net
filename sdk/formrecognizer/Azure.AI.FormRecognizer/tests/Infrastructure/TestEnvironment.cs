@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Tests
         private const string InvoiceFilenameFormat = "Invoice_{0}.{1}";
 
         /// <summary>The name of the JPG file which contains the form to be used for tests.</summary>
-        private const string FormFilename = "form_1.jpg";
+        private const string FormFilename = "Form_1.jpg";
 
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
