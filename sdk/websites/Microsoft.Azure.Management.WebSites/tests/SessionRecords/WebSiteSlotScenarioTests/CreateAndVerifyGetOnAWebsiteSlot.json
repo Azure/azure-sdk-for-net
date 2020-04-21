@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b9ad3c68-2e5e-44d4-8d21-030ead2edfaa"
+          "2424cb00-9360-415b-b3cf-21b67b34684d"
         ],
         "accept-language": [
           "en-US"
@@ -24,22 +24,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Apr 2020 10:16:32 GMT"
+          "Tue, 21 Apr 2020 09:15:20 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11994"
         ],
         "x-ms-request-id": [
-          "6dd1708f-e9be-4310-bbf8-be2b6a62acac"
+          "61245401-86de-4a4a-a089-248ae96a3988"
         ],
         "x-ms-correlation-request-id": [
-          "6dd1708f-e9be-4310-bbf8-be2b6a62acac"
+          "61245401-86de-4a4a-a089-248ae96a3988"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20200420T101632Z:6dd1708f-e9be-4310-bbf8-be2b6a62acac"
+          "WESTINDIA:20200421T091521Z:61245401-86de-4a4a-a089-248ae96a3988"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourcegroups/csmrg9597?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlZ3JvdXBzL2NzbXJnOTU5Nz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
+      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourcegroups/csmrg9410?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlZ3JvdXBzL2NzbXJnOTQxMD9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d204f71-89a0-438f-95f4-d259281825a8"
+          "1eb26998-9147-4a58-9d68-e54d92a70214"
         ],
         "accept-language": [
           "en-US"
@@ -90,22 +90,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Apr 2020 10:16:37 GMT"
+          "Tue, 21 Apr 2020 09:15:24 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1197"
         ],
         "x-ms-request-id": [
-          "a24f278e-b85d-4971-bd91-52c7d277503d"
+          "831d34fa-236d-43c2-ba30-a73d24e4b0fe"
         ],
         "x-ms-correlation-request-id": [
-          "a24f278e-b85d-4971-bd91-52c7d277503d"
+          "831d34fa-236d-43c2-ba30-a73d24e4b0fe"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20200420T101637Z:a24f278e-b85d-4971-bd91-52c7d277503d"
+          "WESTINDIA:20200421T091525Z:831d34fa-236d-43c2-ba30-a73d24e4b0fe"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597\",\r\n  \"name\": \"csmrg9597\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410\",\r\n  \"name\": \"csmrg9410\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/serverfarms/cswhp986?api-version=2019-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlR3JvdXBzL2NzbXJnOTU5Ny9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zZXJ2ZXJmYXJtcy9jc3docDk4Nj9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/serverfarms/cswhp1148?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlR3JvdXBzL2NzbXJnOTQxMC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zZXJ2ZXJmYXJtcy9jc3docDExNDg/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\"\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "aa87b79c-3241-462a-a914-5fa344b6b9ef"
+          "f00950f4-b80e-4355-b6c8-cf3a142e0495"
         ],
         "accept-language": [
           "en-US"
@@ -156,7 +156,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Apr 2020 10:16:54 GMT"
+          "Tue, 21 Apr 2020 09:15:37 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -168,7 +168,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "90e6f1d4-7982-4512-b22c-71dd34d878d2"
+          "041b21fb-08f1-4c4e-8556-97a3cba78366"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -177,19 +177,19 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "1a2461d3-99a3-4a83-89f1-bd8f0c3940ee"
+          "029954e3-0743-4880-8b55-825fdee7fce9"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20200420T101655Z:1a2461d3-99a3-4a83-89f1-bd8f0c3940ee"
+          "WESTINDIA:20200421T091537Z:029954e3-0743-4880-8b55-825fdee7fce9"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "1308"
+          "1311"
         ],
         "Content-Type": [
           "application/json"
@@ -198,17 +198,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/serverfarms/cswhp986\",\r\n  \"name\": \"cswhp986\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"serverFarmId\": 60184,\r\n    \"name\": \"cswhp986\",\r\n    \"workerSize\": \"Default\",\r\n    \"workerSizeId\": 0,\r\n    \"workerTierName\": null,\r\n    \"numberOfWorkers\": 1,\r\n    \"currentWorkerSize\": \"Default\",\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 1,\r\n    \"status\": \"Ready\",\r\n    \"webSpace\": \"csmrg9597-SouthCentralUSwebspace\",\r\n    \"subscription\": \"04b0639d-85d8-445a-bada-8da78e50ff30\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 10,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": \"Dedicated\",\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"South Central US\",\r\n    \"perSiteScaling\": false,\r\n    \"maximumElasticWorkerCount\": 1,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"isSpot\": false,\r\n    \"spotExpirationTime\": null,\r\n    \"freeOfferExpirationTime\": null,\r\n    \"tags\": null,\r\n    \"kind\": \"app\",\r\n    \"resourceGroup\": \"csmrg9597\",\r\n    \"reserved\": false,\r\n    \"isXenon\": false,\r\n    \"hyperV\": false,\r\n    \"mdmId\": \"waws-prod-sn1-153_60184\",\r\n    \"targetWorkerCount\": 0,\r\n    \"targetWorkerSizeId\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"webSiteId\": null,\r\n    \"existingServerFarmIds\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"family\": \"S\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/serverfarms/cswhp1148\",\r\n  \"name\": \"cswhp1148\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"serverFarmId\": 57614,\r\n    \"name\": \"cswhp1148\",\r\n    \"workerSize\": \"Default\",\r\n    \"workerSizeId\": 0,\r\n    \"workerTierName\": null,\r\n    \"numberOfWorkers\": 1,\r\n    \"currentWorkerSize\": \"Default\",\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 1,\r\n    \"status\": \"Ready\",\r\n    \"webSpace\": \"csmrg9410-SouthCentralUSwebspace\",\r\n    \"subscription\": \"04b0639d-85d8-445a-bada-8da78e50ff30\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 10,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": \"Dedicated\",\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"South Central US\",\r\n    \"perSiteScaling\": false,\r\n    \"maximumElasticWorkerCount\": 1,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"isSpot\": false,\r\n    \"spotExpirationTime\": null,\r\n    \"freeOfferExpirationTime\": null,\r\n    \"tags\": null,\r\n    \"kind\": \"app\",\r\n    \"resourceGroup\": \"csmrg9410\",\r\n    \"reserved\": false,\r\n    \"isXenon\": false,\r\n    \"hyperV\": false,\r\n    \"mdmId\": \"waws-prod-sn1-141_57614\",\r\n    \"targetWorkerCount\": 0,\r\n    \"targetWorkerSizeId\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"webSiteId\": null,\r\n    \"existingServerFarmIds\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"family\": \"S\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/sites/csmws9459?api-version=2019-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlR3JvdXBzL2NzbXJnOTU5Ny9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9jc213czk0NTk/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/sites/csmws9529?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlR3JvdXBzL2NzbXJnOTQxMC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9jc213czk1Mjk/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourcegroups/csmrg9597/providers/Microsoft.Web/serverfarms/cswhp986\"\r\n  },\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourcegroups/csmrg9410/providers/Microsoft.Web/serverfarms/cswhp1148\"\r\n  },\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "72a723b0-a752-491b-95d4-e06d1fa76b77"
+          "3ae73222-f0df-4b7e-b2a6-50b25f1164e0"
         ],
         "accept-language": [
           "en-US"
@@ -223,7 +223,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "266"
+          "267"
         ]
       },
       "ResponseHeaders": {
@@ -231,13 +231,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Apr 2020 10:17:15 GMT"
+          "Tue, 21 Apr 2020 09:15:59 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"1D616FCD4680C4B\""
+          "\"1D617BD6EB11B0B\""
         ],
         "Server": [
           "Microsoft-IIS/10.0"
@@ -246,7 +246,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "56d5b9da-4718-4b37-8b10-1f8d65a7ae58"
+          "6692c95e-4f5f-4838-82ca-c7aded819a09"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -258,16 +258,16 @@
           "499"
         ],
         "x-ms-correlation-request-id": [
-          "57d21a23-313a-48bf-9512-0199352505f5"
+          "65af2f41-2ae7-4dda-9fdd-afe519d79486"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20200420T101715Z:57d21a23-313a-48bf-9512-0199352505f5"
+          "WESTINDIA:20200421T091559Z:65af2f41-2ae7-4dda-9fdd-afe519d79486"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "3142"
+          "3138"
         ],
         "Content-Type": [
           "application/json"
@@ -276,17 +276,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/sites/csmws9459\",\r\n  \"name\": \"csmws9459\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"csmws9459\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"csmws9459.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg9597-SouthCentralUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-sn1-153.api.azurewebsites.windows.net:454/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/webspaces/csmrg9597-SouthCentralUSwebspace/sites/csmws9459\",\r\n    \"repositorySiteName\": \"csmws9459\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"csmws9459.azurewebsites.net\",\r\n      \"csmws9459.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [\r\n        {\r\n          \"name\": \"LinuxFxVersion\",\r\n          \"value\": \"\"\r\n        },\r\n        {\r\n          \"name\": \"WindowsFxVersion\",\r\n          \"value\": null\r\n        }\r\n      ],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"csmws9459.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"csmws9459.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/serverfarms/cswhp986\",\r\n    \"reserved\": false,\r\n    \"isXenon\": false,\r\n    \"hyperV\": false,\r\n    \"lastModifiedTimeUtc\": \"2020-04-20T10:16:59.5666667\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"csmws9459\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"clientCertExclusionPaths\": null,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"customDomainVerificationId\": \"C3E7C05FE8A97695B3AE08C1935F4251C48E338FE439627B2E788D9D718C8A70\",\r\n    \"kind\": \"app\",\r\n    \"inboundIpAddress\": \"52.171.222.247\",\r\n    \"possibleInboundIpAddresses\": \"52.171.222.247\",\r\n    \"outboundIpAddresses\": \"52.171.222.247,13.66.17.222,13.66.52.32,13.66.18.19,13.66.17.225\",\r\n    \"possibleOutboundIpAddresses\": \"52.171.222.247,13.66.17.222,13.66.52.32,13.66.18.19,13.66.17.225,13.66.17.244,13.66.38.114\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-sn1-153\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {\r\n      \"tag1\": \"value1\",\r\n      \"tag2\": \"\"\r\n    },\r\n    \"resourceGroup\": \"csmrg9597\",\r\n    \"defaultHostName\": \"csmws9459.azurewebsites.net\",\r\n    \"slotSwapStatus\": null,\r\n    \"httpsOnly\": false,\r\n    \"redundancyMode\": \"None\",\r\n    \"inProgressOperationId\": null,\r\n    \"geoDistributions\": null,\r\n    \"privateEndpointConnections\": null,\r\n    \"buildVersion\": null,\r\n    \"targetBuildVersion\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/sites/csmws9529\",\r\n  \"name\": \"csmws9529\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"\"\r\n  },\r\n  \"properties\": {\r\n    \"name\": \"csmws9529\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"csmws9529.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg9410-SouthCentralUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-sn1-141.api.azurewebsites.windows.net:454/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/webspaces/csmrg9410-SouthCentralUSwebspace/sites/csmws9529\",\r\n    \"repositorySiteName\": \"csmws9529\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"csmws9529.azurewebsites.net\",\r\n      \"csmws9529.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [\r\n        {\r\n          \"name\": \"LinuxFxVersion\",\r\n          \"value\": \"\"\r\n        },\r\n        {\r\n          \"name\": \"WindowsFxVersion\",\r\n          \"value\": null\r\n        }\r\n      ],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"csmws9529.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"csmws9529.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/serverfarms/cswhp1148\",\r\n    \"reserved\": false,\r\n    \"isXenon\": false,\r\n    \"hyperV\": false,\r\n    \"lastModifiedTimeUtc\": \"2020-04-21T09:15:42.6633333\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"csmws9529\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"clientCertExclusionPaths\": null,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"customDomainVerificationId\": \"C3E7C05FE8A97695B3AE08C1935F4251C48E338FE439627B2E788D9D718C8A70\",\r\n    \"kind\": \"app\",\r\n    \"inboundIpAddress\": \"52.171.56.101\",\r\n    \"possibleInboundIpAddresses\": \"52.171.56.101\",\r\n    \"outboundIpAddresses\": \"52.171.56.101,13.84.163.72,13.84.43.80,13.84.45.163,13.84.45.98\",\r\n    \"possibleOutboundIpAddresses\": \"52.171.56.101,13.84.163.72,13.84.43.80,13.84.45.163,13.84.45.98,13.84.44.203,13.84.41.82\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-sn1-141\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": {\r\n      \"tag1\": \"value1\",\r\n      \"tag2\": \"\"\r\n    },\r\n    \"resourceGroup\": \"csmrg9410\",\r\n    \"defaultHostName\": \"csmws9529.azurewebsites.net\",\r\n    \"slotSwapStatus\": null,\r\n    \"httpsOnly\": false,\r\n    \"redundancyMode\": \"None\",\r\n    \"inProgressOperationId\": null,\r\n    \"geoDistributions\": null,\r\n    \"privateEndpointConnections\": null,\r\n    \"buildVersion\": null,\r\n    \"targetBuildVersion\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/sites/csmws9459/slots/staging?api-version=2019-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlR3JvdXBzL2NzbXJnOTU5Ny9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9jc213czk0NTkvc2xvdHMvc3RhZ2luZz9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/sites/csmws9529/slots/staging?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlR3JvdXBzL2NzbXJnOTQxMC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9jc213czk1Mjkvc2xvdHMvc3RhZ2luZz9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourcegroups/csmrg9597/providers/Microsoft.Web/serverfarms/cswhp986\"\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourcegroups/csmrg9410/providers/Microsoft.Web/serverfarms/cswhp1148\"\r\n  },\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "54973493-2cdd-41cd-9a54-e21d32ead031"
+          "77ecfdc7-51ce-4d26-bcdd-abc7f9a56922"
         ],
         "accept-language": [
           "en-US"
@@ -301,7 +301,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "208"
+          "209"
         ]
       },
       "ResponseHeaders": {
@@ -309,13 +309,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Apr 2020 10:17:36 GMT"
+          "Tue, 21 Apr 2020 09:16:19 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"1D616FCD4680C4B\""
+          "\"1D617BD6EB11B0B\""
         ],
         "Server": [
           "Microsoft-IIS/10.0"
@@ -324,7 +324,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3e619031-68cb-482b-a36b-69a9768f653c"
+          "657284a4-16e4-4afd-8564-76ab18c9148f"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -336,16 +336,16 @@
           "499"
         ],
         "x-ms-correlation-request-id": [
-          "4058bcf8-c46f-4aea-be4c-873992ab311f"
+          "d809f7e6-c15e-459c-941f-6481a12b2455"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20200420T101736Z:4058bcf8-c46f-4aea-be4c-873992ab311f"
+          "WESTINDIA:20200421T091620Z:d809f7e6-c15e-459c-941f-6481a12b2455"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "3175"
+          "3171"
         ],
         "Content-Type": [
           "application/json"
@@ -354,17 +354,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/sites/csmws9459/slots/staging\",\r\n  \"name\": \"csmws9459/staging\",\r\n  \"type\": \"Microsoft.Web/sites/slots\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"name\": \"csmws9459(staging)\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"csmws9459-staging.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg9597-SouthCentralUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-sn1-153.api.azurewebsites.windows.net:454/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/webspaces/csmrg9597-SouthCentralUSwebspace/sites/csmws9459\",\r\n    \"repositorySiteName\": \"csmws9459\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"csmws9459-staging.azurewebsites.net\",\r\n      \"csmws9459-staging.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [\r\n        {\r\n          \"name\": \"LinuxFxVersion\",\r\n          \"value\": \"\"\r\n        },\r\n        {\r\n          \"name\": \"WindowsFxVersion\",\r\n          \"value\": null\r\n        }\r\n      ],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"csmws9459-staging.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"csmws9459-staging.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/serverfarms/cswhp986\",\r\n    \"reserved\": false,\r\n    \"isXenon\": false,\r\n    \"hyperV\": false,\r\n    \"lastModifiedTimeUtc\": \"2020-04-20T10:17:19.9166667\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"csmws9459__2e5c\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"clientCertExclusionPaths\": null,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"customDomainVerificationId\": \"C3E7C05FE8A97695B3AE08C1935F4251C48E338FE439627B2E788D9D718C8A70\",\r\n    \"kind\": \"app\",\r\n    \"inboundIpAddress\": \"52.171.222.247\",\r\n    \"possibleInboundIpAddresses\": \"52.171.222.247\",\r\n    \"outboundIpAddresses\": \"52.171.222.247,13.66.17.222,13.66.52.32,13.66.18.19,13.66.17.225\",\r\n    \"possibleOutboundIpAddresses\": \"52.171.222.247,13.66.17.222,13.66.52.32,13.66.18.19,13.66.17.225,13.66.17.244,13.66.38.114\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-sn1-153\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null,\r\n    \"resourceGroup\": \"csmrg9597\",\r\n    \"defaultHostName\": \"csmws9459-staging.azurewebsites.net\",\r\n    \"slotSwapStatus\": null,\r\n    \"httpsOnly\": false,\r\n    \"redundancyMode\": \"None\",\r\n    \"inProgressOperationId\": null,\r\n    \"geoDistributions\": null,\r\n    \"privateEndpointConnections\": null,\r\n    \"buildVersion\": null,\r\n    \"targetBuildVersion\": null\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/sites/csmws9529/slots/staging\",\r\n  \"name\": \"csmws9529/staging\",\r\n  \"type\": \"Microsoft.Web/sites/slots\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"South Central US\",\r\n  \"properties\": {\r\n    \"name\": \"csmws9529(staging)\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"csmws9529-staging.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"csmrg9410-SouthCentralUSwebspace\",\r\n    \"selfLink\": \"https://waws-prod-sn1-141.api.azurewebsites.windows.net:454/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/webspaces/csmrg9410-SouthCentralUSwebspace/sites/csmws9529\",\r\n    \"repositorySiteName\": \"csmws9529\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"csmws9529-staging.azurewebsites.net\",\r\n      \"csmws9529-staging.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [\r\n        {\r\n          \"name\": \"LinuxFxVersion\",\r\n          \"value\": \"\"\r\n        },\r\n        {\r\n          \"name\": \"WindowsFxVersion\",\r\n          \"value\": null\r\n        }\r\n      ],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"csmws9529-staging.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"csmws9529-staging.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/serverfarms/cswhp1148\",\r\n    \"reserved\": false,\r\n    \"isXenon\": false,\r\n    \"hyperV\": false,\r\n    \"lastModifiedTimeUtc\": \"2020-04-21T09:16:02.6766667\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"csmws9529__5178\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Standard\",\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"clientCertExclusionPaths\": null,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"customDomainVerificationId\": \"C3E7C05FE8A97695B3AE08C1935F4251C48E338FE439627B2E788D9D718C8A70\",\r\n    \"kind\": \"app\",\r\n    \"inboundIpAddress\": \"52.171.56.101\",\r\n    \"possibleInboundIpAddresses\": \"52.171.56.101\",\r\n    \"outboundIpAddresses\": \"52.171.56.101,13.84.163.72,13.84.43.80,13.84.45.163,13.84.45.98\",\r\n    \"possibleOutboundIpAddresses\": \"52.171.56.101,13.84.163.72,13.84.43.80,13.84.45.163,13.84.45.98,13.84.44.203,13.84.41.82\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-sn1-141\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null,\r\n    \"resourceGroup\": \"csmrg9410\",\r\n    \"defaultHostName\": \"csmws9529-staging.azurewebsites.net\",\r\n    \"slotSwapStatus\": null,\r\n    \"httpsOnly\": false,\r\n    \"redundancyMode\": \"None\",\r\n    \"inProgressOperationId\": null,\r\n    \"geoDistributions\": null,\r\n    \"privateEndpointConnections\": null,\r\n    \"buildVersion\": null,\r\n    \"targetBuildVersion\": null\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/sites/csmws9459/slots?api-version=2019-08-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlR3JvdXBzL2NzbXJnOTU5Ny9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9jc213czk0NTkvc2xvdHM/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
+      "RequestUri": "/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/sites/csmws9529/slots?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMDRiMDYzOWQtODVkOC00NDVhLWJhZGEtOGRhNzhlNTBmZjMwL3Jlc291cmNlR3JvdXBzL2NzbXJnOTQxMC9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9jc213czk1Mjkvc2xvdHM/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6fcd2778-e3d7-456a-9a1d-99227d5d65ca"
+          "1f3e6c89-e452-4c98-a459-5b2f864f230b"
         ],
         "accept-language": [
           "en-US"
@@ -381,13 +381,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 20 Apr 2020 10:17:36 GMT"
+          "Tue, 21 Apr 2020 09:16:19 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"1D616FCE08831C0\""
+          "\"1D617BD7AF2500B\""
         ],
         "Server": [
           "Microsoft-IIS/10.0"
@@ -396,7 +396,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "a22648ff-9085-49d2-ace4-c1104189c40a"
+          "d4f40a4b-1f6b-4297-8622-e158ff549767"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -405,19 +405,19 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "ec758dff-37ab-4b7a-b495-f5002e38102c"
+          "74c9a88f-aba0-4910-8ef3-225a47790755"
         ],
         "x-ms-routing-request-id": [
-          "WESTINDIA:20200420T101737Z:ec758dff-37ab-4b7a-b495-f5002e38102c"
+          "WESTINDIA:20200421T091620Z:74c9a88f-aba0-4910-8ef3-225a47790755"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "3220"
+          "3221"
         ],
         "Content-Type": [
           "application/json"
@@ -426,15 +426,15 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/sites/csmws9459/slots/staging\",\r\n      \"name\": \"csmws9459/staging\",\r\n      \"type\": \"Microsoft.Web/sites/slots\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"name\": \"csmws9459(staging)\",\r\n        \"state\": \"Running\",\r\n        \"hostNames\": [\r\n          \"csmws9459-staging.azurewebsites.net\"\r\n        ],\r\n        \"webSpace\": \"csmrg9597-SouthCentralUSwebspace\",\r\n        \"selfLink\": \"https://waws-prod-sn1-153.api.azurewebsites.windows.net:454/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/webspaces/csmrg9597-SouthCentralUSwebspace/sites/csmws9459\",\r\n        \"repositorySiteName\": \"csmws9459\",\r\n        \"owner\": null,\r\n        \"usageState\": \"Normal\",\r\n        \"enabled\": true,\r\n        \"adminEnabled\": true,\r\n        \"enabledHostNames\": [\r\n          \"csmws9459-staging.azurewebsites.net\",\r\n          \"csmws9459-staging.scm.azurewebsites.net\"\r\n        ],\r\n        \"siteProperties\": {\r\n          \"metadata\": null,\r\n          \"properties\": [\r\n            {\r\n              \"name\": \"LinuxFxVersion\",\r\n              \"value\": \"\"\r\n            },\r\n            {\r\n              \"name\": \"WindowsFxVersion\",\r\n              \"value\": null\r\n            }\r\n          ],\r\n          \"appSettings\": null\r\n        },\r\n        \"availabilityState\": \"Normal\",\r\n        \"sslCertificates\": null,\r\n        \"csrs\": [],\r\n        \"cers\": null,\r\n        \"siteMode\": \"Limited\",\r\n        \"hostNameSslStates\": [\r\n          {\r\n            \"name\": \"csmws9459-staging.azurewebsites.net\",\r\n            \"sslState\": \"Disabled\",\r\n            \"ipBasedSslResult\": null,\r\n            \"virtualIP\": null,\r\n            \"thumbprint\": null,\r\n            \"toUpdate\": null,\r\n            \"toUpdateIpBasedSsl\": null,\r\n            \"ipBasedSslState\": \"NotConfigured\",\r\n            \"hostType\": \"Standard\"\r\n          },\r\n          {\r\n            \"name\": \"csmws9459-staging.scm.azurewebsites.net\",\r\n            \"sslState\": \"Disabled\",\r\n            \"ipBasedSslResult\": null,\r\n            \"virtualIP\": null,\r\n            \"thumbprint\": null,\r\n            \"toUpdate\": null,\r\n            \"toUpdateIpBasedSsl\": null,\r\n            \"ipBasedSslState\": \"NotConfigured\",\r\n            \"hostType\": \"Repository\"\r\n          }\r\n        ],\r\n        \"computeMode\": \"Dedicated\",\r\n        \"serverFarm\": null,\r\n        \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9597/providers/Microsoft.Web/serverfarms/cswhp986\",\r\n        \"reserved\": false,\r\n        \"isXenon\": false,\r\n        \"hyperV\": false,\r\n        \"lastModifiedTimeUtc\": \"2020-04-20T10:17:20.86\",\r\n        \"storageRecoveryDefaultState\": \"Running\",\r\n        \"contentAvailabilityState\": \"Normal\",\r\n        \"runtimeAvailabilityState\": \"Normal\",\r\n        \"siteConfig\": null,\r\n        \"deploymentId\": \"csmws9459__2e5c\",\r\n        \"trafficManagerHostNames\": null,\r\n        \"sku\": \"Standard\",\r\n        \"scmSiteAlsoStopped\": false,\r\n        \"targetSwapSlot\": null,\r\n        \"hostingEnvironment\": null,\r\n        \"hostingEnvironmentProfile\": null,\r\n        \"clientAffinityEnabled\": true,\r\n        \"clientCertEnabled\": false,\r\n        \"clientCertExclusionPaths\": null,\r\n        \"hostNamesDisabled\": false,\r\n        \"domainVerificationIdentifiers\": null,\r\n        \"customDomainVerificationId\": \"C3E7C05FE8A97695B3AE08C1935F4251C48E338FE439627B2E788D9D718C8A70\",\r\n        \"kind\": \"app\",\r\n        \"inboundIpAddress\": \"52.171.222.247\",\r\n        \"possibleInboundIpAddresses\": \"52.171.222.247\",\r\n        \"outboundIpAddresses\": \"52.171.222.247,13.66.17.222,13.66.52.32,13.66.18.19,13.66.17.225\",\r\n        \"possibleOutboundIpAddresses\": \"52.171.222.247,13.66.17.222,13.66.52.32,13.66.18.19,13.66.17.225,13.66.17.244,13.66.38.114\",\r\n        \"containerSize\": 0,\r\n        \"dailyMemoryTimeQuota\": 0,\r\n        \"suspendedTill\": null,\r\n        \"siteDisabledReason\": 0,\r\n        \"functionExecutionUnitsCache\": null,\r\n        \"maxNumberOfWorkers\": null,\r\n        \"homeStamp\": \"waws-prod-sn1-153\",\r\n        \"cloningInfo\": null,\r\n        \"hostingEnvironmentId\": null,\r\n        \"tags\": null,\r\n        \"resourceGroup\": \"csmrg9597\",\r\n        \"defaultHostName\": \"csmws9459-staging.azurewebsites.net\",\r\n        \"slotSwapStatus\": null,\r\n        \"httpsOnly\": false,\r\n        \"redundancyMode\": \"None\",\r\n        \"inProgressOperationId\": null,\r\n        \"geoDistributions\": null,\r\n        \"privateEndpointConnections\": null,\r\n        \"buildVersion\": null,\r\n        \"targetBuildVersion\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null,\r\n  \"id\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/sites/csmws9529/slots/staging\",\r\n      \"name\": \"csmws9529/staging\",\r\n      \"type\": \"Microsoft.Web/sites/slots\",\r\n      \"kind\": \"app\",\r\n      \"location\": \"South Central US\",\r\n      \"properties\": {\r\n        \"name\": \"csmws9529(staging)\",\r\n        \"state\": \"Running\",\r\n        \"hostNames\": [\r\n          \"csmws9529-staging.azurewebsites.net\"\r\n        ],\r\n        \"webSpace\": \"csmrg9410-SouthCentralUSwebspace\",\r\n        \"selfLink\": \"https://waws-prod-sn1-141.api.azurewebsites.windows.net:454/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/webspaces/csmrg9410-SouthCentralUSwebspace/sites/csmws9529\",\r\n        \"repositorySiteName\": \"csmws9529\",\r\n        \"owner\": null,\r\n        \"usageState\": \"Normal\",\r\n        \"enabled\": true,\r\n        \"adminEnabled\": true,\r\n        \"enabledHostNames\": [\r\n          \"csmws9529-staging.azurewebsites.net\",\r\n          \"csmws9529-staging.scm.azurewebsites.net\"\r\n        ],\r\n        \"siteProperties\": {\r\n          \"metadata\": null,\r\n          \"properties\": [\r\n            {\r\n              \"name\": \"LinuxFxVersion\",\r\n              \"value\": \"\"\r\n            },\r\n            {\r\n              \"name\": \"WindowsFxVersion\",\r\n              \"value\": null\r\n            }\r\n          ],\r\n          \"appSettings\": null\r\n        },\r\n        \"availabilityState\": \"Normal\",\r\n        \"sslCertificates\": null,\r\n        \"csrs\": [],\r\n        \"cers\": null,\r\n        \"siteMode\": \"Limited\",\r\n        \"hostNameSslStates\": [\r\n          {\r\n            \"name\": \"csmws9529-staging.azurewebsites.net\",\r\n            \"sslState\": \"Disabled\",\r\n            \"ipBasedSslResult\": null,\r\n            \"virtualIP\": null,\r\n            \"thumbprint\": null,\r\n            \"toUpdate\": null,\r\n            \"toUpdateIpBasedSsl\": null,\r\n            \"ipBasedSslState\": \"NotConfigured\",\r\n            \"hostType\": \"Standard\"\r\n          },\r\n          {\r\n            \"name\": \"csmws9529-staging.scm.azurewebsites.net\",\r\n            \"sslState\": \"Disabled\",\r\n            \"ipBasedSslResult\": null,\r\n            \"virtualIP\": null,\r\n            \"thumbprint\": null,\r\n            \"toUpdate\": null,\r\n            \"toUpdateIpBasedSsl\": null,\r\n            \"ipBasedSslState\": \"NotConfigured\",\r\n            \"hostType\": \"Repository\"\r\n          }\r\n        ],\r\n        \"computeMode\": \"Dedicated\",\r\n        \"serverFarm\": null,\r\n        \"serverFarmId\": \"/subscriptions/04b0639d-85d8-445a-bada-8da78e50ff30/resourceGroups/csmrg9410/providers/Microsoft.Web/serverfarms/cswhp1148\",\r\n        \"reserved\": false,\r\n        \"isXenon\": false,\r\n        \"hyperV\": false,\r\n        \"lastModifiedTimeUtc\": \"2020-04-21T09:16:03.2966667\",\r\n        \"storageRecoveryDefaultState\": \"Running\",\r\n        \"contentAvailabilityState\": \"Normal\",\r\n        \"runtimeAvailabilityState\": \"Normal\",\r\n        \"siteConfig\": null,\r\n        \"deploymentId\": \"csmws9529__5178\",\r\n        \"trafficManagerHostNames\": null,\r\n        \"sku\": \"Standard\",\r\n        \"scmSiteAlsoStopped\": false,\r\n        \"targetSwapSlot\": null,\r\n        \"hostingEnvironment\": null,\r\n        \"hostingEnvironmentProfile\": null,\r\n        \"clientAffinityEnabled\": true,\r\n        \"clientCertEnabled\": false,\r\n        \"clientCertExclusionPaths\": null,\r\n        \"hostNamesDisabled\": false,\r\n        \"domainVerificationIdentifiers\": null,\r\n        \"customDomainVerificationId\": \"C3E7C05FE8A97695B3AE08C1935F4251C48E338FE439627B2E788D9D718C8A70\",\r\n        \"kind\": \"app\",\r\n        \"inboundIpAddress\": \"52.171.56.101\",\r\n        \"possibleInboundIpAddresses\": \"52.171.56.101\",\r\n        \"outboundIpAddresses\": \"52.171.56.101,13.84.163.72,13.84.43.80,13.84.45.163,13.84.45.98\",\r\n        \"possibleOutboundIpAddresses\": \"52.171.56.101,13.84.163.72,13.84.43.80,13.84.45.163,13.84.45.98,13.84.44.203,13.84.41.82\",\r\n        \"containerSize\": 0,\r\n        \"dailyMemoryTimeQuota\": 0,\r\n        \"suspendedTill\": null,\r\n        \"siteDisabledReason\": 0,\r\n        \"functionExecutionUnitsCache\": null,\r\n        \"maxNumberOfWorkers\": null,\r\n        \"homeStamp\": \"waws-prod-sn1-141\",\r\n        \"cloningInfo\": null,\r\n        \"hostingEnvironmentId\": null,\r\n        \"tags\": null,\r\n        \"resourceGroup\": \"csmrg9410\",\r\n        \"defaultHostName\": \"csmws9529-staging.azurewebsites.net\",\r\n        \"slotSwapStatus\": null,\r\n        \"httpsOnly\": false,\r\n        \"redundancyMode\": \"None\",\r\n        \"inProgressOperationId\": null,\r\n        \"geoDistributions\": null,\r\n        \"privateEndpointConnections\": null,\r\n        \"buildVersion\": null,\r\n        \"targetBuildVersion\": null\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null,\r\n  \"id\": null\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     "CreateAndVerifyGetOnAWebsiteSlot": [
-      "csmws9459",
-      "csmrg9597",
-      "cswhp986"
+      "csmws9529",
+      "csmrg9410",
+      "cswhp1148"
     ]
   },
   "Variables": {
