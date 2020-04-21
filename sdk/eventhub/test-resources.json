@@ -83,7 +83,7 @@
       }
     ],
     "outputs": {
-        "EVENT_HUBS_PER_TEST_LIMIT_MINUTES": {
+        "EVENTHUB_PER_TEST_LIMIT_MINUTES": {
             "type": "string",
             "value": "[parameters('perTestExecutionLimitMinutes')]"
         }
