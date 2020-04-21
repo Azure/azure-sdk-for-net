@@ -51,7 +51,7 @@ az cognitiveservices account create \
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
 ### Authenticate a Form Recognizer client
-In order to interact with the Form Recognizer service, you'll need to create an instance of the `FormRecognizerClient`[form_recognizer_client_class] class.  You will need an **endpoint** and an **API key** to instantiate a client object.  
+In order to interact with the Form Recognizer service, you'll need to create an instance of the [`FormRecognizerClient`][form_recognizer_client_class] class.  You will need an **endpoint** and an **API key** to instantiate a client object.  
 
 #### Get API Key
 
@@ -97,7 +97,7 @@ Please note that models can also be trained using a graphical user interface suc
 
 Because analyzing and training form documents takes time, these operations are implemented as [**long-running operations**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed or failed, and if it has succeeded, to get the result.
 
-For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#extracting-receipt-values-with-a-long-running-operation).
+For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#recognize-receipts).
 
 ## Examples
 The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API.
@@ -198,7 +198,7 @@ Train a machine-learned model on your own form types. The resulting model will b
 
 ```C# Snippet:FormRecognizerSample5TrainModelWithForms
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
-// https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
+// https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
 
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 CustomFormModel model = await client.StartTrainingAsync(new Uri(trainingFileUrl)).WaitForCompletionAsync();
@@ -347,17 +347,17 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [formreco_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/src
-[formreco_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/
+[formreco_docs]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/
 [formreco_refdocs]: https://aka.ms/azsdk-net-formrecognizer-ref-docs
 [formreco_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer
 [formreco_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples
 [formreco_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2-preview
-[cognitive_resource]: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account
+[cognitive_resource]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
 
 [form_recognizer_client_class]: src/FormRecognizerClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
-[cognitive_auth]: https://docs.microsoft.com/en-us/azure/cognitive-services/authentication
+[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
@@ -366,7 +366,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 
 
-[labeling_tool]: https://docs.microsoft.com/en-us/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+[labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md

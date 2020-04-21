@@ -3,9 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
@@ -27,10 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             string receiptUri = TestEnvironment.JpgReceiptUri;
 
-            #region Snippet:FormRecognizerSample2RecognizeReceiptUri
-            CancellationToken ct1;
-            CancellationToken ct2;
-            Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri), cancellationToken: ct1).WaitForCompletionAsync(cancellationToken: ct2);
+            Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
             foreach (var receipt in receipts.Value)
             {
                 USReceipt usReceipt = receipt.AsUSReceipt();
@@ -40,6 +34,7 @@ namespace Azure.AI.FormRecognizer.Samples
                 IReadOnlyList<USReceiptItem> items = usReceipt.Items;
                 float subtotal = usReceipt.Subtotal;
                 float tax = usReceipt.Tax;
+                float tip = usReceipt.Tip;
                 float total = usReceipt.Total;
 
                 Console.WriteLine($"Recognized USReceipt fields:");
@@ -54,9 +49,9 @@ namespace Azure.AI.FormRecognizer.Samples
 
                 Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
                 Console.WriteLine($"    Tax: '{tax}', with confidence '{usReceipt.Tax.Confidence}'");
+                Console.WriteLine($"    Tip: '{tip}', with confidence '{usReceipt.Tip.Confidence}'");
                 Console.WriteLine($"    Total: '{total}', with confidence '{usReceipt.Total.Confidence}'");
             }
-            #endregion
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string invoiceUri = TestEnvironment.RetrieveUri("Invoice_1.pdf");
+            string invoiceUri = TestEnvironment.CreateUri("Invoice_1.pdf");
 
             #region Snippet:FormRecognizerSample3RecognizeContent
 

@@ -111,19 +111,9 @@ namespace Azure.AI.FormRecognizer.Tests
             return Path.Combine(CurrentWorkingDirectory, assetFolder ?? AssetsFolderName, fileName);
         }
 
-        private static string CreateUri(string fileName, string assetFolder = default, string fileUriFormat = default)
+        public static string CreateUri(string fileName, string assetFolder = default, string fileUriFormat = default)
         {
             return string.Format(fileUriFormat ?? FileUriFormat, assetFolder ?? AssetsFolderName, fileName);
-        }
-
-        /// <summary>
-        /// Retrieves the URI string to a specified file.
-        /// </summary>
-        /// <param name="filename">The name of the file to retrieve.</param>
-        /// <returns>The URI string to the specified file.</returns>
-        public static string RetrieveUri(string filename)
-        {
-            return string.Format(FileUriFormat, AssetsFolderName, filename);
         }
     }
 }
