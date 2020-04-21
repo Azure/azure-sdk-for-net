@@ -129,6 +129,7 @@ namespace Azure.Search.Documents
         private void AddLoggingQueryParameters()
         {
             Diagnostics.LoggedQueryParameters.Add("api-version");
+            Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
             Diagnostics.LoggedQueryParameters.Add("$select");
         }
     }
