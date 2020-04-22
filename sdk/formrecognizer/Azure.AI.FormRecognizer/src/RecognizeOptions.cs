@@ -4,20 +4,27 @@
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// The set of options that can be specified when calling a recognition method in
+    /// a <see cref="FormRecognizerClient" /> instance to configure the behavior of the
+    /// operation.
     /// </summary>
     public class RecognizeOptions
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeOptions"/> class.
         /// </summary>
         public RecognizeOptions()
         {
         }
 
         /// <summary>
+        /// Whether or not to include raw page recognition in addition to layout elements.
         /// </summary>
         public bool IncludeTextContent { get; set; } = false;
 
         /// <summary>
+        /// When set, specifies the content type for uploaded streams and skips automatic
+        /// content type detection.
         /// </summary>
         public ContentType? ContentType { get; set; } = null;
     }

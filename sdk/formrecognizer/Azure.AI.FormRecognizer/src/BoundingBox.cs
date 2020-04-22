@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,6 +8,9 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// A set of 4 <see cref="PointF"/> representing the quadrangle bounding box that outlines
+    /// the text of an element in a recognized form. Units are in pixels for images and inches
+    /// for PDF.
     /// </summary>
     public readonly struct BoundingBox
     {
@@ -32,9 +34,10 @@ namespace Azure.AI.FormRecognizer.Models
         internal PointF[] Points { get; }
 
         /// <summary>
+        /// Gets one of the points that set the limits of this <see cref="BoundingBox"/>.
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
+        /// <param name="index">The 0-based index of the point to be retrieved.</param>
+        /// <returns>A <see cref="PointF"/> corresponding to the specified <paramref name="index"/>.</returns>
         public PointF this[int index] => Points[index];
     }
 }

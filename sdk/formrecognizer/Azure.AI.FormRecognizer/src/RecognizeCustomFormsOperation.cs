@@ -12,6 +12,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Tracks the status of a long-running operation for recognizing elements from forms by using custom
+    /// trained models.
     /// </summary>
     public class RecognizeCustomFormsOperation : Operation<IReadOnlyList<RecognizedForm>>
     {
@@ -74,7 +76,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Initializes a new <see cref="RecognizeCustomFormsOperation"/> instance.
+        /// Initializes a new instance of the <see cref="RecognizeCustomFormsOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
@@ -100,6 +102,12 @@ namespace Azure.AI.FormRecognizer.Models
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
+        /// <summary>
+        /// Calls the server to get updated status of the long-running operation.
+        /// </summary>
+        /// <param name="async">When <c>true</c>, the method will be executed asynchronously; otherwise, it will execute synchronously.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The HTTP response from the service.</returns>
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             if (!_hasCompleted)
