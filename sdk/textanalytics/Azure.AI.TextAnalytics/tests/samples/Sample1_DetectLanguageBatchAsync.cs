@@ -60,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Console.WriteLine($"    Detected language {result.PrimaryLanguage.Name} with confidence {result.PrimaryLanguage.Score}.");
+                    Console.WriteLine($"    Detected language {result.PrimaryLanguage.Name} with confidence score {result.PrimaryLanguage.ConfidenceScore}.");
 
                     Console.WriteLine($"    Document statistics:");
                     Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
