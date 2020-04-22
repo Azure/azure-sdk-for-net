@@ -253,6 +253,38 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task GetIndexes()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchServiceClient client = resources.GetServiceClient();
+
+            bool found = false;
+            await foreach (SearchIndex index in client.GetIndexesAsync())
+            {
+                found |= string.Equals(resources.IndexName, index.Name, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            Assert.IsTrue(found, "Shared index not found");
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetIndexesNextPageThrows()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchServiceClient client = resources.GetServiceClient();
+            AsyncPageable<SearchIndex> pageable = client.GetIndexesAsync();
+
+            string continuationToken = Recording.GenerateId();
+            IAsyncEnumerator<Page<SearchIndex>> e = pageable.AsPages(continuationToken).GetAsyncEnumerator();
+
+            // Given a continuationToken above, this actually starts with the second page.
+            Assert.ThrowsAsync<NotSupportedException>(async () => await e.MoveNextAsync());
+        }
+
+        [Test]
         public async Task CreateAzureBlobIndexer()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);

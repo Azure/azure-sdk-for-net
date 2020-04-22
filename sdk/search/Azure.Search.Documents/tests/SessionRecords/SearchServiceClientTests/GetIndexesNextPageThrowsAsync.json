@@ -1,0 +1,13 @@
+{
+  "Entries": [],
+  "Variables": {
+    "CLIENT_ID": "f9ab11db-b032-44b3-af0a-44713541cc40",
+    "LOCATION": "westus2",
+    "RandomSeed": "1502897414",
+    "RESOURCE_GROUP": "heaths-search",
+    "SearchIndexName": "rnoiluqs",
+    "SearchServiceName": "azs-net-qbhattkf",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  }
+}
