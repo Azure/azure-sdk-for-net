@@ -11,7 +11,7 @@ This package's [documentation][readme] and [samples][samples] demonstrate the ne
 - The namespace/package name for Azure Form Recognizer client library has changed from 
     `Microsoft.Azure.CognitiveServices.FormRecognizer` to `Azure.AI.FormRecognizer`
 - Two client design:
-  - `FormRecognizerClient` to analyze fields/values on custom forms, receipts, and form content/layout.
+  - `FormRecognizerClient` to recognize and extract fields/values on custom forms, receipts, and form content/layout.
   - `FormTrainingClient` to train custom models, and manage the custom models on your resource account.
 - Different recognize methods based on input type: file stream or URI.
 - File stream methods will automatically detect content-type of the input file.
