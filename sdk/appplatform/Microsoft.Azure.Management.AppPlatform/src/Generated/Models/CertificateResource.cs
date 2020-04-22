@@ -14,33 +14,31 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// App resource payload
+    /// Certificate resource payload.
     /// </summary>
-    public partial class AppResource : ProxyResource
+    public partial class CertificateResource : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the AppResource class.
+        /// Initializes a new instance of the CertificateResource class.
         /// </summary>
-        public AppResource()
+        public CertificateResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppResource class.
+        /// Initializes a new instance of the CertificateResource class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="properties">Properties of the App resource</param>
-        /// <param name="location">The GEO location of the application, always
-        /// the same with its parent resource</param>
-        public AppResource(string id = default(string), string name = default(string), string type = default(string), AppResourceProperties properties = default(AppResourceProperties), string location = default(string))
+        /// <param name="properties">Properties of the certificate resource
+        /// payload.</param>
+        public CertificateResource(string id = default(string), string name = default(string), string type = default(string), CertificateProperties properties = default(CertificateProperties))
             : base(id, name, type)
         {
             Properties = properties;
-            Location = location;
             CustomInit();
         }
 
@@ -50,17 +48,10 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets properties of the App resource
+        /// Gets or sets properties of the certificate resource payload.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public AppResourceProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the GEO location of the application, always the same
-        /// with its parent resource
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public CertificateProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.

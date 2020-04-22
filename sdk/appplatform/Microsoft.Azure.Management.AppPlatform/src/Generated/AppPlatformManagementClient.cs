@@ -92,6 +92,16 @@ namespace Microsoft.Azure.Management.AppPlatform
         public virtual IBindingsOperations Bindings { get; private set; }
 
         /// <summary>
+        /// Gets the ICertificatesOperations.
+        /// </summary>
+        public virtual ICertificatesOperations Certificates { get; private set; }
+
+        /// <summary>
+        /// Gets the ICustomDomainsOperations.
+        /// </summary>
+        public virtual ICustomDomainsOperations CustomDomains { get; private set; }
+
+        /// <summary>
         /// Gets the IDeploymentsOperations.
         /// </summary>
         public virtual IDeploymentsOperations Deployments { get; private set; }
@@ -345,6 +355,8 @@ namespace Microsoft.Azure.Management.AppPlatform
             Services = new ServicesOperations(this);
             Apps = new AppsOperations(this);
             Bindings = new BindingsOperations(this);
+            Certificates = new CertificatesOperations(this);
+            CustomDomains = new CustomDomainsOperations(this);
             Deployments = new DeploymentsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
