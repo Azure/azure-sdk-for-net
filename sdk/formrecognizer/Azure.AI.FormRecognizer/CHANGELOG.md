@@ -7,8 +7,8 @@ This library replaces the package [`Microsoft.Azure.CognitiveServices.FormRecogn
 This package's [documentation][readme] and [samples][samples] demonstrate the new API.
 
 ### Major changes from `Microsoft.Azure.CognitiveServices.FormRecognizer`
-- This library supports only the Rorm Recognizer Service v2.0-preview API
-- The namespace/package name for Azure Text Analytics client library has changed from 
+- This library supports only the Form Recognizer Service v2.0-preview API
+- The namespace/package name for Azure Form Recognizer client library has changed from 
     `Microsoft.Azure.CognitiveServices.FormRecognizer` to `Azure.AI.FormRecognizer`
 - Two client design:
   - `FormRecognizerClient` to analyze fields/values on custom forms, receipts, and form content/layout.
