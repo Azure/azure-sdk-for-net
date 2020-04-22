@@ -100,7 +100,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.Greater(line.Words.Count, 0, $"There should be at least one word in line {lineIndex}.");
                 foreach (var item in line.Words)
                 {
-                    Assert.Greater(item.Confidence, 0);
+                    Assert.GreaterOrEqual(item.Confidence, 0);
                 }
             }
 
@@ -138,7 +138,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.IsFalse(cell.IsFooter, $"Cell with text {cell.Text} should not have been classified as footer.");
                 Assert.IsFalse(cell.IsHeader, $"Cell with text {cell.Text} should not have been classified as header.");
 
-                Assert.Greater(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater than zero.");
+                Assert.GreaterOrEqual(cell.Confidence, 0, $"Cell with text {cell.Text} should have confidence greater or equal to zero.");
                 Assert.LessOrEqual(cell.RowIndex, 1, $"Cell with text {cell.Text} should have a row index less than or equal to one.");
 
                 Assert.Greater(cell.TextContent.Count, 0, $"Cell with text {cell.Text} should have text content.");
@@ -267,43 +267,106 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedClient();
             RecognizeCustomFormsOperation operation;
 
-            string modelId = await GetModelIdAsync(true);
+            string modelId = await GetModelIdAsync(useLabels: true);
 
-            if (useStream)
+            try
             {
-                using var stream = new FileStream(FormRecognizerTestEnvironment.FormPath, FileMode.Open);
-                operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                if (useStream)
+                {
+                    using var stream = new FileStream(FormRecognizerTestEnvironment.FormPath, FileMode.Open);
+                    operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                }
+                else
+                {
+                    var uri = new Uri(FormRecognizerTestEnvironment.FormUri);
+                    operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri);
+                }
+
+                await operation.WaitForCompletionAsync();
+
+                Assert.IsTrue(operation.HasValue);
+                Assert.GreaterOrEqual(operation.Value.Count, 1);
+
+                RecognizedForm form = operation.Value.FirstOrDefault();
+
+                //testing that we shuffle things around correctly so checking only once per property
+
+                Assert.AreEqual("custom:form", form.FormType);
+                Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+                Assert.AreEqual(1, form.PageRange.LastPageNumber);
+                Assert.AreEqual(1, form.Pages.Count);
+                Assert.AreEqual(2200, form.Pages[0].Height);
+                Assert.AreEqual(1, form.Pages[0].PageNumber);
+                Assert.AreEqual(LengthUnit.Pixel, form.Pages[0].Unit);
+                Assert.AreEqual(1700, form.Pages[0].Width);
+
+                Assert.IsNotNull(form.Fields);
+                var name = "PurchaseOrderNumber";
+                Assert.IsNotNull(form.Fields[name]);
+                Assert.IsNotNull(form.Fields[name].Confidence);
+                Assert.AreEqual(FieldValueType.StringType, form.Fields[name].Value.Type);
+                Assert.AreEqual("948284", form.Fields[name].ValueText.Text);
             }
-            else
+            finally
             {
-                var uri = new Uri(FormRecognizerTestEnvironment.FormUri);
-                operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri);
+                DeleteModel(modelId);
             }
 
-            await operation.WaitForCompletionAsync();
+        }
 
-            Assert.IsTrue(operation.HasValue);
-            Assert.GreaterOrEqual(operation.Value.Count, 1);
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task StartRecognizeCustomForms(bool useStream)
+        {
+            var client = CreateInstrumentedClient();
+            RecognizeCustomFormsOperation operation;
 
-            RecognizedForm form = operation.Value.FirstOrDefault();
+            string modelId = await GetModelIdAsync();
 
-            //testing that we shuffle things around correctly so checking only once per property
+            try
+            {
+                if (useStream)
+                {
+                    using var stream = new FileStream(FormRecognizerTestEnvironment.FormPath, FileMode.Open);
+                    operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                }
+                else
+                {
+                    var uri = new Uri(FormRecognizerTestEnvironment.FormUri);
+                    operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, uri);
+                }
 
-            Assert.AreEqual("custom:form", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
-            Assert.AreEqual(1, form.Pages.Count);
-            Assert.AreEqual(2200, form.Pages[0].Height);
-            Assert.AreEqual(1, form.Pages[0].PageNumber);
-            Assert.AreEqual(LengthUnit.Pixel, form.Pages[0].Unit);
-            Assert.AreEqual(1700, form.Pages[0].Width);
+                await operation.WaitForCompletionAsync();
 
-            Assert.IsNotNull(form.Fields);
-            var name = "PurchaseOrderNumber";
-            Assert.IsNotNull(form.Fields[name]);
-            Assert.IsNotNull(form.Fields[name].Confidence);
-            Assert.AreEqual(FieldValueType.StringType, form.Fields[name].Value.Type);
-            Assert.AreEqual("948284", form.Fields[name].ValueText.Text);
+                Assert.IsTrue(operation.HasValue);
+                Assert.GreaterOrEqual(operation.Value.Count, 1);
+
+                RecognizedForm form = operation.Value.FirstOrDefault();
+
+                //testing that we shuffle things around correctly so checking only once per property
+
+                Assert.AreEqual("form-0", form.FormType);
+                Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+                Assert.AreEqual(1, form.PageRange.LastPageNumber);
+                Assert.AreEqual(1, form.Pages.Count);
+                Assert.AreEqual(2200, form.Pages[0].Height);
+                Assert.AreEqual(1, form.Pages[0].PageNumber);
+                Assert.AreEqual(LengthUnit.Pixel, form.Pages[0].Unit);
+                Assert.AreEqual(1700, form.Pages[0].Width);
+
+                Assert.IsNotNull(form.Fields);
+                var name = "field-0";
+                Assert.IsNotNull(form.Fields[name]);
+                Assert.IsNotNull(form.Fields[name].Confidence);
+                Assert.IsNotNull(form.Fields[name].LabelText.Text);
+                Assert.AreEqual(FieldValueType.StringType, form.Fields[name].Value.Type);
+                Assert.AreEqual("Hero Limited", form.Fields[name].LabelText.Text);
+            }
+            finally
+            {
+                DeleteModel(modelId);
+            }
         }
 
         /// <summary>
@@ -313,32 +376,39 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool labeled)
+        public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useLabels)
         {
             var client = CreateInstrumentedClient();
             var invalidUri = new Uri("https://idont.ex.ist");
-            var modelId = await GetModelIdAsync(labeled);
-
-            var operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, invalidUri);
-            RequestFailedException capturedException = default;
+            var modelId = await GetModelIdAsync(useLabels);
 
             try
             {
-                await operation.WaitForCompletionAsync();
+                var operation = await client.StartRecognizeCustomFormsFromUriAsync(modelId, invalidUri);
+                RequestFailedException capturedException = default;
+
+                try
+                {
+                    await operation.WaitForCompletionAsync();
+                }
+                catch (RequestFailedException ex)
+                {
+                    capturedException = ex;
+                }
+
+                string expectedErrorCode = useLabels ? "3003" : "2003";
+
+                Assert.NotNull(capturedException);
+                Assert.AreEqual(expectedErrorCode, capturedException.ErrorCode);
+
+                Assert.True(operation.HasCompleted);
+                Assert.True(operation.HasValue);
+                Assert.AreEqual(0, operation.Value.Count);
             }
-            catch (RequestFailedException ex)
+            finally
             {
-                capturedException = ex;
+                DeleteModel(modelId);
             }
-
-            string expectedErrorCode = labeled ? "3003" : "2003";
-
-            Assert.NotNull(capturedException);
-            Assert.AreEqual(expectedErrorCode, capturedException.ErrorCode);
-
-            Assert.True(operation.HasCompleted);
-            Assert.True(operation.HasValue);
-            Assert.AreEqual(0, operation.Value.Count);
         }
 
         [Test]
@@ -355,14 +425,20 @@ namespace Azure.AI.FormRecognizer.Tests
         ///  such as the Form Recognizer Labeling Tool found here:
         ///  <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
         /// </summary>
-        private async Task<string> GetModelIdAsync(bool labeled = false)
+        private async Task<string> GetModelIdAsync(bool useLabels = false)
         {
             FormTrainingClient trainingClient = InstrumentClient(new FormTrainingClient(_endpoint, _credential));
-            TrainingOperation trainedModel = await trainingClient.StartTrainingAsync(_containerUri, labeled);
+            TrainingOperation trainedModel = await trainingClient.StartTrainingAsync(_containerUri, useLabels);
             await trainedModel.WaitForCompletionAsync();
             Assert.IsTrue(trainedModel.HasValue);
 
             return trainedModel.Value.ModelId;
+        }
+
+        private async void DeleteModel(string modelId)
+        {
+            FormTrainingClient trainingClient = InstrumentClient(new FormTrainingClient(_endpoint, _credential));
+            await trainingClient.DeleteModelAsync(modelId).ConfigureAwait(false);
         }
     }
 }

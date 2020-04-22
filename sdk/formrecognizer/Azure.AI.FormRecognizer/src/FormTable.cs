@@ -7,6 +7,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
+    /// Represents a table recognized from the input document.
     /// </summary>
     public class FormTable
     {
@@ -21,19 +22,22 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// The 1-based page number in the input document.
+        /// The 1-based number of the page in which this table is present.
         /// </summary>
         public int PageNumber { get; }
 
         /// <summary>
+        /// A list of cells contained in this table.
         /// </summary>
         public IReadOnlyList<FormTableCell> Cells { get; }
 
         /// <summary>
+        /// The number of columns in this table.
         /// </summary>
         public int ColumnCount { get; }
 
         /// <summary>
+        /// The number of rows in this table.
         /// </summary>
         public int RowCount { get; }
 

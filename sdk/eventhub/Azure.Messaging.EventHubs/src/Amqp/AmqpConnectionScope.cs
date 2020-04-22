@@ -176,9 +176,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             Transport = transport;
             Proxy = proxy;
             TokenProvider = new CbsTokenProvider(new EventHubTokenCredential(credential, serviceEndpoint.ToString()), OperationCancellationSource.Token);
-            Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
+            Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
 
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors
+
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(connectionFactory, CloseConnection);
         }
 
@@ -253,7 +256,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
+            var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(CultureInfo.InvariantCulture, ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -295,7 +298,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(PartitionProducerPathSuffixMask, EventHubName, partitionId);
+            var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(CultureInfo.InvariantCulture, PartitionProducerPathSuffixMask, EventHubName, partitionId);
             var producerEndpoint = new Uri(ServiceEndpoint, path);
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
@@ -371,10 +374,11 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             stopWatch.Stop();
 
+#pragma warning disable CA1806 // Do not ignore method results
             // Create the CBS link that will be used for authorization.  The act of creating the link will associate
             // it with the connection.
-
             new AmqpCbsLink(connection);
+#pragma warning restore CA1806 // Do not ignore method results
 
             // When the connection is closed, close each of the links associated with it.
 
@@ -951,7 +955,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             if ((transport != EventHubsTransportType.AmqpTcp) && (transport != EventHubsTransportType.AmqpWebSockets))
             {
-                throw new ArgumentException(nameof(transport), string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport), nameof(transport));
             }
         }
     }

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="order">The order of the sensitivity label.</param>
         /// <param name="enabled">Indicates whether the label is enabled or
         /// not.</param>
-        public SensitivityLabel(string displayName = default(string), string description = default(string), Rank? rank = default(Rank?), double? order = default(double?), bool? enabled = default(bool?))
+        public SensitivityLabel(string displayName = default(string), string description = default(string), Rank? rank = default(Rank?), int? order = default(int?), bool? enabled = default(bool?))
         {
             DisplayName = displayName;
             Description = description;
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets or sets the order of the sensitivity label.
         /// </summary>
         [JsonProperty(PropertyName = "order")]
-        public double? Order { get; set; }
+        public int? Order { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether the label is enabled or not.

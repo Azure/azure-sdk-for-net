@@ -27,7 +27,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get available application frameworks and their versions
         /// </summary>
         /// <remarks>
-        /// Get available application frameworks and their versions
+        /// Description for Get available application frameworks and their
+        /// versions
         /// </remarks>
         /// <param name='osTypeSelected'>
         /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
@@ -48,14 +49,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ApplicationStack>>> GetAvailableStacksWithHttpMessagesAsync(string osTypeSelected = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ApplicationStackResource>>> GetAvailableStacksWithHttpMessagesAsync(string osTypeSelected = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all available operations for the Microsoft.Web resource
         /// provider. Also exposes resource metric definitions
         /// </summary>
         /// <remarks>
-        /// Gets all available operations for the Microsoft.Web resource
-        /// provider. Also exposes resource metric definitions
+        /// Description for Gets all available operations for the Microsoft.Web
+        /// resource provider. Also exposes resource metric definitions
         /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,7 +78,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get available application frameworks and their versions
         /// </summary>
         /// <remarks>
-        /// Get available application frameworks and their versions
+        /// Description for Get available application frameworks and their
+        /// versions
         /// </remarks>
         /// <param name='osTypeSelected'>
         /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
@@ -98,12 +100,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ApplicationStack>>> GetAvailableStacksOnPremWithHttpMessagesAsync(string osTypeSelected = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ApplicationStackResource>>> GetAvailableStacksOnPremWithHttpMessagesAsync(string osTypeSelected = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get available application frameworks and their versions
         /// </summary>
         /// <remarks>
-        /// Get available application frameworks and their versions
+        /// Description for Get available application frameworks and their
+        /// versions
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -123,14 +126,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ApplicationStack>>> GetAvailableStacksNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ApplicationStackResource>>> GetAvailableStacksNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all available operations for the Microsoft.Web resource
         /// provider. Also exposes resource metric definitions
         /// </summary>
         /// <remarks>
-        /// Gets all available operations for the Microsoft.Web resource
-        /// provider. Also exposes resource metric definitions
+        /// Description for Gets all available operations for the Microsoft.Web
+        /// resource provider. Also exposes resource metric definitions
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -155,7 +158,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get available application frameworks and their versions
         /// </summary>
         /// <remarks>
-        /// Get available application frameworks and their versions
+        /// Description for Get available application frameworks and their
+        /// versions
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -175,6 +179,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ApplicationStack>>> GetAvailableStacksOnPremNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ApplicationStackResource>>> GetAvailableStacksOnPremNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

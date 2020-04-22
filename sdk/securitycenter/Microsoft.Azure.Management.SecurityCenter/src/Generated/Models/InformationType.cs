@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="custom">Indicates whether the information type is
         /// custom or not.</param>
         /// <param name="keywords">The information type keywords.</param>
-        public InformationType(string displayName = default(string), string description = default(string), double? order = default(double?), System.Guid? recommendedLabelId = default(System.Guid?), bool? enabled = default(bool?), bool? custom = default(bool?), IList<InformationProtectionKeyword> keywords = default(IList<InformationProtectionKeyword>))
+        public InformationType(string displayName = default(string), string description = default(string), int? order = default(int?), System.Guid? recommendedLabelId = default(System.Guid?), bool? enabled = default(bool?), bool? custom = default(bool?), IList<InformationProtectionKeyword> keywords = default(IList<InformationProtectionKeyword>))
         {
             DisplayName = displayName;
             Description = description;
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Gets or sets the order of the information type.
         /// </summary>
         [JsonProperty(PropertyName = "order")]
-        public double? Order { get; set; }
+        public int? Order { get; set; }
 
         /// <summary>
         /// Gets or sets the recommended label id to be associated with this
