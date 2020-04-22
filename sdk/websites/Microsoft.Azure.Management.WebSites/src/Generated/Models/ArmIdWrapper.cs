@@ -14,27 +14,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// A global distribution definition.
+    /// A wrapper for an ARM resource id
     /// </summary>
-    public partial class GeoDistribution
+    public partial class ArmIdWrapper
     {
         /// <summary>
-        /// Initializes a new instance of the GeoDistribution class.
+        /// Initializes a new instance of the ArmIdWrapper class.
         /// </summary>
-        public GeoDistribution()
+        public ArmIdWrapper()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the GeoDistribution class.
+        /// Initializes a new instance of the ArmIdWrapper class.
         /// </summary>
-        /// <param name="location">Location.</param>
-        /// <param name="numberOfWorkers">NumberOfWorkers.</param>
-        public GeoDistribution(string location = default(string), int? numberOfWorkers = default(int?))
+        public ArmIdWrapper(string id = default(string))
         {
-            Location = location;
-            NumberOfWorkers = numberOfWorkers;
+            Id = id;
             CustomInit();
         }
 
@@ -44,16 +41,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets location.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets numberOfWorkers.
-        /// </summary>
-        [JsonProperty(PropertyName = "numberOfWorkers")]
-        public int? NumberOfWorkers { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }

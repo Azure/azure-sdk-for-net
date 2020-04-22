@@ -14,27 +14,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// Resource metric property.
+    /// Azure API management (APIM) configuration linked to the app.
     /// </summary>
-    public partial class ResourceMetricProperty
+    public partial class ApiManagementConfig
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceMetricProperty class.
+        /// Initializes a new instance of the ApiManagementConfig class.
         /// </summary>
-        public ResourceMetricProperty()
+        public ApiManagementConfig()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceMetricProperty class.
+        /// Initializes a new instance of the ApiManagementConfig class.
         /// </summary>
-        /// <param name="key">Key for resource metric property.</param>
-        /// <param name="value">Value of pair.</param>
-        public ResourceMetricProperty(string key = default(string), string value = default(string))
+        /// <param name="id">APIM-Api Identifier.</param>
+        public ApiManagementConfig(string id = default(string))
         {
-            Key = key;
-            Value = value;
+            Id = id;
             CustomInit();
         }
 
@@ -44,16 +42,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets key for resource metric property.
+        /// Gets or sets aPIM-Api Identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "key")]
-        public string Key { get; set; }
-
-        /// <summary>
-        /// Gets or sets value of pair.
-        /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
