@@ -13,7 +13,7 @@ This package's [documentation][readme] and [samples][samples] demonstrate the ne
 - Two client design:
   - `FormRecognizerClient` to analyze fields/values on custom forms, receipts, and form content/layout.
   - `FormTrainingClient` to train custom models, and manage the custom models on your resource account.
-- Different analyze methods based on input type: file stream or URI.
+- Different recognize methods based on input type: file stream or URI.
 - File stream methods will automatically detect content-type of the input file.
 
 [guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html
