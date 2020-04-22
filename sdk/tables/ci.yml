@@ -38,5 +38,5 @@ stages:
     ServiceDirectory: tables
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Data.Table
-      safeName: AzureDataTable
+    - name: Azure.Data.Tables
+      safeName: AzureDataTables
