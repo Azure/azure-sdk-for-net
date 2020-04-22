@@ -137,13 +137,9 @@ In some cases, you might want to test against the latest versions of the client 
 
 ## Public API additions
 
-If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. If this step is required, you may see your CI build fail with an error similar to:
+If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings.
 
-```
-Unhandled Exception: System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\a\1\s\sdk\tables\Azure.Data.Tables\api\Azure.Data.Tables.netstandard2.0.cs'.
-```
-
-Running the script in this example would look like this: 
+Running the script for a project in `sdk\tables` would look like this: 
 ```
 eng\scripts\Export-API.ps1 tables
 ```
