@@ -21,6 +21,8 @@ trigger:
     include:
     - sdk/core/
     - eng/
+    exclude:
+    - eng/mgmt/
 
 pr:
   branches:
