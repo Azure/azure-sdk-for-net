@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="text"> Text content of the cell. </param>
         /// <param name="boundingBox"> Bounding box of the cell. </param>
         /// <param name="confidence"> Confidence value. </param>
-        internal DataTableCell_internal(int rowIndex, int columnIndex, string text, IEnumerable<float> boundingBox, float? confidence)
+        internal DataTableCell_internal(int rowIndex, int columnIndex, string text, IEnumerable<float> boundingBox, float confidence)
         {
             if (text == null)
             {
@@ -29,10 +29,6 @@ namespace Azure.AI.FormRecognizer.Models
             if (boundingBox == null)
             {
                 throw new ArgumentNullException(nameof(boundingBox));
-            }
-            if (confidence == null)
-            {
-                throw new ArgumentNullException(nameof(confidence));
             }
 
             RowIndex = rowIndex;
@@ -53,7 +49,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="elements"> When includeTextDetails is set to true, a list of references to the text elements constituting this table cell. </param>
         /// <param name="isHeader"> Is the current cell a header cell?. </param>
         /// <param name="isFooter"> Is the current cell a footer cell?. </param>
-        internal DataTableCell_internal(int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string text, IReadOnlyList<float> boundingBox, float? confidence, IReadOnlyList<string> elements, bool? isHeader, bool? isFooter)
+        internal DataTableCell_internal(int rowIndex, int columnIndex, int? rowSpan, int? columnSpan, string text, IReadOnlyList<float> boundingBox, float confidence, IReadOnlyList<string> elements, bool? isHeader, bool? isFooter)
         {
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
@@ -79,6 +75,8 @@ namespace Azure.AI.FormRecognizer.Models
         public string Text { get; }
         /// <summary> Bounding box of the cell. </summary>
         public IReadOnlyList<float> BoundingBox { get; }
+        /// <summary> Confidence value. </summary>
+        public float Confidence { get; }
         /// <summary> When includeTextDetails is set to true, a list of references to the text elements constituting this table cell. </summary>
         public IReadOnlyList<string> Elements { get; }
         /// <summary> Is the current cell a header cell?. </summary>

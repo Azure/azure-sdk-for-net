@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             ColumnIndex = dataTableCell.ColumnIndex;
             ColumnSpan = dataTableCell.ColumnSpan ?? 1;
-            Confidence = dataTableCell.Confidence != null ? (float)dataTableCell.Confidence : Constants.DefaultConfidenceValue;
+            Confidence = dataTableCell.Confidence;
             IsFooter = dataTableCell.IsFooter ?? false;
             IsHeader = dataTableCell.IsHeader ?? false;
             RowIndex = dataTableCell.RowIndex;
