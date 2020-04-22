@@ -15,7 +15,6 @@ namespace Azure.AI.FormRecognizer.Training
         {
             CustomModelCount = summary.Count;
             CustomModelLimit = summary.Limit;
-            LastUpdatedOn = summary.LastUpdatedDateTime;
         }
 
         /// <summary>
@@ -27,10 +26,5 @@ namespace Azure.AI.FormRecognizer.Training
         /// The maximum number of models that can be trained for this subscription.
         /// </summary>
         public int CustomModelLimit { get; internal set; }
-
-        /// <summary>
-        /// The date and time (UTC) when the summary of all trained custom models was last updated.
-        /// </summary>
-        internal DateTimeOffset LastUpdatedOn { get; set; }
     }
 }

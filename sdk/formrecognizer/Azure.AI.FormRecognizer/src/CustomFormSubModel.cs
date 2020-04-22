@@ -30,9 +30,10 @@ namespace Azure.AI.FormRecognizer.Training
 
         /// <summary>
         /// A dictionary of the fields that this submodel will recognize from the
-        /// input document. Labeled models will use pre-defined labels as keys, and a unique
-        /// key will be generated for <see cref="CustomFormModelField"/> instances with no
-        /// pre-defined label available.
+        /// input document. The key is the <see cref="CustomFormModelField.Name"/>
+        /// of the field. For models trained with labels, this is the training-time
+        /// label of the field. For models trained with forms only, a unique name is
+        /// generated for each field.
         /// </summary>
         public IReadOnlyDictionary<string, CustomFormModelField> Fields { get; internal set; }
     }

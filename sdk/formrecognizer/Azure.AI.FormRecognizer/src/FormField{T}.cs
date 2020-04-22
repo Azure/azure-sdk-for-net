@@ -9,8 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <typeparam name="T">The type of the value in the field this instance represents.</typeparam>
     /// <remarks>
     /// This class is used in place of a generic <see cref="FormField"/> when its value
-    /// has a known type. This may happen in forms with well defined key-value pairs, such
-    /// as a <see cref="USReceipt"/>.
+    /// has a known type.
     /// </remarks>
     public class FormField<T>
     {
@@ -44,12 +43,12 @@ namespace Azure.AI.FormRecognizer.Models
         public FieldText ValueText { get; internal set; }
 
         /// <summary>
-        /// The value of the key-value pair that constitutes this <see cref="FormField{T}"/>.
+        /// The strongly-typed value of this <see cref="FormField{T}"/>.
         /// </summary>
         public T Value { get; internal set; }
 
         /// <summary>
-        /// Measures the degree of certainty of the recognition result. Possible values lay between [0.0, 1.0].
+        /// Measures the degree of certainty of the recognition result. Value is between [0.0, 1.0].
         /// </summary>
         public float Confidence { get; }
 

@@ -6,8 +6,9 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents either a key or a value in the key-value pair that constitutes
-    /// the corresponding <see cref="FormField"/> recognized from the input document.
+    /// A form content element representing text that is part of a <see cref="FormField"/>.
+    /// This includes the location of the text in the form and a collection of the content
+    /// elements that make up the text.
     /// </summary>
     public class FieldText : FormContent
     {

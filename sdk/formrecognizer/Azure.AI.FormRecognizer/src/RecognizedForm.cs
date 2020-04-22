@@ -44,9 +44,10 @@ namespace Azure.AI.FormRecognizer.Models
         public FormPageRange PageRange { get; }
 
         /// <summary>
-        /// A dictionary of the key-value pairs recognized from the input document. Labeled
-        /// models will use pre-defined labels as keys, and a unique key will be generated
-        /// for <see cref="FormField"/> instances with no pre-defined label available.
+        /// A dictionary of the fields recognized from the input document. The key is
+        /// the <see cref="FormField.Name"/> of the field. For models trained with labels,
+        /// this is the training-time label of the field. For models trained with forms
+        /// only, a unique name is generated for each field.
         /// </summary>
         public IReadOnlyDictionary<string, FormField> Fields { get; }
 

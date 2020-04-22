@@ -39,8 +39,8 @@ namespace Azure.AI.FormRecognizer.Models
         public USReceiptType ReceiptType { get; internal set; }
 
         /// <summary>
-        /// Measures the degree of certainty of the <see cref="ReceiptType"/> attribution. Possible
-        /// values range from [0.0, 1.0].
+        /// Measures the degree of certainty of the <see cref="ReceiptType"/> attribution. Value
+        /// is between [0.0, 1.0].
         /// </summary>
         public float ReceiptTypeConfidence { get; internal set; }
 

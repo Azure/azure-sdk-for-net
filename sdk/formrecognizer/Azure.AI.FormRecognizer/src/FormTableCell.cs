@@ -36,7 +36,7 @@ namespace Azure.AI.FormRecognizer.Models
         public int ColumnSpan { get; }
 
         /// <summary>
-        /// Measures the degree of certainty of the recognition result. Possible values lay between [0.0, 1.0].
+        /// Measures the degree of certainty of the recognition result. Value is between [0.0, 1.0].
         /// </summary>
         public float Confidence { get; }
 

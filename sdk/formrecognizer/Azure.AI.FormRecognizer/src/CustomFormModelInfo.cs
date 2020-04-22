@@ -30,12 +30,12 @@ namespace Azure.AI.FormRecognizer.Training
         public CustomFormModelStatus Status { get; }
 
         /// <summary>
-        /// The date and time (UTC) when the model was created.
+        /// The date and time (UTC) when model training was started.
         /// </summary>
         public DateTimeOffset CreatedOn { get; }
 
         /// <summary>
-        /// The date and time (UTC) when the status was last updated.
+        /// The date and time (UTC) when model training completed.
         /// </summary>
         public DateTimeOffset LastModified { get; }
     }
