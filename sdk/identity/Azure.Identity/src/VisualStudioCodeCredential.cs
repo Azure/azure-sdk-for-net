@@ -92,7 +92,7 @@ namespace Azure.Identity
             for (var index = 0; index < str.Length; index++)
             {
                 var ch = (uint)str[index];
-                if ((ch < '0' || ch > '9') && (ch < 'A' || ch > 'Z') && (ch < 'a' || ch > 'z') && ch != '_' && ch != '-')
+                if ((ch < '0' || ch > '9') && (ch < 'A' || ch > 'Z') && (ch < 'a' || ch > 'z') && ch != '_' && ch != '-' && ch != '.')
                 {
                     return false;
                 }
