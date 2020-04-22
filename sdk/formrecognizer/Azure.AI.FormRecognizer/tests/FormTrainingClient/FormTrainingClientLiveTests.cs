@@ -180,7 +180,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.IsNotNull(accountP.CustomModelCount);
             Assert.IsNotNull(accountP.CustomModelLimit);
-            Assert.IsNotNull(accountP.LastUpdatedOn);
 
             await client.DeleteModelAsync(trainedModel.ModelId);
 
