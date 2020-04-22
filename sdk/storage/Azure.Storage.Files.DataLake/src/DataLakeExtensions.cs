@@ -99,7 +99,15 @@ namespace Azure.Storage.Files.DataLake
                 EncryptionKeySha256 = blobProperties.EncryptionKeySha256,
                 AccessTier = blobProperties.AccessTier,
                 ArchiveStatus = blobProperties.ArchiveStatus,
-                AccessTierChangedOn = blobProperties.AccessTierChangedOn
+                AccessTierChangedOn = blobProperties.AccessTierChangedOn,
+                ExpiresOn = blobProperties.ExpiresOn
+            };
+
+        internal static PathInfo ToPathInfo(this BlobInfo blobInfo) =>
+            new PathInfo
+            {
+                ETag = blobInfo.ETag,
+                LastModified = blobInfo.LastModified
             };
 
         internal static DataLakeLease ToDataLakeLease(this BlobLease blobLease) =>
@@ -325,6 +333,36 @@ namespace Azure.Storage.Files.DataLake
                 ExpiresOn = dataLakeAccessPolicy.ExpiresOn,
                 Permissions = dataLakeAccessPolicy.Permissions
             };
+        }
+
+        internal static BlobExpirationOffset ToBlobExpirationOffset(
+            this DataLakeFileExpirationOffset setExpiryRelativeTo)
+            => setExpiryRelativeTo == DataLakeFileExpirationOffset.Now
+            ? BlobExpirationOffset.Now
+            : BlobExpirationOffset.CreationTime;
+
+        internal static BlobScheduleDeletionOptions ToBlobScheduleDeletionOptions(
+            this DataLakeFileScheduleDeletionOptions options)
+        {
+            // Cancel deletion
+            if (!options.ExpiresOn.HasValue
+                && !options.SetExpiryRelativeTo.HasValue
+                && !options.TimeToExpire.HasValue)
+            {
+                return new BlobScheduleDeletionOptions();
+            }
+            // Absolute
+            else if (options.ExpiresOn.HasValue)
+            {
+                return new BlobScheduleDeletionOptions(options.ExpiresOn);
+            }
+            // Relative
+            else
+            {
+                return new BlobScheduleDeletionOptions(
+                    options.TimeToExpire.Value,
+                    options.SetExpiryRelativeTo.Value.ToBlobExpirationOffset());
+            }
         }
     }
 }
