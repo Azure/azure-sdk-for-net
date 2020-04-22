@@ -349,7 +349,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="stream">The stream to which the content type detection attempt will be performed.</param>
         /// <param name="paramName">The original parameter name of the <paramref name="stream"/>. Used to create exceptions in case of failure.</param>
         /// <returns>The detected <see cref="ContentType"/>.</returns>
-        /// <exception cref="ArgumentException">Happens when detection fails or cannot be performed.</exception>
+        /// <exception cref="ArgumentException">Thrown when detection fails or cannot be performed.</exception>
         private static ContentType DetectContentType(Stream stream, string paramName)
         {
             ContentType contentType;

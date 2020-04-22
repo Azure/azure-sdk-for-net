@@ -46,7 +46,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as an <see cref="int"/>.
         /// </summary>
         /// <returns>The value of the field converted to an <see cref="int"/>.</returns>
-        /// <exception cref="InvalidOperationException">Happens when <see cref="Type"/> is not <see cref="FieldValueType.IntegerType"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.IntegerType"/> or when the value is <c>null</c>.</exception>
         public int AsInt32()
         {
             if (Type != FieldValueType.IntegerType)
@@ -66,7 +66,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="float"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="float"/>.</returns>
-        /// <exception cref="InvalidOperationException">Happens when <see cref="Type"/> is not <see cref="FieldValueType.FloatType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.FloatType"/>.</exception>
         public float AsFloat()
         {
             if (Type != FieldValueType.FloatType)
@@ -93,7 +93,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="DateTime"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="DateTime"/>.</returns>
-        /// <exception cref="InvalidOperationException">Happens when <see cref="Type"/> is not <see cref="FieldValueType.DateType"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.DateType"/> or when the value is <c>null</c>.</exception>
         public DateTime AsDate()
         {
             if (Type != FieldValueType.DateType)
@@ -113,7 +113,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="TimeSpan"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="TimeSpan"/>.</returns>
-        /// <exception cref="InvalidOperationException">Happens when <see cref="Type"/> is not <see cref="FieldValueType.TimeType"/> or when the value is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.TimeType"/> or when the value is <c>null</c>.</exception>
         public TimeSpan AsTime()
         {
             if (Type != FieldValueType.TimeType)
@@ -133,7 +133,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a phone number <see cref="string"/>.
         /// </summary>
         /// <returns>The value of the field converted to a phone number <see cref="string"/>.</returns>
-        /// <exception cref="InvalidOperationException">Happens when <see cref="Type"/> is not <see cref="FieldValueType.StringType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.StringType"/>.</exception>
         public string AsPhoneNumber()
         {
             if (Type != FieldValueType.PhoneNumberType)
@@ -148,7 +148,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as an <see cref="IReadOnlyList{T}"/>.
         /// </summary>
         /// <returns>The value of the field converted to an <see cref="IReadOnlyList{T}"/>.</returns>
-        /// <exception cref="InvalidOperationException">Happens when <see cref="Type"/> is not <see cref="FieldValueType.ListType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.ListType"/>.</exception>
         public IReadOnlyList<FormField> AsList()
         {
             if (Type != FieldValueType.ListType)
@@ -169,7 +169,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="Dictionary{TKey, TValue}"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="Dictionary{TKey, TValue}"/>.</returns>
-        /// <exception cref="InvalidOperationException">Happens when <see cref="Type"/> is not <see cref="FieldValueType.DictionaryType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.DictionaryType"/>.</exception>
         public IReadOnlyDictionary<string, FormField> AsDictionary()
         {
             if (Type != FieldValueType.DictionaryType)

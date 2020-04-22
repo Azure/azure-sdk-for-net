@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
         /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="useLabels">If <c>true</c>, use a label file created in the <link-to-label-tool-doc> to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful
@@ -78,7 +78,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// Trains a model from a collection of custom forms in a blob storage container.
         /// </summary>
         /// <param name="trainingFiles">An externally accessible Azure storage blob container Uri.</param>
-        /// <param name="useLabels">If <c>true</c>, use label files to train a labeled model. Otherwise, a non-labeled model will be trained.</param>
+        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="filter">Filter to apply to the documents in the source path for training.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="TrainingOperation"/> to wait on this long-running operation.  Its <see cref="TrainingOperation"/>.Value upon successful

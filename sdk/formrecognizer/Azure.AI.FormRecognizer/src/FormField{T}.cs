@@ -34,12 +34,12 @@ namespace Azure.AI.FormRecognizer.Models
         public string Name { get; internal set; }
 
         /// <summary>
-        /// Contains the text, bounding box and content of the field label.
+        /// Contains the text, bounding box and content of the label of the field in the form.
         /// </summary>
         public FieldText LabelText { get; internal set; }
 
         /// <summary>
-        /// Contains the text, bounding box and content of the field value.
+        /// Contains the text, bounding box and content of the value of the field in the form.
         /// </summary>
         public FieldText ValueText { get; internal set; }
 

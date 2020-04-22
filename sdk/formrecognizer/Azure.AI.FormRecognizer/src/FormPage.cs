@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer.Models
         public LengthUnit Unit { get; set; }
 
         /// <summary>
-        /// When <see cref="RecognizeOptions.IncludeTextContent"/> is set to <c>true</c>, a list of recognized text lines.
+        /// When <see cref="RecognizeOptions.IncludeTextContent"/> is set to <c>true</c>, a list of recognized lines of text.
         /// An empty list otherwise. For calls to recognize content, this list is always populated. The maximum number of
         /// lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases
         /// proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across
