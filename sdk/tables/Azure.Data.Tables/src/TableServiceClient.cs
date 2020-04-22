@@ -46,6 +46,8 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual AsyncPageable<TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            //TODO: support continuation tokens
+
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
                 var response = await _tableOperations.RestClient.QueryAsync(
@@ -66,6 +68,8 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual Pageable<TableResponseProperties> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            //TODO: support continuation tokens
+
             return PageableHelpers.CreateEnumerable(_ =>
             {
                 var response =  _tableOperations.RestClient.Query(

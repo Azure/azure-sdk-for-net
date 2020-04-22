@@ -85,6 +85,8 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            //TODO: support continuation tokens
+
             return PageableHelpers.CreateAsyncEnumerable(async tableName =>
             {
                 var response = await _tableOperations.RestClient.QueryEntitiesAsync(_table,
@@ -104,6 +106,8 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<IDictionary<string, object>> Query(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            //TODO: support continuation tokens
+
             return PageableHelpers.CreateEnumerable(tableName =>
             {
                 var response = _tableOperations.RestClient.QueryEntities(_table,
