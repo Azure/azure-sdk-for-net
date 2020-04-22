@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This client library enables working with the Microsoft Azure Storage Table service</Description>
-    <AssemblyTitle>Microsoft Azure.Storage.Tables client library</AssemblyTitle>
-    <Version>12.5.0-preview.1</Version>
+    <Description>This client library enables working with the Microsoft Azure Table service</Description>
+    <AssemblyTitle>Microsoft Azure.Data.Tables client library</AssemblyTitle>
+    <Version>1.0.0-preview.1</Version>
     <DefineConstants>TableSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Tables;Microsoft;Azure;Tables;Table;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

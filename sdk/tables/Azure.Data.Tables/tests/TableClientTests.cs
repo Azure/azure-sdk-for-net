@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Storage.Tables.Tests
             var url = new Uri($"https://{accountName}.table.core.windows.net");
             var key = "";
 
-            TableServiceClient service = new TableServiceClient(url, new StorageSharedKeyCredential(accountName, key));
+            TableServiceClient service = new TableServiceClient(url, new TablesSharedKeyCredential(accountName, key));
             await foreach (var table in service.GetTablesAsync())
             {
                 Assert.AreEqual("test", table.TableName);

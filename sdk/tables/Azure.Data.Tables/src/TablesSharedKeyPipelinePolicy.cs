@@ -19,14 +19,14 @@ namespace Azure.Data.Tables
     /// </summary>
     internal sealed class TablesSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
     {
-        private class InternalStorageCredential: StorageSharedKeyCredential
+        private class InternalStorageCredential: TablesSharedKeyCredential
         {
             public static InternalStorageCredential Instance = new InternalStorageCredential();
             public InternalStorageCredential(): base(string.Empty, string.Empty)
             {
             }
 
-            public static string GetSas(StorageSharedKeyCredential credential, string message)
+            public static string GetSas(TablesSharedKeyCredential credential, string message)
             {
                 return ComputeSasSignature(credential, message);
             }
@@ -34,13 +34,13 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Shared key credentials used to sign requests
         /// </summary>
-        private readonly StorageSharedKeyCredential _credentials;
+        private readonly TablesSharedKeyCredential _credentials;
 
         /// <summary>
         /// Create a new SharedKeyPipelinePolicy
         /// </summary>
         /// <param name="credentials">SharedKeyCredentials to authenticate requests.</param>
-        public TablesSharedKeyPipelinePolicy(StorageSharedKeyCredential credentials)
+        public TablesSharedKeyPipelinePolicy(TablesSharedKeyCredential credentials)
             => _credentials = credentials;
 
         /// <summary>

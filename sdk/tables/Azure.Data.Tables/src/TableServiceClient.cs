@@ -14,7 +14,7 @@ namespace Azure.Data.Tables
         private readonly TableInternalClient _tableOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
 
-        public TableServiceClient(Uri endpoint, StorageSharedKeyCredential credential, TableClientOptions options = null)
+        public TableServiceClient(Uri endpoint, TablesSharedKeyCredential credential, TableClientOptions options = null)
         {
             options ??= new TableClientOptions();
 
