@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             DetectedLanguage language = client.DetectLanguage(document);
 
-            Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+            Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
             #endregion
         }
     }

@@ -74,7 +74,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 Assert.AreEqual(languages[i].Id, results[i].Id);
                 Assert.AreEqual(languages[i].PrimaryLanguage.Name, results[i].PrimaryLanguage.Name);
                 Assert.AreEqual(languages[i].PrimaryLanguage.Iso6391Name, results[i].PrimaryLanguage.Iso6391Name);
-                Assert.AreEqual(languages[i].PrimaryLanguage.Score, results[i].PrimaryLanguage.Score);
+                Assert.AreEqual(languages[i].PrimaryLanguage.ConfidenceScore, results[i].PrimaryLanguage.ConfidenceScore);
                 i++;
             }
         }

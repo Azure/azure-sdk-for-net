@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Tests
                       ""id"": ""2"",
                       ""error"": {
                         ""code"": ""InvalidArgument"",
-                        ""innerError"": {
+                        ""innererror"": {
                             ""code"": ""InvalidDocument"",
                             ""message"": ""Document text is empty.""
                             },

@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual("English", language.Name);
             Assert.AreEqual("en", language.Iso6391Name);
-            Assert.AreEqual(1.0, language.Score);
+            Assert.AreEqual(1.0, language.ConfidenceScore);
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
             Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
             Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
-            Assert.AreEqual("English", results[3].PrimaryLanguage.Name);
+            Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
         }
 
         [Test]
@@ -189,7 +189,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
             Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
             Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
-            Assert.AreEqual("English", results[3].PrimaryLanguage.Name);
+            Assert.AreEqual("(Unknown)", results[3].PrimaryLanguage.Name);
             Assert.IsNotNull(results[0].Statistics);
             Assert.IsNotNull(results[0].Statistics.GraphemeCount);
             Assert.IsNotNull(results[0].Statistics.TransactionCount);
@@ -233,6 +233,8 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (var sentence in docSentiment.Sentences)
             {
                 Assert.AreEqual("Positive", sentence.Sentiment.ToString());
+                Assert.IsNotNull(sentence.Text);
+                Assert.AreEqual(document, sentence.Text);
                 Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                 Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                 Assert.IsNotNull(sentence.ConfidenceScores.Negative);
@@ -277,6 +279,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 foreach (var sentence in docSentiment.Sentences)
                 {
+                    Assert.IsNotNull(sentence.Text);
                     Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                     Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                     Assert.IsNotNull(sentence.ConfidenceScores.Negative);
@@ -337,6 +340,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
                 foreach (var sentence in docSentiment.Sentences)
                 {
+                    Assert.IsNotNull(sentence.Text);
                     Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                     Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                     Assert.IsNotNull(sentence.ConfidenceScores.Negative);
@@ -560,6 +564,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore ("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/11567")]
         public async Task RecognizeEntitiesWithLanguageTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -580,7 +585,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document);
             IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
-            Assert.AreEqual(2, entities.Count);
+            Assert.GreaterOrEqual(entities.Count, 3);
 
             foreach (CategorizedEntity entity in entities)
             {
@@ -741,7 +746,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Response<IReadOnlyCollection<LinkedEntity>> response = await client.RecognizeLinkedEntitiesAsync(document, "es");
             IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
 
-            Assert.AreEqual(3, linkedEntities.Count);
+            Assert.GreaterOrEqual(linkedEntities.Count, 3);
         }
 
         [Test]
@@ -867,8 +872,8 @@ namespace Azure.AI.TextAnalytics.Tests
             const string document = "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | €30 | 11m | 22 °C |" +
                 "Software Engineer | Wedding | Microsoft Surface laptop | Coding | 127.0.0.1 | https://github.com/azure/azure-sdk-for-net";
 
-            Response <IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document);
-            List<CategorizedEntity> entities = response.Value.ToList();
+            RecognizeEntitiesResultCollection response = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en", new TextAnalyticsRequestOptions() { ModelVersion = "2020-02-01" });
+            var entities = response.FirstOrDefault().Entities.ToList();
 
             Assert.AreEqual(21, entities.Count);
 
