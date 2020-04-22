@@ -16,6 +16,9 @@ namespace Azure.Data.Tables
 
         public TableServiceClient(Uri endpoint, TablesSharedKeyCredential credential, TableClientOptions options = null)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
             options ??= new TableClientOptions();
 
             var endpoint1 = endpoint.ToString();
@@ -72,7 +75,7 @@ namespace Azure.Data.Tables
 
             return PageableHelpers.CreateEnumerable(_ =>
             {
-                var response =  _tableOperations.RestClient.Query(
+                var response = _tableOperations.RestClient.Query(
                     null,
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken);
