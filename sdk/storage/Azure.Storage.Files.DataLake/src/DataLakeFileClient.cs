@@ -3190,18 +3190,12 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Upload
 
-        #region SetExpiry
+        #region ScheduleDeletion
         /// <summary>
-        /// Sets the files's ExpiresOn property.  ExpiresOn is when
-        /// the files will be deleted.
+        /// Schedules the file for deletation.
         /// </summary>
-        /// <param name="timeToExpire">
-        /// <see cref="TimeSpan"/>.
-        /// </param>
-        /// <param name="setExpiryRelativeTo">
-        /// Specifies if the files's ExpiresOn property should be
-        /// set relative to the files's creation time, or the current
-        /// time.  Defaults to current time.
+        /// <param name="options">
+        /// Schedule deletion parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3214,19 +3208,17 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<PathInfo> SetExpiryRelative(
-            TimeSpan timeToExpire,
-            DataLakeFileSetExpiryRelativeTo setExpiryRelativeTo = DataLakeFileSetExpiryRelativeTo.CurrentTime,
+        public virtual Response<PathInfo> ScheduleDeletion(
+            DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryRelative)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
             try
             {
                 scope.Start();
 
-                Response<BlobInfo> response = _blockBlobClient.SetExpiryRelative(
-                    timeToExpire,
-                    setExpiryRelativeTo.ToBlobSetExpiryRelativeTo(),
+                Response<BlobInfo> response = _blockBlobClient.ScheduleDeletion(
+                    options.ToBlobScheduleDeletionOptions(),
                     cancellationToken);
 
                 return Response.FromValue(
@@ -3245,16 +3237,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// Sets the files's ExpiresOn property.  ExpiresOn is when
-        /// the files will be deleted.
+        /// Schedules the file for deletation.
         /// </summary>
-        /// <param name="timeToExpire">
-        /// <see cref="TimeSpan"/>.
-        /// </param>
-        /// <param name="setExpiryRelativeTo">
-        /// Specifies if the files's ExpiresOn property should be
-        /// set relative to the files's creation time, or the current
-        /// time.  Defaults to current time.
+        /// <param name="options">
+        /// Schedule deletion parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3267,19 +3253,17 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PathInfo>> SetExpiryRelativeAsync(
-            TimeSpan timeToExpire,
-            DataLakeFileSetExpiryRelativeTo setExpiryRelativeTo = DataLakeFileSetExpiryRelativeTo.CurrentTime,
+        public virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
+            DataLakeFileScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryRelative)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
             try
             {
                 scope.Start();
 
-                Response<BlobInfo> response = await _blockBlobClient.SetExpiryRelativeAsync(
-                    timeToExpire,
-                    setExpiryRelativeTo.ToBlobSetExpiryRelativeTo(),
+                Response<BlobInfo> response = await _blockBlobClient.ScheduleDeletionAsync(
+                    options.ToBlobScheduleDeletionOptions(),
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -3297,107 +3281,6 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-
-        /// <summary>
-        /// Sets the files's ExpiresOn time, when the file will
-        /// be delete.  If <paramref name="expiresOn"/> is null,
-        /// the file's existing ExpiresOn property will be
-        /// removed.
-        /// </summary>
-        /// <param name="expiresOn">
-        /// The <see cref="DateTimeOffset"/> to set for when
-        /// the file will be deleted.  If null, the existing
-        /// ExpiresOn time on the file will be removed, if it exists.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the file.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<PathInfo> SetExpiryAbsolute(
-            DateTimeOffset? expiresOn = default,
-            CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryAbsolute)}");
-            try
-            {
-                scope.Start();
-
-                Response<BlobInfo> response = _blockBlobClient.SetExpiryAbsolute(
-                    expiresOn,
-                    cancellationToken);
-
-                return Response.FromValue(
-                    response.Value.ToPathInfo(),
-                    response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Sets the files's ExpiresOn time, when the file will
-        /// be delete.  If <paramref name="expiresOn"/> is null,
-        /// the file's existing ExpiresOn property will be
-        /// removed.
-        /// </summary>
-        /// <param name="expiresOn">
-        /// The <see cref="DateTimeOffset"/> to set for when
-        /// the file will be deleted.  If null, the existing
-        /// ExpiresOn time on the file will be removed, if it exists.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the file.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<PathInfo>> SetExpiryAbsoluteAsync(
-            DateTimeOffset? expiresOn = default,
-            CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(SetExpiryAbsolute)}");
-            try
-            {
-                scope.Start();
-
-                Response<BlobInfo> response = await _blockBlobClient.SetExpiryAbsoluteAsync(
-                    expiresOn,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                return Response.FromValue(
-                    response.Value.ToPathInfo(),
-                    response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-        #endregion SetExpiry
+        #endregion ScheduleDeletion
     }
 }

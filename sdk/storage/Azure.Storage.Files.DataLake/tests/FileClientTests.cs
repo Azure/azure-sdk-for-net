@@ -2805,7 +2805,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryRelativeAsync()
+        public async Task ScheduleDeletionAsync_Relative()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2817,8 +2817,12 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await Task.Delay(1000);
             }
 
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(
+                new TimeSpan(hours: 1, minutes: 0, seconds: 0),
+                DataLakeFileExpirationOffset.Now);
+
             // Act
-            Response<PathInfo> expiryResponse = await file.SetExpiryRelativeAsync(new TimeSpan(hours: 1, minutes: 0, seconds: 0));
+            Response<PathInfo> expiryResponse = await file.ScheduleDeletionAsync(options);
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
@@ -2829,16 +2833,17 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryRelativeAsync_RelativeToFileCreationTime()
+        public async Task ScheduleDeletionAsync_RelativeToFileCreationTime()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(
+                new TimeSpan(hours: 1, minutes: 0, seconds: 0),
+                DataLakeFileExpirationOffset.CreationTime);
 
             // Act
-            Response<PathInfo> expiryResponse = await file.SetExpiryRelativeAsync(
-                timeToExpire: new TimeSpan(hours: 1, minutes: 0, seconds: 0),
-                setExpiryRelativeTo: DataLakeFileSetExpiryRelativeTo.FileCreationTime);
+            Response <PathInfo> expiryResponse = await file.ScheduleDeletionAsync(options);
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
@@ -2847,30 +2852,34 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryRelativeAsync_Error()
+        public async Task ScheduleDeletionAsync_Error()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(
+                new TimeSpan(hours: 1, minutes: 0, seconds: 0),
+                DataLakeFileExpirationOffset.Now);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.SetExpiryRelativeAsync(new TimeSpan(hours: 1, minutes: 0, seconds: 0)),
+                file.ScheduleDeletionAsync(options),
                 e => Assert.AreEqual(Blobs.Models.BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
             ;
         }
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryAbsoluteAsync()
+        public async Task ScheduleDeletionAsync_Absolute()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
             DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(expiresOn);
 
             // Act
-            Response<PathInfo> expiryResponse = await file.SetExpiryAbsoluteAsync(expiresOn);
+            Response <PathInfo> expiryResponse = await file.ScheduleDeletionAsync(options);
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
@@ -2881,34 +2890,21 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryAbsoluteAsync_RemoveExpiry()
+        public async Task ScheduleDeletionAsync_RemoveExpiry()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
             DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
-            await file.SetExpiryAbsoluteAsync(expiresOn);
+            DataLakeFileScheduleDeletionOptions options = new DataLakeFileScheduleDeletionOptions(expiresOn);
+            await file.ScheduleDeletionAsync(options);
 
             // Act
-            await file.SetExpiryAbsoluteAsync();
+            await file.ScheduleDeletionAsync(new DataLakeFileScheduleDeletionOptions());
             Response<PathProperties> propertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
             Assert.AreEqual(default(DateTimeOffset), propertiesResponse.Value.ExpiresOn);
-        }
-
-        [Test]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryAbsoluteAsync_Error()
-        {
-            // Arrange
-            await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.SetExpiryAbsoluteAsync(),
-                e => Assert.AreEqual(Blobs.Models.BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
         }
     }
 }

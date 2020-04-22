@@ -1807,7 +1807,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryRelativeAsync()
+        public async Task ScheduleDeletionAsync_Relative()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_Hns();
@@ -1819,10 +1819,12 @@ namespace Azure.Storage.Blobs.Test
             {
                 await Task.Delay(1000);
             }
+            BlobScheduleDeletionOptions options = new BlobScheduleDeletionOptions(
+                new TimeSpan(hours: 1, minutes: 0, seconds: 0),
+                BlobExpirationOffset.Now);
 
             // Act
-            Response<BlobInfo> expiryResponse = await blob.SetExpiryRelativeAsync(
-                new TimeSpan(hours: 1, minutes: 0, seconds: 0));
+            Response<BlobInfo> expiryResponse = await blob.ScheduleDeletionAsync(options);
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
             IList<BlobItem> blobItems = await test.Container.GetBlobsAsync().ToListAsync();
             BlobItem blobItem = blobItems.Where(b => b.Name == blob.Name).FirstOrDefault();
@@ -1836,17 +1838,18 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryRelativeAsync_RelativeToBlobCreationTime()
+        public async Task ScheduleDeletionAsync_RelativeToBlobCreationTime()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_Hns();
             await using DisposingContainer test = await GetTestContainerAsync(service);
             BlockBlobClient blob = await GetNewBlobClient(test.Container);
+            BlobScheduleDeletionOptions options = new BlobScheduleDeletionOptions(
+                timeToExpire: new TimeSpan(hours: 1, minutes: 0, seconds: 0),
+                setRelativeTo: BlobExpirationOffset.CreationTime);
 
             // Act
-            await blob.SetExpiryRelativeAsync(
-                timeToExpire: new TimeSpan(hours: 1, minutes: 0, seconds: 0),
-                setExpiryRelativeTo: BlobSetExpiryRelativeTo.BlobCreationTime);
+            await blob.ScheduleDeletionAsync(options);
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
 
             // Assert
@@ -1855,31 +1858,35 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryRelativeAsync_Error()
+        public async Task ScheduleDeletionAsync_Error()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_Hns();
             await using DisposingContainer test = await GetTestContainerAsync(service);
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlobScheduleDeletionOptions options = new BlobScheduleDeletionOptions(
+                new TimeSpan(hours: 1, minutes: 0, seconds: 0),
+                BlobExpirationOffset.Now);
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.SetExpiryRelativeAsync(new TimeSpan(hours: 1, minutes: 0, seconds: 0)),
+                blob.ScheduleDeletionAsync(options),
                 e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
         }
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryAbsoluteAsync()
+        public async Task ScheduleDeletionAsync_Absolute()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_Hns();
             await using DisposingContainer test = await GetTestContainerAsync(service);
             BlockBlobClient blob = await GetNewBlobClient(test.Container);
             DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
+            BlobScheduleDeletionOptions options = new BlobScheduleDeletionOptions(expiresOn);
 
             // Act
-            Response<BlobInfo> expiryResponse = await blob.SetExpiryAbsoluteAsync(expiresOn);
+            Response <BlobInfo> expiryResponse = await blob.ScheduleDeletionAsync(options);
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
             IList<BlobItem> blobItems = await test.Container.GetBlobsAsync().ToListAsync();
             BlobItem blobItem = blobItems.Where(b => b.Name == blob.Name).FirstOrDefault();
@@ -1893,36 +1900,22 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryAbsoluteAsync_RemoveExpiry()
+        public async Task ScheduleDeletionAsync_RemoveExpiry()
         {
             // Arrange
             BlobServiceClient service = GetServiceClient_Hns();
             await using DisposingContainer test = await GetTestContainerAsync(service);
             BlockBlobClient blob = await GetNewBlobClient(test.Container);
             DateTimeOffset expiresOn = new DateTimeOffset(2100, 1, 1, 0, 0, 0, 0, TimeSpan.Zero);
-            await blob.SetExpiryAbsoluteAsync(expiresOn);
+            BlobScheduleDeletionOptions options = new BlobScheduleDeletionOptions(expiresOn);
+            await blob.ScheduleDeletionAsync(options);
 
             // Act
-            await blob.SetExpiryAbsoluteAsync();
+            await blob.ScheduleDeletionAsync(new BlobScheduleDeletionOptions());
             Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
 
             // Assert
             Assert.AreEqual(default(DateTimeOffset), propertiesResponse.Value.ExpiresOn);
-        }
-
-        [Test]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task SetExpiryAbsoluteAsync_Error()
-        {
-            // Arrange
-            BlobServiceClient service = GetServiceClient_Hns();
-            await using DisposingContainer test = await GetTestContainerAsync(service);
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                blob.SetExpiryAbsoluteAsync(),
-                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

@@ -521,6 +521,11 @@ namespace Azure.Storage.Blobs.Models
         public static bool operator !=(Azure.Storage.Blobs.Models.BlobErrorCode left, Azure.Storage.Blobs.Models.BlobErrorCode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum BlobExpirationOffset
+    {
+        CreationTime = 0,
+        Now = 1,
+    }
     public partial class BlobGeoReplication
     {
         internal BlobGeoReplication() { }
@@ -702,6 +707,15 @@ namespace Azure.Storage.Blobs.Models
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
     }
+    public partial class BlobScheduleDeletionOptions
+    {
+        public BlobScheduleDeletionOptions() { }
+        public BlobScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
+        public BlobScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Blobs.Models.BlobExpirationOffset setRelativeTo) { }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobExpirationOffset? SetExpiryRelativeTo { get { throw null; } }
+        public System.TimeSpan? TimeToExpire { get { throw null; } }
+    }
     public partial class BlobServiceProperties
     {
         public BlobServiceProperties() { }
@@ -717,11 +731,6 @@ namespace Azure.Storage.Blobs.Models
     {
         internal BlobServiceStatistics() { }
         public Azure.Storage.Blobs.Models.BlobGeoReplication GeoReplication { get { throw null; } }
-    }
-    public enum BlobSetExpiryRelativeTo
-    {
-        BlobCreationTime = 0,
-        CurrentTime = 1,
     }
     public partial class BlobSignedIdentifier
     {
@@ -1277,10 +1286,8 @@ namespace Azure.Storage.Blobs.Specialized
         protected static Azure.Storage.Blobs.Specialized.BlockBlobClient CreateClient(System.Uri blobUri, Azure.Storage.Blobs.BlobClientOptions options, Azure.Core.Pipeline.HttpPipeline pipeline) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlockList> GetBlockList(Azure.Storage.Blobs.Models.BlockListTypes blockListTypes = Azure.Storage.Blobs.Models.BlockListTypes.All, string snapshot = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockList>> GetBlockListAsync(Azure.Storage.Blobs.Models.BlockListTypes blockListTypes = Azure.Storage.Blobs.Models.BlockListTypes.All, string snapshot = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> SetExpiryAbsolute(System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> SetExpiryAbsoluteAsync(System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> SetExpiryRelative(System.TimeSpan timeToExpire, Azure.Storage.Blobs.Models.BlobSetExpiryRelativeTo setExpiryRelativeTo = Azure.Storage.Blobs.Models.BlobSetExpiryRelativeTo.CurrentTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> SetExpiryRelativeAsync(System.TimeSpan timeToExpire, Azure.Storage.Blobs.Models.BlobSetExpiryRelativeTo setExpiryRelativeTo = Azure.Storage.Blobs.Models.BlobSetExpiryRelativeTo.CurrentTime, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ScheduleDeletion(Azure.Storage.Blobs.Models.BlobScheduleDeletionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> ScheduleDeletionAsync(Azure.Storage.Blobs.Models.BlobScheduleDeletionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlock(string base64BlockId, System.IO.Stream content, byte[] transactionalContentHash = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlockInfo>> StageBlockAsync(string base64BlockId, System.IO.Stream content, byte[] transactionalContentHash = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUri(System.Uri sourceUri, string base64BlockId, Azure.HttpRange sourceRange = default(Azure.HttpRange), byte[] sourceContentHash = null, Azure.RequestConditions sourceConditions = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

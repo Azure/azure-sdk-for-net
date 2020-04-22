@@ -1771,18 +1771,12 @@ namespace Azure.Storage.Blobs.Specialized
         }
         #endregion GetBlockList
 
-        #region SetExpiry
+        #region ScheduleDeletion
         /// <summary>
-        /// Sets the blob's ExpiresOn property.  ExpiresOn is when
-        /// the blob will be deleted.
+        /// Schedules the blob for deletion.
         /// </summary>
-        /// <param name="timeToExpire">
-        /// <see cref="TimeSpan"/>.
-        /// </param>
-        /// <param name="setExpiryRelativeTo">
-        /// Specifies if the blob's ExpiresOn property should be
-        /// set relative to the blob's creation time, or the current
-        /// time.  Defaults to current time.
+        /// <param name="options">
+        /// Schedule deletion parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1795,27 +1789,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobInfo> SetExpiryRelative(
-            TimeSpan timeToExpire,
-            BlobSetExpiryRelativeTo setExpiryRelativeTo = BlobSetExpiryRelativeTo.CurrentTime,
+        public virtual Response<BlobInfo> ScheduleDeletion(
+            BlobScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
-            => SetExpiryRelativeInternal(
-                timeToExpire,
-                setExpiryRelativeTo,
+            => ScheduleDeletionInternal(
+                options,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Sets the blob's ExpiresOn property.  ExpiresOn is when
-        /// the blob will be deleted.
+        /// Schedules the blob for deletion.
         /// </summary>
-        /// <param name="timeToExpire">
-        /// <see cref="TimeSpan"/>.
-        /// </param>
-        /// <param name="setExpiryRelativeTo">
-        /// Specifies if the blob's ExpiresOn property should be
-        /// set relative to the blob's creation time, or the current
-        /// time.  Defaults to current time.
+        /// <param name="options">
+        /// Schedule deletion parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1828,27 +1814,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobInfo>> SetExpiryRelativeAsync(
-            TimeSpan timeToExpire,
-            BlobSetExpiryRelativeTo setExpiryRelativeTo = BlobSetExpiryRelativeTo.CurrentTime,
+        public virtual async Task<Response<BlobInfo>> ScheduleDeletionAsync(
+            BlobScheduleDeletionOptions options,
             CancellationToken cancellationToken = default)
-            => await SetExpiryRelativeInternal(
-                timeToExpire,
-                setExpiryRelativeTo,
+            => await ScheduleDeletionInternal(
+                options,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Sets the blob's ExpiresOn property.  ExpiresOn is when
-        /// the blob will be deleted.
+        /// Schedules the blob for deletion.
         /// </summary>
-        /// <param name="timeToExpire">
-        /// <see cref="TimeSpan"/>.
-        /// </param>
-        /// <param name="setExpiryRelativeTo">
-        /// Specifies if the blob's ExpiresOn property should be
-        /// set relative to the blob's creation time, or the current
-        /// time.  Defaults to current time.
+        /// <param name="options">
+        /// Schedule deletion parameters.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1864,145 +1842,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobInfo>> SetExpiryRelativeInternal(
-            TimeSpan timeToExpire,
-            BlobSetExpiryRelativeTo setExpiryRelativeTo,
-            bool async,
-            CancellationToken cancellationToken)
-            => await SetExpiryInternal(
-                timeToExpire.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
-                setExpiryRelativeTo == BlobSetExpiryRelativeTo.BlobCreationTime ? BlobExpiryOptions.RelativeToCreation : BlobExpiryOptions.RelativeToNow,
-                $"{nameof(BlockBlobClient)}.{nameof(SetExpiryRelative)}",
-                async,
-                cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Sets the blob's ExpiresOn time, when the blob will
-        /// be delete.  If <paramref name="expiresOn"/> is null,
-        /// the blob's existing ExpiresOn property will be
-        /// removed.
-        /// </summary>
-        /// <param name="expiresOn">
-        /// The <see cref="DateTimeOffset"/> to set for when
-        /// the blob will be deleted.  If null, the existing
-        /// ExpiresOn time on the blob will be removed, if it exists.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual Response<BlobInfo> SetExpiryAbsolute(
-            DateTimeOffset? expiresOn = default,
-            CancellationToken cancellationToken = default)
-            => SetExpiryAbsoluteInternal(
-                expiresOn,
-                async: false,
-                cancellationToken).EnsureCompleted();
-
-        /// <summary>
-        /// Sets the blob's ExpiresOn time, when the blob will
-        /// be delete.  If <paramref name="expiresOn"/> is null,
-        /// the blob's existing ExpiresOn property will be
-        /// removed.
-        /// </summary>
-        /// <param name="expiresOn">
-        /// The <see cref="DateTimeOffset"/> to set for when
-        /// the blob will be deleted.  If null, the existing
-        /// ExpiresOn time on the blob will be removed, if it exists.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        public virtual async Task<Response<BlobInfo>> SetExpiryAbsoluteAsync(
-            DateTimeOffset? expiresOn = default,
-            CancellationToken cancellationToken = default)
-            => await SetExpiryAbsoluteInternal(
-                expiresOn,
-                async: true,
-                cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Sets the blob's ExpiresOn time, when the blob will
-        /// be delete.  If <paramref name="expiresOn"/> is null,
-        /// the blob's existing ExpiresOn property will be
-        /// removed.
-        /// </summary>
-        /// <param name="expiresOn">
-        /// The <see cref="DateTimeOffset"/> to set for when
-        /// the blob will be deleted.  If null, the existing
-        /// ExpiresOn time on the blob will be removed, if it exists.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        private async Task<Response<BlobInfo>> SetExpiryAbsoluteInternal(
-            DateTimeOffset? expiresOn,
-            bool async,
-            CancellationToken cancellationToken)
-            => await SetExpiryInternal(
-                expiresOn?.ToString("R", CultureInfo.InvariantCulture),
-                expiresOn.HasValue ? BlobExpiryOptions.Absolute : BlobExpiryOptions.NeverExpire,
-                $"{nameof(BlockBlobClient)}.{nameof(SetExpiryAbsolute)}",
-                async,
-                cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Sets the Expires On property for this blob.
-        /// The blob will be deleted when Expires On time is reached.
-        /// </summary>
-        /// <param name="expiryTime">
-        /// Relative or absolute time when the blob will be delted.
-        /// </param>
-        /// <param name="expiryOptions">
-        /// ExpiryOptions.
-        /// </param>
-        /// <param name="operationName">
-        /// The name of the calling operation.
-        /// </param>
-        /// <param name="async">
-        /// Whether to invoke the operation asynchronously.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        private async Task<Response<BlobInfo>> SetExpiryInternal(
-            string expiryTime,
-            BlobExpiryOptions expiryOptions,
-            string operationName,
+        private async Task<Response<BlobInfo>> ScheduleDeletionInternal(
+            BlobScheduleDeletionOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2012,19 +1853,51 @@ namespace Azure.Storage.Blobs.Specialized
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(expiryTime)}: {expiryTime}\n" +
-                    $"{nameof(expiryOptions)}: {expiryOptions}");
+                    $"{nameof(options.TimeToExpire)}: {options.TimeToExpire}\n" +
+                    $"{nameof(options.SetExpiryRelativeTo)}: {options.SetExpiryRelativeTo}\n" +
+                    $"{nameof(options.ExpiresOn)}: {options.ExpiresOn}");
                 try
                 {
+
+                    BlobExpiryOptions blobExpiryOptions;
+                    string expiresOn = null;
+
+                    // Relative
+                    if (options.TimeToExpire.HasValue)
+                    {
+                        if (options.SetExpiryRelativeTo.Value == BlobExpirationOffset.CreationTime)
+                        {
+                            blobExpiryOptions = BlobExpiryOptions.RelativeToCreation;
+                        }
+                        else
+                        {
+                            blobExpiryOptions = BlobExpiryOptions.RelativeToNow;
+                        }
+                        expiresOn = options.TimeToExpire.Value.TotalMilliseconds.ToString(CultureInfo.InvariantCulture);
+                    }
+                    // Absolute
+                    else
+                    {
+                        if (options.ExpiresOn.HasValue)
+                        {
+                            blobExpiryOptions = BlobExpiryOptions.Absolute;
+                            expiresOn = options.ExpiresOn?.ToString("R", CultureInfo.InvariantCulture);
+                        }
+                        else
+                        {
+                            blobExpiryOptions = BlobExpiryOptions.NeverExpire;
+                        }
+                    }
+
                     Response<BlobSetExpiryInternal> response = await BlobRestClient.Blob.SetExpiryAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         Version.ToVersionString(),
-                        expiryOptions,
-                        expiresOn: expiryTime,
+                        blobExpiryOptions,
+                        expiresOn: expiresOn,
                         async: async,
-                        operationName: operationName,
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(ScheduleDeletion)}",
                         cancellationToken: cancellationToken).ConfigureAwait(false);
 
                     return Response.FromValue(
@@ -2046,7 +1919,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
         }
-        #endregion SetExpiry
+        #endregion ScheduleDeletion
     }
 
     /// <summary>

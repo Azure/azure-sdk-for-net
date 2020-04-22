@@ -11,18 +11,18 @@ namespace Azure.Storage.Blobs.Models
     /// Enum to specify when a blob's ExpiriesOn time should be relative
     /// to.
     /// </summary>
-    public enum BlobSetExpiryRelativeTo
+    public enum BlobExpirationOffset
     {
         /// <summary>
         /// Blob's ExpiriesOn property should be set relative to
         /// the blob CreatedOn time.
         /// </summary>
-        BlobCreationTime,
+        CreationTime,
 
         /// <summary>
         /// Blob's ExpiriesOn property should be set relative to
         /// the current time.
         /// </summary>
-        CurrentTime
+        Now
     }
 }
