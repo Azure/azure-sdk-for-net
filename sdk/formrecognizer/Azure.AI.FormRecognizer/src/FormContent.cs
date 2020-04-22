@@ -18,7 +18,8 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// The quadrilateral bounding box that outlines the text of this content. Units are in pixels for
-        /// images and inches for PDF.
+        /// images and inches for PDF. The <see cref="LengthUnit"/> type of a recognized page can be found
+        /// at <see cref="FormPage.Unit"/>.
         /// </summary>
         public BoundingBox BoundingBox { get; }
 

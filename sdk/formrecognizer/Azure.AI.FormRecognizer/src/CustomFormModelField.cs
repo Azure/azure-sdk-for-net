@@ -6,7 +6,10 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// Represents a pre-defined key-value pair that a model will extract from forms it analyzes.
+    /// Represents a field that a model will extract from forms it analyzes. A form field includes
+    /// a name unique to the submodel, a field label representing the label of the field on the form,
+    /// and, if a model was trained with training-time labels, an estimated accuracy for recognition
+    /// of the field.
     /// </summary>
     [CodeGenModel("FormFieldsReport")]
     public partial class CustomFormModelField

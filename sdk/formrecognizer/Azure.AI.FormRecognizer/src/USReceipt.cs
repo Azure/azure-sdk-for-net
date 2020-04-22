@@ -53,47 +53,47 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyList<USReceiptItem> Items { get; internal set; }
 
         /// <summary>
-        /// The field for the address of the merchant.
+        /// The merchant's address.
         /// </summary>
         public FormField<string> MerchantAddress { get; internal set; }
 
         /// <summary>
-        /// The field for the name of the merchant.
+        /// The merchant's name.
         /// </summary>
         public FormField<string> MerchantName { get; internal set; }
 
         /// <summary>
-        /// The field for the phone number of the merchant.
+        /// The merchant's phone number.
         /// </summary>
         public FormField<string> MerchantPhoneNumber { get; internal set; }
 
         /// <summary>
-        /// The field for the subtotal price.
+        /// The subtotal price.
         /// </summary>
         public FormField<float> Subtotal { get; internal set; }
 
         /// <summary>
-        /// The field for the tax price.
+        /// The tax price.
         /// </summary>
         public FormField<float> Tax { get; internal set; }
 
         /// <summary>
-        /// The field for the tip price.
+        /// The tip price.
         /// </summary>
         public FormField<float> Tip { get; internal set; }
 
         /// <summary>
-        /// The field for the total price.
+        /// The total price.
         /// </summary>
         public FormField<float> Total { get; internal set; }
 
         /// <summary>
-        /// The field for the transaction date.
+        /// The transaction date.
         /// </summary>
         public FormField<DateTime> TransactionDate { get; internal set; }
 
         /// <summary>
-        /// The field for the transaction time.
+        /// The transaction time.
         /// </summary>
         public FormField<TimeSpan> TransactionTime { get; internal set; }
 

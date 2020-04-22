@@ -31,6 +31,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// </summary>
         /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service. The URI is likely to be similar to <c>{protocol}://{resourcename}.cognitiveservices.azure.com</c>.</param>
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
+        /// <remarks>
+        /// Both the <paramref name="endpoint"/> URI <c>string</c> and the <paramref name="credential"/> <c>string</c> key
+        /// can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormTrainingClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new FormRecognizerClientOptions())
         {
         }
@@ -41,6 +46,11 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="endpoint">The endpoint to use for connecting to the Form Recognizer Azure Cognitive Service. The URI is likely to be similar to <c>{protocol}://{resourcename}.cognitiveservices.azure.com</c>.</param>
         /// <param name="credential">A credential used to authenticate to an Azure Service.</param>
         /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <remarks>
+        /// Both the <paramref name="endpoint"/> URI <c>string</c> and the <paramref name="credential"/> <c>string</c> key
+        /// can be found in the Azure Portal.
+        /// </remarks>
+        /// <seealso href="https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md#authenticate-a-form-recognizer-client"/>
         public FormTrainingClient(Uri endpoint, AzureKeyCredential credential, FormRecognizerClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));

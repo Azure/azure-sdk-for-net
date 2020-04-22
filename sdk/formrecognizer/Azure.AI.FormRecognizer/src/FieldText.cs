@@ -25,7 +25,9 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// A list of the text elements constituting this <see cref="FieldText"/>.
+        /// When <see cref="RecognizeOptions.IncludeTextContent"/> is set to <c>true</c>, a list of references to
+        /// the text elements constituting this <see cref="FieldText"/>. An empty list otherwise. For calls to
+        /// recognize content, this list is always populated.
         /// </summary>
         public IReadOnlyList<FormContent> TextContent { get; }
 

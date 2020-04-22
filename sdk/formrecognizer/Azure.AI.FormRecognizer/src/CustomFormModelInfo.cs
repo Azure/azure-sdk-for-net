@@ -6,8 +6,7 @@ using System;
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
-    /// Describes a model trained in a Cognitive Services Account and its training
-    /// status.
+    /// Describes a model trained in a Cognitive Services Account and its status.
     /// </summary>
     public class CustomFormModelInfo
     {

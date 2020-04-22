@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.Models
         public int RowSpan { get; }
 
         /// <summary>
-        /// When <see cref="RecognizeOptions.IncludeTextContent"/> is set to <c>true</c>, a list of refereces to
+        /// When <see cref="RecognizeOptions.IncludeTextContent"/> is set to <c>true</c>, a list of references to
         /// the text elements constituting this cell. An empty list otherwise. For calls to recognize content, this
         /// list is always populated.
         /// </summary>
