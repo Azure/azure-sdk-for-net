@@ -9,7 +9,7 @@ namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
     /// Represents a receipt recognized from the input document and provides members
-    /// for accessing pre-defined fields present in US sales receipts.
+    /// for accessing common fields present in US sales receipts.
     /// </summary>
     public class USReceipt : RecognizedReceipt
     {
@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Measures the degree of certainty of the <see cref="ReceiptType"/> attribution. Possible
-        /// values lay between [0.0, 1.0].
+        /// values range from [0.0, 1.0].
         /// </summary>
         public float ReceiptTypeConfidence { get; internal set; }
 

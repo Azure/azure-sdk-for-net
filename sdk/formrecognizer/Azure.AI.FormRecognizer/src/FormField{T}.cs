@@ -4,9 +4,9 @@
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents a key-value pair recognized from the input document.
+    /// Represents a field recognized in the input form, where the field's value is of a known type.
     /// </summary>
-    /// <typeparam name="T">The type of the value in the key-value pair this instance represents.</typeparam>
+    /// <typeparam name="T">The type of the value in the field this instance represents.</typeparam>
     /// <remarks>
     /// This class is used in place of a generic <see cref="FormField"/> when its value
     /// has a known type. This may happen in forms with well defined key-value pairs, such

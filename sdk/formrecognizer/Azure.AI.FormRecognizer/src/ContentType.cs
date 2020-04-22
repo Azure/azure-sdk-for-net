@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// The form content type for local files.
+    /// The content type for local form files.
     /// </summary>
     [CodeGenModel("ContentType")]
     public enum ContentType

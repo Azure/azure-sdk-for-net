@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents a text line recognized from the input document.
+    /// Represents a line of text recognized from the input document.
     /// </summary>
     public class FormLine : FormContent
     {
@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// A list of words in the text line.
+        /// A list of the words that make up the line.
         /// </summary>
         public IReadOnlyList<FormWord> Words { get; internal set; }
 

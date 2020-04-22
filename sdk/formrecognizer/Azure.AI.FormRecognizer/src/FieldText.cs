@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// A list of refereces to the text elements constituting this <see cref="FieldText"/>.
+        /// A list of the text elements constituting this <see cref="FieldText"/>.
         /// </summary>
         public IReadOnlyList<FormContent> TextContent { get; }
 

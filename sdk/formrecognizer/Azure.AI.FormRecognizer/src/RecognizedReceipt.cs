@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary>
         /// Contains detailed form information about the recognized receipt, such as fields, form type and
-        /// layout disposition.
+        /// form content elements.
         /// </summary>
         public RecognizedForm RecognizedForm { get; internal set; }
 

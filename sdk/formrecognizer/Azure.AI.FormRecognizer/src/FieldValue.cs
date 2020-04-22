@@ -7,8 +7,8 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents the value of a field recognized from the input document and provides
-    /// methods for converting it into different types.
+    /// Represents the strongly-typed value of a field recognized from the input document and provides
+    /// methods for converting it to the appropriate type.
     /// </summary>
     public readonly struct FieldValue
     {
@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a <see cref="string"/>.
         /// </summary>
         /// <returns>The value of the field converted to a <see cref="string"/>.</returns>
-        /// <exception cref="InvalidOperationException">Happens when <see cref="Type"/> is not <see cref="FieldValueType.StringType"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="Type"/> is not <see cref="FieldValueType.StringType"/>.</exception>
         public string AsString()
         {
             if (Type != FieldValueType.StringType)

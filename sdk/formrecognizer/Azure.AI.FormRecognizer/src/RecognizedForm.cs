@@ -51,7 +51,7 @@ namespace Azure.AI.FormRecognizer.Models
         public IReadOnlyDictionary<string, FormField> Fields { get; }
 
         /// <summary>
-        /// A list of pages describing the recognized layout elements present in the input
+        /// A list of pages describing the recognized form content elements present in the input
         /// document.
         /// </summary>
         public IReadOnlyList<FormPage> Pages { get; }

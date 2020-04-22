@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Training
         public float? Accuracy { get; internal set; }
 
         /// <summary>
-        /// A dictionary of the key-value pairs that this submodel will recognize from the
+        /// A dictionary of the fields that this submodel will recognize from the
         /// input document. Labeled models will use pre-defined labels as keys, and a unique
         /// key will be generated for <see cref="CustomFormModelField"/> instances with no
         /// pre-defined label available.

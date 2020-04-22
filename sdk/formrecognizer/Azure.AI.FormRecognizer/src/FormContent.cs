@@ -4,8 +4,8 @@
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents a general content recognized from the input document. Its text can be a whole line
-    /// or a single word.
+    /// Represents a content element recognized from the input document. Its text can be a line,
+    /// a word, the content of a table cell, etc.
     /// </summary>
     public abstract class FormContent
     {
@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// The quadrangle bounding box that outlines the text of this content. Units are in pixels for
+        /// The quadrilateral bounding box that outlines the text of this content. Units are in pixels for
         /// images and inches for PDF.
         /// </summary>
         public BoundingBox BoundingBox { get; }
@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
         public int PageNumber { get; }
 
         /// <summary>
-        /// The text string that constitutes this content. It can be a whole line or a single word.
+        /// The text of this content element. It can be a whole line or a single word.
         /// </summary>
         public string Text { get; }
     }

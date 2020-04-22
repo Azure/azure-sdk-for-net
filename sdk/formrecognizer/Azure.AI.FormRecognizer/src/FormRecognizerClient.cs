@@ -14,8 +14,8 @@ namespace Azure.AI.FormRecognizer
 {
     /// <summary>
     /// The client to use to connect to the Form Recognizer Azure Cognitive Service to recognize
-    /// information from forms and images into structured data. It's able to analyze receipts,
-    /// to recognize content disposition and to analyze custom forms from trained models.
+    /// information from forms and images and extract into structured data. It provides the ability to analyze receipts,
+    /// to recognize form content, and to extract fields from custom forms with models trained on custom form types.
     /// </summary>
     public class FormRecognizerClient
     {

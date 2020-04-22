@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientOptions"/> class.
         /// </summary>
-        /// <param name="version">The template service version.</param>
+        /// <param name="version">The version of the service to send requests to.</param>
         public FormRecognizerClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version;
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// The template service version.
+        /// The service version.
         /// </summary>
         public ServiceVersion Version { get; }
 

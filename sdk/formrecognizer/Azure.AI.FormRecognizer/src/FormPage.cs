@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents a page recognized from the input document. Contains text lines, tables and page metadata.
+    /// Represents a page recognized from the input document. Contains lines, words, tables and page metadata.
     /// </summary>
     public class FormPage
     {

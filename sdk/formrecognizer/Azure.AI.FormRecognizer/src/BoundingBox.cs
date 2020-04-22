@@ -8,7 +8,7 @@ using System.Linq;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// A set of 4 <see cref="PointF"/> representing the quadrangle bounding box that outlines
+    /// A set of four <see cref="PointF"/> representing a quadrilateral that outlines
     /// the text of an element in a recognized form. Units are in pixels for images and inches
     /// for PDF.
     /// </summary>

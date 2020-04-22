@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Training
         public string Prefix { get; set; } = string.Empty;
 
         /// <summary>
-        /// A flag to indicate whether subfolders within the set of prefix folders will also need to be included
+        /// A flag to indicate whether subfolders within the set of prefix folders should be included
         /// when searching for content to be preprocessed.
         /// </summary>
         public bool IncludeSubFolders { get; set; } = false;

@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Tracks the status of a long-running operation for recognizing elements from forms by using custom
+    /// Tracks the status of a long-running operation for recognizing fields and other content from forms by using custom
     /// trained models.
     /// </summary>
     public class RecognizeCustomFormsOperation : Operation<IReadOnlyList<RecognizedForm>>

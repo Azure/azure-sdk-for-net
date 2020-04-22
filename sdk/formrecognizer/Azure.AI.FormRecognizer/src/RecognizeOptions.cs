@@ -6,7 +6,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// The set of options that can be specified when calling a recognition method in
     /// a <see cref="FormRecognizerClient" /> instance to configure the behavior of the
-    /// operation.
+    /// request.
     /// </summary>
     public class RecognizeOptions
     {
@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
-        /// Whether or not to include raw page recognition in addition to layout elements.
+        /// Whether or not to include form content elements such as lines and words in addition to form fields.
         /// </summary>
         public bool IncludeTextContent { get; set; } = false;
 

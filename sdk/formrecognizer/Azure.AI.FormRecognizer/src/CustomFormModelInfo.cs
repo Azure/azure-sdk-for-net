@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// The identifier of the model.
+        /// The unique identifier of the model.
         /// </summary>
         public string ModelId { get; }
 

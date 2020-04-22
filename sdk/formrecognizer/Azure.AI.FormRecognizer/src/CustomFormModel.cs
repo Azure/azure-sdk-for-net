@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         /// <summary>
-        /// The identifier of this model.
+        /// The unique identifier of this model.
         /// </summary>
         public string ModelId { get; }
 
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Training
         public DateTimeOffset LastModified { get; }
 
         /// <summary>
-        /// A list of submodels, each of which extracts fields from a different type of form.
+        /// A list of submodels that are part of this model, each of which can recognize and extract fields from a different type of form.
         /// </summary>
         public IReadOnlyList<CustomFormSubModel> Models { get; }
 
