@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var connection = new TestConnectionWithTransport(connectionString))
                 {
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = TestEnvironment.EventHubsConnectionString;
+                var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
 
                 await using (var connection = new TestConnectionWithTransport(connectionString, scope.EventHubName))
                 {
@@ -79,9 +79,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var credential = new EventHubSharedKeyCredential(TestEnvironment.SharedAccessKeyName, TestEnvironment.SharedAccessKey);
+                var credential = new EventHubSharedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
 
-                await using (var connection = new TestConnectionWithTransport(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential))
+                await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -104,14 +104,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 (
                     new SharedAccessSignature
                     (
-                        $"{ options.TransportType.GetUriScheme() }://{ TestEnvironment.FullyQualifiedNamespace }/{ scope.EventHubName }".ToLowerInvariant(),
-                        TestEnvironment.SharedAccessKeyName,
-                        TestEnvironment.SharedAccessKey,
+                        $"{ options.TransportType.GetUriScheme() }://{ EventHubsTestEnvironment.Instance.FullyQualifiedNamespace }/{ scope.EventHubName }".ToLowerInvariant(),
+                        EventHubsTestEnvironment.Instance.SharedAccessKeyName,
+                        EventHubsTestEnvironment.Instance.SharedAccessKey,
                         TimeSpan.FromHours(4)
                     )
                 );
 
-                await using (var connection = new TestConnectionWithTransport(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential))
+                await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -129,9 +129,9 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
                 var options = new EventHubConnectionOptions();
-                var credential = new ClientSecretCredential(TestEnvironment.EventHubsTenant, TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
+                var credential = EventHubsTestEnvironment.Instance.Credential;
 
-                await using (var connection = new TestConnectionWithTransport(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential))
+                await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential))
                 {
                     Assert.That(() => connection.GetPropertiesAsync(), Throws.Nothing);
                 }
@@ -152,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (EventHubScope scope = await EventHubScope.CreateAsync(partitionCount))
             {
-                var connectionString = TestEnvironment.EventHubsConnectionString;
+                var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
 
                 await using (var connection = new TestConnectionWithTransport(connectionString, scope.EventHubName, new EventHubConnectionOptions { TransportType = transportType }))
                 {
@@ -186,14 +186,14 @@ namespace Azure.Messaging.EventHubs.Tests
                 (
                     new SharedAccessSignature
                     (
-                        $"{ options.TransportType.GetUriScheme() }://{ TestEnvironment.FullyQualifiedNamespace }/{ scope.EventHubName }".ToLowerInvariant(),
-                        TestEnvironment.SharedAccessKeyName,
-                        TestEnvironment.SharedAccessKey,
+                        $"{ options.TransportType.GetUriScheme() }://{ EventHubsTestEnvironment.Instance.FullyQualifiedNamespace }/{ scope.EventHubName }".ToLowerInvariant(),
+                        EventHubsTestEnvironment.Instance.SharedAccessKeyName,
+                        EventHubsTestEnvironment.Instance.SharedAccessKey,
                         TimeSpan.FromHours(4)
                     )
                 );
 
-                await using (var connection = new TestConnectionWithTransport(TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, credential, new EventHubConnectionOptions { TransportType = transportType }))
+                await using (var connection = new TestConnectionWithTransport(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, credential, new EventHubConnectionOptions { TransportType = transportType }))
                 {
                     var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                     var properties = await connection.GetPropertiesAsync();
@@ -220,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(4))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var connection = new TestConnectionWithTransport(connectionString))
                 {
@@ -245,7 +245,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var connection = new TestConnectionWithTransport(connectionString))
                 {
@@ -278,7 +278,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 await using (var connection = new TestConnectionWithTransport(connectionString))
                 {
@@ -297,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
                 var retryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) };
 
                 var clientOptions = new EventHubConnectionOptions

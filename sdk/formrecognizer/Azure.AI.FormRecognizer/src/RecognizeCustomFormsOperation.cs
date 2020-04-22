@@ -15,15 +15,23 @@ namespace Azure.AI.FormRecognizer.Models
     /// </summary>
     public class RecognizeCustomFormsOperation : Operation<IReadOnlyList<RecognizedForm>>
     {
-        private Response _response;
-        private IReadOnlyList<RecognizedForm> _value;
-        private bool _hasCompleted;
-
-        private readonly string _modelId;
+        /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
         private readonly ServiceClient _serviceClient;
 
-        // TODO: use this.
-        private CancellationToken _cancellationToken;
+        /// <summary>Provides tools for exception creation in case of failure.</summary>
+        private readonly ClientDiagnostics _diagnostics;
+
+        /// <summary>The last HTTP response received from the server. <c>null</c> until the first response is received.</summary>
+        private Response _response;
+
+        /// <summary>The result of the long-running operation. <c>null</c> until result is received on status update.</summary>
+        private IReadOnlyList<RecognizedForm> _value;
+
+        /// <summary><c>true</c> if the long-running operation has completed. Otherwise, <c>false</c>.</summary>
+        private bool _hasCompleted;
+
+        /// <summary>The id of the model to use for recognizing form values.</summary>
+        private readonly string _modelId;
 
         /// <inheritdoc/>
         public override string Id { get; }
@@ -51,11 +59,13 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// </summary>
         /// <param name="operations"></param>
+        /// <param name="diagnostics"></param>
         /// <param name="modelId"></param>
         /// <param name="operationLocation"></param>
-        internal RecognizeCustomFormsOperation(ServiceClient operations, string modelId, string operationLocation)
+        internal RecognizeCustomFormsOperation(ServiceClient operations, ClientDiagnostics diagnostics, string modelId, string operationLocation)
         {
             _serviceClient = operations;
+            _diagnostics = diagnostics;
             _modelId = modelId;
 
             // TODO: Add validation here
@@ -68,12 +78,18 @@ namespace Azure.AI.FormRecognizer.Models
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        /// <param name="cancellationToken"></param>
-        public RecognizeCustomFormsOperation(string operationId, FormRecognizerClient client, CancellationToken cancellationToken = default)
+        public RecognizeCustomFormsOperation(string operationId, FormRecognizerClient client)
         {
             Id = operationId;
             _serviceClient = client.ServiceClient;
-            _cancellationToken = cancellationToken;
+            _diagnostics = client.Diagnostics;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeCustomFormsOperation"/> class.
+        /// </summary>
+        protected RecognizeCustomFormsOperation()
+        {
         }
 
         /// <inheritdoc/>
@@ -92,17 +108,22 @@ namespace Azure.AI.FormRecognizer.Models
                     ? await _serviceClient.GetAnalyzeFormResultAsync(new Guid(_modelId), new Guid(Id), cancellationToken).ConfigureAwait(false)
                     : _serviceClient.GetAnalyzeFormResult(new Guid(_modelId), new Guid(Id), cancellationToken);
 
-                // TODO: Handle correctly according to returned status code
-                // https://github.com/Azure/azure-sdk-for-net/issues/10386
                 // TODO: Add reasonable null checks.
 
-                if (update.Value.Status == OperationStatus.Succeeded || update.Value.Status == OperationStatus.Failed)
+                _response = update.GetRawResponse();
+
+                if (update.Value.Status == OperationStatus.Succeeded)
                 {
                     _hasCompleted = true;
                     _value = ConvertToRecognizedForms(update.Value.AnalyzeResult);
                 }
+                else if (update.Value.Status == OperationStatus.Failed)
+                {
+                    _hasCompleted = true;
+                    _value = new List<RecognizedForm>();
 
-                _response = update.GetRawResponse();
+                    throw await CreateExceptionForFailedOperationAsync(async, update.Value.AnalyzeResult.Errors).ConfigureAwait(false);
+                }
             }
 
             return GetRawResponse();
@@ -133,6 +154,37 @@ namespace Azure.AI.FormRecognizer.Models
                 forms.Add(new RecognizedForm(documentResult, analyzeResult.PageResults, analyzeResult.ReadResults));
             }
             return forms;
+        }
+
+        private async ValueTask<RequestFailedException> CreateExceptionForFailedOperationAsync(bool async, IReadOnlyList<FormRecognizerError> errors)
+        {
+            string errorMessage = default;
+            string errorCode = default;
+
+            if (errors.Count > 0)
+            {
+                var firstError = errors[0];
+
+                errorMessage = firstError.Message;
+                errorCode = firstError.Code;
+            }
+            else
+            {
+                errorMessage = "RecognizeCustomForms operation failed.";
+            }
+
+            var errorInfo = new Dictionary<string, string>();
+            int index = 0;
+
+            foreach (var error in errors)
+            {
+                errorInfo.Add($"error-{index}", $"{error.Code}: {error.Message}");
+                index++;
+            }
+
+            return async
+                ? await _diagnostics.CreateRequestFailedExceptionAsync(_response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
+                : _diagnostics.CreateRequestFailedException(_response, errorMessage, errorCode, errorInfo);
         }
     }
 }

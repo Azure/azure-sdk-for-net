@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Tests
     /// of the Azure.Core testing framework.
     /// </summary>
     [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06_Preview)]
-    public abstract partial class SearchTestBase : RecordedTestBase
+    public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
         /// The maximum number of retries for service requests.

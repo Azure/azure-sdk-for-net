@@ -480,9 +480,9 @@ namespace Azure.Messaging.EventHubs.Producer
             Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             AssertSinglePartitionReference(eventBatch.SendOptions.PartitionId, eventBatch.SendOptions.PartitionKey);
 
-            int attempts = 0;
             using DiagnosticScope scope = CreateDiagnosticScope(eventBatch.GetEventDiagnosticIdentifiers());
 
+            var attempts = 0;
             var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
 
             while (!cancellationToken.IsCancellationRequested)
@@ -583,7 +583,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             IsClosed = true;
 
-            var identifier = GetHashCode().ToString();
+            var identifier = GetHashCode().ToString(CultureInfo.InvariantCulture);
             EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubProducerClient), EventHubName, identifier);
 
             // Attempt to close the pool of producers.  In the event that an exception is encountered,

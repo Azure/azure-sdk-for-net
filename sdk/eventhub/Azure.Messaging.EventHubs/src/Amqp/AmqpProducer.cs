@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -279,7 +280,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             _closed = true;
 
-            var clientId = GetHashCode().ToString();
+            var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
             var clientType = GetType();
 
             try
@@ -338,7 +339,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     try
                     {
                         using AmqpMessage batchMessage = messageFactory();
-                        messageHash = batchMessage.GetHashCode().ToString();
+                        messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
                         // Creation of the link happens without explicit knowledge of the cancellation token
                         // used for this operation; validate the token state before attempting link creation and
@@ -355,7 +356,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                         {
-                            throw new EventHubsException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
+                            throw new EventHubsException(EventHubName, string.Format(CultureInfo.CurrentCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
                         }
 
                         // Attempt to send the message batch.

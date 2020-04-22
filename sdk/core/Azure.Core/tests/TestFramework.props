@@ -14,6 +14,7 @@
 
   <ItemGroup Condition="'$(ExcludeRecordingFramework)' == 'true'">
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\LiveOnlyAttribute.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\SamplesBase.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\PlaybackTransport.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\*Record*.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\TestRandom.cs" />

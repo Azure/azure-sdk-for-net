@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +28,9 @@ namespace Azure.Messaging.EventHubs.Amqp
     {
         /// <summary>The default prefetch count to use for the consumer.</summary>
         private const uint DefaultPrefetchCount = 300;
+
+        /// <summary>An empty set of events which can be dispatched when no events are available.</summary>
+        private static readonly IReadOnlyList<EventData> EmptyEventSet = Array.Empty<EventData>();
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
@@ -267,7 +271,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         // No events were available.
 
-                        return new List<EventData>(0);
+                        return EmptyEventSet;
                     }
                     catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
                     {
@@ -275,7 +279,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // amount of time to wait for events, a timeout isn't considered an error condition,
                         // rather a sign that no events were available in the requested period.
 
-                        return new List<EventData>(0);
+                        return EmptyEventSet;
                     }
                     catch (Exception ex)
                     {
@@ -341,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             _closed = true;
 
-            var clientId = GetHashCode().ToString();
+            var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
             var clientType = GetType();
 
             try
@@ -401,12 +405,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 link = await ConnectionScope.OpenConsumerLinkAsync(
                     consumerGroup,
                     partitionId,
-                    CurrentEventPosition,
+                    eventStartingPosition,
                     timeout,
                     prefetchCount,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
-                    CancellationToken.None).ConfigureAwait(false);
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (InvalidOperationException ex)
             {
