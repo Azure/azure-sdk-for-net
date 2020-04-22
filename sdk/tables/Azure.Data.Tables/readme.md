@@ -1,4 +1,4 @@
-# Azure Tables client for .NET
+# Azure Tables client library for .NET
 
 Content forthcoming
 
