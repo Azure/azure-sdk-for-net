@@ -15,6 +15,7 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
+        [Ignore("Need to revisit how to pass the modelId. Issue https://github.com/Azure/azure-sdk-for-net/issues/11493")]
         public async Task RecognizeCustomFormsFromFile()
         {
             string endpoint = TestEnvironment.Endpoint;
