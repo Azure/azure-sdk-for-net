@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     /// <summary>
     /// Represents settings for User and Entity Behavior Analytics enablement.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("UebaSettings")]
     [Rest.Serialization.JsonTransformation]
     public partial class UebaSettings : Settings
     {

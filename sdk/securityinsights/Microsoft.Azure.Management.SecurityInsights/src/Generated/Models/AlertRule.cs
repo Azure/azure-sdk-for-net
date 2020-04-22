@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     /// <summary>
     /// Alert rule.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AlertRule")]
     public partial class AlertRule
     {
         /// <summary>

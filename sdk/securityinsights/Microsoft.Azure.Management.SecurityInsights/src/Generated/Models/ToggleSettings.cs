@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.SecurityInsights.Models
     /// <summary>
     /// Settings with single toggle.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("ToggleSettings")]
     [Rest.Serialization.JsonTransformation]
     public partial class ToggleSettings : Settings
     {
