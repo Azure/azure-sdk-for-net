@@ -18,18 +18,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// The alias type.
     /// </summary>
-    public partial class AliasType1
+    public partial class Alias
     {
         /// <summary>
-        /// Initializes a new instance of the AliasType1 class.
+        /// Initializes a new instance of the Alias class.
         /// </summary>
-        public AliasType1()
+        public Alias()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AliasType1 class.
+        /// Initializes a new instance of the Alias class.
         /// </summary>
         /// <param name="name">The alias name.</param>
         /// <param name="paths">The paths for an alias.</param>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="defaultPath">The default path for an alias.</param>
         /// <param name="defaultPattern">The default pattern for an
         /// alias.</param>
-        public AliasType1(string name = default(string), IList<AliasPathType> paths = default(IList<AliasPathType>), AliasType? type = default(AliasType?), string defaultPath = default(string), AliasPatternType1 defaultPattern = default(AliasPatternType1))
+        public Alias(string name = default(string), IList<AliasPath> paths = default(IList<AliasPath>), AliasType? type = default(AliasType?), string defaultPath = default(string), AliasPattern defaultPattern = default(AliasPattern))
         {
             Name = name;
             Paths = paths;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets the paths for an alias.
         /// </summary>
         [JsonProperty(PropertyName = "paths")]
-        public IList<AliasPathType> Paths { get; set; }
+        public IList<AliasPath> Paths { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the alias. Possible values include:
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets the default pattern for an alias.
         /// </summary>
         [JsonProperty(PropertyName = "defaultPattern")]
-        public AliasPatternType1 DefaultPattern { get; set; }
+        public AliasPattern DefaultPattern { get; set; }
 
     }
 }
