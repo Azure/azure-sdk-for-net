@@ -21,7 +21,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 To recognize the content from a given file at a URI, use the `StartRecognizeContentFromUri` method. The returned value is a collection of `FormPage` objects -- one for each page in the submitted document.
 
-```C# Snippet:FormRecognizerSample2RecognizeContentFromUri
+```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
 Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
 foreach (FormPage page in formPages.Value)
 {
@@ -30,7 +30,7 @@ foreach (FormPage page in formPages.Value)
     for (int i = 0; i < page.Lines.Count; i++)
     {
         FormLine line = page.Lines[i];
-        Console.WriteLine($"    Line {i} has {line.Words.Count} word {(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+        Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
     }
 
     for (int i = 0; i < page.Tables.Count; i++)
@@ -64,4 +64,4 @@ To see the full example source files, see:
 * [Recognize form content from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample2_RecognizeContentFromUri.cs)
 * [Recognize form content from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample2_RecognizeContentFromFile.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

@@ -21,7 +21,7 @@ var client = new FormTrainingClient(new Uri(endpoint), credential);
 
 ## Train a model with forms
 
-Train custom models to recognize all fields and values found in your custom forms. A `CustomFormModel` is returned indicating the form types the model will recognize, and the fields it will extract for each form type.
+Train custom models to recognize all fields and values found in your custom forms. A `CustomFormModel` is returned indicating the form types the model will recognize, and the fields it will extract from each form type.
 
 ```C# Snippet:FormRecognizerSample4TrainModelWithForms
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
@@ -84,9 +84,6 @@ foreach (CustomFormSubModel subModel in model.Models)
         Console.WriteLine("");
     }
 }
-
-// Delete the model on completion.
-client.DeleteModel(model.ModelId);
 ```
 
 To see the full example source files, see:
@@ -94,5 +91,5 @@ To see the full example source files, see:
 * [Train a model with forms](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample4_TrainModelWithForms.cs)
 * [Train a model with forms and labels](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample5_TrainModelWithFormsAndLabels.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool

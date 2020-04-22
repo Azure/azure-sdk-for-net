@@ -111,7 +111,7 @@ The following section provides several code snippets illustrating common pattern
 ### Recognize Receipts
 Recognize data from US sales receipts using a prebuilt model.
 
-```C# Snippet:FormRecognizerSample1RecognizeReceiptFileStream
+```C# Snippet:FormRecognizerSampleRecognizeReceiptFileStream
 using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 {
     Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
@@ -134,7 +134,8 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
         for (int i = 0; i < items.Count; i++)
         {
             USReceiptItem item = usReceipt.Items[i];
-            Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', TotalPrice: '{item.TotalPrice.Value}'");
+            Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', Price: '{item.Price?.Value}'");
+            Console.WriteLine($"    TotalPrice: '{item.TotalPrice.Value}'");
         }
 
         Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
@@ -148,7 +149,7 @@ using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
 ### Recognize Content
 Recognize text and table data, along with their bounding box coordinates, from documents.
 
-```C# Snippet:FormRecognizerSample2RecognizeContentFromUri
+```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
 Response<IReadOnlyList<FormPage>> formPages = await client.StartRecognizeContentFromUri(new Uri(invoiceUri)).WaitForCompletionAsync();
 foreach (FormPage page in formPages.Value)
 {
@@ -157,7 +158,7 @@ foreach (FormPage page in formPages.Value)
     for (int i = 0; i < page.Lines.Count; i++)
     {
         FormLine line = page.Lines[i];
-        Console.WriteLine($"    Line {i} has {line.Words.Count} word {(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+        Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
     }
 
     for (int i = 0; i < page.Tables.Count; i++)
@@ -328,8 +329,8 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
 
-- [Recognize receipts][recognize_receipts]
 - [Recognize form content][recognize_content]
+- [Recognize receipts][recognize_receipts]
 - [Recognize custom forms][recognize_custom_forms]
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
@@ -371,8 +372,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [logging]: ../../core/Azure.Core/samples/Diagnostics.md
 
-[recognize_receipts]: samples/Sample1_RecognizeReceipts.md
-[recognize_content]: samples/Sample2_RecognizeFormContent.md
+[recognize_content]: samples/Sample1_RecognizeFormContent.md
+[recognize_receipts]: samples/Sample2_RecognizeReceipts.md
 [recognize_custom_forms]: samples/Sample3_RecognizeCustomForms.md
 [train_a_model]: samples/Sample4_TrainModel.md
 [manage_custom_models]: samples/Sample5_ManageCustomModels.md

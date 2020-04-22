@@ -21,7 +21,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 To recognize receipts from a URI, use the `StartRecognizeReceiptsFromUri` method. The returned value is a collection of `RecognizedReceipt` objects -- one for each page in the submitted document.
 
-```C# Snippet:FormRecognizerSample1RecognizeReceiptFileFromUri
+```C# Snippet:FormRecognizerSampleRecognizeReceiptFileFromUri
 Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceiptsFromUri(new Uri(receiptUri)).WaitForCompletionAsync();
 foreach (var receipt in receipts.Value)
 {
@@ -42,7 +42,8 @@ foreach (var receipt in receipts.Value)
     for (int i = 0; i < items.Count; i++)
     {
         USReceiptItem item = usReceipt.Items[i];
-        Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', TotalPrice: '{item.TotalPrice.Value}'");
+        Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', Price: '{item.Price?.Value}'");
+        Console.WriteLine($"    TotalPrice: '{item.TotalPrice.Value}'");
     }
 
     Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
@@ -71,4 +72,4 @@ To see the full example source files, see:
 * [Recognize receipts from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample1_RecognizeReceiptsFromUri.cs)
 * [Recognize receipts from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample1_RecognizeReceiptsFromFile.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

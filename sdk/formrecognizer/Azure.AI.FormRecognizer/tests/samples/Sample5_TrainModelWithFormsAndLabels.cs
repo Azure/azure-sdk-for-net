@@ -48,11 +48,10 @@ namespace Azure.AI.FormRecognizer.Samples
                     Console.WriteLine("");
                 }
             }
-
-            // Delete the model on completion.
-            client.DeleteModel(model.ModelId);
-
             #endregion
+
+            // Delete the model on completion to clean environment.
+            client.DeleteModel(model.ModelId);
         }
     }
 }

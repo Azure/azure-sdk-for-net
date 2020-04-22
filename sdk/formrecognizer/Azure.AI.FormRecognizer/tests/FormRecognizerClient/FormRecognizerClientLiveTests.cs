@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [LiveOnly]
+    //[LiveOnly]
     public class FormRecognizerClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
     {
         private readonly Uri _containerUri;
@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
+        public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             _containerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
             _endpoint = new Uri(TestEnvironment.Endpoint);

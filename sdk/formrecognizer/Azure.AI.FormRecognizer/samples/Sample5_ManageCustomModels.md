@@ -20,7 +20,7 @@ var client = new FormTrainingClient(new Uri(endpoint), credential);
 ## Operations
 
 Operations that can be executed are:
-- Check number of models in the FormRecognizer resource account, and the maximum number of models that can be stored.
+- Check the number of models in the FormRecognizer resource account, and the maximum number of models that can be stored there.
 - List the models currently stored in the resource account.
 - Get a specific model using the model's Id.
 - Delete a model from the resource account.
@@ -76,4 +76,4 @@ To see the full example source files, see:
 * [Manage custom models (Synchronous)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample6_ManageCustomModels.cs)
 * [Manage custom models (Asynchronous)](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample6_ManageCustomModelsAsync.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

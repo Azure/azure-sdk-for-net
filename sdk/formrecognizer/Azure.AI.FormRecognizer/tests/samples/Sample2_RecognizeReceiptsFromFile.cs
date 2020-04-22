@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.Samples
 
             string receiptPath = FormRecognizerTestEnvironment.JpgReceiptPath;
 
-            #region Snippet:FormRecognizerSample1RecognizeReceiptFileStream
+            #region Snippet:FormRecognizerSampleRecognizeReceiptFileStream
             using (FileStream stream = new FileStream(receiptPath, FileMode.Open))
             {
                 Response<IReadOnlyList<RecognizedReceipt>> receipts = await client.StartRecognizeReceipts(stream).WaitForCompletionAsync();
@@ -49,7 +49,8 @@ namespace Azure.AI.FormRecognizer.Samples
                     for (int i = 0; i < items.Count; i++)
                     {
                         USReceiptItem item = usReceipt.Items[i];
-                        Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', TotalPrice: '{item.TotalPrice.Value}'");
+                        Console.WriteLine($"    Item {i}:  Name: '{item.Name.Value}', Quantity: '{item.Quantity?.Value}', Price: '{item.Price?.Value}'");
+                        Console.WriteLine($"    TotalPrice: '{item.TotalPrice.Value}'");
                     }
 
                     Console.WriteLine($"    Subtotal: '{subtotal}', with confidence '{usReceipt.Subtotal.Confidence}'");
