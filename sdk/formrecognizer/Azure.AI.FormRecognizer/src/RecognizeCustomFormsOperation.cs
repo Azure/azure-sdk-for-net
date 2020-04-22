@@ -69,7 +69,10 @@ namespace Azure.AI.FormRecognizer.Models
             _serviceClient = operations;
             _diagnostics = diagnostics;
 
-            // TODO: Add validation here
+            // TODO: Use regex to parse ids.
+            // https://github.com/Azure/azure-sdk-for-net/issues/11505
+
+            // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
             // https://github.com/Azure/azure-sdk-for-net/issues/10385
 
             string[] substrs = operationLocation.Split('/');
@@ -90,7 +93,18 @@ namespace Azure.AI.FormRecognizer.Models
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
 
+            // TODO: Use regex to parse ids.
+            // https://github.com/Azure/azure-sdk-for-net/issues/11505
+
+            // TODO: Add validation here (should we store _resuldId and _modelId as GUIDs?)
+            // https://github.com/Azure/azure-sdk-for-net/issues/10385
+
             string[] substrs = operationId.Split('/');
+
+            if (substrs.Length < 3)
+            {
+                throw new ArgumentException($"Invalid {operationId}. It should be formatted as: '{{modelId}}/analyzeresults/{{resultId}}'.", operationId);
+            }
 
             _resultId = substrs.Last();
             _modelId = substrs.First();
