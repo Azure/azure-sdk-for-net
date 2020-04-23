@@ -5,7 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -13,6 +12,7 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
@@ -1140,12 +1140,12 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var connection = CreateConnection();
                 await using var connectionAwaiter = connection.ConfigureAwait(false);
 
-                var cycleDuration = new Stopwatch();
+                ValueStopwatch cycleDuration;
                 var partitionIds = default(string[]);
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    cycleDuration.Restart();
+                    cycleDuration = ValueStopwatch.StartNew();
 
                     try
                     {
@@ -1197,7 +1197,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The interval that callers should delay before invoking the next load balancing cycle.</returns>
         ///
-        private async Task<TimeSpan> PerformLoadBalancingAsync(Stopwatch cycleDuration,
+        private async Task<TimeSpan> PerformLoadBalancingAsync(ValueStopwatch cycleDuration,
                                                                string[] partitionIds,
                                                                CancellationToken cancellationToken)
         {
@@ -1278,7 +1278,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Wait the remaining time, if any, to start the next cycle.
 
-            return LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.Elapsed);
+            return LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.GetElapsedTime());
         }
 
         /// <summary>
