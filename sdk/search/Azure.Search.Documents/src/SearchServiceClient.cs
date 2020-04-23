@@ -1443,7 +1443,11 @@ namespace Azure.Search.Documents
         /// Creates a new synonym map or updates an existing synonym map.
         /// </summary>
         /// <param name="synonymMap">Required. The <see cref="SynonymMap"/> to create or update.</param>
-        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SynonymMap"/> that was created.
@@ -1454,20 +1458,25 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response<SynonymMap> CreateOrUpdateSynonymMap(
             SynonymMap synonymMap,
-            SearchConditionalOptions options = null,
+            bool onlyIfUnchanged = false,
+            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             SynonymMapsClient.CreateOrUpdate(
                 synonymMap?.Name,
                 synonymMap,
                 options?.ClientRequestId,
-                options?.IfMatch?.ToString(),
-                options?.IfNoneMatch?.ToString(),
+                onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                null,
                 cancellationToken);
 
         /// <summary>
         /// Creates a new synonym map or updates an existing synonym map.
         /// </summary>
         /// <param name="synonymMap">Required. The <see cref="SynonymMap"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
         /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
@@ -1479,57 +1488,68 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response<SynonymMap>> CreateOrUpdateSynonymMapAsync(
             SynonymMap synonymMap,
+            bool onlyIfUnchanged = false,
             SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SynonymMapsClient.CreateOrUpdateAsync(
                 synonymMap?.Name,
                 synonymMap,
                 options?.ClientRequestId,
-                options?.IfMatch?.ToString(),
-                options?.IfNoneMatch?.ToString(),
+                onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                null,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a synonym map.
         /// </summary>
-        /// <param name="synonymMapName">The name of the synonym map to delete.</param>
-        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
+        /// <param name="synonymMap">The <see cref="SynonymMap"/> to delete.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMap"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual Response DeleteSynonymMap(
-            string synonymMapName,
-            SearchConditionalOptions options = null,
+            SynonymMap synonymMap,
+            bool onlyIfUnchanged = false,
+            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             SynonymMapsClient.Delete(
-                synonymMapName,
+                synonymMap?.Name,
                 options?.ClientRequestId,
-                options?.IfMatch?.ToString(),
-                options?.IfNoneMatch?.ToString(),
+                onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                null,
                 cancellationToken);
 
         /// <summary>
         /// Deletes a synonym map.
         /// </summary>
-        /// <param name="synonymMapName">The name of the synonym map to delete.</param>
-        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
+        /// <param name="synonymMap">The <see cref="SynonymMap"/> to delete.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMap"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSynonymMapAsync(
-            string synonymMapName,
-            SearchConditionalOptions options = null,
+            SynonymMap synonymMap,
+            bool onlyIfUnchanged = false,
+            SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SynonymMapsClient.DeleteAsync(
-                synonymMapName,
+                synonymMap?.Name,
                 options?.ClientRequestId,
-                options?.IfMatch?.ToString(),
-                options?.IfNoneMatch?.ToString(),
+                onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                null,
                 cancellationToken)
                 .ConfigureAwait(false);
 

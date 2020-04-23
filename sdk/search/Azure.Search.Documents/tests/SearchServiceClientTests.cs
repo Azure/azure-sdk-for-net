@@ -346,31 +346,41 @@ namespace Azure.Search.Documents.Tests
 
             SearchServiceClient client = resources.GetServiceClient();
 
-            SynonymMap map = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, "msft=>Microsoft"));
-            Assert.AreEqual(synonymMapName, map.Name);
-            Assert.AreEqual("solr", map.Format);
-            Assert.AreEqual("msft=>Microsoft", map.Synonyms);
+            SynonymMap createdMap = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, "msft=>Microsoft"));
+            Assert.AreEqual(synonymMapName, createdMap.Name);
+            Assert.AreEqual("solr", createdMap.Format);
+            Assert.AreEqual("msft=>Microsoft", createdMap.Synonyms);
 
-            map = await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new SearchConditionalOptions { IfMatch = map.ETag });
-            Assert.AreEqual(synonymMapName, map.Name);
-            Assert.AreEqual("solr", map.Format);
-            Assert.AreEqual("ms,msft=>Microsoft", map.Synonyms);
+            SynonymMap updatedMap = await client.CreateOrUpdateSynonymMapAsync(
+                new SynonymMap(synonymMapName, "ms,msft=>Microsoft")
+                {
+                    ETag = createdMap.ETag,
+                },
+                onlyIfUnchanged: true);
+            Assert.AreEqual(synonymMapName, updatedMap.Name);
+            Assert.AreEqual("solr", updatedMap.Format);
+            Assert.AreEqual("ms,msft=>Microsoft", updatedMap.Synonyms);
 
             RequestFailedException ex = await CatchAsync<RequestFailedException>(async () =>
-                await client.CreateOrUpdateSynonymMapAsync(new SynonymMap(synonymMapName, "ms,msft=>Microsoft"), new SearchConditionalOptions { IfNoneMatch = map.ETag }));
+                await client.CreateOrUpdateSynonymMapAsync(
+                    new SynonymMap(synonymMapName, "ms,msft=>Microsoft")
+                    {
+                        ETag = createdMap.ETag,
+                    },
+                    onlyIfUnchanged: true));
             Assert.AreEqual((int)HttpStatusCode.PreconditionFailed, ex.Status);
 
             Response<IReadOnlyList<SynonymMap>> mapsResponse = await client.GetSynonymMapsAsync(new[] { nameof(SynonymMap.Name) });
             foreach (SynonymMap namedMap in mapsResponse.Value)
             {
-                if (string.Equals(map.Name, namedMap.Name, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(updatedMap.Name, namedMap.Name, StringComparison.OrdinalIgnoreCase))
                 {
                     SynonymMap fetchedMap = await client.GetSynonymMapAsync(namedMap.Name);
-                    Assert.AreEqual(map.Synonyms, fetchedMap.Synonyms);
+                    Assert.AreEqual(updatedMap.Synonyms, fetchedMap.Synonyms);
                 }
             }
 
-            await client.DeleteSynonymMapAsync(map.Name, new SearchConditionalOptions { IfMatch = map.ETag });
+            await client.DeleteSynonymMapAsync(updatedMap, onlyIfUnchanged: true);
         }
 
         /// <summary>
