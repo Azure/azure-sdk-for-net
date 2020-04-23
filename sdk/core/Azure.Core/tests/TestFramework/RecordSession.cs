@@ -14,6 +14,9 @@ namespace Azure.Core.Testing
 
         public SortedDictionary<string, string> Variables { get; } = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
+        //Used only for deserializing track 1 session record files
+        public Dictionary<string, Queue<string>> Names { get; set; } = new Dictionary<string, Queue<string>>();
+
         public void Serialize(Utf8JsonWriter jsonWriter)
         {
             jsonWriter.WriteStartObject();
@@ -50,6 +53,19 @@ namespace Azure.Core.Testing
                 foreach (JsonProperty item in property.EnumerateObject())
                 {
                     session.Variables[item.Name] = item.Value.GetString();
+                }
+            }
+
+            if (element.TryGetProperty(nameof(Names), out property))
+            {
+                foreach (JsonProperty item in property.EnumerateObject())
+                {
+                    var queue = new Queue<string>();
+                    foreach (JsonElement subItem in item.Value.EnumerateArray())
+                    {
+                        queue.Enqueue(subItem.GetString());
+                    }
+                    session.Names[item.Name] = queue;
                 }
             }
             return session;

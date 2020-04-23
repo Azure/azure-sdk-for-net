@@ -19,7 +19,14 @@ namespace Azure.Core.Testing
             {
                 Type declaringType = invocation.Method.DeclaringType;
                 var ns = declaringType.Namespace;
-                var expectedName = declaringType.Name + "." + methodName.Substring(0, methodName.Length - 5);
+                var methodNameNoAysnc = methodName.Substring(0, methodName.Length - 5);
+                var expectedName = declaringType.Name + "." + methodNameNoAysnc;
+                string expectedNameNoStart = null;
+                //Fix scenario: StartCreateOrUpdateAsync -> CreateOrUpdate
+                if (methodNameNoAysnc.StartsWith("Start"))
+                {
+                    expectedNameNoStart = $"{declaringType.Name}.{methodNameNoAysnc.Substring(5)}";
+                }
                 using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."));
                 invocation.Proceed();
 
@@ -71,6 +78,10 @@ namespace Azure.Core.Testing
                         if (strict)
                         {
                             ClientDiagnosticListener.ProducedDiagnosticScope e = diagnosticListener.Scopes.FirstOrDefault(e => e.Name == expectedName);
+                            if (e == default && !string.IsNullOrEmpty(expectedNameNoStart))
+                            {
+                                e = diagnosticListener.Scopes.FirstOrDefault(e => e.Name == expectedNameNoStart);
+                            }
 
                             if (e == default)
                             {

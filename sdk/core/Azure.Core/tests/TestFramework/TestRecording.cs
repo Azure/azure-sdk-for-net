@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
@@ -90,7 +92,15 @@ namespace Azure.Core.Testing
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
-                            _random = new TestRandom(Mode, int.Parse(_session.Variables[RandomSeedVariableKey]));
+                            if (IsTrack1SessionRecord())
+                            {
+                                //random is not really used for track 1 playback, so randomly pick one as seed
+                                _random = new TestRandom(Mode, (int)DateTime.UtcNow.Ticks);
+                            }
+                            else
+                            {
+                                _random = new TestRandom(Mode, int.Parse(_session.Variables[RandomSeedVariableKey]));
+                            }
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -199,6 +209,23 @@ namespace Azure.Core.Testing
         public string GenerateId()
         {
             return Random.Next().ToString();
+        }
+
+        public string GenerateAssetName(string prefix, [CallerMemberName]string callerMethodName = "testframework_failed")
+        {
+            if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
+            {
+                return _session.Names[callerMethodName].Dequeue();
+            }
+            else
+            {
+                return prefix + Random.Next(9999);
+            }
+        }
+
+        public bool IsTrack1SessionRecord()
+        {
+            return _session.Entries.Any(item => !string.IsNullOrEmpty(item.EncodedRequestUri));
         }
 
         public string GetVariable(string variableName, string defaultValue)
