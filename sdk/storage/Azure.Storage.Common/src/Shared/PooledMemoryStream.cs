@@ -72,10 +72,9 @@ namespace Azure.Storage.Shared
         /// <param name="async">Whether to perform this operation asynchronously</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The buffered stream partition with memory backed by an array pool.</returns>
-        internal static async Task<(PooledMemoryStream Partition, bool StreamFinished)> BufferStreamPartitionInternal(Stream stream, long minCount, long maxCount, long absolutePosition, ArrayPool<byte> arrayPool, int maxArrayPoolRentalSize, bool async, CancellationToken cancellationToken)
+        internal static async Task<PooledMemoryStream> BufferStreamPartitionInternal(Stream stream, long minCount, long maxCount, long absolutePosition, ArrayPool<byte> arrayPool, int maxArrayPoolRentalSize, bool async, CancellationToken cancellationToken)
         {
-            int totalRead = 0;
-            bool streamFinished = false;
+            long totalRead = 0;
             var streamPartition = new PooledMemoryStream(arrayPool, absolutePosition, maxArrayPoolRentalSize);
 
             int maxCountIndividualBuffer;
@@ -86,22 +85,25 @@ namespace Azure.Storage.Shared
                 byte[] buffer;
                 int offset;
                 BufferPartition latestBuffer;
+                bool newbuffer;
                 if (((latestBuffer = streamPartition.BufferSet.LastOrDefault())?.GarbageOffset ?? 0) < (latestBuffer?.Buffer.Length ?? 0))
                 {
                     buffer = latestBuffer.Buffer;
                     offset = latestBuffer.GarbageOffset;
+                    newbuffer = false;
                 }
                 else
                 {
                     buffer = arrayPool.Rent((int)Math.Min(maxCount - totalRead, streamPartition.MaxArraySize));
                     offset = 0;
+                    newbuffer = true;
                 }
 
                 // limit max and min count for this buffer by buffer length
                 maxCountIndividualBuffer = (int)Math.Min(maxCount - totalRead, buffer.Length - offset);
-                minCountIndividualBuffer = (int)Math.Min(minCount - totalRead, maxCountIndividualBuffer);
+                minCountIndividualBuffer = (int)Math.Min(minCount - totalRead, maxCountIndividualBuffer); // definitionally limited by max; we won't ever have a swapped min/max range
 
-                (readIndividualBuffer, streamFinished) = await ReadLoopInternal(
+                readIndividualBuffer = await ReadLoopInternal(
                     stream,
                     buffer,
                     offset: offset,
@@ -109,13 +111,11 @@ namespace Azure.Storage.Shared
                     maxCountIndividualBuffer,
                     async,
                     cancellationToken).ConfigureAwait(false);
-                if (readIndividualBuffer == 0) // stream fininished and didn't put anything in the array
+                if (readIndividualBuffer == 0 && newbuffer) // nothing was placed in a brand new array
                 {
                     arrayPool.Return(buffer);
-                    break;
                 }
-
-                if (latestBuffer == default)
+                else if (newbuffer) // brand new array and we did place data in it
                 {
                     streamPartition.BufferSet.Add(new BufferPartition
                     {
@@ -123,46 +123,60 @@ namespace Azure.Storage.Shared
                         GarbageOffset = readIndividualBuffer
                     });
                 }
-                else
+                else // added to an existing array that was not entirely filled
                 {
                     latestBuffer.GarbageOffset += readIndividualBuffer;
                 }
 
                 totalRead += readIndividualBuffer;
 
-            /* If we read the max size of this buffer then quitting on min count is pointless. The point of quitting
+            /* If we filled the buffer this loop, then quitting on min count is pointless. The point of quitting
              * on min count is when the source stream doesn't have available bytes and we've reached an amount worth
              * sending instead of blocking on. If we filled the available array, we don't actually know whether more
              * data is available yet, as we limited our read for reasons outside the stream state. We should therefore
-             * try at least one more read regardless of whether we hit min count.
+             * try another read regardless of whether we hit min count.
              */
-            } while (totalRead < minCount && readIndividualBuffer == maxCountIndividualBuffer);
+            } while (
+                readIndividualBuffer != 0 &&                                                 // stream is done if this value is zero; no other check matters
+                totalRead < maxCount &&                                                      // stop filling the partition if we've hit the max size of the partition
+                (totalRead < minCount || readIndividualBuffer == maxCountIndividualBuffer)); // stop filling the partition if we've reached min count and we know we've hit at least a pause in the stream
 
-            return (streamPartition, streamFinished);
+            return streamPartition;
         }
 
         /// <summary>
         /// Loops Read() calls into buffer until minCount is reached or stream returns 0.
         /// </summary>
-        /// <returns>Bytes read and whether we reached end of stream.</returns>
-        private static async Task<(int Read, bool StreamFinished)> ReadLoopInternal(Stream stream, byte[] buffer, int offset, int minCount, int maxCount, bool async, CancellationToken cancellationToken)
+        /// <returns>Bytes read.</returns>
+        /// <remarks>
+        /// This method may have read bytes even if it has reached the confirmed end of stream. You will have to call
+        /// this method again and read zero bytes to get that confirmation.
+        /// </remarks>
+        private static async Task<int> ReadLoopInternal(Stream stream, byte[] buffer, int offset, int minCount, int maxCount, bool async, CancellationToken cancellationToken)
         {
+            if (minCount > maxCount) // nonsensical; don't allow caller methods to produce this
+            {
+                throw new ArgumentException($"{nameof(minCount)} cannot be greater than {nameof(maxCount)}.");
+            }
+            if (maxCount <= 0) // useless; don't allow caller methods to produce this
+            {
+                throw new ArgumentException("Cannot read a non-positive number of bytes.");
+            }
+
             int totalRead = 0;
-            bool endOfStream = false;
             do
             {
                 int read = async
                     ? await stream.ReadAsync(buffer, offset + totalRead, maxCount - totalRead, cancellationToken).ConfigureAwait(false)
                     : stream.Read(buffer, offset + totalRead, maxCount - totalRead);
-                if (read == 0)
+                if (read == 0) // either we have read maxCount in total or the stream has ended
                 {
-                    endOfStream = true;
                     break;
                 }
                 totalRead += read;
-            } while (totalRead < minCount);
-
-            return (totalRead, endOfStream);
+            } while (totalRead < minCount); // we always request the number that will bring our total read to maxCount
+                                            // if the stream can only give us so much at the moment and we've at least hit minCount, we can exit
+            return totalRead;
         }
 
         public override bool CanRead => true;
@@ -171,7 +185,7 @@ namespace Azure.Storage.Shared
 
         public override bool CanWrite => false;
 
-        public override long Length => BufferSet.Sum(tuple => tuple.GarbageOffset);
+        public override long Length => BufferSet.Sum(tuple => (long)tuple.GarbageOffset);
 
         public override long Position { get; set; }
 
@@ -192,7 +206,11 @@ namespace Azure.Storage.Shared
             {
                 (byte[] currentBuffer, int bufferCount, long offsetOfBuffer) = GetBufferFromPosition();
 
-                int toCopy = (int)Math.Min(Math.Min(Length - Position, bufferCount), count);
+                int toCopy = (int)Math.Min(Math.Min(
+                    Length - Position,
+                    bufferCount - (Position - offsetOfBuffer)),
+                    count - read);
+                Console.WriteLine($"Offset = {Position - offsetOfBuffer}; Count = {toCopy}; ArrayLength = {currentBuffer.Length}; RecordedBufferCount = {bufferCount};");
                 Array.Copy(currentBuffer, Position - offsetOfBuffer, buffer, read, toCopy);
                 read += toCopy;
                 Position += toCopy;

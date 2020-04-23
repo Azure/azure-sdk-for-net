@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.Storage.Tests
 {
     [TestFixture]
-    public class ArrayPoolStreamTests
+    public class PooledMemoryStreamTests
     {
         private readonly ArrayPool<byte> _pool = ArrayPool<byte>.Shared;
 
@@ -104,7 +104,7 @@ namespace Azure.Storage.Tests
         public void ReadStream(int dataSize, int bufferPartitionSize)
         {
             var originalStream = new PredictableStream();
-            var arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
+            var arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
             originalStream.Position = 0;
 
             var originalStreamData = new byte[dataSize];
@@ -113,6 +113,32 @@ namespace Azure.Storage.Tests
             arrayPoolStream.Read(poolStreamData, 0, dataSize);
 
             CollectionAssert.AreEqual(originalStreamData, poolStreamData);
+        }
+
+        [Test]
+        public void StreamCanHoldLongData()
+        {
+            const long dataSize = 4000L * Constants.MB;
+            const int bufferPartitionSize = 512 * Constants.MB;
+            var originalStream = new PredictableStream();
+            var arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, 0, _pool, bufferPartitionSize, false, default).EnsureCompleted();
+            originalStream.Position = 0;
+
+
+            // assert it holds the correct amount of data. other tests assert data validity and it's so expensive to do that here.
+            // test without blowing up memory
+            const int testSize = 256 * Constants.MB;
+            var pooledStreamBuffer = new byte[testSize];
+            long totalRead = 0;
+            int read;
+            do
+            {
+                // both these streams are backed in memory and will always read what is asked until the pooled stream hits the end
+                read = arrayPoolStream.Read(pooledStreamBuffer, 0, testSize);
+                totalRead += read;
+            } while (read != 0);
+
+            Assert.AreEqual(dataSize, totalRead);
         }
     }
 }

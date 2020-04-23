@@ -71,9 +71,9 @@ namespace Azure.Storage
         /// <returns>Hash code for the ParallelTransferOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
-            => MaximumTransferLength.GetHashCode()
+            => MaximumTransferSize.GetHashCode()
             ^ MaximumConcurrency.GetHashCode()
-            ^ InitialTransferLength.GetHashCode()
+            ^ InitialTransferSize.GetHashCode()
             ;
 
         /// <summary>

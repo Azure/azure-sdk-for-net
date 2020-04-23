@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(1, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
 
@@ -126,7 +126,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(1, sink.Staged.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertStaged(sink, content);
         }
@@ -153,7 +153,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(41, testPool.TotalRents);
             AssertStaged(sink, content);
 
-            foreach (byte[] bytes in sink.Staged.Values)
+            foreach (byte[] bytes in sink.Staged.Values.Select(val => val.Data))
             {
                 Assert.LessOrEqual(bytes.Length, 100);
                 Assert.GreaterOrEqual(bytes.Length, 50);
@@ -180,7 +180,7 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(2, sink.Staged.Count);
             // First two should be merged
-            CollectionAssert.AreEqual(new byte[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Staged[sink.Blocks.First()]);
+            CollectionAssert.AreEqual(new byte[] {0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Staged[sink.Blocks.First()].Data);
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(3, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
@@ -245,7 +245,40 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, testPool.TotalRents);
         }
 
-        private async Task<Response<BlobContentInfo>> InvokeUploadAsync(PartitionedUploader uploader, TestStream content)
+        [Test]
+        public async Task CanHandleLongBlockBufferedUpload()
+        {
+            const long blockSize = int.MaxValue + 1024L;
+            const int numBlocks = 2;
+            Stream content = new Storage.Tests.Shared.PredictableStream(numBlocks * blockSize);
+            TrackingArrayPool testPool = new TrackingArrayPool();
+            StagingSink sink = new StagingSink(false); // sink can't hold long blocks, and we don't need to look at their data anyway.
+
+            Mock<BlockBlobClient> clientMock = new Mock<BlockBlobClient>(MockBehavior.Strict, new Uri("http://mock"), new BlobClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            SetupAsyncStaging(clientMock, sink);
+
+            PartitionedUploader uploader = new PartitionedUploader(
+                clientMock.Object,
+                new StorageTransferOptions
+                {
+                    InitialTransferSize = 1, // forces buffered upload
+                    MaximumTransferSize = blockSize,
+                    MaximumConcurrency = 2
+                },
+                arrayPool: testPool);
+            Response<BlobContentInfo> info = await InvokeUploadAsync(uploader, content);
+
+            Assert.AreEqual(s_response, info);
+            Assert.AreEqual(numBlocks, sink.Staged.Count);
+            Assert.AreEqual(numBlocks, sink.Blocks.Length);
+            foreach (var block in sink.Staged.Values)
+            {
+                Assert.AreEqual(blockSize, block.StreamLength);
+            }
+        }
+
+        private async Task<Response<BlobContentInfo>> InvokeUploadAsync(PartitionedUploader uploader, Stream content)
         {
             if (_async)
             {
@@ -314,18 +347,21 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(sink.Blocks.Length, sink.Staged.Count);
             CollectionAssert.AreEqual(
                 stream.AllBytes,
-                sink.Blocks.SelectMany(block => sink.Staged[block]));
+                sink.Blocks.SelectMany(block => sink.Staged[block].Data));
         }
 
         private class StagingSink
         {
+            private readonly bool _saveBytes;
+
             public string[] Blocks { get; set; }
 
-            public Dictionary<string, byte[]> Staged { get; }
+            public Dictionary<string, (byte[] Data, long? StreamLength)> Staged { get; }
 
-            public StagingSink()
+            public StagingSink(bool saveBytes = true)
             {
-                Staged = new Dictionary<string, byte[]>();
+                _saveBytes = saveBytes;
+                Staged = new Dictionary<string, (byte[], long?)>();
             }
 
             public async Task<Response<BlobContentInfo>> CommitInternal(
@@ -352,12 +388,17 @@ namespace Azure.Storage.Blobs.Test
             public Response<BlockInfo> Stage(string s, Stream stream, byte[] hash, BlobRequestConditions accessConditions, IProgress<long> progress, CancellationToken cancellationToken)
             {
                 progress.Report(stream.Length);
-                var memoryStream = new MemoryStream();
-                stream.CopyTo(memoryStream);
-                memoryStream.Position = 0;
+                byte[] data = default;
+                if (_saveBytes)
+                {
+                    var memoryStream = new MemoryStream();
+                    stream.CopyTo(memoryStream);
+                    memoryStream.Position = 0;
+                    data = memoryStream.ToArray();
+                }
                 lock (Staged)
                 {
-                    Staged.Add(s, memoryStream.ToArray());
+                    Staged.Add(s, (data, stream.Length));
                 }
                 return Response.FromValue(new BlockInfo(), new MockResponse(200));
             }
