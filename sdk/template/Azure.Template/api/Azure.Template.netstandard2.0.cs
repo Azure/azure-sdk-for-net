@@ -4,13 +4,13 @@ namespace Azure.Template
     {
         protected MiniSecretClient() { }
         public MiniSecretClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public MiniSecretClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.MiniSecretsClientOptions options) { }
+        public MiniSecretClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.MiniSecretClientOptions options) { }
         public virtual Azure.Response<Azure.Template.Models.SecretBundle> GetSecret(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.SecretBundle>> GetSecretAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MiniSecretsClientOptions : Azure.Core.ClientOptions
+    public partial class MiniSecretClientOptions : Azure.Core.ClientOptions
     {
-        public MiniSecretsClientOptions(Azure.Template.MiniSecretsClientOptions.ServiceVersion version = Azure.Template.MiniSecretsClientOptions.ServiceVersion.V7_0) { }
+        public MiniSecretClientOptions(Azure.Template.MiniSecretClientOptions.ServiceVersion version = Azure.Template.MiniSecretClientOptions.ServiceVersion.V7_0) { }
         public enum ServiceVersion
         {
             V7_0 = 1,
