@@ -106,9 +106,9 @@ namespace Azure.Storage.Internal.Avro
 
             // Validate codec
             _metadata.TryGetValue(AvroConstants.CodecKey, out string codec);
-            if (codec == AvroConstants.DeflateCodec)
+            if (!(codec == null || codec == "null"))
             {
-                throw new ArgumentException("Deflate codec is not supported");
+                throw new ArgumentException("Codecs are not supported");
             }
 
             // The 16-byte, randomly-generated sync marker for this file.

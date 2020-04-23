@@ -3,13 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -17,6 +15,15 @@ namespace Azure.Storage.Internal.Avro
 {
     internal static class AvroParser
     {
+        /// <summary>
+        /// Reads a fixed number of bytes from the stream.
+        /// The number of bytes to return is the first int read from the stream.
+        /// </summary>
+        /// <remarks>
+        /// Note that in the Avro spec, byte array length is specified as a long.
+        /// This is fine for Quick Query and Change Feed, but could become a problem
+        /// in the future.
+        /// </remarks>
         public static async Task<byte[]> ReadFixedBytesAsync(
             Stream stream,
             int length,
@@ -40,6 +47,9 @@ namespace Azure.Storage.Internal.Avro
             return data;
         }
 
+        /// <summary>
+        /// Reads a single byte from the stream.
+        /// </summary>
         private static async Task<byte> ReadByteAsync(
             Stream stream,
             bool async,
@@ -49,7 +59,9 @@ namespace Azure.Storage.Internal.Avro
             return bytes[0];
         }
 
-        // Stolen because the linked references in the Avro spec were subpar...
+        /// <summary>
+        /// Internal implementation of ReadLongAsync().
+        /// </summary>
         private static async Task<long> ReadZigZagLongAsync(
             Stream stream,
             bool async,
@@ -68,29 +80,50 @@ namespace Azure.Storage.Internal.Avro
             return (-(value & 0x01L)) ^ ((value >> 1) & 0x7fffffffffffffffL);
         }
 
+        /// <summary>
+        /// Returns null.
+        /// </summary>
         public static Task<object> ReadNullAsync() => Task.FromResult<object>(null);
 
+        /// <summary>
+        /// Reads a bool from the stream.
+        /// </summary>
         public static async Task<bool> ReadBoolAsync(
             Stream stream,
             bool async,
             CancellationToken cancellationToken)
         {
             byte b = await ReadByteAsync(stream, async, cancellationToken).ConfigureAwait(false);
-            return b != 0;
+
+            if (b == 1)
+                return true;
+            else if (b == 0)
+                return false;
+            else
+                throw new InvalidOperationException("Byte was not a bool.");
         }
 
+        /// <summary>
+        /// Reads a long from the stream.
+        /// </summary>
         public static async Task<long> ReadLongAsync(
             Stream stream,
             bool async,
             CancellationToken cancellationToken) =>
             await ReadZigZagLongAsync(stream, async, cancellationToken).ConfigureAwait(false);
 
+        /// <summary>
+        /// Reads an int from the stream.
+        /// </summary>
         public static async Task<int> ReadIntAsync(
             Stream stream,
             bool async,
             CancellationToken cancellationToken) =>
             (int)(await ReadLongAsync(stream, async, cancellationToken).ConfigureAwait(false));
 
+        /// <summary>
+        /// Reads a float from the stream.
+        /// </summary>
         public static async Task<float> ReadFloatAsync(
             Stream stream,
             bool async,
@@ -100,6 +133,9 @@ namespace Azure.Storage.Internal.Avro
             return BitConverter.ToSingle(bytes, 0);
         }
 
+        /// <summary>
+        /// Reads a double from the stream.
+        /// </summary>
         public static async Task<double> ReadDoubleAsync(
             Stream stream,
             bool async,
@@ -109,15 +145,23 @@ namespace Azure.Storage.Internal.Avro
             return BitConverter.ToDouble(bytes, 0);
         }
 
+        /// <summary>
+        /// Reads a fixed number of bytes from the stream.
+        /// </summary>
         public static async Task<byte[]> ReadBytesAsync(
             Stream stream,
             bool async,
             CancellationToken cancellationToken)
         {
+            // Note that byte array length is actually defined as a long in the Avro spec.
+            // This is fine for now, but may need to be changed in the future.
             int size = await ReadIntAsync(stream, async, cancellationToken).ConfigureAwait(false);
             return await ReadFixedBytesAsync(stream, size, async, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Reads a string from the stream.
+        /// </summary>
         public static async Task<string> ReadStringAsync(
             Stream stream,
             bool async,
@@ -127,6 +171,10 @@ namespace Azure.Storage.Internal.Avro
             return Encoding.UTF8.GetString(bytes);
         }
 
+        /// <summary>
+        /// Reads a KeyValuePair from the stream.
+        /// Used in ReadMapAsync().
+        /// </summary>
         private static async Task<KeyValuePair<string, T>> ReadMapPairAsync<T>(
             Stream stream,
             Func<Stream, bool, CancellationToken, Task<T>> parseItemAsync,
@@ -140,6 +188,9 @@ namespace Azure.Storage.Internal.Avro
             return new KeyValuePair<string, T>(key, value);
         }
 
+        /// <summary>
+        /// Reads a map from the stream.
+        /// </summary>
         public static async Task<Dictionary<string, T>> ReadMapAsync<T>(
             Stream stream,
             Func<Stream, bool, CancellationToken, Task<T>> parseItemAsync,
@@ -157,6 +208,9 @@ namespace Azure.Storage.Internal.Avro
             return entries.ToDictionary();
         }
 
+        /// <summary>
+        /// Reads an array of objects from the stream.
+        /// </summary>
         private static async Task<IEnumerable<T>> ReadArrayAsync<T>(
             Stream stream,
             Func<Stream, bool, CancellationToken, Task<T>> parseItemAsync,
@@ -186,6 +240,9 @@ namespace Azure.Storage.Internal.Avro
             return items;
         }
 
+        /// <summary>
+        /// Adds the select to each element in the array.
+        /// </summary>
         internal static List<T> Map<T>(this JsonElement array, Func<JsonElement, T> selector)
         {
             var values = new List<T>();
@@ -196,6 +253,9 @@ namespace Azure.Storage.Internal.Avro
             return values;
         }
 
+        /// <summary>
+        /// Converts an IEnumerable of KeyValuePair into a Dictionary.
+        /// </summary>
         internal static Dictionary<string, T> ToDictionary<T>(this IEnumerable<KeyValuePair<string, T>> values)
         {
             Dictionary<string, T> dict = new Dictionary<string, T>();
@@ -207,98 +267,110 @@ namespace Azure.Storage.Internal.Avro
         }
     }
 
+    /// <summary>
+    /// Parent class of AvroTypes.
+    /// </summary>
     internal abstract class AvroType
     {
+        /// <summary>
+        /// Reads an object from the stream.
+        /// </summary>
         public abstract Task<object> ReadAsync(
             Stream stream,
             bool async,
             CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Determinds the AvroType from the Avro Schema.
+        /// </summary>
         public static AvroType FromSchema(JsonElement schema)
         {
-            switch (schema.ValueKind)
+            return schema.ValueKind switch
             {
                 // Primitives
-                case JsonValueKind.String:
-                    {
-                        string type = schema.GetString();
-                        switch (type)
-                        {
-                            case "null":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Null };
-                            case "boolean":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Boolean };
-                            case "int":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Int };
-                            case "long":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Long };
-                            case "float":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Float };
-                            case "double":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Double };
-                            case "bytes":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Bytes };
-                            case "string":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.String };
-                            default:
-                                throw new InvalidOperationException($"Unexpected Avro type {type} in {schema}");
-                        }
-                    }
+                JsonValueKind.String => FromStringSchema(schema),
                 // Union types
-                case JsonValueKind.Array:
-                    return new AvroUnionType { Types = schema.Map(FromSchema) };
+                JsonValueKind.Array => FromArraySchema(schema),
                 // Everything else
-                case JsonValueKind.Object:
+                JsonValueKind.Object => FromObjectSchema(schema),
+                _ => throw new InvalidOperationException($"Unexpected JSON Element: {schema}"),
+            };
+        }
+
+        private static AvroType FromStringSchema(JsonElement schema)
+        {
+            string type = schema.GetString();
+            return type switch
+            {
+                AvroConstants.Null => new AvroPrimitiveType { Primitive = AvroPrimitive.Null },
+                AvroConstants.Boolean => new AvroPrimitiveType { Primitive = AvroPrimitive.Boolean },
+                AvroConstants.Int => new AvroPrimitiveType { Primitive = AvroPrimitive.Int },
+                AvroConstants.Long => new AvroPrimitiveType { Primitive = AvroPrimitive.Long },
+                AvroConstants.Float => new AvroPrimitiveType { Primitive = AvroPrimitive.Float },
+                AvroConstants.Double => new AvroPrimitiveType { Primitive = AvroPrimitive.Double },
+                AvroConstants.Bytes => new AvroPrimitiveType { Primitive = AvroPrimitive.Bytes },
+                AvroConstants.String => new AvroPrimitiveType { Primitive = AvroPrimitive.String },
+                _ => throw new InvalidOperationException($"Unexpected Avro type {type} in {schema}"),
+            };
+        }
+
+        private static AvroType FromArraySchema(JsonElement schema)
+        {
+            return new AvroUnionType { Types = schema.Map(FromSchema) };
+        }
+
+        private static AvroType FromObjectSchema(JsonElement schema)
+        {
+            string type = schema.GetProperty("type").GetString();
+            switch (type)
+            {
+                // Primitives can be defined as strings or objects
+                case AvroConstants.Null:
+                    return new AvroPrimitiveType { Primitive = AvroPrimitive.Null };
+                case AvroConstants.Boolean:
+                    return new AvroPrimitiveType { Primitive = AvroPrimitive.Boolean };
+                case AvroConstants.Int:
+                    return new AvroPrimitiveType { Primitive = AvroPrimitive.Int };
+                case AvroConstants.Long:
+                    return new AvroPrimitiveType { Primitive = AvroPrimitive.Long };
+                case AvroConstants.Float:
+                    return new AvroPrimitiveType { Primitive = AvroPrimitive.Float };
+                case AvroConstants.Double:
+                    return new AvroPrimitiveType { Primitive = AvroPrimitive.Double };
+                case AvroConstants.Bytes:
+                    return new AvroPrimitiveType { Primitive = AvroPrimitive.Bytes };
+                case AvroConstants.String:
+                    return new AvroPrimitiveType { Primitive = AvroPrimitive.String };
+                case AvroConstants.Record:
+                    if (schema.TryGetProperty(AvroConstants.Aliases, out var _))
+                        throw new InvalidOperationException($"Unexpected aliases on {schema}");
+                    string name = schema.GetProperty(AvroConstants.Name).GetString();
+                    Dictionary<string, AvroType> fields = new Dictionary<string, AvroType>();
+                    foreach (JsonElement field in schema.GetProperty(AvroConstants.Fields).EnumerateArray())
                     {
-                        string type = schema.GetProperty("type").GetString();
-                        switch (type)
-                        {
-                            // Primitives can be defined as strings or objects
-                            case "null":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Null };
-                            case "boolean":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Boolean };
-                            case "int":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Int };
-                            case "long":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Long };
-                            case "float":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Float };
-                            case "double":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Double };
-                            case "bytes":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.Bytes };
-                            case "string":
-                                return new AvroPrimitiveType { Primitive = AvroPrimitive.String };
-                            case "record":
-                                if (schema.TryGetProperty("aliases", out var _)) throw new InvalidOperationException($"Unexpected aliases on {schema}");
-                                string name = schema.GetProperty("name").GetString();
-                                Dictionary<string, AvroType> fields = new Dictionary<string, AvroType>();
-                                foreach (JsonElement field in schema.GetProperty("fields").EnumerateArray())
-                                {
-                                    fields[field.GetProperty("name").GetString()] = FromSchema(field.GetProperty("type"));
-                                }
-                                return new AvroRecordType { Schema = name, Fields = fields };
-                            case "enum":
-                                if (schema.TryGetProperty("aliases", out var _)) throw new InvalidOperationException($"Unexpected aliases on {schema}");
-                                return new AvroEnumType { Symbols = schema.GetProperty("symbols").Map(s => s.GetString()) };
-                            case "map":
-                                return new AvroMapType { ItemType = FromSchema(schema.GetProperty("values")) };
-                            case "array": // Unused today
-                            case "union": // Unused today
-                            case "fixed": // Unused today
-                            default:
-                                throw new InvalidOperationException($"Unexpected Avro type {type} in {schema}");
-                        }
+                        fields[field.GetProperty(AvroConstants.Name).GetString()] = FromSchema(field.GetProperty(AvroConstants.Type));
                     }
+                    return new AvroRecordType { Schema = name, Fields = fields };
+                case AvroConstants.Enum:
+                    if (schema.TryGetProperty(AvroConstants.Aliases, out var _))
+                        throw new InvalidOperationException($"Unexpected aliases on {schema}");
+                    return new AvroEnumType { Symbols = schema.GetProperty(AvroConstants.Symbols).Map(s => s.GetString()) };
+                case AvroConstants.Map:
+                    return new AvroMapType { ItemType = FromSchema(schema.GetProperty(AvroConstants.Values)) };
+                case AvroConstants.Array: // Unused today
+                case AvroConstants.Union: // Unused today
+                case AvroConstants.Fixed: // Unused today
                 default:
-                    throw new InvalidOperationException($"Unexpected JSON Element: {schema}");
+                    throw new InvalidOperationException($"Unexpected Avro type {type} in {schema}");
             }
         }
     }
 
     internal enum AvroPrimitive { Null, Boolean, Int, Long, Float, Double, Bytes, String };
 
+    /// <summary>
+    /// AvroPrimativeType.
+    /// </summary>
     internal class AvroPrimitiveType : AvroType
     {
         public AvroPrimitive Primitive { get; set; }
@@ -323,6 +395,9 @@ namespace Azure.Storage.Internal.Avro
             };
     }
 
+    /// <summary>
+    /// AvroEnumType.
+    /// </summary>
     internal class AvroEnumType : AvroType
     {
         public IReadOnlyList<string> Symbols { get; set; }
@@ -337,6 +412,9 @@ namespace Azure.Storage.Internal.Avro
         }
     }
 
+    /// <summary>
+    /// AvroUnionType.
+    /// </summary>
     internal class AvroUnionType : AvroType
     {
         public IReadOnlyList<AvroType> Types { get; set; }
@@ -351,6 +429,9 @@ namespace Azure.Storage.Internal.Avro
         }
     }
 
+    /// <summary>
+    /// AvroMapType.
+    /// </summary>
     internal class AvroMapType : AvroType
     {
         public AvroType ItemType { get; set; }
@@ -366,6 +447,9 @@ namespace Azure.Storage.Internal.Avro
         }
     }
 
+    /// <summary>
+    /// AvroRecordType.
+    /// </summary>
     internal class AvroRecordType : AvroType
     {
         public string Schema { get; set; }
