@@ -60,6 +60,17 @@ namespace Microsoft.Azure.Management.Cdn
         public string ApiVersion { get; private set; }
 
         /// <summary>
+        /// Azure Subscription ID.
+        /// </summary>
+        public string SubscriptionId1 { get; set; }
+
+        /// <summary>
+        /// Version of the API to be used with the client request. Current version is
+        /// 2017-04-02.
+        /// </summary>
+        public string ApiVersion1 { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -111,6 +122,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets the IEdgeNodesOperations.
         /// </summary>
         public virtual IEdgeNodesOperations EdgeNodes { get; private set; }
+
+        /// <summary>
+        /// Gets the IPoliciesOperations.
+        /// </summary>
+        public virtual IPoliciesOperations Policies { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedRuleSetsOperations.
+        /// </summary>
+        public virtual IManagedRuleSetsOperations ManagedRuleSets { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the CdnManagementClient class.
@@ -360,8 +381,10 @@ namespace Microsoft.Azure.Management.Cdn
             ResourceUsage = new ResourceUsageOperations(this);
             Operations = new Operations(this);
             EdgeNodes = new EdgeNodesOperations(this);
+            Policies = new PoliciesOperations(this);
+            ManagedRuleSets = new ManagedRuleSetsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-15";
+            ApiVersion = "2019-06-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
