@@ -21,6 +21,7 @@
       <GenAPITargetPath>$(_RefSourceOutputPath)$(AssemblyName).$(TargetFramework).cs</GenAPITargetPath>
     </PropertyGroup>
     <Delete Files="$(GenAPITargetPath)" />
+    <MakeDir Directories="$(_RefSourceOutputPath)"/>
   </Target>
 
   <Target Name="_CheckGenerateAPIListingValue" AfterTargets="Build">

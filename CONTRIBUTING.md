@@ -139,6 +139,11 @@ In some cases, you might want to test against the latest versions of the client 
 
 If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings.
 
+Running the script for a project in `sdk\tables` would look like this: 
+```
+eng\scripts\Export-API.ps1 tables
+```
+
 ## API Compatibility Verification
 
 .NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/master/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
