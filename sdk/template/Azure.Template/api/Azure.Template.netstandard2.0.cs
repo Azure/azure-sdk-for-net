@@ -6,7 +6,6 @@ namespace Azure.Template
         public MiniSecretClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MiniSecretClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Template.MiniSecretsClientOptions options) { }
         public virtual Azure.Response<Azure.Template.Models.SecretBundle> GetSecret(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Template.Models.SecretBundle>> GetSecretAsync(string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MiniSecretsClientOptions : Azure.Core.ClientOptions
