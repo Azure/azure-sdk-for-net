@@ -157,11 +157,6 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        /// <summary>
-        /// The options that were used to created this PathClient.
-        /// </summary>
-        private DataLakeClientOptions _options;
-
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakePathClient"/>
@@ -326,7 +321,6 @@ namespace Azure.Storage.Files.DataLake
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
-            _options = options;
         }
 
         /// <summary>
@@ -1574,15 +1568,7 @@ namespace Azure.Storage.Files.DataLake
                     destUriBuilder.Sas = null;
 
                     // Build destPathClient
-                    DataLakePathClient destPathClient;
-                    if (destUriBuilder.Sas != null)
-                    {
-                        destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), _options);
-                    }
-                    else
-                    {
-                        destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline, _options);
-                    }
+                    DataLakePathClient destPathClient = new DataLakePathClient(destUriBuilder.ToUri(), Pipeline);
 
                     Response<PathCreateResult> response = await DataLakeRestClient.Path.CreateAsync(
                         clientDiagnostics: _clientDiagnostics,
