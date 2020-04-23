@@ -5,6 +5,7 @@
 ### Breaking Changes
 
 - Removed constructor from `SynonymMap` with `IEnumerable<string>` parameter.
+- `SearchServiceClient.GetIndexes` and `SearchServiceClient.GetIndexesAsync` now return `Pageable<SearchIndex>` and `AsyncPageable<SearchIndex>` respectively.
 
 ## 1.0.0-preview.2 (2020-04-06)
 

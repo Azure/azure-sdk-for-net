@@ -753,21 +753,26 @@ namespace Azure.Search.Documents
         /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
+        /// <returns>The <see cref="Pageable{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<IReadOnlyList<SearchIndex>> GetIndexes(
+        public virtual Pageable<SearchIndex> GetIndexes(
             IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            Response<ListIndexesResult> result = IndexesClient.List(
-                selectProperties.CommaJoin() ?? Constants.All,
-                options?.ClientRequestId,
-                cancellationToken);
+            CancellationToken cancellationToken = default) => PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+            {
+                if (continuationToken != null)
+                {
+                    throw new NotSupportedException("A continuation token is unexpected and unsupported at this time.");
+                }
 
-            return Response.FromValue(result.Value.Indexes, result.GetRawResponse());
-        }
+                Response<ListIndexesResult> result = IndexesClient.List(
+                    selectProperties.CommaJoin() ?? Constants.All,
+                    options?.ClientRequestId,
+                    cancellationToken);
+
+                return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
+            });
 
         /// <summary>
         /// Gets a list of all indexes.
@@ -778,19 +783,24 @@ namespace Azure.Search.Documents
         /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndex"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IReadOnlyList<SearchIndex>>> GetIndexesAsync(
+        public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
             IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            Response<ListIndexesResult> result = await IndexesClient.ListAsync(
-                selectProperties.CommaJoin() ?? Constants.All,
-                options?.ClientRequestId,
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default) => PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+            {
+                if (continuationToken != null)
+                {
+                    throw new NotSupportedException("A continuation token is unexpected and unsupported at this time.");
+                }
 
-            return Response.FromValue(result.Value.Indexes, result.GetRawResponse());
-        }
+                Response<ListIndexesResult> result = await IndexesClient.ListAsync(
+                    selectProperties.CommaJoin() ?? Constants.All,
+                    options?.ClientRequestId,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
+            });
 
         /// <summary>
         /// Gets <see cref="SearchIndexStatistics"/> for the given index, including a document count and storage usage.
