@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
-using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -14,6 +13,8 @@ namespace Azure.Core.Tests
     public class RecordSessionTests
     {
         [TestCase("{\"json\":\"value\"}", "application/json")]
+        [TestCase("[\"json\", \"value\"]", "application/json")]
+        [TestCase("[{\"json\":\"value\"}, {\"json\":\"value\"}]", "application/json")]
         [TestCase("invalid json", "application/json")]
         [TestCase("{ \"json\": \"value\" }", "unknown")]
         [TestCase("multi\rline", "application/xml")]
