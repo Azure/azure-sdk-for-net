@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
@@ -75,11 +76,11 @@ namespace Azure.Core.Testing
             {
                 if (property.ValueKind == JsonValueKind.Object)
                 {
-                    var arrayBufferWriter = new ArrayBufferWriter<byte>();
-                    using var writer = new Utf8JsonWriter(arrayBufferWriter);
+                    using var memoryStream = new MemoryStream();
+                    using var writer = new Utf8JsonWriter(memoryStream);
                     property.WriteTo(writer);
                     writer.Flush();
-                    return arrayBufferWriter.WrittenMemory.ToArray();
+                    return memoryStream.ToArray();
                 }
                 else if (property.ValueKind == JsonValueKind.Array)
                 {

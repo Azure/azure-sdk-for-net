@@ -6,16 +6,16 @@ using Azure.Core;
 namespace Azure.Template
 {
     /// <summary>
-    /// The options for <see cref="TemplateClient"/>
+    /// The options for <see cref="MiniSecretClient"/>
     /// </summary>
-    public class TemplateClientOptions : ClientOptions
+    public class MiniSecretsClientOptions : ClientOptions
     {
         private readonly ServiceVersion _version;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TemplateClientOptions"/>.
+        /// Initializes a new instance of the <see cref="MiniSecretsClientOptions"/>.
         /// </summary>
-        public TemplateClientOptions(ServiceVersion version = ServiceVersion.V1)
+        public MiniSecretsClientOptions(ServiceVersion version = ServiceVersion.V1)
         {
             _version = version;
         }
