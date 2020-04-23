@@ -11,10 +11,10 @@ namespace Azure.Template
     }
     public partial class MiniSecretsClientOptions : Azure.Core.ClientOptions
     {
-        public MiniSecretsClientOptions(Azure.Template.MiniSecretsClientOptions.ServiceVersion version = Azure.Template.MiniSecretsClientOptions.ServiceVersion.V1) { }
+        public MiniSecretsClientOptions(Azure.Template.MiniSecretsClientOptions.ServiceVersion version = Azure.Template.MiniSecretsClientOptions.ServiceVersion.V7_0) { }
         public enum ServiceVersion
         {
-            V1 = 1,
+            V7_0 = 1,
         }
     }
 }

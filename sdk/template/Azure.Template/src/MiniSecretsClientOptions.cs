@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 
 namespace Azure.Template
@@ -10,14 +11,18 @@ namespace Azure.Template
     /// </summary>
     public class MiniSecretsClientOptions : ClientOptions
     {
-        private readonly ServiceVersion _version;
+        internal string Version { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MiniSecretsClientOptions"/>.
         /// </summary>
-        public MiniSecretsClientOptions(ServiceVersion version = ServiceVersion.V1)
+        public MiniSecretsClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
-            _version = version;
+            Version = version switch
+            {
+                ServiceVersion.V7_0 => "7.0",
+                _ => throw new NotSupportedException("Unsupported service version.")
+            };
         }
 
         /// <summary>
@@ -26,9 +31,11 @@ namespace Azure.Template
         public enum ServiceVersion
         {
             /// <summary>
-            /// The V1 of the template service.
+            /// The 7.0 of the secret service.
             /// </summary>
-            V1 = 1
+#pragma warning disable CA1707 // Remove the underscores from member name
+            V7_0 = 1
+#pragma warning restore
         }
     }
 }
