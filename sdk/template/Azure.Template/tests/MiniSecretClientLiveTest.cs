@@ -21,7 +21,7 @@ namespace Azure.Template.Tests
             return InstrumentClient(new MiniSecretClient(
                 new Uri(TestEnvironment.KeyVaultUri),
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new MiniSecretsClientOptions())
+                Recording.InstrumentClientOptions(new MiniSecretClientOptions())
             ));
         }
 

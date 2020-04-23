@@ -9,19 +9,19 @@ namespace Azure.Template
     /// <summary>
     /// The options for <see cref="MiniSecretClient"/>
     /// </summary>
-    public class MiniSecretsClientOptions : ClientOptions
+    public class MiniSecretClientOptions : ClientOptions
     {
         internal string Version { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MiniSecretsClientOptions"/>.
+        /// Initializes a new instance of the <see cref="MiniSecretClientOptions"/>.
         /// </summary>
-        public MiniSecretsClientOptions(ServiceVersion version = ServiceVersion.V7_0)
+        public MiniSecretClientOptions(ServiceVersion version = ServiceVersion.V7_0)
         {
             Version = version switch
             {
                 ServiceVersion.V7_0 => "7.0",
-                _ => throw new NotSupportedException("Unsupported service version.")
+                _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
         }
 

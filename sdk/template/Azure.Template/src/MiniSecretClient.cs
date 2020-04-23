@@ -16,14 +16,14 @@ namespace Azure.Template
         /// <summary>
         /// Initializes a new instance of the <see cref="MiniSecretClient"/>.
         /// </summary>
-        public MiniSecretClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MiniSecretsClientOptions())
+        public MiniSecretClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new MiniSecretClientOptions())
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MiniSecretClient"/>.
         /// </summary>
-        public MiniSecretClient(Uri endpoint, TokenCredential credential, MiniSecretsClientOptions options): this(
+        public MiniSecretClient(Uri endpoint, TokenCredential credential, MiniSecretClientOptions options): this(
             new ClientDiagnostics(options),
             HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://vault.azure.net/.default")),
             endpoint.ToString(),
