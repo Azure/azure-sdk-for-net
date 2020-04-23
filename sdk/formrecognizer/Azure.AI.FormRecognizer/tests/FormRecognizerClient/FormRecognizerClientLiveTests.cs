@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    //[LiveOnly]
+    [LiveOnly]
     public class FormRecognizerClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
     {
         private readonly Uri _containerUri;
