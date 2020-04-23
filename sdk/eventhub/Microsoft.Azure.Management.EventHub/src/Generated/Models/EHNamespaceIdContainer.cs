@@ -14,23 +14,23 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties supplied for Subnet
+    /// The full ARM ID of an Event Hubs Namespace
     /// </summary>
-    public partial class Subnet
+    public partial class EHNamespaceIdContainer
     {
         /// <summary>
-        /// Initializes a new instance of the Subnet class.
+        /// Initializes a new instance of the EHNamespaceIdContainer class.
         /// </summary>
-        public Subnet()
+        public EHNamespaceIdContainer()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Subnet class.
+        /// Initializes a new instance of the EHNamespaceIdContainer class.
         /// </summary>
-        /// <param name="id">Resource ID of Virtual Network Subnet</param>
-        public Subnet(string id = default(string))
+        /// <param name="id">id parameter</param>
+        public EHNamespaceIdContainer(string id = default(string))
         {
             Id = id;
             CustomInit();
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource ID of Virtual Network Subnet
+        /// Gets or sets id parameter
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
