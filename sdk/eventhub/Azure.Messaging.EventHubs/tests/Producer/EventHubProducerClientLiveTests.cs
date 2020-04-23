@@ -9,7 +9,6 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -265,8 +264,8 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = new EventHubProducerClient(connectionString, new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(5) } }))
                 {
                     // Actual limit is 1046520 for a single event.
-                    var singleEvent = new EventData(new byte[100000]);
 
+                    var singleEvent = new EventData(new byte[100000]);
                     Assert.That(async () => await producer.SendAsync(singleEvent), Throws.Nothing);
                 }
             }
@@ -309,6 +308,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = new EventHubProducerClient(connectionString))
                 {
                     // Actual limit is 1046520 for a single event.
+
                     var singleEvent = new EventData(new byte[1500000]);
                     EventData[] eventBatch = new[] { new EventData(new byte[1500000]) };
 
@@ -491,6 +491,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     using EventDataBatch batch = await producer.CreateBatchAsync();
 
                     // Actual limit is 1046520 for a single event.
+
                     batch.TryAdd(new EventData(new byte[100000 / 3]));
                     batch.TryAdd(new EventData(new byte[100000 / 3]));
                     batch.TryAdd(new EventData(new byte[100000 / 3]));
@@ -516,6 +517,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = new EventHubProducerClient(connectionString))
                 {
                     // Actual limit is 1046520 for a single event.
+
                     EventData[] events = new[]
                     {
                         new EventData(new byte[1500000 / 3]),

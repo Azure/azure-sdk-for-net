@@ -9,7 +9,6 @@ using System.Net;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
@@ -1326,12 +1325,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName))
                 {
                     var waitTime = TimeSpan.FromMilliseconds(250);
-                    var desiredEmptyBatches = 8;
+                    var desiredEmptyBatches = 10;
                     var minimumEmptyBatches = 5;
 
                     var readTime = TimeSpan
                         .FromSeconds(waitTime.TotalSeconds * desiredEmptyBatches)
-                        .Add(TimeSpan.FromSeconds(1));
+                        .Add(TimeSpan.FromSeconds(2));
 
                     // Attempt to read from the empty partition and verify that no events are observed.  Because no events are expected, the
                     // read operation will not naturally complete; limit the read to only a couple of seconds and trigger cancellation.
