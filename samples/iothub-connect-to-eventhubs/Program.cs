@@ -20,12 +20,14 @@ namespace IotHubToEventHubsSample
         ///
         /// <param name="args">The arguments passed to the application on the command line.</param>
         ///
+        /// <returns>Zero for a successful run, non-zero when an exception is encountered.</returns>
+        ///
         /// <remarks>
         ///   If arguments are passed, the first argument is assumed to be the IoT Hub connection string; the rest
         ///   are ignored.  If no arguments were present, an interactive prompt will collect the IoT Hub connection.
         /// </remarks>
         ///
-        public static async Task Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
             var connectionString = default(string);
 
@@ -56,8 +58,7 @@ namespace IotHubToEventHubsSample
                 Console.WriteLine("Connection string obtained.  Connecting to Event Hubs...");
                 await using var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, eventHubsConnectionString);
 
-                // Read events from any partition of the Event Hub; once no events are read after a couple of seconds, stop
-                // reading.
+                // Read events from any partition of the Event Hub; once no events are read after a couple of seconds, stop reading.
 
                 Console.WriteLine();
                 Console.WriteLine("Reading events...");
@@ -79,13 +80,15 @@ namespace IotHubToEventHubsSample
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An exception of type { ex.GetType().Name } occurred.  Message:");
-                Console.WriteLine($"\t{ ex.Message }");
+                Console.Error.WriteLine($"An exception of type { ex.GetType().Name } occurred.  Message:{ Environment.NewLine }\t{ ex.Message }");
+                return -1;
             }
 
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("Exiting...");
+
+            return 0;
         }
     }
 }
