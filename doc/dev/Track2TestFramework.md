@@ -52,7 +52,7 @@ __Limitation__: all method calls/properties that are being used have to be `virt
 
 # Test environment and live test resources
 
-Follow the [../../eng/common/eng/common/TestResources/README.md](live test resources management) to create a live test resources deployment template and get id deployed.
+Follow the [live test resources management](../../eng/common/TestResources/README.md) to create a live test resources deployment template and get id deployed.
 
 To use the environment provided by the `New-TestResources.ps1` create a class that inherits from `TestEnvironment` and exposes required values as properties:
 
