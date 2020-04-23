@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -166,6 +168,43 @@ namespace Azure.Core.Tests
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "No records to match." + Environment.NewLine,
                 exception.Message);
+        }
+
+        [Test]
+        public void RecordingSessionSanitizeSanitizesVariables()
+        {
+            var sanitizer = new TestSanitizer();
+            var session = new RecordSession();
+            session.Variables["A"] = "secret";
+            session.Variables["B"] = "Totally not a secret";
+
+            session.Sanitize(sanitizer);
+
+            Assert.AreEqual("SANITIZED", session.Variables["A"]);
+            Assert.AreEqual("Totally not a SANITIZED", session.Variables["B"]);
+        }
+
+        [Test]
+        public void SavingRecordingSanitizesValues()
+        {
+            var tempFile = Path.GetTempFileName();
+            var sanitizer = new TestSanitizer();
+            TestRecording recording = new TestRecording(RecordedTestMode.Record, tempFile, sanitizer, new RecordMatcher(sanitizer));
+
+            recording.SetVariable("A", "secret");
+            recording.Dispose(true);
+
+            var text = File.ReadAllText(tempFile);
+
+            StringAssert.DoesNotContain("secret", text);
+        }
+
+        private class TestSanitizer : RecordedTestSanitizer
+        {
+            public override string SanitizeVariable(string variableName, string environmentVariableValue)
+            {
+                return environmentVariableValue.Replace("secret", "SANITIZED");
+            }
         }
     }
 }
