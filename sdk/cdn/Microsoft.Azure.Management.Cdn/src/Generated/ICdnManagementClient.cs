@@ -56,6 +56,17 @@ namespace Microsoft.Azure.Management.Cdn
         string ApiVersion { get; }
 
         /// <summary>
+        /// Azure Subscription ID.
+        /// </summary>
+        string SubscriptionId1 { get; set; }
+
+        /// <summary>
+        /// Version of the API to be used with the client request. Current
+        /// version is 2017-04-02.
+        /// </summary>
+        string ApiVersion1 { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -108,6 +119,16 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets the IEdgeNodesOperations.
         /// </summary>
         IEdgeNodesOperations EdgeNodes { get; }
+
+        /// <summary>
+        /// Gets the IPoliciesOperations.
+        /// </summary>
+        IPoliciesOperations Policies { get; }
+
+        /// <summary>
+        /// Gets the IManagedRuleSetsOperations.
+        /// </summary>
+        IManagedRuleSetsOperations ManagedRuleSets { get; }
 
         /// <summary>
         /// Check the availability of a resource name. This is needed for

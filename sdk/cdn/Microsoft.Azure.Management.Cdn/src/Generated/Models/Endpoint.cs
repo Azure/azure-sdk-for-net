@@ -88,6 +88,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// /pictures/</param>
         /// <param name="deliveryPolicy">A policy that specifies the delivery
         /// rules to be used for an endpoint.</param>
+        /// <param name="webApplicationFirewallPolicyLink">Defines the Web
+        /// Application Firewall policy for the endpoint (if
+        /// applicable)</param>
         /// <param name="hostName">The host name of the endpoint structured as
         /// {endpointName}.{DNSZone}, e.g. contoso.azureedge.net</param>
         /// <param name="resourceState">Resource status of the endpoint.
@@ -95,7 +98,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Starting', 'Stopped', 'Stopping'</param>
         /// <param name="provisioningState">Provisioning status of the
         /// endpoint.</param>
-        public Endpoint(string location, IList<DeepCreatedOrigin> origins, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), IList<string> contentTypesToCompress = default(IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), string optimizationType = default(string), string probePath = default(string), IList<GeoFilter> geoFilters = default(IList<GeoFilter>), EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy = default(EndpointPropertiesUpdateParametersDeliveryPolicy), string hostName = default(string), string resourceState = default(string), string provisioningState = default(string))
+        public Endpoint(string location, IList<DeepCreatedOrigin> origins, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), IList<string> contentTypesToCompress = default(IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), string optimizationType = default(string), string probePath = default(string), IList<GeoFilter> geoFilters = default(IList<GeoFilter>), EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy = default(EndpointPropertiesUpdateParametersDeliveryPolicy), EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default(EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink), string hostName = default(string), string resourceState = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             OriginHostHeader = originHostHeader;
@@ -109,6 +112,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
             ProbePath = probePath;
             GeoFilters = geoFilters;
             DeliveryPolicy = deliveryPolicy;
+            WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
             HostName = hostName;
             Origins = origins;
             ResourceState = resourceState;
@@ -215,6 +219,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.deliveryPolicy")]
         public EndpointPropertiesUpdateParametersDeliveryPolicy DeliveryPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets defines the Web Application Firewall policy for the
+        /// endpoint (if applicable)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.webApplicationFirewallPolicyLink")]
+        public EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
 
         /// <summary>
         /// Gets the host name of the endpoint structured as
