@@ -10,37 +10,37 @@
 
 namespace Microsoft.Azure.Management.EventHub.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Definition of resource.
+    /// Single item in a List or Get VirtualNetworkRules operation
     /// </summary>
-    public partial class TrackedResource : Resource
+    [Rest.Serialization.JsonTransformation]
+    public partial class VirtualNetworkRule : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the VirtualNetworkRule class.
         /// </summary>
-        public TrackedResource()
+        public VirtualNetworkRule()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrackedResource class.
+        /// Initializes a new instance of the VirtualNetworkRule class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="location">Resource location.</param>
-        /// <param name="tags">Resource tags.</param>
-        public TrackedResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="virtualNetworkSubnetId">ARM ID of Virtual Network
+        /// Subnet</param>
+        public VirtualNetworkRule(string id = default(string), string name = default(string), string type = default(string), string virtualNetworkSubnetId = default(string))
             : base(id, name, type)
         {
-            Location = location;
-            Tags = tags;
+            VirtualNetworkSubnetId = virtualNetworkSubnetId;
             CustomInit();
         }
 
@@ -50,16 +50,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource location.
+        /// Gets or sets ARM ID of Virtual Network Subnet
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "properties.virtualNetworkSubnetId")]
+        public string VirtualNetworkSubnetId { get; set; }
 
     }
 }

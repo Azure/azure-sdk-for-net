@@ -11,28 +11,31 @@
 namespace Microsoft.Azure.Management.EventHub.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Properties supplied for Subnet
+    /// The response of the List Available Clusters operation.
     /// </summary>
-    public partial class Subnet
+    public partial class AvailableClustersList
     {
         /// <summary>
-        /// Initializes a new instance of the Subnet class.
+        /// Initializes a new instance of the AvailableClustersList class.
         /// </summary>
-        public Subnet()
+        public AvailableClustersList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Subnet class.
+        /// Initializes a new instance of the AvailableClustersList class.
         /// </summary>
-        /// <param name="id">Resource ID of Virtual Network Subnet</param>
-        public Subnet(string id = default(string))
+        /// <param name="value">The count of readily available and
+        /// pre-provisioned Event Hubs Clusters per region.</param>
+        public AvailableClustersList(IList<AvailableCluster> value = default(IList<AvailableCluster>))
         {
-            Id = id;
+            Value = value;
             CustomInit();
         }
 
@@ -42,10 +45,11 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource ID of Virtual Network Subnet
+        /// Gets or sets the count of readily available and pre-provisioned
+        /// Event Hubs Clusters per region.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<AvailableCluster> Value { get; set; }
 
     }
 }
