@@ -78,7 +78,7 @@ if ([System.String]::IsNullOrEmpty($NewVersionString))
     Write-Verbose "Current Version: ${PackageVersion}"
 
     $SemVer.IncrementAndSetToPrerelease()
-    Update-Version -SemVer $SemVer-SemVer $SemVer
+    Update-Version -SemVer $SemVer
 }
 else
 {
