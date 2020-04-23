@@ -166,9 +166,16 @@ namespace Azure.Core.Testing
                 try
                 {
                     using JsonDocument document = JsonDocument.Parse(requestBody);
-                    jsonWriter.WritePropertyName(name.AsSpan());
-                    document.RootElement.WriteTo(jsonWriter);
-                    return;
+
+                    // We use array as a wrapper for string based serialization
+                    // so if the root is an array we can't write it directly
+                    // fallback to generic string writing
+                    if (document.RootElement.ValueKind != JsonValueKind.Array)
+                    {
+                        jsonWriter.WritePropertyName(name.AsSpan());
+                        document.RootElement.WriteTo(jsonWriter);
+                        return;
+                    }
                 }
                 catch (Exception)
                 {
