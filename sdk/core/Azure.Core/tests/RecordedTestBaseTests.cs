@@ -65,8 +65,8 @@ namespace Azure.Core.Tests
             {
             }
 
-            public string RecordedValue => GetRecordedVariable("Recorded");
-            public string NotRecordedValue => GetVariable("NotRecorded");
+            public string RecordedValue => GetRecordedVariable("RECORDED");
+            public string NotRecordedValue => GetVariable("NOTRECORDED");
 
         }
     }
