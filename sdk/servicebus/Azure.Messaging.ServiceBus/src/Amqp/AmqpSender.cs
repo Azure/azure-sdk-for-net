@@ -285,7 +285,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   being sent will fit in a batch, use <see cref="SendBatchAsync"/> instead.
         /// </summary>
         ///
-        /// <param name="messages">The list of messages to send.</param>
+        /// <param name="messages">The set of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public override async Task SendAsync(
             IList<ServiceBusMessage> messages,
