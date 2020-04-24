@@ -160,6 +160,15 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 
+        [Test]
+        public void AuthenticateWithVsCredential_ProcessReturnedInvalidJson()
+        {
+            var testProcess = new TestProcess { Output = "Not Json" };
+            var fileSystem = CreateTestFileSystem();
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
+        }
+
         private (string token, DateTimeOffset expiresOn, string json) CreateTestToken()
         {
             var expiresOnString = DateTimeOffset.Now.AddHours(0.5).ToUniversalTime().ToString("s");
