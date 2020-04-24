@@ -14,7 +14,7 @@
     <PackageReleaseNotes>
 <![CDATA[This is a preview release sdk for Azure Blueprints, allows you to do Blueprint definition and assignment CRUD.
 
- - This version adds support for management group level Blueprint assignment.
+ - This version removes resource group name and location length validation in a blueprint.
 
 ]]>
 </PackageReleaseNotes>
