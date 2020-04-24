@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageSendCt = numThreads * 2;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {
@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageSendCt = numThreads;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {
@@ -171,7 +171,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageSendCt = numThreads;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {
@@ -242,7 +242,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, numMessages);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,

@@ -387,7 +387,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AddMessages(batch, 1, Guid.NewGuid().ToString());
                 }
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var options = new ServiceBusProcessorOptions
                 {
@@ -456,7 +456,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AddMessages(batch, 1, Guid.NewGuid().ToString());
                 }
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var options = new ServiceBusProcessorOptions
                 {

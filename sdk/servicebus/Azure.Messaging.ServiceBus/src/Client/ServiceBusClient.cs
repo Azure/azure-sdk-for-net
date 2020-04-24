@@ -175,34 +175,28 @@ namespace Azure.Messaging.ServiceBus
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
-                viaEntityPath: null,
+                options: new ServiceBusSenderOptions(),
                 connection: Connection);
         }
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
-        /// queue or topic via a different queue or topic.
+        /// queue or topic.
         /// </summary>
         ///
         /// <param name="queueOrTopicName">The queue or topic to create a <see cref="ServiceBusSender"/> for.</param>
-        /// <param name="viaQueueOrTopicName"></param>
-        ///
-        /// <remarks>
-        /// This is mainly to be used when sending messages in a transaction.
-        /// When messages need to be sent across entities in a single transaction, this can be used to ensure
-        /// all the messages land initially in the same entity/partition for local transactions, and then
-        /// let Service Bus handle transferring the message to the actual destination.
-        /// </remarks>
+        /// <param name="options">The set of <see cref="ServiceBusSenderOptions"/> to use for configuring
+        /// this <see cref="ServiceBusSender"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
-        public ServiceBusSender CreateSender(string queueOrTopicName, string viaQueueOrTopicName)
+        public ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
         {
-            ValidateEntityName(viaQueueOrTopicName);
+            ValidateEntityName(options?.ViaQueueOrTopicName);
             ValidateEntityName(queueOrTopicName);
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
-                viaEntityPath: viaQueueOrTopicName,
+                options: options,
                 connection: Connection);
         }
 

@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendBatchAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync((ServiceBusMessageBatch)null));
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
             var sender = new ServiceBusSender("dummy", null, mockConnection.Object);
-            var sendTask = sender.SendBatchAsync(batch);
+            var sendTask = sender.SendAsync(batch);
 
             Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
             completionSource.TrySetResult(true);
