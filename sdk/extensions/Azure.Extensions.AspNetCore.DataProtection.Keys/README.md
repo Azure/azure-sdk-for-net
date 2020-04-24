@@ -24,6 +24,9 @@ Here's an example using the Azure CLI:
 ```Powershell
 az keyvault create --name MyVault --resource-group MyResourceGroup --location westus
 az keyvault key create --name MyKey --vault-name MyVault
+
+# give write access to a service principal (application)
+az keyvault set-policy -n MyVault --object-id <application_id> --key-permissions get unwrapKey wrapKey
 ```
 
 ## Examples
