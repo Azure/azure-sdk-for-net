@@ -4318,8 +4318,8 @@ namespace Azure.Storage.Blobs
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobProperties>> GetPropertiesAsync(
+            /// <returns>Azure.Response{Azure.Storage.Blobs.Models.BlobPropertiesInternal}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Blobs.Models.BlobPropertiesInternal>> GetPropertiesAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -4466,8 +4466,8 @@ namespace Azure.Storage.Blobs
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}.</returns>
-            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetPropertiesAsync_CreateResponse(
+            /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobPropertiesInternal}.</returns>
+            internal static Azure.Response<Azure.Storage.Blobs.Models.BlobPropertiesInternal> GetPropertiesAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -4477,7 +4477,7 @@ namespace Azure.Storage.Blobs
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Blobs.Models.BlobProperties _value = new Azure.Storage.Blobs.Models.BlobProperties();
+                        Azure.Storage.Blobs.Models.BlobPropertiesInternal _value = new Azure.Storage.Blobs.Models.BlobPropertiesInternal();
 
                         // Get response headers
                         string _header;
@@ -4655,7 +4655,7 @@ namespace Azure.Storage.Blobs
                     }
                     case 304:
                     {
-                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobProperties>(response);
+                        return new Azure.NoBodyResponse<Azure.Storage.Blobs.Models.BlobPropertiesInternal>(response);
                     }
                     default:
                     {
@@ -17629,7 +17629,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// An Azure Storage blob
     /// </summary>
-    public partial class BlobItemInternal
+    internal partial class BlobItemInternal
     {
         /// <summary>
         /// Name
@@ -17659,7 +17659,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Properties of a blob
         /// </summary>
-        public Azure.Storage.Blobs.Models.BlobPropertiesInternal Properties { get; internal set; }
+        public Azure.Storage.Blobs.Models.BlobItemProperties Properties { get; internal set; }
 
         /// <summary>
         /// Metadata
@@ -17684,7 +17684,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobItemInternal instance
         /// </summary>
-        internal BlobItemInternal()
+        public BlobItemInternal()
             : this(false)
         {
         }
@@ -17697,7 +17697,7 @@ namespace Azure.Storage.Blobs.Models
         {
             if (!skipInitialization)
             {
-                Properties = new Azure.Storage.Blobs.Models.BlobPropertiesInternal();
+                Properties = new Azure.Storage.Blobs.Models.BlobItemProperties();
                 Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                 BlobTags = new Azure.Storage.Blobs.Models.BlobTags();
                 ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
@@ -17742,7 +17742,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("Properties", ""));
             if (_child != null)
             {
-                _value.Properties = Azure.Storage.Blobs.Models.BlobPropertiesInternal.FromXml(_child);
+                _value.Properties = Azure.Storage.Blobs.Models.BlobItemProperties.FromXml(_child);
             }
             _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
@@ -17778,6 +17778,391 @@ namespace Azure.Storage.Blobs.Models
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItemInternal value);
     }
+}
+#endregion class BlobItemInternal
+
+#region class BlobItemProperties
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Properties of a blob
+    /// </summary>
+    public partial class BlobItemProperties
+    {
+        /// <summary>
+        /// Last-Modified
+        /// </summary>
+        public System.DateTimeOffset? LastModified { get; internal set; }
+
+        /// <summary>
+        /// Size in bytes
+        /// </summary>
+        public long? ContentLength { get; internal set; }
+
+        /// <summary>
+        /// Content-Type
+        /// </summary>
+        public string ContentType { get; internal set; }
+
+        /// <summary>
+        /// Content-Encoding
+        /// </summary>
+        public string ContentEncoding { get; internal set; }
+
+        /// <summary>
+        /// Content-Language
+        /// </summary>
+        public string ContentLanguage { get; internal set; }
+
+        /// <summary>
+        /// Content-MD5
+        /// </summary>
+        #pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentHash { get; internal set; }
+        #pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
+        /// Content-Disposition
+        /// </summary>
+        public string ContentDisposition { get; internal set; }
+
+        /// <summary>
+        /// Cache-Control
+        /// </summary>
+        public string CacheControl { get; internal set; }
+
+        /// <summary>
+        /// x-ms-blob-sequence-number
+        /// </summary>
+        public long? BlobSequenceNumber { get; internal set; }
+
+        /// <summary>
+        /// BlobType
+        /// </summary>
+        public Azure.Storage.Blobs.Models.BlobType? BlobType { get; internal set; }
+
+        /// <summary>
+        /// LeaseStatus
+        /// </summary>
+        public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// LeaseState
+        /// </summary>
+        public Azure.Storage.Blobs.Models.LeaseState? LeaseState { get; internal set; }
+
+        /// <summary>
+        /// LeaseDuration
+        /// </summary>
+        public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { get; internal set; }
+
+        /// <summary>
+        /// CopyId
+        /// </summary>
+        public string CopyId { get; internal set; }
+
+        /// <summary>
+        /// CopyStatus
+        /// </summary>
+        public Azure.Storage.Blobs.Models.CopyStatus? CopyStatus { get; internal set; }
+
+        /// <summary>
+        /// CopySource
+        /// </summary>
+        public System.Uri CopySource { get; internal set; }
+
+        /// <summary>
+        /// CopyProgress
+        /// </summary>
+        public string CopyProgress { get; internal set; }
+
+        /// <summary>
+        /// CopyStatusDescription
+        /// </summary>
+        public string CopyStatusDescription { get; internal set; }
+
+        /// <summary>
+        /// ServerEncrypted
+        /// </summary>
+        public bool? ServerEncrypted { get; internal set; }
+
+        /// <summary>
+        /// IncrementalCopy
+        /// </summary>
+        public bool? IncrementalCopy { get; internal set; }
+
+        /// <summary>
+        /// DestinationSnapshot
+        /// </summary>
+        public string DestinationSnapshot { get; internal set; }
+
+        /// <summary>
+        /// RemainingRetentionDays
+        /// </summary>
+        public int? RemainingRetentionDays { get; internal set; }
+
+        /// <summary>
+        /// AccessTier
+        /// </summary>
+        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get; internal set; }
+
+        /// <summary>
+        /// AccessTierInferred
+        /// </summary>
+        public bool AccessTierInferred { get; internal set; }
+
+        /// <summary>
+        /// ArchiveStatus
+        /// </summary>
+        public Azure.Storage.Blobs.Models.ArchiveStatus? ArchiveStatus { get; internal set; }
+
+        /// <summary>
+        /// CustomerProvidedKeySha256
+        /// </summary>
+        public string CustomerProvidedKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// The name of the encryption scope under which the blob is encrypted.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// TagCount
+        /// </summary>
+        public int? TagCount { get; internal set; }
+
+        /// <summary>
+        /// Expiry-Time
+        /// </summary>
+        public System.DateTimeOffset? ExpiresOn { get; internal set; }
+
+        /// <summary>
+        /// IsSealed
+        /// </summary>
+        public bool? IsSealed { get; internal set; }
+
+        /// <summary>
+        /// ETag
+        /// </summary>
+        public Azure.ETag? ETag { get; internal set; }
+
+        /// <summary>
+        /// CreatedOn
+        /// </summary>
+        public System.DateTimeOffset? CreatedOn { get; internal set; }
+
+        /// <summary>
+        /// CopyCompletedOn
+        /// </summary>
+        public System.DateTimeOffset? CopyCompletedOn { get; internal set; }
+
+        /// <summary>
+        /// DeletedOn
+        /// </summary>
+        public System.DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// AccessTierChangedOn
+        /// </summary>
+        public System.DateTimeOffset? AccessTierChangedOn { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of BlobItemProperties instances.
+        /// You can use BlobsModelFactory.BlobItemProperties instead.
+        /// </summary>
+        internal BlobItemProperties() { }
+
+        /// <summary>
+        /// Deserializes XML into a new BlobItemProperties instance.
+        /// </summary>
+        /// <param name="element">The XML element to deserialize.</param>
+        /// <returns>A deserialized BlobItemProperties instance.</returns>
+        internal static Azure.Storage.Blobs.Models.BlobItemProperties FromXml(System.Xml.Linq.XElement element)
+        {
+            System.Diagnostics.Debug.Assert(element != null);
+            System.Xml.Linq.XElement _child;
+            Azure.Storage.Blobs.Models.BlobItemProperties _value = new Azure.Storage.Blobs.Models.BlobItemProperties();
+            _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
+            if (_child != null)
+            {
+                _value.LastModified = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Length", ""));
+            if (_child != null)
+            {
+                _value.ContentLength = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Type", ""));
+            if (_child != null)
+            {
+                _value.ContentType = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Encoding", ""));
+            if (_child != null)
+            {
+                _value.ContentEncoding = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Language", ""));
+            if (_child != null)
+            {
+                _value.ContentLanguage = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-MD5", ""));
+            if (_child != null)
+            {
+                _value.ContentHash = System.Convert.FromBase64String(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Content-Disposition", ""));
+            if (_child != null)
+            {
+                _value.ContentDisposition = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Cache-Control", ""));
+            if (_child != null)
+            {
+                _value.CacheControl = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("x-ms-blob-sequence-number", ""));
+            if (_child != null)
+            {
+                _value.BlobSequenceNumber = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("BlobType", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.BlobType = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseBlobType(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseState", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseState(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("LeaseDuration", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.LeaseDuration = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseDurationType(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyId", ""));
+            if (_child != null)
+            {
+                _value.CopyId = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyStatus", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatus(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopySource", ""));
+            if (_child != null)
+            {
+                _value.CopySource = new System.Uri(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyProgress", ""));
+            if (_child != null)
+            {
+                _value.CopyProgress = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyStatusDescription", ""));
+            if (_child != null)
+            {
+                _value.CopyStatusDescription = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ServerEncrypted", ""));
+            if (_child != null)
+            {
+                _value.ServerEncrypted = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("IncrementalCopy", ""));
+            if (_child != null)
+            {
+                _value.IncrementalCopy = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DestinationSnapshot", ""));
+            if (_child != null)
+            {
+                _value.DestinationSnapshot = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
+            if (_child != null)
+            {
+                _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTier", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.AccessTier = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierInferred", ""));
+            if (_child != null)
+            {
+                _value.AccessTierInferred = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("ArchiveStatus", ""));
+            if (_child != null && !string.IsNullOrEmpty(_child.Value))
+            {
+                _value.ArchiveStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseArchiveStatus(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CustomerProvidedKeySha256", ""));
+            if (_child != null)
+            {
+                _value.CustomerProvidedKeySha256 = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("EncryptionScope", ""));
+            if (_child != null)
+            {
+                _value.EncryptionScope = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("TagCount", ""));
+            if (_child != null)
+            {
+                _value.TagCount = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Expiry-Time", ""));
+            if (_child != null)
+            {
+                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("IsSealed", ""));
+            if (_child != null)
+            {
+                _value.IsSealed = bool.Parse(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
+            if (_child != null)
+            {
+                _value.ETag = new Azure.ETag(_child.Value);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("Creation-Time", ""));
+            if (_child != null)
+            {
+                _value.CreatedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("CopyCompletionTime", ""));
+            if (_child != null)
+            {
+                _value.CopyCompletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
+            if (_child != null)
+            {
+                _value.DeletedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierChangeTime", ""));
+            if (_child != null)
+            {
+                _value.AccessTierChangedOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            CustomizeFromXml(element, _value);
+            return _value;
+        }
+
+        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItemProperties value);
+    }
 
     /// <summary>
     /// BlobsModelFactory provides utilities for mocking.
@@ -17785,37 +18170,87 @@ namespace Azure.Storage.Blobs.Models
     public static partial class BlobsModelFactory
     {
         /// <summary>
-        /// Creates a new BlobItemInternal instance for mocking.
+        /// Creates a new BlobItemProperties instance for mocking.
         /// </summary>
-        public static BlobItemInternal BlobItemInternal(
-            string name,
-            bool deleted,
-            Azure.Storage.Blobs.Models.BlobPropertiesInternal properties,
-            string snapshot = default,
-            string versionId = default,
-            bool? isCurrentVersion = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default,
-            Azure.Storage.Blobs.Models.BlobTags blobTags = default,
-            string objectReplicationPolicyId = default,
-            System.Collections.Generic.IDictionary<string, string> objectReplicationRules = default)
+        public static BlobItemProperties BlobItemProperties(
+            bool accessTierInferred,
+            string copyStatusDescription = default,
+            string contentType = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            byte[] contentHash = default,
+            string contentDisposition = default,
+            string cacheControl = default,
+            long? blobSequenceNumber = default,
+            Azure.Storage.Blobs.Models.BlobType? blobType = default,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
+            Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
+            Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
+            string copyId = default,
+            Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
+            System.Uri copySource = default,
+            string copyProgress = default,
+            long? contentLength = default,
+            bool? serverEncrypted = default,
+            bool? incrementalCopy = default,
+            string destinationSnapshot = default,
+            int? remainingRetentionDays = default,
+            Azure.Storage.Blobs.Models.AccessTier? accessTier = default,
+            System.DateTimeOffset? lastModified = default,
+            Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
+            string customerProvidedKeySha256 = default,
+            string encryptionScope = default,
+            int? tagCount = default,
+            System.DateTimeOffset? expiresOn = default,
+            bool? isSealed = default,
+            Azure.ETag? eTag = default,
+            System.DateTimeOffset? createdOn = default,
+            System.DateTimeOffset? copyCompletedOn = default,
+            System.DateTimeOffset? deletedOn = default,
+            System.DateTimeOffset? accessTierChangedOn = default)
         {
-            return new BlobItemInternal()
+            return new BlobItemProperties()
             {
-                Name = name,
-                Deleted = deleted,
-                Properties = properties,
-                Snapshot = snapshot,
-                VersionId = versionId,
-                IsCurrentVersion = isCurrentVersion,
-                Metadata = metadata,
-                BlobTags = blobTags,
-                ObjectReplicationPolicyId = objectReplicationPolicyId,
-                ObjectReplicationRules = objectReplicationRules,
+                AccessTierInferred = accessTierInferred,
+                CopyStatusDescription = copyStatusDescription,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                ContentLanguage = contentLanguage,
+                ContentHash = contentHash,
+                ContentDisposition = contentDisposition,
+                CacheControl = cacheControl,
+                BlobSequenceNumber = blobSequenceNumber,
+                BlobType = blobType,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+                CopySource = copySource,
+                CopyProgress = copyProgress,
+                ContentLength = contentLength,
+                ServerEncrypted = serverEncrypted,
+                IncrementalCopy = incrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
+                RemainingRetentionDays = remainingRetentionDays,
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ArchiveStatus = archiveStatus,
+                CustomerProvidedKeySha256 = customerProvidedKeySha256,
+                EncryptionScope = encryptionScope,
+                TagCount = tagCount,
+                ExpiresOn = expiresOn,
+                IsSealed = isSealed,
+                ETag = eTag,
+                CreatedOn = createdOn,
+                CopyCompletedOn = copyCompletedOn,
+                DeletedOn = deletedOn,
+                AccessTierChangedOn = accessTierChangedOn,
             };
         }
     }
 }
-#endregion class BlobItemInternal
+#endregion class BlobItemProperties
 
 #region class BlobLease
 namespace Azure.Storage.Blobs.Models
@@ -18038,13 +18473,13 @@ namespace Azure.Storage.Blobs.Models
 }
 #endregion class BlobPrefix
 
-#region class BlobProperties
+#region class BlobPropertiesInternal
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// BlobProperties
+    /// BlobPropertiesInternal
     /// </summary>
-    public partial class BlobProperties
+    internal partial class BlobPropertiesInternal
     {
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -18249,579 +18684,12 @@ namespace Azure.Storage.Blobs.Models
         public bool IsSealed { get; internal set; }
 
         /// <summary>
-        /// Creates a new BlobProperties instance
+        /// Creates a new BlobPropertiesInternal instance
         /// </summary>
-        public BlobProperties()
+        public BlobPropertiesInternal()
         {
             Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-        }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobProperties instance for mocking.
-        /// </summary>
-        public static BlobProperties BlobProperties(
-            System.DateTimeOffset lastModified,
-            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
-            long contentLength,
-            string contentType,
-            Azure.ETag eTag,
-            Azure.Storage.Blobs.Models.LeaseState leaseState,
-            string contentEncoding,
-            string contentDisposition,
-            string contentLanguage,
-            string cacheControl,
-            long blobSequenceNumber,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
-            string acceptRanges,
-            string destinationSnapshot,
-            int blobCommittedBlockCount,
-            bool isIncrementalCopy,
-            bool isServerEncrypted,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
-            string encryptionKeySha256,
-            System.Uri copySource,
-            string encryptionScope,
-            string copyProgress,
-            string accessTier,
-            string copyId,
-            bool accessTierInferred,
-            string copyStatusDescription,
-            string archiveStatus,
-            System.DateTimeOffset copyCompletedOn,
-            System.DateTimeOffset accessTierChangedOn,
-            Azure.Storage.Blobs.Models.BlobType blobType,
-            string versionId,
-            System.Collections.Generic.IDictionary<string, string> objectReplicationRules,
-            bool isCurrentVersion,
-            string objectReplicationPolicyId,
-            long tagCount,
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            System.DateTimeOffset expiresOn,
-            System.DateTimeOffset createdOn,
-            bool isSealed,
-            byte[] contentHash)
-        {
-            return new BlobProperties()
-            {
-                LastModified = lastModified,
-                LeaseStatus = leaseStatus,
-                ContentLength = contentLength,
-                ContentType = contentType,
-                ETag = eTag,
-                LeaseState = leaseState,
-                ContentEncoding = contentEncoding,
-                ContentDisposition = contentDisposition,
-                ContentLanguage = contentLanguage,
-                CacheControl = cacheControl,
-                BlobSequenceNumber = blobSequenceNumber,
-                LeaseDuration = leaseDuration,
-                AcceptRanges = acceptRanges,
-                DestinationSnapshot = destinationSnapshot,
-                BlobCommittedBlockCount = blobCommittedBlockCount,
-                IsIncrementalCopy = isIncrementalCopy,
-                IsServerEncrypted = isServerEncrypted,
-                CopyStatus = copyStatus,
-                EncryptionKeySha256 = encryptionKeySha256,
-                CopySource = copySource,
-                EncryptionScope = encryptionScope,
-                CopyProgress = copyProgress,
-                AccessTier = accessTier,
-                CopyId = copyId,
-                AccessTierInferred = accessTierInferred,
-                CopyStatusDescription = copyStatusDescription,
-                ArchiveStatus = archiveStatus,
-                CopyCompletedOn = copyCompletedOn,
-                AccessTierChangedOn = accessTierChangedOn,
-                BlobType = blobType,
-                VersionId = versionId,
-                ObjectReplicationRules = objectReplicationRules,
-                IsCurrentVersion = isCurrentVersion,
-                ObjectReplicationPolicyId = objectReplicationPolicyId,
-                TagCount = tagCount,
-                Metadata = metadata,
-                ExpiresOn = expiresOn,
-                CreatedOn = createdOn,
-                IsSealed = isSealed,
-                ContentHash = contentHash,
-            };
-        }
-    }
-}
-#endregion class BlobProperties
-
-#region class BlobPropertiesInternal
-namespace Azure.Storage.Blobs.Models
-{
-    /// <summary>
-    /// Properties of a blob
-    /// </summary>
-    public partial class BlobPropertiesInternal
-    {
-        /// <summary>
-        /// Creation-Time
-        /// </summary>
-        public System.DateTimeOffset? CreationTime { get; internal set; }
-
-        /// <summary>
-        /// Last-Modified
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// Etag
-        /// </summary>
-        public Azure.ETag Etag { get; internal set; }
-
-        /// <summary>
-        /// Size in bytes
-        /// </summary>
-        public long? ContentLength { get; internal set; }
-
-        /// <summary>
-        /// Content-Type
-        /// </summary>
-        public string ContentType { get; internal set; }
-
-        /// <summary>
-        /// Content-Encoding
-        /// </summary>
-        public string ContentEncoding { get; internal set; }
-
-        /// <summary>
-        /// Content-Language
-        /// </summary>
-        public string ContentLanguage { get; internal set; }
-
-        /// <summary>
-        /// Content-MD5
-        /// </summary>
-        #pragma warning disable CA1819 // Properties should not return arrays
-        public byte[] ContentMD5 { get; internal set; }
-        #pragma warning restore CA1819 // Properties should not return arrays
-
-        /// <summary>
-        /// Content-Disposition
-        /// </summary>
-        public string ContentDisposition { get; internal set; }
-
-        /// <summary>
-        /// Cache-Control
-        /// </summary>
-        public string CacheControl { get; internal set; }
-
-        /// <summary>
-        /// x-ms-blob-sequence-number
-        /// </summary>
-        public long? BlobSequenceNumber { get; internal set; }
-
-        /// <summary>
-        /// BlobType
-        /// </summary>
-        public Azure.Storage.Blobs.Models.BlobType? BlobType { get; internal set; }
-
-        /// <summary>
-        /// LeaseStatus
-        /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseStatus? LeaseStatus { get; internal set; }
-
-        /// <summary>
-        /// LeaseState
-        /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseState? LeaseState { get; internal set; }
-
-        /// <summary>
-        /// LeaseDuration
-        /// </summary>
-        public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { get; internal set; }
-
-        /// <summary>
-        /// CopyId
-        /// </summary>
-        public string CopyId { get; internal set; }
-
-        /// <summary>
-        /// CopyStatus
-        /// </summary>
-        public Azure.Storage.Blobs.Models.CopyStatus? CopyStatus { get; internal set; }
-
-        /// <summary>
-        /// CopySource
-        /// </summary>
-        public string CopySource { get; internal set; }
-
-        /// <summary>
-        /// CopyProgress
-        /// </summary>
-        public string CopyProgress { get; internal set; }
-
-        /// <summary>
-        /// CopyCompletionTime
-        /// </summary>
-        public System.DateTimeOffset? CopyCompletionTime { get; internal set; }
-
-        /// <summary>
-        /// CopyStatusDescription
-        /// </summary>
-        public string CopyStatusDescription { get; internal set; }
-
-        /// <summary>
-        /// ServerEncrypted
-        /// </summary>
-        public bool? ServerEncrypted { get; internal set; }
-
-        /// <summary>
-        /// IncrementalCopy
-        /// </summary>
-        public bool? IncrementalCopy { get; internal set; }
-
-        /// <summary>
-        /// DestinationSnapshot
-        /// </summary>
-        public string DestinationSnapshot { get; internal set; }
-
-        /// <summary>
-        /// DeletedTime
-        /// </summary>
-        public System.DateTimeOffset? DeletedTime { get; internal set; }
-
-        /// <summary>
-        /// RemainingRetentionDays
-        /// </summary>
-        public int? RemainingRetentionDays { get; internal set; }
-
-        /// <summary>
-        /// AccessTier
-        /// </summary>
-        public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get; internal set; }
-
-        /// <summary>
-        /// AccessTierInferred
-        /// </summary>
-        public bool? AccessTierInferred { get; internal set; }
-
-        /// <summary>
-        /// ArchiveStatus
-        /// </summary>
-        public Azure.Storage.Blobs.Models.ArchiveStatus? ArchiveStatus { get; internal set; }
-
-        /// <summary>
-        /// CustomerProvidedKeySha256
-        /// </summary>
-        public string CustomerProvidedKeySha256 { get; internal set; }
-
-        /// <summary>
-        /// The name of the encryption scope under which the blob is encrypted.
-        /// </summary>
-        public string EncryptionScope { get; internal set; }
-
-        /// <summary>
-        /// AccessTierChangeTime
-        /// </summary>
-        public System.DateTimeOffset? AccessTierChangeTime { get; internal set; }
-
-        /// <summary>
-        /// TagCount
-        /// </summary>
-        public int? TagCount { get; internal set; }
-
-        /// <summary>
-        /// Expiry-Time
-        /// </summary>
-        public System.DateTimeOffset? ExpiresOn { get; internal set; }
-
-        /// <summary>
-        /// IsSealed
-        /// </summary>
-        public bool? IsSealed { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of BlobPropertiesInternal instances.
-        /// You can use BlobsModelFactory.BlobPropertiesInternal instead.
-        /// </summary>
-        internal BlobPropertiesInternal() { }
-
-        /// <summary>
-        /// Deserializes XML into a new BlobPropertiesInternal instance.
-        /// </summary>
-        /// <param name="element">The XML element to deserialize.</param>
-        /// <returns>A deserialized BlobPropertiesInternal instance.</returns>
-        internal static Azure.Storage.Blobs.Models.BlobPropertiesInternal FromXml(System.Xml.Linq.XElement element)
-        {
-            System.Diagnostics.Debug.Assert(element != null);
-            System.Xml.Linq.XElement _child;
-            Azure.Storage.Blobs.Models.BlobPropertiesInternal _value = new Azure.Storage.Blobs.Models.BlobPropertiesInternal();
-            _child = element.Element(System.Xml.Linq.XName.Get("Creation-Time", ""));
-            if (_child != null)
-            {
-                _value.CreationTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Last-Modified", ""));
-            if (_child != null)
-            {
-                _value.LastModified = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
-            if (_child != null)
-            {
-                _value.Etag = new Azure.ETag(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Content-Length", ""));
-            if (_child != null)
-            {
-                _value.ContentLength = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Content-Type", ""));
-            if (_child != null)
-            {
-                _value.ContentType = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Content-Encoding", ""));
-            if (_child != null)
-            {
-                _value.ContentEncoding = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Content-Language", ""));
-            if (_child != null)
-            {
-                _value.ContentLanguage = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Content-MD5", ""));
-            if (_child != null)
-            {
-                _value.ContentMD5 = System.Convert.FromBase64String(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Content-Disposition", ""));
-            if (_child != null)
-            {
-                _value.ContentDisposition = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Cache-Control", ""));
-            if (_child != null)
-            {
-                _value.CacheControl = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("x-ms-blob-sequence-number", ""));
-            if (_child != null)
-            {
-                _value.BlobSequenceNumber = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("BlobType", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.BlobType = (Azure.Storage.Blobs.Models.BlobType)System.Enum.Parse(typeof(Azure.Storage.Blobs.Models.BlobType), _child.Value, false);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("LeaseStatus", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.LeaseStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseStatus(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("LeaseState", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.LeaseState = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseState(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("LeaseDuration", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.LeaseDuration = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseLeaseDurationType(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("CopyId", ""));
-            if (_child != null)
-            {
-                _value.CopyId = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("CopyStatus", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.CopyStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseCopyStatus(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("CopySource", ""));
-            if (_child != null)
-            {
-                _value.CopySource = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("CopyProgress", ""));
-            if (_child != null)
-            {
-                _value.CopyProgress = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("CopyCompletionTime", ""));
-            if (_child != null)
-            {
-                _value.CopyCompletionTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("CopyStatusDescription", ""));
-            if (_child != null)
-            {
-                _value.CopyStatusDescription = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ServerEncrypted", ""));
-            if (_child != null)
-            {
-                _value.ServerEncrypted = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("IncrementalCopy", ""));
-            if (_child != null)
-            {
-                _value.IncrementalCopy = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("DestinationSnapshot", ""));
-            if (_child != null)
-            {
-                _value.DestinationSnapshot = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("DeletedTime", ""));
-            if (_child != null)
-            {
-                _value.DeletedTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("RemainingRetentionDays", ""));
-            if (_child != null)
-            {
-                _value.RemainingRetentionDays = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("AccessTier", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.AccessTier = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierInferred", ""));
-            if (_child != null)
-            {
-                _value.AccessTierInferred = bool.Parse(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("ArchiveStatus", ""));
-            if (_child != null && !string.IsNullOrEmpty(_child.Value))
-            {
-                _value.ArchiveStatus = Azure.Storage.Blobs.BlobRestClient.Serialization.ParseArchiveStatus(_child.Value);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("CustomerProvidedKeySha256", ""));
-            if (_child != null)
-            {
-                _value.CustomerProvidedKeySha256 = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("EncryptionScope", ""));
-            if (_child != null)
-            {
-                _value.EncryptionScope = _child.Value;
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("AccessTierChangeTime", ""));
-            if (_child != null)
-            {
-                _value.AccessTierChangeTime = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("TagCount", ""));
-            if (_child != null)
-            {
-                _value.TagCount = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("Expiry-Time", ""));
-            if (_child != null)
-            {
-                _value.ExpiresOn = System.DateTimeOffset.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
-            }
-            _child = element.Element(System.Xml.Linq.XName.Get("IsSealed", ""));
-            if (_child != null)
-            {
-                _value.IsSealed = bool.Parse(_child.Value);
-            }
-            CustomizeFromXml(element, _value);
-            return _value;
-        }
-
-        static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobPropertiesInternal value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobPropertiesInternal instance for mocking.
-        /// </summary>
-        public static BlobPropertiesInternal BlobPropertiesInternal(
-            Azure.ETag etag,
-            System.DateTimeOffset lastModified,
-            string copySource = default,
-            long? contentLength = default,
-            string contentType = default,
-            string contentEncoding = default,
-            string contentLanguage = default,
-            byte[] contentMD5 = default,
-            string contentDisposition = default,
-            string cacheControl = default,
-            long? blobSequenceNumber = default,
-            Azure.Storage.Blobs.Models.BlobType? blobType = default,
-            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
-            Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
-            Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
-            string copyId = default,
-            Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
-            System.DateTimeOffset? creationTime = default,
-            string copyProgress = default,
-            System.DateTimeOffset? copyCompletionTime = default,
-            string copyStatusDescription = default,
-            bool? serverEncrypted = default,
-            bool? incrementalCopy = default,
-            string destinationSnapshot = default,
-            System.DateTimeOffset? deletedTime = default,
-            int? remainingRetentionDays = default,
-            Azure.Storage.Blobs.Models.AccessTier? accessTier = default,
-            bool? accessTierInferred = default,
-            Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
-            string customerProvidedKeySha256 = default,
-            string encryptionScope = default,
-            System.DateTimeOffset? accessTierChangeTime = default,
-            int? tagCount = default,
-            System.DateTimeOffset? expiresOn = default,
-            bool? isSealed = default)
-        {
-            return new BlobPropertiesInternal()
-            {
-                Etag = etag,
-                LastModified = lastModified,
-                CopySource = copySource,
-                ContentLength = contentLength,
-                ContentType = contentType,
-                ContentEncoding = contentEncoding,
-                ContentLanguage = contentLanguage,
-                ContentMD5 = contentMD5,
-                ContentDisposition = contentDisposition,
-                CacheControl = cacheControl,
-                BlobSequenceNumber = blobSequenceNumber,
-                BlobType = blobType,
-                LeaseStatus = leaseStatus,
-                LeaseState = leaseState,
-                LeaseDuration = leaseDuration,
-                CopyId = copyId,
-                CopyStatus = copyStatus,
-                CreationTime = creationTime,
-                CopyProgress = copyProgress,
-                CopyCompletionTime = copyCompletionTime,
-                CopyStatusDescription = copyStatusDescription,
-                ServerEncrypted = serverEncrypted,
-                IncrementalCopy = incrementalCopy,
-                DestinationSnapshot = destinationSnapshot,
-                DeletedTime = deletedTime,
-                RemainingRetentionDays = remainingRetentionDays,
-                AccessTier = accessTier,
-                AccessTierInferred = accessTierInferred,
-                ArchiveStatus = archiveStatus,
-                CustomerProvidedKeySha256 = customerProvidedKeySha256,
-                EncryptionScope = encryptionScope,
-                AccessTierChangeTime = accessTierChangeTime,
-                TagCount = tagCount,
-                ExpiresOn = expiresOn,
-                IsSealed = isSealed,
-            };
         }
     }
 }
@@ -19595,17 +19463,48 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// BlockBlob
         /// </summary>
-        BlockBlob,
+        Block,
 
         /// <summary>
         /// PageBlob
         /// </summary>
-        PageBlob,
+        Page,
 
         /// <summary>
         /// AppendBlob
         /// </summary>
-        AppendBlob
+        Append
+    }
+}
+
+namespace Azure.Storage.Blobs
+{
+    internal static partial class BlobRestClient
+    {
+        public static partial class Serialization
+        {
+            public static string ToString(Azure.Storage.Blobs.Models.BlobType value)
+            {
+                return value switch
+                {
+                    Azure.Storage.Blobs.Models.BlobType.Block => "BlockBlob",
+                    Azure.Storage.Blobs.Models.BlobType.Page => "PageBlob",
+                    Azure.Storage.Blobs.Models.BlobType.Append => "AppendBlob",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.BlobType value.")
+                };
+            }
+
+            public static Azure.Storage.Blobs.Models.BlobType ParseBlobType(string value)
+            {
+                return value switch
+                {
+                    "BlockBlob" => Azure.Storage.Blobs.Models.BlobType.Block,
+                    "PageBlob" => Azure.Storage.Blobs.Models.BlobType.Page,
+                    "AppendBlob" => Azure.Storage.Blobs.Models.BlobType.Append,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Blobs.Models.BlobType value.")
+                };
+            }
+        }
     }
 }
 #endregion enum BlobType

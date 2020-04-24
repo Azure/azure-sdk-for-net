@@ -3189,5 +3189,98 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Upload
+
+        #region ScheduleDeletion
+        /// <summary>
+        /// Schedules the file for deletation.
+        /// </summary>
+        /// <param name="options">
+        /// Schedule deletion parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> ScheduleDeletion(
+            DataLakeFileScheduleDeletionOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
+            try
+            {
+                scope.Start();
+
+                Response<BlobInfo> response = _blockBlobClient.ScheduleDeletion(
+                    options.ToBlobScheduleDeletionOptions(),
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToPathInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Schedules the file for deletation.
+        /// </summary>
+        /// <param name="options">
+        /// Schedule deletion parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> ScheduleDeletionAsync(
+            DataLakeFileScheduleDeletionOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ScheduleDeletion)}");
+            try
+            {
+                scope.Start();
+
+                Response<BlobInfo> response = await _blockBlobClient.ScheduleDeletionAsync(
+                    options.ToBlobScheduleDeletionOptions(),
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToPathInfo(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion ScheduleDeletion
     }
 }

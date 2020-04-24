@@ -2202,7 +2202,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                 try
                 {
-                    Response<BlobProperties> response = await BlobRestClient.Blob.GetPropertiesAsync(
+                    Response<BlobPropertiesInternal> response = await BlobRestClient.Blob.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -2444,7 +2444,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.Blob.GetPropertiesAsync(
+                    Response<BlobPropertiesInternal> response = await BlobRestClient.Blob.GetPropertiesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -2461,6 +2461,10 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: "BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        response.Value.ToBlobProperties(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

@@ -2397,11 +2397,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2458,11 +2454,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2519,11 +2511,7 @@ namespace Azure.Storage.Files.DataLake
                     conditions.ToBlobRequestConditions());
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2579,11 +2567,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new PathInfo()
-                    {
-                        ETag = response.Value.ETag,
-                        LastModified = response.Value.LastModified
-                    },
+                    response.Value.ToPathInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)

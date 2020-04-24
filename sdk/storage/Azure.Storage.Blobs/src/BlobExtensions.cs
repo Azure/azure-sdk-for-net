@@ -92,5 +92,55 @@ namespace Azure.Storage.Blobs
             }
             return string.Join("&", encodedTags);
         }
+
+        /// <summary>
+        /// Creates a new BlobProperties object backed by BlobPropertiesInternal.
+        /// </summary>
+        /// <param name="properties">
+        /// The BlobPropertiesInternal returned with the reques
+        /// </param>
+        internal static BlobProperties ToBlobProperties(this BlobPropertiesInternal properties) =>
+            new BlobProperties()
+            {
+                LastModified = properties.LastModified,
+                CreatedOn = properties.CreatedOn,
+                Metadata = properties.Metadata,
+                ObjectReplicationDestinationPolicy = properties.ObjectReplicationPolicyId,
+                BlobType = properties.BlobType,
+                CopyCompletedOn = properties.CopyCompletedOn,
+                CopyStatusDescription = properties.CopyStatusDescription,
+                CopyId = properties.CopyId,
+                CopyProgress = properties.CopyProgress,
+                CopySource = properties.CopySource,
+                CopyStatus = properties.CopyStatus,
+                IsIncrementalCopy = properties.IsIncrementalCopy,
+                DestinationSnapshot = properties.DestinationSnapshot,
+                LeaseDuration = properties.LeaseDuration,
+                LeaseState = properties.LeaseState,
+                LeaseStatus = properties.LeaseStatus,
+                ContentLength = properties.ContentLength,
+                ContentType = properties.ContentType,
+                ETag = properties.ETag,
+                ContentHash = properties.ContentHash,
+                ContentEncoding = properties.ContentEncoding,
+                ContentDisposition = properties.ContentDisposition,
+                ContentLanguage = properties.ContentLanguage,
+                CacheControl = properties.CacheControl,
+                BlobSequenceNumber = properties.BlobSequenceNumber,
+                AcceptRanges = properties.AcceptRanges,
+                BlobCommittedBlockCount = properties.BlobCommittedBlockCount,
+                IsServerEncrypted = properties.IsServerEncrypted,
+                EncryptionKeySha256 = properties.EncryptionKeySha256,
+                EncryptionScope = properties.EncryptionScope,
+                AccessTier = properties.AccessTier,
+                AccessTierInferred = properties.AccessTierInferred,
+                ArchiveStatus = properties.ArchiveStatus,
+                AccessTierChangedOn = properties.AccessTierChangedOn,
+                VersionId = properties.VersionId,
+                IsCurrentVersion = properties.IsCurrentVersion,
+                TagCount = properties.TagCount,
+                ExpiresOn = properties.ExpiresOn,
+                IsSealed = properties.IsSealed,
+            };
     }
 }

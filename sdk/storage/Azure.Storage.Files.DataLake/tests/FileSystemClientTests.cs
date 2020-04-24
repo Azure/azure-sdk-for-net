@@ -17,8 +17,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 {
     public class FileSystemClientTests : DataLakeTestBase
     {
-        public FileSystemClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public FileSystemClientTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
