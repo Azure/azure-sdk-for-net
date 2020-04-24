@@ -15,13 +15,3 @@ USA
 Notwithstanding any other terms, you may reverse engineer this software to the
 extent required to debug changes to any libraries licensed under the GNU Lesser
 General Public License.
-
-------------------------------------------------------------------------------
-
-This file list any third-party libraries or other resources that may be
-distributed under licenses different than the Azure SDK for .NET software.
-
-In the event that we accidentally failed to list a required notice, please
-bring it to our attention by opening an issue.
-
-The attached notices are provided for information only.
