@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an Azure Search service and its current state.
+    /// Describes an Azure Cognitive Search service and its current state.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SearchService : Resource
@@ -72,11 +72,11 @@ namespace Microsoft.Azure.Management.Search.Models
         /// 'disabled': The Search service is disabled. In this state, the
         /// service will reject all API requests. 'error': The Search service
         /// is in an error state. If your service is in the degraded, disabled,
-        /// or error states, it means the Azure Search team is actively
-        /// investigating the underlying issue. Dedicated services in these
-        /// states are still chargeable based on the number of search units
-        /// provisioned. Possible values include: 'running', 'provisioning',
-        /// 'deleting', 'degraded', 'disabled', 'error'</param>
+        /// or error states, it means the Azure Cognitive Search team is
+        /// actively investigating the underlying issue. Dedicated services in
+        /// these states are still chargeable based on the number of search
+        /// units provisioned. Possible values include: 'running',
+        /// 'provisioning', 'deleting', 'degraded', 'disabled', 'error'</param>
         /// <param name="statusDetails">The details of the Search service
         /// status.</param>
         /// <param name="provisioningState">The state of the last provisioning
@@ -154,11 +154,11 @@ namespace Microsoft.Azure.Management.Search.Models
         /// 'disabled': The Search service is disabled. In this state, the
         /// service will reject all API requests. 'error': The Search service
         /// is in an error state. If your service is in the degraded, disabled,
-        /// or error states, it means the Azure Search team is actively
-        /// investigating the underlying issue. Dedicated services in these
-        /// states are still chargeable based on the number of search units
-        /// provisioned. Possible values include: 'running', 'provisioning',
-        /// 'deleting', 'degraded', 'disabled', 'error'
+        /// or error states, it means the Azure Cognitive Search team is
+        /// actively investigating the underlying issue. Dedicated services in
+        /// these states are still chargeable based on the number of search
+        /// units provisioned. Possible values include: 'running',
+        /// 'provisioning', 'deleting', 'degraded', 'disabled', 'error'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public SearchServiceStatus? Status { get; private set; }

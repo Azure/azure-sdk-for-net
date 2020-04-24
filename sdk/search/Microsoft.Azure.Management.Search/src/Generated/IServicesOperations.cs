@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service to create or update. Search
-        /// service names must only contain lowercase letters, digits or
+        /// The name of the Azure Cognitive Search service to create or update.
+        /// Search service names must only contain lowercase letters, digits or
         /// dashes, cannot use dash as the first two or last one characters,
         /// cannot contain consecutive dashes, and must be between 2 and 60
         /// characters in length. Search service names must be globally unique
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service to update.
+        /// The name of the Azure Cognitive Search service to update.
         /// </param>
         /// <param name='service'>
         /// The definition of the Search service to update.
@@ -111,8 +111,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service associated with the specified
-        /// resource group.
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -144,8 +144,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service associated with the specified
-        /// resource group.
+        /// The name of the Azure Cognitive Search service associated with the
+        /// specified resource group.
         /// </param>
         /// <param name='searchManagementRequestOptions'>
         /// Additional parameters for the operation
@@ -258,8 +258,8 @@ namespace Microsoft.Azure.Management.Search
         /// portal.
         /// </param>
         /// <param name='searchServiceName'>
-        /// The name of the Azure Search service to create or update. Search
-        /// service names must only contain lowercase letters, digits or
+        /// The name of the Azure Cognitive Search service to create or update.
+        /// Search service names must only contain lowercase letters, digits or
         /// dashes, cannot use dash as the first two or last one characters,
         /// cannot contain consecutive dashes, and must be between 2 and 60
         /// characters in length. Search service names must be globally unique
