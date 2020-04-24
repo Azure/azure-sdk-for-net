@@ -1,12 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-ypwrygpr.search.windows.net/indexes?$select=%2A\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-morphgyq.search.windows.net/indexes?$select=%2A\u0026api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200422.1",
+          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "df603cdb3a3b95a3bc0ad41634fa28f0",
@@ -17,9 +18,9 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "6165",
-        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
-        "Date": "Wed, 22 Apr 2020 23:17:51 GMT",
-        "elapsed-time": "34",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 24 Apr 2020 07:08:16 GMT",
+        "elapsed-time": "56",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -28,11 +29,11 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-ypwrygpr.search.windows.net/$metadata#indexes(*)",
+        "@odata.context": "https://azs-net-morphgyq.search.windows.net/$metadata#indexes(*)",
         "value": [
           {
-            "@odata.etag": "\u00220x8D7E71352C81C3C\u0022",
-            "name": "kmjauxxu",
+            "@odata.etag": "\u00220x8D7E81A280288C2\u0022",
+            "name": "ylirgsqk",
             "defaultScoringProfile": null,
             "fields": [
               {
@@ -430,7 +431,7 @@
   ],
   "Variables": {
     "RandomSeed": "347410179",
-    "SearchIndexName": "kmjauxxu",
-    "SearchServiceName": "azs-net-ypwrygpr"
+    "SearchIndexName": "ylirgsqk",
+    "SearchServiceName": "azs-net-morphgyq"
   }
 }

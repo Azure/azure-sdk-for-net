@@ -1,12 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-ypwrygpr.search.windows.net/indexes?$select=%2A\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-morphgyq.search.windows.net/indexes?$select=%2A\u0026api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200422.1",
+          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e88bbfcc516ee73040fb1420e7a9ee12",
@@ -17,9 +18,9 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "6165",
-        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
-        "Date": "Wed, 22 Apr 2020 23:17:51 GMT",
-        "elapsed-time": "152",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Fri, 24 Apr 2020 07:06:29 GMT",
+        "elapsed-time": "87",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -28,11 +29,11 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-ypwrygpr.search.windows.net/$metadata#indexes(*)",
+        "@odata.context": "https://azs-net-morphgyq.search.windows.net/$metadata#indexes(*)",
         "value": [
           {
-            "@odata.etag": "\u00220x8D7E71352C81C3C\u0022",
-            "name": "kmjauxxu",
+            "@odata.etag": "\u00220x8D7E81A280288C2\u0022",
+            "name": "ylirgsqk",
             "defaultScoringProfile": null,
             "fields": [
               {
@@ -429,13 +430,8 @@
     }
   ],
   "Variables": {
-    "CLIENT_ID": "f9ab11db-b032-44b3-af0a-44713541cc40",
-    "LOCATION": "westus2",
     "RandomSeed": "230027432",
-    "RESOURCE_GROUP": "heaths-search",
-    "SearchIndexName": "kmjauxxu",
-    "SearchServiceName": "azs-net-ypwrygpr",
-    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
-    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+    "SearchIndexName": "ylirgsqk",
+    "SearchServiceName": "azs-net-morphgyq"
   }
 }

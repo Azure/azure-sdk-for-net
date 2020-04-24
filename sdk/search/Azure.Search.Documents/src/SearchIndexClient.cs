@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Pipeline;
 
 namespace Azure.Search.Documents
 {
@@ -158,7 +159,7 @@ namespace Azure.Search.Documents
             Endpoint = endpoint;
             IndexName = indexName;
             ClientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = options.Build(credential);
+            Pipeline = options.Build(credential, OdataMetadataPolicy.None);
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(

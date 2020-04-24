@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-kupqasmr.search.windows.net/indexes?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-ftnafclr.search.windows.net/indexes?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "4032",
         "Content-Type": "application/json",
-        "traceparent": "00-acdacd631b2f2f418a57bed049109c71-fe0a0dce2d059e43-00",
+        "traceparent": "00-230b540a589cde48aeff472aba6f8d35-06bc09827ca52743-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200327.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5cad1ef4d125aded2bffeebfd431dec8",
         "x-ms-return-client-request-id": "true"
@@ -308,11 +309,11 @@
         "Cache-Control": "no-cache",
         "Content-Length": "6158",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Sat, 28 Mar 2020 00:04:15 GMT",
-        "elapsed-time": "1367",
-        "ETag": "W/\u00220x8D7D2AB8E40C0A9\u0022",
+        "Date": "Fri, 24 Apr 2020 07:05:57 GMT",
+        "elapsed-time": "1002",
+        "ETag": "W/\u00220x8D7E81DEFE230C6\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-kupqasmr.search.windows.net/indexes(\u0027wvhobppu\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-ftnafclr.search.windows.net/indexes(\u0027wvhobppu\u0027)?api-version=2019-05-06-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -320,8 +321,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-kupqasmr.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D7D2AB8E40C0A9\u0022",
+        "@odata.context": "https://azs-net-ftnafclr.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D7E81DEFE230C6\u0022",
         "name": "wvhobppu",
         "defaultScoringProfile": null,
         "fields": [
@@ -717,7 +718,12 @@
     }
   ],
   "Variables": {
+    "CLIENT_ID": "f9ab11db-b032-44b3-af0a-44713541cc40",
+    "LOCATION": "westus2",
     "RandomSeed": "96077012",
-    "SearchServiceName": "azs-net-kupqasmr"
+    "RESOURCE_GROUP": "heaths-search",
+    "SearchServiceName": "azs-net-ftnafclr",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }
 }

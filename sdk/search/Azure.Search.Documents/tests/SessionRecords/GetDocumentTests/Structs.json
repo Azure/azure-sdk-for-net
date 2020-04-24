@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-edcbiwde.search.windows.net/indexes(\u0027nnpkimvp\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-wpqwjyux.search.windows.net/indexes(\u0027bnshnpuh\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "77",
         "Content-Type": "application/json",
-        "traceparent": "00-a6d2f53da6a60140b594396723f38810-f2516a3ded49dc47-00",
+        "traceparent": "00-832ac234e0f32c499ebe75be45fc3203-671a94d92fcac748-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "eb3f3216b0de1bf6125f047abab79f2a",
         "x-ms-return-client-request-id": "true"
@@ -29,8 +30,8 @@
         "Cache-Control": "no-cache",
         "Content-Length": "234",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 12 Mar 2020 00:43:42 GMT",
-        "elapsed-time": "101",
+        "Date": "Fri, 24 Apr 2020 06:44:37 GMT",
+        "elapsed-time": "138",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -39,7 +40,7 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-edcbiwde.search.windows.net/indexes(\u0027nnpkimvp\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
+        "@odata.context": "https://azs-net-wpqwjyux.search.windows.net/indexes(\u0027bnshnpuh\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
         "value": [
           {
             "key": "4",
@@ -51,14 +52,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-edcbiwde.search.windows.net/indexes(\u0027nnpkimvp\u0027)/docs(\u00274\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-wpqwjyux.search.windows.net/indexes(\u0027bnshnpuh\u0027)/docs(\u00274\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-059176eb8377534ebef9820debcdffc1-a26b0fb9161bb64b-00",
+        "traceparent": "00-bf67bb2eeb2d2f499adcd7ad6bf0d9d4-cc78cc1666915b4b-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "616d0353a8077dbe8775e6cb950c62f3",
         "x-ms-return-client-request-id": "true"
@@ -67,10 +69,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "341",
-        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
-        "Date": "Thu, 12 Mar 2020 00:43:45 GMT",
-        "elapsed-time": "8",
+        "Content-Length": "232",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 24 Apr 2020 06:44:39 GMT",
+        "elapsed-time": "6",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -79,7 +81,6 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-edcbiwde.search.windows.net/indexes(\u0027nnpkimvp\u0027)/$metadata#docs(*)/$entity",
         "hotelId": "4",
         "hotelName": "Value Inn",
         "description": null,
@@ -97,8 +98,13 @@
     }
   ],
   "Variables": {
+    "CLIENT_ID": "f9ab11db-b032-44b3-af0a-44713541cc40",
+    "LOCATION": "westus2",
     "RandomSeed": "10321260",
-    "SearchIndexName": "nnpkimvp",
-    "SearchServiceName": "azs-net-edcbiwde"
+    "RESOURCE_GROUP": "heaths-search",
+    "SearchIndexName": "bnshnpuh",
+    "SearchServiceName": "azs-net-wpqwjyux",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }
 }

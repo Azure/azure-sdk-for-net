@@ -1,16 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-orwqtkfe.search.windows.net/indexes(\u0027aplwxoqr\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-ybhxardp.search.windows.net/indexes(\u0027skjluoyb\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "879",
         "Content-Type": "application/json",
-        "traceparent": "00-d991d5920064d9499f7682fd544d5ede-2b3cf3fec028a24c-00",
+        "traceparent": "00-178057664e98ef45b73fc22b14dda262-6e5b15c7549aa140-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "aa5f713be58bf17803b0715e17f2aff2",
         "x-ms-return-client-request-id": "true"
@@ -44,8 +45,8 @@
         "Cache-Control": "no-cache",
         "Content-Length": "234",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Thu, 12 Mar 2020 00:48:00 GMT",
-        "elapsed-time": "117",
+        "Date": "Fri, 24 Apr 2020 06:48:57 GMT",
+        "elapsed-time": "151",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -54,7 +55,7 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-orwqtkfe.search.windows.net/indexes(\u0027aplwxoqr\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
+        "@odata.context": "https://azs-net-ybhxardp.search.windows.net/indexes(\u0027skjluoyb\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
         "value": [
           {
             "key": "1",
@@ -66,14 +67,15 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-orwqtkfe.search.windows.net/indexes(\u0027aplwxoqr\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-ybhxardp.search.windows.net/indexes(\u0027skjluoyb\u0027)/docs(\u00271\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-1331560f25f2a0488526e2c2be133708-45806617c51d1f45-00",
+        "traceparent": "00-4b18a9aea797504fb407f206e8822c3c-27d3430791ae6948-00",
         "User-Agent": [
-          "azsdk-net-Search/11.0.0-dev.20200311.1",
-          "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "93de715e8cce15b225b9af5b7103eb25",
         "x-ms-return-client-request-id": "true"
@@ -82,10 +84,10 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "943",
-        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
-        "Date": "Thu, 12 Mar 2020 00:48:03 GMT",
-        "elapsed-time": "10",
+        "Content-Length": "834",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Fri, 24 Apr 2020 06:49:00 GMT",
+        "elapsed-time": "7",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -94,7 +96,6 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-orwqtkfe.search.windows.net/indexes(\u0027aplwxoqr\u0027)/$metadata#docs(*)/$entity",
         "hotelId": "1",
         "hotelName": "Fancy Stay",
         "description": "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.",
@@ -117,8 +118,13 @@
     }
   ],
   "Variables": {
+    "CLIENT_ID": "f9ab11db-b032-44b3-af0a-44713541cc40",
+    "LOCATION": "westus2",
     "RandomSeed": "1353165967",
-    "SearchIndexName": "aplwxoqr",
-    "SearchServiceName": "azs-net-orwqtkfe"
+    "RESOURCE_GROUP": "heaths-search",
+    "SearchIndexName": "skjluoyb",
+    "SearchServiceName": "azs-net-ybhxardp",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }
 }
