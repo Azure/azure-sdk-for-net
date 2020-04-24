@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Azure.Core.Testing
@@ -95,6 +96,19 @@ namespace Azure.Core.Testing
             if (originalLength != sanitizedLength && headers.ContainsKey("Content-Length"))
             {
                 headers["Content-Length"] = new string[] { sanitizedLength.ToString() };
+            }
+        }
+
+        public virtual void Sanitize(RecordSession session)
+        {
+            foreach (RecordEntry entry in session.Entries)
+            {
+                Sanitize(entry);
+            }
+
+            foreach (var variable in session.Variables.ToArray())
+            {
+                session.Variables[variable.Key] = SanitizeVariable(variable.Key, variable.Value);
             }
         }
     }

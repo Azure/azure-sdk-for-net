@@ -19,34 +19,49 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         private const string ApiKeyHeaderName = "api-key";
 
-        /// <summary>
-        /// Secret values to sanitize from body.
-        /// </summary>
-        private readonly HashSet<string> _secrets = new HashSet<string>();
-
-        /// <summary>
-        /// Redact sensitive body content.
-        /// </summary>
-        /// <param name="contentType">The Content-Type of the body content.</param>
-        /// <param name="body">The body content.</param>
-        /// <returns>The sanitized body content.</returns>
-        public override string SanitizeTextBody(string contentType, string body)
+        public override void Sanitize(RecordSession session)
         {
-            if (_secrets.Count > 0 &&
+            var secrets = new HashSet<string>();
+
+            foreach (var variable in session.Variables)
+            {
+                if (SearchTestEnvironment.StorageAccountKeyVariableName.Equals(variable.Key, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Assumes the secret content is destined to appear in JSON, for which certain common characters in account keys are escaped.
+                    // See https://github.com/dotnet/runtime/blob/8640eed0/src/libraries/System.Text.Json/src/System/Text/Json/Writer/JsonWriterHelper.Escaping.cs
+                    string encoded = JavaScriptEncoder.Default.Encode(variable.Value);
+                    secrets.Add(encoded);
+
+                    session.Variables[variable.Key] = SanitizeValue;
+                }
+            }
+
+            foreach (var recordEntry in session.Entries)
+            {
+                SanitizeSecretsInJsonBody(secrets, recordEntry.Request);
+                SanitizeSecretsInJsonBody(secrets, recordEntry.Response);
+            }
+
+            base.Sanitize(session);
+        }
+
+        internal void SanitizeSecretsInJsonBody(HashSet<string> secrets, RecordEntryMessage message)
+        {
+            if (secrets.Count > 0 &&
+                message.TryGetBodyAsText(out var body) &&
+                message.TryGetContentType(out var contentType) &&
                 !string.IsNullOrEmpty(body) &&
                 contentType != null &&
                 contentType.StartsWith("application/json", StringComparison.OrdinalIgnoreCase))
             {
                 StringBuilder sanitized = new StringBuilder(body);
-                foreach (string secret in _secrets)
+                foreach (string secret in secrets)
                 {
                     sanitized.Replace(secret, SanitizeValue);
                 }
 
-                return sanitized.ToString();
+                message.Body = Encoding.UTF8.GetBytes(sanitized.ToString());
             }
-
-            return base.SanitizeTextBody(contentType, body);
         }
 
         /// <summary>
@@ -60,27 +75,6 @@ namespace Azure.Search.Documents.Tests
                 headers[ApiKeyHeaderName] = new string[] { SanitizeValue };
             }
             base.SanitizeHeaders(headers);
-        }
-
-        /// <summary>
-        /// Redact sensitive variables.
-        /// </summary>
-        /// <param name="variableName">The name of the variable.</param>
-        /// <param name="environmentVariableValue">The value of the variable.</param>
-        /// <returns>The sanitized variable value.</returns>
-        public override string SanitizeVariable(string variableName, string environmentVariableValue)
-        {
-            if (SearchTestEnvironment.StorageAccountKeyVariableName.Equals(variableName, StringComparison.OrdinalIgnoreCase))
-            {
-                // Assumes the secret content is destined to appear in JSON, for which certain common characters in account keys are escaped.
-                // See https://github.com/dotnet/runtime/blob/8640eed0/src/libraries/System.Text.Json/src/System/Text/Json/Writer/JsonWriterHelper.Escaping.cs
-                string encoded = JavaScriptEncoder.Default.Encode(environmentVariableValue);
-                _secrets.Add(encoded);
-
-                return SanitizeValue;
-            }
-
-            return base.SanitizeVariable(variableName, environmentVariableValue);
         }
     }
 }
