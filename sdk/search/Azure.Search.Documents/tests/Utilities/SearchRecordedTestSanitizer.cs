@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using Azure.Core.Testing;
@@ -23,7 +24,7 @@ namespace Azure.Search.Documents.Tests
         {
             var secrets = new HashSet<string>();
 
-            foreach (var variable in session.Variables)
+            foreach (var variable in session.Variables.ToArray())
             {
                 if (SearchTestEnvironment.StorageAccountKeyVariableName.Equals(variable.Key, StringComparison.OrdinalIgnoreCase))
                 {
