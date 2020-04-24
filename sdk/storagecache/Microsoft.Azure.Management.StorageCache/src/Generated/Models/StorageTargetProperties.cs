@@ -6,34 +6,27 @@
 
 namespace Microsoft.Azure.Management.StorageCache.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Type of the Storage Target.
+    /// Properties of the Storage Target.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
-    public partial class StorageTarget : StorageTargetResource
+    public partial class StorageTargetProperties
     {
         /// <summary>
-        /// Initializes a new instance of the StorageTarget class.
+        /// Initializes a new instance of the StorageTargetProperties class.
         /// </summary>
-        public StorageTarget()
+        public StorageTargetProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StorageTarget class.
+        /// Initializes a new instance of the StorageTargetProperties class.
         /// </summary>
-        /// <param name="name">Name of the Storage Target.</param>
-        /// <param name="id">Resource ID of the Storage Target.</param>
-        /// <param name="type">Type of the Storage Target;
-        /// Microsoft.StorageCache/Cache/StorageTarget</param>
         /// <param name="junctions">List of Cache namespace junctions to target
         /// for namespace associations.</param>
         /// <param name="targetType">Type of the Storage Target.</param>
@@ -45,8 +38,7 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// <param name="clfs">Properties when targetType is clfs.</param>
         /// <param name="unknown">Properties when targetType is
         /// unknown.</param>
-        public StorageTarget(string name = default(string), string id = default(string), string type = default(string), IList<NamespaceJunction> junctions = default(IList<NamespaceJunction>), string targetType = default(string), string provisioningState = default(string), Nfs3Target nfs3 = default(Nfs3Target), ClfsTarget clfs = default(ClfsTarget), UnknownTarget unknown = default(UnknownTarget))
-            : base(name, id, type)
+        public StorageTargetProperties(IList<NamespaceJunction> junctions = default(IList<NamespaceJunction>), string targetType = default(string), string provisioningState = default(string), Nfs3Target nfs3 = default(Nfs3Target), ClfsTarget clfs = default(ClfsTarget), UnknownTarget unknown = default(UnknownTarget))
         {
             Junctions = junctions;
             TargetType = targetType;
@@ -66,13 +58,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// Gets or sets list of Cache namespace junctions to target for
         /// namespace associations.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.junctions")]
+        [JsonProperty(PropertyName = "junctions")]
         public IList<NamespaceJunction> Junctions { get; set; }
 
         /// <summary>
         /// Gets or sets type of the Storage Target.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.targetType")]
+        [JsonProperty(PropertyName = "targetType")]
         public string TargetType { get; set; }
 
         /// <summary>
@@ -81,31 +73,31 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// Possible values include: 'Succeeded', 'Failed', 'Cancelled',
         /// 'Creating', 'Deleting', 'Updating'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets properties when targetType is nfs3.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.nfs3")]
+        [JsonProperty(PropertyName = "nfs3")]
         public Nfs3Target Nfs3 { get; set; }
 
         /// <summary>
         /// Gets or sets properties when targetType is clfs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.clfs")]
+        [JsonProperty(PropertyName = "clfs")]
         public ClfsTarget Clfs { get; set; }
 
         /// <summary>
         /// Gets or sets properties when targetType is unknown.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.unknown")]
+        [JsonProperty(PropertyName = "unknown")]
         public UnknownTarget Unknown { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

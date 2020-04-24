@@ -10,25 +10,25 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties pertained to ClfsTarget
+    /// Cache security settings.
     /// </summary>
-    public partial class ClfsTarget
+    public partial class CacheSecuritySettings
     {
         /// <summary>
-        /// Initializes a new instance of the ClfsTarget class.
+        /// Initializes a new instance of the CacheSecuritySettings class.
         /// </summary>
-        public ClfsTarget()
+        public CacheSecuritySettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClfsTarget class.
+        /// Initializes a new instance of the CacheSecuritySettings class.
         /// </summary>
-        /// <param name="target">Resource ID of storage container.</param>
-        public ClfsTarget(string target = default(string))
+        /// <param name="rootSquash">root squash of cache property.</param>
+        public CacheSecuritySettings(bool? rootSquash = default(bool?))
         {
-            Target = target;
+            RootSquash = rootSquash;
             CustomInit();
         }
 
@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource ID of storage container.
+        /// Gets or sets root squash of cache property.
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
+        [JsonProperty(PropertyName = "rootSquash")]
+        public bool? RootSquash { get; set; }
 
     }
 }
