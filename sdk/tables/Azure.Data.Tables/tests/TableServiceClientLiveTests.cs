@@ -20,14 +20,9 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     public class TableServiceClientLiveTests : RecordedTestBase<TablesTestEnvironment>
     {
-        /// <summary>
-        /// The table endpoint.
-        /// </summary>
-        private readonly Uri _tableEndpoint;
 
         public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
         {
-            _tableEndpoint = new Uri(TestEnvironment.StorageUri);
             Sanitizer = new TablesRecordedTestSanitizer();
             Matcher = new TablesRecordMatcher(Sanitizer);
         }
@@ -39,7 +34,7 @@ namespace Azure.Data.Tables.Tests
         /// <returns>The instrumented <see cref="TableServiceClient" />.</returns>
         private TableServiceClient CreateTableServiceClient()
         {
-            return InstrumentClient(new TableServiceClient(_tableEndpoint,
+            return InstrumentClient(new TableServiceClient(new Uri(TestEnvironment.StorageUri),
                                                                new TablesSharedKeyCredential(
                                                                    TestEnvironment.AccountName,
                                                                    TestEnvironment.PrimaryStorageAccountKey
