@@ -22,10 +22,10 @@ namespace Azure.Data.Tables
 
             options ??= new TableClientOptions();
 
-            var endpoint1 = endpoint.ToString();
+            var endpointString = endpoint.ToString();
             var pipeline = HttpPipelineBuilder.Build(options, new TablesSharedKeyPipelinePolicy(credential));
             var diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableInternalClient(diagnostics, pipeline, endpoint1, "2019-02-02");
+            _tableOperations = new TableInternalClient(diagnostics, pipeline, endpointString);
         }
 
         /// <summary>

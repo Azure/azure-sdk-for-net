@@ -12,10 +12,10 @@ namespace Azure.Data.Tables
     }
     public partial class TableClientOptions : Azure.Core.ClientOptions
     {
-        public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2018_10_10) { }
+        public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2019_02_02) { }
         public enum ServiceVersion
         {
-            V2018_10_10 = 1,
+            V2019_02_02 = 1,
         }
     }
     public partial class TableServiceClient
