@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure.Data.Tables;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.Storage.Tables.Tests
+namespace Azure.Tables.Tests
 {
     public class TableServiceClientTests
     {
