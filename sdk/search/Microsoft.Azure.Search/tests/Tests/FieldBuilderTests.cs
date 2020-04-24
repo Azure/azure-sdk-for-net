@@ -446,6 +446,19 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedErrorMessage, e.Message);
         }
 
+        [Theory]
+        [InlineData(typeof(ReflectableCamelCaseModel))]
+        public void FieldsCanBeAddedDynamicallyToTheFieldsCollectionReturned(Type modelType)
+        {
+            var fields = FieldBuilder.BuildForType(modelType);
+
+            Assert.Equal(4, fields.Count);
+
+            fields.Add(new Field("TestField", AnalyzerName.StandardLucene));
+
+            Assert.Equal(5, fields.Count);
+        }
+
         [Fact]
         public void FieldBuilderCreatesIndexEquivalentToManuallyDefinedIndex()
         {
