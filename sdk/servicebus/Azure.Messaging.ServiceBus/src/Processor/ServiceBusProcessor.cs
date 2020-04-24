@@ -701,6 +701,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
             CancellationTokenSource renewLockCancellationTokenSource = null;
             Task renewLock = null;
+            bool userSettled = false;
 
             try
             {
@@ -717,24 +718,36 @@ namespace Azure.Messaging.ServiceBus
 
                 if (IsSessionProcessor)
                 {
-                    await OnProcessSessionMessageAsync(
-                        new ProcessSessionMessageEventArgs(
-                            message,
-                            (ServiceBusSessionReceiver)receiver,
-                            processorCancellationToken))
-                        .ConfigureAwait(false);
+                    var args = new ProcessSessionMessageEventArgs(
+                                message,
+                                (ServiceBusSessionReceiver)receiver,
+                                processorCancellationToken);
+                    try
+                    {
+                        await OnProcessSessionMessageAsync(args).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        userSettled = args.UserSettled;
+                    }
                 }
                 else
                 {
-                    await OnProcessMessageAsync(
-                        new ProcessMessageEventArgs(
+                    var args = new ProcessMessageEventArgs(
                             message,
                             receiver,
-                            processorCancellationToken))
-                        .ConfigureAwait(false);
+                            processorCancellationToken);
+                    try
+                    {
+                        await OnProcessMessageAsync(args).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        userSettled = args.UserSettled;
+                    }
                 }
 
-                if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete)
+                if (ReceiveMode == ReceiveMode.PeekLock && AutoComplete && !userSettled)
                 {
                     errorSource = ServiceBusErrorSource.Complete;
                     // don't pass the processor cancellation token
@@ -754,8 +767,10 @@ namespace Azure.Messaging.ServiceBus
                 await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(ex, errorSource, FullyQualifiedNamespace, EntityPath)).ConfigureAwait(false);
 
-                // if the message or session lock was lost, do not attempt to abandon the message
-                if (ReceiveMode == ReceiveMode.PeekLock &&
+                // if the user settled the message, or if the message or session lock was lost,
+                // do not attempt to abandon the message
+                if (!userSettled &&
+                    ReceiveMode == ReceiveMode.PeekLock &&
                     (!(ex is ServiceBusException sbException) ||
                     (sbException.Reason != ServiceBusException.FailureReason.SessionLockLost) &&
                      sbException.Reason != ServiceBusException.FailureReason.MessageLockLost))
