@@ -68,7 +68,7 @@ The v4 client allowed for sending a single message or a list of messages, which 
 | In v4                                          | Equivalent in v7                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
 | `QueueClient.SendAsync(Message)` or `MessageSender.SendAsync(Message)`                          | `ServiceBusSender.SendAsync(ServiceBusMessage)`                               | [Send a message](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-message) |
-| `QueueClient.SendAsync(IList<Message>)` or `MessageSender.SendAsync(IList<Message>)`                          | `messageBatch = ServiceBusSender.CreateBatchAsync()` `messageBatch.TryAdd(ServiceBusMessage)` `ServiceBusSender.SendBatchAsync(messageBatch)`                               | [Send a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-batch-of-messages) |
+| `QueueClient.SendAsync(IList<Message>)` or `MessageSender.SendAsync(IList<Message>)`                          | `messageBatch = ServiceBusSender.CreateBatchAsync()` `messageBatch.TryAdd(ServiceBusMessage)` `ServiceBusSender.SendAsync(messageBatch)`                               | [Send a batch of messages](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_HelloWorld.md#sending-and-receiving-a-batch-of-messages) |
 
 ### Receiving messages 
 
@@ -157,7 +157,7 @@ Console.WriteLine(body);
 
 In v4, `QueueClient`/`MessageSender`/`MessageReceiver` would be created directly, after which user would call `SendAsync()` method via `QueueClient`/`MessageSender` to send a batch of messages and `ReceiveAsync()` method via `MessageReceiver` to receive a batch of messages.
 
-In v7, user would initialize the `ServiceBusClient` and call `CreateSender()` method to create a `ServiceBusSender` and `CreateReceiver()` method to create a `ServiceBusReceiver`. To send a batch of messages, user would call `CreateBatchAsync()` method to create `ServiceBusMessageBatch` and try to add messages to it using `TryAdd()` method. If the `ServiceBusMessageBatch` accepts a message, user can be confident that it will not violate size constraints when calling `SendBatchAsync()` via `ServiceBusSender`. To receive a batch of messages, user would call `ReceiveBatchAsync()` method via `ServiceBusReceiver`. 
+In v7, user would initialize the `ServiceBusClient` and call `CreateSender()` method to create a `ServiceBusSender` and `CreateReceiver()` method to create a `ServiceBusReceiver`. To send a batch of messages, user would call `CreateBatchAsync()` method to create `ServiceBusMessageBatch` and try to add messages to it using `TryAdd()` method. If the `ServiceBusMessageBatch` accepts a message, user can be confident that it will not violate size constraints when calling `SendAsync()` via `ServiceBusSender`. To receive a batch of messages, user would call `ReceiveBatchAsync()` method via `ServiceBusReceiver`. 
 
 In v4:
 

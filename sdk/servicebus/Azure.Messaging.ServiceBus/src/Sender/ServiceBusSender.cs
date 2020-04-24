@@ -83,8 +83,8 @@ namespace Azure.Messaging.ServiceBus
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         /// <param name="entityPath">The entity path to send the message to.</param>
-        /// <param name="options">The set of <see cref="ServiceBusClientOptions"/> to use for configuring
-        /// this <see cref="ServiceBusClient"/>.</param>
+        /// <param name="options">The set of <see cref="ServiceBusSenderOptions"/> to use for configuring
+        /// this <see cref="ServiceBusSender"/>.</param>
         /// <param name="connection">The connection for the sender.</param>
         ///
         internal ServiceBusSender(
@@ -178,12 +178,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using a try-based pattern.  If a message would
-        ///   exceed the maximum allowable size of the batch, the batch will not allow adding the message and signal that scenario using its
-        ///   return value.
+        ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using
+        ///   a <see cref="ServiceBusMessageBatch.TryAdd"/>. If a message would exceed the maximum
+        ///   allowable size of the batch, the batch will not allow adding the message and signal that
+        ///   scenario using it return value.
         ///
-        ///   Because messages that would violate the size constraint cannot be added, publishing a batch will not trigger an exception when
-        ///   attempting to send the messages to the Queue/Topic.
+        ///   Because messages that would violate the size constraint cannot be added, publishing a batch
+        ///   will not trigger an exception when attempting to send the messages to the Queue/Topic.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
