@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
@@ -23,6 +24,9 @@ namespace IotHubToEventHubsSample
     ///
     public static class IotHubConnection
     {
+        /// <summary>The regular expression used to parse the Event Hub name from the IoT Hub redirection address.</summary>
+        private static readonly Regex EventHubNameExpression = new Regex(@":\d+\/(?<eventHubName>.*)\/\$management", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
         /// <summary>
         ///   Requests connection string for the built-in Event Hubs messaging endpoint of the associated IoT Hub.
         /// </summary>
@@ -71,6 +75,7 @@ namespace IotHubToEventHubsSample
             var connection = default(AmqpConnection);
             var link = default(AmqpLink);
             var eventHubsHost = default(string);
+            var eventHubName = default(string);
 
             try
             {
@@ -82,7 +87,20 @@ namespace IotHubToEventHubsSample
             catch (AmqpException ex)
                 when ((ex?.Error?.Condition.Value == AmqpErrorCode.LinkRedirect.Value) && (ex?.Error?.Info != null))
             {
+                // The Event Hubs host is returned as a first-party element of the redirect information.
+
                 ex.Error.Info.TryGetValue("hostname", out eventHubsHost);
+
+                // The Event Hub name is a variant of the IoT Hub name and must be parsed from the
+                // full IoT Hub address returned by the redirect.
+
+                if (ex.Error.Info.TryGetValue("address", out string iotAddress))
+                {
+                    //  If the address does not match the expected pattern, this will not result in an exception; the Event Hub
+                    // name will remain null and trigger a failed validation later in the flow.
+
+                    eventHubName = EventHubNameExpression.Match(iotAddress).Groups["eventHubName"].Value;
+                }
             }
             finally
             {
@@ -100,7 +118,12 @@ namespace IotHubToEventHubsSample
                 throw new InvalidOperationException("The Event Hubs host was not returned by the IoT Hub service.");
             }
 
-            return $"Endpoint=sb://{ eventHubsHost }/;EntityPath={ iotHubName };SharedAccessKeyName={ parsedConnectionString.SharedAccessKeyName };SharedAccessKey={ parsedConnectionString.SharedAccessKey }";
+            if (string.IsNullOrEmpty(eventHubName))
+            {
+                throw new InvalidOperationException("The Event Hub name was not returned by the IoT Hub service.");
+            }
+
+            return $"Endpoint=sb://{ eventHubsHost }/;EntityPath={ eventHubName };SharedAccessKeyName={ parsedConnectionString.SharedAccessKeyName };SharedAccessKey={ parsedConnectionString.SharedAccessKey }";
         }
 
         /// <summary>

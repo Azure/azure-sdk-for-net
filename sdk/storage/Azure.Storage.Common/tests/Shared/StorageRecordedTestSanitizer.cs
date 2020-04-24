@@ -15,6 +15,7 @@ namespace Azure.Storage.Test.Shared
     {
         private const string SignatureQueryName = "sig";
         private const string CopySourceName = "x-ms-copy-source";
+        private const string RenameSource = "x-ms-rename-source";
 
         public override string SanitizeUri(string uri)
         {
@@ -28,6 +29,16 @@ namespace Azure.Storage.Test.Shared
             return builder.Uri.ToString();
         }
 
+        public string SanitizeQueryParameters(string queryParameters)
+        {
+            var query = new UriQueryParamsCollection(queryParameters);
+            if (query.ContainsKey(SignatureQueryName))
+            {
+                query[SignatureQueryName] = SanitizeValue;
+            }
+            return query.ToString();
+        }
+
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
             // Remove the Auth header
@@ -37,6 +48,11 @@ namespace Azure.Storage.Test.Shared
             if (headers.TryGetValue(CopySourceName, out var copySource))
             {
                 headers[CopySourceName] = copySource.Select(c => SanitizeUri(c)).ToArray();
+            }
+
+            if (headers.TryGetValue(RenameSource, out var renameSource))
+            {
+                headers[RenameSource] = renameSource.Select(c => SanitizeQueryParameters(c)).ToArray();
             }
         }
 

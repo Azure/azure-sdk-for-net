@@ -82,6 +82,11 @@ namespace Azure.Core.Testing
                 {
                     sanitizer.Sanitize(entry);
                 }
+
+                foreach (var variable in Variables.ToArray())
+                {
+                    Variables[variable.Key] = sanitizer.SanitizeVariable(variable.Key, variable.Value);
+                }
             }
         }
 
