@@ -479,6 +479,8 @@ directive:
         $.BlobItemProperties.properties.AccessTierChangedOn = $.BlobItemProperties.properties.AccessTierChangeTime;
         $.BlobItemProperties.properties.AccessTierChangedOn.xml = {"name": "AccessTierChangeTime"};
         delete $.BlobItemProperties.properties.AccessTierChangeTime;
+        
+        $.BlobItemInternal["x-az-public"] = false;
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{containerName}/{blob}"]
@@ -508,6 +510,7 @@ directive:
         "x-az-public": false,
         "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } } };
     $.head.responses["200"]["x-az-response-name"] = "BlobPropertiesInternal";
+    $.head.responses["200"]["x-az-public"] = false;
     $.head.responses["200"].headers["x-ms-copy-source"].format = "url";
     $.head.responses["200"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
     $.head.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "LeaseState";

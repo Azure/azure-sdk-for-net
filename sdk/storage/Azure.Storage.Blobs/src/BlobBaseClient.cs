@@ -2461,9 +2461,10 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName: "BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-                    // Wrap BlobProperties to make content easier to find
-                    BlobProperties properties = BlobExtensions.ToBlobProperties(response.Value);
-                    return Response.FromValue(properties, response.GetRawResponse());
+
+                    return Response.FromValue(
+                        response.Value.ToBlobProperties(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

@@ -95,18 +95,19 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Creates a new BlobProperties object backed by BlobPropertiesInternal
+        /// Creates a new BlobProperties object backed by BlobPropertiesInternal.
         /// </summary>
-        /// <param name="properties">The BlobPropertiesInternal returned with the request</param>
-        internal static BlobProperties ToBlobProperties(BlobPropertiesInternal properties) =>
+        /// <param name="properties">
+        /// The BlobPropertiesInternal returned with the reques
+        /// </param>
+        internal static BlobProperties ToBlobProperties(this BlobPropertiesInternal properties) =>
             new BlobProperties()
             {
-                _properties = properties,
                 LastModified = properties.LastModified,
                 CreatedOn = properties.CreatedOn,
                 Metadata = properties.Metadata,
                 ObjectReplicationDestinationPolicy = properties.ObjectReplicationPolicyId,
-                ObjectReplicationSourceProperties = BlobExtensions.ParseObjectReplicationIds(properties.ObjectReplicationRules),
+                ObjectReplicationSourceProperties = properties.ObjectReplicationRules.ToObjectReplicationIds(),
                 BlobType = properties.BlobType,
                 CopyCompletedOn = properties.CopyCompletedOn,
                 CopyStatusDescription = properties.CopyStatusDescription,
@@ -148,8 +149,13 @@ namespace Azure.Storage.Blobs
         /// Internal. Parses Object Replication Policy ID from Rule ID and sets the Policy ID.
         /// </summary>
         /// <returns></returns>
-        internal static IDictionary<string, IDictionary<string, string>> ParseObjectReplicationIds(IDictionary<string,string> OrIds)
+        internal static IDictionary<string, IDictionary<string, string>> ToObjectReplicationIds(this IDictionary<string,string> OrIds)
         {
+            if (OrIds == null)
+            {
+                return null;
+            }
+
             if (OrIds.Count == 0 ||
                 (OrIds.Count > 0 &&
                 (OrIds.First().Key == "policy-id")))

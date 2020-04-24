@@ -17629,7 +17629,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// An Azure Storage blob
     /// </summary>
-    public partial class BlobItemInternal
+    internal partial class BlobItemInternal
     {
         /// <summary>
         /// Name
@@ -17684,7 +17684,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobItemInternal instance
         /// </summary>
-        internal BlobItemInternal()
+        public BlobItemInternal()
             : this(false)
         {
         }
@@ -17777,42 +17777,6 @@ namespace Azure.Storage.Blobs.Models
         }
 
         static partial void CustomizeFromXml(System.Xml.Linq.XElement element, Azure.Storage.Blobs.Models.BlobItemInternal value);
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobItemInternal instance for mocking.
-        /// </summary>
-        public static BlobItemInternal BlobItemInternal(
-            string name,
-            bool deleted,
-            Azure.Storage.Blobs.Models.BlobItemProperties properties,
-            string snapshot = default,
-            string versionId = default,
-            bool? isCurrentVersion = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default,
-            Azure.Storage.Blobs.Models.BlobTags blobTags = default,
-            string objectReplicationPolicyId = default,
-            System.Collections.Generic.IDictionary<string, string> objectReplicationRules = default)
-        {
-            return new BlobItemInternal()
-            {
-                Name = name,
-                Deleted = deleted,
-                Properties = properties,
-                Snapshot = snapshot,
-                VersionId = versionId,
-                IsCurrentVersion = isCurrentVersion,
-                Metadata = metadata,
-                BlobTags = blobTags,
-                ObjectReplicationPolicyId = objectReplicationPolicyId,
-                ObjectReplicationRules = objectReplicationRules,
-            };
-        }
     }
 }
 #endregion class BlobItemInternal
@@ -18515,7 +18479,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// BlobPropertiesInternal
     /// </summary>
-    public partial class BlobPropertiesInternal
+    internal partial class BlobPropertiesInternal
     {
         /// <summary>
         /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
@@ -18726,102 +18690,6 @@ namespace Azure.Storage.Blobs.Models
         {
             Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             ObjectReplicationRules = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
-        }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new BlobPropertiesInternal instance for mocking.
-        /// </summary>
-        public static BlobPropertiesInternal BlobPropertiesInternal(
-            System.DateTimeOffset lastModified,
-            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
-            long contentLength,
-            string contentType,
-            Azure.ETag eTag,
-            Azure.Storage.Blobs.Models.LeaseState leaseState,
-            string contentEncoding,
-            string contentDisposition,
-            string contentLanguage,
-            string cacheControl,
-            long blobSequenceNumber,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
-            string acceptRanges,
-            string destinationSnapshot,
-            int blobCommittedBlockCount,
-            bool isIncrementalCopy,
-            bool isServerEncrypted,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
-            string encryptionKeySha256,
-            System.Uri copySource,
-            string encryptionScope,
-            string copyProgress,
-            string accessTier,
-            string copyId,
-            bool accessTierInferred,
-            string copyStatusDescription,
-            string archiveStatus,
-            System.DateTimeOffset copyCompletedOn,
-            System.DateTimeOffset accessTierChangedOn,
-            Azure.Storage.Blobs.Models.BlobType blobType,
-            string versionId,
-            System.Collections.Generic.IDictionary<string, string> objectReplicationRules,
-            bool isCurrentVersion,
-            string objectReplicationPolicyId,
-            long tagCount,
-            System.Collections.Generic.IDictionary<string, string> metadata,
-            System.DateTimeOffset expiresOn,
-            System.DateTimeOffset createdOn,
-            bool isSealed,
-            byte[] contentHash)
-        {
-            return new BlobPropertiesInternal()
-            {
-                LastModified = lastModified,
-                LeaseStatus = leaseStatus,
-                ContentLength = contentLength,
-                ContentType = contentType,
-                ETag = eTag,
-                LeaseState = leaseState,
-                ContentEncoding = contentEncoding,
-                ContentDisposition = contentDisposition,
-                ContentLanguage = contentLanguage,
-                CacheControl = cacheControl,
-                BlobSequenceNumber = blobSequenceNumber,
-                LeaseDuration = leaseDuration,
-                AcceptRanges = acceptRanges,
-                DestinationSnapshot = destinationSnapshot,
-                BlobCommittedBlockCount = blobCommittedBlockCount,
-                IsIncrementalCopy = isIncrementalCopy,
-                IsServerEncrypted = isServerEncrypted,
-                CopyStatus = copyStatus,
-                EncryptionKeySha256 = encryptionKeySha256,
-                CopySource = copySource,
-                EncryptionScope = encryptionScope,
-                CopyProgress = copyProgress,
-                AccessTier = accessTier,
-                CopyId = copyId,
-                AccessTierInferred = accessTierInferred,
-                CopyStatusDescription = copyStatusDescription,
-                ArchiveStatus = archiveStatus,
-                CopyCompletedOn = copyCompletedOn,
-                AccessTierChangedOn = accessTierChangedOn,
-                BlobType = blobType,
-                VersionId = versionId,
-                ObjectReplicationRules = objectReplicationRules,
-                IsCurrentVersion = isCurrentVersion,
-                ObjectReplicationPolicyId = objectReplicationPolicyId,
-                TagCount = tagCount,
-                Metadata = metadata,
-                ExpiresOn = expiresOn,
-                CreatedOn = createdOn,
-                IsSealed = isSealed,
-                ContentHash = contentHash,
-            };
         }
     }
 }
