@@ -18,7 +18,6 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    //[LiveOnly]
     public class TableServiceClientLiveTests : RecordedTestBase<TablesTestEnvironment>
     {
         /// <summary>
@@ -40,13 +39,11 @@ namespace Azure.Data.Tables.Tests
         /// <returns>The instrumented <see cref="TableServiceClient" />.</returns>
         private TableServiceClient CreateTableServiceClient()
         {
-            TableServiceClient client = new TableServiceClient(_tableEndpoint,
+            return InstrumentClient(new TableServiceClient(_tableEndpoint,
                                                                new TablesSharedKeyCredential(
                                                                    TestEnvironment.AccountName,
-                                                                   string.Empty /* To record new tests, replace this value with TestEnvironment.PrimaryStorageAccountKey */
-                                                               ), Recording.InstrumentClientOptions(new TableClientOptions()));
-
-            return InstrumentClient(client);
+                                                                   TestEnvironment.PrimaryStorageAccountKey
+                                                               ), Recording.InstrumentClientOptions(new TableClientOptions())));
         }
 
         /// <summary>

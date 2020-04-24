@@ -280,7 +280,7 @@
   ],
   "Variables": {
     "RandomSeed": "580735771",
-    "TABLES_STORAGE_ACCOUNT_KEY": "Sanitized",
+    "TABLES_STORAGE_ACCOUNT_KEY": "",
     "TABLES_STORAGE_ACCOUNT_NAME": "chrissprim"
   }
 }
