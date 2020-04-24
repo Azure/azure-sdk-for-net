@@ -22,6 +22,10 @@ namespace Azure.Data.Tables
     {
         protected TableServiceClient() { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TablesSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
+        public virtual Azure.Data.Tables.Models.TableResponse CreateTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Data.Tables.Models.TableResponse> CreateTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public Azure.Data.Tables.TableClient GetTableClient(string tableName) { throw null; }
         public virtual Azure.Pageable<Azure.Data.Tables.Models.TableResponseProperties> GetTables(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.Tables.Models.TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

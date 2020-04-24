@@ -49,11 +49,11 @@
         }
     ],
     "outputs": {
-      "PRIMARY_STORAGE_ACCOUNT_NAME": {
+      "TABLES_STORAGE_ACCOUNT_NAME": {
         "type": "string",
         "value": "[variables('primaryAccountName')]"
       },
-      "PRIMARY_STORAGE_ACCOUNT_KEY": {
+      "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": {
         "type": "string",
         "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
       }

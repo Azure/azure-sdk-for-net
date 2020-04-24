@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
@@ -81,6 +82,74 @@ namespace Azure.Data.Tables
                     cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
             }, (_, __) => throw new NotImplementedException());
+        }
+
+        /// <summary>
+        /// Creates a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual TableResponse CreateTable(string tableName, CancellationToken cancellationToken = default) =>
+            CreateTableInternalAsync(false, tableName, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Creates a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual async Task<TableResponse> CreateTableAsync(string tableName, CancellationToken cancellationToken = default) =>
+            await CreateTableInternalAsync(true, tableName, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Deletes a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual Response DeleteTable(string tableName, CancellationToken cancellationToken = default) =>
+            DeleteTableInternalAsync(false, tableName, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Deletes a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default) =>
+            await DeleteTableInternalAsync(true, tableName, cancellationToken).ConfigureAwait(false);
+
+        internal async Task<TableResponse> CreateTableInternalAsync(bool async, string tableName, CancellationToken cancellationToken = default)
+        {
+            if (async)
+            {
+                //using var scope = _clientDiagnostics.CreateScope("TableServiceClient.CreateTable");
+                //scope.Start();
+                return await _tableOperations.RestClient.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                //using var scope = _clientDiagnostics.CreateScope("TableServiceClient.CreateTable");
+                //scope.Start();
+                return _tableOperations.RestClient.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+            }
+        }
+
+        internal async Task<Response> DeleteTableInternalAsync(bool async, string tableName, CancellationToken cancellationToken = default)
+        {
+            if (async)
+            {
+                return await _tableOperations.DeleteAsync(tableName, null, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                return _tableOperations.Delete(tableName, null, cancellationToken: cancellationToken);
+            }
         }
     }
 }
