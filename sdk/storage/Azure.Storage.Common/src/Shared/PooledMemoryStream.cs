@@ -325,7 +325,7 @@ namespace Azure.Storage.Shared
         {
             var latestBuffer = BufferSet.LastOrDefault();
 
-            if (latestBuffer == default || latestBuffer.DataLength < latestBuffer.Buffer.Length)
+            if (latestBuffer == default || latestBuffer.DataLength >= latestBuffer.Buffer.Length)
             {
                 return default;
             }
