@@ -37,10 +37,13 @@ namespace Azure.Search.Documents.Tests
                 }
             }
 
-            foreach (var recordEntry in session.Entries)
+            if (secrets.Count > 0)
             {
-                SanitizeSecretsInJsonBody(secrets, recordEntry.Request);
-                SanitizeSecretsInJsonBody(secrets, recordEntry.Response);
+                foreach (var recordEntry in session.Entries)
+                {
+                    SanitizeSecretsInJsonBody(secrets, recordEntry.Request);
+                    SanitizeSecretsInJsonBody(secrets, recordEntry.Response);
+                }
             }
 
             base.Sanitize(session);
@@ -48,8 +51,7 @@ namespace Azure.Search.Documents.Tests
 
         internal void SanitizeSecretsInJsonBody(HashSet<string> secrets, RecordEntryMessage message)
         {
-            if (secrets.Count > 0 &&
-                message.TryGetBodyAsText(out var body) &&
+            if (message.TryGetBodyAsText(out var body) &&
                 message.TryGetContentType(out var contentType) &&
                 !string.IsNullOrEmpty(body) &&
                 contentType != null &&
