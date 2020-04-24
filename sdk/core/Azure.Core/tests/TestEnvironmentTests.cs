@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class RecordedTestBaseTests
+    public class TestEnvironmentTests
     {
         [SetUp]
         public void SetUp()
@@ -20,10 +20,10 @@ namespace Azure.Core.Tests
         [TestCase(RecordedTestMode.Live)]
         [TestCase(RecordedTestMode.Playback)]
         [TestCase(RecordedTestMode.Record)]
+        [TestCase(RecordedTestMode.None)]
         public void ReadingRecordedValueInCtorThrows(RecordedTestMode mode)
         {
             Assert.Throws<InvalidOperationException>(() => new RecordedVariableMisuse(true, mode));
-
         }
 
         [Theory]
@@ -35,6 +35,18 @@ namespace Azure.Core.Tests
         {
             var test = new RecordedVariableMisuse(false, mode);
             Assert.AreEqual("2", test.Value);
+        }
+
+        [Test]
+        public void ReadingRecordedValueOutsideRecordedTestWorks()
+        {
+            Assert.AreEqual("1", MockTestEnvironment.Instance.RecordedValue);
+        }
+
+        [Test]
+        public void ReadingNonRecordedValueOutsideRecordedTestWorks()
+        {
+            Assert.AreEqual("2", MockTestEnvironment.Instance.NotRecordedValue);
         }
 
         private class RecordedVariableMisuse : RecordedTestBase<MockTestEnvironment>
@@ -65,6 +77,7 @@ namespace Azure.Core.Tests
             {
             }
 
+            public static MockTestEnvironment Instance { get; } = new MockTestEnvironment();
             public string RecordedValue => GetRecordedVariable("RECORDED");
             public string NotRecordedValue => GetVariable("NOTRECORDED");
 
