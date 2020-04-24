@@ -494,5 +494,49 @@ namespace Azure.Storage.Blobs.Models
                 HasLegalHold = hasLegalHold,
             };
         }
+
+        /// <summary>
+        /// Creates a new BlobQueryError instance for mocking.
+        /// </summary>
+        public static BlobQueryError BlobQueryError(
+            string name = default,
+            string description = default,
+            bool isFatal = default,
+            long position = default)
+            => new BlobQueryError
+            {
+                Name = name,
+                Description = description,
+                IsFatal = isFatal,
+                Position = position
+            };
+
+        /// <summary>
+        /// Creates a new BlobQueryJsonTextConfiguration instance for mocking.
+        /// </summary>
+        public static BlobQueryJsonTextConfiguration BlobQueryJsonTextConfiguration(
+            string recordSeparator = default)
+            => new BlobQueryJsonTextConfiguration
+            {
+                RecordSeparator = recordSeparator
+            };
+
+        /// <summary>
+        /// Creates a new BlobQueryCsvTextConfiguration instance for mocking.
+        /// </summary>
+        public static BlobQueryCsvTextConfiguration BlobQueryCsvTextConfiguration(
+            string recordSeparator = default,
+            string columnSeparator = default,
+            char? fieldQuote = default,
+            char? escapeCharacter = default,
+            bool hasHeader = default)
+            => new BlobQueryCsvTextConfiguration
+            {
+                RecordSeparator = recordSeparator,
+                ColumnSeparator = columnSeparator,
+                FieldQuote = fieldQuote,
+                EscapeCharacter = escapeCharacter,
+                HasHeaders = hasHeader
+            };
     }
 }

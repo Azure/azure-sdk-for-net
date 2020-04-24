@@ -1920,6 +1920,208 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion ScheduleDeletion
+
+        #region Query
+        /// <summary>
+        /// The <see cref="Query"/> API returns the
+        /// result of a query against the blob.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="inputTextConfiguration">
+        /// Optional input text configuration.
+        /// </param>
+        /// <param name="outputTextConfiguration">
+        /// Optional output text configuration.
+        /// </param>
+        /// <param name="errorReceiver">
+        /// Optional error receiver.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional request conditions.
+        /// </param>
+        /// <param name="progressReceiver">
+        /// Optional progress receiver.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Response{BlobQueryInfo}"/>.
+        /// </returns>
+        public virtual Response<BlobDownloadInfo> Query(
+            string query,
+            BlobQueryTextConfiguration inputTextConfiguration = default,
+            BlobQueryTextConfiguration outputTextConfiguration = default,
+            IBlobQueryErrorReceiver errorReceiver = default,
+            BlobRequestConditions conditions = default,
+            IProgress<long> progressReceiver = default,
+            CancellationToken cancellationToken = default) =>
+            QueryInternal(
+                query,
+                inputTextConfiguration,
+                outputTextConfiguration,
+                errorReceiver,
+                conditions,
+                progressReceiver,
+                async: false,
+                cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="QueryAsync"/> API returns the
+        /// result of a query against the blob.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="inputTextConfiguration">
+        /// Optional input text configuration.
+        /// </param>
+        /// <param name="outputTextConfiguration">
+        /// Optional output text configuration.
+        /// </param>
+        /// <param name="errorReceiver">
+        /// Optional error receiver.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional request conditions.
+        /// </param>
+        /// <param name="progressReceiver">
+        /// Optional progress receiver.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Response{BlobQueryInfo}"/>.
+        /// </returns>
+        public virtual async Task<Response<BlobDownloadInfo>> QueryAsync(
+            string query,
+            BlobQueryTextConfiguration inputTextConfiguration = default,
+            BlobQueryTextConfiguration outputTextConfiguration = default,
+            IBlobQueryErrorReceiver errorReceiver = default,
+            BlobRequestConditions conditions = default,
+            IProgress<long> progressReceiver = default,
+            CancellationToken cancellationToken = default) =>
+            await QueryInternal(
+                query,
+                inputTextConfiguration,
+                outputTextConfiguration,
+                errorReceiver,
+                conditions,
+                progressReceiver,
+                async: true,
+                cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="QueryInternal"/> API returns the
+        /// result of a query against the blob.
+        /// </summary>
+        /// <param name="query">
+        /// The query.
+        /// </param>
+        /// <param name="inputTextConfiguration">
+        /// Optional input text configuration.
+        /// </param>
+        /// <param name="outputTextConfiguration">
+        /// Optional output text configuration.
+        /// </param>
+        /// <param name="nonFatalErrorReceiver">
+        /// Optional non-fatal error receiver.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional request conditions.
+        /// </param>
+        /// <param name="progressReceiver">
+        /// Optional progress receiver.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Response{BlobQueryInfo}"/>.
+        /// </returns>
+        private async Task<Response<BlobDownloadInfo>> QueryInternal(
+            string query,
+            BlobQueryTextConfiguration inputTextConfiguration,
+            BlobQueryTextConfiguration outputTextConfiguration,
+            IBlobQueryErrorReceiver nonFatalErrorReceiver,
+            BlobRequestConditions conditions,
+            IProgress<long> progressReceiver,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            {
+                Pipeline.LogMethodEnter(nameof(BlockBlobClient), message: $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    QueryRequest queryRequest = new QueryRequest()
+                    {
+                        QueryType = Constants.QuickQuery.SqlQueryType,
+                        Expression = query,
+                        InputSerialization = inputTextConfiguration.ToQuickQuerySerialization(),
+                        OutputSerialization = outputTextConfiguration.ToQuickQuerySerialization()
+                    };
+                    Response<BlobQuickQueryResult> result = await BlobRestClient.Blob.QuickQueryAsync(
+                        clientDiagnostics: ClientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: Uri,
+                        version: Version.ToVersionString(),
+                        queryRequest: queryRequest,
+                        leaseId: conditions?.LeaseId,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        async: async,
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(Query)}",
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    Stream parsedStream = new BlobQuickQueryStream(result.Value.Body, progressReceiver, nonFatalErrorReceiver);
+                    result.Value.Body = parsedStream;
+
+
+                    return Response.FromValue(result.Value.ToBlobDownloadInfo(), result.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                }
+            }
+        }
+        #endregion Query
     }
 
     /// <summary>

@@ -1185,6 +1185,7 @@ directive:
     - $["x-ms-paths"]["/{containerName}/{blob}"].get.responses["200"].headers["x-ms-blob-type"]
     - $["x-ms-paths"]["/{containerName}/{blob}"].get.responses["206"].headers["x-ms-blob-type"]
     - $["x-ms-paths"]["/{containerName}/{blob}"].head.responses["200"].headers["x-ms-blob-type"]
+    - $["x-ms-paths"]["/{containerName}/{blob}?comp=query"].post.responses["200"].headers["x-ms-blob-type"]
   transform: >
     $.enum = [ "Block", "Page", "Append" ];
     $["x-ms-enum"].values = [ { name: "Block", value: "BlockBlob" }, { name: "Page", value: "PageBlob" }, { name: "Append", value: "AppendBlob" }];
@@ -1399,6 +1400,21 @@ directive:
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
 
+### /{containerName}/{blob}?comp=query
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{containerName}/{blob}?comp=query"]
+  transform: >
+    $.post.responses.default = {
+        "description": "Failure",
+        "x-az-response-name": "FailureNoContent",
+        "x-az-create-exception": true,
+        "x-az-public": false,
+        "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
+    };
+```
+
 ### Make BlobQuickQueryResult internal
 ``` yaml
 directive:
@@ -1407,6 +1423,62 @@ directive:
   transform: >
     $.post.responses["200"]["x-az-public"] = false;
     $.post.responses["206"]["x-az-public"] = false;
+```
+
+### Hide QueryRequest
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.QueryRequest
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide QuickQueryFormat
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.QuickQueryFormat
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide QuickQuerySerialization
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.QuickQuerySerialization
+  transform: >
+    $["x-az-public"] = false;
+```
+
+### Hide JsonTextConfiguration
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.JsonTextConfiguration
+  transform: >
+    $["x-az-public"] = false;
+    $["x-ms-client-name"] = "JsonTextConfigurationInternal";
+```
+
+### Hide DelimitedTextConfiguration
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.DelimitedTextConfiguration
+  transform: >
+    $["x-az-public"] = false;
+    $["x-ms-client-name"] = "DelimitedTextConfigurationInternal";
+```
+
+### Hide QuickQueryType
+``` yaml
+directive:
+- from: swagger-document
+  where: definitions.QuickQueryType
+  transform: >
+    $["x-az-public"] = false;
 ```
 
 ### Hide BlobTags, BlobTagSet, BlobTag, BlobItemInternal, and FilterBlobSegment
