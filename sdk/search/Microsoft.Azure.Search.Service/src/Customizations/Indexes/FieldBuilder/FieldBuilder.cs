@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Search
                     onComplexDataType: CreateComplexField);
             }
 
-            return contract.Properties.Select(BuildField).Where(field => field != null).ToArray();
+            return contract.Properties.Select(BuildField).Where(field => field != null).ToList();
         }
 
         private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IContractResolver contractResolver)
