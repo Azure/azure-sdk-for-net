@@ -74,7 +74,7 @@ namespace Azure.Storage.Shared
                     blockSize,
                     absolutePosition,
                     arrayPool,
-                    126 * Constants.MB, // abritrary limit on single buffer size in multibuffer stream; granular arrays are less wasteful when stream end is reached
+                    maxArrayPoolRentalSize: default,
                     async,
                     cancellationToken).ConfigureAwait(false);
                 read = partition.Length;

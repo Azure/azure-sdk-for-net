@@ -18,6 +18,8 @@ namespace Azure.Storage.Shared
     /// </summary>
     internal class PooledMemoryStream : Stream
     {
+        private const int DefaultMaxArrayPoolRentalSize = 128 * Constants.MB;
+
         private class BufferPartition
         {
             /// <summary>
@@ -26,9 +28,9 @@ namespace Azure.Storage.Shared
             public byte[] Buffer { get; set; }
 
             /// <summary>
-            /// Offset at which known data stops and garbage bytes begin.
+            /// Offset at which known data stops and undefined state begins.
             /// </summary>
-            public int GarbageOffset { get; set; }
+            public int DataLength { get; set; }
         }
 
         /// <summary>
@@ -63,33 +65,59 @@ namespace Azure.Storage.Shared
         /// <summary>
         /// Buffers a portion of the given stream, returning the buffered stream partition.
         /// </summary>
-        /// <param name="stream">Stream to buffer from.</param>
-        /// <param name="minCount">Minimum number of bytes to buffer. This method will not return until at least this many bytes have been read from <paramref name="stream"/> or the stream completes.</param>
-        /// <param name="maxCount">Maximum number of bytes to buffer.</param>
-        /// <param name="absolutePosition">Current position of the stream, since <see cref="Stream.Position"/> throws if not seekable.</param>
-        /// <param name="arrayPool">Pool to rent buffer space from.</param>
-        /// <param name="maxArrayPoolRentalSize">Max size we can request from the array pool.</param>
-        /// <param name="async">Whether to perform this operation asynchronously</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>The buffered stream partition with memory backed by an array pool.</returns>
-        internal static async Task<PooledMemoryStream> BufferStreamPartitionInternal(Stream stream, long minCount, long maxCount, long absolutePosition, ArrayPool<byte> arrayPool, int maxArrayPoolRentalSize, bool async, CancellationToken cancellationToken)
+        /// <param name="stream">
+        /// Stream to buffer from.
+        /// </param>
+        /// <param name="minCount">
+        /// Minimum number of bytes to buffer. This method will not return until at least this many bytes have been read from <paramref name="stream"/> or the stream completes.
+        /// </param>
+        /// <param name="maxCount">
+        /// Maximum number of bytes to buffer.
+        /// </param>
+        /// <param name="absolutePosition">
+        /// Current position of the stream, since <see cref="Stream.Position"/> throws if not seekable.
+        /// </param>
+        /// <param name="arrayPool">
+        /// Pool to rent buffer space from.
+        /// </param>
+        /// <param name="maxArrayPoolRentalSize">
+        /// Max size we can request from the array pool.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform this operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The buffered stream partition with memory backed by an array pool.
+        /// </returns>
+        internal static async Task<PooledMemoryStream> BufferStreamPartitionInternal(
+            Stream stream,
+            long minCount,
+            long maxCount,
+            long absolutePosition,
+            ArrayPool<byte> arrayPool,
+            int? maxArrayPoolRentalSize,
+            bool async,
+            CancellationToken cancellationToken)
         {
             long totalRead = 0;
-            var streamPartition = new PooledMemoryStream(arrayPool, absolutePosition, maxArrayPoolRentalSize);
+            var streamPartition = new PooledMemoryStream(arrayPool, absolutePosition, maxArrayPoolRentalSize ?? DefaultMaxArrayPoolRentalSize);
 
-            int maxCountIndividualBuffer;
-            int minCountIndividualBuffer;
-            int readIndividualBuffer;
+            int maxCountIndividualBuffer; // max count to write into buffer
+            int minCountIndividualBuffer; // min count to write into buffer
+            int readIndividualBuffer;     // the amount that was written into buffer
             do
             {
-                byte[] buffer;
-                int offset;
-                BufferPartition latestBuffer;
-                bool newbuffer;
-                if (((latestBuffer = streamPartition.BufferSet.LastOrDefault())?.GarbageOffset ?? 0) < (latestBuffer?.Buffer.Length ?? 0))
+                byte[] buffer; // buffer to write to
+                int offset;    // offset to start writing at
+                BufferPartition latestBuffer = streamPartition.GetLatestBufferWithAvailableSpaceOrDefault();
+                bool newbuffer; // whether we got a brand new buffer to write into
+                if (latestBuffer != default)
                 {
                     buffer = latestBuffer.Buffer;
-                    offset = latestBuffer.GarbageOffset;
+                    offset = latestBuffer.DataLength;
                     newbuffer = false;
                 }
                 else
@@ -120,12 +148,12 @@ namespace Azure.Storage.Shared
                     streamPartition.BufferSet.Add(new BufferPartition
                     {
                         Buffer = buffer,
-                        GarbageOffset = readIndividualBuffer
+                        DataLength = readIndividualBuffer
                     });
                 }
                 else // added to an existing array that was not entirely filled
                 {
-                    latestBuffer.GarbageOffset += readIndividualBuffer;
+                    latestBuffer.DataLength += readIndividualBuffer;
                 }
 
                 totalRead += readIndividualBuffer;
@@ -185,7 +213,7 @@ namespace Azure.Storage.Shared
 
         public override bool CanWrite => false;
 
-        public override long Length => BufferSet.Sum(tuple => (long)tuple.GarbageOffset);
+        public override long Length => BufferSet.Sum(tuple => (long)tuple.DataLength);
 
         public override long Position { get; set; }
 
@@ -206,11 +234,10 @@ namespace Azure.Storage.Shared
             {
                 (byte[] currentBuffer, int bufferCount, long offsetOfBuffer) = GetBufferFromPosition();
 
-                int toCopy = (int)Math.Min(Math.Min(
+                int toCopy = (int)MultiParamMin(
                     Length - Position,
-                    bufferCount - (Position - offsetOfBuffer)),
+                    bufferCount - (Position - offsetOfBuffer),
                     count - read);
-                Console.WriteLine($"Offset = {Position - offsetOfBuffer}; Count = {toCopy}; ArrayLength = {currentBuffer.Length}; RecordedBufferCount = {bufferCount};");
                 Array.Copy(currentBuffer, Position - offsetOfBuffer, buffer, read, toCopy);
                 read += toCopy;
                 Position += toCopy;
@@ -219,6 +246,12 @@ namespace Azure.Storage.Shared
             return read;
         }
 
+        /// <summary>
+        /// According the the current <see cref="Position"/> of the stream, gets the correct buffer containing the byte
+        /// at that position, as well as the stream position represented by the start of the array.
+        /// Position - offsetOfBuffer is the index in the returned array of the current byte.
+        /// </summary>
+        /// <returns></returns>
         private (byte[] currentBuffer, int bufferCount, long offsetOfBuffer) GetBufferFromPosition()
         {
             AssertPositionInBounds();
@@ -226,13 +259,13 @@ namespace Azure.Storage.Shared
             long countingPosition = 0;
             foreach (var tuple in BufferSet)
             {
-                if (countingPosition + tuple.GarbageOffset <= Position)
+                if (countingPosition + tuple.DataLength <= Position)
                 {
-                    countingPosition += tuple.GarbageOffset;
+                    countingPosition += tuple.DataLength;
                 }
                 else
                 {
-                    return (tuple.Buffer, tuple.GarbageOffset, countingPosition);
+                    return (tuple.Buffer, tuple.DataLength, countingPosition);
                 }
             }
 
@@ -286,6 +319,34 @@ namespace Azure.Storage.Shared
             {
                 throw new InvalidOperationException("Cannot read outside the bounds of this stream.");
             }
+        }
+
+        private BufferPartition GetLatestBufferWithAvailableSpaceOrDefault()
+        {
+            var latestBuffer = BufferSet.LastOrDefault();
+
+            if (latestBuffer == default || latestBuffer.DataLength < latestBuffer.Buffer.Length)
+            {
+                return default;
+            }
+
+            return latestBuffer;
+        }
+
+        private static long MultiParamMin(params long[] values)
+        {
+            if (values.Length == 0)
+            {
+                throw new ArgumentException("Cannot take the minimum of no values.");
+            }
+
+            long result = long.MaxValue;
+            foreach (var value in values)
+            {
+                result = Math.Min(result, value);
+            }
+
+            return result;
         }
     }
 }
