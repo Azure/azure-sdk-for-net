@@ -17,6 +17,9 @@ namespace Azure.Messaging.ServiceBus
     /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
+    ///
+    /// <see cref="ServiceBusSessionProcessor"/> is used for receiving messages, not for sending messages.
+    /// In order to receive messages it uses <see cref="ServiceBusSessionReceiver"/> under the hood.
     /// </summary>
     public class ServiceBusSessionProcessor
     {

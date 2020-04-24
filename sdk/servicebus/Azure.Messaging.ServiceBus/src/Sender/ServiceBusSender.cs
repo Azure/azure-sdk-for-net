@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -17,7 +16,7 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
-    ///   (Queue or Topic). It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
+    ///   (Queue or Topic). It can be used for session enabled entities. It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
     /// </summary>
     ///
     public class ServiceBusSender : IAsyncDisposable

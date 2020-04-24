@@ -413,5 +413,105 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.IsTrue(diff.TotalSeconds > 10);
             }
         }
+
+        [Test]
+        public async Task ThrowIfCompletePeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.CompleteAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfAbandonPeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.AbandonAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfDeferPeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.DeferAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfDeadletterPeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.DeadLetterAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
+
+        [Test]
+        public async Task ThrowIfRenewlockOfPeekedMessage()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage());
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var peekedMessage = await receiver.PeekAsync();
+
+                Assert.That(
+                    async () => await receiver.RenewMessageLockAsync(peekedMessage),
+                    Throws.InstanceOf<InvalidOperationException>());
+            }
+        }
     }
 }
