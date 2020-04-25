@@ -50,8 +50,7 @@
         }
     },
     "variables": {
-        "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]" 
+        "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]"
     },
     "resources": [
         {
@@ -67,15 +66,5 @@
                 "customSubDomainName": "[variables('uniqueSubDomainName')]"
             }
         }
-    ],
-    "outputs": {
-        "TEXT_ANALYTICS_API_KEY": {
-            "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"
-        },
-        "TEXT_ANALYTICS_ENDPOINT": {
-            "type": "string",
-            "value": "[variables('endpointValue')]"
-        }
-    }
+    ]
 }
