@@ -29,10 +29,21 @@ namespace Azure.AI.FormRecognizer.Models
                 }
                 if (property.NameEquals("readResults"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<ReadResult_internal> array = new List<ReadResult_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReadResult_internal.DeserializeReadResult_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReadResult_internal.DeserializeReadResult_internal(item));
+                        }
                     }
                     readResults = array;
                     continue;
@@ -46,7 +57,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<PageResult_internal> array = new List<PageResult_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PageResult_internal.DeserializePageResult_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PageResult_internal.DeserializePageResult_internal(item));
+                        }
                     }
                     pageResults = array;
                     continue;
@@ -60,7 +78,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<DocumentResult_internal> array = new List<DocumentResult_internal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentResult_internal.DeserializeDocumentResult_internal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentResult_internal.DeserializeDocumentResult_internal(item));
+                        }
                     }
                     documentResults = array;
                     continue;
@@ -74,7 +99,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        }
                     }
                     errors = array;
                     continue;

@@ -31,7 +31,9 @@ namespace Azure.Messaging.EventHubs
     ///   allowing the processor to be resilient in the face of errors.
     /// </summary>
     ///
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     public class EventProcessorClient : EventProcessor<EventProcessorPartition>
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         /// <summary>The number of events to request as the maximum size for batches read from a partition.</summary>
         private const int ReadBatchSize = 15;
@@ -66,6 +68,7 @@ namespace Azure.Messaging.EventHubs
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "Guidelines do allow throwing NotSupportedException or ArgumentException here")]
         public event Func<PartitionInitializingEventArgs, Task> PartitionInitializingAsync
         {
             add
@@ -99,6 +102,7 @@ namespace Azure.Messaging.EventHubs
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "Guidelines do allow throwing NotSupportedException or ArgumentException here")]
         public event Func<PartitionClosingEventArgs, Task> PartitionClosingAsync
         {
             add
@@ -133,6 +137,7 @@ namespace Azure.Messaging.EventHubs
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "Guidelines do allow throwing NotSupportedException or ArgumentException here")]
         public event Func<ProcessEventArgs, Task> ProcessEventAsync
         {
             add
@@ -167,6 +172,7 @@ namespace Azure.Messaging.EventHubs
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "Guidelines do allow throwing NotSupportedException or ArgumentException here")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
         {
             add
@@ -831,7 +837,7 @@ namespace Azure.Messaging.EventHubs
                                                              string operationDescription,
                                                              CancellationToken cancellationToken)
         {
-            var eventArgs = new ProcessErrorEventArgs(partition.PartitionId, operationDescription, exception, cancellationToken);
+            var eventArgs = new ProcessErrorEventArgs(partition?.PartitionId, operationDescription, exception, cancellationToken);
             await _processErrorAsync(eventArgs).ConfigureAwait(false);
         }
 

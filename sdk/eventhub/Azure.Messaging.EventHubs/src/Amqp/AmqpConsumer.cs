@@ -3,11 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -27,6 +28,9 @@ namespace Azure.Messaging.EventHubs.Amqp
     {
         /// <summary>The default prefetch count to use for the consumer.</summary>
         private const uint DefaultPrefetchCount = 300;
+
+        /// <summary>An empty set of events which can be dispatched when no events are available.</summary>
+        private static readonly IReadOnlyList<EventData> EmptyEventSet = Array.Empty<EventData>();
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
@@ -161,14 +165,14 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
-                    ConnectionScope.OpenConsumerLinkAsync(
+                   CreateConsumerLinkAsync(
                         consumerGroup,
                         partitionId,
                         CurrentEventPosition,
-                        timeout,
                         prefetchCount ?? DefaultPrefetchCount,
                         ownerLevel,
                         trackLastEnqueuedEventProperties,
+                        timeout,
                         CancellationToken.None),
                 link =>
                 {
@@ -204,15 +208,20 @@ namespace Azure.Messaging.EventHubs.Amqp
             var receivedEvents = default(List<EventData>);
             var lastReceivedEvent = default(EventData);
 
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
-                while (!cancellationToken.IsCancellationRequested)
+                while ((!cancellationToken.IsCancellationRequested) && (!_closed))
                 {
                     try
                     {
+                        // Creation of the link happens without explicit knowledge of the cancellation token
+                        // used for this operation; validate the token state before attempting link creation and
+                        // again after the operation completes to provide best efforts in respecting it.
+
                         EventHubsEventSource.Log.EventReceiveStart(EventHubName, ConsumerGroup, PartitionId);
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -262,7 +271,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         // No events were available.
 
-                        return new List<EventData>(0);
+                        return EmptyEventSet;
                     }
                     catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
                     {
@@ -270,7 +279,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // amount of time to wait for events, a timeout isn't considered an error condition,
                         // rather a sign that no events were available in the requested period.
 
-                        return new List<EventData>(0);
+                        return EmptyEventSet;
                     }
                     catch (Exception ex)
                     {
@@ -285,7 +294,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
                             EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, activeEx.Message);
-                            await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
+                            await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
                         }
@@ -305,6 +314,10 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 throw new TaskCanceledException();
             }
+            catch (TaskCanceledException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
@@ -312,7 +325,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
-                stopWatch.Stop();
                 EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, receivedEventCount);
             }
         }
@@ -332,7 +344,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             _closed = true;
 
-            var clientId = GetHashCode().ToString();
+            var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
             var clientType = GetType();
 
             try
@@ -359,6 +371,52 @@ namespace Azure.Messaging.EventHubs.Amqp
             {
                 EventHubsEventSource.Log.ClientCloseComplete(clientType, EventHubName, clientId);
             }
+        }
+
+        /// <summary>
+        ///   Creates the AMQP link to be used for consumer-related operations.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The consumer group of the Event Hub to which the link is bound.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition to which the link is bound.</param>
+        /// <param name="eventStartingPosition">The place within the partition's event stream to begin consuming events.</param>
+        /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
+        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="timeout">The timeout to apply when creating the link.</param>
+        /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
+        ///
+        /// <returns>The AMQP link to use for consumer-related operations.</returns>
+        ///
+        private async Task<ReceivingAmqpLink> CreateConsumerLinkAsync(string consumerGroup,
+                                                                      string partitionId,
+                                                                      EventPosition eventStartingPosition,
+                                                                      uint prefetchCount,
+                                                                      long? ownerLevel,
+                                                                      bool trackLastEnqueuedEventProperties,
+                                                                      TimeSpan timeout,
+                                                                      CancellationToken cancellationToken)
+        {
+            var link = default(ReceivingAmqpLink);
+
+            try
+            {
+                link = await ConnectionScope.OpenConsumerLinkAsync(
+                    consumerGroup,
+                    partitionId,
+                    eventStartingPosition,
+                    timeout,
+                    prefetchCount,
+                    ownerLevel,
+                    trackLastEnqueuedEventProperties,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            {
+               ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
+            }
+
+            return link;
         }
 
         /// <summary>

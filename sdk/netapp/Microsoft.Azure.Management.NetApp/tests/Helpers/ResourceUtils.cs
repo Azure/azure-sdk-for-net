@@ -10,7 +10,7 @@ namespace NetApp.Tests.Helpers
     {
         public const long gibibyte = 1024L * 1024L * 1024L;
 
-        private const string remoteSuffix = "-R";
+        private const string remoteSuffix = "-RSC";
         public const string vnet = "sdknettestqa2vnet464";
         public const string repVnet = "sdktestqa2vnet464";
         public const string remoteVnet = repVnet + remoteSuffix;
@@ -136,14 +136,13 @@ namespace NetApp.Tests.Helpers
             }
             var defaultProtocolType = new List<string>() { "NFSv3" };
             var volumeProtocolTypes = protocolTypes == null ? defaultProtocolType : protocolTypes;
-
             var volume = new Volume
             {
                 Location = location,
                 UsageThreshold = 100 * gibibyte,
                 ProtocolTypes = volumeProtocolTypes,
                 CreationToken = volumeName,
-                SubnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
+                SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                 Tags = tags,
                 ExportPolicy = exportPolicy,
                 SnapshotId = snapshotId
@@ -182,14 +181,15 @@ namespace NetApp.Tests.Helpers
                 UsageThreshold = 100 * gibibyte,
                 ProtocolTypes = volumeProtocolTypes,
                 CreationToken = volumeName,
-                SubnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + remoteVnet + "/subnets/default",
+                //SubnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + remoteVnet + "/subnets/default",
+                SubnetId = "/subscriptions/" + netAppMgmtClient.SubscriptionId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + remoteVnet + "/subnets/default",
                 Tags = tags,
                 ExportPolicy = exportPolicy,
                 SnapshotId = snapshotId,
                 VolumeType = "DataProtection",
                 DataProtection = dataProtection
             };
-
+            
             var resource = netAppMgmtClient.Volumes.CreateOrUpdate(volume, resourceGroup, accountName, poolName, volumeName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName);
 
@@ -210,7 +210,6 @@ namespace NetApp.Tests.Helpers
                 snapshot = new Snapshot
                 {
                     Location = location,
-                    FileSystemId = volume?.FileSystemId
                 };
             }
             else

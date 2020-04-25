@@ -80,5 +80,25 @@ namespace Azure.Search.Documents
             set => throw new InvalidOperationException($"Cannot deserialize {nameof(AutocompleteOptions)}.");
         }
         #pragma warning restore CA1822
+
+        /// <summary>
+        /// Creates a shallow copy of the AutocompleteOptions.
+        /// </summary>
+        /// <returns>The cloned AutocompleteOptions.</returns>
+        internal AutocompleteOptions Clone() =>
+            new AutocompleteOptions
+            {
+                SearchText = SearchText,
+                SuggesterName = SuggesterName,
+                Mode = Mode,
+                Filter = Filter,
+                Size = Size,
+                SearchFields = SearchFields,
+                HighlightPostTag = HighlightPostTag,
+                HighlightPreTag = HighlightPreTag,
+                MinimumCoverage = MinimumCoverage,
+                UseFuzzyMatching = UseFuzzyMatching,
+                ClientRequestId = ClientRequestId
+            };
     }
 }

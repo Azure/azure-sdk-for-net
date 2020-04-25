@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -117,7 +117,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -184,7 +184,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -243,7 +243,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 // A regular expression used to capture strings enclosed in double quotes.
                 Regex s_doubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
 
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -281,7 +281,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -319,7 +319,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -373,7 +373,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -410,7 +410,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -468,7 +468,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -515,7 +515,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -588,7 +588,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -646,7 +646,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -704,7 +704,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (var storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -762,7 +762,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, $"test-container-{Guid.NewGuid()}");
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -781,7 +781,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, $"test-container-{Guid.NewGuid()}");
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -800,7 +800,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, $"test-container-{Guid.NewGuid()}");
 
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
@@ -832,7 +832,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
@@ -878,7 +878,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
@@ -924,7 +924,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (var storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
@@ -970,7 +970,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
-                var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
+                var storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
                 var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 

@@ -117,7 +117,7 @@ tools/*.dll
 
 # Sensitive files
 *.keys
-!Azure.AspNetCore.DataProtection.Keys
+!Azure.Extensions.AspNetCore.DataProtection.Keys
 !Azure.Security.KeyVault.Keys
 *.pfx
 TestConfigurations.xml

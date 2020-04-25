@@ -6,46 +6,48 @@
 ###########
 
 # Catch all
-/sdk/ @AlexGhiondea
+/sdk/                                           @AlexGhiondea
 
 # Core
-/sdk/core/ @pakrym @KrzysztofCwalina
+/sdk/core/                                      @pakrym @KrzysztofCwalina
 
 # Extensions
-/sdk/extensions/ @parkym
+/sdk/extensions/                                @parkym
 
 # Service teams
-/sdk/appconfiguration/ @annelo-msft @AlexanderSher
+/sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
-/sdk/batch/ @matthchr 
+/sdk/batch/                                     @matthchr 
 
-/sdk/cognitiveservices/language.textanalytics/ @assafi 
-/sdk/cognitiveservices/vision.computervision/ @toothache
-/sdk/cognitiveservices/vision.face/ @TFR258 
+/sdk/cognitiveservices/language.textanalytics/  @assafi 
+/sdk/cognitiveservices/vision.computervision/   @toothache
+/sdk/cognitiveservices/vision.face/             @TFR258 
 
-/sdk/eventgrid/ @kalyanaj 
+/sdk/eventgrid/                                 @Kishp01 @ahamad-MS
 
-/sdk/eventhub/ @serkantkaraca @jsquire @kinelski
-/sdk/eventhub/azure.messaging.eventhubs/ @jsquire @kinelski
+/sdk/eventhub/                                  @serkantkaraca @jsquire @kinelski
+/sdk/eventhub/azure.messaging.eventhubs/        @jsquire @kinelski
 
-/sdk/identity/ @schaabs
+/sdk/identity/                                  @schaabs
 
-/sdk/keyvault/ @schaabs @heaths
+/sdk/keyvault/                                  @schaabs @heaths
 
-/sdk/search/ @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
-/sdk/search/Microsoft.*/ @brjohnstmsft @arv100kri @bleroy
+/sdk/search/                                    @brjohnstmsft @arv100kri @bleroy @tg-msft @heaths
+/sdk/search/Microsoft.*/                        @brjohnstmsft @arv100kri @bleroy
 
-/sdk/servicebus/ @nemakam @JoshLove-msft @ShivangiReja @jsquire
+/sdk/servicebus/                                @nemakam @JoshLove-msft @ShivangiReja @jsquire
 
-/sdk/storage/ @seanmcc-msft @amnguye @kasobol-msft @tg-msft @JoshLove-msft
+/sdk/storage/                                   @amishra-dev @seanmcc-msft @amnguye @kasobol-msft @tg-msft @JoshLove-msft
 
-/sdk/textanalytics/ @annelo-msft @maririos
+/sdk/tables/                                    @christothes
+
+/sdk/textanalytics/                             @annelo-msft @maririos
 
 # Management Plane
-/**/*Management*/ @isra-fel @erich-wang
+/**/*Management*/                               @isra-fel @erich-wang
 
 # Reviewers to double check any API changes
-/sdk/**/api/ @KrzysztofCwalina @pakrym @tg-msft
+/sdk/**/api/                                    @KrzysztofCwalina @pakrym @tg-msft
 
 ###########
 # Eng Sys

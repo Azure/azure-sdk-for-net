@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,7 +16,8 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity (queue or topic).
+    ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
+    ///   (Queue or Topic). It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
     /// </summary>
     ///
     public class ServiceBusSender : IAsyncDisposable
@@ -48,6 +50,11 @@ namespace Azure.Messaging.ServiceBus
         public bool IsDisposed { get; private set; } = false;
 
         /// <summary>
+        /// In the case of a via-sender, the message is sent to <see cref="EntityPath"/> via <see cref="ViaEntityPath"/>; null otherwise.
+        /// </summary>
+        public string ViaEntityPath { get; }
+
+        /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
         /// <remarks>Every new client has a unique ID.</remarks>
@@ -77,10 +84,12 @@ namespace Azure.Messaging.ServiceBus
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         /// <param name="entityPath">The entity path to send the message to.</param>
+        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="connection">The connection for the sender.</param>
         ///
         internal ServiceBusSender(
             string entityPath,
+            string viaEntityPath,
             ServiceBusConnection connection)
         {
             Argument.AssertNotNull(connection, nameof(connection));
@@ -89,11 +98,13 @@ namespace Azure.Messaging.ServiceBus
             connection.ThrowIfClosed();
 
             EntityPath = entityPath;
+            ViaEntityPath = viaEntityPath;
             Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
             _connection = connection;
             _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
             _innerSender = _connection.CreateTransportSender(
                 entityPath,
+                viaEntityPath,
                 _retryPolicy);
         }
 
@@ -119,12 +130,42 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
+            await SendAsync(
+                new ServiceBusMessage[] { message },
+                cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///   Sends a set of messages to the associated Service Bus entity using a batched approach.
+        ///   If the size of the messages exceed the maximum size of a single batch,
+        ///   an exception will be triggered and the send will fail. In order to ensure that the messages
+        ///   being sent will fit in a batch, use <see cref="SendBatchAsync"/> instead.
+        /// </summary>
+        ///
+        /// <param name="messages">The set of messages to send.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///
+        public virtual async Task SendAsync(
+            IEnumerable<ServiceBusMessage> messages,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusSender));
+            IList<ServiceBusMessage> messageList = messages.ToList();
+            if (messageList.Count == 0)
+            {
+                return;
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.SendMessageStart(Identifier, messageCount: 1);
+            ServiceBusEventSource.Log.SendMessageStart(Identifier, messageCount: messageList.Count);
             try
             {
-                await _innerSender.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _innerSender.SendAsync(
+                    messageList,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -134,6 +175,7 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.SendMessageComplete(Identifier);
         }
+
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="ServiceBusMessage" /> may be added using a try-based pattern.  If a message would
         ///   exceed the maximum allowable size of the batch, the batch will not allow adding the message and signal that scenario using its
@@ -210,6 +252,7 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusEventSource.Log.SendMessageStart(Identifier, messageBatch.Count);
             try
             {
+                messageBatch.Lock();
                 await _innerSender.SendBatchAsync(messageBatch, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -217,6 +260,11 @@ namespace Azure.Messaging.ServiceBus
                 ServiceBusEventSource.Log.SendMessageException(Identifier, ex);
                 throw;
             }
+            finally
+            {
+                messageBatch.Unlock();
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ServiceBusEventSource.Log.SendMessageComplete(Identifier);
         }
@@ -286,8 +334,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />,
-        ///   including ensuring that the client itself has been closed.
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>

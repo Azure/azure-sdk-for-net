@@ -21,13 +21,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var messageCt = 10;
 
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendBatchAsync(batch);
 
-                await using var receiver = client.GetReceiver(scope.QueueName);
+                await using var receiver = client.CreateReceiver(scope.QueueName);
 
                 Dictionary<string, string> sentMessageIdToLabel = new Dictionary<string, string>();
                 foreach (ServiceBusMessage message in sentMessages)
@@ -57,13 +57,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var messageCount = 10;
 
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendBatchAsync(batch);
 
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
                 while (remainingMessages > 0)
@@ -94,13 +94,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var messageCount = 10;
 
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendBatchAsync(batch);
 
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
 
@@ -129,13 +129,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var messageCount = 10;
 
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendBatchAsync(batch);
 
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
 
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
@@ -180,13 +180,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var messageCount = 10;
 
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
-                using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
-                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(messages);
 
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 var remainingMessages = messageCount;
                 var messageEnum = messages.GetEnumerator();
 
@@ -207,7 +206,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 messageEnum.Reset();
                 string deadLetterQueuePath = EntityNameFormatter.FormatDeadLetterPath(scope.QueueName);
-                var deadLetterReceiver = client.GetReceiver(deadLetterQueuePath);
+                var deadLetterReceiver = client.CreateReceiver(deadLetterQueuePath);
                 remainingMessages = messageCount;
 
                 while (remainingMessages > 0)
@@ -235,13 +234,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var messageCount = 10;
 
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
                 await sender.SendBatchAsync(batch);
 
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 var messageEnum = messages.GetEnumerator();
                 IList<long> sequenceNumbers = new List<long>();
                 var remainingMessages = messageCount;
@@ -278,7 +277,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
                 var messageCount = 10;
 
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
 
@@ -288,7 +287,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 };
-                var receiver = client.GetReceiver(scope.QueueName, clientOptions);
+                var receiver = client.CreateReceiver(scope.QueueName, clientOptions);
                 var messageEnum = messages.GetEnumerator();
                 var remainingMessages = messageCount;
                 while (remainingMessages > 0)
@@ -313,7 +312,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusMessage sentMessage = GetMessage();
                 await sender.SendAsync(sentMessage);
 
@@ -321,7 +320,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 };
-                var receiver = client.GetReceiver(scope.QueueName, clientOptions);
+                var receiver = client.CreateReceiver(scope.QueueName, clientOptions);
                 var receivedMessage = await receiver.ReceiveAsync();
                 Assert.AreEqual(sentMessage.MessageId, receivedMessage.MessageId);
 
@@ -336,11 +335,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 ServiceBusMessage sentMessage = GetMessage("sessionId");
                 await sender.SendAsync(sentMessage);
 
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 Assert.That(
                     async () => await receiver.ReceiveAsync(),
                     Throws.InstanceOf<InvalidOperationException>());
@@ -353,12 +352,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.GetSender(scope.QueueName);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCount = 1;
                 ServiceBusMessage message = GetMessage();
                 await sender.SendAsync(message);
 
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage[] receivedMessages = (await receiver.ReceiveBatchAsync(messageCount)).ToArray();
 
                 var receivedMessage = receivedMessages.First();
@@ -397,7 +396,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         }
                     });
 
-                var receiver = client.GetReceiver(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
                 var start = DateTimeOffset.UtcNow;
                 var receivedMessage = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
                 var end = DateTimeOffset.UtcNow;

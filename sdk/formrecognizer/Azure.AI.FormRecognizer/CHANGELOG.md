@@ -1,19 +1,22 @@
 # Release History
 
-## 1.0.2-preview.6 (2020-02-24)
-### Added
-- Testing Changelog added section
-- Testing Links [Project Site](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md)
-- Test `Highlighted Code`
+## 1.0.0-preview.1 (04-23-2020)
+This is the first preview Azure Form Recognizer client library that follows the [.NET Azure SDK Design Guidelines][guidelines].
+This library replaces the package [`Microsoft.Azure.CognitiveServices.FormRecognizer`][cognitiveServices_fr_nuget].
 
-## 1.0.2-preview.5 (2020-02-24)
-### Added
-- Testing Changelog added section
-- Testing Links [Project Site](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/template/Azure.Template/README.md)
-- Test `Highlighted Code`
+This package's [documentation][readme] and [samples][samples] demonstrate the new API.
 
-## 1.0.2-preview.4 (2019-12-17)
-- Version Bump
+### Major changes from `Microsoft.Azure.CognitiveServices.FormRecognizer`
+- This library supports only the Form Recognizer Service v2.0-preview API
+- The namespace/package name for Azure Form Recognizer client library has changed from 
+    `Microsoft.Azure.CognitiveServices.FormRecognizer` to `Azure.AI.FormRecognizer`
+- Two client design:
+  - `FormRecognizerClient` to recognize and extract fields/values on custom forms, receipts, and form content/layout.
+  - `FormTrainingClient` to train custom models, and manage the custom models on your resource account.
+- Different recognize methods based on input type: file stream or URI.
+- File stream methods will automatically detect content-type of the input file.
 
-## 1.0.2-preview.3 (2019-12-17)
-- Started changelog to capture release notes.
+[guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html
+[cognitiveServices_fr_nuget]: https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.FormRecognizer/0.8.0-preview
+[readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/README.md
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/README.md

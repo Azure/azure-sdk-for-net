@@ -38,14 +38,8 @@ namespace Azure.AI.TextAnalytics.Samples
         #region Snippet:MethodToTest
         private static async Task<bool> IsSpanishAsync(string document, TextAnalyticsClient client, CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                DetectedLanguage language = await client.DetectLanguageAsync(document);
-                return language.Iso6391Name == "es";
-            }
-
-            cancellationToken.ThrowIfCancellationRequested();
-            return false;
+            DetectedLanguage language = await client.DetectLanguageAsync(document, default, cancellationToken);
+            return language.Iso6391Name == "es";
         }
         #endregion Snippet:MethodToTest
 

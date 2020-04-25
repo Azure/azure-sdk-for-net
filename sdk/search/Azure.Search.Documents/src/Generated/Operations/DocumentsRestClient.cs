@@ -22,8 +22,8 @@ namespace Azure.Search.Documents
         private string endpoint;
         private string indexName;
         private string apiVersion;
-        private ClientDiagnostics clientDiagnostics;
-        private HttpPipeline pipeline;
+        private ClientDiagnostics _clientDiagnostics;
+        private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of DocumentsRestClient. </summary>
         public DocumentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string indexName, string apiVersion = "2019-05-06-Preview")
@@ -44,13 +44,13 @@ namespace Azure.Search.Documents
             this.endpoint = endpoint;
             this.indexName = indexName;
             this.apiVersion = apiVersion;
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateCountRequest(Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -71,14 +71,14 @@ namespace Azure.Search.Documents
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<long>> CountAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<long>> CountAsync(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
             {
                 using var message = CreateCountRequest(xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -89,7 +89,7 @@ namespace Azure.Search.Documents
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -102,14 +102,14 @@ namespace Azure.Search.Documents
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<long> Count(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<long> Count(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Count");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Count");
             scope.Start();
             try
             {
                 using var message = CreateCountRequest(xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -120,7 +120,7 @@ namespace Azure.Search.Documents
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -130,9 +130,9 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateSearchPostRequest(Guid? xMsClientRequestId, SearchOptions searchRequest)
+        internal HttpMessage CreateSearchPostRequest(SearchOptions searchRequest, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -155,33 +155,40 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchDocumentsResult>> SearchPostAsync(Guid? xMsClientRequestId, SearchOptions searchRequest, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
             {
                 throw new ArgumentNullException(nameof(searchRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
             scope.Start();
             try
             {
-                using var message = CreateSearchPostRequest(xMsClientRequestId, searchRequest);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                using var message = CreateSearchPostRequest(searchRequest, xMsClientRequestId);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SearchDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -192,33 +199,40 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Searches for documents in the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="searchRequest"> The definition of the Search request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchDocumentsResult> SearchPost(Guid? xMsClientRequestId, SearchOptions searchRequest, CancellationToken cancellationToken = default)
+        public Response<SearchDocumentsResult> SearchPost(SearchOptions searchRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (searchRequest == null)
             {
                 throw new ArgumentNullException(nameof(searchRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
             scope.Start();
             try
             {
-                using var message = CreateSearchPostRequest(xMsClientRequestId, searchRequest);
-                pipeline.Send(message, cancellationToken);
+                using var message = CreateSearchPostRequest(searchRequest, xMsClientRequestId);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SearchDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchDocumentsResult.DeserializeSearchDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -230,7 +244,7 @@ namespace Azure.Search.Documents
 
         internal HttpMessage CreateGetRequest(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -259,35 +273,49 @@ namespace Azure.Search.Documents
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Get");
             scope.Start();
             try
             {
                 using var message = CreateGetRequest(key, selectedFields, xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             IReadOnlyDictionary<string, object> value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, property.Value.GetObject());
+                                value = null;
                             }
-                            value = dictionary;
+                            else
+                            {
+                                Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                                foreach (var property in document.RootElement.EnumerateObject())
+                                {
+                                    if (property.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        dictionary.Add(property.Name, null);
+                                    }
+                                    else
+                                    {
+                                        dictionary.Add(property.Name, property.Value.GetObject());
+                                    }
+                                }
+                                value = dictionary;
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -302,35 +330,49 @@ namespace Azure.Search.Documents
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields, Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Get");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Get");
             scope.Start();
             try
             {
                 using var message = CreateGetRequest(key, selectedFields, xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             IReadOnlyDictionary<string, object> value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                            foreach (var property in document.RootElement.EnumerateObject())
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
-                                dictionary.Add(property.Name, property.Value.GetObject());
+                                value = null;
                             }
-                            value = dictionary;
+                            else
+                            {
+                                Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                                foreach (var property in document.RootElement.EnumerateObject())
+                                {
+                                    if (property.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        dictionary.Add(property.Name, null);
+                                    }
+                                    else
+                                    {
+                                        dictionary.Add(property.Name, property.Value.GetObject());
+                                    }
+                                }
+                                value = dictionary;
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -340,9 +382,9 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateSuggestPostRequest(Guid? xMsClientRequestId, SuggestOptions suggestRequest)
+        internal HttpMessage CreateSuggestPostRequest(SuggestOptions suggestRequest, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -365,33 +407,40 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SuggestDocumentsResult>> SuggestPostAsync(Guid? xMsClientRequestId, SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
             {
                 throw new ArgumentNullException(nameof(suggestRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
             scope.Start();
             try
             {
-                using var message = CreateSuggestPostRequest(xMsClientRequestId, suggestRequest);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                using var message = CreateSuggestPostRequest(suggestRequest, xMsClientRequestId);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SuggestDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -402,33 +451,40 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="suggestRequest"> The Suggest request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SuggestDocumentsResult> SuggestPost(Guid? xMsClientRequestId, SuggestOptions suggestRequest, CancellationToken cancellationToken = default)
+        public Response<SuggestDocumentsResult> SuggestPost(SuggestOptions suggestRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (suggestRequest == null)
             {
                 throw new ArgumentNullException(nameof(suggestRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
             scope.Start();
             try
             {
-                using var message = CreateSuggestPostRequest(xMsClientRequestId, suggestRequest);
-                pipeline.Send(message, cancellationToken);
+                using var message = CreateSuggestPostRequest(suggestRequest, xMsClientRequestId);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             SuggestDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SuggestDocumentsResult.DeserializeSuggestDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -438,9 +494,9 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateIndexRequest(Guid? xMsClientRequestId, IndexBatch batch)
+        internal HttpMessage CreateIndexRequest(IndexBatch batch, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -463,22 +519,22 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IndexDocumentsResult>> IndexAsync(Guid? xMsClientRequestId, IndexBatch batch, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (batch == null)
             {
                 throw new ArgumentNullException(nameof(batch));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Index");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Index");
             scope.Start();
             try
             {
-                using var message = CreateIndexRequest(xMsClientRequestId, batch);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                using var message = CreateIndexRequest(batch, xMsClientRequestId);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -486,11 +542,18 @@ namespace Azure.Search.Documents
                         {
                             IndexDocumentsResult value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -501,22 +564,22 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="batch"> The batch of index actions. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IndexDocumentsResult> Index(Guid? xMsClientRequestId, IndexBatch batch, CancellationToken cancellationToken = default)
+        public Response<IndexDocumentsResult> Index(IndexBatch batch, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (batch == null)
             {
                 throw new ArgumentNullException(nameof(batch));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.Index");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Index");
             scope.Start();
             try
             {
-                using var message = CreateIndexRequest(xMsClientRequestId, batch);
-                pipeline.Send(message, cancellationToken);
+                using var message = CreateIndexRequest(batch, xMsClientRequestId);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
@@ -524,11 +587,18 @@ namespace Azure.Search.Documents
                         {
                             IndexDocumentsResult value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)
@@ -538,9 +608,9 @@ namespace Azure.Search.Documents
             }
         }
 
-        internal HttpMessage CreateAutocompletePostRequest(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest)
+        internal HttpMessage CreateAutocompletePostRequest(AutocompleteOptions autocompleteRequest, Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -563,33 +633,40 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<AutocompleteResults>> AutocompletePostAsync(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
             {
                 throw new ArgumentNullException(nameof(autocompleteRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
             scope.Start();
             try
             {
-                using var message = CreateAutocompletePostRequest(xMsClientRequestId, autocompleteRequest);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                using var message = CreateAutocompletePostRequest(autocompleteRequest, xMsClientRequestId);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             AutocompleteResults value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -600,33 +677,40 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="autocompleteRequest"> The definition of the Autocomplete request. </param>
+        /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AutocompleteResults> AutocompletePost(Guid? xMsClientRequestId, AutocompleteOptions autocompleteRequest, CancellationToken cancellationToken = default)
+        public Response<AutocompleteResults> AutocompletePost(AutocompleteOptions autocompleteRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (autocompleteRequest == null)
             {
                 throw new ArgumentNullException(nameof(autocompleteRequest));
             }
 
-            using var scope = clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
             scope.Start();
             try
             {
-                using var message = CreateAutocompletePostRequest(xMsClientRequestId, autocompleteRequest);
-                pipeline.Send(message, cancellationToken);
+                using var message = CreateAutocompletePostRequest(autocompleteRequest, xMsClientRequestId);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
                             AutocompleteResults value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = AutocompleteResults.DeserializeAutocompleteResults(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)

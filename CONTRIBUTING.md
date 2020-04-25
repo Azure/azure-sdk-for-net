@@ -116,19 +116,13 @@ If for any reason there is an update to the build tools, you will then need to f
 
 ### Live testing
 
-Live tests assume a live resource has been created and appropriate environment
-variables have been set for the test process. To automate setting up live
-resources we use created a script called `New-TestResources.ps1` that deploys
-resources for a given service.
+Before running or recording live tests you need to create
+[live test resources](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/common/TestResources/README.md).
+If recording tests, secrets will be sanitized from saved recordings.
+If you will be working on contributions over time, you should consider
+persisting these variables.
 
-To see what resources will be deployed for a live service, check the
-`test-resources.json` ARM template files in the service you wish to deploy for
-testing, for example `sdk\keyvault\test-resources.json`.
-
-To deploy live resources for testing use the steps documented in [`Example 1 of New-TestResources.ps1`](eng/common/TestResources/New-TestResources.ps1.md#example-1)
-to set up a service principal and deploy live testing resources.
-
-To run live tests after deploying live resources:
+To run live tests after creating live resources:
 
 1. Open Developer Command Prompt
 2. Navigate to service directory e.g. _"sdk\keyvault"_
@@ -143,7 +137,12 @@ In some cases, you might want to test against the latest versions of the client 
 
 ## Public API additions
 
-If you make a public API addition, the `eng\Export-API.ps1` script has to be run to update public API listings.
+If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings.
+
+Running the script for a project in `sdk\tables` would look like this: 
+```
+eng\scripts\Export-API.ps1 tables
+```
 
 ## API Compatibility Verification
 
@@ -168,7 +167,7 @@ Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consu
 
 You can also achieve this from the command line.
 
-```nuget.exe sources add -Name “Azure SDK for Net Dev Feed” -Source “https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json”```
+```nuget.exe sources add -Name "Azure SDK for Net Dev Feed" -Source "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json"```
 
 You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages.
 
@@ -196,7 +195,7 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
 6. **MANDATORY**: Add or update tests for the newly generated code.
 7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-8. For management libraries run `eng\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
 9. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 10. The pull requests will be reviewed and merged by the Azure SDK team
 
@@ -244,6 +243,69 @@ If you are adding a new service directory, ensure that it is mapped to a friendl
 
 8. Copy existing generate.ps1 file from another service and update the `ResourceProvider` name that is applicable to your SDK. Resource provider refers to the relative path of your REST spec directory in Azure-Rest-Api-Specs repository
    During SDK generation, this path helps to locate the REST API spec from the `https://github.com/Azure/azure-rest-api-specs`
+
+# On-boarding New generated code library
+
+1. Make a copy of `/sdk/template/Azure.Template` in you appropriate service directory and rename projects to `Azure.Management.*` for management libraries or `Azure.*` (e.g.  `sdk/storage/Azure.Management.Storage` or `sdk/storage/Azure.Storage.Blobs`)
+2. Modify `autorest.md` to point to you Swagger file or central README.md file. E.g.
+
+``` yaml
+input-file:
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json
+```
+
+``` yaml
+require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
+```
+
+3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13).
+4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
+4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
+
+``` C#
+namespace Azure.Management.Storage
+{
+    public class StorageManagementClientOptions: ClientOptions
+    {
+        private const ServiceVersion Latest = ServiceVersion.V2019_06_01;
+        internal static StorageManagementClientOptions Default { get; } = new StorageManagementClientOptions();
+
+        public StorageManagementClientOptions(ServiceVersion serviceVersion = Latest)
+        {
+            VersionString = serviceVersion switch
+            {
+                ServiceVersion.V2019_06_01 => "2019-06-01",
+                _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion))
+            };
+        }
+
+        internal string VersionString { get; }
+
+        public enum ServiceVersion
+        {
+#pragma warning disable CA1707
+            V2019_06_01 = 1
+#pragma warning restore CA1707
+        }
+    }
+}
+```
+5. Add public constructors to all the clients using a partial class.
+``` C#
+ public partial class FileSharesClient
+    {
+        public FileSharesClient(string subscriptionId, TokenCredential tokenCredential): this(subscriptionId, tokenCredential, StorageManagementClientOptions.Default)
+        {
+        }
+
+        public FileSharesClient(string subscriptionId, TokenCredential tokenCredential, StorageManagementClientOptions options):
+            this(new ClientDiagnostics(options), ManagementClientPipeline.Build(options, tokenCredential), subscriptionId, apiVersion: options.VersionString)
+        {
+        }
+    }
+```
 
 ### Code Review Process
 

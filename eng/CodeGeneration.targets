@@ -1,13 +1,12 @@
 <Project>
 
   <PropertyGroup>
-    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6207/autorest-3.0.6207.tgz</_AutoRestVersion>
-    <_AutoRestCoreVersion>3.0.6257</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200331.3/autorest-csharp-v3-3.0.0-dev.20200331.3.tgz</_AutoRestCSharpVersion>
+    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6221/autorest-3.0.6221.tgz</_AutoRestVersion>
+    <_AutoRestCoreVersion>3.0.6280</_AutoRestCoreVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200415.7/autorest-csharp-v3-3.0.0-dev.20200415.7.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
     <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
     <AutorestInput Condition="'$(AutorestInput)' == ''">$(_DefaultInputName)</AutorestInput>
-    <AutorestConfiguration Condition="'$(AutorestConfiguration)' == '' AND '$(AutorestInput)' != '$(_DefaultInputName)'">$(_DefaultInputName)</AutorestConfiguration>
     <!--
       Allows passing additional AutoRest command line arguments, for example to run in interactive mode 
       use the following command line (remove the space between minus minus): dotnet msbuild /t:GenerateCode /p:AutorestAdditionalParameters="- -interactive"
@@ -21,11 +20,8 @@
   </PropertyGroup>
 
   <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
-    <PropertyGroup>
-      <_RequireConfigurationArgument Condition="'$(AutorestConfiguration)' != ''">--require=$(AutorestConfiguration)</_RequireConfigurationArgument>
-    </PropertyGroup>
     <RemoveDir Directories="$(MSBuildProjectDirectory)/Generated"/>
-    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutorestInput) $(_RequireConfigurationArgument) $(AutorestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory) --verbose" />
+    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutorestInput) $(AutorestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory) --verbose" />
   </Target>
 
   <ItemGroup Condition="'$(_GenerateCode)' == 'true'">

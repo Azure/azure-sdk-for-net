@@ -14,16 +14,19 @@ namespace Azure.Search.Documents.Tests
     public partial class SearchResources
     {
         /// <summary>
-        /// Get a Search Index for the Hotels sample data.
-        ///
+        /// <para>
+        /// Get a <see cref="SearchIndex"/> for the Hotels sample data.
+        /// </para>
+        /// <para>
         /// This index is tuned more for exercising document serialization,
         /// indexing, and querying operations. Also, the fields of this index
         /// should exactly match the properties of the Hotel test model class
         /// below.
+        /// </para>
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        private static SearchIndex GetHotelIndex(string name) =>
+        /// <param name="name">The name of the index to create.</param>
+        /// <returns>A <see cref="SearchIndex"/> for the Hotels sample data.</returns>
+        internal static SearchIndex GetHotelIndex(string name) =>
             new SearchIndex(name)
             {
                 Fields =
@@ -65,11 +68,11 @@ namespace Azure.Search.Documents.Tests
                         },
                     },
                 },
-                Suggesters = new[]
+                Suggesters =
                 {
                     new Suggester("sg", "description", "hotelName"),
                 },
-                ScoringProfiles = new[]
+                ScoringProfiles =
                 {
                     new ScoringProfile("nearest")
                     {

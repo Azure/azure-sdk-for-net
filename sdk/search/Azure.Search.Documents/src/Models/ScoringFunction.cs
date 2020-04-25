@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenModel("ScoringFunction")]
     public partial class ScoringFunction
     {
         /// <summary>
@@ -19,11 +18,6 @@ namespace Azure.Search.Documents.Models
 
             FieldName = fieldName;
             Boost = boost;
-        }
-
-        internal ScoringFunction()
-        {
-            // TODO: Remove when https://github.com/Azure/autorest.csharp/issues/582 is fixed.
         }
     }
 }

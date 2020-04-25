@@ -10,7 +10,7 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.1.0" />
+    <PackageReference Update="Azure.Core" Version="1.2.0" />
     <PackageReference Update="Azure.Identity" Version="1.1.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
@@ -85,7 +85,7 @@
     <PackageReference Update="System.Diagnostics.Tools" Version="4.3.0" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
     <PackageReference Update="System.Globalization" Version="4.3.0" />
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="[5.4.0, 6.0.0)" />
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.Linq" Version="4.3.0" />
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
@@ -120,7 +120,7 @@
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
 
     <!-- Build time packages -->
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200311.1" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200416.2" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
     <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" />
     

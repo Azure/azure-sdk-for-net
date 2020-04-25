@@ -13,8 +13,8 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+// create the sender
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
 ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
@@ -22,8 +22,8 @@ ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hel
 // send the message
 await sender.SendAsync(message);
 
-// get a receiver that we can use to receive the message
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
+// create a receiver that we can use to receive the message
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -43,8 +43,8 @@ string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
 
-// get the sender
-ServiceBusSender sender = client.GetSender(queueName);
+// create the sender
+ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message batch that we can send
 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
@@ -54,8 +54,8 @@ messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 // send the message batch
 await sender.SendBatchAsync(messageBatch);
 
-// get a receiver that we can use to receive the messages
-ServiceBusReceiver receiver = client.GetReceiver(queueName);
+// create a receiver that we can use to receive the messages
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 // the received message is a different type as it contains some service set properties
 IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);

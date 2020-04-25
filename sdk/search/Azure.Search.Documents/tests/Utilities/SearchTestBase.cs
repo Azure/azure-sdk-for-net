@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -18,7 +19,7 @@ namespace Azure.Search.Documents.Tests
     /// of the Azure.Core testing framework.
     /// </summary>
     [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06_Preview)]
-    public abstract partial class SearchTestBase : RecordedTestBase
+    public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
         /// The maximum number of retries for service requests.
@@ -137,9 +138,13 @@ namespace Azure.Search.Documents.Tests
         /// An optional time wait if we're playing back a recorded test.  This
         /// is useful for allowing client side events to get processed.
         /// </param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to check.</param>
         /// <returns>A task that will (optionally) delay.</returns>
-        public async Task DelayAsync(TimeSpan? delay = null, TimeSpan? playbackDelay = null)
+        /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was signaled.</exception>
+        public async Task DelayAsync(TimeSpan? delay = null, TimeSpan? playbackDelay = null, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             if (Mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(delay ?? TimeSpan.FromSeconds(1));

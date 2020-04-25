@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "resourcegraph/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "resourcegraph/resource-manager" -AutoRestVersion "v2"

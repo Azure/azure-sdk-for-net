@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
+using NUnit.Framework;
 
 namespace Azure.Core.Testing
 {
@@ -29,7 +31,6 @@ namespace Azure.Core.Testing
 
         public virtual TClient CreateClient<TClient>(params object[] args) where TClient : class
         {
-
             return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
@@ -70,7 +71,14 @@ namespace Azure.Core.Testing
                 interceptors.Add(s_diagnosticScopeValidatingInterceptor);
             }
 
-            interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
+            // Ignore the async method interceptor entirely if we're running a
+            // a SyncOnly test
+            TestContext.TestAdapter test = TestContext.CurrentContext.Test;
+            bool? isSyncOnly = (bool?)test.Properties.Get(ClientTestFixtureAttribute.SyncOnlyKey);
+            if (isSyncOnly != true)
+            {
+                interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
+            }
 
             return s_proxyGenerator.CreateClassProxyWithTarget(client, interceptors.ToArray());
         }

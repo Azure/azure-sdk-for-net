@@ -5,16 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Samples;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    public class TextAnalyticsClientLiveTests : RecordedTestBase
+    public class TextAnalyticsClientLiveTests : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        public const string EndpointEnvironmentVariable = "TEXT_ANALYTICS_ENDPOINT";
-        public const string ApiKeyEnvironmentVariable = "TEXT_ANALYTICS_API_KEY";
-
         public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
@@ -23,12 +21,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
         public TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default)
         {
-            string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
+            string apiKey = TestEnvironment.ApiKey;
             credential ??= new AzureKeyCredential(apiKey);
             options ??= new TextAnalyticsClientOptions();
             return InstrumentClient (
                 new TextAnalyticsClient(
-                    new Uri(Recording.GetVariableFromEnvironment(EndpointEnvironmentVariable)),
+                    new Uri(TestEnvironment.Endpoint),
                     credential,
                     Recording.InstrumentClientOptions(options))
             );
@@ -921,7 +919,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RotateApiKey()
         {
             // Instantiate a client that will be used to call the service.
-            string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
+            string apiKey = TestEnvironment.ApiKey;
             var credential = new AzureKeyCredential(apiKey);
             TextAnalyticsClient client = GetClient(credential);
 
@@ -938,15 +936,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Re-rotate the API key and make sure it succeeds again
             credential.Update(apiKey);
             await client.DetectLanguageAsync(document);
-        }
-
-        [Test]
-        public void ThrowExceptionTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var document = new List<string>();
-
-            Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageBatchAsync(document));
         }
     }
 }

@@ -5,13 +5,14 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
@@ -29,6 +30,7 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///
     /// <typeparam name="TPartition">The context of the partition for which an operation is being performed.</typeparam>
     ///
+    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
         /// <summary>The maximum number of failed consumers to allow when processing a partition; failed consumers are those which have been unable to receive and process events.</summary>
@@ -234,7 +236,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
             Options = options;
             EventBatchMaximumCount = eventBatchMaximumCount;
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors.  The virtual methods are internal and used for testing.
             LoadBalancer = loadBalancer ?? CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -304,7 +309,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
             Options = options;
             EventBatchMaximumCount = eventBatchMaximumCount;
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors.  The virtual methods are internal and used for testing.
             LoadBalancer = CreatePartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors
         }
 
         /// <summary>
@@ -421,7 +429,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           EventPosition eventPosition,
                                                           EventHubConnection connection,
                                                           EventProcessorOptions options) =>
-            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount);
+            connection.CreateTransportConsumer(consumerGroup, partitionId, eventPosition, options.RetryOptions.ToRetryPolicy(), options.TrackLastEnqueuedEventProperties, prefetchCount: (uint?)options.PrefetchCount, ownerLevel: 0);
 
         /// <summary>
         ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
@@ -491,7 +499,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         var attributes = new Dictionary<string, string>(1)
                         {
-                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString() }
+                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
                         };
 
                         diagnosticScope.AddLink(diagnosticId, attributes);
@@ -562,15 +570,34 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 cancellationSource.Token.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                var connection = CreateConnection();
-                await using var connectionAwaiter = connection.ConfigureAwait(false);
-
+                var connection = default(EventHubConnection);
                 var retryDelay = default(TimeSpan?);
                 var capturedException = default(Exception);
                 var eventBatch = default(IReadOnlyList<EventData>);
                 var lastEvent = default(EventData);
                 var failedAttemptCount = 0;
                 var failedConsumerCount = 0;
+
+                // Create the connection to be used for spawning consumers; if the creation
+                // fails, then consider the processing task to be failed.  The main processing
+                // loop will take responsibility for attempting to restart or relinquishing ownership.
+
+                try
+                {
+                    connection = CreateConnection();
+                }
+                catch (Exception ex)
+                {
+                    // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
+                    // for observing or surfacing exceptions that may occur in the handler.
+
+                    _ = InvokeOnProcessingErrorAsync(ex, partition, Resources.OperationReadEvents, CancellationToken.None);
+                    Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                    throw;
+                }
+
+                await using var connectionAwaiter = connection.ConfigureAwait(false);
 
                 // Continue processing the partition until cancellation is signaled or until the count of failed consumers is too great.
                 // Consumers which been consistently unable to receive and process events will be considered invalid and abandoned for a new consumer.
@@ -596,7 +623,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                 // If the batch was successfully processed, capture the last event as the current starting position, in the
                                 // event that the consumer becomes invalid and needs to be replaced.
 
-                                lastEvent = eventBatch?.LastOrDefault();
+                                lastEvent = (eventBatch != null && eventBatch.Count > 0) ? eventBatch[eventBatch.Count - 1] : null;
 
                                 if ((lastEvent != null) && (lastEvent.Offset != long.MinValue))
                                 {
@@ -693,7 +720,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             return new PartitionProcessor
             (
-                Task.Run(performProcessing, cancellationSource.Token),
+                Task.Run(performProcessing),
                 partition,
                 readLastEnquedEventInformation,
                 cancellationSource
@@ -1113,12 +1140,12 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var connection = CreateConnection();
                 await using var connectionAwaiter = connection.ConfigureAwait(false);
 
-                var cycleDuration = new Stopwatch();
+                ValueStopwatch cycleDuration;
                 var partitionIds = default(string[]);
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    cycleDuration.Restart();
+                    cycleDuration = ValueStopwatch.StartNew();
 
                     try
                     {
@@ -1170,7 +1197,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>The interval that callers should delay before invoking the next load balancing cycle.</returns>
         ///
-        private async Task<TimeSpan> PerformLoadBalancingAsync(Stopwatch cycleDuration,
+        private async Task<TimeSpan> PerformLoadBalancingAsync(ValueStopwatch cycleDuration,
                                                                string[] partitionIds,
                                                                CancellationToken cancellationToken)
         {
@@ -1200,7 +1227,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                     var partition = (partitionId ?? string.Empty) switch
                     {
-                        string id when (id == string.Empty) => null,
+                        string id when (id.Length == 0) => null,
                         string _ when (ActivePartitionProcessors.TryGetValue(partitionId, out var partitionProcessor)) => partitionProcessor.Partition,
                         _ => new TPartition { PartitionId = partitionId }
                     };
@@ -1251,7 +1278,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Wait the remaining time, if any, to start the next cycle.
 
-            return LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.Elapsed);
+            return LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.GetElapsedTime());
         }
 
         /// <summary>

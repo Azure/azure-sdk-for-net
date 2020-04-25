@@ -15,21 +15,12 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
-            if (Format != null)
-            {
-                writer.WritePropertyName("format");
-                writer.WriteStringValue(Format);
-            }
-            if (Synonyms != null)
-            {
-                writer.WritePropertyName("synonyms");
-                writer.WriteStringValue(Synonyms);
-            }
+            writer.WritePropertyName("name");
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("format");
+            writer.WriteStringValue(Format);
+            writer.WritePropertyName("synonyms");
+            writer.WriteStringValue(Synonyms);
             if (EncryptionKey != null)
             {
                 writer.WritePropertyName("encryptionKey");
@@ -49,33 +40,21 @@ namespace Azure.Search.Documents.Models
             string format = default;
             string synonyms = default;
             EncryptionKey encryptionKey = default;
-            string odataetag = default;
+            string odataEtag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("format"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     format = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("synonyms"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     synonyms = property.Value.GetString();
                     continue;
                 }
@@ -94,11 +73,11 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    odataetag = property.Value.GetString();
+                    odataEtag = property.Value.GetString();
                     continue;
                 }
             }
-            return new SynonymMap(name, format, synonyms, encryptionKey, odataetag);
+            return new SynonymMap(name, format, synonyms, encryptionKey, odataEtag);
         }
     }
 }

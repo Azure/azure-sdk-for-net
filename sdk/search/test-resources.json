@@ -30,7 +30,6 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
             }
@@ -43,31 +42,34 @@
             }
         }
     },
-    "resources": [],
+    "variables": {
+        "storageAccountName": "[concat(parameters('baseName'), 'stg')]",
+        "storageApiVersion": "2019-06-01"
+    },
+    "resources": [
+        {
+            "name": "[variables('storageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "[variables('storageApiVersion')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "accessTier": "Hot",
+                "supportsHttpsTrafficOnly": true
+            },
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "BlobStorage"
+        }
+    ],
     "outputs": {
-        "AZURE_TENANT_ID": {
+        "AZURE_SEARCH_STORAGE_NAME": {
             "type": "string",
-            "value": "[parameters('tenantId')]"
+            "value": "[variables('storageAccountName')]"
         },
-        "AZURE_CLIENT_ID": {
+        "AZURE_SEARCH_STORAGE_KEY": {
             "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "AZURE_CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
-        "AZURE_SUBSCRIPTION_ID": {
-            "type": "string",
-            "value": "[subscription().subscriptionId]"
-        },
-        "AZURE_RESOURCE_GROUP": {
-            "type": "string",
-            "value": "[resourceGroup().name]"
-        },
-        "AZURE_LOCATION": {
-            "type": "string",
-            "value": "[parameters('location')]"
+            "value": "[listKeys(variables('storageAccountName'), variables('storageApiVersion')).keys[0].value]"
         }
     }
 }

@@ -1,7 +1,12 @@
 # Release History
 
-## 12.1.0-preview.1 (Unreleased)
+## 12.2.0-preview.1 (Unreleased)
 
+
+## 12.1.0 (2020-04)
+- Fixed bug where DataLakeFileSystemClient.DeleteIfExistsAsync() would throw an exception if the underlying File System did not exist.
+- Added PathProperties.IsDirectory
+- Fixed bug where DataLakeFileClient.Read() would throw an exception when download an empty File.
 
 ## 12.0.0 (2020-03)
 - Added DataLakeFileClient.Upload(), which creates a file, appends data to it, and flushes the file in one user-facing API call.

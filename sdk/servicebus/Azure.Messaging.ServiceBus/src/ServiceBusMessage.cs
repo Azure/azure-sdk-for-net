@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new Message
         /// </summary>
         public ServiceBusMessage()
-            : this(null)
+            : this(default)
         {
         }
 
@@ -267,29 +267,23 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         public static ServiceBusMessage CreateFrom(ServiceBusReceivedMessage message)
         {
-            var copiedMessage = new ServiceBusMessage()
+            var copiedMessage = new ServiceBusMessage
             {
+                Body = message.Body,
                 ContentType = message.ContentType,
                 CorrelationId = message.CorrelationId,
                 Label = message.Label,
                 MessageId = message.MessageId,
                 PartitionKey = message.PartitionKey,
+                Properties = new Dictionary<string, object>(message.Properties),
                 ReplyTo = message.ReplyTo,
                 ReplyToSessionId = message.ReplyToSessionId,
                 SessionId = message.SessionId,
                 ScheduledEnqueueTime = message.ScheduledEnqueueTime,
                 TimeToLive = message.TimeToLive,
                 To = message.To,
-                ViaPartitionKey = message.ViaPartitionKey,
+                ViaPartitionKey = message.ViaPartitionKey
             };
-            var originalBody = message.Body;
-            if (!originalBody.IsEmpty)
-            {
-                var clonedBody = new byte[originalBody.Length];
-                Array.Copy(originalBody.ToArray(), clonedBody, originalBody.Length);
-                copiedMessage.Body = clonedBody;
-            }
-            copiedMessage.Properties = new Dictionary<string, object>(message.Properties);
             return copiedMessage;
         }
 

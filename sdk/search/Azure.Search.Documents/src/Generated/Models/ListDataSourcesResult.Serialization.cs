@@ -23,7 +23,14 @@ namespace Azure.Search.Documents.Models
                     List<DataSource> array = new List<DataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSource.DeserializeDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataSource.DeserializeDataSource(item));
+                        }
                     }
                     value = array;
                     continue;

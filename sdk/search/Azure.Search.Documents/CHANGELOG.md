@@ -1,10 +1,18 @@
 # Release History
 
-## 1.0.0-preview.2 (Unreleased)
+## 1.0.0-preview.3 (Unreleased)
+
+### Breaking Changes
+
+- Removed constructor from `SynonymMap` with `IEnumerable<string>` parameter.
+- `SearchServiceClient.GetIndexes` and `SearchServiceClient.GetIndexesAsync` now return `Pageable<SearchIndex>` and `AsyncPageable<SearchIndex>` respectively.
+
+## 1.0.0-preview.2 (2020-04-06)
 
 ### Added
 
 - Added models and methods to `SearchServiceClient` to create and manage indexes.
+- Added support for continuation tokens to resume server-side paging.
 
 ### Breaking Changes
 

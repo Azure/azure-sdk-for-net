@@ -1492,6 +1492,30 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task AppendDataAsync_EmptyStream()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            // Act
+            using (var stream = new MemoryStream())
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.AppendAsync(stream, 0),
+                    e =>
+                    {
+                        Assert.AreEqual("InvalidHeaderValue", e.ErrorCode);
+                        Assert.IsTrue(e.Message.Contains("The value for one of the HTTP headers is not in the correct format."));
+                        Assert.AreEqual("Content-Length", e.Data["HeaderName"]);
+                        Assert.AreEqual("0", e.Data["HeaderValue"]);
+                    });
+            }
+        }
+
+        [Test]
         public async Task AppendDataAsync_ProgressReporting()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

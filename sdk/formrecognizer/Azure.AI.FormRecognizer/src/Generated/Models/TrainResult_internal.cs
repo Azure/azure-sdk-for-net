@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.FormRecognizer.Custom;
+using Azure.AI.FormRecognizer.Training;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="fields"> List of fields used to train the model and the train operation error reported by each. </param>
         /// <param name="averageModelAccuracy"> Average accuracy. </param>
         /// <param name="errors"> Errors returned during the training operation. </param>
-        internal TrainResult_internal(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<FieldPredictionAccuracy> fields, float? averageModelAccuracy, IReadOnlyList<FormRecognizerError> errors)
+        internal TrainResult_internal(IReadOnlyList<TrainingDocumentInfo> trainingDocuments, IReadOnlyList<CustomFormModelField> fields, float? averageModelAccuracy, IReadOnlyList<FormRecognizerError> errors)
         {
             TrainingDocuments = trainingDocuments;
             Fields = fields;
@@ -43,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary> List of the documents used to train the model and any errors reported in each document. </summary>
         public IReadOnlyList<TrainingDocumentInfo> TrainingDocuments { get; }
         /// <summary> List of fields used to train the model and the train operation error reported by each. </summary>
-        public IReadOnlyList<FieldPredictionAccuracy> Fields { get; }
+        public IReadOnlyList<CustomFormModelField> Fields { get; }
         /// <summary> Average accuracy. </summary>
         public float? AverageModelAccuracy { get; }
         /// <summary> Errors returned during the training operation. </summary>

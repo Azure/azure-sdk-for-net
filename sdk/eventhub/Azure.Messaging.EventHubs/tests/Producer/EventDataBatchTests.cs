@@ -111,7 +111,24 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventData = new EventData(new byte[] { 0x21 });
 
             Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
-            Assert.That(mockBatch.TryAddCalledWith, Is.SameAs(eventData), "The event data should have been passed with delegation.");
+            Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
+        }
+
+        /// <summary>
+        ///   Verifies property accessors for the <see cref="EventDataBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddClonesTheEvent()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var eventData = new EventData(new byte[] { 0x21 });
+
+            Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
+            Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
+            Assert.That(mockBatch.TryAddCalledWith, Is.Not.SameAs(eventData), "The event data should have been cloned.");
         }
 
         /// <summary>
@@ -130,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies property accessors for the <see cref="EventDataBatch.TryAdd" />
+        ///   Verifies property accessors for the <see cref="EventDataBatch.Dispose" />
         ///   method.
         /// </summary>
         ///
@@ -142,6 +159,21 @@ namespace Azure.Messaging.EventHubs.Tests
 
             batch.Dispose();
             Assert.That(mockBatch.DisposeInvoked, Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies property accessors for the <see cref="EventDataBatch.Clear" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ClearIsDelegatedToTheTransportClient()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+
+            batch.Clear();
+            Assert.That(mockBatch.ClearInvoked, Is.True);
         }
 
         /// <summary>
@@ -166,6 +198,54 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies property accessors for the <see cref="EventDataBatch.Clear" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ClearRespectsTheBatchLock()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var eventData = new EventData(new byte[] { 0x21 });
+
+            Assert.That(batch.TryAdd(new EventData(new byte[] { 0x21 })), Is.True, "The event should have been accepted before locking.");
+
+            batch.Lock();
+            Assert.That(() => batch.Clear(), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept events when locked.");
+            Assert.That(mockBatch.ClearInvoked, Is.False, "The batch should not have permitted the operation while locked.");
+
+            batch.Unlock();
+            batch.Clear();
+
+            Assert.That(mockBatch.ClearInvoked, Is.True, "The batch should have been cleared after unlocking.");
+        }
+
+        /// <summary>
+        ///   Verifies property accessors for the <see cref="EventDataBatch.Clear" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void DisposeRespectsTheBatchLock()
+        {
+            var mockBatch = new MockTransportBatch();
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var eventData = new EventData(new byte[] { 0x21 });
+
+            Assert.That(batch.TryAdd(new EventData(new byte[] { 0x21 })), Is.True, "The event should have been accepted before locking.");
+
+            batch.Lock();
+            Assert.That(() => batch.Dispose(), Throws.InstanceOf<InvalidOperationException>(), "The batch should not accept events when locked.");
+            Assert.That(mockBatch.DisposeInvoked, Is.False, "The batch should not have permitted the operation while locked.");
+
+            batch.Unlock();
+            batch.Dispose();
+
+            Assert.That(mockBatch.DisposeInvoked, Is.True, "The batch should have been disposed after unlocking.");
+        }
+
+        /// <summary>
         ///   Retrieves the inner transport batch from an <see cref="EventDataBatch" />
         ///   using its private accessors.
         /// </summary>
@@ -187,6 +267,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private class MockTransportBatch : TransportEventBatch
         {
             public bool DisposeInvoked = false;
+            public bool ClearInvoked = false;
             public Type AsEnumerableCalledWith = null;
             public EventData TryAddCalledWith = null;
 
@@ -194,10 +275,9 @@ namespace Azure.Messaging.EventHubs.Tests
             public override long SizeInBytes { get; } = 100;
             public override int Count { get; } = 300;
 
-            public override void Dispose()
-            {
-                DisposeInvoked = true;
-            }
+            public override void Clear() => ClearInvoked = true;
+
+            public override void Dispose() => DisposeInvoked = true;
 
             public override bool TryAdd(EventData eventData)
             {

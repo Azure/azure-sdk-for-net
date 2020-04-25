@@ -7,14 +7,14 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Summary of all trained custom models. </summary>
     internal partial class ModelsSummary_internal
     {
         /// <summary> Initializes a new instance of ModelsSummary_internal. </summary>
         /// <param name="count"> Current count of trained custom models. </param>
-        /// <param name="limit"> Max number of models that can be trained for this subscription. </param>
+        /// <param name="limit"> Max number of models that can be trained for this account. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the summary was last updated. </param>
         internal ModelsSummary_internal(int count, int limit, DateTimeOffset lastUpdatedDateTime)
         {
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer
 
         /// <summary> Current count of trained custom models. </summary>
         public int Count { get; }
-        /// <summary> Max number of models that can be trained for this subscription. </summary>
+        /// <summary> Max number of models that can be trained for this account. </summary>
         public int Limit { get; }
         /// <summary> Date and time (UTC) when the summary was last updated. </summary>
         public DateTimeOffset LastUpdatedDateTime { get; }
