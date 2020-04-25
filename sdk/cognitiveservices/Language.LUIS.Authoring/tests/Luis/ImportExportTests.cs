@@ -183,7 +183,7 @@
 
             UseClientFor(async client =>
             {
-                var testAppId = await client.Apps.ImportLuFromatAsync(appText, "Test Import LUIS App Lu format");
+                var testAppId = await client.Apps.ImportLuFormatAsync(appText, "Test Import LUIS App Lu format");
                 var testApp = await client.Apps.GetAsync(testAppId);
                 await client.Apps.DeleteAsync(testAppId);
 
