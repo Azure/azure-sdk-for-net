@@ -1410,6 +1410,72 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_VersionSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetBlobVersionSas(
+                test.Container.Name,
+                blob.Name,
+                createResponse.Value.VersionId,
+                BlobVersionSasPermissions.Delete);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri.ToString()}&{sasQueryParameters}"), GetOptions());
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_InvalidVersionSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetBlobSas(
+                test.Container.Name,
+                blob.Name,
+                BlobSasPermissions.Read);
+            BlobBaseClient versionBlob = new BlobBaseClient(
+                new Uri($"{blob.WithVersion(createResponse.Value.VersionId).Uri.ToString()}&{sasQueryParameters}"), GetOptions());
+
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                versionBlob.DeleteAsync(),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task DeleteAsync_InvalidSAS()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            Response<BlobContentInfo> createResponse = await blob.CreateAsync();
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+            SasQueryParameters sasQueryParameters = GetBlobSas(test.Container.Name, blob.Name, BlobSasPermissions.Read);
+            BlobBaseClient versionBlob = blob.WithVersion(createResponse.Value.VersionId);
+
+            Response response = await versionBlob.DeleteAsync();
+
+            // Assert
+            Assert.IsTrue(await blob.ExistsAsync());
+        }
+
+        [Test]
         public async Task DeleteIfExistsAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3037,6 +3103,78 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_BlobTagSas()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetBlobSas(test.Container.Name, blob.Name, BlobSasPermissions.Tag);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await sasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_InvalidBlobSas()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetBlobSas(test.Container.Name, blob.Name, BlobSasPermissions.Read);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                sasBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_ContainerTagSas()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.Tag);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await sasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await sasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_InvalidContainerSas()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            SasQueryParameters sasQueryParameters = GetContainerSas(test.Container.Name, BlobContainerSasPermissions.Read);
+            BlobBaseClient sasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                sasBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
         }
 
         [Test]

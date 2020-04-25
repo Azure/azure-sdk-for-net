@@ -21,7 +21,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2019-07-07";
+        public const string DefaultSasVersion = "2019-12-12";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -310,6 +310,7 @@ namespace Azure.Storage
                 public const char Read = 'r';
                 public const char Write = 'w';
                 public const char Delete = 'd';
+                public const char DeleteBlobVersion = 'x';
                 public const char List = 'l';
                 public const char Add = 'a';
                 public const char Update = 'u';
@@ -369,6 +370,7 @@ namespace Azure.Storage
             internal static class Resource
             {
                 public const string BlobSnapshot = "bs";
+                public const string BlobVersion = "bv";
                 public const string Blob = "b";
                 public const string Container = "c";
                 public const string File = "f";
