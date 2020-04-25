@@ -35,7 +35,7 @@ public void ConfigureServices(IServiceCollection services)
 {
     services
         .AddDataProtection()
-        .ProtectKeysWithAzureKeyVault("<Key-ID>", new DefaultAzureCredential());
+        .ProtectKeysWithAzureKeyVault(new Uri("<Key-ID>"), new DefaultAzureCredential());
 }
 ```
 
