@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
-    ///   (Queue or Topic). It can be used for session enabled entities. It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
+    ///   (Queue or Topic). It can be used for both session and non-session entities. It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
     /// </summary>
     ///
     public class ServiceBusSender : IAsyncDisposable
