@@ -866,15 +866,14 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("Track by issue: https://github.com/Azure/azure-sdk-for-net/issues/11571")]
         public async Task RecognizeEntitiesCategories()
         {
             TextAnalyticsClient client = GetClient();
             const string document = "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | €30 | 11m | 22 °C |" +
                 "Software Engineer | Wedding | Microsoft Surface laptop | Coding | 127.0.0.1 | https://github.com/azure/azure-sdk-for-net";
 
-            Response <IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document);
-            List<CategorizedEntity> entities = response.Value.ToList();
+            RecognizeEntitiesResultCollection response = await client.RecognizeEntitiesBatchAsync(new List<string>() { document }, "en", new TextAnalyticsRequestOptions() { ModelVersion = "2020-02-01" });
+            var entities = response.FirstOrDefault().Entities.ToList();
 
             Assert.AreEqual(21, entities.Count);
 
