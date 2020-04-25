@@ -24,7 +24,6 @@ namespace Azure.AI.FormRecognizer
 
         private readonly Uri _endpoint;
         private readonly AzureKeyCredential _credential;
-        private readonly FormRecognizerClientOptions _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClient"/> class.
@@ -60,10 +59,9 @@ namespace Azure.AI.FormRecognizer
 
             _endpoint = endpoint;
             _credential = credential;
-            _options = options.Clone();
 
-            Diagnostics = new ClientDiagnostics(_options);
-            var pipeline = HttpPipelineBuilder.Build(_options, new AzureKeyCredentialPolicy(_credential, Constants.AuthorizationHeader));
+            Diagnostics = new ClientDiagnostics(options);
+            var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(_credential, Constants.AuthorizationHeader));
             ServiceClient = new ServiceClient(Diagnostics, pipeline, _endpoint.ToString());
         }
 
@@ -345,10 +343,7 @@ namespace Azure.AI.FormRecognizer
         /// credentials and the same set of <see cref="FormRecognizerClientOptions"/> this client has.
         /// </summary>
         /// <returns>A new instance of a <see cref="FormTrainingClient"/>.</returns>
-        public virtual FormTrainingClient GetFormTrainingClient()
-        {
-            return new FormTrainingClient(_endpoint, _credential, _options);
-        }
+        public virtual FormTrainingClient GetFormTrainingClient() => new FormTrainingClient(ServiceClient);
 
         #endregion Training client
 
