@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-pahmurta.search.windows.net/indexes?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-nybdpxve.search.windows.net/indexes?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "4032",
         "Content-Type": "application/json",
-        "traceparent": "00-4d35f6a6126be54486455730a652b7f2-b01338042aaf7645-00",
+        "traceparent": "00-22d1d88d464eac439ef5778d8371f16c-b04160844da09d40-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "62e943843b5a3dfda55d7936ea8d46fa",
@@ -309,11 +309,11 @@
         "Cache-Control": "no-cache",
         "Content-Length": "6158",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 24 Apr 2020 07:08:21 GMT",
-        "elapsed-time": "964",
-        "ETag": "W/\u00220x8D7E81E45DFF51D\u0022",
+        "Date": "Sat, 25 Apr 2020 01:18:11 GMT",
+        "elapsed-time": "1475",
+        "ETag": "W/\u00220x8D7E8B685DEA9F4\u0022",
         "Expires": "-1",
-        "Location": "https://azs-net-pahmurta.search.windows.net/indexes(\u0027mvqfigik\u0027)?api-version=2019-05-06-Preview",
+        "Location": "https://azs-net-nybdpxve.search.windows.net/indexes(\u0027mvqfigik\u0027)?api-version=2019-05-06-Preview",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
@@ -321,8 +321,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pahmurta.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D7E81E45DFF51D\u0022",
+        "@odata.context": "https://azs-net-nybdpxve.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D7E8B685DEA9F4\u0022",
         "name": "mvqfigik",
         "defaultScoringProfile": null,
         "fields": [
@@ -717,18 +717,18 @@
       }
     },
     {
-      "RequestUri": "https://azs-net-pahmurta.search.windows.net/indexes(\u0027mvqfigik\u0027)?allowIndexDowntime=true\u0026api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-nybdpxve.search.windows.net/indexes(\u0027mvqfigik\u0027)?allowIndexDowntime=true\u0026api-version=2019-05-06-Preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "4873",
         "Content-Type": "application/json",
-        "If-Match": "\u00220x8D7E81E45DFF51D\u0022",
+        "If-Match": "\u00220x8D7E8B685DEA9F4\u0022",
         "Prefer": "return=representation",
-        "traceparent": "00-6aca12cf9d4fb14dbe571389619b49e6-cdb594deb3c7254c-00",
+        "traceparent": "00-7e3a5f2ba3131142ab5eb76e8bfe91ac-19a476f2892d434f-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "b20370b178072cf624850527937d7829",
@@ -1070,16 +1070,16 @@
             "name": "asciiTags"
           }
         ],
-        "@odata.etag": "\u00220x8D7E81E45DFF51D\u0022"
+        "@odata.etag": "\u00220x8D7E8B685DEA9F4\u0022"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "6577",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 24 Apr 2020 07:08:22 GMT",
-        "elapsed-time": "1731",
-        "ETag": "W/\u00220x8D7E81E47039C03\u0022",
+        "Date": "Sat, 25 Apr 2020 01:18:14 GMT",
+        "elapsed-time": "2315",
+        "ETag": "W/\u00220x8D7E8B687496726\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -1088,8 +1088,8 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-pahmurta.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D7E81E47039C03\u0022",
+        "@odata.context": "https://azs-net-nybdpxve.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D7E8B687496726\u0022",
         "name": "mvqfigik",
         "defaultScoringProfile": null,
         "fields": [
@@ -1516,7 +1516,7 @@
     "LOCATION": "westus2",
     "RandomSeed": "1673829715",
     "RESOURCE_GROUP": "heaths-search",
-    "SearchServiceName": "azs-net-pahmurta",
+    "SearchServiceName": "azs-net-nybdpxve",
     "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
     "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }

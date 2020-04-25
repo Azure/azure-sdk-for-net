@@ -1,16 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-bbiteohl.search.windows.net/indexes(\u0027olbldbyh\u0027)/docs/search.index?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-xtvpuxha.search.windows.net/indexes(\u0027jttlxthb\u0027)/docs/search.index?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json; odata.metadata=minimal",
+        "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "53",
         "Content-Type": "application/json",
-        "traceparent": "00-85c4191ca9817f41a08e4782ec6933f6-6bba71ed7cb7794d-00",
+        "traceparent": "00-27face8e114cbc49b8a8605e2d84a930-a778c2fd687c3f42-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "cbc31d4dbd8a2fc4e121ff629bd129b8",
@@ -27,10 +27,10 @@
       "StatusCode": 207,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "253",
-        "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 24 Apr 2020 06:57:34 GMT",
-        "elapsed-time": "114",
+        "Content-Length": "93",
+        "Content-Type": "application/json; odata.metadata=none",
+        "Date": "Sat, 25 Apr 2020 01:07:11 GMT",
+        "elapsed-time": "57",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -39,7 +39,6 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-bbiteohl.search.windows.net/indexes(\u0027olbldbyh\u0027)/$metadata#Collection(Microsoft.Azure.Search.V2019_05_06_Preview.IndexResult)",
         "value": [
           {
             "key": "42",
@@ -56,8 +55,8 @@
     "LOCATION": "westus2",
     "RandomSeed": "1230788505",
     "RESOURCE_GROUP": "heaths-search",
-    "SearchIndexName": "olbldbyh",
-    "SearchServiceName": "azs-net-bbiteohl",
+    "SearchIndexName": "jttlxthb",
+    "SearchServiceName": "azs-net-xtvpuxha",
     "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
     "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }

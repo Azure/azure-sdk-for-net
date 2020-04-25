@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Models;
-using Azure.Search.Documents.Pipeline;
 
 namespace Azure.Search.Documents
 {
@@ -159,7 +158,7 @@ namespace Azure.Search.Documents
             Endpoint = endpoint;
             IndexName = indexName;
             ClientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = options.Build(credential, OdataMetadataPolicy.None);
+            Pipeline = options.Build(credential);
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(
@@ -1568,6 +1567,7 @@ namespace Azure.Search.Documents
                     {
                         request.ClientRequestId = options?.ClientRequestId.ToString();
                     }
+                    request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");
                     using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
                     content.JsonWriter.WriteObjectValue(documents);

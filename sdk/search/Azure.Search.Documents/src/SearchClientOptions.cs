@@ -3,10 +3,8 @@
 
 using System;
 using System.Diagnostics;
-using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Search.Documents.Pipeline;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -85,20 +83,13 @@ namespace Azure.Search.Documents
         /// <param name="credential">
         /// The <see cref="AzureKeyCredential"/> to authenticate requests.
         /// </param>
-        /// <param name="metadataPolicy">
-        /// The <see cref="OdataMetadataPolicy"/> to set Accept request headers.
-        /// </param>
         /// <returns>An <see cref="HttpPipeline"/> to send requests.</returns>
-        internal HttpPipeline Build(AzureKeyCredential credential, OdataMetadataPolicy metadataPolicy)
+        internal HttpPipeline Build(AzureKeyCredential credential)
         {
             Debug.Assert(credential != null);
             return HttpPipelineBuilder.Build(
                 options: this,
-                perCallPolicies: new HttpPipelinePolicy[]
-                {
-                    new AzureKeyCredentialPolicy(credential, Constants.ApiKeyHeaderName),
-                    metadataPolicy,
-                },
+                perCallPolicies: new[] { new AzureKeyCredentialPolicy(credential, Constants.ApiKeyHeaderName) },
                 perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
                 responseClassifier: null);
         }

@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-morphgyq.search.windows.net/servicestats?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-jcswnkcn.search.windows.net/servicestats?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-04423486f8b3c74cbaef1001e6c04f1c-ebd73619c707834e-00",
+        "traceparent": "00-a90e367307aaff4d94c38a7b8f853ef8-5e3078a30938b744-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200423.1",
+          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": [
@@ -23,17 +23,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "586",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Fri, 24 Apr 2020 07:04:44 GMT",
-        "elapsed-time": "43",
+        "Date": "Sat, 25 Apr 2020 01:14:48 GMT",
+        "elapsed-time": "29",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "a5581e08-06dc-498e-88d6-621994981c00",
+        "request-id": "09ceaa4f-b87d-4fe2-b74a-b47730ef361a",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-morphgyq.search.windows.net/$metadata#Microsoft.Azure.Search.V2019_05_06_Preview.ServiceStatistics",
+        "@odata.context": "https://azs-net-jcswnkcn.search.windows.net/$metadata#Microsoft.Azure.Search.V2019_05_06_Preview.ServiceStatistics",
         "counters": {
           "documentCount": {
             "usage": 10,
@@ -75,7 +75,7 @@
   ],
   "Variables": {
     "RandomSeed": "1622410931",
-    "SearchIndexName": "ylirgsqk",
-    "SearchServiceName": "azs-net-morphgyq"
+    "SearchIndexName": "mesaejwj",
+    "SearchServiceName": "azs-net-jcswnkcn"
   }
 }

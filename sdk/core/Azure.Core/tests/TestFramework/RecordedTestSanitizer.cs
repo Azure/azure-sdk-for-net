@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Azure.Core.Testing
@@ -40,11 +41,19 @@ namespace Azure.Core.Testing
         }
 
         public virtual string SanitizeVariable(string variableName, string environmentVariableValue) => environmentVariableValue;
+
         public virtual void SanitizeBody(RecordEntryMessage message)
         {
             if (message.Body != null)
             {
                 int contentLength = message.Body.Length;
+                if (message.Headers.TryGetValue(HttpHeader.Names.ContentLength, out string[] values) && values.Length > 0)
+                {
+                    if (int.TryParse(values[0], out int value))
+                    {
+                        contentLength = value;
+                    }
+                }
 
                 message.TryGetContentType(out string contentType);
 
@@ -75,6 +84,18 @@ namespace Azure.Core.Testing
             SanitizeBody(entry.Response);
         }
 
+        public virtual void Sanitize(RecordSession session)
+        {
+            foreach (RecordEntry entry in session.Entries)
+            {
+                Sanitize(entry);
+            }
+
+            foreach (KeyValuePair<string, string> variable in session.Variables.ToArray())
+            {
+                session.Variables[variable.Key] = SanitizeVariable(variable.Key, variable.Value);
+            }
+        }
 
         /// <summary>
         /// Optionally update the Content-Length header if we've sanitized it
