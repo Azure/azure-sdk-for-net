@@ -34,7 +34,7 @@ namespace Azure.Storage.Test.Shared
             new Uri(TestConfigSecondary.BlobServiceSecondaryEndpoint).Host;
 
         public BlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, mode)
         {
             _serviceVersion = serviceVersion;
         }
@@ -316,6 +316,18 @@ namespace Azure.Storage.Test.Shared
             return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
         }
 
+        public BlobSasQueryParameters GetBlobIdentitySas(
+            string containerName,
+            string blobName,
+            BlobSasPermissions permissions,
+            UserDelegationKey userDelegationKey,
+            string accountName)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
         public BlobSasQueryParameters GetContainerSas(
             string containerName,
             BlobContainerSasPermissions permissions,
@@ -324,6 +336,17 @@ namespace Azure.Storage.Test.Shared
             BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName);
             sasBuilder.SetPermissions(permissions);
             return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
+        }
+
+        public BlobSasQueryParameters GetContainerIdentitySas(
+            string containerName,
+            BlobContainerSasPermissions permissions,
+            UserDelegationKey userDelegationKey,
+            string accountName)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
         public BlobSasQueryParameters GetBlobVersionSas(

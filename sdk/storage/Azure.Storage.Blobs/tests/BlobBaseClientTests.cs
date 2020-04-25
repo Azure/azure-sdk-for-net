@@ -3143,6 +3143,72 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_BlobIdentityTagSas()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                BlobSasPermissions.Tag,
+                userDelegationKey,
+                oauthService.AccountName);
+
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await identitySasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await identitySasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_InvalidBlobIdentitySas()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            SasQueryParameters sasQueryParameters = GetBlobIdentitySas(
+                test.Container.Name,
+                blob.Name,
+                BlobSasPermissions.Read,
+                userDelegationKey,
+                oauthService.AccountName);
+
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identitySasBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetSetTagsAsync_ContainerTagSas()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3174,6 +3240,70 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sasBlob.SetTagsAsync(tags),
+                e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_ContainerIdentityTagSas()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
+                test.Container.Name,
+                BlobContainerSasPermissions.Tag,
+                userDelegationKey,
+                oauthService.AccountName);
+
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await identitySasBlob.SetTagsAsync(tags);
+            Response<IDictionary<string, string>> getTagsResponse = await identitySasBlob.GetTagsAsync();
+
+            // Assert
+            AssertDictionaryEquality(tags, getTagsResponse.Value);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetSetTagsAsync_InvalidContainerIdentitySas()
+        {
+            BlobServiceClient oauthService = GetServiceClient_OauthAccount();
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthService);
+
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            SasQueryParameters sasQueryParameters = GetContainerIdentitySas(
+                test.Container.Name,
+                BlobContainerSasPermissions.Read,
+                userDelegationKey,
+                oauthService.AccountName);
+
+            BlobBaseClient identitySasBlob = new BlobBaseClient(new Uri($"{blob.Uri.ToString()}?{sasQueryParameters}"), GetOptions());
+
+            Dictionary<string, string> tags = BuildTags();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                identitySasBlob.SetTagsAsync(tags),
                 e => Assert.AreEqual(BlobErrorCode.AuthorizationPermissionMismatch.ToString(), e.ErrorCode));
         }
 

@@ -36,7 +36,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public readonly PathPermissions PathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
 
         public DataLakeTestBase(bool async, DataLakeClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, RecordedTestMode.Playback)
         {
             _serviceVersion = serviceVersion;
         }
