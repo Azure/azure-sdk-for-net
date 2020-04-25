@@ -224,7 +224,6 @@ namespace Azure.Core.Tests
             Assert.NotNull(matcher.FindMatch(playbackRequest, new[] { entry }));
         }
 
-
         private class TestSanitizer : RecordedTestSanitizer
         {
             public override string SanitizeVariable(string variableName, string environmentVariableValue)
