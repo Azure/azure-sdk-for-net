@@ -41,6 +41,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="etag">Resource Etag.</param>
+        /// <param name="defaultEncryptionScope">Default the container to use
+        /// specified encryption scope for all writes.</param>
+        /// <param name="denyEncryptionScopeOverride">Block override of
+        /// encryption scope from the container default.</param>
         /// <param name="publicAccess">Specifies whether data in the container
         /// may be accessed publicly and the level of access. Possible values
         /// include: 'Container', 'Blob', 'None'</param>
@@ -70,9 +74,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// been created for this container. The hasImmutabilityPolicy public
         /// property is set to false by SRP if ImmutabilityPolicy has not been
         /// created for this container.</param>
-        public ListContainerItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?))
+        public ListContainerItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string defaultEncryptionScope = default(string), bool? denyEncryptionScopeOverride = default(bool?), PublicAccess? publicAccess = default(PublicAccess?), System.DateTime? lastModifiedTime = default(System.DateTime?), string leaseStatus = default(string), string leaseState = default(string), string leaseDuration = default(string), IDictionary<string, string> metadata = default(IDictionary<string, string>), ImmutabilityPolicyProperties immutabilityPolicy = default(ImmutabilityPolicyProperties), LegalHoldProperties legalHold = default(LegalHoldProperties), bool? hasLegalHold = default(bool?), bool? hasImmutabilityPolicy = default(bool?))
             : base(id, name, type, etag)
         {
+            DefaultEncryptionScope = defaultEncryptionScope;
+            DenyEncryptionScopeOverride = denyEncryptionScopeOverride;
             PublicAccess = publicAccess;
             LastModifiedTime = lastModifiedTime;
             LeaseStatus = leaseStatus;
@@ -90,6 +96,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets default the container to use specified encryption
+        /// scope for all writes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.defaultEncryptionScope")]
+        public string DefaultEncryptionScope { get; set; }
+
+        /// <summary>
+        /// Gets or sets block override of encryption scope from the container
+        /// default.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.denyEncryptionScopeOverride")]
+        public bool? DenyEncryptionScopeOverride { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether data in the container may be

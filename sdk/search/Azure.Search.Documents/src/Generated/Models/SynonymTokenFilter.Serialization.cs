@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -41,15 +42,28 @@ namespace Azure.Search.Documents.Models
 
         internal static SynonymTokenFilter DeserializeSynonymTokenFilter(JsonElement element)
         {
-            SynonymTokenFilter result = new SynonymTokenFilter();
+            IList<string> synonyms = default;
+            bool? ignoreCase = default;
+            bool? expand = default;
+            string odataType = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("synonyms"))
                 {
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Synonyms.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
+                    synonyms = array;
                     continue;
                 }
                 if (property.NameEquals("ignoreCase"))
@@ -58,7 +72,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.IgnoreCase = property.Value.GetBoolean();
+                    ignoreCase = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("expand"))
@@ -67,21 +81,21 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Expand = property.Value.GetBoolean();
+                    expand = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new SynonymTokenFilter(odataType, name, synonyms, ignoreCase, expand);
         }
     }
 }

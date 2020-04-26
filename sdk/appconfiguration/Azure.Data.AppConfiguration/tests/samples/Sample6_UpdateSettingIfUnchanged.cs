@@ -13,7 +13,7 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void UpdateSettingIfUnchanged()
         {
-            var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
+            var connectionString = TestEnvironment.ConnectionString;
 
             #region Snippet:AzConfigSample6_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);

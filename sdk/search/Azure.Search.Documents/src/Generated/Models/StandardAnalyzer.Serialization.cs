@@ -40,7 +40,10 @@ namespace Azure.Search.Documents.Models
 
         internal static StandardAnalyzer DeserializeStandardAnalyzer(JsonElement element)
         {
-            StandardAnalyzer result = new StandardAnalyzer();
+            int? maxTokenLength = default;
+            IList<string> stopwords = default;
+            string odataType = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxTokenLength"))
@@ -49,7 +52,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.MaxTokenLength = property.Value.GetInt32();
+                    maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("stopwords"))
@@ -58,25 +61,33 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    result.Stopwords = new List<string>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Stopwords.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
+                    stopwords = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    result.ODataType = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
-                    result.Name = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new StandardAnalyzer(odataType, name, maxTokenLength, stopwords);
         }
     }
 }

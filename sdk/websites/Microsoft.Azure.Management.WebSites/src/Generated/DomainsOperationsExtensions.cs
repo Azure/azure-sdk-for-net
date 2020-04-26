@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Check if a domain is available for registration.
             /// </summary>
             /// <remarks>
-            /// Check if a domain is available for registration.
+            /// Description for Check if a domain is available for registration.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='identifier'>
             /// Name of the domain.
             /// </param>
-            public static DomainAvailablilityCheckResult CheckAvailability(this IDomainsOperations operations, NameIdentifier identifier)
+            public static DomainAvailabilityCheckResult CheckAvailability(this IDomainsOperations operations, NameIdentifier identifier)
             {
                 return operations.CheckAvailabilityAsync(identifier).GetAwaiter().GetResult();
             }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Check if a domain is available for registration.
             /// </summary>
             /// <remarks>
-            /// Check if a domain is available for registration.
+            /// Description for Check if a domain is available for registration.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DomainAvailablilityCheckResult> CheckAvailabilityAsync(this IDomainsOperations operations, NameIdentifier identifier, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainAvailabilityCheckResult> CheckAvailabilityAsync(this IDomainsOperations operations, NameIdentifier identifier, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckAvailabilityWithHttpMessagesAsync(identifier, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all domains in a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all domains in a subscription.
+            /// Description for Get all domains in a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all domains in a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all domains in a subscription.
+            /// Description for Get all domains in a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -99,7 +99,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Generate a single sign-on request for the domain management portal.
             /// </summary>
             /// <remarks>
-            /// Generate a single sign-on request for the domain management portal.
+            /// Description for Generate a single sign-on request for the domain management
+            /// portal.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -113,7 +114,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// Generate a single sign-on request for the domain management portal.
             /// </summary>
             /// <remarks>
-            /// Generate a single sign-on request for the domain management portal.
+            /// Description for Generate a single sign-on request for the domain management
+            /// portal.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -133,7 +135,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get domain name recommendations based on keywords.
             /// </summary>
             /// <remarks>
-            /// Get domain name recommendations based on keywords.
+            /// Description for Get domain name recommendations based on keywords.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -150,7 +152,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get domain name recommendations based on keywords.
             /// </summary>
             /// <remarks>
-            /// Get domain name recommendations based on keywords.
+            /// Description for Get domain name recommendations based on keywords.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -173,7 +175,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all domains in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all domains in a resource group.
+            /// Description for Get all domains in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -190,7 +192,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all domains in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all domains in a resource group.
+            /// Description for Get all domains in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -213,7 +215,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a domain.
             /// </summary>
             /// <remarks>
-            /// Get a domain.
+            /// Description for Get a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -233,7 +235,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get a domain.
             /// </summary>
             /// <remarks>
-            /// Get a domain.
+            /// Description for Get a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -259,7 +261,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates or updates a domain.
             /// </summary>
             /// <remarks>
-            /// Creates or updates a domain.
+            /// Description for Creates or updates a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -282,7 +284,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates or updates a domain.
             /// </summary>
             /// <remarks>
-            /// Creates or updates a domain.
+            /// Description for Creates or updates a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -311,7 +313,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a domain.
             /// </summary>
             /// <remarks>
-            /// Delete a domain.
+            /// Description for Delete a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -336,7 +338,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete a domain.
             /// </summary>
             /// <remarks>
-            /// Delete a domain.
+            /// Description for Delete a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -364,7 +366,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates or updates a domain.
             /// </summary>
             /// <remarks>
-            /// Creates or updates a domain.
+            /// Description for Creates or updates a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -387,7 +389,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates or updates a domain.
             /// </summary>
             /// <remarks>
-            /// Creates or updates a domain.
+            /// Description for Creates or updates a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -416,7 +418,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists domain ownership identifiers.
             /// </summary>
             /// <remarks>
-            /// Lists domain ownership identifiers.
+            /// Description for Lists domain ownership identifiers.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -436,7 +438,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists domain ownership identifiers.
             /// </summary>
             /// <remarks>
-            /// Lists domain ownership identifiers.
+            /// Description for Lists domain ownership identifiers.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -462,7 +464,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get ownership identifier for domain
             /// </summary>
             /// <remarks>
-            /// Get ownership identifier for domain
+            /// Description for Get ownership identifier for domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -485,7 +487,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get ownership identifier for domain
             /// </summary>
             /// <remarks>
-            /// Get ownership identifier for domain
+            /// Description for Get ownership identifier for domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -515,8 +517,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// for an existing identifer
             /// </summary>
             /// <remarks>
-            /// Creates an ownership identifier for a domain or updates identifier details
-            /// for an existing identifer
+            /// Description for Creates an ownership identifier for a domain or updates
+            /// identifier details for an existing identifer
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -543,8 +545,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// for an existing identifer
             /// </summary>
             /// <remarks>
-            /// Creates an ownership identifier for a domain or updates identifier details
-            /// for an existing identifer
+            /// Description for Creates an ownership identifier for a domain or updates
+            /// identifier details for an existing identifer
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -576,7 +578,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete ownership identifier for domain
             /// </summary>
             /// <remarks>
-            /// Delete ownership identifier for domain
+            /// Description for Delete ownership identifier for domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -599,7 +601,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Delete ownership identifier for domain
             /// </summary>
             /// <remarks>
-            /// Delete ownership identifier for domain
+            /// Description for Delete ownership identifier for domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -626,8 +628,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// for an existing identifer
             /// </summary>
             /// <remarks>
-            /// Creates an ownership identifier for a domain or updates identifier details
-            /// for an existing identifer
+            /// Description for Creates an ownership identifier for a domain or updates
+            /// identifier details for an existing identifer
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -654,8 +656,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// for an existing identifer
             /// </summary>
             /// <remarks>
-            /// Creates an ownership identifier for a domain or updates identifier details
-            /// for an existing identifer
+            /// Description for Creates an ownership identifier for a domain or updates
+            /// identifier details for an existing identifer
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -687,7 +689,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Renew a domain.
             /// </summary>
             /// <remarks>
-            /// Renew a domain.
+            /// Description for Renew a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -707,7 +709,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Renew a domain.
             /// </summary>
             /// <remarks>
-            /// Renew a domain.
+            /// Description for Renew a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -730,7 +732,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates or updates a domain.
             /// </summary>
             /// <remarks>
-            /// Creates or updates a domain.
+            /// Description for Creates or updates a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -753,7 +755,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Creates or updates a domain.
             /// </summary>
             /// <remarks>
-            /// Creates or updates a domain.
+            /// Description for Creates or updates a domain.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -782,7 +784,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all domains in a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all domains in a subscription.
+            /// Description for Get all domains in a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -799,7 +801,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all domains in a subscription.
             /// </summary>
             /// <remarks>
-            /// Get all domains in a subscription.
+            /// Description for Get all domains in a subscription.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -822,7 +824,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get domain name recommendations based on keywords.
             /// </summary>
             /// <remarks>
-            /// Get domain name recommendations based on keywords.
+            /// Description for Get domain name recommendations based on keywords.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -839,7 +841,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get domain name recommendations based on keywords.
             /// </summary>
             /// <remarks>
-            /// Get domain name recommendations based on keywords.
+            /// Description for Get domain name recommendations based on keywords.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -862,7 +864,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all domains in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all domains in a resource group.
+            /// Description for Get all domains in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -879,7 +881,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Get all domains in a resource group.
             /// </summary>
             /// <remarks>
-            /// Get all domains in a resource group.
+            /// Description for Get all domains in a resource group.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -902,7 +904,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists domain ownership identifiers.
             /// </summary>
             /// <remarks>
-            /// Lists domain ownership identifiers.
+            /// Description for Lists domain ownership identifiers.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -919,7 +921,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Lists domain ownership identifiers.
             /// </summary>
             /// <remarks>
-            /// Lists domain ownership identifiers.
+            /// Description for Lists domain ownership identifiers.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

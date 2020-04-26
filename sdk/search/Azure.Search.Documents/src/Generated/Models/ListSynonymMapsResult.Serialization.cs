@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,19 +15,28 @@ namespace Azure.Search.Documents.Models
     {
         internal static ListSynonymMapsResult DeserializeListSynonymMapsResult(JsonElement element)
         {
-            ListSynonymMapsResult result = new ListSynonymMapsResult();
+            IReadOnlyList<SynonymMap> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
+                    List<SynonymMap> array = new List<SynonymMap>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.SynonymMaps.Add(SynonymMap.DeserializeSynonymMap(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynonymMap.DeserializeSynonymMap(item));
+                        }
                     }
+                    value = array;
                     continue;
                 }
             }
-            return result;
+            return new ListSynonymMapsResult(value);
         }
     }
 }

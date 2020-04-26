@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Core
         public static bool IsNotType<T>(this Exception instance) where T : Exception => (!(instance is T));
 
         /// <summary>
-        ///   Determines whether the <paramref name="instance"/> is considered a fatal exception and should avoid retries,
+        ///   Determines whether the <paramref name="instance"/> is a well-known fatal exception and should avoid retries,
         ///   logging, and similar activities.
         /// </summary>
         ///

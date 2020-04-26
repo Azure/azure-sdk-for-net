@@ -101,5 +101,20 @@ namespace Azure.Storage.Files.DataLake.Tests
                 () => new DataLakePathClient(uri, tokenCredential, new DataLakeClientOptions()),
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
+
+        [Test]
+        public async Task Ctor_FileSystemAndPath()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient fileClient = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            // Act
+            DataLakePathClient pathClient = new DataLakePathClient(test.FileSystem, fileClient.Path);
+
+            // Assert
+            await pathClient.GetPropertiesAsync();
+            await pathClient.GetAccessControlAsync();
+        }
     }
 }

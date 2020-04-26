@@ -93,6 +93,7 @@ namespace Azure.Storage.Test.Shared
             VolatileHeaders.Add("x-ms-source-if-modified-since");
             VolatileHeaders.Add("x-ms-source-if-unmodified-since");
             VolatileHeaders.Add("x-ms-copy-source");
+            VolatileHeaders.Add("x-ms-rename-source");
 
             // Storage specific response headers to ignore
             VolatileResponseHeaders.Add("Server");

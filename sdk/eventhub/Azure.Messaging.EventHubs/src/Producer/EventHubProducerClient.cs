@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -36,11 +35,17 @@ namespace Azure.Messaging.EventHubs.Producer
     ///
     public class EventHubProducerClient : IAsyncDisposable
     {
+        /// <summary>The maximum number of attempts that may be made to get a <see cref="TransportProducer" /> from the pool.</summary>
+        internal const int MaximumCreateProducerAttempts = 3;
+
         /// <summary>The minimum allowable size, in bytes, for a batch to be sent.</summary>
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
         private static readonly SendEventOptions DefaultSendOptions = new SendEventOptions();
+
+        /// <summary>Sets how long a dedicated <see cref="TransportProducer" /> would sit in memory before its <see cref="TransportProducerPool" /> would remove and close it.</summary>
+        private static readonly TimeSpan PartitionProducerLifespan = TimeSpan.FromMinutes(5);
 
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the producer is associated with.  This is likely
@@ -57,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Producer
         public string EventHubName => Connection.EventHubName;
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="EventHubProducerClient"/> has been closed.
+        ///   Indicates whether or not this <see cref="EventHubProducerClient" /> has been closed.
         /// </summary>
         ///
         /// <value>
@@ -87,21 +92,13 @@ namespace Azure.Messaging.EventHubs.Producer
         private EventHubConnection Connection { get; }
 
         /// <summary>
-        ///   An abstracted Event Hub transport-specific producer that is associated with the
-        ///   Event Hub gateway rather than a specific partition; intended to perform delegated operations.
+        ///   A <see cref="TransportProducerPool" /> used to manage a set of partition specific <see cref="TransportProducer" />.
         /// </summary>
         ///
-        private TransportProducer EventHubProducer { get; }
+        private TransportProducerPool PartitionProducerPool { get; }
 
         /// <summary>
-        ///   The set of active Event Hub transport-specific producers created by this client which are specific to
-        ///   a given partition; intended to perform delegated operations.
-        /// </summary>
-        ///
-        private ConcurrentDictionary<string, TransportProducer> PartitionProducers { get; } = new ConcurrentDictionary<string, TransportProducer>();
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
@@ -122,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
@@ -145,7 +142,7 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
@@ -165,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
@@ -190,11 +187,11 @@ namespace Azure.Messaging.EventHubs.Producer
             OwnsConnection = true;
             Connection = new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            PartitionProducerPool = new TransportProducerPool(Connection, RetryPolicy);
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -216,11 +213,11 @@ namespace Azure.Messaging.EventHubs.Producer
             OwnsConnection = true;
             Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            PartitionProducerPool = new TransportProducerPool(Connection, RetryPolicy);
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
         /// </summary>
         ///
         /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
@@ -235,15 +232,16 @@ namespace Azure.Messaging.EventHubs.Producer
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            PartitionProducerPool = new TransportProducerPool(Connection, RetryPolicy);
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
         /// </summary>
         ///
         /// <param name="connection">The connection to use as the basis for delegation of client-type operations.</param>
         /// <param name="transportProducer">The transport producer instance to use as the basis for service communication.</param>
+        /// <param name="partitionProducerPool">A <see cref="TransportProducerPool" /> used to manage a set of partition specific <see cref="TransportProducer" />.</param>
         ///
         /// <remarks>
         ///   This constructor is intended to be used internally for functional
@@ -251,18 +249,20 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         internal EventHubProducerClient(EventHubConnection connection,
-                                        TransportProducer transportProducer)
+                                        TransportProducer transportProducer,
+                                        TransportProducerPool partitionProducerPool = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(transportProducer, nameof(transportProducer));
 
             OwnsConnection = false;
             Connection = connection;
-            EventHubProducer = transportProducer;
+            RetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
+            PartitionProducerPool = partitionProducerPool ?? new TransportProducerPool(Connection, RetryPolicy, eventHubProducer: transportProducer);
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
         /// </summary>
         ///
         protected EventHubProducerClient()
@@ -275,7 +275,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   the number of partitions present and their identifiers.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
         ///
@@ -289,12 +289,12 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Retrieves the set of identifiers for the partitions of an Event Hub.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
         ///
         /// <remarks>
-        ///   This method is synonymous with invoking <see cref="GetEventHubPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
+        ///   This method is synonymous with invoking <see cref="GetEventHubPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds" />
         ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
         ///   No new or extended information is presented.
         /// </remarks>
@@ -312,7 +312,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
         ///
@@ -329,7 +329,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="eventData">The event data to send.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -352,7 +352,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="eventData">The event data to send.</param>
         /// <param name="options">The set of options to consider when sending this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -375,7 +375,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="events">The set of event data to send.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="events">The set of event data to send.</param>
         /// <param name="options">The set of options to consider when sending this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -409,26 +409,7 @@ namespace Azure.Messaging.EventHubs.Producer
             Argument.AssertNotNull(events, nameof(events));
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
-            // Determine the transport producer to delegate the send operation to.  Because sending to a specific
-            // partition requires a dedicated client, use (or create) that client if a partition was specified.  Otherwise
-            // the default gateway producer can be used to request automatic routing from the Event Hubs service gateway.
-
-            TransportProducer activeProducer;
-
-            if (string.IsNullOrEmpty(options.PartitionId))
-            {
-                activeProducer = EventHubProducer;
-            }
-            else
-            {
-                // This assertion is intended as an additional check, not as a guarantee.  There still exists a benign
-                // race condition where a transport producer may be created after the client has been closed; in this case
-                // the transport producer will be force-closed with the associated connection or, worst case, will close once
-                // its idle timeout period elapses.
-
-                Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
-                activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
-            }
+            int attempts = 0;
 
             events = (events as IList<EventData>) ?? events.ToList();
             InstrumentMessages(events);
@@ -445,15 +426,37 @@ namespace Azure.Messaging.EventHubs.Producer
 
             using DiagnosticScope scope = CreateDiagnosticScope(diagnosticIdentifiers);
 
-            try
+            var pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
+
+            while (!cancellationToken.IsCancellationRequested)
             {
-                await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    await using var _ = pooledProducer.ConfigureAwait(false);
+
+                    await pooledProducer.TransportProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
+
+                    return;
+                }
+                catch (EventHubsException eventHubException)
+                    when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
+                {
+                    if (++attempts >= MaximumCreateProducerAttempts)
+                    {
+                        scope.Failed(eventHubException);
+                        throw;
+                    }
+
+                    pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+
+            throw new TaskCanceledException();
         }
 
         /// <summary>
@@ -461,7 +464,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="eventBatch">The set of event data to send. A batch may be created using <see cref="CreateBatchAsync(CancellationToken)" />.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -477,43 +480,45 @@ namespace Azure.Messaging.EventHubs.Producer
             Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             AssertSinglePartitionReference(eventBatch.SendOptions.PartitionId, eventBatch.SendOptions.PartitionKey);
 
-            // Determine the transport producer to delegate the send operation to.  Because sending to a specific
-            // partition requires a dedicated client, use (or create) that client if a partition was specified.  Otherwise
-            // the default gateway producer can be used to request automatic routing from the Event Hubs service gateway.
-
-            TransportProducer activeProducer;
-
-            if (string.IsNullOrEmpty(eventBatch.SendOptions.PartitionId))
-            {
-                activeProducer = EventHubProducer;
-            }
-            else
-            {
-                // This assertion is intended as an additional check, not as a guarantee.  There still exists a benign
-                // race condition where a transport producer may be created after the client has been closed; in this case
-                // the transport producer will be force-closed with the associated connection or, worst case, will close once
-                // its idle timeout period elapses.
-
-                Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
-                activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
-            }
-
             using DiagnosticScope scope = CreateDiagnosticScope(eventBatch.GetEventDiagnosticIdentifiers());
 
-            try
+            var attempts = 0;
+            var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
+
+            while (!cancellationToken.IsCancellationRequested)
             {
-                eventBatch.Lock();
-                await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    await using var _ = pooledProducer.ConfigureAwait(false);
+
+                    eventBatch.Lock();
+                    await pooledProducer.TransportProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
+
+                    return;
+                }
+                catch (EventHubsException eventHubException)
+                    when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed && ShouldRecreateProducer(pooledProducer.TransportProducer, eventBatch.SendOptions.PartitionId))
+                {
+                    if (++attempts >= MaximumCreateProducerAttempts)
+                    {
+                        scope.Failed(eventHubException);
+                        throw;
+                    }
+
+                    pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    eventBatch.Unlock();
+                }
             }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                eventBatch.Unlock();
-            }
+
+            throw new TaskCanceledException();
         }
 
         /// <summary>
@@ -525,7 +530,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   attempting to send the events to the Event Hubs service.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="EventDataBatch" /> with the default batch options.</returns>
         ///
@@ -543,7 +548,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <param name="options">The set of options to consider when creating this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
         ///
@@ -555,7 +560,7 @@ namespace Azure.Messaging.EventHubs.Producer
             options = options?.Clone() ?? new CreateBatchOptions();
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
-            TransportEventBatch transportBatch = await EventHubProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            TransportEventBatch transportBatch = await PartitionProducerPool.EventHubProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
             return new EventDataBatch(transportBatch, FullyQualifiedNamespace, EventHubName, options.ToSendOptions());
         }
 
@@ -563,7 +568,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Closes the producer.
         /// </summary>
         ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
@@ -578,32 +583,22 @@ namespace Azure.Messaging.EventHubs.Producer
 
             IsClosed = true;
 
-            var identifier = GetHashCode().ToString();
+            var identifier = GetHashCode().ToString(CultureInfo.InvariantCulture);
             EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubProducerClient), EventHubName, identifier);
 
-            // Attempt to close the active transport producers.  In the event that an exception is encountered,
+            // Attempt to close the pool of producers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
 
-            var transportProducerException = default(Exception);
+            var transportProducerPoolException = default(Exception);
 
             try
             {
-                await EventHubProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
-
-                var pendingCloses = new List<Task>();
-
-                foreach (var producer in PartitionProducers.Values)
-                {
-                    pendingCloses.Add(producer.CloseAsync(CancellationToken.None));
-                }
-
-                PartitionProducers.Clear();
-                await Task.WhenAll(pendingCloses).ConfigureAwait(false);
+                await PartitionProducerPool.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 EventHubsEventSource.Log.ClientCloseError(typeof(EventHubProducerClient), EventHubName, identifier, ex.Message);
-                transportProducerException = ex;
+                transportProducerPoolException = ex;
             }
 
             // An exception when closing the connection supersedes one observed when closing the
@@ -626,12 +621,12 @@ namespace Azure.Messaging.EventHubs.Producer
                 EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubProducerClient), EventHubName, identifier);
             }
 
-            // If there was an active exception pending from closing the individual
-            // transport producers, surface it now.
+            // If there was an active exception pending from closing the
+            // transport producer pool, surface it now.
 
-            if (transportProducerException != default)
+            if (transportProducerPoolException != default)
             {
-                ExceptionDispatchInfo.Capture(transportProducerException).Throw();
+                ExceptionDispatchInfo.Capture(transportProducerPoolException).Throw();
             }
         }
 
@@ -733,5 +728,20 @@ namespace Azure.Messaging.EventHubs.Producer
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
             }
         }
+
+        /// <summary>
+        ///   Checks if the <see cref="TransportProducer" /> returned by the <see cref="TransportProducerPool" /> is still open.
+        /// </summary>
+        ///
+        /// <param name="producer">The <see cref="TransportProducer" /> that has being checked.</param>
+        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="TransportProducer" /> is closed; otherwise, <c>false</c>.</returns>
+        ///
+        private bool ShouldRecreateProducer(TransportProducer producer,
+                                            string partitionId) => !string.IsNullOrEmpty(partitionId)
+                                                                   && producer.IsClosed
+                                                                   && !IsClosed
+                                                                   && !Connection.IsClosed;
     }
 }

@@ -342,7 +342,7 @@ namespace Azure.Storage.Files.DataLake
         /// pipeline as the <see cref="DataLakeFileClient"/>.
         /// </summary>
         /// <param name="fileName">The name of the directory.</param>
-        /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
+        /// <returns>A new <see cref="DataLakeFileSystemClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
             => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
 

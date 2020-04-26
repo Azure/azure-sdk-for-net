@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Support.Models
     using System.Linq;
 
     /// <summary>
-    /// The api error details.
+    /// The API error details.
     /// </summary>
     public partial class ServiceError
     {

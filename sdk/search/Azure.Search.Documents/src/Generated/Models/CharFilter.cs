@@ -5,30 +5,38 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for character filters. </summary>
+    /// <summary> Base type for character filters. </summary>
     public partial class CharFilter
     {
         /// <summary> Initializes a new instance of CharFilter. </summary>
-        public CharFilter()
+        /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public CharFilter(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
             ODataType = null;
         }
 
         /// <summary> Initializes a new instance of CharFilter. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the char filter. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal CharFilter(string oDataType, string name)
         {
             ODataType = oDataType;
             Name = name;
-            ODataType = null;
         }
 
-        /// <summary> The model type. </summary>
-        public string ODataType { get; internal set; }
+        /// <summary> Identifies the concrete type of the char filter. </summary>
+        internal string ODataType { get; set; }
         /// <summary> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
     }
 }

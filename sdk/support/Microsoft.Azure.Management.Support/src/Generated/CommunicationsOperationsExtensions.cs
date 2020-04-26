@@ -22,18 +22,18 @@ namespace Microsoft.Azure.Management.Support
     public static partial class CommunicationsOperationsExtensions
     {
             /// <summary>
-            /// Check the availability of a resource name. This API should to be used to
-            /// check the uniqueness of the name for adding a new communication to the
-            /// support ticket.
+            /// Check the availability of a resource name. This API should be used to check
+            /// the uniqueness of the name for adding a new communication to the support
+            /// ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='checkNameAvailabilityInput'>
-            /// Input to check
+            /// Input to check.
             /// </param>
             public static CheckNameAvailabilityOutput CheckNameAvailability(this ICommunicationsOperations operations, string supportTicketName, CheckNameAvailabilityInput checkNameAvailabilityInput)
             {
@@ -41,18 +41,18 @@ namespace Microsoft.Azure.Management.Support
             }
 
             /// <summary>
-            /// Check the availability of a resource name. This API should to be used to
-            /// check the uniqueness of the name for adding a new communication to the
-            /// support ticket.
+            /// Check the availability of a resource name. This API should be used to check
+            /// the uniqueness of the name for adding a new communication to the support
+            /// ticket.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='checkNameAvailabilityInput'>
-            /// Input to check
+            /// Input to check.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='top'>
             /// The number of values to return in the collection. Default is 10 and max is
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='top'>
             /// The number of values to return in the collection. Default is 10 and max is
@@ -142,10 +142,10 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             public static CommunicationDetails Get(this ICommunicationsOperations operations, string supportTicketName, string communicationName)
             {
@@ -159,10 +159,10 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -182,13 +182,13 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='createCommunicationParameters'>
-            /// Communication object
+            /// Communication object.
             /// </param>
             public static CommunicationDetails Create(this ICommunicationsOperations operations, string supportTicketName, string communicationName, CommunicationDetails createCommunicationParameters)
             {
@@ -202,13 +202,13 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='createCommunicationParameters'>
-            /// Communication object
+            /// Communication object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -228,13 +228,13 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='createCommunicationParameters'>
-            /// Communication object
+            /// Communication object.
             /// </param>
             public static CommunicationDetails BeginCreate(this ICommunicationsOperations operations, string supportTicketName, string communicationName, CommunicationDetails createCommunicationParameters)
             {
@@ -248,13 +248,13 @@ namespace Microsoft.Azure.Management.Support
             /// The operations group for this extension method.
             /// </param>
             /// <param name='supportTicketName'>
-            /// Support ticket name
+            /// Support ticket name.
             /// </param>
             /// <param name='communicationName'>
-            /// Communication name
+            /// Communication name.
             /// </param>
             /// <param name='createCommunicationParameters'>
-            /// Communication object
+            /// Communication object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

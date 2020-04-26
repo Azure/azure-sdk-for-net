@@ -31,19 +31,19 @@ namespace Azure.Core.Diagnostics
 
         public static AzureCoreEventSource Singleton { get; } = new AzureCoreEventSource();
 
-        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2} \r\n{3}")]
+        [Event(RequestEvent, Level = EventLevel.Informational, Message = "Request [{0}] {1} {2}\r\n{3}")]
         public void Request(string requestId, string method, string uri, string headers)
         {
             WriteEvent(RequestEvent, requestId, method, uri, headers);
         }
 
-        [Event(RequestContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] Content {1}")]
+        [Event(RequestContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]
         public void RequestContent(string requestId, byte[] content)
         {
             WriteEvent(RequestContentEvent, requestId, content);
         }
 
-        [Event(RequestContentTextEvent, Level = EventLevel.Verbose, Message = "Request [{0}] Content {1}")]
+        [Event(RequestContentTextEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]
         public void RequestContentText(string requestId, string content)
         {
             WriteEvent(RequestContentTextEvent, requestId, content);
@@ -55,55 +55,55 @@ namespace Azure.Core.Diagnostics
             WriteEvent(ResponseEvent, requestId, status, reasonPhrase, headers, seconds);
         }
 
-        [Event(ResponseContentEvent, Level = EventLevel.Verbose, Message = "Request [{0}] Content {1}")]
+        [Event(ResponseContentEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content: {1}")]
         public void ResponseContent(string requestId, byte[] content)
         {
             WriteEvent(ResponseContentEvent, requestId, content);
         }
 
-        [Event(ResponseContentBlockEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content block {1}: {2}")]
+        [Event(ResponseContentBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
         public void ResponseContentBlock(string requestId, int blockNumber, byte[] content)
         {
             WriteEvent(ResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
-        [Event(ResponseContentTextEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content: {1}")]
+        [Event(ResponseContentTextEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content: {1}")]
         public void ResponseContentText(string requestId, string content)
         {
             WriteEvent(ResponseContentTextEvent, requestId, content);
         }
 
-        [Event(ResponseContentTextBlockEvent, Level = EventLevel.Verbose, Message = "Request [{0}] content block {1}: {2}")]
+        [Event(ResponseContentTextBlockEvent, Level = EventLevel.Verbose, Message = "Response [{0}] content block {1}: {2}")]
         public void ResponseContentTextBlock(string requestId, int blockNumber, string content)
         {
             WriteEvent(ResponseContentTextBlockEvent, requestId, blockNumber, content);
         }
 
-        [Event(ErrorResponseEvent, Level = EventLevel.Warning, Message = "Error Response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
+        [Event(ErrorResponseEvent, Level = EventLevel.Warning, Message = "Error response [{0}] {1} {2} ({4:00.0}s)\r\n{3}")]
         public void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds)
         {
             WriteEvent(ErrorResponseEvent, requestId, status, reasonPhrase, headers, seconds);
         }
 
-        [Event(ErrorResponseContentEvent, Level = EventLevel.Informational, Message = "Response [{0}] content: {1}")]
+        [Event(ErrorResponseContentEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content: {1}")]
         public void ErrorResponseContent(string requestId, byte[] content)
         {
             WriteEvent(ErrorResponseContentEvent, requestId, content);
         }
 
-        [Event(ErrorResponseContentBlockEvent, Level = EventLevel.Informational, Message = "Request [{0}] content block {1}: {2}")]
+        [Event(ErrorResponseContentBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
         public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content)
         {
             WriteEvent(ErrorResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
-        [Event(ErrorResponseContentTextEvent, Level = EventLevel.Informational, Message = "Request [{0}] content: {1}")]
+        [Event(ErrorResponseContentTextEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content: {1}")]
         public void ErrorResponseContentText(string requestId, string content)
         {
             WriteEvent(ErrorResponseContentTextEvent, requestId, content);
         }
 
-        [Event(ErrorResponseContentTextBlockEvent, Level = EventLevel.Informational, Message = "Request [{0}] content block {1}: {2}")]
+        [Event(ErrorResponseContentTextBlockEvent, Level = EventLevel.Informational, Message = "Error response [{0}] content block {1}: {2}")]
         public void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content)
         {
             WriteEvent(ErrorResponseContentTextBlockEvent, requestId, blockNumber, content);
@@ -115,7 +115,7 @@ namespace Azure.Core.Diagnostics
             WriteEvent(RequestRetryingEvent, requestId, retryNumber);
         }
 
-        [Event(ResponseDelayEvent, Level = EventLevel.Warning, Message = "Request [{0}] took {1:00.0}s")]
+        [Event(ResponseDelayEvent, Level = EventLevel.Warning, Message = "Response [{0}] took {1:00.0}s")]
         public void ResponseDelay(string requestId, double seconds)
         {
             WriteEvent(ResponseDelayEvent, requestId, seconds);

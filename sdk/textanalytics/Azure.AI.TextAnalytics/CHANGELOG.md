@@ -1,9 +1,18 @@
 # Release History
 
-## 1.0.0-preview.4 (Unreleased)
+## 1.0.0-preview.5 (Unreleased)
+
+
+## 1.0.0-preview.4 (2020-04-07)
 ### Breaking changes
 - Replaced `TextAnalyticsApiKeyCredential` with `AzureKeyCredential`.
-- Rename all input parameters `inputText` to `document`, and `inputs` to `documents`.
+- Renamed all input parameters `inputText` to `document`, and `inputs` to `documents`.
+- Removed the `RecognizePiiEntities` endpoint and all related models (`RecognizePiiEntitiesResult` and `PiiEntity`) from this library.
+
+### Added
+- Refactor common properties from `DetectLanguageInput` and `TextDocumentInput` into it's own type `TextAnalyticsInput`.
+- Mock support for the Text Analytics client with respective samples.
+- Integration for ASP.NET Core.
 
 ## 1.0.0-preview.3 (2020-03-10)
 ### Breaking changes

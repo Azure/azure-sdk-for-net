@@ -859,6 +859,45 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// The operation to simulate the eviction of spot virtual machine. The
+            /// eviction will occur within 30 minutes of calling the API
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            public static void SimulateEviction(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName)
+            {
+                operations.SimulateEvictionAsync(resourceGroupName, vmName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The operation to simulate the eviction of spot virtual machine. The
+            /// eviction will occur within 30 minutes of calling the API
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmName'>
+            /// The name of the virtual machine.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SimulateEvictionAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.SimulateEvictionWithHttpMessagesAsync(resourceGroupName, vmName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Run command on the VM.
             /// </summary>
             /// <param name='operations'>

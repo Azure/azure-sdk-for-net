@@ -41,11 +41,14 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages that will be received.</param>
+        /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for the first message before returning an empty list if no messages have been received.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>List of messages received. Returns null if no message is found.</returns>
+        /// <returns>List of messages received. Returns an empty list if no message is found.</returns>
         public abstract Task<IList<ServiceBusReceivedMessage>> ReceiveBatchAsync(
             int maximumMessageCount,
+            TimeSpan? maxWaitTime,
             CancellationToken cancellationToken);
 
         /// <summary>
@@ -114,7 +117,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// The first call to PeekBatchBySequenceAsync(long, int, CancellationToken) fetches the first active message for this receiver. Each subsequent call
         /// fetches the subsequent message in the entity.
         /// Unlike a received message, peeked message will not have lock token associated with it, and hence it cannot be Completed/Abandoned/Deferred/Deadlettered/Renewed.
-        /// Also, unlike <see cref="ReceiveBatchAsync(int, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered message)
+        /// Also, unlike <see cref="ReceiveBatchAsync(int, TimeSpan?, CancellationToken)"/>, this method will fetch even Deferred messages (but not Deadlettered messages).
         /// </remarks>
         /// <returns></returns>
         public abstract Task<IList<ServiceBusReceivedMessage>> PeekBatchAtAsync(
@@ -197,8 +200,30 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>New lock token expiry date and time in UTC format.</returns>
         ///
-        /// <param name="cancellationToken"></param>
-        public abstract Task RenewSessionLockAsync(
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        public abstract Task RenewSessionLockAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets the session state.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The session state as byte array.</returns>
+        public abstract Task<byte[]> GetStateAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Set a custom state on the session which can be later retrieved using <see cref="GetStateAsync"/>
+        /// </summary>
+        ///
+        /// <param name="sessionState">A byte array of session state</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <remarks>This state is stored on Service Bus forever unless you set an empty state on it.</remarks>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        public abstract Task SetStateAsync(
+            byte[] sessionState,
             CancellationToken cancellationToken);
     }
 }

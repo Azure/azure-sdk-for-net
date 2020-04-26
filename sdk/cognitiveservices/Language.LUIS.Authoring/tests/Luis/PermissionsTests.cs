@@ -12,6 +12,7 @@
         {
             UseClientFor(async client =>
             {
+                //Arrange
                 var collaborators = new CollaboratorsArray
                 {
                     Emails = new string[]
@@ -21,6 +22,7 @@
                     }
                 };
 
+                //Act 
                 await client.Permissions.UpdateAsync(GlobalAppId, collaborators);
                 var result = await client.Permissions.ListAsync(GlobalAppId);
 
@@ -35,7 +37,7 @@
                 };
                 await client.Permissions.DeleteAsync(GlobalAppId, userToRemove);
 
-                Assert.Equal(OwnerEmail, result.Owner);
+                //Assert
                 Assert.Equal(new string[] { "guest@outlook.com", "invited.user@live.com" }, result.Emails);
             });
         }

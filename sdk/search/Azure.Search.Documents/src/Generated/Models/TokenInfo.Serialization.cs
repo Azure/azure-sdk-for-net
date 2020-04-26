@@ -14,31 +14,34 @@ namespace Azure.Search.Documents.Models
     {
         internal static TokenInfo DeserializeTokenInfo(JsonElement element)
         {
-            TokenInfo result = new TokenInfo();
+            string token = default;
+            int startOffset = default;
+            int endOffset = default;
+            int position = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("token"))
                 {
-                    result.Token = property.Value.GetString();
+                    token = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("startOffset"))
                 {
-                    result.StartOffset = property.Value.GetInt32();
+                    startOffset = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("endOffset"))
                 {
-                    result.EndOffset = property.Value.GetInt32();
+                    endOffset = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("position"))
                 {
-                    result.Position = property.Value.GetInt32();
+                    position = property.Value.GetInt32();
                     continue;
                 }
             }
-            return result;
+            return new TokenInfo(token, startOffset, endOffset, position);
         }
     }
 }

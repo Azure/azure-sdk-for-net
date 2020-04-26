@@ -5,19 +5,16 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for functions that can modify document scores during ranking. </summary>
+    /// <summary> Base type for functions that can modify document scores during ranking. </summary>
     public partial class ScoringFunction
     {
-        /// <summary> Initializes a new instance of ScoringFunction. </summary>
-        public ScoringFunction()
-        {
-            Type = null;
-        }
 
         /// <summary> Initializes a new instance of ScoringFunction. </summary>
-        /// <param name="type"> Required for scoring functions. Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. You can include more than one function in each scoring profile. The function name must be lower case. </param>
+        /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </param>
@@ -27,15 +24,14 @@ namespace Azure.Search.Documents.Models
             FieldName = fieldName;
             Boost = boost;
             Interpolation = interpolation;
-            Type = null;
         }
 
-        /// <summary> Required for scoring functions. Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. You can include more than one function in each scoring profile. The function name must be lower case. </summary>
-        public string Type { get; internal set; }
+        /// <summary> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </summary>
+        internal string Type { get; set; }
         /// <summary> The name of the field used as input to the scoring function. </summary>
-        public string FieldName { get; set; }
+        public string FieldName { get; }
         /// <summary> A multiplier for the raw score. Must be a positive number not equal to 1.0. </summary>
-        public double Boost { get; set; }
+        public double Boost { get; }
         /// <summary> A value indicating how boosting will be interpolated across document scores; defaults to &quot;Linear&quot;. </summary>
         public ScoringFunctionInterpolation? Interpolation { get; set; }
     }

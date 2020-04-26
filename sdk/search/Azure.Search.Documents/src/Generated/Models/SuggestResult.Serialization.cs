@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,17 +15,28 @@ namespace Azure.Search.Documents.Models
     {
         internal static SuggestResult DeserializeSuggestResult(JsonElement element)
         {
-            SuggestResult result = new SuggestResult();
+            string searchText = default;
+            IReadOnlyDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@search.text"))
                 {
-                    result.Text = property.Value.GetString();
+                    searchText = property.Value.GetString();
                     continue;
                 }
-                result.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary ??= new Dictionary<string, object>();
+                if (property.Value.ValueKind == JsonValueKind.Null)
+                {
+                    additionalPropertiesDictionary.Add(property.Name, null);
+                }
+                else
+                {
+                    additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                }
             }
-            return result;
+            additionalProperties = additionalPropertiesDictionary;
+            return new SuggestResult(searchText, additionalProperties);
         }
     }
 }

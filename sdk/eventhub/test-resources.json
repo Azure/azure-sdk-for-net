@@ -47,6 +47,13 @@
             "metadata": {
                 "description": "The location of the resources. By default, this is the same as the resource group."
             }
+        },
+        "perTestExecutionLimitMinutes": {
+            "type": "string",
+            "defaultValue": "10",
+            "metadata": {
+                "description": "The maximum duration, in minutes, that a single test is permitted to run before it is considered at-risk for being hung."
+            }
         }
     },
     "variables": {
@@ -76,25 +83,9 @@
       }
     ],
     "outputs": {
-        "EVENT_HUBS_SUBSCRIPTION": {
+        "EVENTHUB_PER_TEST_LIMIT_MINUTES": {
             "type": "string",
-            "value": "[parameters('subscriptionId')]"
-        },
-        "EVENT_HUBS_TENANT": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "EVENT_HUBS_CLIENT": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "EVENT_HUBS_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
-        "EVENT_HUBS_RESOURCEGROUP": {
-            "type": "string",
-            "value": "[resourceGroup().name]"
+            "value": "[parameters('perTestExecutionLimitMinutes')]"
         }
     }
 }

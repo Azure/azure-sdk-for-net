@@ -11,6 +11,7 @@
     <PackageReleaseNotes>
   <![CDATA[
 - Added support for copying data to and from Snowflake using copy activity
+- Added package store support for Azure-SSIS integration runtime
   ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

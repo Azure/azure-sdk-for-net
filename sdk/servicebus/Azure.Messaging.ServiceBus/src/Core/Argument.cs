@@ -112,7 +112,7 @@ namespace Azure.Core
         {
             if (wasDisposed)
             {
-                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources1.ClosedInstanceCannotPerformOperation, targetName));
+                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.ClosedInstanceCannotPerformOperation, targetName));
             }
         }
 
@@ -129,14 +129,14 @@ namespace Azure.Core
             if (wasClosed)
             {
                 throw new ServiceBusException(
-                    string.Format(CultureInfo.CurrentCulture, Resources1.ClosedInstanceCannotPerformOperation, targetName),
+                    string.Format(CultureInfo.CurrentCulture, Resources.ClosedInstanceCannotPerformOperation, targetName),
                     ServiceBusException.FailureReason.ClientClosed,
                     targetName);
             }
         }
 
         /// <summary>
-        ///   Ensures that an argument's value is a well-formed Event Hubs fully qualified namespace value,
+        ///   Ensures that an argument's value is a well-formed Service Bus fully qualified namespace value,
         ///   throwing a <see cref="ArgumentException" /> if that invariant is not met.
         /// </summary>
         ///
@@ -152,7 +152,7 @@ namespace Azure.Core
 
             if (Uri.CheckHostName(argumentValue) == UriHostNameType.Unknown)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources1.InvalidFullyQualifiedNamespace, argumentValue), argumentName);
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.InvalidFullyQualifiedNamespace, argumentValue), argumentName);
             }
         }
     }

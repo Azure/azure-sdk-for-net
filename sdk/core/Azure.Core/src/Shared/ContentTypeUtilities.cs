@@ -26,6 +26,9 @@ namespace Azure.Core.Pipeline
             const string xmlSuffix = "xml";
             const string urlEncodedSuffix = "-urlencoded";
 
+            // Default is technically US-ASCII, but will default to UTF-8 which is a superset.
+            const string appFormUrlEncoded = "application/x-www-form-urlencoded";
+
             if (contentType == null)
             {
                 encoding = null;
@@ -47,7 +50,8 @@ namespace Azure.Core.Pipeline
                 contentType.EndsWith(jsonSuffix, StringComparison.OrdinalIgnoreCase) ||
                 contentType.EndsWith(xmlSuffix, StringComparison.OrdinalIgnoreCase) ||
                 contentType.EndsWith(urlEncodedSuffix, StringComparison.OrdinalIgnoreCase) ||
-                contentType.StartsWith(appJsonPrefix, StringComparison.OrdinalIgnoreCase))
+                contentType.StartsWith(appJsonPrefix, StringComparison.OrdinalIgnoreCase) ||
+                contentType.StartsWith(appFormUrlEncoded, StringComparison.OrdinalIgnoreCase))
             {
                 encoding = Encoding.UTF8;
                 return true;

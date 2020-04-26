@@ -5,28 +5,38 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class AnalyzeResult
+    internal partial class AnalyzeResult
     {
         internal static AnalyzeResult DeserializeAnalyzeResult(JsonElement element)
         {
-            AnalyzeResult result = new AnalyzeResult();
+            IReadOnlyList<TokenInfo> tokens = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tokens"))
                 {
+                    List<TokenInfo> array = new List<TokenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.Tokens.Add(TokenInfo.DeserializeTokenInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TokenInfo.DeserializeTokenInfo(item));
+                        }
                     }
+                    tokens = array;
                     continue;
                 }
             }
-            return result;
+            return new AnalyzeResult(tokens);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -13,21 +14,27 @@ namespace Azure.Search.Documents.Models
     public partial class CjkBigramTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of CjkBigramTokenFilter. </summary>
-        public CjkBigramTokenFilter()
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public CjkBigramTokenFilter(string name) : base(name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             ODataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
 
         /// <summary> Initializes a new instance of CjkBigramTokenFilter. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="ignoreScripts"> The scripts to ignore. </param>
         /// <param name="outputUnigrams"> A value indicating whether to output both unigrams and bigrams (if true), or just bigrams (if false). Default is false. </param>
-        /// <param name="oDataType"> The model type. </param>
-        /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal CjkBigramTokenFilter(IList<CjkBigramTokenFilterScripts> ignoreScripts, bool? outputUnigrams, string oDataType, string name) : base(oDataType, name)
+        internal CjkBigramTokenFilter(string oDataType, string name, IList<CjkBigramTokenFilterScripts> ignoreScripts, bool? outputUnigrams) : base(oDataType, name)
         {
             IgnoreScripts = ignoreScripts;
             OutputUnigrams = outputUnigrams;
-            ODataType = "#Microsoft.Azure.Search.CjkBigramTokenFilter";
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.CjkBigramTokenFilter";
         }
 
         /// <summary> The scripts to ignore. </summary>

@@ -41,6 +41,13 @@
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
+        },
+        "enableSoftDelete": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Whether to enable soft delete for the Key Vault. The default is true."
+            }
         }
     },
     "variables": {
@@ -115,23 +122,11 @@
                 "enabledForDeployment": false,
                 "enabledForDiskEncryption": false,
                 "enabledForTemplateDeployment": false,
-                "enableSoftDelete": true
+                "enableSoftDelete": "[parameters('enableSoftDelete')]"
             }
         }
     ],
     "outputs": {
-        "AZURE_TENANT_ID": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "AZURE_CLIENT_ID": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "AZURE_CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
         "AZURE_KEYVAULT_URL": {
             "type": "string",
             "value": "[variables('azureKeyVaultUrl')]"

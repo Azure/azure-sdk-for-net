@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenSchema("ServiceStatistics")]
+    [CodeGenModel("ServiceStatistics")]
     public partial class SearchServiceStatistics
     {
     }

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.FormRecognizer.Custom
+namespace Azure.AI.FormRecognizer.Training
 {
     internal static class TrainingStatusExtensions
     {

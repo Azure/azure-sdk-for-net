@@ -5,16 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Samples;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    public class TextAnalyticsClientLiveTests : RecordedTestBase
+    public class TextAnalyticsClientLiveTests : RecordedTestBase<TextAnalyticsTestEnvironment>
     {
-        public const string EndpointEnvironmentVariable = "TEXT_ANALYTICS_ENDPOINT";
-        public const string ApiKeyEnvironmentVariable = "TEXT_ANALYTICS_API_KEY";
-
         public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
@@ -23,12 +21,12 @@ namespace Azure.AI.TextAnalytics.Tests
 
         public TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default)
         {
-            string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
+            string apiKey = TestEnvironment.ApiKey;
             credential ??= new AzureKeyCredential(apiKey);
             options ??= new TextAnalyticsClientOptions();
             return InstrumentClient (
                 new TextAnalyticsClient(
-                    new Uri(Recording.GetVariableFromEnvironment(EndpointEnvironmentVariable)),
+                    new Uri(TestEnvironment.Endpoint),
                     credential,
                     Recording.InstrumentClientOptions(options))
             );
@@ -708,156 +706,6 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizePiiEntitiesTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
-
-            Response<IReadOnlyCollection<PiiEntity>> response = await client.RecognizePiiEntitiesAsync(document);
-            IReadOnlyCollection<PiiEntity> entities = response.Value;
-
-            Assert.AreEqual(2, entities.Count);
-
-            var entitiesList = new List<string> { "555-55-5555", "800-102-1100" };
-            foreach (PiiEntity entity in entities)
-            {
-                Assert.IsTrue(entitiesList.Contains(entity.Text));
-                Assert.IsNotNull(entity.ConfidenceScore);
-                Assert.IsNotNull(entity.GraphemeOffset);
-                Assert.IsNotNull(entity.GraphemeLength);
-                Assert.Greater(entity.GraphemeLength, 0);
-            }
-        }
-
-        [Test]
-        public async Task RecognizePiiEntitiesWithLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            string document = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
-
-            Response<IReadOnlyCollection<PiiEntity>> response = await client.RecognizePiiEntitiesAsync(document, "en");
-            IReadOnlyCollection<PiiEntity> entities = response.Value;
-
-            Assert.AreEqual(2, entities.Count);
-        }
-
-        [Test]
-        public async Task RecognizePiiEntitiesBatchWithErrorTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = new List<string>
-            {
-                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
-                "",
-                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
-            };
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
-
-            Assert.IsTrue(!results[0].HasError);
-            Assert.IsTrue(!results[2].HasError);
-
-            var exceptionMessage = "Cannot access result for document 1, due to error InvalidDocument: Document text is empty.";
-            Assert.IsTrue(results[1].HasError);
-            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
-            Assert.AreEqual(exceptionMessage, ex.Message);
-        }
-
-        [Test]
-        public async Task RecognizePiiEntitiesBatchConvenienceTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = new List<string>
-            {
-                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
-                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
-            };
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
-
-            foreach (RecognizePiiEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
-        }
-
-        [Test]
-        public async Task RecognizePiiEntitiesBatchConvenienceWithStatisticsTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = new List<string>
-            {
-                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
-                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
-            };
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
-
-            foreach (RecognizePiiEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
-
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-        }
-
-        [Test]
-        public async Task RecognizePiiEntitiesBatchTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = new List<TextDocumentInput>
-            {
-                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
-                {
-                     Language = "en",
-                },
-                new TextDocumentInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
-                {
-                     Language = "en",
-                }
-            };
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents);
-
-            foreach (RecognizePiiEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
-        }
-
-        [Test]
-        public async Task RecognizePiiEntitiesBatchWithStatisticsTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var documents = new List<TextDocumentInput>
-            {
-                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
-                {
-                     Language = "en",
-                },
-                new TextDocumentInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
-                {
-                     Language = "en",
-                }
-            };
-
-            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
-
-            foreach (RecognizePiiEntitiesResult result in results)
-            {
-                Assert.GreaterOrEqual(result.Entities.Count(), 2);
-            }
-
-            Assert.IsNotNull(results.Statistics.DocumentCount);
-            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
-            Assert.IsNotNull(results.Statistics.TransactionCount);
-            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
-        }
-
-        [Test]
         public async Task RecognizeLinkedEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -1071,7 +919,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RotateApiKey()
         {
             // Instantiate a client that will be used to call the service.
-            string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
+            string apiKey = TestEnvironment.ApiKey;
             var credential = new AzureKeyCredential(apiKey);
             TextAnalyticsClient client = GetClient(credential);
 
@@ -1088,15 +936,6 @@ namespace Azure.AI.TextAnalytics.Tests
             // Re-rotate the API key and make sure it succeeds again
             credential.Update(apiKey);
             await client.DetectLanguageAsync(document);
-        }
-
-        [Test]
-        public void ThrowExceptionTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            var document = new List<string>();
-
-            Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageBatchAsync(document));
         }
     }
 }

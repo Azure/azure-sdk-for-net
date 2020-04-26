@@ -5,35 +5,38 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer
+namespace Azure.AI.FormRecognizer.Training
 {
     internal partial class ModelsSummary_internal
     {
         internal static ModelsSummary_internal DeserializeModelsSummary_internal(JsonElement element)
         {
-            ModelsSummary_internal result = new ModelsSummary_internal();
+            int count = default;
+            int limit = default;
+            DateTimeOffset lastUpdatedDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
                 {
-                    result.Count = property.Value.GetInt32();
+                    count = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("limit"))
                 {
-                    result.Limit = property.Value.GetInt32();
+                    limit = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedDateTime"))
                 {
-                    result.LastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
             }
-            return result;
+            return new ModelsSummary_internal(count, limit, lastUpdatedDateTime);
         }
     }
 }

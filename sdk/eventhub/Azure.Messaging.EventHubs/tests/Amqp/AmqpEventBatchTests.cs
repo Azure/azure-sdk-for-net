@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
@@ -413,6 +414,72 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.Clear" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ClearClearsTheCount()
+        {
+            var currentIndex = -1;
+            var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
+            var eventMessages = new AmqpMessage[5];
+            var mockEnvelope = new Mock<AmqpMessage>();
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockEnvelope.Object,
+                CreateMessageFromEventHandler = (_e, _p) => eventMessages[++currentIndex]
+            };
+
+            mockEnvelope
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(0);
+
+            for (var index = 0; index < eventMessages.Length; ++index)
+            {
+                eventMessages[index] = AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(new byte[] { 0x66 }) });
+            }
+
+            // Add the messages to the batch; all should be accepted.
+
+            var batch = new AmqpEventBatch(mockConverter, options);
+
+            for (var index = 0; index < eventMessages.Length; ++index)
+            {
+                Assert.That(batch.TryAdd(new EventData(new byte[0])), Is.True, $"The addition for index: { index } should fit and be accepted.");
+            }
+
+            // Dispose the batch and verify that each message has also been disposed.
+
+            batch.Clear();
+            Assert.That(batch.Count, Is.EqualTo(0), "The count should have been cleared when the batch was disposed.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.Clear" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ClearClearsTheSize()
+        {
+            var mockMessage = new Mock<AmqpMessage>();
+            var mockConverter = new InjectableMockConverter
+            {
+                CreateBatchFromEventsHandler = (_e, _p) => mockMessage.Object
+            };
+
+            mockMessage
+                .Setup(message => message.SerializedMessageSize)
+                .Returns(9959);
+
+            var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 });
+            batch.Clear();
+
+            Assert.That(batch.SizeInBytes, Is.EqualTo(GetReservedSize(batch)));
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpEventBatch.Dispose" />
         ///   method.
         /// </summary>
@@ -475,8 +542,22 @@ namespace Azure.Messaging.EventHubs.Tests
             var batch = new AmqpEventBatch(mockConverter, new CreateBatchOptions { MaximumSizeInBytes = 99 });
             batch.Dispose();
 
-            Assert.That(batch.SizeInBytes, Is.EqualTo(0));
+            Assert.That(batch.SizeInBytes, Is.EqualTo(GetReservedSize(batch)));
         }
+
+        /// <summary>
+        ///   Reads the size reserved for AMQP message overhead in a batch using its private field.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance to consider.</param>
+        ///
+        /// <returns>The reserved size of the batch.</returns>
+        ///
+        private static long GetReservedSize(AmqpEventBatch instance) =>
+            (long)
+                typeof(AmqpEventBatch)
+                    .GetField("ReservedSize", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(instance);
 
         /// <summary>
         ///   Allows for control over AMQP message conversion for testing purposes.
@@ -487,7 +568,6 @@ namespace Azure.Messaging.EventHubs.Tests
             public Func<EventData, string, AmqpMessage> CreateMessageFromEventHandler = (_e, _p) => null;
             public Func<IEnumerable<EventData>, string, AmqpMessage> CreateBatchFromEventsHandler = (_e, _p) => null;
             public Func<IEnumerable<AmqpMessage>, string, AmqpMessage> CreateBatchFromMessagesHandler = (_m, _p) => null;
-
             public override AmqpMessage CreateMessageFromEvent(EventData source, string partitionKey = null) => CreateMessageFromEventHandler(source, partitionKey);
             public override AmqpMessage CreateBatchFromEvents(IEnumerable<EventData> source, string partitionKey = null) => CreateBatchFromEventsHandler(source, partitionKey);
             public override AmqpMessage CreateBatchFromMessages(IEnumerable<AmqpMessage> source, string partitionKey = null) => CreateBatchFromMessagesHandler(source, partitionKey);

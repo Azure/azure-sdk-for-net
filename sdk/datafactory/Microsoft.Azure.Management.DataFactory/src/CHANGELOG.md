@@ -3,6 +3,10 @@
 ## Version 4.9.0
 ###  Feature Additions
 - Added support for copying data to and from Snowflake using copy activity
+- Added package store support for Azure-SSIS integration runtime
+- Added httpRequestTimeout for ODataSource, SapEccSource, SapCloudForCustomerSource, SapCloudForCustomerSink, DynamicsAXSource
+- Added SharePointOnlineListConnector
+
 ## Version 4.8.0
 ###  Feature Additions
 - Added new API to query on triggers with filters like type and parentTrigger

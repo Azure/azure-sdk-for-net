@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
@@ -212,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var retryDelay = default(TimeSpan?);
                 var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
 
-                while (!cancellationToken.IsCancellationRequested)
+                while ((!cancellationToken.IsCancellationRequested) && (!_closed))
                 {
                     try
                     {
@@ -278,7 +280,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             _closed = true;
 
-            var clientId = GetHashCode().ToString();
+            var clientId = GetHashCode().ToString(CultureInfo.InvariantCulture);
             var clientType = GetType();
 
             try
@@ -322,10 +324,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         {
             var failedAttemptCount = 0;
             var logPartition = PartitionId ?? partitionKey;
-            var retryDelay = default(TimeSpan?);
             var messageHash = default(string);
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
 
+            TimeSpan? retryDelay;
             SendingAmqpLink link;
 
             try
@@ -337,9 +339,14 @@ namespace Azure.Messaging.EventHubs.Amqp
                     try
                     {
                         using AmqpMessage batchMessage = messageFactory();
-                        messageHash = batchMessage.GetHashCode().ToString();
+                        messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
+
+                        // Creation of the link happens without explicit knowledge of the cancellation token
+                        // used for this operation; validate the token state before attempting link creation and
+                        // again after the operation completes to provide best efforts in respecting it.
 
                         EventHubsEventSource.Log.EventPublishStart(EventHubName, logPartition, messageHash);
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -349,13 +356,13 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                         {
-                            throw new EventHubsException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
+                            throw new EventHubsException(EventHubName, string.Format(CultureInfo.CurrentCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
                         }
 
                         // Attempt to send the message batch.
 
                         var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
-                        var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
+                        var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, tryTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         if (outcome.DescriptorCode != Accepted.Code)
@@ -384,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
-                            stopWatch.Reset();
+                            stopWatch = ValueStopwatch.StartNew();
                         }
                         else if (ex is AmqpException)
                         {
@@ -402,6 +409,10 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 throw new TaskCanceledException();
             }
+            catch (TaskCanceledException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, ex.Message);
@@ -409,7 +420,6 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
-                stopWatch.Stop();
                 EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, messageHash);
             }
         }
@@ -437,20 +447,29 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                                             TimeSpan timeout,
                                                                                             CancellationToken cancellationToken)
         {
-            SendingAmqpLink link = await ConnectionScope.OpenProducerLinkAsync(partitionId, timeout, cancellationToken).ConfigureAwait(false);
+            var link = default(SendingAmqpLink);
 
-            if (!MaximumMessageSize.HasValue)
+            try
             {
-                // This delay is necessary to prevent the link from causing issues for subsequent
-                // operations after creating a batch.  Without it, operations using the link consistently
-                // timeout.  The length of the delay does not appear significant, just the act of introducing
-                // an asynchronous delay.
-                //
-                // For consistency the value used by the legacy Event Hubs client has been brought forward and
-                // used here.
+                link = await ConnectionScope.OpenProducerLinkAsync(partitionId, timeout, cancellationToken).ConfigureAwait(false);
 
-                await Task.Delay(15, cancellationToken).ConfigureAwait(false);
-                MaximumMessageSize = (long)link.Settings.MaxMessageSize;
+                if (!MaximumMessageSize.HasValue)
+                {
+                    // This delay is necessary to prevent the link from causing issues for subsequent
+                    // operations after creating a batch.  Without it, operations using the link consistently
+                    // timeout.  The length of the delay does not appear significant, just the act of introducing
+                    // an asynchronous delay.
+                    //
+                    // For consistency the value used by the legacy Event Hubs client has been brought forward and
+                    // used here.
+
+                    await Task.Delay(15, cancellationToken).ConfigureAwait(false);
+                    MaximumMessageSize = (long)link.Settings.MaxMessageSize;
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+               ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
             }
 
             return link;

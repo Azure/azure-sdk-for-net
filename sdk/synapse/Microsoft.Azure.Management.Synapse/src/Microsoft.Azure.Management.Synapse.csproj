@@ -7,11 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.Synapse</PackageId>
 		<Description>Azure Synapse Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Synapse</AssemblyName>
-		<Version>0.1.0-preview.1</Version>
+		<Version>0.1.0-preview.2</Version>
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-Update Synapse SDK: Add init method with ServiceCredentials
+ Fix Update SqlPool issue
+ Support IntegrationRuntime feature
+ Support Get single Firewall Rule
+ Support Vnet feature
       ]]>
 		</PackageReleaseNotes>
     

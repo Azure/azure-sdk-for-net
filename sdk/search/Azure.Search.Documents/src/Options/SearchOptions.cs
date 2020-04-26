@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Azure.Core;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
@@ -12,14 +14,25 @@ namespace Azure.Search.Documents
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
-    [CodeGenSchema("SearchRequest")]
+    [CodeGenModel("SearchRequest")]
     public partial class SearchOptions : SearchRequestOptions
     {
+        /// <summary>
+        /// Initializes a new instance of SearchOptions from a continuation
+        /// token to continue fetching results from a previous search.
+        /// </summary>
+        /// <param name="continuationToken">
+        /// Encapsulates the state required to fetch the next page of search
+        /// results from the index.
+        /// </param>
+        public SearchOptions(string continuationToken) =>
+            Copy(SearchContinuationToken.Deserialize(continuationToken), this);
+
         /// <summary>
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.
         /// </summary>
-        [CodeGenSchemaMember("search")]
+        [CodeGenMember("search")]
         internal string SearchText { get; set; }
 
         /// <summary>
@@ -27,7 +40,7 @@ namespace Azure.Search.Documents
         /// use <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
-        [CodeGenSchemaMember("filter")]
+        [CodeGenMember("filter")]
         public string Filter { get; set; }
 
         /// <summary>
@@ -40,7 +53,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join HighlightFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("highlight")]
+        [CodeGenMember("HighlightFields")]
         internal string HighlightFieldsRaw
         {
             get => HighlightFields.CommaJoin();
@@ -60,7 +73,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("searchFields")]
+        [CodeGenMember("searchFields")]
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
@@ -78,7 +91,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join Select so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("select")]
+        [CodeGenMember("select")]
         internal string SelectRaw
         {
             get => Select.CommaJoin();
@@ -94,7 +107,7 @@ namespace Azure.Search.Documents
         /// that can be used to issue another Search request for the next page
         /// of results.
         /// </summary>
-        [CodeGenSchemaMember("top")]
+        [CodeGenMember("top")]
         public int? Size { get; set; }
 
         /// <summary>
@@ -113,7 +126,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join OrderBy so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenSchemaMember("orderby")]
+        [CodeGenMember("orderby")]
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
@@ -128,7 +141,7 @@ namespace Azure.Search.Documents
         /// performance impact.  Note that the count returned is an
         /// approximation.
         /// </summary>
-        [CodeGenSchemaMember("count")]
+        [CodeGenMember("IncludeTotalResultCount")]
         public bool? IncludeTotalCount { get; set; }
 
         /// <summary>
@@ -136,7 +149,7 @@ namespace Azure.Search.Documents
         /// facet expression contains a field name, optionally followed by a
         /// comma-separated list of name:value pairs.
         /// </summary>
-        [CodeGenSchemaMember("facets")]
+        [CodeGenMember("facets")]
         public IList<string> Facets { get; internal set; } = new List<string>();
 
         /// <summary>
@@ -146,7 +159,48 @@ namespace Azure.Search.Documents
         /// called &apos;mylocation&apos; the parameter string would be
         /// &quot;mylocation--122.2,44.8&quot; (without the quotes).
         /// </summary>
-        [CodeGenSchemaMember("scoringParameters")]
+        [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
+
+        /// <summary>
+        /// Shallow copy one SearchOptions instance to another.
+        /// </summary>
+        /// <param name="source">The source options.</param>
+        /// <param name="destination">The destination options.</param>
+        private static void Copy(SearchOptions source, SearchOptions destination)
+        {
+            Debug.Assert(source != null);
+            Debug.Assert(destination != null);
+
+            destination.SearchText = source.SearchText;
+            destination.Filter = source.Filter;
+            destination.HighlightFields = source.HighlightFields;
+            destination.SearchFields = source.SearchFields;
+            destination.Select = source.Select;
+            destination.Size = source.Size;
+            destination.OrderBy = source.OrderBy;
+            destination.IncludeTotalCount = source.IncludeTotalCount;
+            destination.Facets = source.Facets;
+            destination.ScoringParameters = source.ScoringParameters;
+            destination.HighlightPostTag = source.HighlightPostTag;
+            destination.HighlightPreTag = source.HighlightPreTag;
+            destination.MinimumCoverage = source.MinimumCoverage;
+            destination.QueryType = source.QueryType;
+            destination.ScoringProfile = source.ScoringProfile;
+            destination.SearchMode = source.SearchMode;
+            destination.Skip = source.Skip;
+            destination.ClientRequestId = source.ClientRequestId;
+        }
+
+        /// <summary>
+        /// Creates a shallow copy of the SearchOptions.
+        /// </summary>
+        /// <returns>The cloned SearchOptions.</returns>
+        internal SearchOptions Clone()
+        {
+            SearchOptions clone = new SearchOptions();
+            Copy(this, clone);
+            return clone;
+        }
     }
 }

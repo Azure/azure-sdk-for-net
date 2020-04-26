@@ -112,7 +112,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'Enabled', 'Disabled'
+        /// If not specified, the default value is 'enabled'. Possible values
+        /// include: 'Enabled', 'Disabled'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }

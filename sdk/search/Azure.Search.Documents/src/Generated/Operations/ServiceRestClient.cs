@@ -19,37 +19,37 @@ namespace Azure.Search.Documents
     internal partial class ServiceRestClient
     {
         private string endpoint;
-        private string ApiVersion;
-        private ClientDiagnostics clientDiagnostics;
-        private HttpPipeline pipeline;
+        private string apiVersion;
+        private ClientDiagnostics _clientDiagnostics;
+        private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string ApiVersion = "2019-05-06-Preview")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-05-06-Preview")
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
             }
-            if (ApiVersion == null)
+            if (apiVersion == null)
             {
-                throw new ArgumentNullException(nameof(ApiVersion));
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
             this.endpoint = endpoint;
-            this.ApiVersion = ApiVersion;
-            this.clientDiagnostics = clientDiagnostics;
-            this.pipeline = pipeline;
+            this.apiVersion = apiVersion;
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         internal HttpMessage CreateGetServiceStatisticsRequest(Guid? xMsClientRequestId)
         {
-            var message = pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(endpoint, false);
             uri.AppendPath("/servicestats", false);
-            uri.AppendQuery("api-version", ApiVersion, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
             if (xMsClientRequestId != null)
             {
@@ -61,25 +61,32 @@ namespace Azure.Search.Documents
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-
-            using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
             try
             {
                 using var message = CreateGetServiceStatisticsRequest(xMsClientRequestId);
-                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            SearchServiceStatistics value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                            var value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw await clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -92,25 +99,32 @@ namespace Azure.Search.Documents
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId, CancellationToken cancellationToken = default)
+        public Response<SearchServiceStatistics> GetServiceStatistics(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-
-            using var scope = clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetServiceStatistics");
             scope.Start();
             try
             {
                 using var message = CreateGetServiceStatisticsRequest(xMsClientRequestId);
-                pipeline.Send(message, cancellationToken);
+                _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
+                            SearchServiceStatistics value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
-                            var value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
+                            if (document.RootElement.ValueKind == JsonValueKind.Null)
+                            {
+                                value = null;
+                            }
+                            else
+                            {
+                                value = SearchServiceStatistics.DeserializeSearchServiceStatistics(document.RootElement);
+                            }
                             return Response.FromValue(value, message.Response);
                         }
                     default:
-                        throw clientDiagnostics.CreateRequestFailedException(message.Response);
+                        throw _clientDiagnostics.CreateRequestFailedException(message.Response);
                 }
             }
             catch (Exception e)

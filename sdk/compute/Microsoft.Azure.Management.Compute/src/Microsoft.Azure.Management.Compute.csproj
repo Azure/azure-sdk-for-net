@@ -6,12 +6,12 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Compute</PackageId>
     <Description>Provides developers with libraries for the updated compute platform under Azure Resource manager to deploy virtual machine, virtual machine extensions and availability set management capabilities. Launch, restart, scale, capture and manage VMs, VM Extensions and more. Note: This client library is for Virtual Machines under Azure Resource Manager.</Description>
-    <Version>33.0.0</Version>
+    <Version>36.0.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Compute</AssemblyName>
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are shared disks properties and creating a disk from a shared gallery image version.
+        This is a public release of the Azure Compute SDK. Included with this release are SimulateEviction API for Spot Virtual Machines and Spot VMScaleSet VMs
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

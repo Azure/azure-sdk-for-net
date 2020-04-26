@@ -22,16 +22,16 @@ namespace Azure.Search.Documents.Models
 
         internal static TagScoringParameters DeserializeTagScoringParameters(JsonElement element)
         {
-            TagScoringParameters result = new TagScoringParameters();
+            string tagsParameter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tagsParameter"))
                 {
-                    result.TagsParameter = property.Value.GetString();
+                    tagsParameter = property.Value.GetString();
                     continue;
                 }
             }
-            return result;
+            return new TagScoringParameters(tagsParameter);
         }
     }
 }

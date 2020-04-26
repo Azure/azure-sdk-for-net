@@ -39,6 +39,13 @@ namespace Azure.Search.Documents
         internal const ServiceVersion LatestVersion = ServiceVersion.V2019_05_06_Preview;
 
         /// <summary>
+        /// The service version to use when creating continuation tokens that
+        /// can be passed between different client libraries.  Changing this
+        /// value requires updating <see cref="Azure.Search.Documents.Models.SearchContinuationToken"/>.
+        /// </summary>
+        internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2019_05_06_Preview;
+
+        /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when
         /// making requests.  For more, see
         /// <see href="https://docs.microsoft.com/azure/search/search-api-versions" />.
@@ -122,6 +129,7 @@ namespace Azure.Search.Documents
         private void AddLoggingQueryParameters()
         {
             Diagnostics.LoggedQueryParameters.Add("api-version");
+            Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
             Diagnostics.LoggedQueryParameters.Add("$select");
         }
     }

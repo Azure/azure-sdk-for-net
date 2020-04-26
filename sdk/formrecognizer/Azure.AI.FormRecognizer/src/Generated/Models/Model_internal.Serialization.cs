@@ -7,21 +7,23 @@
 
 using System.Text.Json;
 using Azure.AI.FormRecognizer;
-using Azure.AI.FormRecognizer.Custom;
+using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.Training
 {
     internal partial class Model_internal
     {
         internal static Model_internal DeserializeModel_internal(JsonElement element)
         {
-            Model_internal result = new Model_internal();
+            ModelInfo_internal modelInfo = default;
+            KeysResult_internal keys = default;
+            TrainResult_internal trainResult = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelInfo"))
                 {
-                    result.ModelInfo = ModelInfo_internal.DeserializeModelInfo_internal(property.Value);
+                    modelInfo = ModelInfo_internal.DeserializeModelInfo_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("keys"))
@@ -30,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.Keys = KeysResult_internal.DeserializeKeysResult_internal(property.Value);
+                    keys = KeysResult_internal.DeserializeKeysResult_internal(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trainResult"))
@@ -39,11 +41,11 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    result.TrainResult = TrainResult_internal.DeserializeTrainResult_internal(property.Value);
+                    trainResult = TrainResult_internal.DeserializeTrainResult_internal(property.Value);
                     continue;
                 }
             }
-            return result;
+            return new Model_internal(modelInfo, keys, trainResult);
         }
     }
 }

@@ -3,6 +3,7 @@
     <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants);TESTFRAMEWORK;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,6 +30,7 @@
     <Compile Include="..\src\Shared\NoBodyResponse{T}.cs" />
     <Compile Include="..\src\Shared\OperationHelpers.cs" />
     <Compile Include="..\src\Shared\AzureResourceProviderNamespaceAttribute.cs" />
+    <Compile Include="..\src\Shared\ValueStopwatch.cs" />
   </ItemGroup>
 
 </Project>

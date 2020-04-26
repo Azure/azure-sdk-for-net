@@ -6,25 +6,39 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Form content type for local files.
+    /// The content type for local form files.
     /// </summary>
-    [CodeGenSchema("ContentType")]
+    [CodeGenModel("ContentType")]
     public enum ContentType
     {
-        /// <summary>application/pdf</summary>
-        [CodeGenSchemaMember("ApplicationPdf")]
+        /// <summary>
+        /// Used for JSON files.
+        /// </summary>
+        [CodeGenMember("ApplicationJson")]
+        Json,
+
+        /// <summary>
+        /// Used for PDF files.
+        /// </summary>
+        [CodeGenMember("ApplicationPdf")]
         Pdf,
 
-        /// <summary>image/png</summary>
-        [CodeGenSchemaMember("ImagePng")]
+        /// <summary>
+        /// Used for PNG files.
+        /// </summary>
+        [CodeGenMember("ImagePng")]
         Png,
 
-        /// <summary>image/jpeg</summary>
-        [CodeGenSchemaMember("ImageJpeg")]
+        /// <summary>
+        /// Used for JPEG files.
+        /// </summary>
+        [CodeGenMember("ImageJpeg")]
         Jpeg,
 
-        /// <summary>image/tiff</summary>
-        [CodeGenSchemaMember("ImageTiff")]
+        /// <summary>
+        /// Used for TIFF files.
+        /// </summary>
+        [CodeGenMember("ImageTiff")]
         Tiff,
     }
 }

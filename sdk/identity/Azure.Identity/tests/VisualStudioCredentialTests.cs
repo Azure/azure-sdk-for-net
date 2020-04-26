@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -131,6 +132,16 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void AuthenticateWithVsCredential_NoDirectoryFound()
+        {
+            var (_, _, processOutput) = CreateTestToken();
+            var fileSystem = new TestFileSystemService { ReadAllHandler = s => throw new DirectoryNotFoundException() };
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
+        }
+
+        [Test]
         public void AuthenticateWithVsCredential_BrokenJsonFileFound()
         {
             var (_, _, processOutput) = CreateTestToken();
@@ -147,6 +158,15 @@ namespace Azure.Identity.Tests
             var fileSystem = CreateTestFileSystem();
             var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
+        }
+
+        [Test]
+        public void AuthenticateWithVsCredential_ProcessReturnedInvalidJson()
+        {
+            var testProcess = new TestProcess { Output = "Not Json" };
+            var fileSystem = CreateTestFileSystem();
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess)));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(new[]{"https://vault.azure.net/"}), CancellationToken.None));
         }
 
         private (string token, DateTimeOffset expiresOn, string json) CreateTestToken()

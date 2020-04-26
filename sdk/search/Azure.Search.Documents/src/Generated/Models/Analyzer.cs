@@ -5,30 +5,38 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Abstract base class for analyzers. </summary>
+    /// <summary> Base type for analyzers. </summary>
     public partial class Analyzer
     {
         /// <summary> Initializes a new instance of Analyzer. </summary>
-        public Analyzer()
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        public Analyzer(string name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            Name = name;
             ODataType = null;
         }
 
         /// <summary> Initializes a new instance of Analyzer. </summary>
-        /// <param name="oDataType"> The model type. </param>
+        /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         internal Analyzer(string oDataType, string name)
         {
             ODataType = oDataType;
             Name = name;
-            ODataType = null;
         }
 
-        /// <summary> The model type. </summary>
-        public string ODataType { get; internal set; }
+        /// <summary> Identifies the concrete type of the analyzer. </summary>
+        internal string ODataType { get; set; }
         /// <summary> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
     }
 }

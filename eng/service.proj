@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ExcludeMgmtLib Include="..\sdk\*\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
+    <ExcludeMgmtLib Include="..\sdk\*\Microsoft.*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />

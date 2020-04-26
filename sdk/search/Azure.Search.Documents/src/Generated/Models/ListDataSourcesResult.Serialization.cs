@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,19 +15,28 @@ namespace Azure.Search.Documents.Models
     {
         internal static ListDataSourcesResult DeserializeListDataSourcesResult(JsonElement element)
         {
-            ListDataSourcesResult result = new ListDataSourcesResult();
+            IReadOnlyList<DataSource> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
+                    List<DataSource> array = new List<DataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        result.DataSources.Add(DataSource.DeserializeDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataSource.DeserializeDataSource(item));
+                        }
                     }
+                    value = array;
                     continue;
                 }
             }
-            return result;
+            return new ListDataSourcesResult(value);
         }
     }
 }
