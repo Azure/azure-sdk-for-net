@@ -361,6 +361,19 @@ namespace Azure.Storage.Test.Shared
             return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
         }
 
+        public BlobSasQueryParameters GetBlobVersionIdentitySas(
+            string containerName,
+            string blobName,
+            string blobVersion,
+            BlobVersionSasPermissions permissions,
+            UserDelegationKey userDelegationKey,
+            string accountName)
+        {
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, blobVersion: blobVersion);
+            sasBuilder.SetPermissions(permissions);
+            return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
+        }
+
         private BlobSasBuilder GetBlobSasBuilder(
             string containerName,
             string blobName = default,

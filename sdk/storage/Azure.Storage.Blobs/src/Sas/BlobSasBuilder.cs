@@ -312,7 +312,7 @@ namespace Azure.Storage.Sas
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
-                Snapshot,
+                Snapshot ?? BlobVersion,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,

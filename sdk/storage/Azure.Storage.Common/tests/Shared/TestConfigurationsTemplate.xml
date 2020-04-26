@@ -45,7 +45,7 @@
       <TableServiceSecondaryEndpoint>http://[RAGRS-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
 
-    <!-- A storage account with Oauth access -->
+    <!-- A storage account with Oauth access and Blob Version enabled. -->
     <!-- Replace [OAUTH-ACCOUNT] and [OAUTH-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>OAuthTenant</TenantName>
