@@ -70,14 +70,12 @@ namespace Azure.Core.Testing
             int bestScore = int.MaxValue;
             RecordEntry bestScoreEntry = null;
 
-            bool isTrack1Record = entries.Any(item => !string.IsNullOrEmpty(item.EncodedRequestUri));
-
             foreach (RecordEntry entry in entries)
             {
                 int score = 0;
 
                 var recordRequestUri = entry.RequestUri;
-                if (isTrack1Record)
+                if (entry.IsTrack1Recording)
                 {
                     //there's no domain name for request uri in track 1 record, so add it from reqeust uri
                     int len = 8; //length of "https://"
@@ -99,9 +97,9 @@ namespace Azure.Core.Testing
                 }
 
                 //we only check Uri + RequestMethod for track1 record
-                if (!isTrack1Record)
+                if (entry.IsTrack1Recording)
                 {
-                score += CompareHeaderDictionaries(headers, entry.Request.Headers, ExcludeHeaders);
+                    score += CompareHeaderDictionaries(headers, entry.Request.Headers, ExcludeHeaders);
                 }
 
                 if (score == 0)

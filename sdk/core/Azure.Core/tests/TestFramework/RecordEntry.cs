@@ -17,8 +17,7 @@ namespace Azure.Core.Testing
 
         public string RequestUri { get; set; }
 
-        //Used only for deserializing track 1 session record files
-        public string EncodedRequestUri { get; set; }
+        public bool IsTrack1Recording { get; set; }
 
         public RequestMethod RequestMethod { get; set; }
 
@@ -38,9 +37,9 @@ namespace Azure.Core.Testing
                 record.RequestUri = property.GetString();
             }
 
-            if (element.TryGetProperty(nameof(EncodedRequestUri), out property))
+            if (element.TryGetProperty("EncodedRequestUri", out property))
             {
-                record.EncodedRequestUri = property.GetString();
+                record.IsTrack1Recording = true;
             }
 
             if (element.TryGetProperty("RequestHeaders", out property))
