@@ -417,10 +417,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 var subscriptionsRi = await client.GetSubscriptionsRuntimeInfoAsync(topicName);
                 var subscriptionRi = subscriptionsRi.FirstOrDefault(s => subscriptionName.Equals(s.SubscriptionName, StringComparison.OrdinalIgnoreCase));
 
-                Assert.Equal(topicName, subscriptionRi.TopicPath);
-                Assert.Equal(subscriptionName, subscriptionRi.SubscriptionName);
+                Assert.Equal(topicName, subscriptionRi?.TopicPath);
+                Assert.Equal(subscriptionName, subscriptionRi?.SubscriptionName);
 
-                Assert.True(subscriptionRi.CreatedAt < subscriptionRi.UpdatedAt);
+                Assert.True(subscriptionRi?.CreatedAt < subscriptionRi?.UpdatedAt);
                 Assert.True(subscriptionRi.UpdatedAt < subscriptionRi.AccessedAt);
 
                 Assert.Equal(1, subscriptionRi.MessageCountDetails.ActiveMessageCount);

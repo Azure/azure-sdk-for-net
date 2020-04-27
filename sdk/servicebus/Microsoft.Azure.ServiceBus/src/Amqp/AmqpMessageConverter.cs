@@ -202,7 +202,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     else if (data.Value is ArraySegment<byte> arraySegmentValue)
                     {
                         byte[] byteArray;
-                        if (arraySegmentValue.Count == arraySegmentValue.Array.Length)
+                        if (arraySegmentValue.Count == arraySegmentValue.Array?.Length)
                         {
                             byteArray = arraySegmentValue.Array;
                         }

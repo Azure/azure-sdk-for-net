@@ -126,7 +126,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
             }
             finally
             {
-                await scope?.CleanupAsync();
+                await (scope?.CleanupAsync() ?? Task.CompletedTask);
             }
         }
 
