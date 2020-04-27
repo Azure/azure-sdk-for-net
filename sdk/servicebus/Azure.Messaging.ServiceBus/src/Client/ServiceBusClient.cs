@@ -175,34 +175,27 @@ namespace Azure.Messaging.ServiceBus
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
-                viaEntityPath: null,
+                options: new ServiceBusSenderOptions(),
                 connection: Connection);
         }
 
         /// <summary>
         /// Creates a <see cref="ServiceBusSender"/> instance that can be used for sending messages to a specific
-        /// queue or topic via a different queue or topic.
+        /// queue or topic.
         /// </summary>
         ///
         /// <param name="queueOrTopicName">The queue or topic to create a <see cref="ServiceBusSender"/> for.</param>
-        /// <param name="viaQueueOrTopicName"></param>
-        ///
-        /// <remarks>
-        /// This is mainly to be used when sending messages in a transaction.
-        /// When messages need to be sent across entities in a single transaction, this can be used to ensure
-        /// all the messages land initially in the same entity/partition for local transactions, and then
-        /// let Service Bus handle transferring the message to the actual destination.
-        /// </remarks>
+        /// <param name="options">The set of <see cref="ServiceBusSenderOptions"/> to use for configuring
+        /// this <see cref="ServiceBusSender"/>.</param>
         ///
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
-        public ServiceBusSender CreateSender(string queueOrTopicName, string viaQueueOrTopicName)
+        public ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
         {
-            ValidateEntityName(viaQueueOrTopicName);
-            ValidateEntityName(queueOrTopicName);
+            ValidateSendViaEntityName(queueOrTopicName, options?.ViaQueueOrTopicName);
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
-                viaEntityPath: viaQueueOrTopicName,
+                options: options,
                 connection: Connection);
         }
 
@@ -614,6 +607,31 @@ namespace Azure.Messaging.ServiceBus
             if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
+            }
+        }
+
+        /// <summary>
+        /// Validates that the specified entity name matches the entity path in the Connection,
+        /// if an entity path is specified in the connection.
+        /// </summary>
+        /// <param name="entityName">Entity name to validate</param>
+        ///
+        /// <param name="sendViaEntityName">The send via entity name to validate</param>
+        private void ValidateSendViaEntityName(string entityName, string sendViaEntityName)
+        {
+            if (sendViaEntityName == null ||
+                string.Equals(sendViaEntityName, entityName, StringComparison.InvariantCultureIgnoreCase))
+            {
+                ValidateEntityName(sendViaEntityName);
+                return;
+            }
+
+            // we've established they are not equal, so anything specified in connection string will cause
+            // a mismatch with one of the entities.
+
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
+            {
+                throw new ArgumentException(Resources.SendViaCannotBeUsedWithEntityInConnectionString);
             }
         }
     }

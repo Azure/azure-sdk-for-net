@@ -466,6 +466,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When sending via a different entity, an entity path is not allowed to specified in the connection string..
+        /// </summary>
+        internal static string SendViaCannotBeUsedWithEntityInConnectionString {
+            get {
+                return ResourceManager.GetString("SendViaCannotBeUsedWithEntityInConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to retreive session filter from broker. Please retry..
         /// </summary>
         internal static string SessionFilterMissing {

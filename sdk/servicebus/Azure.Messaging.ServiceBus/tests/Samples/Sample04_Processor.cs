@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
                 // send the message batch
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 // get the options to use for configuring the processor
                 var options = new ServiceBusProcessorOptions
