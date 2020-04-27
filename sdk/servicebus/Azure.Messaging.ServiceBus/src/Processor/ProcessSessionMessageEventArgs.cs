@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -49,7 +48,7 @@ namespace Azure.Messaging.ServiceBus
         internal bool UserSettled { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProcessMessageEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
         /// </summary>
         ///
         /// <param name="message">The current <see cref="ServiceBusReceivedMessage"/>.</param>

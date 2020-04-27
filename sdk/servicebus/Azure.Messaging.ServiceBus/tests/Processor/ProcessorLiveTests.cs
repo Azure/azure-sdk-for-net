@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 var messageSendCt = numThreads * 2;
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageSendCt);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 var options = new ServiceBusProcessorOptions
                 {

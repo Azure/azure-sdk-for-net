@@ -14,6 +14,98 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
     public class SessionProcessorTests : ServiceBusTestBase
     {
         [Test]
+        public void CannotAddNullHandler()
+        {
+            var processor = new ServiceBusSessionProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                new ServiceBusProcessorOptions());
+
+            Assert.That(() => processor.ProcessMessageAsync += null, Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => processor.ProcessErrorAsync += null, Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => processor.SessionInitializingAsync += null, Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => processor.SessionClosingAsync += null, Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void CannotAddTwoHandlersToTheSameEvent()
+        {
+            var processor = new ServiceBusSessionProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                new ServiceBusProcessorOptions());
+
+            processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
+            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+            processor.SessionInitializingAsync += eventArgs => Task.CompletedTask;
+            processor.SessionClosingAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(() => processor.ProcessMessageAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
+            Assert.That(() => processor.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
+            Assert.That(() => processor.SessionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
+            Assert.That(() => processor.SessionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
+        }
+
+        [Test]
+        public void CannotRemoveHandlerThatHasNotBeenAdded()
+        {
+            var processor = new ServiceBusSessionProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                new ServiceBusProcessorOptions());
+
+            // First scenario: no handler has been set.
+
+            Assert.That(() => processor.ProcessMessageAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.ProcessErrorAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.SessionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.SessionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+
+            // Second scenario: there is a handler set, but it's not the one we are trying to remove.
+
+            processor.ProcessMessageAsync += eventArgs => Task.CompletedTask;
+            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+            processor.SessionInitializingAsync += eventArgs => Task.CompletedTask;
+            processor.SessionClosingAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(() => processor.ProcessMessageAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.ProcessErrorAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.SessionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.SessionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void CanRemoveHandlerThatHasBeenAdded()
+        {
+            var processor = new ServiceBusSessionProcessor(
+                GetMockedConnection(),
+                "entityPath",
+                new ServiceBusProcessorOptions());
+
+            Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessSessionEventArgs, Task> sessionInitHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessSessionEventArgs, Task> sessionCloseHandler = eventArgs => Task.CompletedTask;
+
+            processor.ProcessMessageAsync += eventHandler;
+            processor.ProcessErrorAsync += errorHandler;
+            processor.SessionInitializingAsync += sessionInitHandler;
+            processor.SessionClosingAsync += sessionCloseHandler;
+
+            Assert.That(() => processor.ProcessMessageAsync -= eventHandler, Throws.Nothing);
+            Assert.That(() => processor.ProcessErrorAsync -= errorHandler, Throws.Nothing);
+            Assert.That(() => processor.SessionInitializingAsync -= sessionInitHandler, Throws.Nothing);
+            Assert.That(() => processor.SessionClosingAsync -= sessionCloseHandler, Throws.Nothing);
+
+            // Assert that handlers can be added again.
+
+            Assert.That(() => processor.ProcessMessageAsync += eventHandler, Throws.Nothing);
+            Assert.That(() => processor.ProcessErrorAsync += errorHandler, Throws.Nothing);
+            Assert.That(() => processor.SessionInitializingAsync += sessionInitHandler, Throws.Nothing);
+            Assert.That(() => processor.SessionClosingAsync += sessionCloseHandler, Throws.Nothing);
+        }
+
+        [Test]
         public void ProcessorOptionsSetOnClient()
         {
             var account = Encoding.Default.GetString(GetRandomBuffer(12));
