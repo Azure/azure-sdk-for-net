@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         internal QueueRuntimeInfo(string path)
         {
-            this.Path = path;
+            Path = path;
         }
 
         /// <summary>

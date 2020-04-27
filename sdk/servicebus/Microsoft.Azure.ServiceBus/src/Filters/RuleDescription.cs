@@ -4,8 +4,8 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
-    using Microsoft.Azure.ServiceBus.Management;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Management;
+    using Primitives;
 
     /// <summary>
     /// Represents a description of a rule.
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Initializes a new instance of the <see cref="RuleDescription" /> class with default values.
         /// </summary>
         public RuleDescription()
-            : this(RuleDescription.DefaultRuleName, TrueFilter.Default)
+            : this(DefaultRuleName, TrueFilter.Default)
         {
         }
 
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.ServiceBus
         [Obsolete("This constructor will be removed in next version, please use RuleDescription(string, Filter) instead.")]
         public RuleDescription(Filter filter)
         {
-            this.Filter = filter ?? throw Fx.Exception.ArgumentNull(nameof(filter));
+            Filter = filter ?? throw Fx.Exception.ArgumentNull(nameof(filter));
         }
 
         /// <summary>
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="filter">The filter expression used to match messages.</param>
         public RuleDescription(string name, Filter filter)
         {
-            this.Filter = filter ?? throw Fx.Exception.ArgumentNull(nameof(filter));
-            this.Name = name;
+            Filter = filter ?? throw Fx.Exception.ArgumentNull(nameof(filter));
+            Name = name;
         }
 
         /// <summary>
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.ServiceBus
         /// <exception cref="System.ArgumentNullException">null (Nothing in Visual Basic) is assigned.</exception>
         public Filter Filter
         {
-            get => this.filter;
+            get => filter;
 
-            set => this.filter = value ?? throw Fx.Exception.ArgumentNull(nameof(this.Filter));
+            set => filter = value ?? throw Fx.Exception.ArgumentNull(nameof(Filter));
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>Max allowed length of rule name is 50 chars.</remarks>
         public string Name
         {
-            get => this.name;
+            get => name;
 
             set
             {
                 EntityNameHelper.CheckValidRuleName(value);
-                this.name = value;
+                name = value;
             }
         }
 
@@ -105,8 +105,8 @@ namespace Microsoft.Azure.ServiceBus
             int hash = 13;
             unchecked
             {
-                hash = (hash * 7) + this.filter?.GetHashCode() ?? 0;
-                hash = (hash * 7) + this.Action?.GetHashCode() ?? 0; 
+                hash = (hash * 7) + filter?.GetHashCode() ?? 0;
+                hash = (hash * 7) + Action?.GetHashCode() ?? 0; 
             }
             return hash;
         }
@@ -114,15 +114,15 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj)
         {
             var other = obj as RuleDescription;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         public bool Equals(RuleDescription otherRule)
         {
             if (otherRule is RuleDescription other
-                && string.Equals(this.Name, other.Name, StringComparison.OrdinalIgnoreCase)
-                && (this.Filter == null || this.Filter.Equals(other.Filter))
-                && (this.Action == null || this.Action.Equals(other.Action)))
+                && string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase)
+                && (Filter == null || Filter.Equals(other.Filter))
+                && (Action == null || Action.Equals(other.Action)))
             {
                 return true;
             }

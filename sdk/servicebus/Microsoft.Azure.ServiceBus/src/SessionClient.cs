@@ -96,7 +96,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(connectionString);
             }
 
-            this.OwnsConnection = true;
+            OwnsConnection = true;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.ServiceBus
                 retryPolicy,
                 null)
         {
-            this.OwnsConnection = true;
+            OwnsConnection = true;
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.ServiceBus
                 retryPolicy,
                 null)
         {
-            this.OwnsConnection = false;
+            OwnsConnection = false;
         }
 
         internal SessionClient(
@@ -177,34 +177,34 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
 
-            this.ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            this.EntityPath = entityPath;
-            this.EntityType = entityType;
-            this.ReceiveMode = receiveMode;
-            this.PrefetchCount = prefetchCount;
-            this.ServiceBusConnection.ThrowIfClosed();
+            ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
+            EntityPath = entityPath;
+            EntityType = entityType;
+            ReceiveMode = receiveMode;
+            PrefetchCount = prefetchCount;
+            ServiceBusConnection.ThrowIfClosed();
 
             if (cbsTokenProvider != null)
             {
-                this.CbsTokenProvider = cbsTokenProvider;
+                CbsTokenProvider = cbsTokenProvider;
             }
-            else if (this.ServiceBusConnection.TokenProvider != null)
+            else if (ServiceBusConnection.TokenProvider != null)
             {
-                this.CbsTokenProvider = new TokenProviderAdapter(this.ServiceBusConnection.TokenProvider, this.ServiceBusConnection.OperationTimeout);
+                CbsTokenProvider = new TokenProviderAdapter(ServiceBusConnection.TokenProvider, ServiceBusConnection.OperationTimeout);
             }
             else
             {
                 throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
             }
 
-            this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
+            diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
 
             // Register plugins on the message session.
             if (registeredPlugins != null)
             {
                 foreach (var serviceBusPlugin in registeredPlugins)
                 {
-                    this.RegisterPlugin(serviceBusPlugin);
+                    RegisterPlugin(serviceBusPlugin);
                 }
             }
         }
@@ -219,15 +219,15 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Gets the path of the entity. This is either the name of the queue, or the full path of the subscription.
         /// </summary>
-        public override string Path => this.EntityPath;
+        public override string Path => EntityPath;
 
         /// <summary>
         /// Duration after which individual operations will timeout.
         /// </summary>
         public override TimeSpan OperationTimeout
         {
-            get => this.ServiceBusConnection.OperationTimeout;
-            set => this.ServiceBusConnection.OperationTimeout = value;
+            get => ServiceBusConnection.OperationTimeout;
+            set => ServiceBusConnection.OperationTimeout = value;
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Individual sessions can further register additional plugins.</remarks>
         public Task<IMessageSession> AcceptMessageSessionAsync()
         {
-            return this.AcceptMessageSessionAsync(this.ServiceBusConnection.OperationTimeout);
+            return AcceptMessageSessionAsync(ServiceBusConnection.OperationTimeout);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Individual sessions can further register additional plugins.</remarks>
         public Task<IMessageSession> AcceptMessageSessionAsync(TimeSpan operationTimeout)
         {
-            return this.AcceptMessageSessionAsync(null, operationTimeout);
+            return AcceptMessageSessionAsync(null, operationTimeout);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Individual sessions can further register additional plugins.</remarks>
         public Task<IMessageSession> AcceptMessageSessionAsync(string sessionId)
         {
-            return this.AcceptMessageSessionAsync(sessionId, this.ServiceBusConnection.OperationTimeout);
+            return AcceptMessageSessionAsync(sessionId, ServiceBusConnection.OperationTimeout);
         }
 
         /// <summary>
@@ -287,33 +287,33 @@ namespace Microsoft.Azure.ServiceBus
         /// Individual sessions can further register additional plugins.</remarks>
         public async Task<IMessageSession> AcceptMessageSessionAsync(string sessionId, TimeSpan operationTimeout)
         {
-            this.ThrowIfClosed();
+            ThrowIfClosed();
 
             MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionStart(
-                this.ClientId,
-                this.EntityPath,
-                this.ReceiveMode,
-                this.PrefetchCount,
+                ClientId,
+                EntityPath,
+                ReceiveMode,
+                PrefetchCount,
                 sessionId);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.AcceptMessageSessionStart(sessionId) : null;
+            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.AcceptMessageSessionStart(sessionId) : null;
             Task acceptMessageSessionTask = null;
 
             var session = new MessageSession(
-                this.EntityPath,
-                this.EntityType,
-                this.ReceiveMode,
-                this.ServiceBusConnection,
-                this.CbsTokenProvider,
-                this.RetryPolicy,
-                this.PrefetchCount,
+                EntityPath,
+                EntityType,
+                ReceiveMode,
+                ServiceBusConnection,
+                CbsTokenProvider,
+                RetryPolicy,
+                PrefetchCount,
                 sessionId,
                 true);
 
             try
             {
-                acceptMessageSessionTask = this.RetryPolicy.RunOperation(
+                acceptMessageSessionTask = RetryPolicy.RunOperation(
                     () => session.GetSessionReceiverLinkAsync(operationTimeout),
                     operationTimeout);
                 await acceptMessageSessionTask.ConfigureAwait(false);
@@ -322,12 +322,12 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (isDiagnosticSourceEnabled && !(exception is ServiceBusTimeoutException))
                 {
-                    this.diagnosticSource.ReportException(exception);
+                    diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionException(
-                    this.ClientId,
-                    this.EntityPath,
+                    ClientId,
+                    EntityPath,
                     exception);
 
                 await session.CloseAsync().ConfigureAwait(false);
@@ -335,17 +335,17 @@ namespace Microsoft.Azure.ServiceBus
             }
             finally
             {
-                this.diagnosticSource.AcceptMessageSessionStop(activity, session.SessionId, acceptMessageSessionTask?.Status);
+                diagnosticSource.AcceptMessageSessionStop(activity, session.SessionId, acceptMessageSessionTask?.Status);
             }
 
             MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionStop(
-                this.ClientId,
-                this.EntityPath,
+                ClientId,
+                EntityPath,
                 session.SessionIdInternal);
 
-            session.UpdateClientId(ClientEntity.GenerateClientId(nameof(MessageSession), $"{this.EntityPath}_{session.SessionId}"));
+            session.UpdateClientId(GenerateClientId(nameof(MessageSession), $"{EntityPath}_{session.SessionId}"));
             // Register plugins on the message session.
-            foreach (var serviceBusPlugin in this.RegisteredPlugins)
+            foreach (var serviceBusPlugin in RegisteredPlugins)
             {
                 session.RegisterPlugin(serviceBusPlugin);
             }
@@ -359,17 +359,17 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serviceBusPlugin">The <see cref="ServiceBusPlugin"/> to register.</param>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
         {
-            this.ThrowIfClosed();
+            ThrowIfClosed();
 
             if (serviceBusPlugin == null)
             {
                 throw new ArgumentNullException(nameof(serviceBusPlugin), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPlugin)));
             }
-            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPlugin.Name))
+            if (RegisteredPlugins.Any(p => p.Name == serviceBusPlugin.Name))
             {
                 throw new ArgumentException(nameof(serviceBusPlugin), Resources.PluginAlreadyRegistered.FormatForUser(nameof(serviceBusPlugin)));
             }
-            this.RegisteredPlugins.Add(serviceBusPlugin);
+            RegisteredPlugins.Add(serviceBusPlugin);
         }
 
         /// <summary>
@@ -378,9 +378,9 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="serviceBusPluginName">The <see cref="ServiceBusPlugin.Name"/> of the plugin to be unregistered.</param>
         public override void UnregisterPlugin(string serviceBusPluginName)
         {
-            this.ThrowIfClosed();
+            ThrowIfClosed();
 
-            if (this.RegisteredPlugins == null)
+            if (RegisteredPlugins == null)
             {
                 return;
             }
@@ -388,10 +388,10 @@ namespace Microsoft.Azure.ServiceBus
             {
                 throw new ArgumentNullException(nameof(serviceBusPluginName), Resources.ArgumentNullOrWhiteSpace.FormatForUser(nameof(serviceBusPluginName)));
             }
-            if (this.RegisteredPlugins.Any(p => p.Name == serviceBusPluginName))
+            if (RegisteredPlugins.Any(p => p.Name == serviceBusPluginName))
             {
-                var plugin = this.RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
-                this.RegisteredPlugins.Remove(plugin);
+                var plugin = RegisteredPlugins.First(p => p.Name == serviceBusPluginName);
+                RegisteredPlugins.Remove(plugin);
             }
         }
 

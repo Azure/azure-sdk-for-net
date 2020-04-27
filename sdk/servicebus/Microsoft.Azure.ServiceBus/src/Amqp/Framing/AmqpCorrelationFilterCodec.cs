@@ -17,7 +17,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         public AmqpCorrelationFilterCodec() : base(Name, Code)
         {
-            this.properties = new AmqpMap();
+            properties = new AmqpMap();
         }
 
         public string CorrelationId { get; set; }
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         public string ContentType { get; set; }
 
-        public AmqpMap Properties => this.properties;
+        public AmqpMap Properties => properties;
 
         protected override int FieldCount => Fields;
 
@@ -44,83 +44,83 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
         {
             var stringBuilder = new StringBuilder("correlation(");
             var count = 0;
-            this.AddFieldToString(this.CorrelationId != null, stringBuilder, "id", this.CorrelationId, ref count);
+            AddFieldToString(CorrelationId != null, stringBuilder, "id", CorrelationId, ref count);
             stringBuilder.Append(')');
             return stringBuilder.ToString();
         }
 
         protected override void OnEncode(ByteBuffer buffer)
         {
-            AmqpCodec.EncodeString(this.CorrelationId, buffer);
-            AmqpCodec.EncodeString(this.MessageId, buffer);
-            AmqpCodec.EncodeString(this.To, buffer);
-            AmqpCodec.EncodeString(this.ReplyTo, buffer);
-            AmqpCodec.EncodeString(this.Label, buffer);
-            AmqpCodec.EncodeString(this.SessionId, buffer);
-            AmqpCodec.EncodeString(this.ReplyToSessionId, buffer);
-            AmqpCodec.EncodeString(this.ContentType, buffer);
-            AmqpCodec.EncodeMap(this.properties, buffer);
+            AmqpCodec.EncodeString(CorrelationId, buffer);
+            AmqpCodec.EncodeString(MessageId, buffer);
+            AmqpCodec.EncodeString(To, buffer);
+            AmqpCodec.EncodeString(ReplyTo, buffer);
+            AmqpCodec.EncodeString(Label, buffer);
+            AmqpCodec.EncodeString(SessionId, buffer);
+            AmqpCodec.EncodeString(ReplyToSessionId, buffer);
+            AmqpCodec.EncodeString(ContentType, buffer);
+            AmqpCodec.EncodeMap(properties, buffer);
         }
 
         protected override void OnDecode(ByteBuffer buffer, int count)
         {
             if (count-- > 0)
             {
-                this.CorrelationId = AmqpCodec.DecodeString(buffer);
+                CorrelationId = AmqpCodec.DecodeString(buffer);
             }
 
             if (count-- > 0)
             {
-                this.MessageId = AmqpCodec.DecodeString(buffer);
+                MessageId = AmqpCodec.DecodeString(buffer);
             }
 
             if (count-- > 0)
             {
-                this.To = AmqpCodec.DecodeString(buffer);
+                To = AmqpCodec.DecodeString(buffer);
             }
 
             if (count-- > 0)
             {
-                this.ReplyTo = AmqpCodec.DecodeString(buffer);
+                ReplyTo = AmqpCodec.DecodeString(buffer);
             }
 
             if (count-- > 0)
             {
-                this.Label = AmqpCodec.DecodeString(buffer);
+                Label = AmqpCodec.DecodeString(buffer);
             }
 
             if (count-- > 0)
             {
-                this.SessionId = AmqpCodec.DecodeString(buffer);
+                SessionId = AmqpCodec.DecodeString(buffer);
             }
 
             if (count-- > 0)
             {
-                this.ReplyToSessionId = AmqpCodec.DecodeString(buffer);
+                ReplyToSessionId = AmqpCodec.DecodeString(buffer);
             }
 
             if (count-- > 0)
             {
-                this.ContentType = AmqpCodec.DecodeString(buffer);
+                ContentType = AmqpCodec.DecodeString(buffer);
             }
 
             if (count > 0)
             {
-                this.properties = AmqpCodec.DecodeMap(buffer);
+                properties = AmqpCodec.DecodeMap(buffer);
             }
         }
 
         protected override int OnValueSize()
         {
-            return AmqpCodec.GetStringEncodeSize(this.CorrelationId) +
-                   AmqpCodec.GetStringEncodeSize(this.MessageId) +
-                   AmqpCodec.GetStringEncodeSize(this.To) +
-                   AmqpCodec.GetStringEncodeSize(this.ReplyTo) +
-                   AmqpCodec.GetStringEncodeSize(this.Label) +
-                   AmqpCodec.GetStringEncodeSize(this.SessionId) +
-                   AmqpCodec.GetStringEncodeSize(this.ReplyToSessionId) +
-                   AmqpCodec.GetStringEncodeSize(this.ContentType) +
-                   AmqpCodec.GetMapEncodeSize(this.properties);
+            return AmqpCodec.GetStringEncodeSize(CorrelationId) +
+                   AmqpCodec.GetStringEncodeSize(MessageId) +
+                   AmqpCodec.GetStringEncodeSize(To) +
+                   AmqpCodec.GetStringEncodeSize(ReplyTo) +
+                   AmqpCodec.GetStringEncodeSize(Label) +
+                   AmqpCodec.GetStringEncodeSize(SessionId) +
+                   AmqpCodec.GetStringEncodeSize(ReplyToSessionId) +
+                   AmqpCodec.GetStringEncodeSize(ContentType) +
+                   AmqpCodec.GetMapEncodeSize(properties);
         }
     }
 }

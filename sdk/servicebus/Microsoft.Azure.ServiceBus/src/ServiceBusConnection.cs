@@ -10,8 +10,8 @@ namespace Microsoft.Azure.ServiceBus
     using Microsoft.Azure.Amqp.Framing;
     using Microsoft.Azure.Amqp.Transaction;
     using Microsoft.Azure.Amqp.Transport;
-    using Microsoft.Azure.ServiceBus.Amqp;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Amqp;
+    using Primitives;
 
     /// <summary>
     /// Connection object to service bus namespace
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.Argument(nameof(namespaceConnectionString), "NamespaceConnectionString should not contain EntityPath.");
             }
 
-            this.InitializeConnection(serviceBusConnectionStringBuilder);
+            InitializeConnection(serviceBusConnectionStringBuilder);
         }
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.Argument(nameof(namespaceConnectionString), "NamespaceConnectionString should not contain EntityPath.");
             }
 
-            this.InitializeConnection(serviceBusConnectionStringBuilder);
+            InitializeConnection(serviceBusConnectionStringBuilder);
             // operationTimeout argument explicitly provided by caller should take precedence over OperationTimeout found in the connection string.
-            this.OperationTimeout = operationTimeout;
+            OperationTimeout = operationTimeout;
         }
 
         /// <summary>
@@ -112,13 +112,13 @@ namespace Microsoft.Azure.ServiceBus
                 TransportType = transportType
             };
 
-            this.InitializeConnection(serviceBusConnectionStringBuilder);
+            InitializeConnection(serviceBusConnectionStringBuilder);
         }
 
         internal ServiceBusConnection(RetryPolicy retryPolicy = null)
         {
-            this.RetryPolicy = retryPolicy ?? RetryPolicy.Default;
-            this.syncLock = new object();
+            RetryPolicy = retryPolicy ?? RetryPolicy.Default;
+            syncLock = new object();
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         internal virtual void ThrowIfClosed()
         {
-            if (this.IsClosedOrClosing)
+            if (IsClosedOrClosing)
             {
                 throw new ObjectDisposedException($"{nameof(ServiceBusConnection)} has already been closed. Please create a new instance");
             }
@@ -191,42 +191,42 @@ namespace Microsoft.Azure.ServiceBus
         public async Task CloseAsync()
         {
             var callClose = false;
-            lock (this.syncLock)
+            lock (syncLock)
             {
-                if (!this.IsClosedOrClosing)
+                if (!IsClosedOrClosing)
                 {
-                    this.IsClosedOrClosing = true;
+                    IsClosedOrClosing = true;
                     callClose = true;
                 }
             }
 
             if (callClose)
             {
-                await this.ConnectionManager.CloseAsync().ConfigureAwait(false);
+                await ConnectionManager.CloseAsync().ConfigureAwait(false);
             }
         }
 
         void InitializeConnection(ServiceBusConnectionStringBuilder builder)
         {
-            this.Endpoint = new Uri(builder.Endpoint);
+            Endpoint = new Uri(builder.Endpoint);
 
             if (builder.SasToken != null)
             {
-                this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasToken);
+                TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasToken);
             }
             else if (builder.SasKeyName != null || builder.SasKey != null)
             {
-                this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
+                TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
             }
             else if (builder.Authentication.Equals(ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity))
             {
-                this.TokenProvider = new ManagedIdentityTokenProvider();
+                TokenProvider = new ManagedIdentityTokenProvider();
             }
 
-            this.OperationTimeout = builder.OperationTimeout;
-            this.TransportType = builder.TransportType;
-            this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);
-            this.TransactionController = new FaultTolerantAmqpObject<Controller>(this.CreateControllerAsync, CloseController);
+            OperationTimeout = builder.OperationTimeout;
+            TransportType = builder.TransportType;
+            ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(CreateConnectionAsync, CloseConnection);
+            TransactionController = new FaultTolerantAmqpObject<Controller>(CreateControllerAsync, CloseController);
         }
 
         static void CloseConnection(AmqpConnection connection)
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.ServiceBus
 
         async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
         {
-            var hostName = this.Endpoint.Host;
+            var hostName = Endpoint.Host;
 
             var timeoutHelper = new TimeoutHelper(timeout, true);
             var amqpSettings = AmqpConnectionHelper.CreateAmqpSettings(
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.ServiceBus
         async Task<Controller> CreateControllerAsync(TimeSpan timeout)
         {
             var timeoutHelper = new TimeoutHelper(timeout, true);
-            var connection = await this.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            var connection = await ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };
             AmqpSession amqpSession = null;
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.ServiceBus
                     await amqpSession.CloseAsync(timeout).ConfigureAwait(false);
                 }
 
-                MessagingEventSource.Log.AmqpCreateControllerException(this.ConnectionManager.ToString(), exception);
+                MessagingEventSource.Log.AmqpCreateControllerException(ConnectionManager.ToString(), exception);
                 throw;
             }
 
@@ -305,9 +305,9 @@ namespace Microsoft.Azure.ServiceBus
 
         TransportSettings CreateTransportSettings()
         {
-            var hostName = this.Endpoint.Host;
-            var networkHost = this.Endpoint.Host;
-            var port = this.Endpoint.Port;
+            var hostName = Endpoint.Host;
+            var networkHost = Endpoint.Host;
+            var port = Endpoint.Port;
 
             if (TransportType == TransportType.AmqpWebSockets)
             {

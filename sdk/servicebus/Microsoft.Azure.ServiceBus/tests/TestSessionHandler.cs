@@ -34,17 +34,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             this.sessionHandlerOptions = sessionHandlerOptions;
             this.sender = sender;
             this.sessionPumpHost = sessionPumpHost;
-            this.sessionMessageMap = new ConcurrentDictionary<string, int>();
+            sessionMessageMap = new ConcurrentDictionary<string, int>();
         }
 
         public void RegisterSessionHandler(SessionHandlerOptions handlerOptions)
         {
-            this.sessionPumpHost.OnSessionHandler(this.OnSessionHandler, this.sessionHandlerOptions);
+            sessionPumpHost.OnSessionHandler(OnSessionHandler, sessionHandlerOptions);
         }
 
         public async Task SendSessionMessages()
         {
-            await TestUtility.SendSessionMessagesAsync(this.sender, NumberOfSessions, MessagesPerSession);
+            await TestUtility.SendSessionMessagesAsync(sender, NumberOfSessions, MessagesPerSession);
         }
 
         public async Task OnSessionHandler(IMessageSession session, Message message, CancellationToken token)
@@ -52,15 +52,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.NotNull(session);
             Assert.NotNull(message);
 
-            Interlocked.Increment(ref this.totalMessageCount);
+            Interlocked.Increment(ref totalMessageCount);
             TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
 
-            if (this.receiveMode == ReceiveMode.PeekLock && !this.sessionHandlerOptions.AutoComplete)
+            if (receiveMode == ReceiveMode.PeekLock && !sessionHandlerOptions.AutoComplete)
             {
                 await session.CompleteAsync(message.SystemProperties.LockToken);
             }
 
-            this.sessionMessageMap.AddOrUpdate(session.SessionId, 1, (_, current) => current + 1);
+            sessionMessageMap.AddOrUpdate(session.SessionId, 1, (_, current) => current + 1);
         }
 
         public async Task VerifyRun()
@@ -69,27 +69,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed.TotalSeconds <= 180)
             {
-                if (this.totalMessageCount == MessagesPerSession * NumberOfSessions)
+                if (totalMessageCount == MessagesPerSession * NumberOfSessions)
                 {
-                    TestUtility.Log($"All '{this.totalMessageCount}' messages Received.");
+                    TestUtility.Log($"All '{totalMessageCount}' messages Received.");
                     break;
                 }
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
 
-            foreach (KeyValuePair<string, int> keyValuePair in this.sessionMessageMap)
+            foreach (KeyValuePair<string, int> keyValuePair in sessionMessageMap)
             {
                 TestUtility.Log($"Session: {keyValuePair.Key}, Messages Received in this Session: {keyValuePair.Value}");
             }
 
-            Assert.True(this.sessionMessageMap.Keys.Count == NumberOfSessions);
-            Assert.True(this.totalMessageCount == MessagesPerSession * NumberOfSessions);
+            Assert.True(sessionMessageMap.Keys.Count == NumberOfSessions);
+            Assert.True(totalMessageCount == MessagesPerSession * NumberOfSessions);
         }
 
         public void ClearData()
         {
-            this.totalMessageCount = 0;
-            this.sessionMessageMap = new ConcurrentDictionary<string, int>();
+            totalMessageCount = 0;
+            sessionMessageMap = new ConcurrentDictionary<string, int>();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 {
     using System;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Core;
+    using Core;
     using Xunit;
 
     [Collection(nameof(DiagnosticsTests))]
@@ -19,13 +19,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
                 var subscriptionClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName, ReceiveMode.ReceiveAndDelete);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
                 var entityName = $"{topicName}/Subscriptions/{subscriptionName}";
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(entityName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(entityName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Disable();
 
@@ -52,12 +52,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Disable();
 
@@ -95,12 +95,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, arg) => queue?.ToString() != queueName);
 
@@ -141,12 +141,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
                 var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 var messageSession = default(IMessageSession);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Disable();
 
@@ -185,12 +185,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, arg) => 
                             !name.Contains("Send") && !name.Contains("Process") && !name.Contains("Receive") && !name.Contains("Exception"));

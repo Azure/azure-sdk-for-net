@@ -20,12 +20,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, arg) => !name.Contains("Receive") && !name.Contains("Exception"));
 
@@ -101,12 +101,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
                         listener.Enable((name, queue, arg) => !name.EndsWith(".Start") && !name.Contains("Receive") );
@@ -187,12 +187,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
                         var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
@@ -234,12 +234,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, arg) => name.Contains("Send") || name.Contains("Receive"));
                         var messages = await queueClient.InnerReceiver.ReceiveAsync(2, TimeSpan.FromSeconds(5));
@@ -273,12 +273,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable( (name, queue, arg) => name.Contains("Send") || name.Contains("Receive") );
                         await TestUtility.SendMessagesAsync(queueClient.InnerSender, 2);
@@ -333,12 +333,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queuName, arg) => name.Contains("Send") || name.Contains("Peek"));
 
@@ -380,12 +380,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
                         var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
@@ -429,12 +429,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
                         var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
@@ -469,12 +469,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, arg) => name.Contains("Send") || name.Contains("Defer") || name.Contains("Receive"));
 
@@ -522,12 +522,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         Activity parentActivity = new Activity("test");
                         listener.Enable((name, queue, arg) => name.Contains("Schedule") || name.Contains("Cancel"));

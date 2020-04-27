@@ -17,13 +17,13 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             Debug.Assert(timeout >= TimeSpan.Zero, "timeout must be non-negative");
 
-            this.originalTimeout = timeout;
-            this.deadline = DateTime.MaxValue;
-            this.deadlineSet = (timeout == TimeSpan.MaxValue);
+            originalTimeout = timeout;
+            deadline = DateTime.MaxValue;
+            deadlineSet = (timeout == TimeSpan.MaxValue);
 
-            if (startTimeout && !this.deadlineSet)
+            if (startTimeout && !deadlineSet)
             {
-                this.SetDeadline();
+                SetDeadline();
             }
         }
 
@@ -103,18 +103,18 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public TimeSpan RemainingTime()
         {
-            if (!this.deadlineSet)
+            if (!deadlineSet)
             {
-                this.SetDeadline();
-                return this.originalTimeout;
+                SetDeadline();
+                return originalTimeout;
             }
 
-            if (this.deadline == DateTime.MaxValue)
+            if (deadline == DateTime.MaxValue)
             {
                 return TimeSpan.MaxValue;
             }
 
-            var remaining = this.deadline - DateTime.UtcNow;
+            var remaining = deadline - DateTime.UtcNow;
             if (remaining <= TimeSpan.Zero)
             {
                 return TimeSpan.Zero;
@@ -125,14 +125,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public TimeSpan ElapsedTime()
         {
-            return this.originalTimeout - this.RemainingTime();
+            return originalTimeout - RemainingTime();
         }
 
         void SetDeadline()
         {
-            Debug.Assert(!this.deadlineSet, "TimeoutHelper deadline set twice.");
-            this.deadline = DateTime.UtcNow + this.originalTimeout;
-            this.deadlineSet = true;
+            Debug.Assert(!deadlineSet, "TimeoutHelper deadline set twice.");
+            deadline = DateTime.UtcNow + originalTimeout;
+            deadlineSet = true;
         }
     }
 }

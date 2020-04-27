@@ -62,19 +62,19 @@ namespace Microsoft.Azure.ServiceBus
             List<Exception> exceptions = null;
             var timeoutHelper = new TimeoutHelper(operationTimeout, true);
 
-            if (this.IsServerBusy && timeoutHelper.RemainingTime() < RetryPolicy.ServerBusyBaseSleepTime)
+            if (IsServerBusy && timeoutHelper.RemainingTime() < ServerBusyBaseSleepTime)
             {
                 // We are in a server busy state before we start processing.
                 // Since ServerBusyBaseSleepTime > remaining time for the operation, we don't wait for the entire Sleep time.
                 await Task.Delay(timeoutHelper.RemainingTime()).ConfigureAwait(false);
-                throw new ServerBusyException(this.ServerBusyExceptionMessage);
+                throw new ServerBusyException(ServerBusyExceptionMessage);
             }
 
             while (true)
             {
-                if (this.IsServerBusy)
+                if (IsServerBusy)
                 {
-                    await Task.Delay(RetryPolicy.ServerBusyBaseSleepTime).ConfigureAwait(false);
+                    await Task.Delay(ServerBusyBaseSleepTime).ConfigureAwait(false);
                 }
 
                 try
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus
                     await operation().ConfigureAwait(false);
 
                     // Its a successful operation. Preemptively reset ServerBusy status.
-                    this.ResetServerBusy();
+                    ResetServerBusy();
                     break;
                 }
                 catch (Exception exception)
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                     exceptions.Add(exception);
 
-                    if (this.ShouldRetry(
+                    if (ShouldRetry(
                         timeoutHelper.RemainingTime(), currentRetryCount, exception, out var retryInterval)
                         && retryInterval < timeoutHelper.RemainingTime())
                     {
@@ -135,12 +135,12 @@ namespace Microsoft.Azure.ServiceBus
 
             if (lastException is ServerBusyException)
             {
-                this.SetServerBusy(lastException.Message);
+                SetServerBusy(lastException.Message);
             }
 
-            if (this.IsRetryableException(lastException))
+            if (IsRetryableException(lastException))
             {
-                return this.OnShouldRetry(remainingTime, currentRetryCount, out retryInterval);
+                return OnShouldRetry(remainingTime, currentRetryCount, out retryInterval);
             }
 
             retryInterval = TimeSpan.Zero;
@@ -150,19 +150,19 @@ namespace Microsoft.Azure.ServiceBus
         internal void SetServerBusy(string exceptionMessage)
         {
             // multiple call to this method will not prolong the timer.
-            if (this.encounteredServerBusy)
+            if (encounteredServerBusy)
             {
                 return;
             }
 
-            lock (this.serverBusyLock)
+            lock (serverBusyLock)
             {
-                if (!this.encounteredServerBusy)
+                if (!encounteredServerBusy)
                 {
-                    this.encounteredServerBusy = true;
-                    this.ServerBusyExceptionMessage = string.IsNullOrWhiteSpace(exceptionMessage) ?
+                    encounteredServerBusy = true;
+                    ServerBusyExceptionMessage = string.IsNullOrWhiteSpace(exceptionMessage) ?
                         Resources.DefaultServerBusyException : exceptionMessage;
-                    this.IsServerBusy = true;
+                    IsServerBusy = true;
                     TaskExtensionHelper.Schedule(ScheduleResetServerBusy);
                 }
             }
@@ -170,18 +170,18 @@ namespace Microsoft.Azure.ServiceBus
 
         internal void ResetServerBusy()
         {
-            if (!this.encounteredServerBusy)
+            if (!encounteredServerBusy)
             {
                 return;
             }
 
-            lock (this.serverBusyLock)
+            lock (serverBusyLock)
             {
-                if (this.encounteredServerBusy)
+                if (encounteredServerBusy)
                 {
-                    this.encounteredServerBusy = false;
-                    this.ServerBusyExceptionMessage = Resources.DefaultServerBusyException;
-                    this.IsServerBusy = false;
+                    encounteredServerBusy = false;
+                    ServerBusyExceptionMessage = Resources.DefaultServerBusyException;
+                    IsServerBusy = false;
                 }
             }
         }
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.ServiceBus
 
         private async Task ScheduleResetServerBusy()
         {
-            await Task.Delay(RetryPolicy.ServerBusyBaseSleepTime).ConfigureAwait(false);
+            await Task.Delay(ServerBusyBaseSleepTime).ConfigureAwait(false);
             ResetServerBusy();
         }
     }

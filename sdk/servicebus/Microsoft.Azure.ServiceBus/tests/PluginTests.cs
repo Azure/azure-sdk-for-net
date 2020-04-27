@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Core;
+    using Core;
     using Xunit;
 
     public class PluginTests
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         public override Task<Message> BeforeMessageSend(Message message)
         {
-            this.MessageBodies.Add(message.MessageId, message.Body);
+            MessageBodies.Add(message.MessageId, message.Body);
             var clonedMessage = message.Clone();
             clonedMessage.Body = null;
             return Task.FromResult(clonedMessage);
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         public override Task<Message> AfterMessageReceive(Message message)
         {
             Assert.Null(message.Body);
-            message.Body = this.MessageBodies[message.MessageId];
+            message.Body = MessageBodies[message.MessageId];
             return Task.FromResult(message);
         }
     }

@@ -16,10 +16,10 @@ namespace Microsoft.Azure.ServiceBus
 
         public SessionPumpHost(string clientId, ReceiveMode receiveMode, ISessionClient sessionClient, Uri endpoint)
         {
-            this.syncLock = new object();
-            this.ClientId = clientId;
-            this.ReceiveMode = receiveMode;
-            this.SessionClient = sessionClient;
+            syncLock = new object();
+            ClientId = clientId;
+            ReceiveMode = receiveMode;
+            SessionClient = sessionClient;
             this.endpoint = endpoint;
         }
 
@@ -31,11 +31,11 @@ namespace Microsoft.Azure.ServiceBus
 
         public void Close()
         {
-            if (this.sessionReceivePump != null)
+            if (sessionReceivePump != null)
             {
-                this.sessionPumpCancellationTokenSource?.Cancel();
-                this.sessionPumpCancellationTokenSource?.Dispose();
-                this.sessionReceivePump = null;
+                sessionPumpCancellationTokenSource?.Cancel();
+                sessionPumpCancellationTokenSource?.Dispose();
+                sessionReceivePump = null;
             }
         }
 
@@ -43,44 +43,44 @@ namespace Microsoft.Azure.ServiceBus
             Func<IMessageSession, Message, CancellationToken, Task> callback,
             SessionHandlerOptions sessionHandlerOptions)
         {
-            MessagingEventSource.Log.RegisterOnSessionHandlerStart(this.ClientId, sessionHandlerOptions);
+            MessagingEventSource.Log.RegisterOnSessionHandlerStart(ClientId, sessionHandlerOptions);
 
-            lock (this.syncLock)
+            lock (syncLock)
             {
-                if (this.sessionReceivePump != null)
+                if (sessionReceivePump != null)
                 {
                     throw new InvalidOperationException(Resources.SessionHandlerAlreadyRegistered);
                 }
 
-                this.sessionPumpCancellationTokenSource = new CancellationTokenSource();
-                this.sessionReceivePump = new SessionReceivePump(
-                    this.ClientId,
-                    this.SessionClient,
-                    this.ReceiveMode,
+                sessionPumpCancellationTokenSource = new CancellationTokenSource();
+                sessionReceivePump = new SessionReceivePump(
+                    ClientId,
+                    SessionClient,
+                    ReceiveMode,
                     sessionHandlerOptions,
                     callback,
-                    this.endpoint,
-                    this.sessionPumpCancellationTokenSource.Token);
+                    endpoint,
+                    sessionPumpCancellationTokenSource.Token);
             }
 
             try
             {
-                this.sessionReceivePump.StartPump();
+                sessionReceivePump.StartPump();
             }
             catch (Exception exception)
             {
-                MessagingEventSource.Log.RegisterOnSessionHandlerException(this.ClientId, exception);
-                if (this.sessionReceivePump != null)
+                MessagingEventSource.Log.RegisterOnSessionHandlerException(ClientId, exception);
+                if (sessionReceivePump != null)
                 {
-                    this.sessionPumpCancellationTokenSource.Cancel();
-                    this.sessionPumpCancellationTokenSource.Dispose();
-                    this.sessionReceivePump = null;
+                    sessionPumpCancellationTokenSource.Cancel();
+                    sessionPumpCancellationTokenSource.Dispose();
+                    sessionReceivePump = null;
                 }
 
                 throw;
             }
 
-            MessagingEventSource.Log.RegisterOnSessionHandlerStop(this.ClientId);
+            MessagingEventSource.Log.RegisterOnSessionHandlerStop(ClientId);
         }
     }
 }

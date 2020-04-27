@@ -36,7 +36,7 @@ namespace Microsoft.Azure.ServiceBus
                         Constants.MaximumSqlRuleActionStatementLength));
             }
 
-            this.SqlExpression = sqlExpression;
+            SqlExpression = sqlExpression;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Sets the value of a rule action.
         /// </summary>
         /// <value>The value of a rule action.</value>
-        public IDictionary<string, object> Parameters => this.parameters ?? (this.parameters = new PropertyDictionary());
+        public IDictionary<string, object> Parameters => parameters ?? (parameters = new PropertyDictionary());
 
         /// <summary>
         /// Returns a string representation of <see cref="SqlRuleAction" />.
@@ -58,36 +58,36 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The string representation of <see cref="SqlRuleAction" />.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "SqlRuleAction: {0}", this.SqlExpression);
+            return string.Format(CultureInfo.InvariantCulture, "SqlRuleAction: {0}", SqlExpression);
         }
 
         public override int GetHashCode()
         {
-            return this.SqlExpression?.GetHashCode() ?? base.GetHashCode();
+            return SqlExpression?.GetHashCode() ?? base.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             var other = obj as RuleAction;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         public override bool Equals(RuleAction other)
         {
             if (other is SqlRuleAction sqlAction)
             {
-                if (string.Equals(this.SqlExpression, sqlAction.SqlExpression, StringComparison.OrdinalIgnoreCase)
-                    && (this.parameters != null && sqlAction.parameters != null
-                        || this.parameters == null && sqlAction.parameters == null))
+                if (string.Equals(SqlExpression, sqlAction.SqlExpression, StringComparison.OrdinalIgnoreCase)
+                    && (parameters != null && sqlAction.parameters != null
+                        || parameters == null && sqlAction.parameters == null))
                 {
-                    if (this.parameters != null)
+                    if (parameters != null)
                     {
-                        if (this.parameters.Count != sqlAction.parameters.Count)
+                        if (parameters.Count != sqlAction.parameters.Count)
                         {
                             return false;
                         }
 
-                        foreach (var param in this.parameters)
+                        foreach (var param in parameters)
                         {
                             if (!sqlAction.parameters.TryGetValue(param.Key, out var otherParamValue) ||
                                 (param.Value == null ^ otherParamValue == null) ||

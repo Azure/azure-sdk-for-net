@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
     using System.Collections.Generic;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Core;
+    using Core;
     using Microsoft.Azure.ServiceBus.Management;
     using Xunit;
 

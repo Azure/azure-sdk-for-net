@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
     using System;
     using System.Xml;
     using System.Xml.Linq;
-    using Microsoft.Azure.ServiceBus.Management;
+    using Management;
 
     internal class XmlObjectConvertor
     {

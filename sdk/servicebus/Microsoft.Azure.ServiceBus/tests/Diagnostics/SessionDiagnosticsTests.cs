@@ -7,7 +7,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Core;
+    using Core;
     using Xunit;
 
     [Collection(nameof(DiagnosticsTests))]
@@ -23,12 +23,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 var messageSender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
                 var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 var messageSession = default(IMessageSession);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
                 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable();
 
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
                 var timeout = TimeSpan.FromSeconds(5);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
 
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete, new NoRetry())
                 {
@@ -113,8 +113,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 
                 try
                 {
-                    using (var listener = this.CreateEventListener(queueName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(queueName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         queueClient.ServiceBusConnection.OperationTimeout = timeout;
                         queueClient.SessionClient.OperationTimeout = timeout;
@@ -192,9 +192,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         protected void AssertAcceptMessageSessionStart(string entityName, string eventName, object payload, Activity activity)
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.AcceptMessageSession.Start", eventName);
-            this.AssertCommonPayloadProperties(entityName, payload);
+            AssertCommonPayloadProperties(entityName, payload);
 
-            var sessionId = this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
+            var sessionId = GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
             
             Assert.NotNull(activity);
             Assert.Null(activity.Parent);
@@ -204,8 +204,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         protected void AssertAcceptMessageSessionStop(string entityName, string eventName, object payload, Activity activity, Activity acceptActivity)
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.AcceptMessageSession.Stop", eventName);
-            this.AssertCommonStopPayloadProperties(entityName, payload);
-            this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
+            AssertCommonStopPayloadProperties(entityName, payload);
+            GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
 
             if (acceptActivity != null)
             {
@@ -216,9 +216,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         protected void AssertGetSessionStateStart(string entityName, string eventName, object payload, Activity activity)
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.GetSessionState.Start", eventName);
-            this.AssertCommonPayloadProperties(entityName, payload);
+            AssertCommonPayloadProperties(entityName, payload);
 
-            var sessionId = this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
+            var sessionId = GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
             
             Assert.NotNull(activity);
             Assert.Null(activity.Parent);
@@ -228,9 +228,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         protected void AssertGetSessionStateStop(string entityName, string eventName, object payload, Activity activity, Activity getStateActivity)
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.GetSessionState.Stop", eventName);
-            this.AssertCommonStopPayloadProperties(entityName, payload);
-            this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
-            this.GetPropertyValueFromAnonymousTypeInstance<byte[]>(payload, "State");
+            AssertCommonStopPayloadProperties(entityName, payload);
+            GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
+            GetPropertyValueFromAnonymousTypeInstance<byte[]>(payload, "State");
 
             if (getStateActivity != null)
             {
@@ -241,9 +241,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         protected void AssertSetSessionStateStart(string entityName, string eventName, object payload, Activity activity)
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.SetSessionState.Start", eventName);
-            this.AssertCommonPayloadProperties(entityName, payload);
-            var sessionId = this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
-            this.GetPropertyValueFromAnonymousTypeInstance<byte[]>(payload, "State");
+            AssertCommonPayloadProperties(entityName, payload);
+            var sessionId = GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
+            GetPropertyValueFromAnonymousTypeInstance<byte[]>(payload, "State");
 
             Assert.NotNull(activity);
             Assert.Null(activity.Parent);
@@ -254,9 +254,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.SetSessionState.Stop", eventName);
 
-            this.AssertCommonStopPayloadProperties(entityName, payload);
-            this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
-            this.GetPropertyValueFromAnonymousTypeInstance<byte[]>(payload, "State");
+            AssertCommonStopPayloadProperties(entityName, payload);
+            GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
+            GetPropertyValueFromAnonymousTypeInstance<byte[]>(payload, "State");
 
             if (setStateActivity != null)
             {
@@ -267,8 +267,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         protected void AssertRenewSessionLockStart(string entityName, string eventName, object payload, Activity activity, Activity parentActivity)
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.RenewSessionLock.Start", eventName);
-            this.AssertCommonPayloadProperties(entityName, payload);
-            var sessionId= this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
+            AssertCommonPayloadProperties(entityName, payload);
+            var sessionId= GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
 
             Assert.NotNull(activity);
             Assert.Null(activity.Parent);
@@ -279,8 +279,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.RenewSessionLock.Stop", eventName);
 
-            this.AssertCommonStopPayloadProperties(entityName, payload);
-            this.GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
+            AssertCommonStopPayloadProperties(entityName, payload);
+            GetPropertyValueFromAnonymousTypeInstance<string>(payload, "SessionId");
 
             if (renewActivity != null)
             {

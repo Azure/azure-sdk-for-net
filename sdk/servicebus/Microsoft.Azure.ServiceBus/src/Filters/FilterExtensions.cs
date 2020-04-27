@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Xml.Linq;
-    using Microsoft.Azure.ServiceBus.Management;
+    using Management;
 
     internal static class FilterExtensions
     {

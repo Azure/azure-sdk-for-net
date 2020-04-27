@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Core;
+    using Core;
     using Microsoft.Azure.ServiceBus.Management;
     using Microsoft.Azure.ServiceBus.Primitives;
     using Xunit;

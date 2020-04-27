@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Sasl;
     using Microsoft.Azure.Amqp.Transport;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Primitives;
 
     internal class AmqpConnectionHelper
     {
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             string sslHostName = null,
             bool useWebSockets = false,
             bool sslStreamUpgrade = false,
-            System.Net.NetworkCredential networkCredential = null,
+            NetworkCredential networkCredential = null,
             bool forceTokenProvider = true)
         {
             var amqpSettings = new AmqpSettings();

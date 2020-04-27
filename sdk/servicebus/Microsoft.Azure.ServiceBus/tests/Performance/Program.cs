@@ -3,8 +3,8 @@
 
 namespace Microsoft.Azure.ServiceBus.Performance
 {
-    using Microsoft.Azure.ServiceBus;
-    using Microsoft.Azure.ServiceBus.Core;
+    using ServiceBus;
+    using Core;
     using System;
     using System.Diagnostics;
     using System.Threading;

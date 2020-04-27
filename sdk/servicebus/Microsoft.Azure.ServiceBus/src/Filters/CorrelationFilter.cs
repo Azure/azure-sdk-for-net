@@ -52,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(correlationId));
             }
 
-            this.CorrelationId = correlationId;
+            CorrelationId = correlationId;
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.ServiceBus
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[],
         /// and IList / IDictionary of supported types
         /// </remarks>
-        public IDictionary<string, object> Properties => this.properties ?? (this.properties = new PropertyDictionary());
+        public IDictionary<string, object> Properties => properties ?? (properties = new PropertyDictionary());
 
         /// <summary>
         /// Converts the value of the current instance to its equivalent string representation.
@@ -162,21 +162,21 @@ namespace Microsoft.Azure.ServiceBus
 
             var isFirstExpression = true;
 
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.CorrelationId", this.CorrelationId);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.MessageId", this.MessageId);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.To", this.To);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyTo", this.ReplyTo);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.Label", this.Label);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.SessionId", this.SessionId);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyToSessionId", this.ReplyToSessionId);
-            this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ContentType", this.ContentType);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.CorrelationId", CorrelationId);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.MessageId", MessageId);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.To", To);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyTo", ReplyTo);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.Label", Label);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.SessionId", SessionId);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ReplyToSessionId", ReplyToSessionId);
+            AppendPropertyExpression(ref isFirstExpression, stringBuilder, "sys.ContentType", ContentType);
 
-            foreach (var pair in this.Properties)
+            foreach (var pair in Properties)
             {
                 string propertyName = pair.Key;
                 object propertyValue = pair.Value;
 
-                this.AppendPropertyExpression(ref isFirstExpression, stringBuilder, propertyName, propertyValue);
+                AppendPropertyExpression(ref isFirstExpression, stringBuilder, propertyName, propertyValue);
             }
 
             return stringBuilder.ToString();
@@ -204,9 +204,9 @@ namespace Microsoft.Azure.ServiceBus
             int hash = 13;
             unchecked
             {
-                hash = (hash * 7) + this.CorrelationId?.GetHashCode() ?? 0;
-                hash = (hash * 7) + this.MessageId?.GetHashCode() ?? 0;
-                hash = (hash * 7) + this.SessionId?.GetHashCode() ?? 0; 
+                hash = (hash * 7) + CorrelationId?.GetHashCode() ?? 0;
+                hash = (hash * 7) + MessageId?.GetHashCode() ?? 0;
+                hash = (hash * 7) + SessionId?.GetHashCode() ?? 0; 
             }
 
             return hash;
@@ -215,32 +215,32 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj)
         {
             var other = obj as CorrelationFilter;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         public override bool Equals(Filter other)
         {
             if (other is CorrelationFilter correlationFilter)
             {
-                if (string.Equals(this.CorrelationId, correlationFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(this.MessageId, correlationFilter.MessageId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(this.To, correlationFilter.To, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(this.ReplyTo, correlationFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(this.Label, correlationFilter.Label, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(this.SessionId, correlationFilter.SessionId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(this.ReplyToSessionId, correlationFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(this.ContentType, correlationFilter.ContentType, StringComparison.OrdinalIgnoreCase)
-                    && (this.properties != null && correlationFilter.properties != null
-                        || this.properties == null && correlationFilter.properties == null))
+                if (string.Equals(CorrelationId, correlationFilter.CorrelationId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(MessageId, correlationFilter.MessageId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(To, correlationFilter.To, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(ReplyTo, correlationFilter.ReplyTo, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(Label, correlationFilter.Label, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(SessionId, correlationFilter.SessionId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(ReplyToSessionId, correlationFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(ContentType, correlationFilter.ContentType, StringComparison.OrdinalIgnoreCase)
+                    && (properties != null && correlationFilter.properties != null
+                        || properties == null && correlationFilter.properties == null))
                 {
-                    if (this.properties != null)
+                    if (properties != null)
                     {
-                        if (this.properties.Count != correlationFilter.properties.Count)
+                        if (properties.Count != correlationFilter.properties.Count)
                         {
                             return false;
                         }
 
-                        foreach (var param in this.properties)
+                        foreach (var param in properties)
                         {
                             if (!correlationFilter.properties.TryGetValue(param.Key, out var otherParamValue) ||
                                 (param.Value == null ^ otherParamValue == null) ||

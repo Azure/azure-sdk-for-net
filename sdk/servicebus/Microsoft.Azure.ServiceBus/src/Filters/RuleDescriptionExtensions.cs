@@ -6,8 +6,8 @@ namespace Microsoft.Azure.ServiceBus
     using System;
     using System.Collections.Generic;
     using System.Xml.Linq;
-    using Microsoft.Azure.ServiceBus.Management;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Management;
+    using Primitives;
 
     internal static class RuleDescriptionExtensions
     {

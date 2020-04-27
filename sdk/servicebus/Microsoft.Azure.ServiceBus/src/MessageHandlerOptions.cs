@@ -27,11 +27,11 @@ namespace Microsoft.Azure.ServiceBus
         /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
         public MessageHandlerOptions(Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
-            this.MaxConcurrentCalls = 1;
-            this.AutoComplete = true;
-            this.ReceiveTimeOut = Constants.DefaultOperationTimeout;
-            this.MaxAutoRenewDuration = Constants.ClientPumpRenewLockTimeout;
-            this.ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
+            MaxConcurrentCalls = 1;
+            AutoComplete = true;
+            ReceiveTimeOut = Constants.DefaultOperationTimeout;
+            MaxAutoRenewDuration = Constants.ClientPumpRenewLockTimeout;
+            ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
         }
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the message pump.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The maximum number of concurrent calls to the callback.</value>
         public int MaxConcurrentCalls
         {
-            get => this.maxConcurrentCalls;
+            get => maxConcurrentCalls;
 
             set
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.ServiceBus
                     throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
                 }
 
-                this.maxConcurrentCalls = value;
+                maxConcurrentCalls = value;
             }
         }
 
@@ -68,16 +68,16 @@ namespace Microsoft.Azure.ServiceBus
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoRenewDuration
         {
-            get => this.maxAutoRenewDuration;
+            get => maxAutoRenewDuration;
 
             set
             {
                 TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
-                this.maxAutoRenewDuration = value;
+                maxAutoRenewDuration = value;
             }
         }
 
-        internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;
+        internal bool AutoRenewLock => MaxAutoRenewDuration > TimeSpan.Zero;
 
         internal TimeSpan ReceiveTimeOut { get; }
 
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
+                await ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
             }
             catch (Exception exception)
             {

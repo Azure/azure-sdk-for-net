@@ -28,7 +28,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 try
                 {
-                    await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                    await PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
                 }
                 finally
                 {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 try
                 {
-                    await this.ReceiveDeleteTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                    await ReceiveDeleteTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
                 }
                 finally
                 {
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 try
                 {
-                    await this.PeekLockWithAbandonTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                    await PeekLockWithAbandonTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
                 }
                 finally
                 {
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 try
                 {
                     await
-                        this.PeekLockWithDeadLetterTestCase(
+                        PeekLockWithDeadLetterTestCase(
                             queueClient.InnerSender,
                             queueClient.InnerReceiver,
                             deadLetterQueueClient.InnerReceiver,
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 try
                 {
-                    await this.RenewLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                    await RenewLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
                 }
                 finally
                 {
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 try
                 {
-                    await this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                    await ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
                 }
                 finally
                 {
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 try
                 {
-                    await this.CancelScheduledMessagesAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                    await CancelScheduledMessagesAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
                 }
                 finally
                 {

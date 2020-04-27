@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
     using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Primitives;
 
     internal class AmqpSendReceiveLinkCreator : AmqpLinkCreator
     {
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 amqpLink = new SendingAmqpLink(linkSettings);
             }
-            linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{amqpSession.Identifier}:{amqpLink.Identifier}:{linkSettings.Source.ToString()}:{this.ClientId}";
+            linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{amqpSession.Identifier}:{amqpLink.Identifier}:{linkSettings.Source.ToString()}:{ClientId}";
             amqpLink.AttachTo(amqpSession);
             return amqpLink;
         }

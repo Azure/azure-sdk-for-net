@@ -12,8 +12,8 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         internal SubscriptionRuntimeInfo(string topicPath, string subscriptionName)
         {
-            this.TopicPath = topicPath;
-            this.SubscriptionName = subscriptionName;
+            TopicPath = topicPath;
+            SubscriptionName = subscriptionName;
         }
 
         /// <summary>

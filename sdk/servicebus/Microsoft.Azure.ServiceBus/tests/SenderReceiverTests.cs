@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await this.PeekLockTestCase(sender, receiver, messageCount);
+                    await PeekLockTestCase(sender, receiver, messageCount);
                 }
                 finally
                 {
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 try
                 {
                     await
-                        this.PeekLockDeferTestCase(sender, receiver, messageCount);
+                        PeekLockDeferTestCase(sender, receiver, messageCount);
                 }
                 finally
                 {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await this.PeekAsyncTestCase(sender, receiver, messageCount);
+                    await PeekAsyncTestCase(sender, receiver, messageCount);
                 }
                 finally
                 {
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await this.ReceiveShouldReturnNoLaterThanServerWaitTimeTestCase(sender, receiver, messageCount);
+                    await ReceiveShouldReturnNoLaterThanServerWaitTimeTestCase(sender, receiver, messageCount);
                 }
                 finally
                 {
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    await this.ReceiveShouldThrowForServerTimeoutZero(receiver);
+                    await ReceiveShouldThrowForServerTimeoutZero(receiver);
                 }
                 finally
                 {

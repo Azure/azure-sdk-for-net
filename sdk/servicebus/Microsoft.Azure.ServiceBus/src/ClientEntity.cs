@@ -23,9 +23,9 @@ namespace Microsoft.Azure.ServiceBus
         protected ClientEntity(string clientTypeName, string postfix, RetryPolicy retryPolicy)
         {
             this.clientTypeName = clientTypeName;
-            this.ClientId = GenerateClientId(clientTypeName, postfix);
-            this.RetryPolicy = retryPolicy ?? RetryPolicy.Default;
-            this.syncLock = new object();
+            ClientId = GenerateClientId(clientTypeName, postfix);
+            RetryPolicy = retryPolicy ?? RetryPolicy.Default;
+            syncLock = new object();
         }
 
         /// <summary>
@@ -86,21 +86,21 @@ namespace Microsoft.Azure.ServiceBus
         public async Task CloseAsync()
         {
             var callClose = false;
-            lock (this.syncLock)
+            lock (syncLock)
             {
-                if (!this.IsClosedOrClosing)
+                if (!IsClosedOrClosing)
                 {
-                    this.IsClosedOrClosing = true;
+                    IsClosedOrClosing = true;
                     callClose = true;
                 }
             }
 
             if (callClose)
             {
-                await this.OnClosingAsync().ConfigureAwait(false);
-                if (OwnsConnection && this.ServiceBusConnection.IsClosedOrClosing == false)
+                await OnClosingAsync().ConfigureAwait(false);
+                if (OwnsConnection && ServiceBusConnection.IsClosedOrClosing == false)
                 {
-                    await this.ServiceBusConnection.CloseAsync().ConfigureAwait(false);
+                    await ServiceBusConnection.CloseAsync().ConfigureAwait(false);
                 }
             }
         }
@@ -143,10 +143,10 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         protected virtual void ThrowIfClosed()
         {
-            this.ServiceBusConnection.ThrowIfClosed();
-            if (this.IsClosedOrClosing)
+            ServiceBusConnection.ThrowIfClosed();
+            if (IsClosedOrClosing)
             {
-                throw new ObjectDisposedException($"{this.clientTypeName} with Id '{this.ClientId}' has already been closed. Please create a new {this.clientTypeName}.");
+                throw new ObjectDisposedException($"{clientTypeName} with Id '{ClientId}' has already been closed. Please create a new {clientTypeName}.");
             }            
         }
 
@@ -155,8 +155,8 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         internal void UpdateClientId(string newClientId)
         {
-            MessagingEventSource.Log.UpdateClientId(this.ClientId, newClientId);
-            this.ClientId = newClientId;
+            MessagingEventSource.Log.UpdateClientId(ClientId, newClientId);
+            ClientId = newClientId;
         }
     }
 }

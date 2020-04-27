@@ -20,13 +20,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
                 var subscriptionClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName, ReceiveMode.ReceiveAndDelete);
-                var eventQueue = this.CreateEventQueue();
+                var eventQueue = CreateEventQueue();
                 var entityName = $"{topicName}/Subscriptions/{subscriptionName}";
 
                 try
                 {
-                    using (var listener = this.CreateEventListener(entityName, eventQueue))
-                    using (var subscription = this.SubscribeToEvents(listener))
+                    using (var listener = CreateEventListener(entityName, eventQueue))
+                    using (var subscription = SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, id) => name.Contains("Rule"));
 

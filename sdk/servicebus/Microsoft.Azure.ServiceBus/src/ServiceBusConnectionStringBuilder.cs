@@ -52,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             if (!string.IsNullOrWhiteSpace(connectionString))
             {
-                this.ParseConnectionString(connectionString);
+                ParseConnectionString(connectionString);
             }
         }
 
@@ -81,10 +81,10 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(string.IsNullOrWhiteSpace(sharedAccessKeyName) ? nameof(sharedAccessKeyName) : nameof(sharedAccessKey));
             }
 
-            this.Endpoint = endpoint;
-            this.EntityPath = entityPath;
-            this.SasKeyName = sharedAccessKeyName;
-            this.SasKey = sharedAccessKey;
+            Endpoint = endpoint;
+            EntityPath = entityPath;
+            SasKeyName = sharedAccessKeyName;
+            SasKey = sharedAccessKey;
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(sharedAccessSignature));
             }
 
-            this.Endpoint = endpoint;
-            this.EntityPath = entityPath;
-            this.SasToken = sharedAccessSignature;
+            Endpoint = endpoint;
+            EntityPath = entityPath;
+            SasToken = sharedAccessSignature;
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey, TransportType transportType)
             : this(endpoint, entityPath, sharedAccessKeyName, sharedAccessKey)
         {
-            this.TransportType = transportType;
+            TransportType = transportType;
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, TransportType transportType)
             :this(endpoint, entityPath, sharedAccessSignature)
         {
-            this.TransportType = transportType;
+            TransportType = transportType;
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <exception cref="UriFormatException">Throws when the hostname cannot be parsed</exception>
         public string Endpoint
         {
-            get => this.endpoint;
+            get => endpoint;
             set
             {
                 if (!value.Contains("."))
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 var uriBuilder = new UriBuilder(value.Trim());
-                this.endpoint = (value.Contains("://") ? uriBuilder.Scheme : EndpointScheme) + "://" + uriBuilder.Host;
+                endpoint = (value.Contains("://") ? uriBuilder.Scheme : EndpointScheme) + "://" + uriBuilder.Host;
             }
         }
 
@@ -185,8 +185,8 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public string EntityPath
         {
-            get => this.entityPath;
-            set => this.entityPath = value.Trim();
+            get => entityPath;
+            set => entityPath = value.Trim();
         }
 
         /// <summary>
@@ -194,14 +194,14 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public string SasKeyName
         {
-            get => this.sasKeyName;
+            get => sasKeyName;
             set
             {
-                if (this.Authentication != AuthenticationType.Other)
+                if (Authentication != AuthenticationType.Other)
                 {
                     throw Fx.Exception.Argument("Authentication, SasKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasKeyName"));
                 }
-                this.sasKeyName = value.Trim();
+                sasKeyName = value.Trim();
             }
         }
 
@@ -211,8 +211,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>Shared Access Signature key</value>
         public string SasKey
         {
-            get => this.sasKey;
-            set => this.sasKey = value.Trim();
+            get => sasKey;
+            set => sasKey = value.Trim();
         }
 
          /// <summary>
@@ -221,14 +221,14 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>Shared Access Signature token</value>
         public string SasToken
         {
-            get => this.sasToken;
+            get => sasToken;
             set
             {
-                if (this.Authentication != AuthenticationType.Other)
+                if (Authentication != AuthenticationType.Other)
                 {
                     throw Fx.Exception.Argument("Authentication, SasToken", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasToken"));
                 }
-                this.sasToken = value.Trim();
+                sasToken = value.Trim();
             }
         }
 
@@ -248,21 +248,21 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public AuthenticationType Authentication
         {
-            get => this.authType;
+            get => authType;
             set
             {
-                if (!string.IsNullOrWhiteSpace(this.SasKeyName))
+                if (!string.IsNullOrWhiteSpace(SasKeyName))
                 {
                     throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
                         Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
                 }
 
-                if (!string.IsNullOrWhiteSpace(this.SasToken))
+                if (!string.IsNullOrWhiteSpace(SasToken))
                 {
                     throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
                         Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
                 }
-                this.authType = value;
+                authType = value;
             }
         }
 
@@ -275,37 +275,37 @@ namespace Microsoft.Azure.ServiceBus
         public string GetNamespaceConnectionString()
         {
             var connectionStringBuilder = new StringBuilder();
-            if (this.Endpoint != null)
+            if (Endpoint != null)
             {
-                connectionStringBuilder.Append(EndpointConfigName).Append(KeyValueSeparator).Append(this.Endpoint).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append(EndpointConfigName).Append(KeyValueSeparator).Append(Endpoint).Append(KeyValuePairDelimiter);
             }
 
-            if (!string.IsNullOrWhiteSpace(this.SasKeyName))
+            if (!string.IsNullOrWhiteSpace(SasKeyName))
             {
-                connectionStringBuilder.Append(SharedAccessKeyNameConfigName).Append(KeyValueSeparator).Append(this.SasKeyName).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append(SharedAccessKeyNameConfigName).Append(KeyValueSeparator).Append(SasKeyName).Append(KeyValuePairDelimiter);
             }
 
-            if (!string.IsNullOrWhiteSpace(this.SasKey))
+            if (!string.IsNullOrWhiteSpace(SasKey))
             {
-                connectionStringBuilder.Append(SharedAccessKeyConfigName).Append(KeyValueSeparator).Append(this.SasKey).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append(SharedAccessKeyConfigName).Append(KeyValueSeparator).Append(SasKey).Append(KeyValuePairDelimiter);
             }
 
-            if (!string.IsNullOrWhiteSpace(this.SasToken))
+            if (!string.IsNullOrWhiteSpace(SasToken))
             {
-                connectionStringBuilder.Append(SharedAccessSignatureConfigName).Append(KeyValueSeparator).Append(this.SasToken).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append(SharedAccessSignatureConfigName).Append(KeyValueSeparator).Append(SasToken).Append(KeyValuePairDelimiter);
             }
 
-            if (this.TransportType != TransportType.Amqp)
+            if (TransportType != TransportType.Amqp)
             {
-                connectionStringBuilder.Append(TransportTypeConfigName).Append(KeyValueSeparator).Append(this.TransportType).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append(TransportTypeConfigName).Append(KeyValueSeparator).Append(TransportType).Append(KeyValuePairDelimiter);
             }
 
-            if (this.OperationTimeout != Constants.DefaultOperationTimeout)
+            if (OperationTimeout != Constants.DefaultOperationTimeout)
             {
-                connectionStringBuilder.Append(OperationTimeoutConfigName).Append(KeyValueSeparator).Append(this.OperationTimeout).Append(KeyValuePairDelimiter);
+                connectionStringBuilder.Append(OperationTimeoutConfigName).Append(KeyValueSeparator).Append(OperationTimeout).Append(KeyValuePairDelimiter);
             }
 
-            if (this.Authentication == AuthenticationType.ManagedIdentity)
+            if (Authentication == AuthenticationType.ManagedIdentity)
             {
                 connectionStringBuilder.Append(AuthenticationConfigName).Append(KeyValueSeparator).Append("Managed Identity").Append(KeyValuePairDelimiter);
             }
@@ -319,12 +319,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>Entity connection string</returns>
         public string GetEntityConnectionString()
         {
-            if (string.IsNullOrWhiteSpace(this.EntityPath))
+            if (string.IsNullOrWhiteSpace(EntityPath))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(this.EntityPath));
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(EntityPath));
             }
 
-            return $"{this.GetNamespaceConnectionString()}{KeyValuePairDelimiter}{EntityPathConfigName}{KeyValueSeparator}{this.EntityPath}";
+            return $"{GetNamespaceConnectionString()}{KeyValuePairDelimiter}{EntityPathConfigName}{KeyValueSeparator}{EntityPath}";
         }
 
         /// <summary>
@@ -333,12 +333,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The connection string</returns>
         public override string ToString()
         {
-            if (string.IsNullOrWhiteSpace(this.EntityPath))
+            if (string.IsNullOrWhiteSpace(EntityPath))
             {
-                return this.GetNamespaceConnectionString();
+                return GetNamespaceConnectionString();
             }
 
-            return this.GetEntityConnectionString();
+            return GetEntityConnectionString();
         }
 
         void ParseConnectionString(string connectionString)
@@ -358,52 +358,52 @@ namespace Microsoft.Azure.ServiceBus
                 var value = keyAndValue[1].Trim();
                 if (key.Equals(EndpointConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Endpoint = value;
+                    Endpoint = value;
                 }
                 else if (key.Equals(SharedAccessKeyNameConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SasKeyName = value;
+                    SasKeyName = value;
                 }
                 else if (key.Equals(EntityPathConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.EntityPath = value;
+                    EntityPath = value;
                 }
                 else if (key.Equals(SharedAccessKeyConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SasKey = value;
+                    SasKey = value;
                 }
                 else if (key.Equals(SharedAccessSignatureConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SasToken = value;
+                    SasToken = value;
                 }
                 else if (key.Equals(TransportTypeConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     if (Enum.TryParse(value, true, out TransportType transportType))
                     {
-                        this.TransportType = transportType;
+                        TransportType = transportType;
                     }
                 }
                 else if (key.Equals(OperationTimeoutConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     if (int.TryParse(value, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out var timeoutInSeconds))
                     {
-                        this.OperationTimeout = TimeSpan.FromSeconds(timeoutInSeconds);
+                        OperationTimeout = TimeSpan.FromSeconds(timeoutInSeconds);
                     }
                     else if (TimeSpan.TryParse(value, NumberFormatInfo.InvariantInfo, out var operationTimeout))
                     {
-                        this.OperationTimeout = operationTimeout;
+                        OperationTimeout = operationTimeout;
                     }
                     else
                     {
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) format is invalid. It must be an integer representing a number of seconds.");
                     }
 
-                    if (this.OperationTimeout.TotalMilliseconds <= 0)
+                    if (OperationTimeout.TotalMilliseconds <= 0)
                     {
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be greater than zero.");
                     }
 
-                    if (this.OperationTimeout.TotalHours >= 1)
+                    if (OperationTimeout.TotalHours >= 1)
                     {
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be smaller than one hour.");
                     }
@@ -411,9 +411,9 @@ namespace Microsoft.Azure.ServiceBus
                 else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase) && !int.TryParse(value, out _))
                 {
                     value = value.Replace(" ", string.Empty);
-                    if (!Enum.TryParse(value, true, out this.authType))
+                    if (!Enum.TryParse(value, true, out authType))
                     {
-                        this.authType = AuthenticationType.Other;
+                        authType = AuthenticationType.Other;
                     }
                 }
                 else

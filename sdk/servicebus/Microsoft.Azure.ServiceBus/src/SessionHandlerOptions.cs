@@ -29,11 +29,11 @@ namespace Microsoft.Azure.ServiceBus
         public SessionHandlerOptions(Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             // These are default values
-            this.AutoComplete = true;
-            this.MaxConcurrentSessions = 2000;
-            this.MessageWaitTimeout = TimeSpan.FromMinutes(1);
-            this.MaxAutoRenewDuration = Constants.ClientPumpRenewLockTimeout;
-            this.ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
+            AutoComplete = true;
+            MaxConcurrentSessions = 2000;
+            MessageWaitTimeout = TimeSpan.FromMinutes(1);
+            MaxAutoRenewDuration = Constants.ClientPumpRenewLockTimeout;
+            ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
         }
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the session pump.
@@ -44,12 +44,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The duration for which the session renew its state.</value>
         public TimeSpan MaxAutoRenewDuration
         {
-            get => this.maxAutoRenewDuration;
+            get => maxAutoRenewDuration;
 
             set
             {
                 TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
-                this.maxAutoRenewDuration = value;
+                maxAutoRenewDuration = value;
             }
         }
 
@@ -57,12 +57,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The time to wait for receiving the message.</value>
         public TimeSpan MessageWaitTimeout
         {
-            get => this.messageWaitTimeout;
+            get => messageWaitTimeout;
 
             set
             {
                 TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
-                this.messageWaitTimeout = value;
+                messageWaitTimeout = value;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The maximum number of sessions that the User wants to handle concurrently.</value>
         public int MaxConcurrentSessions
         {
-            get => this.maxConcurrentSessions;
+            get => maxConcurrentSessions;
 
             set
             {
@@ -79,8 +79,8 @@ namespace Microsoft.Azure.ServiceBus
                     throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
                 }
 
-                this.maxConcurrentSessions = value;
-                this.MaxConcurrentAcceptSessionCalls = Math.Min(value, 2 * Environment.ProcessorCount);
+                maxConcurrentSessions = value;
+                MaxConcurrentAcceptSessionCalls = Math.Min(value, 2 * Environment.ProcessorCount);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>true if the autocomplete option of the session handler is enabled; otherwise, false.</value>
         public bool AutoComplete { get; set; }
 
-        internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;
+        internal bool AutoRenewLock => MaxAutoRenewDuration > TimeSpan.Zero;
 
         internal int MaxConcurrentAcceptSessionCalls { get; set; }
 
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
+                await ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
             }
             catch (Exception exception)
             {

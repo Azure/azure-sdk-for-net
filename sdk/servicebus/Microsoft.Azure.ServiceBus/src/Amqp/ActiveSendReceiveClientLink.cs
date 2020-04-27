@@ -11,11 +11,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public ActiveSendReceiveClientLink(AmqpLink link, Uri endpointUri, string[] audience, string[] requiredClaims, DateTime authorizationValidUntilUtc)
             : base(link, endpointUri, audience, requiredClaims, authorizationValidUntilUtc)
         {
-            this.Link = link;
+            Link = link;
         }
 
         public AmqpLink Link { get; }
 
-        public override AmqpConnection Connection => this.Link.Session.Connection;
+        public override AmqpConnection Connection => Link.Session.Connection;
     }
 }

@@ -162,10 +162,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     TestUtility.Log($"Sent Message: {messageId2} to Session: {sessionId2}");
 
                     // Peek Message, Receive and Delete with SessionId - sessionId 1
-                    await this.PeekAndDeleteMessageAsync(sessionClient, sessionId1, messageId1);
+                    await PeekAndDeleteMessageAsync(sessionClient, sessionId1, messageId1);
 
                     // Peek Message, Receive and Delete with SessionId - sessionId 2
-                    await this.PeekAndDeleteMessageAsync(sessionClient, sessionId2, messageId2);
+                    await PeekAndDeleteMessageAsync(sessionClient, sessionId2, messageId2);
                 }
                 finally
                 {

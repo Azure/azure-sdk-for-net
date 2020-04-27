@@ -19,9 +19,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
         {
-            this.AuthCallback = authenticationCallback ?? throw Fx.Exception.ArgumentNull(nameof(authenticationCallback));
+            AuthCallback = authenticationCallback ?? throw Fx.Exception.ArgumentNull(nameof(authenticationCallback));
             this.authority = authority ?? throw Fx.Exception.ArgumentNull(nameof(authority));
-            this.authCallbackState = state;
+            authCallbackState = state;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            var tokenString = await this.AuthCallback(Constants.AadServiceBusAudience, this.authority, this.authCallbackState).ConfigureAwait(false);
+            var tokenString = await AuthCallback(Constants.AadServiceBusAudience, authority, authCallbackState).ConfigureAwait(false);
             return new JsonSecurityToken(tokenString, appliesTo);
         }
     }

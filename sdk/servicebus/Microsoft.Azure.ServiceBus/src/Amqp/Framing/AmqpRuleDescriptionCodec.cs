@@ -39,41 +39,41 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         protected override void OnEncode(ByteBuffer buffer)
         {
-            AmqpCodec.EncodeSerializable(this.Filter, buffer);
-            AmqpCodec.EncodeSerializable(this.Action, buffer);
-            AmqpCodec.EncodeString(this.RuleName, buffer);
-            AmqpCodec.EncodeTimeStamp(this.CreatedAt, buffer);
+            AmqpCodec.EncodeSerializable(Filter, buffer);
+            AmqpCodec.EncodeSerializable(Action, buffer);
+            AmqpCodec.EncodeString(RuleName, buffer);
+            AmqpCodec.EncodeTimeStamp(CreatedAt, buffer);
         }
 
         protected override void OnDecode(ByteBuffer buffer, int count)
         {
             if (count-- > 0)
             {
-                this.Filter = (AmqpFilterCodec)AmqpCodec.DecodeAmqpDescribed(buffer);
+                Filter = (AmqpFilterCodec)AmqpCodec.DecodeAmqpDescribed(buffer);
             }
 
             if (count-- > 0)
             {
-                this.Action = (AmqpRuleActionCodec)AmqpCodec.DecodeAmqpDescribed(buffer);
+                Action = (AmqpRuleActionCodec)AmqpCodec.DecodeAmqpDescribed(buffer);
             }
 
             if (count-- > 0)
             {
-                this.RuleName = AmqpCodec.DecodeString(buffer);
+                RuleName = AmqpCodec.DecodeString(buffer);
             }
 
             if (count > 0)
             {
-                this.CreatedAt = AmqpCodec.DecodeTimeStamp(buffer);
+                CreatedAt = AmqpCodec.DecodeTimeStamp(buffer);
             }
         }
 
         protected override int OnValueSize()
         {
-            return AmqpCodec.GetSerializableEncodeSize(this.Filter) +
-                   AmqpCodec.GetSerializableEncodeSize(this.Action) +
-                   AmqpCodec.GetStringEncodeSize(this.RuleName) +
-                   AmqpCodec.GetTimeStampEncodeSize(this.CreatedAt);
+            return AmqpCodec.GetSerializableEncodeSize(Filter) +
+                   AmqpCodec.GetSerializableEncodeSize(Action) +
+                   AmqpCodec.GetStringEncodeSize(RuleName) +
+                   AmqpCodec.GetTimeStampEncodeSize(CreatedAt);
         }
     }
 }

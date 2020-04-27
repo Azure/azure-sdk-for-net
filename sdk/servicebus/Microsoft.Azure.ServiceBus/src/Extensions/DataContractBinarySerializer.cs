@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// </summary>
         public DataContractBinarySerializer(Type type)
         {
-            this.dataContractSerializer = new DataContractSerializer(type);
+            dataContractSerializer = new DataContractSerializer(type);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// <remarks>Override the default (Text) and use Binary Xml Reader instead</remarks>
         public override object ReadObject(Stream stream)
         {
-            return this.ReadObject(XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max));
+            return ReadObject(XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max));
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
             }
 
             var xmlDictionaryWriter = XmlDictionaryWriter.CreateBinaryWriter(stream, null, null, false);
-            this.WriteObject(xmlDictionaryWriter, graph);
+            WriteObject(xmlDictionaryWriter, graph);
             xmlDictionaryWriter.Flush();
         }
 
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            this.dataContractSerializer.WriteObject(writer, graph);
+            dataContractSerializer.WriteObject(writer, graph);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// </summary>
         public override bool IsStartObject(XmlDictionaryReader reader)
         {
-            return this.dataContractSerializer.IsStartObject(reader);
+            return dataContractSerializer.IsStartObject(reader);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// </summary>
         public override object ReadObject(XmlDictionaryReader reader, bool verifyObjectName)
         {
-            return this.dataContractSerializer.ReadObject(reader, verifyObjectName);
+            return dataContractSerializer.ReadObject(reader, verifyObjectName);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// </summary>
         public override void WriteEndObject(XmlDictionaryWriter writer)
         {
-            this.dataContractSerializer.WriteEndObject(writer);
+            dataContractSerializer.WriteEndObject(writer);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// </summary>
         public override void WriteObjectContent(XmlDictionaryWriter writer, object graph)
         {
-            this.dataContractSerializer.WriteObjectContent(writer, graph);
+            dataContractSerializer.WriteObjectContent(writer, graph);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.ServiceBus.InteropExtensions
         /// </summary>
         public override void WriteStartObject(XmlDictionaryWriter writer, object graph)
         {
-            this.dataContractSerializer.WriteStartObject(writer, graph);
+            dataContractSerializer.WriteStartObject(writer, graph);
         }
     }
 

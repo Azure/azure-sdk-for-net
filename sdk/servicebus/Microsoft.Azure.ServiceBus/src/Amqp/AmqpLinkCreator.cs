@@ -7,7 +7,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Primitives;
 
     internal abstract class AmqpLinkCreator
     {
@@ -28,29 +28,29 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             this.requiredClaims = requiredClaims;
             this.cbsTokenProvider = cbsTokenProvider;
             this.amqpLinkSettings = amqpLinkSettings;
-            this.ClientId = clientId;
+            ClientId = clientId;
         }
 
         protected string ClientId { get; }
 
         public async Task<Tuple<AmqpObject, DateTime>> CreateAndOpenAmqpLinkAsync()
         {
-            var timeoutHelper = new TimeoutHelper(this.serviceBusConnection.OperationTimeout, true);
+            var timeoutHelper = new TimeoutHelper(serviceBusConnection.OperationTimeout, true);
 
             MessagingEventSource.Log.AmqpGetOrCreateConnectionStart();
-            var amqpConnection = await this.serviceBusConnection.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
-            MessagingEventSource.Log.AmqpGetOrCreateConnectionStop(this.entityPath, amqpConnection.ToString(), amqpConnection.State.ToString());
+            var amqpConnection = await serviceBusConnection.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
+            MessagingEventSource.Log.AmqpGetOrCreateConnectionStop(entityPath, amqpConnection.ToString(), amqpConnection.State.ToString());
 
             // Authenticate over CBS
             var cbsLink = amqpConnection.Extensions.Find<AmqpCbsLink>();
             DateTime cbsTokenExpiresAtUtc = DateTime.MaxValue;
 
-            foreach (var resource in this.audience)
+            foreach (var resource in audience)
             {
-                MessagingEventSource.Log.AmqpSendAuthenticationTokenStart(this.endpointAddress, resource, resource, this.requiredClaims);
+                MessagingEventSource.Log.AmqpSendAuthenticationTokenStart(endpointAddress, resource, resource, requiredClaims);
                 cbsTokenExpiresAtUtc = TimeoutHelper.Min(
                     cbsTokenExpiresAtUtc, 
-                    await cbsLink.SendTokenAsync(this.cbsTokenProvider, this.endpointAddress, resource, resource, this.requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false));
+                    await cbsLink.SendTokenAsync(cbsTokenProvider, endpointAddress, resource, resource, requiredClaims, timeoutHelper.RemainingTime()).ConfigureAwait(false));
                 MessagingEventSource.Log.AmqpSendAuthenticationTokenStop(); 
             }
 
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                MessagingEventSource.Log.AmqpSessionCreationException(this.entityPath, amqpConnection, exception);
+                MessagingEventSource.Log.AmqpSessionCreationException(entityPath, amqpConnection, exception);
                 session?.Abort();
                 throw AmqpExceptionHelper.GetClientException(exception, null, session.GetInnerException(), amqpConnection.IsClosing());
             }
@@ -73,14 +73,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             try
             {
                 // Create Link
-                link = this.OnCreateAmqpLink(amqpConnection, this.amqpLinkSettings, session);
+                link = OnCreateAmqpLink(amqpConnection, amqpLinkSettings, session);
                 await link.OpenAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 return new Tuple<AmqpObject, DateTime>(link, cbsTokenExpiresAtUtc);
             }
             catch (Exception exception)
             {
                 MessagingEventSource.Log.AmqpLinkCreationException(
-                    this.entityPath,
+                    entityPath,
                     session,
                     amqpConnection,
                     exception);

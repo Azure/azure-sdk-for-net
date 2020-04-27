@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         internal TopicRuntimeInfo(string path)
         {
-            this.Path = path;
+            Path = path;
         }
 
         /// <summary>

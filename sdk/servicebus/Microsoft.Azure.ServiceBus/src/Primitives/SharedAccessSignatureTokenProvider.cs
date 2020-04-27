@@ -78,7 +78,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             this.keyName = keyName;
             this.tokenTimeToLive = tokenTimeToLive;
-            this.encodedSharedAccessKey = customKeyEncoder != null ?
+            encodedSharedAccessKey = customKeyEncoder != null ?
                 customKeyEncoder(sharedAccessKey) :
                 MessagingTokenProviderKeyEncoder(sharedAccessKey);
             this.tokenScope = tokenScope;
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             TimeoutHelper.ThrowIfNegativeArgument(timeout);
             appliesTo = NormalizeAppliesTo(appliesTo);
-            string tokenString = this.BuildSignature(appliesTo);
+            string tokenString = BuildSignature(appliesTo);
             var securityToken = new SharedAccessSignatureToken(tokenString);
             return Task.FromResult<SecurityToken>(securityToken);
         }
@@ -108,18 +108,18 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns></returns>
         protected virtual string BuildSignature(string targetUri)
         {
-            return string.IsNullOrWhiteSpace(this.sharedAccessSignature)
+            return string.IsNullOrWhiteSpace(sharedAccessSignature)
                 ? SharedAccessSignatureBuilder.BuildSignature(
-                    this.keyName,
-                    this.encodedSharedAccessKey,
+                    keyName,
+                    encodedSharedAccessKey,
                     targetUri,
-                    this.tokenTimeToLive)
-                : this.sharedAccessSignature;
+                    tokenTimeToLive)
+                : sharedAccessSignature;
         }
 
         string NormalizeAppliesTo(string appliesTo)
         {
-            return ServiceBusUriHelper.NormalizeUri(appliesTo, "https", true, stripPath: this.tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
+            return ServiceBusUriHelper.NormalizeUri(appliesTo, "https", true, stripPath: tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
         }
 
         static class SharedAccessSignatureBuilder

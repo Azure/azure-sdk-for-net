@@ -200,9 +200,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             public ExceptionRetryData(Exception exception, int retryCount, bool shouldRetry)
             {
-                this.Exception = exception;
-                this.RetryCount = retryCount;
-                this.ShouldRetry = shouldRetry;
+                Exception = exception;
+                RetryCount = retryCount;
+                ShouldRetry = shouldRetry;
             }
 
             public override string ToString() => $"{ Exception }/{ RetryCount }";

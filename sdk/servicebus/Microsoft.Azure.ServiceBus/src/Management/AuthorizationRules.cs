@@ -10,7 +10,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
     public class AuthorizationRules : List<AuthorizationRule>, IEquatable<AuthorizationRules>
     {
-        private bool RequiresEncryption => this.Count > 0;
+        private bool RequiresEncryption => Count > 0;
 
         internal XElement Serialize()
         {
@@ -46,12 +46,12 @@ namespace Microsoft.Azure.ServiceBus.Management
         public override bool Equals(object obj)
         {
             var other = obj as AuthorizationRules;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         public bool Equals(AuthorizationRules other)
         {
-            if (ReferenceEquals(other, null) || this.Count != other.Count)
+            if (ReferenceEquals(other, null) || Count != other.Count)
             {
                 return false;
             }

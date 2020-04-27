@@ -17,7 +17,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="isTransient">Specifies whether or not the exception is transient.</param>
         public ServiceBusException(bool isTransient)
         {
-            this.IsTransient = isTransient;
+            IsTransient = isTransient;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusException(bool isTransient, string message)
             : base(message)
         {
-            this.IsTransient = isTransient;
+            IsTransient = isTransient;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusException(bool isTransient, Exception innerException)
             : base(innerException.Message, innerException)
         {
-            this.IsTransient = isTransient;
+            IsTransient = isTransient;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusException(bool isTransient, string message, Exception innerException)
             : base(message, innerException)
         {
-            this.IsTransient = isTransient;
+            IsTransient = isTransient;
         }
 
         /// <summary>
@@ -60,12 +60,12 @@ namespace Microsoft.Azure.ServiceBus
             get
             {
                 var baseMessage = base.Message;
-                if (string.IsNullOrEmpty(this.ServiceBusNamespace))
+                if (string.IsNullOrEmpty(ServiceBusNamespace))
                 {
                     return baseMessage;
                 }
 
-                return "{0}, ({1})".FormatInvariant(baseMessage, this.ServiceBusNamespace);
+                return "{0}, ({1})".FormatInvariant(baseMessage, ServiceBusNamespace);
             }
         }
 

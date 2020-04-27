@@ -11,9 +11,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 
         public TestBook(string name, int id, int count)
         {
-            this.Name = name;
-            this.Count = count;
-            this.Id = id;
+            Name = name;
+            Count = count;
+            Id = id;
         }
 
         public override bool Equals(object obj)
@@ -26,9 +26,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             var testBook = (TestBook)obj;
 
             return
-                this.Name.Equals(testBook.Name, StringComparison.OrdinalIgnoreCase) &&
-                this.Count == testBook.Count &&
-                this.Id == testBook.Id;
+                Name.Equals(testBook.Name, StringComparison.OrdinalIgnoreCase) &&
+                Count == testBook.Count &&
+                Id == testBook.Id;
         }
 
         public override int GetHashCode()

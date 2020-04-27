@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
-    using Microsoft.Azure.ServiceBus.Management;
+    using Management;
 
     /// <summary>
     /// This class can be used to format the path for different Service Bus entity types.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The path as a string of the dead letter entity.</returns>
         public static string FormatDeadLetterPath(string entityPath)
         {
-            return EntityNameHelper.FormatSubQueuePath(entityPath, EntityNameHelper.DeadLetterQueueName);
+            return FormatSubQueuePath(entityPath, DeadLetterQueueName);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The path as a string of the subqueue entity.</returns>
         public static string FormatSubQueuePath(string entityPath, string subQueueName)
         {
-            return string.Concat(entityPath, EntityNameHelper.PathDelimiter, subQueueName);
+            return string.Concat(entityPath, PathDelimiter, subQueueName);
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Primitives;
 
     /// <summary>
     /// Represents the metadata description of the queue.
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <param name="path">Path of the queue relative to the namespace base address.</param>
         public QueueDescription(string path)
         {
-            this.Path = path;
+            Path = path;
         }
 
         /// <summary>
@@ -38,11 +38,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
         public string Path
         {
-            get => this.path;
+            get => path;
             set
             {
                 EntityNameHelper.CheckValidQueueName(value, nameof(Path));
-                this.path = value;
+                path = value;
             }
         }
 
@@ -53,11 +53,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>Max value is 5 minutes. Default value is 60 seconds.</remarks>
         public TimeSpan LockDuration
         {
-            get => this.lockDuration;
+            get => lockDuration;
             set
             {
                 TimeoutHelper.ThrowIfNonPositiveArgument(value, nameof(LockDuration));
-                this.lockDuration = value;
+                lockDuration = value;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         ///  </remarks>
         public TimeSpan DefaultMessageTimeToLive
         {
-            get => this.defaultMessageTimeToLive;
+            get => defaultMessageTimeToLive;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedTimeToLive || value > ManagementClientConstants.MaximumAllowedTimeToLive)
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $"The value must be between {ManagementClientConstants.MinimumAllowedTimeToLive} and {ManagementClientConstants.MaximumAllowedTimeToLive}");
                 }
 
-                this.defaultMessageTimeToLive = value;
+                defaultMessageTimeToLive = value;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
         public TimeSpan AutoDeleteOnIdle
         {
-            get => this.autoDeleteOnIdle;
+            get => autoDeleteOnIdle;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle)
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}");
                 }
 
-                this.autoDeleteOnIdle = value;
+                autoDeleteOnIdle = value;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// </remarks>
         public TimeSpan DuplicateDetectionHistoryTimeWindow
         {
-            get => this.duplicateDetectionHistoryTimeWindow;
+            get => duplicateDetectionHistoryTimeWindow;
             set
             {
                 if (value < ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow || value > ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow)
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}");
                 }
 
-                this.duplicateDetectionHistoryTimeWindow = value;
+                duplicateDetectionHistoryTimeWindow = value;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// Default value is 10. Minimum value is 1.</remarks>
         public int MaxDeliveryCount
         {
-            get => this.maxDeliveryCount;
+            get => maxDeliveryCount;
             set
             {
                 if (value < ManagementClientConstants.MinAllowedMaxDeliveryCount)
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $"The value must be greater than {ManagementClientConstants.MinAllowedMaxDeliveryCount}");
                 }
 
-                this.maxDeliveryCount = value;
+                maxDeliveryCount = value;
             }
         }
 
@@ -199,22 +199,22 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// must be an already existing entity.</remarks>
         public string ForwardTo
         {
-            get => this.forwardTo;
+            get => forwardTo;
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    this.forwardTo = value;
+                    forwardTo = value;
                     return;
                 }
 
                 EntityNameHelper.CheckValidQueueName(value, nameof(ForwardTo));
-                if (this.path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
 
-                this.forwardTo = value;
+                forwardTo = value;
             }
         }
 
@@ -225,22 +225,22 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// entity must already exist.</remarks>
         public string ForwardDeadLetteredMessagesTo
         {
-            get => this.forwardDeadLetteredMessagesTo;
+            get => forwardDeadLetteredMessagesTo;
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    this.forwardDeadLetteredMessagesTo = value;
+                    forwardDeadLetteredMessagesTo = value;
                     return;
                 }
 
                 EntityNameHelper.CheckValidQueueName(value, nameof(ForwardDeadLetteredMessagesTo));
-                if (this.path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
 
-                this.forwardDeadLetteredMessagesTo = value;
+                forwardDeadLetteredMessagesTo = value;
             }
         }
 
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata
         {
-            get => this.userMetadata;
+            get => userMetadata;
             set
             {
                 if (value == null)
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentOutOfRangeException(nameof(UserMetadata), $"Length cannot cross {ManagementClientConstants.MaxUserMetadataLength} characters");
                 }
 
-                this.userMetadata = value;
+                userMetadata = value;
             }
         }
 
@@ -281,37 +281,37 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public override int GetHashCode()
         {
-            return this.Path?.GetHashCode() ?? base.GetHashCode();
+            return Path?.GetHashCode() ?? base.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             var other = obj as QueueDescription;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         public bool Equals(QueueDescription otherDescription)
         {
             if (otherDescription is QueueDescription other
-                && this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
-                && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
-                && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
-                && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
-                && this.EnableBatchedOperations == other.EnableBatchedOperations
-                && this.EnableDeadLetteringOnMessageExpiration == other.EnableDeadLetteringOnMessageExpiration
-                && this.EnablePartitioning == other.EnablePartitioning
-                && string.Equals(this.ForwardDeadLetteredMessagesTo, other.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(this.ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
-                && this.LockDuration.Equals(other.LockDuration)
-                && this.MaxDeliveryCount == other.MaxDeliveryCount
-                && this.MaxSizeInMB == other.MaxSizeInMB
-                && this.RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
-                && this.RequiresSession.Equals(other.RequiresSession)
-                && this.Status.Equals(other.Status)
-                && string.Equals(this.userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (this.AuthorizationRules != null && other.AuthorizationRules != null
-                    || this.AuthorizationRules == null && other.AuthorizationRules == null)
-                && (this.AuthorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
+                && Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
+                && AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
+                && DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
+                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
+                && EnableBatchedOperations == other.EnableBatchedOperations
+                && EnableDeadLetteringOnMessageExpiration == other.EnableDeadLetteringOnMessageExpiration
+                && EnablePartitioning == other.EnablePartitioning
+                && string.Equals(ForwardDeadLetteredMessagesTo, other.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
+                && LockDuration.Equals(other.LockDuration)
+                && MaxDeliveryCount == other.MaxDeliveryCount
+                && MaxSizeInMB == other.MaxSizeInMB
+                && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
+                && RequiresSession.Equals(other.RequiresSession)
+                && Status.Equals(other.Status)
+                && string.Equals(userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
+                && (AuthorizationRules != null && other.AuthorizationRules != null
+                    || AuthorizationRules == null && other.AuthorizationRules == null)
+                && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules)))
             {
                 return true;
             }

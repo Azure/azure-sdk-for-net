@@ -21,39 +21,39 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public ConcurrentExpiringSet()
         {
-            this.dictionary = new ConcurrentDictionary<TKey, DateTime>();
-            this.dictionaryAsCollection = dictionary;
+            dictionary = new ConcurrentDictionary<TKey, DateTime>();
+            dictionaryAsCollection = dictionary;
             _ = CollectExpiredEntriesAsync(tokenSource.Token);
         }
 
         public void AddOrUpdate(TKey key, DateTime expiration)
         {
-            this.ThrowIfClosed();
+            ThrowIfClosed();
 
-            this.dictionary[key] = expiration;
-            this.cleanupTaskCompletionSource.TrySetResult(true);
+            dictionary[key] = expiration;
+            cleanupTaskCompletionSource.TrySetResult(true);
         }
 
         public bool Contains(TKey key)
         {
-            this.ThrowIfClosed();
+            ThrowIfClosed();
 
-            return this.dictionary.TryGetValue(key, out var expiration) && expiration > DateTime.UtcNow;
+            return dictionary.TryGetValue(key, out var expiration) && expiration > DateTime.UtcNow;
         }
 
         public void Close()
         {
-            if (Interlocked.Exchange(ref this.closeSignaled, 1) != 0)
+            if (Interlocked.Exchange(ref closeSignaled, 1) != 0)
             {
                 return;
             }
 
-            this.closed = true;
+            closed = true;
 
-            this.tokenSource.Cancel();
-            this.cleanupTaskCompletionSource.TrySetCanceled();
-            this.dictionary.Clear();
-            this.tokenSource.Dispose();
+            tokenSource.Cancel();
+            cleanupTaskCompletionSource.TrySetCanceled();
+            dictionary.Clear();
+            tokenSource.Dispose();
         }
 
         async Task CollectExpiredEntriesAsync(CancellationToken token)
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             {
                 try
                 {
-                    await this.cleanupTaskCompletionSource.Task.ConfigureAwait(false);
+                    await cleanupTaskCompletionSource.Task.ConfigureAwait(false);
                     await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
@@ -72,19 +72,19 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
                 var isEmpty = true;
                 var utcNow = DateTime.UtcNow;
-                foreach (var kvp in this.dictionary)
+                foreach (var kvp in dictionary)
                 {
                     isEmpty = false;
                     var expiration = kvp.Value;
                     if (utcNow > expiration)
                     {
-                        this.dictionaryAsCollection.Remove(kvp);
+                        dictionaryAsCollection.Remove(kvp);
                     }
                 }
 
                 if (isEmpty)
                 {
-                    this.cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 }
             }
         }

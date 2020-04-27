@@ -7,7 +7,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using System.Threading.Tasks;
     using System.Transactions;
     using Microsoft.Azure.Amqp;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Primitives;
 
     class AmqpTransactionEnlistment : Singleton<AmqpTransactionEnlistment>, IPromotableSinglePhaseNotification
     {
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             AmqpTransactionManager transactionManager,
             ServiceBusConnection serviceBusConnection)
         {
-            this.transactionId = transaction.TransactionInformation.LocalIdentifier;
+            transactionId = transaction.TransactionInformation.LocalIdentifier;
             this.transactionManager = transactionManager;
             this.serviceBusConnection = serviceBusConnection;
         }
@@ -31,16 +31,16 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             try
             {
-                var faultTolerantController = this.serviceBusConnection.TransactionController;
-                var controller = await faultTolerantController.GetOrCreateAsync(this.serviceBusConnection.OperationTimeout).ConfigureAwait(false);
-                this.AmqpTransactionId = await controller.DeclareAsync().ConfigureAwait(false);
-                MessagingEventSource.Log.AmqpTransactionDeclared(this.transactionId, this.AmqpTransactionId);
+                var faultTolerantController = serviceBusConnection.TransactionController;
+                var controller = await faultTolerantController.GetOrCreateAsync(serviceBusConnection.OperationTimeout).ConfigureAwait(false);
+                AmqpTransactionId = await controller.DeclareAsync().ConfigureAwait(false);
+                MessagingEventSource.Log.AmqpTransactionDeclared(transactionId, AmqpTransactionId);
                 return this;
             }
             catch (Exception exception)
             {
-                MessagingEventSource.Log.AmqpTransactionInitializeException(this.transactionId, exception);
-                this.transactionManager.RemoveEnlistment(this.transactionId);
+                MessagingEventSource.Log.AmqpTransactionInitializeException(transactionId, exception);
+                transactionManager.RemoveEnlistment(transactionId);
                 throw;
             }
         }
@@ -55,51 +55,51 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         void IPromotableSinglePhaseNotification.SinglePhaseCommit(SinglePhaseEnlistment singlePhaseEnlistment)
         {
-            this.transactionManager.RemoveEnlistment(this.transactionId);
-            TaskExtensionHelper.Schedule(() => this.SinglePhaseCommitAsync(singlePhaseEnlistment));
+            transactionManager.RemoveEnlistment(transactionId);
+            TaskExtensionHelper.Schedule(() => SinglePhaseCommitAsync(singlePhaseEnlistment));
         }
 
         async Task SinglePhaseCommitAsync(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             try
             {
-                var faultTolerantController = this.serviceBusConnection.TransactionController;
-                var controller = await faultTolerantController.GetOrCreateAsync(this.serviceBusConnection.OperationTimeout).ConfigureAwait(false);
+                var faultTolerantController = serviceBusConnection.TransactionController;
+                var controller = await faultTolerantController.GetOrCreateAsync(serviceBusConnection.OperationTimeout).ConfigureAwait(false);
 
-                await controller.DischargeAsync(this.AmqpTransactionId, fail: false).ConfigureAwait(false);
+                await controller.DischargeAsync(AmqpTransactionId, fail: false).ConfigureAwait(false);
                 singlePhaseEnlistment.Committed();
-                MessagingEventSource.Log.AmqpTransactionDischarged(this.transactionId, this.AmqpTransactionId, false);
-                await this.CloseAsync().ConfigureAwait(false);
+                MessagingEventSource.Log.AmqpTransactionDischarged(transactionId, AmqpTransactionId, false);
+                await CloseAsync().ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 Exception exception = AmqpExceptionHelper.GetClientException(e, null);
-                MessagingEventSource.Log.AmqpTransactionDischargeException(this.transactionId, this.AmqpTransactionId, exception);
+                MessagingEventSource.Log.AmqpTransactionDischargeException(transactionId, AmqpTransactionId, exception);
                 singlePhaseEnlistment.InDoubt(exception);
             }
         }
 
         void IPromotableSinglePhaseNotification.Rollback(SinglePhaseEnlistment singlePhaseEnlistment)
         {
-            this.transactionManager.RemoveEnlistment(this.transactionId);
-            TaskExtensionHelper.Schedule(() => this.RollbackAsync(singlePhaseEnlistment));
+            transactionManager.RemoveEnlistment(transactionId);
+            TaskExtensionHelper.Schedule(() => RollbackAsync(singlePhaseEnlistment));
         }
 
         async Task RollbackAsync(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             try
             {
-                var faultTolerantController = this.serviceBusConnection.TransactionController;
-                var controller = await faultTolerantController.GetOrCreateAsync(this.serviceBusConnection.OperationTimeout).ConfigureAwait(false);
+                var faultTolerantController = serviceBusConnection.TransactionController;
+                var controller = await faultTolerantController.GetOrCreateAsync(serviceBusConnection.OperationTimeout).ConfigureAwait(false);
 
-                await controller.DischargeAsync(this.AmqpTransactionId, fail: true).ConfigureAwait(false);
+                await controller.DischargeAsync(AmqpTransactionId, fail: true).ConfigureAwait(false);
                 singlePhaseEnlistment.Aborted();
-                MessagingEventSource.Log.AmqpTransactionDischarged(this.transactionId, this.AmqpTransactionId, true);
+                MessagingEventSource.Log.AmqpTransactionDischarged(transactionId, AmqpTransactionId, true);
             }
             catch (Exception e)
             {
                 Exception exception = AmqpExceptionHelper.GetClientException(e, null);
-                MessagingEventSource.Log.AmqpTransactionDischargeException(this.transactionId, this.AmqpTransactionId, exception);
+                MessagingEventSource.Log.AmqpTransactionDischargeException(transactionId, AmqpTransactionId, exception);
                 singlePhaseEnlistment.Aborted(exception);
             }
         }

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 // If an entity name was provided, log those payloads where the target is explicitly not associated with the entity.
                 if (!String.IsNullOrEmpty(entityName))
                 {
-                    var targetEntity = this.GetPropertyValueFromAnonymousTypeInstance<string>(kvp.Value, "Entity", true);
+                    var targetEntity = GetPropertyValueFromAnonymousTypeInstance<string>(kvp.Value, "Entity", true);
 
                     if (String.IsNullOrEmpty(targetEntity) || !String.Equals(targetEntity, entityName, StringComparison.InvariantCultureIgnoreCase))
                     {

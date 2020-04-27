@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Microsoft.Azure.ServiceBus.Amqp;
+    using Amqp;
 
     sealed class PropertyDictionary : IDictionary<string, object>
     {
@@ -14,91 +14,91 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public PropertyDictionary()
         {
-            this.inner = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+            inner = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
         }
 
         public PropertyDictionary(IDictionary<string, object> container)
         {
-            this.inner = container;
+            inner = container;
         }
 
-        public ICollection<string> Keys => this.inner.Keys;
+        public ICollection<string> Keys => inner.Keys;
 
-        public ICollection<object> Values => this.inner.Values;
+        public ICollection<object> Values => inner.Values;
 
-        public int Count => this.inner.Count;
+        public int Count => inner.Count;
 
-        public bool IsReadOnly => this.inner.IsReadOnly;
+        public bool IsReadOnly => inner.IsReadOnly;
 
         public object this[string key]
         {
-            get => this.inner[key];
+            get => inner[key];
 
             set
             {
-                if (this.IsSupportedObject(value))
+                if (IsSupportedObject(value))
                 {
-                    this.inner[key] = value;
+                    inner[key] = value;
                 }
             }
         }
 
         public void Add(string key, object value)
         {
-            if (this.IsSupportedObject(value))
+            if (IsSupportedObject(value))
             {
-                this.inner.Add(key, value);
+                inner.Add(key, value);
             }
         }
 
         public bool ContainsKey(string key)
         {
-            return this.inner.ContainsKey(key);
+            return inner.ContainsKey(key);
         }
 
         public bool Remove(string key)
         {
-            return this.inner.Remove(key);
+            return inner.Remove(key);
         }
 
         public bool TryGetValue(string key, out object value)
         {
-            return this.inner.TryGetValue(key, out value);
+            return inner.TryGetValue(key, out value);
         }
 
         public void Add(KeyValuePair<string, object> item)
         {
-            this.inner.Add(item);
+            inner.Add(item);
         }
 
         public void Clear()
         {
-            this.inner.Clear();
+            inner.Clear();
         }
 
         public bool Contains(KeyValuePair<string, object> item)
         {
-            return this.inner.Contains(item);
+            return inner.Contains(item);
         }
 
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
-            this.inner.CopyTo(array, arrayIndex);
+            inner.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(KeyValuePair<string, object> item)
         {
-            return this.inner.Remove(item);
+            return inner.Remove(item);
         }
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
-            return this.inner.GetEnumerator();
+            return inner.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.inner.GetEnumerator();
+            return inner.GetEnumerator();
         }
 
         bool IsSupportedObject(object value)

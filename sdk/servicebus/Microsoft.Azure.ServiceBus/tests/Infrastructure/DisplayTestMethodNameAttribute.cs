@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System.Reflection;
-    using Microsoft.Extensions.PlatformAbstractions;
+    using Extensions.PlatformAbstractions;
     using Xunit.Sdk;
 
     public class DisplayTestMethodNameAttribute : BeforeAfterTestAttribute

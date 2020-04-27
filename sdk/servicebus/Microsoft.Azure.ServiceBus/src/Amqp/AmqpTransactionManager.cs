@@ -27,16 +27,16 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             string transactionId = transaction.TransactionInformation.LocalIdentifier;
             AmqpTransactionEnlistment transactionEnlistment;
 
-            lock (this.syncRoot)
+            lock (syncRoot)
             {
-                if (!this.enlistmentMap.TryGetValue(transactionId, out transactionEnlistment))
+                if (!enlistmentMap.TryGetValue(transactionId, out transactionEnlistment))
                 {
                     transactionEnlistment = new AmqpTransactionEnlistment(transaction, this, serviceBusConnection);
-                    this.enlistmentMap.Add(transactionId, transactionEnlistment);
+                    enlistmentMap.Add(transactionId, transactionEnlistment);
 
                     if (!transaction.EnlistPromotableSinglePhase(transactionEnlistment))
                     {
-                        this.enlistmentMap.Remove(transactionId);
+                        enlistmentMap.Remove(transactionId);
                         throw new InvalidOperationException("Local transactions are not supported with other resource managers/DTC.");
                     }
                 }
@@ -48,9 +48,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public void RemoveEnlistment(string transactionId)
         {
-            lock (this.syncRoot)
+            lock (syncRoot)
             {
-                this.enlistmentMap.Remove(transactionId);
+                enlistmentMap.Remove(transactionId);
             }
         }
     }

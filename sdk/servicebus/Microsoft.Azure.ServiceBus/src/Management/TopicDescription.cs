@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <param name="path">Path of the topic relative to the namespace base address.</param>
         public TopicDescription(string path)
         {
-            this.Path = path;
+            Path = path;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         ///  </remarks>
         public TimeSpan DefaultMessageTimeToLive
         {
-            get => this.defaultMessageTimeToLive;
+            get => defaultMessageTimeToLive;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedTimeToLive || value > ManagementClientConstants.MaximumAllowedTimeToLive)
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $"The value must be between {ManagementClientConstants.MinimumAllowedTimeToLive} and {ManagementClientConstants.MaximumAllowedTimeToLive}");
                 }
 
-                this.defaultMessageTimeToLive = value;
+                defaultMessageTimeToLive = value;
             }
         }
 
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
         public TimeSpan AutoDeleteOnIdle
         {
-            get => this.autoDeleteOnIdle;
+            get => autoDeleteOnIdle;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle)
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}");
                 }
 
-                this.autoDeleteOnIdle = value;
+                autoDeleteOnIdle = value;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// </remarks>
         public TimeSpan DuplicateDetectionHistoryTimeWindow
         {
-            get => this.duplicateDetectionHistoryTimeWindow;
+            get => duplicateDetectionHistoryTimeWindow;
             set
             {
                 if (value < ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow || value > ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow)
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}");
                 }
 
-                this.duplicateDetectionHistoryTimeWindow = value;
+                duplicateDetectionHistoryTimeWindow = value;
             }
         }
 
@@ -111,11 +111,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
         public string Path
         {
-            get => this.path;
+            get => path;
             set
             {
                 EntityNameHelper.CheckValidTopicName(value, nameof(Path));
-                this.path = value;
+                path = value;
             }
         }
 
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata
         {
-            get => this.userMetadata;
+            get => userMetadata;
             set
             {
                 if (value == null)
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentOutOfRangeException(nameof(UserMetadata), $"Length cannot cross {ManagementClientConstants.MaxUserMetadataLength} characters");
                 }
 
-                this.userMetadata = value;
+                userMetadata = value;
             }
         }
 
@@ -180,31 +180,31 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public override int GetHashCode()
         {
-            return this.Path?.GetHashCode() ?? base.GetHashCode();
+            return Path?.GetHashCode() ?? base.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             var other = obj as TopicDescription;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         public bool Equals(TopicDescription otherDescription)
         {
             if (otherDescription is TopicDescription other
-                && this.Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
-                && this.AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
-                && this.DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
-                && (!this.RequiresDuplicateDetection || this.DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
-                && this.EnableBatchedOperations == other.EnableBatchedOperations
-                && this.EnablePartitioning == other.EnablePartitioning
-                && this.MaxSizeInMB == other.MaxSizeInMB
-                && this.RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
-                && this.Status.Equals(other.Status)
-                && string.Equals(this.userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (this.AuthorizationRules != null && other.AuthorizationRules != null
-                    || this.AuthorizationRules == null && other.AuthorizationRules == null)
-                && (this.AuthorizationRules == null || this.AuthorizationRules.Equals(other.AuthorizationRules)))
+                && Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
+                && AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
+                && DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
+                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
+                && EnableBatchedOperations == other.EnableBatchedOperations
+                && EnablePartitioning == other.EnablePartitioning
+                && MaxSizeInMB == other.MaxSizeInMB
+                && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
+                && Status.Equals(other.Status)
+                && string.Equals(userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
+                && (AuthorizationRules != null && other.AuthorizationRules != null
+                    || AuthorizationRules == null && other.AuthorizationRules == null)
+                && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules)))
             {
                 return true;
             }

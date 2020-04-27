@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(audience));
             }
 
-            this.token = tokenString;
+            token = tokenString;
             this.expiresAtUtc = expiresAtUtc;
             this.audience = audience;
             this.tokenType = tokenType;
@@ -58,21 +58,21 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <summary>
         /// Gets the audience of this token.
         /// </summary>
-        public string Audience => this.audience;
+        public string Audience => audience;
 
         /// <summary>
         /// Gets the expiration time of this token.
         /// </summary>
-        public DateTime ExpiresAtUtc => this.expiresAtUtc;
+        public DateTime ExpiresAtUtc => expiresAtUtc;
 
         /// <summary>
         /// Gets the actual token.
         /// </summary>
-        public virtual string TokenValue => this.token;
+        public virtual string TokenValue => token;
 
         /// <summary>
         /// Gets the token type.
         /// </summary>
-        public virtual string TokenType => this.tokenType;
+        public virtual string TokenType => tokenType;
     }
 }

@@ -32,35 +32,35 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
         {
             var sb = new StringBuilder("sql-rule-action(");
             var count = 0;
-            this.AddFieldToString(this.SqlExpression != null, sb, "expression", this.SqlExpression, ref count);
-            this.AddFieldToString(this.CompatibilityLevel != null, sb, "level", this.CompatibilityLevel, ref count);
+            AddFieldToString(SqlExpression != null, sb, "expression", SqlExpression, ref count);
+            AddFieldToString(CompatibilityLevel != null, sb, "level", CompatibilityLevel, ref count);
             sb.Append(')');
             return sb.ToString();
         }
 
         protected override void OnEncode(ByteBuffer buffer)
         {
-            AmqpCodec.EncodeString(this.SqlExpression, buffer);
-            AmqpCodec.EncodeInt(this.CompatibilityLevel, buffer);
+            AmqpCodec.EncodeString(SqlExpression, buffer);
+            AmqpCodec.EncodeInt(CompatibilityLevel, buffer);
         }
 
         protected override void OnDecode(ByteBuffer buffer, int count)
         {
             if (count-- > 0)
             {
-                this.SqlExpression = AmqpCodec.DecodeString(buffer);
+                SqlExpression = AmqpCodec.DecodeString(buffer);
             }
 
             if (count > 0)
             {
-                this.CompatibilityLevel = AmqpCodec.DecodeInt(buffer);
+                CompatibilityLevel = AmqpCodec.DecodeInt(buffer);
             }
         }
 
         protected override int OnValueSize()
         {
-            return AmqpCodec.GetStringEncodeSize(this.SqlExpression) +
-                   AmqpCodec.GetIntEncodeSize(this.CompatibilityLevel);
+            return AmqpCodec.GetStringEncodeSize(SqlExpression) +
+                   AmqpCodec.GetIntEncodeSize(CompatibilityLevel);
         }
     }
 }

@@ -112,9 +112,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     this.description = description;
                 }
 
-                public Location Location => this.location;
+                public Location Location => location;
 
-                public string Description => this.description;
+                public string Description => description;
             }
 
             [AttributeUsage(AttributeTargets.Field)]
@@ -126,22 +126,22 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
                 public CacheAttribute(Type elementType, CacheAttrition cacheAttrition)
                 {
-                    this.Scope = Strings.DeclaringInstance;
-                    this.SizeLimit = Strings.Unbounded;
-                    this.Timeout = Strings.Infinite;
+                    Scope = Strings.DeclaringInstance;
+                    SizeLimit = Strings.Unbounded;
+                    Timeout = Strings.Infinite;
 
                     if (elementType == null)
                     {
-                        throw Fx.Exception.ArgumentNull(nameof(elementType));
+                        throw Exception.ArgumentNull(nameof(elementType));
                     }
 
                     this.elementType = elementType;
                     this.cacheAttrition = cacheAttrition;
                 }
 
-                public Type ElementType => this.elementType;
+                public Type ElementType => elementType;
 
-                public CacheAttrition CacheAttrition => this.cacheAttrition;
+                public CacheAttrition CacheAttrition => cacheAttrition;
 
                 public string Scope { get; set; }
 
@@ -158,18 +158,18 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
                 public QueueAttribute(Type elementType)
                 {
-                    this.Scope = Strings.DeclaringInstance;
-                    this.SizeLimit = Strings.Unbounded;
+                    Scope = Strings.DeclaringInstance;
+                    SizeLimit = Strings.Unbounded;
 
                     if (elementType == null)
                     {
-                        throw Fx.Exception.ArgumentNull(nameof(elementType));
+                        throw Exception.ArgumentNull(nameof(elementType));
                     }
 
                     this.elementType = elementType;
                 }
 
-                public Type ElementType => this.elementType;
+                public Type ElementType => elementType;
 
                 public string Scope { get; set; }
 
@@ -188,9 +188,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             {
                 public SynchronizationObjectAttribute()
                 {
-                    this.Blocking = true;
-                    this.Scope = Strings.DeclaringInstance;
-                    this.Kind = SynchronizationKind.FromFieldType;
+                    Blocking = true;
+                    Scope = Strings.DeclaringInstance;
+                    Kind = SynchronizationKind.FromFieldType;
                 }
 
                 public bool Blocking { get; set; }
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     this.blocksUsing = blocksUsing;
                 }
 
-                public BlocksUsing BlocksUsing => this.blocksUsing;
+                public BlocksUsing BlocksUsing => blocksUsing;
 
                 public bool SupportsAsync { get; set; }
 
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     {
                         if (exceptionType == null)
                         {
-                            throw Fx.Exception.ArgumentNull(nameof(exceptionType));
+                            throw Exception.ArgumentNull(nameof(exceptionType));
                         }
                         if (string.IsNullOrEmpty(diagnosis))
                         {
@@ -271,9 +271,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                         this.diagnosis = diagnosis;
                     }
 
-                    public Type ExceptionType => this.exceptionType;
+                    public Type ExceptionType => exceptionType;
 
-                    public string Diagnosis => this.diagnosis;
+                    public string Diagnosis => diagnosis;
                 }
 
                 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]

@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.Management
     using System.Threading;
     using System.Threading.Tasks;
     using System.Xml.Linq;
-    using Microsoft.Azure.ServiceBus.Primitives;
+    using Primitives;
 
     public class ManagementClient
     {
@@ -47,13 +47,13 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
         public ManagementClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ITokenProvider tokenProvider = default)
         {
-            this.httpClient = new HttpClient { Timeout = connectionStringBuilder.OperationTimeout };
-            this.endpointFQDN = connectionStringBuilder.Endpoint;
+            httpClient = new HttpClient { Timeout = connectionStringBuilder.OperationTimeout };
+            endpointFQDN = connectionStringBuilder.Endpoint;
             this.tokenProvider = tokenProvider ?? CreateTokenProvider(connectionStringBuilder);
-            this.port = GetPort(connectionStringBuilder.Endpoint);
-            this.clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
+            port = GetPort(connectionStringBuilder.Endpoint);
+            clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
 
-            MessagingEventSource.Log.ManagementClientCreated(this.clientId, this.httpClient.Timeout.TotalSeconds, this.tokenProvider.ToString());
+            MessagingEventSource.Log.ManagementClientCreated(clientId, httpClient.Timeout.TotalSeconds, this.tokenProvider.ToString());
         }
 
         public static HttpRequestMessage CloneRequest(HttpRequestMessage req)
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
         public virtual Task<QueueDescription> CreateQueueAsync(string queuePath, CancellationToken cancellationToken = default)
         {
-            return this.CreateQueueAsync(new QueueDescription(queuePath), cancellationToken);
+            return CreateQueueAsync(new QueueDescription(queuePath), cancellationToken);
         }
 
         /// <summary>
@@ -602,7 +602,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<QueueDescription> CreateQueueAsync(QueueDescription queueDescription, CancellationToken cancellationToken = default)
         {
             queueDescription = queueDescription ?? throw new ArgumentNullException(nameof(queueDescription));
-            queueDescription.NormalizeDescription(this.endpointFQDN);
+            queueDescription.NormalizeDescription(endpointFQDN);
             var atomRequest = queueDescription.Serialize().ToString();
             var content = await PutEntity(
                 queueDescription.Path,
@@ -631,7 +631,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
         public virtual Task<TopicDescription> CreateTopicAsync(string topicPath, CancellationToken cancellationToken = default)
         {
-            return this.CreateTopicAsync(new TopicDescription(topicPath), cancellationToken);
+            return CreateTopicAsync(new TopicDescription(topicPath), cancellationToken);
         }
 
         /// <summary>
@@ -678,7 +678,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <exception cref="ServiceBusException">An internal error or unexpected exception occurs.</exception>
         public virtual Task<SubscriptionDescription> CreateSubscriptionAsync(string topicPath, string subscriptionName, CancellationToken cancellationToken = default)
         {
-            return this.CreateSubscriptionAsync(new SubscriptionDescription(topicPath, subscriptionName), cancellationToken);
+            return CreateSubscriptionAsync(new SubscriptionDescription(topicPath, subscriptionName), cancellationToken);
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual Task<SubscriptionDescription> CreateSubscriptionAsync(SubscriptionDescription subscriptionDescription, CancellationToken cancellationToken = default)
         {
             subscriptionDescription = subscriptionDescription ?? throw new ArgumentNullException(nameof(subscriptionDescription));
-            return this.CreateSubscriptionAsync(subscriptionDescription, null, cancellationToken);
+            return CreateSubscriptionAsync(subscriptionDescription, null, cancellationToken);
         }
 
         /// <summary>
@@ -721,7 +721,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<SubscriptionDescription> CreateSubscriptionAsync(SubscriptionDescription subscriptionDescription, RuleDescription defaultRule, CancellationToken cancellationToken = default)
         {
             subscriptionDescription = subscriptionDescription ?? throw new ArgumentNullException(nameof(subscriptionDescription));
-            subscriptionDescription.NormalizeDescription(this.endpointFQDN);
+            subscriptionDescription.NormalizeDescription(endpointFQDN);
             subscriptionDescription.DefaultRuleDescription = defaultRule;
             var atomRequest = subscriptionDescription.Serialize().ToString();
             var content = await PutEntity(
@@ -787,7 +787,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<QueueDescription> UpdateQueueAsync(QueueDescription queueDescription, CancellationToken cancellationToken = default)
         {
             queueDescription = queueDescription ?? throw new ArgumentNullException(nameof(queueDescription));
-            queueDescription.NormalizeDescription(this.endpointFQDN);
+            queueDescription.NormalizeDescription(endpointFQDN);
 
             var atomRequest = queueDescription.Serialize().ToString();
 
@@ -841,7 +841,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<SubscriptionDescription> UpdateSubscriptionAsync(SubscriptionDescription subscriptionDescription, CancellationToken cancellationToken = default)
         {
             subscriptionDescription = subscriptionDescription ?? throw new ArgumentNullException(nameof(subscriptionDescription));
-            subscriptionDescription.NormalizeDescription(this.endpointFQDN);
+            subscriptionDescription.NormalizeDescription(endpointFQDN);
             var atomRequest = subscriptionDescription.Serialize().ToString();
             var content = await PutEntity(
                 EntityNameHelper.FormatSubscriptionPath(subscriptionDescription.TopicPath, subscriptionDescription.SubscriptionName),
@@ -1099,29 +1099,29 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         private Task<string> GetToken(Uri requestUri)
         {
-            return this.GetToken(requestUri.GetLeftPart(UriPartial.Path));
+            return GetToken(requestUri.GetLeftPart(UriPartial.Path));
         }
 
         private async Task<string> GetToken(string requestUri)
         {
-            var token = await this.tokenProvider.GetTokenAsync(requestUri, TimeSpan.FromHours(1)).ConfigureAwait(false);
+            var token = await tokenProvider.GetTokenAsync(requestUri, TimeSpan.FromHours(1)).ConfigureAwait(false);
             return token.TokenValue;
         }
 
         private async Task<string> GetEntity(string path, string query, bool enrich, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(this.clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
+            MessagingEventSource.Log.ManagementOperationStart(clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
 
             var queryString = $"{ManagementClientConstants.apiVersionQuery}&enrich={enrich}";
             if (query != null)
             {
                 queryString = queryString + "&" + query;
             }
-            var uri = new UriBuilder(this.endpointFQDN)
+            var uri = new UriBuilder(endpointFQDN)
             {
                 Path = path,
                 Scheme = Uri.UriSchemeHttps,
-                Port = this.port,
+                Port = port,
                 Query = queryString
             }.Uri;
 
@@ -1129,18 +1129,18 @@ namespace Microsoft.Azure.ServiceBus.Management
             HttpResponseMessage response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
             var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            MessagingEventSource.Log.ManagementOperationEnd(this.clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
+            MessagingEventSource.Log.ManagementOperationEnd(clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
             return result;
         }
 
         private async Task<string> PutEntity(string path, string requestBody, bool isUpdate, string forwardTo, string fwdDeadLetterTo, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(this.clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
+            MessagingEventSource.Log.ManagementOperationStart(clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
 
-            var uri = new UriBuilder(this.endpointFQDN)
+            var uri = new UriBuilder(endpointFQDN)
             {
                 Path = path,
-                Port = this.port,
+                Port = port,
                 Scheme = Uri.UriSchemeHttps,
                 Query = $"{ManagementClientConstants.apiVersionQuery}"
             }.Uri;
@@ -1159,38 +1159,38 @@ namespace Microsoft.Azure.ServiceBus.Management
 
             if (!string.IsNullOrWhiteSpace(forwardTo))
             {
-                var token = await this.GetToken(forwardTo).ConfigureAwait(false);
+                var token = await GetToken(forwardTo).ConfigureAwait(false);
                 request.Headers.Add(ManagementClientConstants.ServiceBusSupplementartyAuthorizationHeaderName, token);
             }
 
             if (!string.IsNullOrWhiteSpace(fwdDeadLetterTo))
             {
-                var token = await this.GetToken(fwdDeadLetterTo).ConfigureAwait(false);
+                var token = await GetToken(fwdDeadLetterTo).ConfigureAwait(false);
                 request.Headers.Add(ManagementClientConstants.ServiceBusDlqSupplementaryAuthorizationHeaderName, token);
             }
 
             HttpResponseMessage response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
             var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            MessagingEventSource.Log.ManagementOperationEnd(this.clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
+            MessagingEventSource.Log.ManagementOperationEnd(clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
             return result;
         }
 
         private async Task DeleteEntity(string path, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(this.clientId, nameof(DeleteEntity), path);
+            MessagingEventSource.Log.ManagementOperationStart(clientId, nameof(DeleteEntity), path);
 
-            var uri = new UriBuilder(this.endpointFQDN)
+            var uri = new UriBuilder(endpointFQDN)
             {
                 Path = path,
                 Scheme = Uri.UriSchemeHttps,
-                Port = this.port,
+                Port = port,
                 Query = ManagementClientConstants.apiVersionQuery
             }.Uri;
 
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
-            MessagingEventSource.Log.ManagementOperationEnd(this.clientId, nameof(DeleteEntity), path);
+            MessagingEventSource.Log.ManagementOperationEnd(clientId, nameof(DeleteEntity), path);
         }
 
         private async Task<HttpResponseMessage> SendHttpRequest(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -1198,7 +1198,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             if (request.Headers.Authorization == null)
             {
                 // First attempt.
-                var token = await this.GetToken(request.RequestUri).ConfigureAwait(false);
+                var token = await GetToken(request.RequestUri).ConfigureAwait(false);
                 request.Headers.Add("Authorization", token);
                 request.Headers.Add("UserAgent", $"SERVICEBUS/{ManagementClientConstants.ApiVersion}(api-origin={ClientInfo.Framework};os={ClientInfo.Platform};version={ClientInfo.Version};product={ClientInfo.Product})");
             }
@@ -1211,11 +1211,11 @@ namespace Microsoft.Azure.ServiceBus.Management
             HttpResponseMessage response;
             try
             {
-                response = await this.httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (HttpRequestException exception)
             {
-                MessagingEventSource.Log.ManagementOperationException(this.clientId, nameof(SendHttpRequest), exception);
+                MessagingEventSource.Log.ManagementOperationException(clientId, nameof(SendHttpRequest), exception);
                 throw new ServiceBusException(true, exception);
             }
 
@@ -1226,7 +1226,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
             else
             {
-                MessagingEventSource.Log.ManagementOperationException(this.clientId, nameof(SendHttpRequest), exceptionReturned);
+                MessagingEventSource.Log.ManagementOperationException(clientId, nameof(SendHttpRequest), exceptionReturned);
                 throw exceptionReturned;
             }
         }

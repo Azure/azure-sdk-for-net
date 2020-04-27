@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus
                         Constants.MaximumSqlFilterStatementLength));
             }
 
-            this.SqlExpression = sqlExpression;
+            SqlExpression = sqlExpression;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Allowed types: string, int, long, bool, double
         /// </summary>
         /// <value>The value of a filter expression.</value>
-        public IDictionary<string, object> Parameters => this.parameters ?? (this.parameters = new PropertyDictionary());
+        public IDictionary<string, object> Parameters => parameters ?? (parameters = new PropertyDictionary());
 
         /// <summary>
         /// Returns a string representation of <see cref="SqlFilter" />.
@@ -65,36 +65,36 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>The string representation of <see cref="SqlFilter" />.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "SqlFilter: {0}", this.SqlExpression);
+            return string.Format(CultureInfo.InvariantCulture, "SqlFilter: {0}", SqlExpression);
         }
 
         public override int GetHashCode()
         {
-            return this.SqlExpression?.GetHashCode() ?? base.GetHashCode();
+            return SqlExpression?.GetHashCode() ?? base.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             var other = obj as Filter;
-            return this.Equals(other);
+            return Equals(other);
         }
 
         public override bool Equals(Filter other)
         {
             if (other is SqlFilter sqlFilter)
             {
-                if (string.Equals(this.SqlExpression, sqlFilter.SqlExpression, StringComparison.OrdinalIgnoreCase)
-                    && (this.parameters != null && sqlFilter.parameters != null
-                        || this.parameters == null && sqlFilter.parameters == null))
+                if (string.Equals(SqlExpression, sqlFilter.SqlExpression, StringComparison.OrdinalIgnoreCase)
+                    && (parameters != null && sqlFilter.parameters != null
+                        || parameters == null && sqlFilter.parameters == null))
                 {
-                    if (this.parameters != null)
+                    if (parameters != null)
                     {
-                        if (this.parameters.Count != sqlFilter.parameters.Count)
+                        if (parameters.Count != sqlFilter.parameters.Count)
                         {
                             return false;
                         }
 
-                        foreach (var param in this.parameters)
+                        foreach (var param in parameters)
                         {
                             if (!sqlFilter.parameters.TryGetValue(param.Key, out var otherParamValue) ||
                                 (param.Value == null ^ otherParamValue == null) ||

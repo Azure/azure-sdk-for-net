@@ -28,7 +28,7 @@ namespace Microsoft.Azure.ServiceBus
             bool isSessionReceiver = false)
             : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
         {
-            this.diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
+            diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
         }
 
         /// <summary>
@@ -36,31 +36,31 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public DateTime LockedUntilUtc
         {
-            get => this.LockedUntilUtcInternal;
-            internal set => this.LockedUntilUtcInternal = value;
+            get => LockedUntilUtcInternal;
+            internal set => LockedUntilUtcInternal = value;
         }
 
         /// <summary>
         /// Gets the SessionId.
         /// </summary>
-        public string SessionId => this.SessionIdInternal;
+        public string SessionId => SessionIdInternal;
 
         public Task<byte[]> GetStateAsync()
         {
-            this.ThrowIfClosed();
-            return ServiceBusDiagnosticSource.IsEnabled() ? this.OnGetStateInstrumentedAsync() : this.OnGetStateAsync();
+            ThrowIfClosed();
+            return ServiceBusDiagnosticSource.IsEnabled() ? OnGetStateInstrumentedAsync() : OnGetStateAsync();
         }
 
         public Task SetStateAsync(byte[] sessionState)
         {
-            this.ThrowIfClosed();
-            return ServiceBusDiagnosticSource.IsEnabled() ? this.OnSetStateInstrumentedAsync(sessionState) : this.OnSetStateAsync(sessionState);
+            ThrowIfClosed();
+            return ServiceBusDiagnosticSource.IsEnabled() ? OnSetStateInstrumentedAsync(sessionState) : OnSetStateAsync(sessionState);
         }
 
         public Task RenewSessionLockAsync()
         {
-            this.ThrowIfClosed();
-            return ServiceBusDiagnosticSource.IsEnabled() ? this.OnRenewSessionLockInstrumentedAsync() : this.OnRenewSessionLockAsync();
+            ThrowIfClosed();
+            return ServiceBusDiagnosticSource.IsEnabled() ? OnRenewSessionLockInstrumentedAsync() : OnRenewSessionLockAsync();
         }
 
         protected override void OnMessageHandler(MessageHandlerOptions registerHandlerOptions, Func<Message, CancellationToken, Task> callback)
@@ -77,16 +77,16 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, this.OperationTimeout, null);
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.GetSessionStateOperation, OperationTimeout, null);
 
-                if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
+                if (ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
 
-                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionIdInternal;
 
-                var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                var amqpResponseMessage = await ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 byte[] sessionState = null;
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
@@ -113,14 +113,14 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, this.OperationTimeout, null);
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.SetSessionStateOperation, OperationTimeout, null);
 
-                if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
+                if (ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
 
-                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionIdInternal;
 
                 if (sessionState != null)
                 {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.ServiceBus
                     amqpRequestMessage.Map[ManagementConstants.Properties.SessionState] = null;
                 }
 
-                var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                var amqpResponseMessage = await ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
                 if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
                 {
                     throw amqpResponseMessage.ToMessagingContractException();
@@ -148,20 +148,20 @@ namespace Microsoft.Azure.ServiceBus
         {
             try
             {
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, this.OperationTimeout, null);
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(ManagementConstants.Operations.RenewSessionLockOperation, OperationTimeout, null);
 
-                if (this.ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
+                if (ReceiveLinkManager.TryGetOpenedObject(out var receiveLink))
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
 
-                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = this.SessionIdInternal;
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionIdInternal;
 
-                var amqpResponseMessage = await this.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                var amqpResponseMessage = await ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
-                    this.LockedUntilUtcInternal = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
+                    LockedUntilUtcInternal = amqpResponseMessage.GetValue<DateTime>(ManagementConstants.Properties.Expiration);
                 }
                 else
                 {
@@ -179,74 +179,74 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         protected override void ThrowIfClosed()
         {
-            if (this.IsClosedOrClosing)
+            if (IsClosedOrClosing)
             {
-                throw new ObjectDisposedException($"MessageSession with Id '{this.ClientId}' has already been closed. Please accept a new MessageSession.");
+                throw new ObjectDisposedException($"MessageSession with Id '{ClientId}' has already been closed. Please accept a new MessageSession.");
             }
         }
 
         private async Task<byte[]> OnGetStateInstrumentedAsync()
         {
-            Activity activity = this.diagnosticSource.GetSessionStateStart(this.SessionId);
+            Activity activity = diagnosticSource.GetSessionStateStart(SessionId);
             Task<byte[]> getStateTask = null;
             byte[] state = null;
 
             try
             {
-                getStateTask = this.OnGetStateAsync();
+                getStateTask = OnGetStateAsync();
                 state = await getStateTask.ConfigureAwait(false);
                 return state;
             }
             catch (Exception ex)
             {
-                this.diagnosticSource.ReportException(ex);
+                diagnosticSource.ReportException(ex);
                 throw;
             }
             finally
             {
-                this.diagnosticSource.GetSessionStateStop(activity, this.SessionId, state, getStateTask?.Status);
+                diagnosticSource.GetSessionStateStop(activity, SessionId, state, getStateTask?.Status);
             }
         }
 
         private async Task OnSetStateInstrumentedAsync(byte[] sessionState)
         {
-            Activity activity = this.diagnosticSource.SetSessionStateStart(this.SessionId, sessionState);
+            Activity activity = diagnosticSource.SetSessionStateStart(SessionId, sessionState);
             Task setStateTask = null;
 
             try
             {
-                setStateTask = this.OnSetStateAsync(sessionState);
+                setStateTask = OnSetStateAsync(sessionState);
                 await setStateTask.ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                this.diagnosticSource.ReportException(ex);
+                diagnosticSource.ReportException(ex);
                 throw;
             }
             finally
             {
-                this.diagnosticSource.SetSessionStateStop(activity, sessionState, this.SessionId, setStateTask?.Status);
+                diagnosticSource.SetSessionStateStop(activity, sessionState, SessionId, setStateTask?.Status);
             }
         }
 
         private async Task OnRenewSessionLockInstrumentedAsync()
         {
-            Activity activity = this.diagnosticSource.RenewSessionLockStart(this.SessionId);
+            Activity activity = diagnosticSource.RenewSessionLockStart(SessionId);
             Task renewTask = null;
 
             try
             {
-                renewTask = this.OnRenewSessionLockAsync();
+                renewTask = OnRenewSessionLockAsync();
                 await renewTask.ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                this.diagnosticSource.ReportException(ex);
+                diagnosticSource.ReportException(ex);
                 throw;
             }
             finally
             {
-                this.diagnosticSource.RenewSessionLockStop(activity, this.SessionId, renewTask?.Status);
+                diagnosticSource.RenewSessionLockStop(activity, SessionId, renewTask?.Status);
             }
         }
 

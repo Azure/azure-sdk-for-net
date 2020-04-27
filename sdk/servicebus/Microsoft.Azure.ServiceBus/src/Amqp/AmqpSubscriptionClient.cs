@@ -37,38 +37,38 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             int prefetchCount = 0,
             ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
         {
-            this.syncLock = new object();
-            this.Path = path;
-            this.ServiceBusConnection = servicebusConnection;
-            this.RetryPolicy = retryPolicy;
-            this.CbsTokenProvider = cbsTokenProvider;
-            this.PrefetchCount = prefetchCount;
-            this.ReceiveMode = mode;
+            syncLock = new object();
+            Path = path;
+            ServiceBusConnection = servicebusConnection;
+            RetryPolicy = retryPolicy;
+            CbsTokenProvider = cbsTokenProvider;
+            PrefetchCount = prefetchCount;
+            ReceiveMode = mode;
         }
 
         public MessageReceiver InnerReceiver
         {
             get
             {
-                if (this.innerReceiver == null)
+                if (innerReceiver == null)
                 {
-                    lock (this.syncLock)
+                    lock (syncLock)
                     {
-                        if (this.innerReceiver == null)
+                        if (innerReceiver == null)
                         {
-                            this.innerReceiver = new MessageReceiver(
-                                this.Path,
+                            innerReceiver = new MessageReceiver(
+                                Path,
                                 MessagingEntityType.Subscriber,
-                                this.ReceiveMode,
-                                this.ServiceBusConnection,
-                                this.CbsTokenProvider,
-                                this.RetryPolicy,
-                                this.PrefetchCount);
+                                ReceiveMode,
+                                ServiceBusConnection,
+                                CbsTokenProvider,
+                                RetryPolicy,
+                                PrefetchCount);
                         }
                     }
                 }
 
-                return this.innerReceiver;
+                return innerReceiver;
             }
         }
 
@@ -78,17 +78,17 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         /// <value>The number of messages that the subscription client can simultaneously request.</value>
         public int PrefetchCount
         {
-            get => this.prefetchCount;
+            get => prefetchCount;
             set
             {
                 if (value < 0)
                 {
-                    throw Fx.Exception.ArgumentOutOfRange(nameof(this.PrefetchCount), value, "Value cannot be less than 0.");
+                    throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
                 }
-                this.prefetchCount = value;
-                if (this.innerReceiver != null)
+                prefetchCount = value;
+                if (innerReceiver != null)
                 {
-                    this.innerReceiver.PrefetchCount = value;
+                    innerReceiver.PrefetchCount = value;
                 }
             }
         }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public Task CloseAsync()
         {
-            return this.innerReceiver?.CloseAsync();
+            return innerReceiver?.CloseAsync();
         }
 
         public async Task OnAddRuleAsync(RuleDescription description)
@@ -114,13 +114,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.AddRuleOperation,
-                    this.ServiceBusConnection.OperationTimeout,
+                    ServiceBusConnection.OperationTimeout,
                     null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = description.Name;
                 amqpRequestMessage.Map[ManagementConstants.Properties.RuleDescription] =
                     AmqpMessageConverter.GetRuleDescriptionMap(description);
 
-                var response = await this.InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                var response = await InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (response.StatusCode != AmqpResponseStatusCode.OK)
                 {
@@ -140,11 +140,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 var amqpRequestMessage =
                     AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.RemoveRuleOperation,
-                        this.ServiceBusConnection.OperationTimeout,
+                        ServiceBusConnection.OperationTimeout,
                         null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.RuleName] = ruleName;
 
-                var response = await this.InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                var response = await InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
 
                 if (response.StatusCode != AmqpResponseStatusCode.OK)
                 {
@@ -164,12 +164,12 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 var amqpRequestMessage =
                     AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.EnumerateRulesOperation,
-                        this.ServiceBusConnection.OperationTimeout,
+                        ServiceBusConnection.OperationTimeout,
                         null);
                 amqpRequestMessage.Map[ManagementConstants.Properties.Top] = top;
                 amqpRequestMessage.Map[ManagementConstants.Properties.Skip] = skip;
 
-                var response = await this.InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
+                var response = await InnerReceiver.ExecuteRequestResponseAsync(amqpRequestMessage).ConfigureAwait(false);
                 var ruleDescriptions = new List<RuleDescription>();
                 if (response.StatusCode == AmqpResponseStatusCode.OK)
                 {

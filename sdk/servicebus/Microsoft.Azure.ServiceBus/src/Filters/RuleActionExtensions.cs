@@ -5,8 +5,8 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Xml.Linq;
-    using Microsoft.Azure.ServiceBus.Filters;
-    using Microsoft.Azure.ServiceBus.Management;
+    using Filters;
+    using Management;
 
     internal static class RuleActionExtensions
     {

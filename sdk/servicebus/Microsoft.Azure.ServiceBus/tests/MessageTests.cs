@@ -8,7 +8,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using Microsoft.Azure.ServiceBus.Core;
+    using Core;
     using Xunit;
 
     public class MessageTests
