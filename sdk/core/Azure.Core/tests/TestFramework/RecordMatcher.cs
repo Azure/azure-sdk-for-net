@@ -74,7 +74,19 @@ namespace Azure.Core.Testing
             {
                 int score = 0;
 
-                if (!AreUrisSame(entry.RequestUri, uri))
+                var recordRequestUri = entry.RequestUri;
+                if (entry.IsTrack1Recording)
+                {
+                    //there's no domain name for request uri in track 1 record, so add it from reqeust uri
+                    int len = 8; //length of "https://"
+                    int domainEndingIndex = uri.IndexOf('/', len);
+                    if (domainEndingIndex > 0)
+                    {
+                        recordRequestUri = uri.Substring(0, domainEndingIndex) + recordRequestUri;
+                    }
+                }
+
+                if (!AreUrisSame(recordRequestUri, uri))
                 {
                     score++;
                 }
@@ -84,7 +96,11 @@ namespace Azure.Core.Testing
                     score++;
                 }
 
-                score += CompareHeaderDictionaries(headers, entry.Request.Headers, ExcludeHeaders);
+                //we only check Uri + RequestMethod for track1 record
+                if (entry.IsTrack1Recording)
+                {
+                    score += CompareHeaderDictionaries(headers, entry.Request.Headers, ExcludeHeaders);
+                }
 
                 if (score == 0)
                 {

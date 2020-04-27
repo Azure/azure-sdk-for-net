@@ -18,6 +18,8 @@ namespace Azure.Core.Testing
 
         public string RequestUri { get; set; }
 
+        public bool IsTrack1Recording { get; set; }
+
         public RequestMethod RequestMethod { get; set; }
 
         public int StatusCode { get; set; }
@@ -34,6 +36,11 @@ namespace Azure.Core.Testing
             if (element.TryGetProperty(nameof(RequestUri), out property))
             {
                 record.RequestUri = property.GetString();
+            }
+
+            if (element.TryGetProperty("EncodedRequestUri", out property))
+            {
+                record.IsTrack1Recording = true;
             }
 
             if (element.TryGetProperty("RequestHeaders", out property))
