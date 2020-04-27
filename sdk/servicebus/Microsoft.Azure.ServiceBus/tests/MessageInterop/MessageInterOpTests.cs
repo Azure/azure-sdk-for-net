@@ -45,7 +45,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 memoryStream.Flush();
                 memoryStream.Position = 0;
                 payload = memoryStream.ToArray();
-            };
+            }
 
             return new Message(payload);
         }
