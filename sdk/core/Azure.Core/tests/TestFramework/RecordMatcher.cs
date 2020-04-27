@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -70,6 +71,14 @@ namespace Azure.Core.Testing
             int bestScore = int.MaxValue;
             RecordEntry bestScoreEntry = null;
 
+            byte[] body = null;
+            if (request.Content != null)
+            {
+                using var ms = new MemoryStream();
+                request.Content.WriteTo(ms, default);
+                body = ms.ToArray();
+            }
+
             foreach (RecordEntry entry in entries)
             {
                 int score = 0;
@@ -86,6 +95,8 @@ namespace Azure.Core.Testing
 
                 score += CompareHeaderDictionaries(headers, entry.Request.Headers, ExcludeHeaders);
 
+                score += CompareBodies(body, entry.Request.Body);
+
                 if (score == 0)
                 {
                     return entry;
@@ -98,7 +109,39 @@ namespace Azure.Core.Testing
                 }
             }
 
-            throw new InvalidOperationException(GenerateException(request.Method, uri, headers, bestScoreEntry));
+            throw new InvalidOperationException(GenerateException(request.Method, uri, headers, body, bestScoreEntry));
+        }
+
+        private int CompareBodies(byte[] requestBody, byte[] responseBody, StringBuilder descriptionBuilder = null)
+        {
+            if (requestBody == null && responseBody == null)
+            {
+                return 0;
+            }
+
+            if (requestBody == null)
+            {
+                descriptionBuilder?.AppendLine("Request has body but response doesn't");
+                return 1;
+            }
+
+            if (responseBody == null)
+            {
+                descriptionBuilder?.AppendLine("Response has body but request doesn't");
+                return 1;
+            }
+
+            if (!requestBody.SequenceEqual(requestBody))
+            {
+                if (descriptionBuilder != null)
+                {
+                    descriptionBuilder.AppendLine("Request and response bodies do not match");
+
+                }
+                return 1;
+            }
+
+            return 0;
         }
 
         public virtual bool IsEquivalentRecord(RecordEntry entry, RecordEntry otherEntry) =>
@@ -136,7 +179,7 @@ namespace Azure.Core.Testing
                 .SequenceEqual((otherRecord.Response.Body ?? Array.Empty<byte>()));
         }
 
-        private string GenerateException(RequestMethod requestMethod, string uri, SortedDictionary<string, string[]> headers, RecordEntry bestScoreEntry)
+        private string GenerateException(RequestMethod requestMethod, string uri, SortedDictionary<string, string[]> headers, byte[] body, RecordEntry bestScoreEntry)
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendLine($"Unable to find a record for the request {requestMethod} {uri}");
@@ -162,6 +205,10 @@ namespace Azure.Core.Testing
             builder.AppendLine("Header differences:");
 
             CompareHeaderDictionaries(headers, bestScoreEntry.Request.Headers, ExcludeHeaders, builder);
+
+            builder.AppendLine("Body differences:");
+
+            CompareBodies(body, bestScoreEntry.Request.Body, builder);
 
             return builder.ToString();
         }
