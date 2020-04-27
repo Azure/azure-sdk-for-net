@@ -221,12 +221,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 msg.UserProperties.Add("char", 'c');
                 msg.UserProperties.Add("short", (short)4);
                 msg.UserProperties.Add("ushort", (ushort)5);
-                msg.UserProperties.Add("int", (int)6);
+                msg.UserProperties.Add("int", 6);
                 msg.UserProperties.Add("uint", (uint)7);
                 msg.UserProperties.Add("long", (long)8);
                 msg.UserProperties.Add("ulong", (ulong)9);
                 msg.UserProperties.Add("float", (float)10.0);
-                msg.UserProperties.Add("double", (double)11.0);
+                msg.UserProperties.Add("double", 11.0);
                 msg.UserProperties.Add("decimal", (decimal)12.0);
                 msg.UserProperties.Add("bool", true);
                 msg.UserProperties.Add("Guid", Guid.NewGuid());

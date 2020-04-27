@@ -248,7 +248,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 var sqlFilter = new SqlFilter("stringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam AND timeSpanValue = @timeSpanParam");
                 sqlFilter.Parameters.Add("@stringParam", "string");
-                sqlFilter.Parameters.Add("@intParam", (int)1);
+                sqlFilter.Parameters.Add("@intParam", 1);
                 sqlFilter.Parameters.Add("@longParam", (long)12);
                 sqlFilter.Parameters.Add("@dateParam", DateTime.UtcNow);
                 sqlFilter.Parameters.Add("@timeSpanParam", TimeSpan.FromDays(1));
@@ -859,7 +859,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                             { "@intPropertyValue", 3 },
                             { "@longPropertyValue", 3L },
                             { "@boolPropertyValue", true },
-                            { "@doublePropertyValue", (double)3.0 },
+                            { "@doublePropertyValue", 3.0 },
                        }
                 };
 
