@@ -191,8 +191,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A <see cref="ServiceBusSender"/> scoped to the specified queue or topic.</returns>
         public ServiceBusSender CreateSender(string queueOrTopicName, ServiceBusSenderOptions options)
         {
-            ValidateEntityName(options?.ViaQueueOrTopicName);
-            ValidateEntityName(queueOrTopicName);
+            ValidateSendViaEntityName(queueOrTopicName, options?.ViaQueueOrTopicName);
 
             return new ServiceBusSender(
                 entityPath: queueOrTopicName,
@@ -608,6 +607,31 @@ namespace Azure.Messaging.ServiceBus
             if (!string.IsNullOrEmpty(Connection.EntityPath) && !string.Equals(entityName, Connection.EntityPath, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new ArgumentException(Resources.OnlyOneEntityNameMayBeSpecified);
+            }
+        }
+
+        /// <summary>
+        /// Validates that the specified entity name matches the entity path in the Connection,
+        /// if an entity path is specified in the connection.
+        /// </summary>
+        /// <param name="entityName">Entity name to validate</param>
+        ///
+        /// <param name="sendViaEntityName">The send via entity name to validate</param>
+        private void ValidateSendViaEntityName(string entityName, string sendViaEntityName)
+        {
+            if (sendViaEntityName == null ||
+                string.Equals(sendViaEntityName, entityName, StringComparison.InvariantCultureIgnoreCase))
+            {
+                ValidateEntityName(sendViaEntityName);
+                return;
+            }
+
+            // we've established they are not equal, so anything specified in connection string will cause
+            // a mismatch with one of the entities.
+
+            if (!string.IsNullOrEmpty(Connection.EntityPath))
+            {
+                throw new ArgumentException(Resources.SendViaCannotBeUsedWithEntityInConnectionString);
             }
         }
     }
