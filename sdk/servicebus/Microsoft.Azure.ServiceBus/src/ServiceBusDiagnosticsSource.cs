@@ -46,7 +46,7 @@ namespace Microsoft.Azure.ServiceBus
 
         internal Activity SendStart(IList<Message> messageList)
         {
-            Activity activity = Start("Send", () => new
+            var activity = Start("Send", () => new
                 {
                     Messages = messageList,
                     Entity = _entityPath,
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.ServiceBus
 
         internal Activity ScheduleStart(Message message, DateTimeOffset scheduleEnqueueTimeUtc)
         {
-            Activity activity = Start("Schedule", () => new
+            var activity = Start("Schedule", () => new
                 {
                     Message = message,
                     ScheduleEnqueueTimeUtc = scheduleEnqueueTimeUtc,
@@ -629,7 +629,7 @@ namespace Microsoft.Azure.ServiceBus
         private Activity Start(string operationName, Func<object> getPayload, Action<Activity> setTags)
         {
             Activity activity = null;
-            string activityName = BaseActivityName + operationName;
+            var activityName = BaseActivityName + operationName;
             if (DiagnosticListener.IsEnabled(activityName, _entityPath))
             {
                 activity = new Activity(activityName);
@@ -699,7 +699,7 @@ namespace Microsoft.Azure.ServiceBus
                 var relatedTo = new List<string>();
                 foreach (var message in messageList)
                 {
-                    if (message.TryExtractId(out string id))
+                    if (message.TryExtractId(out var id))
                     {
                         relatedTo.Add(id);
                     }
@@ -715,7 +715,7 @@ namespace Microsoft.Azure.ServiceBus
         private Activity ProcessStart(string operationName, Message message, Func<object> getPayload, Action<Activity> setTags)
         {
             Activity activity = null;
-            string activityName = BaseActivityName + operationName;
+            var activityName = BaseActivityName + operationName;
 
             if (message != null && DiagnosticListener.IsEnabled(activityName, _entityPath))
             {

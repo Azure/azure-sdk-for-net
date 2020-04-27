@@ -131,7 +131,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
         public static XDocument Serialize(this RuleDescription description)
         {
-            XDocument doc = new XDocument(
+            var doc = new XDocument(
                    new XElement(XName.Get("entry", ManagementClientConstants.AtomNamespace),
                        new XElement(XName.Get("content", ManagementClientConstants.AtomNamespace),
                            new XAttribute("type", "application/xml"),

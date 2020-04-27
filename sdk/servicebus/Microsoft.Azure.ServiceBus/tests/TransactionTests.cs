@@ -52,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body = Guid.NewGuid().ToString("N");
+                    var body = Guid.NewGuid().ToString("N");
                     var message = new Message(body.GetBytes()) {PartitionKey = "pk"};
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body = Guid.NewGuid().ToString("N");
+                    var body = Guid.NewGuid().ToString("N");
                     var message = new Message(body.GetBytes()) { PartitionKey = "pk" };
                     using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body = Guid.NewGuid().ToString("N");
+                    var body = Guid.NewGuid().ToString("N");
                     var message = new Message(body.GetBytes());
                     await sender.SendAsync(message).ConfigureAwait(false);
 
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body = Guid.NewGuid().ToString("N");
+                    var body = Guid.NewGuid().ToString("N");
                     var message = new Message(body.GetBytes());
                     await sender.SendAsync(message).ConfigureAwait(false);
 
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body = Guid.NewGuid().ToString("N");
+                    var body = Guid.NewGuid().ToString("N");
                     var message = new Message(body.GetBytes())
                     {
                         SessionId = body
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body = Guid.NewGuid().ToString("N");
+                    var body = Guid.NewGuid().ToString("N");
                     var message = new Message(body.GetBytes());
                     await sender.SendAsync(message).ConfigureAwait(false);
 
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body = Guid.NewGuid().ToString("N");
+                    var body = Guid.NewGuid().ToString("N");
                     var message1 = new Message((body + "1").GetBytes())
                     {
                         PartitionKey = "1"
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     // Two send operations to different partitions.
                     var transaction = new CommittableTransaction();
-                    using (TransactionScope ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
+                    using (var ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await sender.SendAsync(message1);
 
@@ -350,7 +350,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.NotNull(receivedMessage2);
 
                     transaction = new CommittableTransaction();
-                    using (TransactionScope ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
+                    using (var ts = new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await receiver.CompleteAsync(receivedMessage1.SystemProperties.LockToken);
 
@@ -393,8 +393,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body1 = Guid.NewGuid().ToString("N");
-                    string body2 = Guid.NewGuid().ToString("N");
+                    var body1 = Guid.NewGuid().ToString("N");
+                    var body2 = Guid.NewGuid().ToString("N");
                     var message = new Message(body1.GetBytes());
                     var message2 = new Message(body2.GetBytes());
                     await sender.SendAsync(message).ConfigureAwait(false);
@@ -445,8 +445,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    string body1 = Guid.NewGuid().ToString("N");
-                    string body2 = Guid.NewGuid().ToString("N");
+                    var body1 = Guid.NewGuid().ToString("N");
+                    var body2 = Guid.NewGuid().ToString("N");
                     var message = new Message(body1.GetBytes());
                     var message2 = new Message(body2.GetBytes());
                     await sender.SendAsync(message).ConfigureAwait(false);

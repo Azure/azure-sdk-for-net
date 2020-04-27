@@ -101,7 +101,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
         public override int GetHashCode()
         {
-            int hash = 13;
+            var hash = 13;
             unchecked
             {
                 hash = (hash * 7) + _filter?.GetHashCode() ?? 0;

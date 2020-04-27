@@ -253,8 +253,8 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageSendStart(ClientId, count);
 
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.SendStart(messageList) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.SendStart(messageList) : null;
             Task sendTask = null;
 
             try
@@ -314,8 +314,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.ScheduleMessageStart(ClientId, scheduleEnqueueTimeUtc);
             long result = 0;
 
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.ScheduleStart(message, scheduleEnqueueTimeUtc) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.ScheduleStart(message, scheduleEnqueueTimeUtc) : null;
             Task scheduleTask = null;
 
             try
@@ -362,8 +362,8 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.CancelScheduledMessageStart(ClientId, sequenceNumber);
 
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.CancelStart(sequenceNumber) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.CancelStart(sequenceNumber) : null;
             Task cancelTask = null;
 
             try
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             var amqpMessage = amqpRequestMessage.AmqpMessage;
             var timeoutHelper = new TimeoutHelper(OperationTimeout, true);
 
-            ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+            var transactionId = AmqpConstants.NullBinary;
             var ambientTransaction = Transaction.Current;
             if (ambientTransaction != null)
             {
@@ -543,7 +543,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 SendingAmqpLink amqpLink = null;
                 try
                 {
-                    ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+                    var transactionId = AmqpConstants.NullBinary;
                     var ambientTransaction = Transaction.Current;
                     if (ambientTransaction != null)
                     {
@@ -596,9 +596,9 @@ namespace Microsoft.Azure.ServiceBus.Core
                         request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
                     }
 
-                    ArraySegment<byte>[] payload = amqpMessage.GetPayload();
+                    var payload = amqpMessage.GetPayload();
                     var buffer = new BufferListStream(payload);
-                    ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+                    var value = buffer.ReadBytes((int)buffer.Length);
 
                     var entry = new AmqpMap();
                     {
@@ -711,7 +711,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             string[] claims = {ClaimConstants.Send};
             var amqpSendReceiveLinkCreator = new AmqpSendReceiveLinkCreator(SendingLinkDestination, ServiceBusConnection, endpointUri, audience, claims, CbsTokenProvider, amqpLinkSettings, ClientId);
-            Tuple<AmqpObject, DateTime> linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
+            var linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var sendingAmqpLink = (SendingAmqpLink) linkDetails.Item1;
             var activeSendReceiveClientLink = new ActiveSendReceiveClientLink(
@@ -758,7 +758,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 amqpLinkSettings,
                 ClientId);
 
-            Tuple<AmqpObject, DateTime> linkDetails =
+            var linkDetails =
                 await amqpRequestResponseLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var requestResponseAmqpLink = (RequestResponseAmqpLink) linkDetails.Item1;

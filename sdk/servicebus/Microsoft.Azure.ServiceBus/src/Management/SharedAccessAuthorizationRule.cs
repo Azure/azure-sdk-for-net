@@ -153,7 +153,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentException($"Rights cannot be null, empty or greater than {ManagementClientConstants.SupportedClaimsCount}");
                 }
 
-                HashSet<AccessRights> dedupedAccessRights = new HashSet<AccessRights>(value);
+                var dedupedAccessRights = new HashSet<AccessRights>(value);
                 if (value.Count != dedupedAccessRights.Count)
                 {
                     throw new ArgumentException("Access rights on an authorization rule must be unique");
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <summary>Returns the hash code for this instance.</summary>
         public override int GetHashCode()
         {
-            int hash = 13;
+            var hash = 13;
             unchecked
             {
                 hash = (hash * 7) + KeyName?.GetHashCode() ?? 0;
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 return false;
             }
 
-            SharedAccessAuthorizationRule comparand = (SharedAccessAuthorizationRule)other;
+            var comparand = (SharedAccessAuthorizationRule)other;
             if (!string.Equals(KeyName, comparand.KeyName, StringComparison.OrdinalIgnoreCase) ||
                 !string.Equals(PrimaryKey, comparand.PrimaryKey, StringComparison.Ordinal) ||
                 !string.Equals(SecondaryKey, comparand.SecondaryKey, StringComparison.Ordinal))
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
             if (Rights != null && comparand.Rights != null)
             {
-                HashSet<AccessRights> thisRights = new HashSet<AccessRights>(Rights);
+                var thisRights = new HashSet<AccessRights>(Rights);
                 if (comparand.Rights.Count != thisRights.Count)
                 {
                     return false;
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <summary>Generates the random key for the authorization rule.</summary>        
         private static string GenerateRandomKey()
         {
-            byte[] key256 = new byte[32];
+            var key256 = new byte[32];
             using (var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
             {
                 rngCryptoServiceProvider.GetBytes(key256);
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         internal override XElement Serialize()
         {
-            XElement rule = new XElement(
+            var rule = new XElement(
                 XName.Get("AuthorizationRule", ManagementClientConstants.ServiceBusNamespace),
                 new XAttribute(XName.Get("type", ManagementClientConstants.XmlSchemaInstanceNamespace), nameof(SharedAccessAuthorizationRule)),
                 new XElement(XName.Get("ClaimType", ManagementClientConstants.ServiceBusNamespace), ClaimType),

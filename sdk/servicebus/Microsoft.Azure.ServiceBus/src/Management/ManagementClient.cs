@@ -60,17 +60,17 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public static HttpRequestMessage CloneRequest(HttpRequestMessage req)
         {
-            HttpRequestMessage clone = new HttpRequestMessage(req.Method, req.RequestUri);
+            var clone = new HttpRequestMessage(req.Method, req.RequestUri);
 
             clone.Content = req.Content;
             clone.Version = req.Version;
 
-            foreach (KeyValuePair<string, object> prop in req.Properties)
+            foreach (var prop in req.Properties)
             {
                 clone.Properties.Add(prop);
             }
 
-            foreach (KeyValuePair<string, IEnumerable<string>> header in req.Headers)
+            foreach (var header in req.Headers)
             {
                 clone.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
@@ -1128,7 +1128,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             }.Uri;
 
             var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            HttpResponseMessage response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
+            var response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
             var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
@@ -1171,7 +1171,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 request.Headers.Add(ManagementClientConstants.ServiceBusDlqSupplementaryAuthorizationHeaderName, token);
             }
 
-            HttpResponseMessage response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
+            var response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
             var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");

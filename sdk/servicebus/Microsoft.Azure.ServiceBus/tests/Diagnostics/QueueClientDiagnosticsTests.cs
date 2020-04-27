@@ -67,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
 	                    // message is processed, but complete happens after that
 	                    // let's wat until Complete starts and ends and Process ends
-	                    int wait = 0;
+	                    var wait = 0;
 	                    while (wait++ < MaxWaitSec && eventQueue.Count < 3)
 	                    {
 		                    await Task.Delay(TimeSpan.FromSeconds(1));
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
 	                    // message is processed, but abandon happens after that
 	                    // let's spin until Complete call starts and ends
-	                    int wait = 0;
+	                    var wait = 0;
 	                    while (wait++ < MaxWaitSec && eventQueue.Count < 3)
 	                    {
 		                    await Task.Delay(TimeSpan.FromSeconds(1));
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                         
 	                    await queueClient.InnerReceiver.ReceiveAsync(2, TimeSpan.FromSeconds(5));
 
-	                    int receivedStopCount = 0;
+	                    var receivedStopCount = 0;
 	                    Assert.Equal(2, eventQueue.Count);
 	                    while (eventQueue.TryDequeue(out var receiveStart))
 	                    {
@@ -300,8 +300,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 	                    Assert.True(eventQueue.TryDequeue(out var sendStop2));
 	                    AssertSendStop(queueName, sendStop2.eventName, sendStop2.payload, sendStop2.activity, sendStop2.activity, 3);
 
-	                    int receivedStopCount = 0;
-	                    string relatedTo = "";
+	                    var receivedStopCount = 0;
+	                    var relatedTo = "";
 	                    while (eventQueue.TryDequeue(out var receiveStart))
 	                    {
 		                    var startCount = AssertReceiveStart(queueName, receiveStart.eventName, receiveStart.payload, receiveStart.activity, -1);
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                     using (var listener = CreateEventListener(queueName, eventQueue))
                     using (SubscribeToEvents(listener))
                     {
-	                    Activity parentActivity = new Activity("test");
+	                    var parentActivity = new Activity("test");
 	                    listener.Enable((name, queue, arg) => name.Contains("Schedule") || name.Contains("Cancel"));
 
 	                    parentActivity.Start();

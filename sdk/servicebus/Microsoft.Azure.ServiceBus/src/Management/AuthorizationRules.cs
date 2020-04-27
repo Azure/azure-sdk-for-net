@@ -29,7 +29,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public override int GetHashCode()
         {
-            int hash = 7;
+            var hash = 7;
             unchecked
             {    
                 foreach (var rule in this)
@@ -55,12 +55,12 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
 
             var cnt = new Dictionary<string, AuthorizationRule>();
-            foreach (AuthorizationRule rule in this)
+            foreach (var rule in this)
             {
                 cnt[rule.KeyName] = rule;
             }
 
-            foreach (AuthorizationRule otherRule in other)
+            foreach (var otherRule in other)
             {
                 if (!cnt.TryGetValue(otherRule.KeyName, out var rule) || !rule.Equals(otherRule))
                 {

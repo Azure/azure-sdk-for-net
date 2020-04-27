@@ -79,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
 
-            foreach (KeyValuePair<string, int> keyValuePair in _sessionMessageMap)
+            foreach (var keyValuePair in _sessionMessageMap)
             {
                 TestUtility.Log($"Session: {keyValuePair.Key}, Messages Received in this Session: {keyValuePair.Value}");
             }

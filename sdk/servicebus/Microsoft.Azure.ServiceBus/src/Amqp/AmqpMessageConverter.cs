@@ -569,7 +569,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     }
                     else if (amqpObject is ArraySegment<byte> amqpObjectAsArraySegment)
                     {
-                        ArraySegment<byte> binValue = amqpObjectAsArraySegment;
+                        var binValue = amqpObjectAsArraySegment;
                         if (binValue.Count == binValue.Array.Length)
                         {
                             netObject = binValue.Array;
@@ -645,9 +645,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         private static Data ToData(AmqpMessage message)
         {
-            ArraySegment<byte>[] payload = message.GetPayload();
+            var payload = message.GetPayload();
             var buffer = new BufferListStream(payload);
-            ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+            var value = buffer.ReadBytes((int)buffer.Length);
             return new Data { Value = value };
         }
 

@@ -159,7 +159,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 topicDescriptionElements.AddRange(description.UnknownProperties);
             }
 
-            XDocument doc = new XDocument(
+            var doc = new XDocument(
                 new XElement(XName.Get("entry", ManagementClientConstants.AtomNamespace),
                     new XElement(XName.Get("content", ManagementClientConstants.AtomNamespace),
                         new XAttribute("type", "application/xml"),

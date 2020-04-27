@@ -83,7 +83,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             try
             {
                 var cbsLink = activeClientLinkObject.Connection.Extensions.Find<AmqpCbsLink>() ?? new AmqpCbsLink(activeClientLinkObject.Connection);
-                DateTime cbsTokenExpiresAtUtc = DateTime.MaxValue;
+                var cbsTokenExpiresAtUtc = DateTime.MaxValue;
 
                 foreach (var resource in activeClientLinkObject.Audience)
                 {

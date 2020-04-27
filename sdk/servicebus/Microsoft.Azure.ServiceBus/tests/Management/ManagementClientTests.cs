@@ -845,7 +845,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 await client.CreateTopicAsync(topicName);
                 await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-                SqlFilter sqlFilter = new SqlFilter(
+                var sqlFilter = new SqlFilter(
                     "PROPERTY(@propertyName) = @stringPropertyValue " +
                     "AND PROPERTY(intProperty) = @intPropertyValue " +
                     "AND PROPERTY(longProperty) = @longPropertyValue " +

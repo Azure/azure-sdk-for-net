@@ -296,8 +296,8 @@ namespace Microsoft.Azure.ServiceBus
                 PrefetchCount,
                 sessionId);
 
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.AcceptMessageSessionStart(sessionId) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.AcceptMessageSessionStart(sessionId) : null;
             Task acceptMessageSessionTask = null;
 
             var session = new MessageSession(

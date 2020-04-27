@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 throw new ArgumentNullException(nameof(sharedAccessSignature));
             }
 
-            IDictionary<string, string> parsedFields = ExtractFieldValues(sharedAccessSignature);
+            var parsedFields = ExtractFieldValues(sharedAccessSignature);
 
             if (!parsedFields.TryGetValue(Signature, out _))
             {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         private static IDictionary<string, string> ExtractFieldValues(string sharedAccessSignature)
         {
-            string[] tokenLines = sharedAccessSignature.Split();
+            var tokenLines = sharedAccessSignature.Split();
 
             if (!string.Equals(tokenLines[0].Trim(), SharedAccessSignature, StringComparison.OrdinalIgnoreCase) || tokenLines.Length != 2)
             {
@@ -76,13 +76,13 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             }
 
             IDictionary<string, string> parsedFields = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            string[] tokenFields = tokenLines[1].Trim().Split(new[] { SasPairSeparator }, StringSplitOptions.None);
+            var tokenFields = tokenLines[1].Trim().Split(new[] { SasPairSeparator }, StringSplitOptions.None);
 
-            foreach (string tokenField in tokenFields)
+            foreach (var tokenField in tokenFields)
             {
                 if (tokenField != string.Empty)
                 {
-                    string[] fieldParts = tokenField.Split(new[] { SasKeyValueSeparator }, StringSplitOptions.None);
+                    var fieldParts = tokenField.Split(new[] { SasKeyValueSeparator }, StringSplitOptions.None);
                     if (string.Equals(fieldParts[0], SignedResource, StringComparison.OrdinalIgnoreCase))
                     {
                         // We need to preserve the casing of the escape characters in the audience,
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         private static string GetAudienceFromToken(string token)
         {
-            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
+            var decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
             if (!decodedToken.TryGetValue(SignedResourceFullFieldName, out var audience))
             {
                 throw new FormatException(Resources.TokenMissingAudience);
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         private static DateTime GetExpirationDateTimeUtcFromToken(string token)
         {
-            IDictionary<string, string> decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
+            var decodedToken = Decode(token, Decoder, Decoder, SasKeyValueSeparator, SasPairSeparator);
             if (!decodedToken.TryGetValue(SignedExpiry, out var expiresIn))
             {
                 throw new FormatException(Resources.TokenMissingExpiresOn);
@@ -127,9 +127,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
             IEnumerable<string> valueEncodedPairs = encodedString.Split(new[] { pairSeparator }, StringSplitOptions.None);
-            foreach (string valueEncodedPair in valueEncodedPairs)
+            foreach (var valueEncodedPair in valueEncodedPairs)
             {
-                string[] pair = valueEncodedPair.Split(new[] { keyValueSeparator }, StringSplitOptions.None);
+                var pair = valueEncodedPair.Split(new[] { keyValueSeparator }, StringSplitOptions.None);
                 if (pair.Length != 2)
                 {
                     throw new FormatException(Resources.InvalidEncoding);

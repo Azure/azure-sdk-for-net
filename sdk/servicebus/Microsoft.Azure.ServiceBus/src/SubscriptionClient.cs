@@ -491,8 +491,8 @@ namespace Microsoft.Azure.ServiceBus
             EntityNameHelper.CheckValidRuleName(description.Name);
             MessagingEventSource.Log.AddRuleStart(ClientId, description.Name);
 
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.AddRuleStart(description) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.AddRuleStart(description) : null;
             Task addRuleTask = null;
 
             try
@@ -532,8 +532,8 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             MessagingEventSource.Log.RemoveRuleStart(ClientId, ruleName);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.RemoveRuleStart(ruleName) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.RemoveRuleStart(ruleName) : null;
             Task removeRuleTask = null;
 
             try
@@ -568,8 +568,8 @@ namespace Microsoft.Azure.ServiceBus
             ThrowIfClosed();
 
             MessagingEventSource.Log.GetRulesStart(ClientId);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.GetRulesStart() : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.GetRulesStart() : null;
             Task<IList<RuleDescription>> getRulesTask = null;
 
             var skip = 0;

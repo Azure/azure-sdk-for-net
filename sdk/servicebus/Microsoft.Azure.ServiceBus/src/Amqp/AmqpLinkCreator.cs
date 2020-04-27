@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
             // Authenticate over CBS
             var cbsLink = amqpConnection.Extensions.Find<AmqpCbsLink>();
-            DateTime cbsTokenExpiresAtUtc = DateTime.MaxValue;
+            var cbsTokenExpiresAtUtc = DateTime.MaxValue;
 
             foreach (var resource in _audience)
             {

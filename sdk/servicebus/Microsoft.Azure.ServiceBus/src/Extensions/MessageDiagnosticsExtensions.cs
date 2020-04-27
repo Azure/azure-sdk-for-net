@@ -75,7 +75,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
 
             var activity = new Activity(activityName);
 
-            if (TryExtractId(message, out string id))
+            if (TryExtractId(message, out var id))
             {
                 activity.SetParentId(id);
 
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
         {
             id = null;
             if (message.UserProperties.TryGetValue(ServiceBusDiagnosticSource.ActivityIdPropertyName,
-                out object requestId))
+                out var requestId))
             {
                 var tmp = requestId as string;
                 if (tmp != null && tmp.Trim().Length > 0)
@@ -114,9 +114,9 @@ namespace Microsoft.Azure.ServiceBus.Extensions
             try
             {
                 if (message.UserProperties.TryGetValue(ServiceBusDiagnosticSource.CorrelationContextPropertyName,
-                    out object ctxObj))
+                    out var ctxObj))
                 {
-                    string ctxStr = ctxObj as string;
+                    var ctxStr = ctxObj as string;
                     if (string.IsNullOrEmpty(ctxStr))
                     {
                         return false;
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
                     }
 
                     context = new List<KeyValuePair<string, string>>();
-                    foreach (string item in ctxList)
+                    foreach (var item in ctxList)
                     {
                         var kvp = item.Split('=');
                         if (kvp.Length == 2)

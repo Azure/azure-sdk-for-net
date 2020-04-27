@@ -435,7 +435,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             {
                 Assert.Contains("MessageId", activity.Tags.Select(t => t.Key));
 
-                string messageIdTag = activity.Tags.Single(t => t.Key == "MessageId").Value;
+                var messageIdTag = activity.Tags.Single(t => t.Key == "MessageId").Value;
                 foreach (var m in messagesWithId)
                 {
                     Assert.Contains(m.MessageId, messageIdTag);
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             {
                 Assert.Contains("SessionId", activity.Tags.Select(t => t.Key));
 
-                string sessionIdTag = activity.Tags.Single(t => t.Key == "SessionId").Value;
+                var sessionIdTag = activity.Tags.Single(t => t.Key == "SessionId").Value;
                 foreach (var m in messagesWithSessionId)
                 {
                     Assert.Contains(m.SessionId, sessionIdTag);
@@ -501,11 +501,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         protected T GetPropertyValueFromAnonymousTypeInstance<T>(object obj, string propertyName, bool canValueBeNull = false)
         {
-            Type t = obj.GetType();
+            var t = obj.GetType();
 
-            PropertyInfo p = t.GetRuntimeProperty(propertyName);
+            var p = t.GetRuntimeProperty(propertyName);
 
-            object propertyValue = p.GetValue(obj);
+            var propertyValue = p.GetValue(obj);
             if (!canValueBeNull)
             {
                 Assert.NotNull(propertyValue);

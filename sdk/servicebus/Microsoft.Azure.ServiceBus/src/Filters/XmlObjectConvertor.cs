@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
         internal static XElement SerializeObject(object value)
         {
             var prefix = "l28";
-            string type = prefix + ':';
+            var type = prefix + ':';
             if (value is string)
             {
                 type += "string";

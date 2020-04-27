@@ -362,8 +362,8 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageReceiveStart(ClientId, maxMessageCount);
 
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.ReceiveStart(maxMessageCount) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.ReceiveStart(maxMessageCount) : null;
             Task receiveTask = null;
 
             IList<Message> unprocessedMessageList = null;
@@ -445,8 +445,8 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageReceiveDeferredMessageStart(ClientId, sequenceNumberList.Length, sequenceNumberList);
 
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.ReceiveDeferredStart(sequenceNumberList) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.ReceiveDeferredStart(sequenceNumberList) : null;
             Task receiveTask = null;
 
             IList<Message> messages = null;
@@ -516,8 +516,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             MessagingEventSource.Log.MessageCompleteStart(ClientId, lockTokenList.Count, lockTokenList);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.CompleteStart(lockTokenList) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.CompleteStart(lockTokenList) : null;
             Task completeTask = null;
 
             try
@@ -561,8 +561,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             ThrowIfNotPeekLockMode();
 
             MessagingEventSource.Log.MessageAbandonStart(ClientId, 1, lockToken);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("Abandon", lockToken) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("Abandon", lockToken) : null;
             Task abandonTask = null;
 
             try
@@ -607,8 +607,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             ThrowIfNotPeekLockMode();
 
             MessagingEventSource.Log.MessageDeferStart(ClientId, 1, lockToken);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("Defer", lockToken) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("Defer", lockToken) : null;
             Task deferTask = null;
 
             try
@@ -652,8 +652,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             ThrowIfNotPeekLockMode();
 
             MessagingEventSource.Log.MessageDeadLetterStart(ClientId, 1, lockToken);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("DeadLetter", lockToken) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("DeadLetter", lockToken) : null;
             Task deadLetterTask = null;
 
             try
@@ -698,8 +698,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             ThrowIfNotPeekLockMode();
 
             MessagingEventSource.Log.MessageDeadLetterStart(ClientId, 1, lockToken);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("DeadLetter", lockToken) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("DeadLetter", lockToken) : null;
             Task deadLetterTask = null;
 
             try
@@ -759,8 +759,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             ThrowIfNotPeekLockMode();
 
             MessagingEventSource.Log.MessageRenewLockStart(ClientId, 1, lockToken);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.RenewLockStart(lockToken) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.RenewLockStart(lockToken) : null;
             Task renewTask = null;
 
             var lockedUntilUtc = DateTime.MinValue;
@@ -842,8 +842,8 @@ namespace Microsoft.Azure.ServiceBus.Core
             IList<Message> messages = null;
 
             MessagingEventSource.Log.MessagePeekStart(ClientId, fromSequenceNumber, messageCount);
-            bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.PeekStart(fromSequenceNumber, messageCount) : null;
+            var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            var activity = isDiagnosticSourceEnabled ? _diagnosticSource.PeekStart(fromSequenceNumber, messageCount) : null;
             Task peekTask = null;
 
             try
@@ -973,7 +973,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             var timeoutHelper = new TimeoutHelper(OperationTimeout, true);
 
-            ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+            var transactionId = AmqpConstants.NullBinary;
             var ambientTransaction = Transaction.Current;
             if (ambientTransaction != null)
             {
@@ -1099,7 +1099,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     Message message = null;
                     var messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
-                    foreach (AmqpMap entry in messageList)
+                    foreach (var entry in messageList)
                     {
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
@@ -1363,12 +1363,12 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             var timeoutHelper = new TimeoutHelper(OperationTimeout, true);
-            List<ArraySegment<byte>> deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
+            var deliveryTags = ConvertLockTokensToDeliveryTags(lockTokens);
 
             ReceivingAmqpLink receiveLink = null;
             try
             {
-                ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+                var transactionId = AmqpConstants.NullBinary;
                 var ambientTransaction = Transaction.Current;
                 if (ambientTransaction != null)
                 {
@@ -1383,7 +1383,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
                 var disposeMessageTasks = new Task<Outcome>[deliveryTags.Count];
                 var i = 0;
-                foreach (ArraySegment<byte> deliveryTag in deliveryTags)
+                foreach (var deliveryTag in deliveryTags)
                 {
                     disposeMessageTasks[i++] = Task.Factory.FromAsync(
                         (c, s) => receiveLink.BeginDisposeMessage(deliveryTag, transactionId, outcome, true, timeoutHelper.RemainingTime(), c, s),
@@ -1533,7 +1533,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 amqpLinkSettings,
                 ClientId);
 
-            Tuple<AmqpObject, DateTime> linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
+            var linkDetails = await amqpSendReceiveLinkCreator.CreateAndOpenAmqpLinkAsync().ConfigureAwait(false);
 
             var receivingAmqpLink = (ReceivingAmqpLink) linkDetails.Item1;
             var activeSendReceiveClientLink = new ActiveSendReceiveClientLink(
@@ -1635,7 +1635,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         private Outcome GetModifiedOutcome(IDictionary<string, object> propertiesToModify, bool undeliverableHere)
         {
-            Modified modified = new Modified();
+            var modified = new Modified();
             if (undeliverableHere)
             {
                 modified.UndeliverableHere = true;

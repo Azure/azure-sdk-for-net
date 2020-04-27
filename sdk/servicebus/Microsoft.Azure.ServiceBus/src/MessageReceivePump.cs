@@ -126,7 +126,7 @@ namespace Microsoft.Azure.ServiceBus
 
         private async Task MessageDispatchTaskInstrumented(Message message)
         {
-            Activity activity = _diagnosticSource.ProcessStart(message);
+            var activity = _diagnosticSource.ProcessStart(message);
             Task processTask = null;
             try
             {

@@ -96,7 +96,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
             TimeoutHelper.ThrowIfNegativeArgument(timeout);
             appliesTo = NormalizeAppliesTo(appliesTo);
-            string tokenString = BuildSignature(appliesTo);
+            var tokenString = BuildSignature(appliesTo);
             var securityToken = new SharedAccessSignatureToken(tokenString);
             return Task.FromResult<SecurityToken>(securityToken);
         }
@@ -131,14 +131,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             {
                 // Note that target URI is not normalized because in IoT scenario it 
                 // is case sensitive.
-                string expiresOn = BuildExpiresOn(timeToLive);
-                string audienceUri = WebUtility.UrlEncode(targetUri);
-                List<string> fields = new List<string> { audienceUri, expiresOn };
+                var expiresOn = BuildExpiresOn(timeToLive);
+                var audienceUri = WebUtility.UrlEncode(targetUri);
+                var fields = new List<string> { audienceUri, expiresOn };
 
                 // Example string to be signed:
                 // http://mynamespace.servicebus.windows.net/a/b/c?myvalue1=a
                 // <Value for ExpiresOn>
-                string signature = Sign(string.Join("\n", fields), encodedSharedAccessKey);
+                var signature = Sign(string.Join("\n", fields), encodedSharedAccessKey);
 
                 // Example returned string:
                 // SharedAccessKeySignature
@@ -154,9 +154,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             private static string BuildExpiresOn(TimeSpan timeToLive)
             {
-                DateTime expiresOn = DateTime.UtcNow.Add(timeToLive);
-                TimeSpan secondsFromBaseTime = expiresOn.Subtract(Constants.EpochTime);
-                long seconds = Convert.ToInt64(secondsFromBaseTime.TotalSeconds, CultureInfo.InvariantCulture);
+                var expiresOn = DateTime.UtcNow.Add(timeToLive);
+                var secondsFromBaseTime = expiresOn.Subtract(Constants.EpochTime);
+                var seconds = Convert.ToInt64(secondsFromBaseTime.TotalSeconds, CultureInfo.InvariantCulture);
                 return Convert.ToString(seconds, CultureInfo.InvariantCulture);
             }
 

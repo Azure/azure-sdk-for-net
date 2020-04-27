@@ -158,7 +158,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 	                    Assert.True(eventQueue.TryDequeue(out var processStart));
 	                    AssertProcessSessionStart(queueName, processStart.eventName, processStart.payload, processStart.activity, sendStart.activity);
 
-	                    int wait = 0;
+	                    var wait = 0;
 	                    while (wait++ < MaxWaitSec && eventQueue.Count < 1)
 	                    {
 		                    await Task.Delay(TimeSpan.FromSeconds(1));

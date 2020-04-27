@@ -217,8 +217,8 @@ namespace Microsoft.Azure.ServiceBus
                         break;
                     }
 
-                    bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-                    Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.ProcessSessionStart(session, message) : null;
+                    var isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+                    var activity = isDiagnosticSourceEnabled ? _diagnosticSource.ProcessSessionStart(session, message) : null;
                     Task processTask = null;
 
                     try

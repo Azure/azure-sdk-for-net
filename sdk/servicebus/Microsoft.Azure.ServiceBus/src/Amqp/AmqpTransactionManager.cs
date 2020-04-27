@@ -24,7 +24,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 throw new InvalidOperationException($"The only supported IsolationLevel is {nameof(IsolationLevel.Serializable)}");
             }
 
-            string transactionId = transaction.TransactionInformation.LocalIdentifier;
+            var transactionId = transaction.TransactionInformation.LocalIdentifier;
             AmqpTransactionEnlistment transactionEnlistment;
 
             lock (_syncRoot)

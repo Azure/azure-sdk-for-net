@@ -45,7 +45,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         public async Task AzureActiveDirectoryTokenProviderAuthCallbackTest()
         {
             var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
-            string testToken = @"eyJhbGciOiJIUzI1NiJ9.e30.ZRrHA1JJJW8opsbCGfG_HACGpVUMN_a9IV7pAx_Zmeo";
+            var testToken = @"eyJhbGciOiJIUzI1NiJ9.e30.ZRrHA1JJJW8opsbCGfG_HACGpVUMN_a9IV7pAx_Zmeo";
 
             var aadTokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(
                 (audience, authority, state) =>

@@ -244,7 +244,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
 
                 TestUtility.Log("Waiting for maximum 10 Secs");
-                bool receiverReturnedInTime = false;
+                var receiverReturnedInTime = false;
                 using (var timeoutCancellationTokenSource = new CancellationTokenSource())
                 {
 
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.True(message.UserProperties.ContainsKey("key"));
                     Assert.Equal("value1", message.UserProperties["key"]);
 
-                    long sequenceNumber = message.SystemProperties.SequenceNumber;
+                    var sequenceNumber = message.SystemProperties.SequenceNumber;
                     await receiver.DeferAsync(message.SystemProperties.LockToken, new Dictionary<string, object>
                     {
                         {"key", "value2"}
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     {
                         EntityPath = queueName
                     };
-                    ServiceBusConnection connection = new ServiceBusConnection(csb);
+                    var connection = new ServiceBusConnection(csb);
                     sender = new MessageSender(connection, queueName);
 
                     messageBody = Encoding.UTF8.GetBytes("Message 2");

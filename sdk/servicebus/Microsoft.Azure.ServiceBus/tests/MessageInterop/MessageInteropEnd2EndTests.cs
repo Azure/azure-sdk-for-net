@@ -102,7 +102,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
         internal static string GetSbConnectionString(TransportType transportType)
         {
             // Override and Create a new ConnectionString with SbmpConnection Endpoint scheme
-            string[] parts = TestUtility.NamespaceConnectionString.Split(':');
+            var parts = TestUtility.NamespaceConnectionString.Split(':');
             var sbConnectionString = "Endpoint=sb:" + parts[1];
 
             if (transportType == TransportType.Amqp)

@@ -173,8 +173,8 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
             foreach (var pair in Properties)
             {
-                string propertyName = pair.Key;
-                object propertyValue = pair.Value;
+                var propertyName = pair.Key;
+                var propertyValue = pair.Value;
 
                 AppendPropertyExpression(ref isFirstExpression, stringBuilder, propertyName, propertyValue);
             }
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
         public override int GetHashCode()
         {
-            int hash = 13;
+            var hash = 13;
             unchecked
             {
                 hash = (hash * 7) + CorrelationId?.GetHashCode() ?? 0;

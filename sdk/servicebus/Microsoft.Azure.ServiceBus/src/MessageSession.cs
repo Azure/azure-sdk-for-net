@@ -187,7 +187,7 @@ namespace Microsoft.Azure.ServiceBus
 
         private async Task<byte[]> OnGetStateInstrumentedAsync()
         {
-            Activity activity = _diagnosticSource.GetSessionStateStart(SessionId);
+            var activity = _diagnosticSource.GetSessionStateStart(SessionId);
             Task<byte[]> getStateTask = null;
             byte[] state = null;
 
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.ServiceBus
 
         private async Task OnSetStateInstrumentedAsync(byte[] sessionState)
         {
-            Activity activity = _diagnosticSource.SetSessionStateStart(SessionId, sessionState);
+            var activity = _diagnosticSource.SetSessionStateStart(SessionId, sessionState);
             Task setStateTask = null;
 
             try
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.ServiceBus
 
         private async Task OnRenewSessionLockInstrumentedAsync()
         {
-            Activity activity = _diagnosticSource.RenewSessionLockStart(SessionId);
+            var activity = _diagnosticSource.RenewSessionLockStart(SessionId);
             Task renewTask = null;
 
             try

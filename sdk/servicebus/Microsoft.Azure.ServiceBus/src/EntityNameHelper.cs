@@ -134,7 +134,7 @@ namespace Microsoft.Azure.ServiceBus
             // To ensure relative queue paths are correctly rejected on these platforms,
             // an additional check using IsWellFormedOriginalString() is made here.
             // See https://github.com/dotnet/corefx/issues/22098 for more information.
-            if (Uri.TryCreate(entityName, UriKind.Absolute, out Uri uriValue) &&
+            if (Uri.TryCreate(entityName, UriKind.Absolute, out var uriValue) &&
                 uriValue.IsWellFormedOriginalString())
             {
                 entityName = uriValue.PathAndQuery;

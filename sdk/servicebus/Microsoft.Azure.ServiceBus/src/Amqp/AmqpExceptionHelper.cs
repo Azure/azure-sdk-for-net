@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static AmqpSymbol GetResponseErrorCondition(AmqpMessage response, AmqpResponseStatusCode statusCode)
         {
-            object condition = response.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
+            var condition = response.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
             if (condition != null)
             {
                 return (AmqpSymbol)condition;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static AmqpResponseStatusCode GetResponseStatusCode(this AmqpMessage responseMessage)
         {
             var amqpResponseStatusCode = AmqpResponseStatusCode.Unused;
-            object statusCodeValue = responseMessage?.ApplicationProperties.Map[ManagementConstants.Response.StatusCode];
+            var statusCodeValue = responseMessage?.ApplicationProperties.Map[ManagementConstants.Response.StatusCode];
             if (statusCodeValue is int && Enum.IsDefined(typeof(AmqpResponseStatusCode), statusCodeValue))
             {
                 amqpResponseStatusCode = (AmqpResponseStatusCode)statusCodeValue;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public static Exception ToMessagingContractException(this AmqpMessage responseMessage, AmqpResponseStatusCode statusCode)
         {
-            AmqpSymbol errorCondition = GetResponseErrorCondition(responseMessage, statusCode);
+            var errorCondition = GetResponseErrorCondition(responseMessage, statusCode);
             var statusDescription = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.StatusDescription] as string ?? errorCondition.Value;
             return ToMessagingContractException(errorCondition.Value, statusDescription);
         }

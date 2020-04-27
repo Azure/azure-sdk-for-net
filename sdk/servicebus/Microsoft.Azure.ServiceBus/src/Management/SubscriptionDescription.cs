@@ -261,7 +261,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public override int GetHashCode()
         {
-            int hash = 7;
+            var hash = 7;
             unchecked
             {
                 hash = (hash * 7) + TopicPath?.GetHashCode() ?? 0;
