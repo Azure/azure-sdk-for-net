@@ -8,6 +8,7 @@ namespace Azure.Data.Tables
 {
     internal partial class TableRestClient
     {
+        // Should be unnecessary when https://github.com/Azure/azure-rest-api-specs/pull/8151/files#r414749024 is implemented.
         internal HttpMessage CreateDeleteRequest(string table, string requestId)
         {
             var message = _pipeline.CreateMessage();
@@ -29,6 +30,7 @@ namespace Azure.Data.Tables
             return message;
         }
 
+        // Should be unnecessary when https://github.com/Azure/azure-rest-api-specs/pull/8151/files#r415950870 is implemented.
         internal HttpMessage CreateQueryRequest(string requestId, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -67,6 +69,7 @@ namespace Azure.Data.Tables
             return message;
         }
 
+        // Should be unnecessary when https://github.com/Azure/azure-rest-api-specs/pull/8151/files#r415950870 is implemented.
         internal HttpMessage CreateQueryEntitiesRequest(string table, int? timeout, string requestId, QueryOptions queryOptions)
         {
             var message = _pipeline.CreateMessage();

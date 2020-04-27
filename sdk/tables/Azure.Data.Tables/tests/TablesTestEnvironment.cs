@@ -11,8 +11,10 @@ namespace Azure.Data.Tables.Tests
         {
         }
 
+        public const string PrimaryKeyEnvironmentVariableName = "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY";
         private const string StorageUriFormat = "https://{0}.table.core.windows.net";
-        public string PrimaryStorageAccountKey => GetRecordedVariable("TABLES_PRIMARY_STORAGE_ACCOUNT_KEY");
+
+        public string PrimaryStorageAccountKey => GetRecordedVariable(PrimaryKeyEnvironmentVariableName);
         public string AccountName => GetRecordedVariable("TABLES_STORAGE_ACCOUNT_NAME");
         public string StorageUri => string.Format(StorageUriFormat, AccountName);
     }
