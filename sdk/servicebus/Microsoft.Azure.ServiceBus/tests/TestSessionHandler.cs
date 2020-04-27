@@ -19,12 +19,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 	    private const int NumberOfSessions = 5;
 	    private const int MessagesPerSession = 10;
 
-	    private readonly SessionPumpHost sessionPumpHost;
-	    private readonly ReceiveMode receiveMode;
-	    private readonly MessageSender sender;
-	    private readonly SessionHandlerOptions sessionHandlerOptions;
-	    private ConcurrentDictionary<string, int> sessionMessageMap;
-	    private int totalMessageCount;
+	    private readonly SessionPumpHost _sessionPumpHost;
+	    private readonly ReceiveMode _receiveMode;
+	    private readonly MessageSender _sender;
+	    private readonly SessionHandlerOptions _sessionHandlerOptions;
+	    private ConcurrentDictionary<string, int> _sessionMessageMap;
+	    private int _totalMessageCount;
 
         public TestSessionHandler(
             ReceiveMode receiveMode,
@@ -32,21 +32,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             MessageSender sender,
             SessionPumpHost sessionPumpHost)
         {
-            this.receiveMode = receiveMode;
-            this.sessionHandlerOptions = sessionHandlerOptions;
-            this.sender = sender;
-            this.sessionPumpHost = sessionPumpHost;
-            sessionMessageMap = new ConcurrentDictionary<string, int>();
+            this._receiveMode = receiveMode;
+            this._sessionHandlerOptions = sessionHandlerOptions;
+            this._sender = sender;
+            this._sessionPumpHost = sessionPumpHost;
+            _sessionMessageMap = new ConcurrentDictionary<string, int>();
         }
 
         public void RegisterSessionHandler(SessionHandlerOptions handlerOptions)
         {
-            sessionPumpHost.OnSessionHandler(OnSessionHandler, sessionHandlerOptions);
+            _sessionPumpHost.OnSessionHandler(OnSessionHandler, _sessionHandlerOptions);
         }
 
         public async Task SendSessionMessages()
         {
-            await TestUtility.SendSessionMessagesAsync(sender, NumberOfSessions, MessagesPerSession);
+            await TestUtility.SendSessionMessagesAsync(_sender, NumberOfSessions, MessagesPerSession);
         }
 
         public async Task OnSessionHandler(IMessageSession session, Message message, CancellationToken token)
@@ -54,15 +54,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.NotNull(session);
             Assert.NotNull(message);
 
-            Interlocked.Increment(ref totalMessageCount);
+            Interlocked.Increment(ref _totalMessageCount);
             TestUtility.Log($"Received Session: {session.SessionId} message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
 
-            if (receiveMode == ReceiveMode.PeekLock && !sessionHandlerOptions.AutoComplete)
+            if (_receiveMode == ReceiveMode.PeekLock && !_sessionHandlerOptions.AutoComplete)
             {
                 await session.CompleteAsync(message.SystemProperties.LockToken);
             }
 
-            sessionMessageMap.AddOrUpdate(session.SessionId, 1, (_, current) => current + 1);
+            _sessionMessageMap.AddOrUpdate(session.SessionId, 1, (_, current) => current + 1);
         }
 
         public async Task VerifyRun()
@@ -71,27 +71,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var stopwatch = Stopwatch.StartNew();
             while (stopwatch.Elapsed.TotalSeconds <= 180)
             {
-                if (totalMessageCount == MessagesPerSession * NumberOfSessions)
+                if (_totalMessageCount == MessagesPerSession * NumberOfSessions)
                 {
-                    TestUtility.Log($"All '{totalMessageCount}' messages Received.");
+                    TestUtility.Log($"All '{_totalMessageCount}' messages Received.");
                     break;
                 }
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
 
-            foreach (KeyValuePair<string, int> keyValuePair in sessionMessageMap)
+            foreach (KeyValuePair<string, int> keyValuePair in _sessionMessageMap)
             {
                 TestUtility.Log($"Session: {keyValuePair.Key}, Messages Received in this Session: {keyValuePair.Value}");
             }
 
-            Assert.True(sessionMessageMap.Keys.Count == NumberOfSessions);
-            Assert.True(totalMessageCount == MessagesPerSession * NumberOfSessions);
+            Assert.True(_sessionMessageMap.Keys.Count == NumberOfSessions);
+            Assert.True(_totalMessageCount == MessagesPerSession * NumberOfSessions);
         }
 
         public void ClearData()
         {
-            totalMessageCount = 0;
-            sessionMessageMap = new ConcurrentDictionary<string, int>();
+            _totalMessageCount = 0;
+            _sessionMessageMap = new ConcurrentDictionary<string, int>();
         }
     }
 }

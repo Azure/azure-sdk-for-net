@@ -16,14 +16,14 @@ namespace Microsoft.Azure.ServiceBus.Extensions
     /// </summary>
 	internal sealed class DataContractBinarySerializer : XmlObjectSerializer
     {
-	    private readonly DataContractSerializer dataContractSerializer;
+	    private readonly DataContractSerializer _dataContractSerializer;
 
         /// <summary>
         /// Initializes a new DataContractBinarySerializer instance
         /// </summary>
         public DataContractBinarySerializer(Type type)
         {
-            dataContractSerializer = new DataContractSerializer(type);
+            _dataContractSerializer = new DataContractSerializer(type);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
                 throw new ArgumentNullException(nameof(writer));
             }
 
-            dataContractSerializer.WriteObject(writer, graph);
+            _dataContractSerializer.WriteObject(writer, graph);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
         /// </summary>
         public override bool IsStartObject(XmlDictionaryReader reader)
         {
-            return dataContractSerializer.IsStartObject(reader);
+            return _dataContractSerializer.IsStartObject(reader);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
         /// </summary>
         public override object ReadObject(XmlDictionaryReader reader, bool verifyObjectName)
         {
-            return dataContractSerializer.ReadObject(reader, verifyObjectName);
+            return _dataContractSerializer.ReadObject(reader, verifyObjectName);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
         /// </summary>
         public override void WriteEndObject(XmlDictionaryWriter writer)
         {
-            dataContractSerializer.WriteEndObject(writer);
+            _dataContractSerializer.WriteEndObject(writer);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
         /// </summary>
         public override void WriteObjectContent(XmlDictionaryWriter writer, object graph)
         {
-            dataContractSerializer.WriteObjectContent(writer, graph);
+            _dataContractSerializer.WriteObjectContent(writer, graph);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.ServiceBus.Extensions
         /// </summary>
         public override void WriteStartObject(XmlDictionaryWriter writer, object graph)
         {
-            dataContractSerializer.WriteStartObject(writer, graph);
+            _dataContractSerializer.WriteStartObject(writer, graph);
         }
     }
 

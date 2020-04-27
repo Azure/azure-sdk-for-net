@@ -26,12 +26,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public static string DeadLetterErrorDescriptionHeader = "DeadLetterErrorDescription";
 
-        private string messageId;
-        private string sessionId;
-        private string replyToSessionId;
-        private string partitionKey;
-        private string viaPartitionKey;
-        private TimeSpan timeToLive;
+        private string _messageId;
+        private string _sessionId;
+        private string _replyToSessionId;
+        private string _partitionKey;
+        private string _viaPartitionKey;
+        private TimeSpan _timeToLive;
 
         /// <summary>
         /// Creates a new Message
@@ -76,12 +76,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </remarks>
         public string MessageId
         {
-            get => messageId;
+            get => _messageId;
 
             set
             {
                 ValidateMessageId(value);
-                messageId = value;
+                _messageId = value;
             }
         }
 
@@ -95,12 +95,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </remarks>
         public string PartitionKey
         {
-            get => partitionKey;
+            get => _partitionKey;
 
             set
             {
                 ValidatePartitionKey(nameof(PartitionKey), value);
-                partitionKey = value;
+                _partitionKey = value;
             }
         }
 
@@ -114,12 +114,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </remarks>
         public string ViaPartitionKey
         {
-            get => viaPartitionKey;
+            get => _viaPartitionKey;
 
             set
             {
                 ValidatePartitionKey(nameof(ViaPartitionKey), value);
-                viaPartitionKey = value;
+                _viaPartitionKey = value;
             }
         }
 
@@ -134,12 +134,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </remarks>
         public string SessionId
         {
-            get => sessionId;
+            get => _sessionId;
 
             set
             {
                 ValidateSessionId(nameof(SessionId), value);
-                sessionId = value;
+                _sessionId = value;
             }
         }
 
@@ -151,12 +151,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </remarks>
         public string ReplyToSessionId
         {
-            get => replyToSessionId;
+            get => _replyToSessionId;
 
             set
             {
                 ValidateSessionId(nameof(ReplyToSessionId), value);
-                replyToSessionId = value;
+                _replyToSessionId = value;
             }
         }
 
@@ -196,18 +196,18 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (timeToLive == TimeSpan.Zero)
+                if (_timeToLive == TimeSpan.Zero)
                 {
                     return TimeSpan.MaxValue;
                 }
 
-                return timeToLive;
+                return _timeToLive;
             }
 
             set
             {
                 TimeoutHelper.ThrowIfNonPositiveArgument(value);
-                timeToLive = value;
+                _timeToLive = value;
             }
         }
 
@@ -343,20 +343,20 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public sealed class SystemPropertiesCollection
         {
-	        private int deliveryCount;
-	        private DateTime lockedUntilUtc;
-	        private long sequenceNumber = -1;
-	        private short partitionId;
-	        private long enqueuedSequenceNumber;
-	        private DateTime enqueuedTimeUtc;
-	        private Guid lockTokenGuid;
-	        private string deadLetterSource;
+	        private int _deliveryCount;
+	        private DateTime _lockedUntilUtc;
+	        private long _sequenceNumber = -1;
+	        private short _partitionId;
+	        private long _enqueuedSequenceNumber;
+	        private DateTime _enqueuedTimeUtc;
+	        private Guid _lockTokenGuid;
+	        private string _deadLetterSource;
 
             /// <summary>
             /// Specifies whether or not there is a lock token set on the current message.
             /// </summary>
             /// <remarks>A lock token will only be specified if the message was received using <see cref="ReceiveMode.PeekLock"/></remarks>
-            public bool IsLockTokenSet => lockTokenGuid != default;
+            public bool IsLockTokenSet => _lockTokenGuid != default;
 
             /// <summary>
             /// Gets the lock token for the current message.
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.ServiceBus
             public string LockToken => LockTokenGuid.ToString();
 
             /// <summary>Specifies if the message has been obtained from the broker.</summary>
-            public bool IsReceived => sequenceNumber > -1;
+            public bool IsReceived => _sequenceNumber > -1;
 
             /// <summary>
             /// Get the current delivery count.
@@ -385,10 +385,10 @@ namespace Microsoft.Azure.ServiceBus
                 get
                 {
                     ThrowIfNotReceived();
-                    return deliveryCount;
+                    return _deliveryCount;
                 }
 
-                internal set => deliveryCount = value;
+                internal set => _deliveryCount = value;
             }
 
             /// <summary>Gets the date and time in UTC until which the message will be locked in the queue/subscription.</summary>
@@ -403,10 +403,10 @@ namespace Microsoft.Azure.ServiceBus
                 get
                 {
                     ThrowIfNotReceived();
-                    return lockedUntilUtc;
+                    return _lockedUntilUtc;
                 }
 
-                internal set => lockedUntilUtc = value;
+                internal set => _lockedUntilUtc = value;
             }
 
             /// <summary>Gets the unique number assigned to a message by Service Bus.</summary>
@@ -421,10 +421,10 @@ namespace Microsoft.Azure.ServiceBus
                 get
                 {
                     ThrowIfNotReceived();
-                    return sequenceNumber;
+                    return _sequenceNumber;
                 }
 
-                internal set => sequenceNumber = value;
+                internal set => _sequenceNumber = value;
             }
 
             /// <summary>
@@ -439,10 +439,10 @@ namespace Microsoft.Azure.ServiceBus
                 get
                 {
                     ThrowIfNotReceived();
-                    return deadLetterSource;
+                    return _deadLetterSource;
                 }
 
-                internal set => deadLetterSource = value;
+                internal set => _deadLetterSource = value;
             }
 
             internal short PartitionId
@@ -450,10 +450,10 @@ namespace Microsoft.Azure.ServiceBus
                 get
                 {
                     ThrowIfNotReceived();
-                    return partitionId;
+                    return _partitionId;
                 }
 
-                set => partitionId = value;
+                set => _partitionId = value;
             }
 
             /// <summary>Gets or sets the original sequence number of the message.</summary>
@@ -467,10 +467,10 @@ namespace Microsoft.Azure.ServiceBus
                 get
                 {
                     ThrowIfNotReceived();
-                    return enqueuedSequenceNumber;
+                    return _enqueuedSequenceNumber;
                 }
 
-                internal set => enqueuedSequenceNumber = value;
+                internal set => _enqueuedSequenceNumber = value;
             }
 
             /// <summary>Gets or sets the date and time of the sent time in UTC.</summary>
@@ -485,10 +485,10 @@ namespace Microsoft.Azure.ServiceBus
                 get
                 {
                     ThrowIfNotReceived();
-                    return enqueuedTimeUtc;
+                    return _enqueuedTimeUtc;
                 }
 
-                internal set => enqueuedTimeUtc = value;
+                internal set => _enqueuedTimeUtc = value;
             }
 
             internal Guid LockTokenGuid
@@ -496,10 +496,10 @@ namespace Microsoft.Azure.ServiceBus
                 get
                 {
                     ThrowIfNotReceived();
-                    return lockTokenGuid;
+                    return _lockTokenGuid;
                 }
 
-                set => lockTokenGuid = value;
+                set => _lockTokenGuid = value;
             }
 
             internal object BodyObject

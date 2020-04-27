@@ -12,13 +12,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     internal sealed class AmqpResponseMessage
     {
-	    private readonly AmqpMessage responseMessage;
+	    private readonly AmqpMessage _responseMessage;
 
 	    private AmqpResponseMessage(AmqpMessage responseMessage)
         {
-            this.responseMessage = responseMessage;
-            StatusCode = this.responseMessage.GetResponseStatusCode();
-            if (this.responseMessage.ApplicationProperties.Map.TryGetValue<string>(ManagementConstants.Properties.TrackingId, out var trackingId))
+            this._responseMessage = responseMessage;
+            StatusCode = this._responseMessage.GetResponseStatusCode();
+            if (this._responseMessage.ApplicationProperties.Map.TryGetValue<string>(ManagementConstants.Properties.TrackingId, out var trackingId))
             {
                 TrackingId = trackingId;
             }
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
         }
 
-        public AmqpMessage AmqpMessage => responseMessage;
+        public AmqpMessage AmqpMessage => _responseMessage;
 
         public AmqpResponseStatusCode StatusCode { get; }
 
@@ -77,14 +77,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public AmqpSymbol GetResponseErrorCondition()
         {
-            var condition = responseMessage.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
+            var condition = _responseMessage.ApplicationProperties.Map[ManagementConstants.Response.ErrorCondition];
 
             return condition is AmqpSymbol amqpSymbol ? amqpSymbol : null;
         }
 
         public Exception ToMessagingContractException()
         {
-            return responseMessage.ToMessagingContractException(StatusCode);
+            return _responseMessage.ToMessagingContractException(StatusCode);
         }
     }
 }

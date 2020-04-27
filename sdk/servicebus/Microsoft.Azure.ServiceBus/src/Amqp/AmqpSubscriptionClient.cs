@@ -16,9 +16,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     internal sealed class AmqpSubscriptionClient : IInnerSubscriptionClient
     {
-	    private int prefetchCount;
-	    private readonly object syncLock;
-	    private MessageReceiver innerReceiver;
+	    private int _prefetchCount;
+	    private readonly object _syncLock;
+	    private MessageReceiver _innerReceiver;
 
         static AmqpSubscriptionClient()
         {
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             int prefetchCount = 0,
             ReceiveMode mode = ReceiveMode.ReceiveAndDelete)
         {
-            syncLock = new object();
+            _syncLock = new object();
             Path = path;
             ServiceBusConnection = servicebusConnection;
             RetryPolicy = retryPolicy;
@@ -52,13 +52,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         {
             get
             {
-                if (innerReceiver == null)
+                if (_innerReceiver == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        if (innerReceiver == null)
+                        if (_innerReceiver == null)
                         {
-                            innerReceiver = new MessageReceiver(
+                            _innerReceiver = new MessageReceiver(
                                 Path,
                                 MessagingEntityType.Subscriber,
                                 ReceiveMode,
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     }
                 }
 
-                return innerReceiver;
+                return _innerReceiver;
             }
         }
 
@@ -80,17 +80,17 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         /// <value>The number of messages that the subscription client can simultaneously request.</value>
         public int PrefetchCount
         {
-            get => prefetchCount;
+            get => _prefetchCount;
             set
             {
                 if (value < 0)
                 {
                     throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
                 }
-                prefetchCount = value;
-                if (innerReceiver != null)
+                _prefetchCount = value;
+                if (_innerReceiver != null)
                 {
-                    innerReceiver.PrefetchCount = value;
+                    _innerReceiver.PrefetchCount = value;
                 }
             }
         }
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public Task CloseAsync()
         {
-            return innerReceiver?.CloseAsync();
+            return _innerReceiver?.CloseAsync();
         }
 
         public async Task OnAddRuleAsync(RuleDescription description)

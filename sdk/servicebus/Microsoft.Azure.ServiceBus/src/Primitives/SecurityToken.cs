@@ -13,22 +13,22 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <summary>
         /// Token literal
         /// </summary>
-        private string token;
+        private string _token;
 
         /// <summary>
         /// Expiry date-time
         /// </summary>
-        private DateTime expiresAtUtc;
+        private DateTime _expiresAtUtc;
 
         /// <summary>
         /// Token audience
         /// </summary>
-        private string audience;
+        private string _audience;
 
         /// <summary>
         /// Token type
         /// </summary>
-        private string tokenType;
+        private string _tokenType;
 
         /// <summary>
         /// Creates a new instance of the <see cref="SecurityToken"/> class.
@@ -49,30 +49,30 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(audience));
             }
 
-            token = tokenString;
-            this.expiresAtUtc = expiresAtUtc;
-            this.audience = audience;
-            this.tokenType = tokenType;
+            _token = tokenString;
+            this._expiresAtUtc = expiresAtUtc;
+            this._audience = audience;
+            this._tokenType = tokenType;
         }
 
         /// <summary>
         /// Gets the audience of this token.
         /// </summary>
-        public string Audience => audience;
+        public string Audience => _audience;
 
         /// <summary>
         /// Gets the expiration time of this token.
         /// </summary>
-        public DateTime ExpiresAtUtc => expiresAtUtc;
+        public DateTime ExpiresAtUtc => _expiresAtUtc;
 
         /// <summary>
         /// Gets the actual token.
         /// </summary>
-        public virtual string TokenValue => token;
+        public virtual string TokenValue => _token;
 
         /// <summary>
         /// Gets the token type.
         /// </summary>
-        public virtual string TokenType => tokenType;
+        public virtual string TokenType => _tokenType;
     }
 }

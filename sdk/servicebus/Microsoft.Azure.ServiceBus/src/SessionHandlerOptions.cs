@@ -13,9 +13,9 @@ namespace Microsoft.Azure.ServiceBus
     /// <see cref="SubscriptionClient.RegisterSessionHandler(Func{IMessageSession, Message, CancellationToken, Task}, SessionHandlerOptions)" />.</summary>
     public sealed class SessionHandlerOptions
     {
-	    private int maxConcurrentSessions;
-	    private TimeSpan messageWaitTimeout;
-	    private TimeSpan maxAutoRenewDuration;
+	    private int _maxConcurrentSessions;
+	    private TimeSpan _messageWaitTimeout;
+	    private TimeSpan _maxAutoRenewDuration;
 
         /// <summary>Initializes a new instance of the <see cref="SessionHandlerOptions" /> class.
         /// Default Values:
@@ -44,12 +44,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The duration for which the session renew its state.</value>
         public TimeSpan MaxAutoRenewDuration
         {
-            get => maxAutoRenewDuration;
+            get => _maxAutoRenewDuration;
 
             set
             {
                 TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
-                maxAutoRenewDuration = value;
+                _maxAutoRenewDuration = value;
             }
         }
 
@@ -57,12 +57,12 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The time to wait for receiving the message.</value>
         public TimeSpan MessageWaitTimeout
         {
-            get => messageWaitTimeout;
+            get => _messageWaitTimeout;
 
             set
             {
                 TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
-                messageWaitTimeout = value;
+                _messageWaitTimeout = value;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The maximum number of sessions that the User wants to handle concurrently.</value>
         public int MaxConcurrentSessions
         {
-            get => maxConcurrentSessions;
+            get => _maxConcurrentSessions;
 
             set
             {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus
                     throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
                 }
 
-                maxConcurrentSessions = value;
+                _maxConcurrentSessions = value;
                 MaxConcurrentAcceptSessionCalls = Math.Min(value, 2 * Environment.ProcessorCount);
             }
         }

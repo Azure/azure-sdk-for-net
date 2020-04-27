@@ -31,8 +31,8 @@ namespace Microsoft.Azure.ServiceBus
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
     public class TopicClient : ClientEntity, ITopicClient
     {
-	    private readonly object syncLock;
-	    private MessageSender innerSender;
+	    private readonly object _syncLock;
+	    private MessageSender _innerSender;
 
         /// <summary>
         /// Instantiates a new <see cref="TopicClient"/> to perform operations on a topic.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(entityPath);
             }
             ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            syncLock = new object();
+            _syncLock = new object();
             TopicName = entityPath;
             OwnsConnection = false;
             ServiceBusConnection.ThrowIfClosed();
@@ -144,13 +144,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (innerSender == null)
+                if (_innerSender == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        if (innerSender == null)
+                        if (_innerSender == null)
                         {
-                            innerSender = new MessageSender(
+                            _innerSender = new MessageSender(
                                 TopicName,
                                 null,
                                 MessagingEntityType.Topic,
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                return innerSender;
+                return _innerSender;
             }
         }
 
@@ -233,9 +233,9 @@ namespace Microsoft.Azure.ServiceBus
 
         protected override async Task OnClosingAsync()
         {
-            if (innerSender != null)
+            if (_innerSender != null)
             {
-                await innerSender.CloseAsync().ConfigureAwait(false);
+                await _innerSender.CloseAsync().ConfigureAwait(false);
             }
         }
     }

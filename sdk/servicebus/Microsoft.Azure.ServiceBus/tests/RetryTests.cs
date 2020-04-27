@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class RetryTests
     {
-        private static IDictionary<string, ExceptionRetryData> RetryTestCases = new[]
+        private static IDictionary<string, ExceptionRetryData> _retryTestCases = new[]
         {
             new ExceptionRetryData(new ServiceBusCommunicationException(string.Empty), 0, true),
             new ExceptionRetryData(new ServerBusyException(string.Empty), 0, true),
@@ -37,13 +37,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         }.ToDictionary(item => item.ToString(), item => item);
 
-        public static IEnumerable<object[]> RetryTestCaseNames => RetryTestCases.Select(testCase => new[] { testCase.Key });
+        public static IEnumerable<object[]> RetryTestCaseNames => _retryTestCases.Select(testCase => new[] { testCase.Key });
 
         [Theory]
         [MemberData(nameof(RetryTestCaseNames))]
         public void RetryExponentialShouldRetryTest(string retryTestCaseName)
         {
-            var testCase = RetryTestCases[retryTestCaseName];
+            var testCase = _retryTestCases[retryTestCaseName];
             var retry = new RetryExponential(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(20), 5);
             var remainingTime = Constants.DefaultOperationTimeout;
             var shouldRetry = retry.ShouldRetry(remainingTime, testCase.RetryCount, testCase.Exception, out var _);

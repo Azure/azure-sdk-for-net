@@ -20,8 +20,8 @@ namespace Microsoft.Azure.ServiceBus.Filters
         /// </remarks>
         public const string DefaultRuleName = "$Default";
 
-        private Filter filter;
-        private string name;
+        private Filter _filter;
+        private string _name;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RuleDescription" /> class with default values.
@@ -66,9 +66,9 @@ namespace Microsoft.Azure.ServiceBus.Filters
         /// <exception cref="System.ArgumentNullException">null (Nothing in Visual Basic) is assigned.</exception>
         public Filter Filter
         {
-            get => filter;
+            get => _filter;
 
-            set => filter = value ?? throw Fx.Exception.ArgumentNull(nameof(Filter));
+            set => _filter = value ?? throw Fx.Exception.ArgumentNull(nameof(Filter));
         }
 
         /// <summary>
@@ -84,12 +84,12 @@ namespace Microsoft.Azure.ServiceBus.Filters
         /// <remarks>Max allowed length of rule name is 50 chars.</remarks>
         public string Name
         {
-            get => name;
+            get => _name;
 
             set
             {
                 EntityNameHelper.CheckValidRuleName(value);
-                name = value;
+                _name = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
             int hash = 13;
             unchecked
             {
-                hash = (hash * 7) + filter?.GetHashCode() ?? 0;
+                hash = (hash * 7) + _filter?.GetHashCode() ?? 0;
                 hash = (hash * 7) + Action?.GetHashCode() ?? 0; 
             }
             return hash;

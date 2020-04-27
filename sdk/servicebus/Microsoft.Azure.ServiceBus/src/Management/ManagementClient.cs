@@ -17,11 +17,11 @@ namespace Microsoft.Azure.ServiceBus.Management
 
     public class ManagementClient
     {
-        private HttpClient httpClient;
-        private readonly string endpointFQDN;
-        private readonly ITokenProvider tokenProvider;
-        private readonly int port;
-        private readonly string clientId;
+        private HttpClient _httpClient;
+        private readonly string _endpointFqdn;
+        private readonly ITokenProvider _tokenProvider;
+        private readonly int _port;
+        private readonly string _clientId;
 
         /// <summary>
         /// Initializes a new <see cref="ManagementClient"/> which can be used to perform management opertions on ServiceBus entities.
@@ -49,13 +49,13 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
         public ManagementClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ITokenProvider tokenProvider = default)
         {
-            httpClient = new HttpClient { Timeout = connectionStringBuilder.OperationTimeout };
-            endpointFQDN = connectionStringBuilder.Endpoint;
-            this.tokenProvider = tokenProvider ?? CreateTokenProvider(connectionStringBuilder);
-            port = GetPort(connectionStringBuilder.Endpoint);
-            clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
+            _httpClient = new HttpClient { Timeout = connectionStringBuilder.OperationTimeout };
+            _endpointFqdn = connectionStringBuilder.Endpoint;
+            this._tokenProvider = tokenProvider ?? CreateTokenProvider(connectionStringBuilder);
+            _port = GetPort(connectionStringBuilder.Endpoint);
+            _clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
 
-            MessagingEventSource.Log.ManagementClientCreated(clientId, httpClient.Timeout.TotalSeconds, this.tokenProvider.ToString());
+            MessagingEventSource.Log.ManagementClientCreated(_clientId, _httpClient.Timeout.TotalSeconds, this._tokenProvider.ToString());
         }
 
         public static HttpRequestMessage CloneRequest(HttpRequestMessage req)
@@ -604,7 +604,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<QueueDescription> CreateQueueAsync(QueueDescription queueDescription, CancellationToken cancellationToken = default)
         {
             queueDescription = queueDescription ?? throw new ArgumentNullException(nameof(queueDescription));
-            queueDescription.NormalizeDescription(endpointFQDN);
+            queueDescription.NormalizeDescription(_endpointFqdn);
             var atomRequest = queueDescription.Serialize().ToString();
             var content = await PutEntity(
                 queueDescription.Path,
@@ -723,7 +723,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<SubscriptionDescription> CreateSubscriptionAsync(SubscriptionDescription subscriptionDescription, RuleDescription defaultRule, CancellationToken cancellationToken = default)
         {
             subscriptionDescription = subscriptionDescription ?? throw new ArgumentNullException(nameof(subscriptionDescription));
-            subscriptionDescription.NormalizeDescription(endpointFQDN);
+            subscriptionDescription.NormalizeDescription(_endpointFqdn);
             subscriptionDescription.DefaultRuleDescription = defaultRule;
             var atomRequest = subscriptionDescription.Serialize().ToString();
             var content = await PutEntity(
@@ -789,7 +789,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<QueueDescription> UpdateQueueAsync(QueueDescription queueDescription, CancellationToken cancellationToken = default)
         {
             queueDescription = queueDescription ?? throw new ArgumentNullException(nameof(queueDescription));
-            queueDescription.NormalizeDescription(endpointFQDN);
+            queueDescription.NormalizeDescription(_endpointFqdn);
 
             var atomRequest = queueDescription.Serialize().ToString();
 
@@ -843,7 +843,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<SubscriptionDescription> UpdateSubscriptionAsync(SubscriptionDescription subscriptionDescription, CancellationToken cancellationToken = default)
         {
             subscriptionDescription = subscriptionDescription ?? throw new ArgumentNullException(nameof(subscriptionDescription));
-            subscriptionDescription.NormalizeDescription(endpointFQDN);
+            subscriptionDescription.NormalizeDescription(_endpointFqdn);
             var atomRequest = subscriptionDescription.Serialize().ToString();
             var content = await PutEntity(
                 EntityNameHelper.FormatSubscriptionPath(subscriptionDescription.TopicPath, subscriptionDescription.SubscriptionName),
@@ -978,8 +978,8 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public Task CloseAsync()
         {
-            httpClient?.Dispose();
-            httpClient = null;
+            _httpClient?.Dispose();
+            _httpClient = null;
 
             return Task.CompletedTask;
         }
@@ -1106,24 +1106,24 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         private async Task<string> GetToken(string requestUri)
         {
-            var token = await tokenProvider.GetTokenAsync(requestUri, TimeSpan.FromHours(1)).ConfigureAwait(false);
+            var token = await _tokenProvider.GetTokenAsync(requestUri, TimeSpan.FromHours(1)).ConfigureAwait(false);
             return token.TokenValue;
         }
 
         private async Task<string> GetEntity(string path, string query, bool enrich, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
+            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
 
             var queryString = $"{ManagementClientConstants.apiVersionQuery}&enrich={enrich}";
             if (query != null)
             {
                 queryString = queryString + "&" + query;
             }
-            var uri = new UriBuilder(endpointFQDN)
+            var uri = new UriBuilder(_endpointFqdn)
             {
                 Path = path,
                 Scheme = Uri.UriSchemeHttps,
-                Port = port,
+                Port = _port,
                 Query = queryString
             }.Uri;
 
@@ -1131,18 +1131,18 @@ namespace Microsoft.Azure.ServiceBus.Management
             HttpResponseMessage response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
             var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            MessagingEventSource.Log.ManagementOperationEnd(clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
+            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
             return result;
         }
 
         private async Task<string> PutEntity(string path, string requestBody, bool isUpdate, string forwardTo, string fwdDeadLetterTo, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
+            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
 
-            var uri = new UriBuilder(endpointFQDN)
+            var uri = new UriBuilder(_endpointFqdn)
             {
                 Path = path,
-                Port = port,
+                Port = _port,
                 Scheme = Uri.UriSchemeHttps,
                 Query = $"{ManagementClientConstants.apiVersionQuery}"
             }.Uri;
@@ -1174,25 +1174,25 @@ namespace Microsoft.Azure.ServiceBus.Management
             HttpResponseMessage response = await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
             var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            MessagingEventSource.Log.ManagementOperationEnd(clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
+            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(PutEntity), $"path:{path},isUpdate:{isUpdate}");
             return result;
         }
 
         private async Task DeleteEntity(string path, CancellationToken cancellationToken)
         {
-            MessagingEventSource.Log.ManagementOperationStart(clientId, nameof(DeleteEntity), path);
+            MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(DeleteEntity), path);
 
-            var uri = new UriBuilder(endpointFQDN)
+            var uri = new UriBuilder(_endpointFqdn)
             {
                 Path = path,
                 Scheme = Uri.UriSchemeHttps,
-                Port = port,
+                Port = _port,
                 Query = ManagementClientConstants.apiVersionQuery
             }.Uri;
 
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
             await SendHttpRequest(request, cancellationToken).ConfigureAwait(false);
-            MessagingEventSource.Log.ManagementOperationEnd(clientId, nameof(DeleteEntity), path);
+            MessagingEventSource.Log.ManagementOperationEnd(_clientId, nameof(DeleteEntity), path);
         }
 
         private async Task<HttpResponseMessage> SendHttpRequest(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -1213,11 +1213,11 @@ namespace Microsoft.Azure.ServiceBus.Management
             HttpResponseMessage response;
             try
             {
-                response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (HttpRequestException exception)
             {
-                MessagingEventSource.Log.ManagementOperationException(clientId, nameof(SendHttpRequest), exception);
+                MessagingEventSource.Log.ManagementOperationException(_clientId, nameof(SendHttpRequest), exception);
                 throw new ServiceBusException(true, exception);
             }
 
@@ -1228,7 +1228,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
             else
             {
-                MessagingEventSource.Log.ManagementOperationException(clientId, nameof(SendHttpRequest), exceptionReturned);
+                MessagingEventSource.Log.ManagementOperationException(_clientId, nameof(SendHttpRequest), exceptionReturned);
                 throw exceptionReturned;
             }
         }

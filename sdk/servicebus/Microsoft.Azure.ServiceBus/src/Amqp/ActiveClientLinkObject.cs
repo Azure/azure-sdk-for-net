@@ -8,14 +8,14 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     internal abstract class ActiveClientLinkObject
     {
-	    private readonly string[] requiredClaims;
+	    private readonly string[] _requiredClaims;
 
         protected ActiveClientLinkObject(AmqpObject amqpLinkObject,  Uri endpointUri, string[] audience, string[] requiredClaims, DateTime authorizationValidUntilUtc)
         {
             LinkObject = amqpLinkObject;
             EndpointUri = endpointUri;
             Audience = audience;
-            this.requiredClaims = requiredClaims;
+            this._requiredClaims = requiredClaims;
             AuthorizationValidUntilUtc = authorizationValidUntilUtc;
         }
 
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public Uri EndpointUri { get; }
 
-        public string[] RequiredClaims => (string[])requiredClaims.Clone();
+        public string[] RequiredClaims => (string[])_requiredClaims.Clone();
 
         public DateTime AuthorizationValidUntilUtc { get; set; }
 

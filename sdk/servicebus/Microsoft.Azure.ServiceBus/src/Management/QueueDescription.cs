@@ -14,13 +14,13 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         internal TimeSpan duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
         internal string path;
-        private TimeSpan lockDuration = TimeSpan.FromSeconds(60);
-        private TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
-        private TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
-        private int maxDeliveryCount = 10;
-        private string forwardTo = null;
-        private string forwardDeadLetteredMessagesTo = null;
-        private string userMetadata = null;
+        private TimeSpan _lockDuration = TimeSpan.FromSeconds(60);
+        private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
+        private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
+        private int _maxDeliveryCount = 10;
+        private string _forwardTo = null;
+        private string _forwardDeadLetteredMessagesTo = null;
+        private string _userMetadata = null;
 
         /// <summary>
         /// Initializes a new instance of QueueDescription class with the specified relative path.
@@ -53,11 +53,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>Max value is 5 minutes. Default value is 60 seconds.</remarks>
         public TimeSpan LockDuration
         {
-            get => lockDuration;
+            get => _lockDuration;
             set
             {
                 TimeoutHelper.ThrowIfNonPositiveArgument(value, nameof(LockDuration));
-                lockDuration = value;
+                _lockDuration = value;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         ///  </remarks>
         public TimeSpan DefaultMessageTimeToLive
         {
-            get => defaultMessageTimeToLive;
+            get => _defaultMessageTimeToLive;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedTimeToLive || value > ManagementClientConstants.MaximumAllowedTimeToLive)
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $@"The value must be between {ManagementClientConstants.MinimumAllowedTimeToLive} and {ManagementClientConstants.MaximumAllowedTimeToLive}");
                 }
 
-                defaultMessageTimeToLive = value;
+                _defaultMessageTimeToLive = value;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
         public TimeSpan AutoDeleteOnIdle
         {
-            get => autoDeleteOnIdle;
+            get => _autoDeleteOnIdle;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle)
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $@"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}");
                 }
 
-                autoDeleteOnIdle = value;
+                _autoDeleteOnIdle = value;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// Default value is 10. Minimum value is 1.</remarks>
         public int MaxDeliveryCount
         {
-            get => maxDeliveryCount;
+            get => _maxDeliveryCount;
             set
             {
                 if (value < ManagementClientConstants.MinAllowedMaxDeliveryCount)
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $@"The value must be greater than {ManagementClientConstants.MinAllowedMaxDeliveryCount}");
                 }
 
-                maxDeliveryCount = value;
+                _maxDeliveryCount = value;
             }
         }
 
@@ -199,12 +199,12 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// must be an already existing entity.</remarks>
         public string ForwardTo
         {
-            get => forwardTo;
+            get => _forwardTo;
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    forwardTo = value;
+                    _forwardTo = value;
                     return;
                 }
 
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
 
-                forwardTo = value;
+                _forwardTo = value;
             }
         }
 
@@ -225,12 +225,12 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// entity must already exist.</remarks>
         public string ForwardDeadLetteredMessagesTo
         {
-            get => forwardDeadLetteredMessagesTo;
+            get => _forwardDeadLetteredMessagesTo;
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    forwardDeadLetteredMessagesTo = value;
+                    _forwardDeadLetteredMessagesTo = value;
                     return;
                 }
 
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
 
-                forwardDeadLetteredMessagesTo = value;
+                _forwardDeadLetteredMessagesTo = value;
             }
         }
 
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata
         {
-            get => userMetadata;
+            get => _userMetadata;
             set
             {
                 if (value == null)
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentOutOfRangeException(nameof(UserMetadata), $@"Length cannot cross {ManagementClientConstants.MaxUserMetadataLength} characters");
                 }
 
-                userMetadata = value;
+                _userMetadata = value;
             }
         }
 
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
                 && RequiresSession.Equals(other.RequiresSession)
                 && Status.Equals(other.Status)
-                && string.Equals(userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
                 && (AuthorizationRules != null && other.AuthorizationRules != null
                     || AuthorizationRules == null && other.AuthorizationRules == null)
                 && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules)))

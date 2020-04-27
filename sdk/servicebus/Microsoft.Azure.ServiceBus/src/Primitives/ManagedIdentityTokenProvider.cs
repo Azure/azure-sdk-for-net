@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// </summary>
     public class ManagedIdentityTokenProvider : TokenProvider
     {
-        private readonly AzureServiceTokenProvider azureServiceTokenProvider;
+        private readonly AzureServiceTokenProvider _azureServiceTokenProvider;
 
         /// <summary>Initializes new instance of <see cref="ManagedIdentityTokenProvider"/> class with default <see cref="AzureServiceTokenProvider"/> configuration.
         public ManagedIdentityTokenProvider() : this(new AzureServiceTokenProvider()){}
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <remarks>Call that constructore to set <see cref="AzureServiceTokenProvider"/> with required Managed Identity connection string.</remarks>
         public ManagedIdentityTokenProvider(AzureServiceTokenProvider azureServiceTokenProvider)
         {
-            this.azureServiceTokenProvider = azureServiceTokenProvider;
+            this._azureServiceTokenProvider = azureServiceTokenProvider;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns><see cref="SecurityToken"/></returns>
         public async override Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(Constants.AadServiceBusAudience).ConfigureAwait(false);
+            string accessToken = await _azureServiceTokenProvider.GetAccessTokenAsync(Constants.AadServiceBusAudience).ConfigureAwait(false);
             return new JsonSecurityToken(accessToken, appliesTo);
         }
     }

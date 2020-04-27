@@ -19,17 +19,17 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     {
 	    internal static readonly TimeSpan DefaultTokenTTL = TimeSpan.FromMinutes(60);
 
-        private readonly byte[] encodedSharedAccessKey;
-        private readonly string keyName;
-        private readonly TimeSpan tokenTimeToLive;
-        private readonly TokenScope tokenScope;
-        private readonly string sharedAccessSignature;
+        private readonly byte[] _encodedSharedAccessKey;
+        private readonly string _keyName;
+        private readonly TimeSpan _tokenTimeToLive;
+        private readonly TokenScope _tokenScope;
+        private readonly string _sharedAccessSignature;
         internal static readonly Func<string, byte[]> MessagingTokenProviderKeyEncoder = Encoding.UTF8.GetBytes;
 
         internal SharedAccessSignatureTokenProvider(string sharedAccessSignature)
         {
             SharedAccessSignatureToken.Validate(sharedAccessSignature);
-            this.sharedAccessSignature = sharedAccessSignature;
+            this._sharedAccessSignature = sharedAccessSignature;
         }
 
         internal SharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope = TokenScope.Entity)
@@ -74,12 +74,12 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     Resources.ArgumentStringTooBig.FormatForUser(nameof(sharedAccessKey), SharedAccessSignatureToken.MaxKeyLength));
             }
 
-            this.keyName = keyName;
-            this.tokenTimeToLive = tokenTimeToLive;
-            encodedSharedAccessKey = customKeyEncoder != null ?
+            this._keyName = keyName;
+            this._tokenTimeToLive = tokenTimeToLive;
+            _encodedSharedAccessKey = customKeyEncoder != null ?
                 customKeyEncoder(sharedAccessKey) :
                 MessagingTokenProviderKeyEncoder(sharedAccessKey);
-            this.tokenScope = tokenScope;
+            this._tokenScope = tokenScope;
         }
 
         /// <summary>
@@ -106,18 +106,18 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <returns></returns>
         protected virtual string BuildSignature(string targetUri)
         {
-            return string.IsNullOrWhiteSpace(sharedAccessSignature)
+            return string.IsNullOrWhiteSpace(_sharedAccessSignature)
                 ? SharedAccessSignatureBuilder.BuildSignature(
-                    keyName,
-                    encodedSharedAccessKey,
+                    _keyName,
+                    _encodedSharedAccessKey,
                     targetUri,
-                    tokenTimeToLive)
-                : sharedAccessSignature;
+                    _tokenTimeToLive)
+                : _sharedAccessSignature;
         }
 
         private string NormalizeAppliesTo(string appliesTo)
         {
-            return ServiceBusUriHelper.NormalizeUri(appliesTo, "https", true, stripPath: tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
+            return ServiceBusUriHelper.NormalizeUri(appliesTo, "https", true, stripPath: _tokenScope == TokenScope.Namespace, ensureTrailingSlash: true);
         }
 
         private static class SharedAccessSignatureBuilder

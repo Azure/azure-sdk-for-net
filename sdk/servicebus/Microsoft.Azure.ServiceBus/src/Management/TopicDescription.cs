@@ -13,9 +13,9 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         internal TimeSpan duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
         internal string path;
-        private TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
-        private TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
-        private string userMetadata = null;
+        private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
+        private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
+        private string _userMetadata = null;
 
         /// <summary>
         /// Initializes a new instance of TopicDescription class with the specified relative path.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         ///  </remarks>
         public TimeSpan DefaultMessageTimeToLive
         {
-            get => defaultMessageTimeToLive;
+            get => _defaultMessageTimeToLive;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedTimeToLive || value > ManagementClientConstants.MaximumAllowedTimeToLive)
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $@"The value must be between {ManagementClientConstants.MinimumAllowedTimeToLive} and {ManagementClientConstants.MaximumAllowedTimeToLive}");
                 }
 
-                defaultMessageTimeToLive = value;
+                _defaultMessageTimeToLive = value;
             }
         }
 
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>The minimum duration is 5 minutes. Default value is <see cref="TimeSpan.MaxValue"/>.</remarks>
         public TimeSpan AutoDeleteOnIdle
         {
-            get => autoDeleteOnIdle;
+            get => _autoDeleteOnIdle;
             set
             {
                 if (value < ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle)
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $@"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}");
                 }
 
-                autoDeleteOnIdle = value;
+                _autoDeleteOnIdle = value;
             }
         }
 
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <remarks>Cannot be null. Max length is 1024 chars.</remarks>
         public string UserMetadata
         {
-            get => userMetadata;
+            get => _userMetadata;
             set
             {
                 if (value == null)
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentOutOfRangeException(nameof(UserMetadata), $@"Length cannot cross {ManagementClientConstants.MaxUserMetadataLength} characters");
                 }
 
-                userMetadata = value;
+                _userMetadata = value;
             }
         }
 
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 && MaxSizeInMB == other.MaxSizeInMB
                 && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
                 && Status.Equals(other.Status)
-                && string.Equals(userMetadata, other.userMetadata, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
                 && (AuthorizationRules != null && other.AuthorizationRules != null
                     || AuthorizationRules == null && other.AuthorizationRules == null)
                 && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules)))

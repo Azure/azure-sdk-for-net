@@ -11,15 +11,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
         // 1-2 seconds and were causing intermitten failures as a result.  The long delay has been set at 5 
         // seconds arbitrarily, which may delay results should tests fail but is otherwise not expected to 
         // be an actual wait time under normal circumstances.
-        private readonly TimeSpan LongDelay = TimeSpan.FromSeconds(5);
-        private readonly TimeSpan TinyDelay = TimeSpan.FromMilliseconds(1);
+        private readonly TimeSpan _longDelay = TimeSpan.FromSeconds(5);
+        private readonly TimeSpan _tinyDelay = TimeSpan.FromMilliseconds(1);
 
         [Fact]
         public void WithTimeoutThrowsWhenATimeoutOccursAndNoActionIsSpecified()
         {
             Func<Task> actionUnderTest = async () =>  
-                await Task.Delay(LongDelay)
-                    .WithTimeout(TinyDelay);
+                await Task.Delay(_longDelay)
+                    .WithTimeout(_tinyDelay);
               
             Assert.ThrowsAsync<TimeoutException>(actionUnderTest);
         }
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
 
             Action timeoutAction = () => { timeoutActionInvoked = true; };
             
-            await Task.Delay(LongDelay).WithTimeout(TinyDelay, null, timeoutAction);
+            await Task.Delay(_longDelay).WithTimeout(_tinyDelay, null, timeoutAction);
             Assert.True(timeoutActionInvoked, "The timeout action should have been invoked.");
         }
 
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
         public async Task WithTimeoutGenericThrowsWhenATimeoutOccursAndNoActionIsSpecified()
         {
             Func<Task> actionUnderTest = async () => 
-                await Task.Delay(LongDelay)
+                await Task.Delay(_longDelay)
                     .ContinueWith( _ => "blue")
-                    .WithTimeout(TinyDelay);
+                    .WithTimeout(_tinyDelay);
 
             await Assert.ThrowsAsync<TimeoutException>(actionUnderTest);
         }
@@ -58,9 +58,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
                 return expectedResult;
             };
 
-            var result = await Task.Delay(LongDelay)
+            var result = await Task.Delay(_longDelay)
                 .ContinueWith( _ => "blue")
-                .WithTimeout(TinyDelay, null, timeoutCallback);
+                .WithTimeout(_tinyDelay, null, timeoutCallback);
 
             Assert.True(timeoutActionInvoked, "The timeout action should have been invoked.");
             Assert.Equal(expectedResult, result);
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
 
             try
             {
-                await Task.Delay(TinyDelay).WithTimeout(LongDelay);
+                await Task.Delay(_tinyDelay).WithTimeout(_longDelay);
             }
             catch (TimeoutException)
             {
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
                         
             try
             {
-                await Task.Delay(TinyDelay).ContinueWith( _ => "blue").WithTimeout(LongDelay);
+                await Task.Delay(_tinyDelay).ContinueWith( _ => "blue").WithTimeout(_longDelay);
             }
             catch (TimeoutException)
             {                
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
         public async Task WithTimeoutGenericReturnsTheValueWhenATimeoutDoesNotOccur()
         {
             var expected = "hello";
-            var result = await  Task.Delay(TinyDelay).ContinueWith( _ => expected).WithTimeout(LongDelay);
+            var result = await  Task.Delay(_tinyDelay).ContinueWith( _ => expected).WithTimeout(_longDelay);
             Assert.Equal(result, expected);
         }
 
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
             var completionSource = new TaskCompletionSource<object>();
             completionSource.SetException(new MissingFieldException("oops"));
 
-            Func<Task> actionUnderTest = async () => await completionSource.Task.WithTimeout(LongDelay);
+            Func<Task> actionUnderTest = async () => await completionSource.Task.WithTimeout(_longDelay);
             await Assert.ThrowsAsync<MissingFieldException>(actionUnderTest);
         }
 
@@ -122,9 +122,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
         public async Task WithTimeoutPropagatesAnExceptionThatCompletesBeforeTimeout()
         {
             Func<Task> actionUnderTest = async () => 
-                await Task.Delay(TinyDelay)
+                await Task.Delay(_tinyDelay)
                     .ContinueWith( _ => throw new MissingMemberException("oh no"))
-                    .WithTimeout(LongDelay);
+                    .WithTimeout(_longDelay);
 
             await Assert.ThrowsAsync<MissingMemberException>(actionUnderTest);
         }
@@ -133,9 +133,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
         public async Task WithTimeoutGenericPropagatesAnExceptionThatCompletesBeforeTimeout()
         {
            Func<Task> actionUnderTest = async () => 
-               await Task.Delay(TinyDelay)
+               await Task.Delay(_tinyDelay)
                    .ContinueWith<string>( _ => throw new MissingMemberException("oh no"))
-                   .WithTimeout(LongDelay);
+                   .WithTimeout(_longDelay);
 
             await Assert.ThrowsAsync<MissingMemberException>(actionUnderTest);
         }
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
             var completionSource = new TaskCompletionSource<object>();
             completionSource.SetCanceled();
 
-            Func<Task> actionUnderTest = async () => await completionSource.Task.WithTimeout(LongDelay);
+            Func<Task> actionUnderTest = async () => await completionSource.Task.WithTimeout(_longDelay);
             await Assert.ThrowsAsync<TaskCanceledException>(actionUnderTest);
         }
 
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
 
             try
             {
-                await Task.Delay(LongDelay).WithTimeout(TinyDelay, token);
+                await Task.Delay(_longDelay).WithTimeout(_tinyDelay, token);
             }
 
             catch (TimeoutException)
@@ -175,9 +175,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
 
             try
             {
-                await Task.Delay(LongDelay)
+                await Task.Delay(_longDelay)
                     .ContinueWith( _ => "hello")
-                    .WithTimeout(TinyDelay, token);
+                    .WithTimeout(_tinyDelay, token);
             }
 
             catch (TimeoutException)

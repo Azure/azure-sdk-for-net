@@ -52,13 +52,13 @@ namespace Microsoft.Azure.ServiceBus
     /// <remarks>It uses AMQP protocol for communicating with service bus. Use <see cref="MessageReceiver"/> for advanced set of functionality.</remarks>
     public class SubscriptionClient : ClientEntity, ISubscriptionClient
     {
-	    private int prefetchCount;
-	    private readonly object syncLock;
-	    private readonly ServiceBusDiagnosticSource diagnosticSource;
+	    private int _prefetchCount;
+	    private readonly object _syncLock;
+	    private readonly ServiceBusDiagnosticSource _diagnosticSource;
 
-	    private IInnerSubscriptionClient innerSubscriptionClient;
-	    private SessionClient sessionClient;
-	    private SessionPumpHost sessionPumpHost;
+	    private IInnerSubscriptionClient _innerSubscriptionClient;
+	    private SessionClient _sessionClient;
+	    private SessionPumpHost _sessionPumpHost;
 
         /// <summary>
         /// Instantiates a new <see cref="SubscriptionClient"/> to perform operations on a subscription.
@@ -137,12 +137,12 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.SubscriptionClientCreateStart(serviceBusConnection?.Endpoint.Authority, topicPath, subscriptionName, receiveMode.ToString());
 
             ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            syncLock = new object();
+            _syncLock = new object();
             TopicPath = topicPath;
             SubscriptionName = subscriptionName;
             Path = EntityNameHelper.FormatSubscriptionPath(TopicPath, SubscriptionName);
             ReceiveMode = receiveMode;
-            diagnosticSource = new ServiceBusDiagnosticSource(Path, serviceBusConnection.Endpoint);
+            _diagnosticSource = new ServiceBusDiagnosticSource(Path, serviceBusConnection.Endpoint);
             OwnsConnection = false;
             ServiceBusConnection.ThrowIfClosed();
 
@@ -209,21 +209,21 @@ namespace Microsoft.Azure.ServiceBus
         /// </remarks>
         public int PrefetchCount
         {
-            get => prefetchCount;
+            get => _prefetchCount;
             set
             {
                 if (value < 0)
                 {
                     throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
                 }
-                prefetchCount = value;
-                if (innerSubscriptionClient != null)
+                _prefetchCount = value;
+                if (_innerSubscriptionClient != null)
                 {
-                    innerSubscriptionClient.PrefetchCount = value;
+                    _innerSubscriptionClient.PrefetchCount = value;
                 }
-                if (sessionClient != null)
+                if (_sessionClient != null)
                 {
-                    sessionClient.PrefetchCount = value;
+                    _sessionClient.PrefetchCount = value;
                 }
             }
         }
@@ -237,11 +237,11 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (innerSubscriptionClient == null)
+                if (_innerSubscriptionClient == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        innerSubscriptionClient = new AmqpSubscriptionClient(
+                        _innerSubscriptionClient = new AmqpSubscriptionClient(
                             Path,
                             ServiceBusConnection,
                             RetryPolicy,
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                return innerSubscriptionClient;
+                return _innerSubscriptionClient;
             }
         }
 
@@ -259,13 +259,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (sessionClient == null)
+                if (_sessionClient == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        if (sessionClient == null)
+                        if (_sessionClient == null)
                         {
-                            sessionClient = new SessionClient(
+                            _sessionClient = new SessionClient(
                                 ClientId,
                                 Path,
                                 MessagingEntityType.Subscriber,
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                return sessionClient;
+                return _sessionClient;
             }
         }
 
@@ -287,13 +287,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (sessionPumpHost == null)
+                if (_sessionPumpHost == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        if (sessionPumpHost == null)
+                        if (_sessionPumpHost == null)
                         {
-                            sessionPumpHost = new SessionPumpHost(
+                            _sessionPumpHost = new SessionPumpHost(
                                 ClientId,
                                 ReceiveMode,
                                 SessionClient,
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                return sessionPumpHost;
+                return _sessionPumpHost;
             }
         }
 
@@ -492,7 +492,7 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.AddRuleStart(ClientId, description.Name);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.AddRuleStart(description) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.AddRuleStart(description) : null;
             Task addRuleTask = null;
 
             try
@@ -504,7 +504,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.AddRuleException(ClientId, exception);
@@ -512,7 +512,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             finally
             {
-                diagnosticSource.AddRuleStop(activity, description, addRuleTask?.Status);
+                _diagnosticSource.AddRuleStop(activity, description, addRuleTask?.Status);
             }
 
             MessagingEventSource.Log.AddRuleStop(ClientId);
@@ -533,7 +533,7 @@ namespace Microsoft.Azure.ServiceBus
 
             MessagingEventSource.Log.RemoveRuleStart(ClientId, ruleName);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.RemoveRuleStart(ruleName) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.RemoveRuleStart(ruleName) : null;
             Task removeRuleTask = null;
 
             try
@@ -545,7 +545,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.RemoveRuleException(ClientId, exception);
@@ -554,7 +554,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             finally
             {
-                diagnosticSource.RemoveRuleStop(activity, ruleName, removeRuleTask?.Status);
+                _diagnosticSource.RemoveRuleStop(activity, ruleName, removeRuleTask?.Status);
             }
 
             MessagingEventSource.Log.RemoveRuleStop(ClientId);
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.ServiceBus
 
             MessagingEventSource.Log.GetRulesStart(ClientId);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.GetRulesStart() : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.GetRulesStart() : null;
             Task<IList<RuleDescription>> getRulesTask = null;
 
             var skip = 0;
@@ -585,7 +585,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.GetRulesException(ClientId, exception);
@@ -594,7 +594,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             finally
             {
-                diagnosticSource.GetRulesStop(activity, rules, getRulesTask?.Status);
+                _diagnosticSource.GetRulesStop(activity, rules, getRulesTask?.Status);
             }
 
             MessagingEventSource.Log.GetRulesStop(ClientId);
@@ -628,16 +628,16 @@ namespace Microsoft.Azure.ServiceBus
 
         protected override async Task OnClosingAsync()
         {
-            if (innerSubscriptionClient != null)
+            if (_innerSubscriptionClient != null)
             {
-                await innerSubscriptionClient.CloseAsync().ConfigureAwait(false);
+                await _innerSubscriptionClient.CloseAsync().ConfigureAwait(false);
             }
 
-            sessionPumpHost?.Close();
+            _sessionPumpHost?.Close();
 
-            if (sessionClient != null)
+            if (_sessionClient != null)
             {
-                await sessionClient.CloseAsync().ConfigureAwait(false);
+                await _sessionClient.CloseAsync().ConfigureAwait(false);
             }
         }
     }

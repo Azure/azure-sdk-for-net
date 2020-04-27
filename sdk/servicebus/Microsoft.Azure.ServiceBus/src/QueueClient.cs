@@ -54,13 +54,13 @@ namespace Microsoft.Azure.ServiceBus
     /// It uses AMQP protocol for communicating with servicebus.</remarks>
     public class QueueClient : ClientEntity, IQueueClient
     {
-	    private readonly object syncLock;
+	    private readonly object _syncLock;
 
-	    private int prefetchCount;
-	    private MessageSender innerSender;
-	    private MessageReceiver innerReceiver;
-	    private SessionClient sessionClient;
-	    private SessionPumpHost sessionPumpHost;
+	    private int _prefetchCount;
+	    private MessageSender _innerSender;
+	    private MessageReceiver _innerReceiver;
+	    private SessionClient _sessionClient;
+	    private SessionPumpHost _sessionPumpHost;
 
         /// <summary>
         /// Instantiates a new <see cref="QueueClient"/> to perform operations on a queue.
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.ServiceBus
             }
 
             ServiceBusConnection = serviceBusConnection ?? throw new ArgumentNullException(nameof(serviceBusConnection));
-            syncLock = new object();
+            _syncLock = new object();
             QueueName = entityPath;
             ReceiveMode = receiveMode;
             OwnsConnection = false;
@@ -196,21 +196,21 @@ namespace Microsoft.Azure.ServiceBus
         /// </remarks>
         public int PrefetchCount
         {
-            get => prefetchCount;
+            get => _prefetchCount;
             set
             {
                 if (value < 0)
                 {
                     throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
                 }
-                prefetchCount = value;
-                if (innerReceiver != null)
+                _prefetchCount = value;
+                if (_innerReceiver != null)
                 {
-                    innerReceiver.PrefetchCount = value;
+                    _innerReceiver.PrefetchCount = value;
                 }
-                if (sessionClient != null)
+                if (_sessionClient != null)
                 {
-                    sessionClient.PrefetchCount = value;
+                    _sessionClient.PrefetchCount = value;
                 }
             }
         }
@@ -229,13 +229,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (innerSender == null)
+                if (_innerSender == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        if (innerSender == null)
+                        if (_innerSender == null)
                         {
-                            innerSender = new MessageSender(
+                            _innerSender = new MessageSender(
                                 QueueName,
                                 null,
                                 MessagingEntityType.Queue,
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                return innerSender;
+                return _innerSender;
             }
         }
 
@@ -254,13 +254,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (innerReceiver == null)
+                if (_innerReceiver == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        if (innerReceiver == null)
+                        if (_innerReceiver == null)
                         {
-                            innerReceiver = new MessageReceiver(
+                            _innerReceiver = new MessageReceiver(
                                 QueueName,
                                 MessagingEntityType.Queue,
                                 ReceiveMode,
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                return innerReceiver;
+                return _innerReceiver;
             }
         }
 
@@ -280,13 +280,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (sessionClient == null)
+                if (_sessionClient == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        if (sessionClient == null)
+                        if (_sessionClient == null)
                         {
-                            sessionClient = new SessionClient(
+                            _sessionClient = new SessionClient(
                                 ClientId,
                                 Path,
                                 MessagingEntityType.Queue,
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                return sessionClient;
+                return _sessionClient;
             }
         }
 
@@ -310,13 +310,13 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                if (sessionPumpHost == null)
+                if (_sessionPumpHost == null)
                 {
-                    lock (syncLock)
+                    lock (_syncLock)
                     {
-                        if (sessionPumpHost == null)
+                        if (_sessionPumpHost == null)
                         {
-                            sessionPumpHost = new SessionPumpHost(
+                            _sessionPumpHost = new SessionPumpHost(
                                 ClientId,
                                 ReceiveMode,
                                 SessionClient,
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.ServiceBus
                     }
                 }
 
-                return sessionPumpHost;
+                return _sessionPumpHost;
             }
         }
 
@@ -520,21 +520,21 @@ namespace Microsoft.Azure.ServiceBus
 
         protected override async Task OnClosingAsync()
         {
-            if (innerSender != null)
+            if (_innerSender != null)
             {
-                await innerSender.CloseAsync().ConfigureAwait(false);
+                await _innerSender.CloseAsync().ConfigureAwait(false);
             }
 
-            if (innerReceiver != null)
+            if (_innerReceiver != null)
             {
-                await innerReceiver.CloseAsync().ConfigureAwait(false);
+                await _innerReceiver.CloseAsync().ConfigureAwait(false);
             }
 
-            sessionPumpHost?.Close();
+            _sessionPumpHost?.Close();
 
-            if (sessionClient != null)
+            if (_sessionClient != null)
             {
-                await sessionClient.CloseAsync().ConfigureAwait(false);
+                await _sessionClient.CloseAsync().ConfigureAwait(false);
             }
         }
     }

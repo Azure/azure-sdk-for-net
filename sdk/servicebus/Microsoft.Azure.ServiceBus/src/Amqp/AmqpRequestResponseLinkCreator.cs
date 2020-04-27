@@ -9,17 +9,17 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     internal class AmqpRequestResponseLinkCreator : AmqpLinkCreator
     {
-	    private readonly string entityPath;
+	    private readonly string _entityPath;
 
         public AmqpRequestResponseLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] audience, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings linkSettings, string clientId)
             : base(entityPath, serviceBusConnection, endpointAddress, audience, requiredClaims, cbsTokenProvider, linkSettings, clientId)
         {
-            this.entityPath = entityPath;
+            this._entityPath = entityPath;
         }
 
         protected override AmqpObject OnCreateAmqpLink(AmqpConnection connection, AmqpLinkSettings linkSettings, AmqpSession amqpSession)
         {
-            AmqpObject link = new RequestResponseAmqpLink(AmqpClientConstants.EntityTypeManagement, amqpSession, entityPath, linkSettings.Properties);
+            AmqpObject link = new RequestResponseAmqpLink(AmqpClientConstants.EntityTypeManagement, amqpSession, _entityPath, linkSettings.Properties);
             linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{amqpSession.Identifier}:{link.Identifier}:{ClientId}";
             return link;
         }

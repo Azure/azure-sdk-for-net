@@ -10,8 +10,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     internal class AmqpTransactionManager
     {
-	    private readonly object syncRoot = new object();
-	    private readonly Dictionary<string, AmqpTransactionEnlistment> enlistmentMap = new Dictionary<string, AmqpTransactionEnlistment>(StringComparer.Ordinal);
+	    private readonly object _syncRoot = new object();
+	    private readonly Dictionary<string, AmqpTransactionEnlistment> _enlistmentMap = new Dictionary<string, AmqpTransactionEnlistment>(StringComparer.Ordinal);
 
         public static AmqpTransactionManager Instance { get; } = new AmqpTransactionManager();
 
@@ -27,16 +27,16 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             string transactionId = transaction.TransactionInformation.LocalIdentifier;
             AmqpTransactionEnlistment transactionEnlistment;
 
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                if (!enlistmentMap.TryGetValue(transactionId, out transactionEnlistment))
+                if (!_enlistmentMap.TryGetValue(transactionId, out transactionEnlistment))
                 {
                     transactionEnlistment = new AmqpTransactionEnlistment(transaction, this, serviceBusConnection);
-                    enlistmentMap.Add(transactionId, transactionEnlistment);
+                    _enlistmentMap.Add(transactionId, transactionEnlistment);
 
                     if (!transaction.EnlistPromotableSinglePhase(transactionEnlistment))
                     {
-                        enlistmentMap.Remove(transactionId);
+                        _enlistmentMap.Remove(transactionId);
                         throw new InvalidOperationException("Local transactions are not supported with other resource managers/DTC.");
                     }
                 }
@@ -48,9 +48,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public void RemoveEnlistment(string transactionId)
         {
-            lock (syncRoot)
+            lock (_syncRoot)
             {
-                enlistmentMap.Remove(transactionId);
+                _enlistmentMap.Remove(transactionId);
             }
         }
     }

@@ -28,8 +28,8 @@ namespace Microsoft.Azure.ServiceBus
 
 	    private const string OperationTimeoutConfigName = "OperationTimeout";
 
-	    private string entityPath, sasKeyName, sasKey, sasToken, endpoint;
-	    private AuthenticationType authType = AuthenticationType.Other;
+	    private string _entityPath, _sasKeyName, _sasKey, _sasToken, _endpoint;
+	    private AuthenticationType _authType = AuthenticationType.Other;
 
         public enum AuthenticationType
         {
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <exception cref="UriFormatException">Throws when the hostname cannot be parsed</exception>
         public string Endpoint
         {
-            get => endpoint;
+            get => _endpoint;
             set
             {
                 if (!value.Contains("."))
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.ServiceBus
                 }
 
                 var uriBuilder = new UriBuilder(value.Trim());
-                endpoint = (value.Contains("://") ? uriBuilder.Scheme : EndpointScheme) + "://" + uriBuilder.Host;
+                _endpoint = (value.Contains("://") ? uriBuilder.Scheme : EndpointScheme) + "://" + uriBuilder.Host;
             }
         }
 
@@ -185,8 +185,8 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public string EntityPath
         {
-            get => entityPath;
-            set => entityPath = value.Trim();
+            get => _entityPath;
+            set => _entityPath = value.Trim();
         }
 
         /// <summary>
@@ -194,14 +194,14 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public string SasKeyName
         {
-            get => sasKeyName;
+            get => _sasKeyName;
             set
             {
                 if (Authentication != AuthenticationType.Other)
                 {
                     throw Fx.Exception.Argument("Authentication, SasKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasKeyName"));
                 }
-                sasKeyName = value.Trim();
+                _sasKeyName = value.Trim();
             }
         }
 
@@ -211,8 +211,8 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>Shared Access Signature key</value>
         public string SasKey
         {
-            get => sasKey;
-            set => sasKey = value.Trim();
+            get => _sasKey;
+            set => _sasKey = value.Trim();
         }
 
          /// <summary>
@@ -221,14 +221,14 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>Shared Access Signature token</value>
         public string SasToken
         {
-            get => sasToken;
+            get => _sasToken;
             set
             {
                 if (Authentication != AuthenticationType.Other)
                 {
                     throw Fx.Exception.Argument("Authentication, SasToken", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SasToken"));
                 }
-                sasToken = value.Trim();
+                _sasToken = value.Trim();
             }
         }
 
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public AuthenticationType Authentication
         {
-            get => authType;
+            get => _authType;
             set
             {
                 if (!string.IsNullOrWhiteSpace(SasKeyName))
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.ServiceBus
                     throw Fx.Exception.Argument(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName), 
                         Resources.ArgumentInvalidCombination.FormatForUser(nameof(AuthenticationConfigName) + ", " + nameof(SharedAccessKeyConfigName)));
                 }
-                authType = value;
+                _authType = value;
             }
         }
 
@@ -411,9 +411,9 @@ namespace Microsoft.Azure.ServiceBus
                 else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase) && !int.TryParse(value, out _))
                 {
                     value = value.Replace(" ", string.Empty);
-                    if (!Enum.TryParse(value, true, out authType))
+                    if (!Enum.TryParse(value, true, out _authType))
                     {
-                        authType = AuthenticationType.Other;
+                        _authType = AuthenticationType.Other;
                     }
                 }
                 else

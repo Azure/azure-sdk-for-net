@@ -22,10 +22,10 @@ namespace Microsoft.Azure.ServiceBus
         private static readonly TimeSpan DefaultRetryMinBackoff = TimeSpan.Zero;
         private static readonly TimeSpan DefaultRetryMaxBackoff = TimeSpan.FromSeconds(30);
 
-        private readonly object serverBusyLock = new object();
+        private readonly object _serverBusyLock = new object();
 
         // This is a volatile copy of IsServerBusy. IsServerBusy is synchronized with a lock, whereas encounteredServerBusy is kept volatile for performance reasons.
-        private volatile bool encounteredServerBusy;
+        private volatile bool _encounteredServerBusy;
 
         protected RetryPolicy()
         {
@@ -150,16 +150,16 @@ namespace Microsoft.Azure.ServiceBus
         internal void SetServerBusy(string exceptionMessage)
         {
             // multiple call to this method will not prolong the timer.
-            if (encounteredServerBusy)
+            if (_encounteredServerBusy)
             {
                 return;
             }
 
-            lock (serverBusyLock)
+            lock (_serverBusyLock)
             {
-                if (!encounteredServerBusy)
+                if (!_encounteredServerBusy)
                 {
-                    encounteredServerBusy = true;
+                    _encounteredServerBusy = true;
                     ServerBusyExceptionMessage = string.IsNullOrWhiteSpace(exceptionMessage) ?
                         Resources.DefaultServerBusyException : exceptionMessage;
                     IsServerBusy = true;
@@ -170,16 +170,16 @@ namespace Microsoft.Azure.ServiceBus
 
         internal void ResetServerBusy()
         {
-            if (!encounteredServerBusy)
+            if (!_encounteredServerBusy)
             {
                 return;
             }
 
-            lock (serverBusyLock)
+            lock (_serverBusyLock)
             {
-                if (encounteredServerBusy)
+                if (_encounteredServerBusy)
                 {
-                    encounteredServerBusy = false;
+                    _encounteredServerBusy = false;
                     ServerBusyExceptionMessage = Resources.DefaultServerBusyException;
                     IsServerBusy = false;
                 }

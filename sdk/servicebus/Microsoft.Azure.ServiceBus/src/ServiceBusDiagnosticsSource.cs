@@ -27,13 +27,13 @@ namespace Microsoft.Azure.ServiceBus
         public const string SessionIdTag = "SessionId";
 
         private static readonly DiagnosticListener DiagnosticListener = new DiagnosticListener(DiagnosticListenerName);
-        private readonly string entityPath;
-        private readonly Uri endpoint;
+        private readonly string _entityPath;
+        private readonly Uri _endpoint;
 
         public ServiceBusDiagnosticSource(string entityPath, Uri endpoint)
         {
-            this.entityPath = entityPath;
-            this.endpoint = endpoint;
+            this._entityPath = entityPath;
+            this._endpoint = endpoint;
         }
 
         public static bool IsEnabled()
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.ServiceBus
             Activity activity = Start("Send", () => new
                 {
                     Messages = messageList,
-                    Entity = entityPath,
-                    Endpoint = endpoint
+                    Entity = _entityPath,
+                    Endpoint = _endpoint
                 },
                 a => SetTags(a, messageList)
             );
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     Messages = messageList,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -84,8 +84,8 @@ namespace Microsoft.Azure.ServiceBus
             return ProcessStart("Process", message, () => new
                 {
                     Message = message,
-                    Entity = entityPath,
-                    Endpoint = endpoint
+                    Entity = _entityPath,
+                    Endpoint = _endpoint
                 },
                 a => SetTags(a, message));
         }
@@ -97,8 +97,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     Message = message,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -115,8 +115,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     Session = session,
                     Message = message,
-                    Entity = entityPath,
-                    Endpoint = endpoint
+                    Entity = _entityPath,
+                    Endpoint = _endpoint
                 },
                 a => SetTags(a, message));
         }
@@ -129,8 +129,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     Session = session,
                     Message = message,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -147,8 +147,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     Message = message,
                     ScheduleEnqueueTimeUtc = scheduleEnqueueTimeUtc,
-                    Entity = entityPath,
-                    Endpoint = endpoint
+                    Entity = _entityPath,
+                    Endpoint = _endpoint
                 },
                 a => SetTags(a, message));
 
@@ -165,8 +165,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     Message = message,
                     ScheduleEnqueueTimeUtc = scheduleEnqueueTimeUtc,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     SequenceNumber = sequenceNumber,
                     Status = status ?? TaskStatus.Faulted
                 });
@@ -183,8 +183,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("Cancel", () => new
             {
                 SequenceNumber = sequenceNumber,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -196,8 +196,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     SequenceNumber = sequenceNumber,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -213,8 +213,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("Receive", () => new
             {
                 RequestedMessageCount = messageCount,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -228,8 +228,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     RequestedMessageCount = messageCount,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted,
                     Messages = messageList
                 });
@@ -247,8 +247,8 @@ namespace Microsoft.Azure.ServiceBus
             {
                 FromSequenceNumber = fromSequenceNumber,
                 RequestedMessageCount = messageCount,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -264,8 +264,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     FromSequenceNumber = fromSequenceNumber,
                     RequestedMessageCount = messageCount,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted,
                     Messages = messageList
                 });
@@ -282,8 +282,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("ReceiveDeferred", () => new
             {
                 SequenceNumbers = sequenceNumbers,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -298,8 +298,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     SequenceNumbers = sequenceNumbers,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Messages = messageList,
                     Status = status ?? TaskStatus.Faulted
                 });
@@ -316,8 +316,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("Complete", () => new
             {
                 LockTokens = lockTokens,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -329,8 +329,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     LockTokens = lockTokens,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -346,8 +346,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start(operationName, () => new
             {
                 LockToken = lockToken,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -359,8 +359,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     LockToken = lockToken,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -376,8 +376,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("RenewLock", () => new
             {
                 LockToken = lockToken,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -389,8 +389,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     LockToken = lockToken,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted,
                     LockedUntilUtc = lockedUntilUtc
                 });
@@ -407,8 +407,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("AddRule", () => new
             {
                 Rule = description,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -420,8 +420,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     Rule = description,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -437,8 +437,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("RemoveRule", () => new
             {
                 RuleName = ruleName,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -450,8 +450,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     RuleName = ruleName,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -466,8 +466,8 @@ namespace Microsoft.Azure.ServiceBus
         {
             return Start("GetRules", () => new
             {
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             null);
         }
@@ -479,8 +479,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     Rules = rules,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -496,8 +496,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("AcceptMessageSession", () => new
                 {
                     SessionId = sessionId,
-                    Entity = entityPath,
-                    Endpoint = endpoint
+                    Entity = _entityPath,
+                    Endpoint = _endpoint
                 },
                 a => SetSessionTag(a, sessionId)
             );
@@ -510,8 +510,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     SessionId = sessionId,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -527,8 +527,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("GetSessionState", () => new
                 {
                     SessionId = sessionId,
-                    Entity = entityPath,
-                    Endpoint = endpoint
+                    Entity = _entityPath,
+                    Endpoint = _endpoint
                 },
                 a => SetSessionTag(a, sessionId));
         }
@@ -540,8 +540,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     SessionId = sessionId,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted,
                     State = state
                 });
@@ -559,8 +559,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     State = state,
                     SessionId = sessionId,
-                    Entity = entityPath,
-                    Endpoint = endpoint
+                    Entity = _entityPath,
+                    Endpoint = _endpoint
                 },
                 a => SetSessionTag(a, sessionId));
         }
@@ -573,8 +573,8 @@ namespace Microsoft.Azure.ServiceBus
                 {
                     State = state,
                     SessionId = sessionId,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -590,8 +590,8 @@ namespace Microsoft.Azure.ServiceBus
             return Start("RenewSessionLock", () => new
             {
                 SessionId = sessionId,
-                Entity = entityPath,
-                Endpoint = endpoint
+                Entity = _entityPath,
+                Endpoint = _endpoint
             },
             a => SetSessionTag(a, sessionId));
         }
@@ -603,8 +603,8 @@ namespace Microsoft.Azure.ServiceBus
                 DiagnosticListener.StopActivity(activity, new
                 {
                     SessionId = sessionId,
-                    Entity = entityPath,
-                    Endpoint = endpoint,
+                    Entity = _entityPath,
+                    Endpoint = _endpoint,
                     Status = status ?? TaskStatus.Faulted
                 });
             }
@@ -620,8 +620,8 @@ namespace Microsoft.Azure.ServiceBus
                     new
                     {
                         Exception = ex,
-                        Entity = entityPath,
-                        Endpoint = endpoint
+                        Entity = _entityPath,
+                        Endpoint = _endpoint
                     });
             }
         }
@@ -630,7 +630,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             Activity activity = null;
             string activityName = BaseActivityName + operationName;
-            if (DiagnosticListener.IsEnabled(activityName, entityPath))
+            if (DiagnosticListener.IsEnabled(activityName, _entityPath))
             {
                 activity = new Activity(activityName);
                 setTags?.Invoke(activity);
@@ -717,12 +717,12 @@ namespace Microsoft.Azure.ServiceBus
             Activity activity = null;
             string activityName = BaseActivityName + operationName;
 
-            if (message != null && DiagnosticListener.IsEnabled(activityName, entityPath))
+            if (message != null && DiagnosticListener.IsEnabled(activityName, _entityPath))
             {
                 var tmpActivity = message.ExtractActivity(activityName);
                 setTags?.Invoke(tmpActivity);
                 
-                if (DiagnosticListener.IsEnabled(activityName, entityPath, tmpActivity))
+                if (DiagnosticListener.IsEnabled(activityName, _entityPath, tmpActivity))
                 {
                     activity = tmpActivity;
                     if (DiagnosticListener.IsEnabled(activityName + ".Start"))

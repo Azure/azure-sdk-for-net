@@ -36,10 +36,10 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
     public class MessageSender : ClientEntity, IMessageSender
     {
-	    private int deliveryCount;
-	    private readonly ActiveClientLinkManager clientLinkManager;
-	    private readonly ServiceBusDiagnosticSource diagnosticSource;
-	    private readonly bool isViaSender;
+	    private int _deliveryCount;
+	    private readonly ActiveClientLinkManager _clientLinkManager;
+	    private readonly ServiceBusDiagnosticSource _diagnosticSource;
+	    private readonly bool _isViaSender;
 
         /// <summary>
         /// Creates a new AMQP MessageSender.
@@ -170,12 +170,12 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(CreateLinkAsync, CloseSession);
             RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(CreateRequestResponseLinkAsync, CloseRequestResponseSession);
-            clientLinkManager = new ActiveClientLinkManager(this, CbsTokenProvider);
-            diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
+            _clientLinkManager = new ActiveClientLinkManager(this, CbsTokenProvider);
+            _diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
 
             if (!string.IsNullOrWhiteSpace(transferDestinationPath))
             {
-                isViaSender = true;
+                _isViaSender = true;
                 TransferDestinationPath = transferDestinationPath;
                 ViaEntityPath = entityPath;
             }
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.MessageSendStart(ClientId, count);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.SendStart(messageList) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.SendStart(messageList) : null;
             Task sendTask = null;
 
             try
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageSendException(ClientId, exception);
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.SendStop(activity, messageList, sendTask?.Status);
+                _diagnosticSource.SendStop(activity, messageList, sendTask?.Status);
             }
 
             MessagingEventSource.Log.MessageSendStop(ClientId);
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     "Cannot schedule messages in the past");
             }
 
-            if (isViaSender && Transaction.Current != null)
+            if (_isViaSender && Transaction.Current != null)
             {
                 throw new ServiceBusException(false, $"{nameof(ScheduleMessageAsync)} method is not supported in a Via-Sender with transactions.");
             }
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             long result = 0;
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.ScheduleStart(message, scheduleEnqueueTimeUtc) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.ScheduleStart(message, scheduleEnqueueTimeUtc) : null;
             Task scheduleTask = null;
 
             try
@@ -333,7 +333,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.ScheduleMessageException(ClientId, exception);
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.ScheduleStop(activity, message, scheduleEnqueueTimeUtc, scheduleTask?.Status, result);
+                _diagnosticSource.ScheduleStop(activity, message, scheduleEnqueueTimeUtc, scheduleTask?.Status, result);
             }
 
             MessagingEventSource.Log.ScheduleMessageStop(ClientId);
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.CancelScheduledMessageStart(ClientId, sequenceNumber);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.CancelStart(sequenceNumber) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.CancelStart(sequenceNumber) : null;
             Task cancelTask = null;
 
             try
@@ -376,7 +376,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.CancelScheduledMessageException(ClientId, exception);
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.CancelStop(activity, sequenceNumber, cancelTask?.Status);
+                _diagnosticSource.CancelStop(activity, sequenceNumber, cancelTask?.Status);
             }
             MessagingEventSource.Log.CancelScheduledMessageStop(ClientId);
         }
@@ -454,7 +454,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>Closes the connection.</summary>
         protected override async Task OnClosingAsync()
         {
-            clientLinkManager.Close();
+            _clientLinkManager.Close();
             await SendLinkManager.CloseAsync().ConfigureAwait(false);
             await RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
         }
@@ -698,7 +698,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             var endpointUri = new Uri(ServiceBusConnection.Endpoint, SendingLinkDestination);
 
             string[] audience;
-            if (isViaSender)
+            if (_isViaSender)
             {
                 var transferDestinationEndpointUri = new Uri(ServiceBusConnection.Endpoint, TransferDestinationPath);
                 audience = new[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
@@ -721,7 +721,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 claims,
                 linkDetails.Item2);
 
-            clientLinkManager.SetActiveSendReceiveLink(activeSendReceiveClientLink);
+            _clientLinkManager.SetActiveSendReceiveLink(activeSendReceiveClientLink);
 
             MessagingEventSource.Log.AmqpSendLinkCreateStop(ClientId);
             return sendingAmqpLink;
@@ -736,7 +736,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             var endpointUri = new Uri(ServiceBusConnection.Endpoint, entityPath);
 
             string[] audience;
-            if (isViaSender)
+            if (_isViaSender)
             {
                 var transferDestinationEndpointUri = new Uri(ServiceBusConnection.Endpoint, TransferDestinationPath);
                 audience = new[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
@@ -768,14 +768,14 @@ namespace Microsoft.Azure.ServiceBus.Core
                 audience,
                 claims,
                 linkDetails.Item2);
-            clientLinkManager.SetActiveRequestResponseLink(activeRequestResponseClientLink);
+            _clientLinkManager.SetActiveRequestResponseLink(activeRequestResponseClientLink);
 
             return requestResponseAmqpLink;
         }
 
         private ArraySegment<byte> GetNextDeliveryTag()
         {
-            var deliveryId = Interlocked.Increment(ref deliveryCount);
+            var deliveryId = Interlocked.Increment(ref _deliveryCount);
             return new ArraySegment<byte>(BitConverter.GetBytes(deliveryId));
         }
     }

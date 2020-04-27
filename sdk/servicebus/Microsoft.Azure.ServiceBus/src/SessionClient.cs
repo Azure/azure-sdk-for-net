@@ -45,7 +45,7 @@ namespace Microsoft.Azure.ServiceBus
     public sealed class SessionClient : ClientEntity, ISessionClient
     {
 	    private const int DefaultPrefetchCount = 0;
-	    private readonly ServiceBusDiagnosticSource diagnosticSource;
+	    private readonly ServiceBusDiagnosticSource _diagnosticSource;
 
         /// <summary>
         /// Creates a new SessionClient from a <see cref="ServiceBusConnectionStringBuilder"/>
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.ServiceBus
                 throw new ArgumentNullException($"{nameof(ServiceBusConnection)} doesn't have a valid token provider");
             }
 
-            diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
+            _diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
 
             // Register plugins on the message session.
             if (registeredPlugins != null)
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.ServiceBus
                 sessionId);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.AcceptMessageSessionStart(sessionId) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.AcceptMessageSessionStart(sessionId) : null;
             Task acceptMessageSessionTask = null;
 
             var session = new MessageSession(
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 if (isDiagnosticSourceEnabled && !(exception is ServiceBusTimeoutException))
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionException(
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.ServiceBus
             }
             finally
             {
-                diagnosticSource.AcceptMessageSessionStop(activity, session.SessionId, acceptMessageSessionTask?.Status);
+                _diagnosticSource.AcceptMessageSessionStop(activity, session.SessionId, acceptMessageSessionTask?.Status);
             }
 
             MessagingEventSource.Log.AmqpSessionClientAcceptMessageSessionStop(

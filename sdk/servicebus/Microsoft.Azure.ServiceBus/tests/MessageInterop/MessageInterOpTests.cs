@@ -14,21 +14,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 
     public class MessageInteropTests
     {
-        private static IDictionary<string, XmlObjectSerializer> SerializerTestCases = new XmlObjectSerializer[]
+        private static IDictionary<string, XmlObjectSerializer> _serializerTestCases = new XmlObjectSerializer[]
         {
            new DataContractBinarySerializer(typeof(TestBook)),
            new DataContractSerializer(typeof(TestBook))
 
         }.ToDictionary(item => item.ToString(), item => item);
 
-        public static IEnumerable<object[]> SerializerTestCaseNames => SerializerTestCases.Select(testCase => new[] { testCase.Key });
+        public static IEnumerable<object[]> SerializerTestCaseNames => _serializerTestCases.Select(testCase => new[] { testCase.Key });
 
         [Theory]
         [MemberData(nameof(SerializerTestCaseNames))]
         [DisplayTestMethodName]
         public void RunSerializerTests(string testCaseName)
         {
-            var serializer = SerializerTestCases[testCaseName];
+            var serializer = _serializerTestCases[testCaseName];
             var book = new TestBook("contoso", 1, 5);
             var message = GetBrokeredMessage(serializer, book);
 

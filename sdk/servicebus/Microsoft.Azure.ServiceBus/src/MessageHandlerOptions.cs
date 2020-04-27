@@ -13,8 +13,8 @@ namespace Microsoft.Azure.ServiceBus
     /// <see cref="SubscriptionClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" />.</summary>
     public sealed class MessageHandlerOptions
     {
-	    private int maxConcurrentCalls;
-	    private TimeSpan maxAutoRenewDuration;
+	    private int _maxConcurrentCalls;
+	    private TimeSpan _maxAutoRenewDuration;
 
         /// <summary>Initializes a new instance of the <see cref="MessageHandlerOptions" /> class.
         /// Default Values:
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <value>The maximum number of concurrent calls to the callback.</value>
         public int MaxConcurrentCalls
         {
-            get => maxConcurrentCalls;
+            get => _maxConcurrentCalls;
 
             set
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.ServiceBus
                     throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
                 }
 
-                maxConcurrentCalls = value;
+                _maxConcurrentCalls = value;
             }
         }
 
@@ -68,12 +68,12 @@ namespace Microsoft.Azure.ServiceBus
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
         public TimeSpan MaxAutoRenewDuration
         {
-            get => maxAutoRenewDuration;
+            get => _maxAutoRenewDuration;
 
             set
             {
                 TimeoutHelper.ThrowIfNegativeArgument(value, nameof(value));
-                maxAutoRenewDuration = value;
+                _maxAutoRenewDuration = value;
             }
         }
 

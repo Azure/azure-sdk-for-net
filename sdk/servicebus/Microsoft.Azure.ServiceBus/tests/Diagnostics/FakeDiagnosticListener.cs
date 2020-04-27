@@ -9,14 +9,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
     public sealed class FakeDiagnosticListener : IObserver<DiagnosticListener>, IDisposable
     {
-        private  IDisposable subscription;
+        private  IDisposable _subscription;
         private class FakeDiagnosticSourceWriteObserver : IObserver<KeyValuePair<string, object>>
         {
-            private readonly Action<KeyValuePair<string, object>> writeCallback;
+            private readonly Action<KeyValuePair<string, object>> _writeCallback;
 
             public FakeDiagnosticSourceWriteObserver(Action<KeyValuePair<string, object>> writeCallback)
             {
-                this.writeCallback = writeCallback;
+                this._writeCallback = writeCallback;
             }
 
             public void OnCompleted()
@@ -29,17 +29,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
             public void OnNext(KeyValuePair<string, object> value)
             {
-                writeCallback(value);
+                _writeCallback(value);
             }
         }
 
-        private readonly Action<KeyValuePair<string, object>> writeCallback;
+        private readonly Action<KeyValuePair<string, object>> _writeCallback;
 
-        private Func<string, object, object, bool> writeObserverEnabled = (name, arg1, arg2) => false;
+        private Func<string, object, object, bool> _writeObserverEnabled = (name, arg1, arg2) => false;
 
         public FakeDiagnosticListener(Action<KeyValuePair<string, object>> writeCallback)
         {
-            this.writeCallback = writeCallback;            
+            this._writeCallback = writeCallback;            
         }
 
         public void OnCompleted()
@@ -54,37 +54,37 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             if (value.Name.Equals("Microsoft.Azure.ServiceBus"))
             {
-                subscription = value.Subscribe(new FakeDiagnosticSourceWriteObserver(writeCallback), IsEnabled);
+                _subscription = value.Subscribe(new FakeDiagnosticSourceWriteObserver(_writeCallback), IsEnabled);
             }
         }
 
         public void Enable()
         {
-            writeObserverEnabled = (name, arg1, arg2) => true;
+            _writeObserverEnabled = (name, arg1, arg2) => true;
         }
 
         public void Enable(Func<string, bool> writeObserverEnabled)
         {
-            this.writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name);
+            this._writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name);
         }
 
         public void Enable(Func<string, object, object, bool> writeObserverEnabled)
         {
-            this.writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name, arg1, arg2);
+            this._writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name, arg1, arg2);
         }
 
         public void Disable()
         {
-            writeObserverEnabled = (name, arg1, arg2) => false;
+            _writeObserverEnabled = (name, arg1, arg2) => false;
         }
 
         private bool IsEnabled(string s, object arg1, object arg2) =>
-            writeObserverEnabled(s, arg1, arg2);
+            _writeObserverEnabled(s, arg1, arg2);
 
         public void Dispose()
         {
             Disable();
-            subscription?.Dispose();
+            _subscription?.Dispose();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         // We lock on this when generating a seed for a threadLocalRandom
         [Fx.Tag.SynchronizationObject] private static readonly Random SeedGenerator = new Random();
 
-        [ThreadStatic] private static Random threadLocalRandom;
+        [ThreadStatic] private static Random _threadLocalRandom;
 
         public static int Next(int minValue, int maxValue)
         {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         private static Random GetThreadLocalRandom()
         {
-            if (threadLocalRandom == null)
+            if (_threadLocalRandom == null)
             {
                 int seed;
                 lock (SeedGenerator)
@@ -38,10 +38,10 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     seed = SeedGenerator.Next();
                 }
 
-                threadLocalRandom = new Random(seed);
+                _threadLocalRandom = new Random(seed);
             }
 
-            return threadLocalRandom;
+            return _threadLocalRandom;
         }
     }
 }

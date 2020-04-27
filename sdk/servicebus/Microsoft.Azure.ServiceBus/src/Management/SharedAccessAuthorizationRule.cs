@@ -21,10 +21,10 @@ namespace Microsoft.Azure.ServiceBus.Management
 	    private const int SupportedSASKeyLength = 44;
 	    private const string FixedClaimType = "SharedAccessKey";
 
-        private string internalKeyName;
-        private string internalPrimaryKey;
-        private string internalSecondaryKey;
-        private List<AccessRights> internalRights;
+        private string _internalKeyName;
+        private string _internalPrimaryKey;
+        private string _internalSecondaryKey;
+        private List<AccessRights> _internalRights;
 
         internal SharedAccessAuthorizationRule()
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <value>The authorization rule key name.</value>
         public override sealed string KeyName
         {
-            get { return internalKeyName; }
+            get { return _internalKeyName; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentException("The key name specified contains invalid characters");
                 }
 
-                internalKeyName = value;
+                _internalKeyName = value;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <value>The primary key for the authorization rule.</value>
         public string PrimaryKey
         {
-            get { return internalPrimaryKey; }
+            get { return _internalPrimaryKey; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentException(nameof(PrimaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports base64 keys.");
                 }
 
-                internalPrimaryKey = value;
+                _internalPrimaryKey = value;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <value>The secondary key for the authorization rule.</value>
         public string SecondaryKey
         {
-            get { return internalSecondaryKey; }
+            get { return _internalSecondaryKey; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -139,13 +139,13 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentException(nameof(SecondaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports base64 keys.");
                 }
 
-                internalSecondaryKey = value;
+                _internalSecondaryKey = value;
             }
         }
 
         public override List<AccessRights> Rights
         {
-            get => internalRights;
+            get => _internalRights;
             set
             {
                 if (value == null || value.Count < 0 || value.Count > ManagementClientConstants.SupportedClaimsCount)
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                     throw new ArgumentException(nameof(Rights), "Manage permission should also include Send and Listen");
                 }
 
-                internalRights = value;
+                _internalRights = value;
             }
         }
 

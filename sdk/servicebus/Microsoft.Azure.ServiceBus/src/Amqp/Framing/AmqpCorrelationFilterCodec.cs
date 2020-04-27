@@ -13,11 +13,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
         public const ulong Code = 0x000001370000009;
         private const int Fields = 9;
 
-        private AmqpMap properties;
+        private AmqpMap _properties;
 
         public AmqpCorrelationFilterCodec() : base(Name, Code)
         {
-            properties = new AmqpMap();
+            _properties = new AmqpMap();
         }
 
         public string CorrelationId { get; set; }
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
         public string ContentType { get; set; }
 
-        public AmqpMap Properties => properties;
+        public AmqpMap Properties => _properties;
 
         protected override int FieldCount => Fields;
 
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
             AmqpCodec.EncodeString(SessionId, buffer);
             AmqpCodec.EncodeString(ReplyToSessionId, buffer);
             AmqpCodec.EncodeString(ContentType, buffer);
-            AmqpCodec.EncodeMap(properties, buffer);
+            AmqpCodec.EncodeMap(_properties, buffer);
         }
 
         protected override void OnDecode(ByteBuffer buffer, int count)
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
 
             if (count > 0)
             {
-                properties = AmqpCodec.DecodeMap(buffer);
+                _properties = AmqpCodec.DecodeMap(buffer);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
                    AmqpCodec.GetStringEncodeSize(SessionId) +
                    AmqpCodec.GetStringEncodeSize(ReplyToSessionId) +
                    AmqpCodec.GetStringEncodeSize(ContentType) +
-                   AmqpCodec.GetMapEncodeSize(properties);
+                   AmqpCodec.GetMapEncodeSize(_properties);
         }
     }
 }

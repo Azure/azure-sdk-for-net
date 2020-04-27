@@ -414,31 +414,31 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 var msg = await receiver.ReceiveAsync();
                 await receiver.DeadLetterAsync(msg.SystemProperties.LockToken);
 
-                var subscriptionsRI = await client.GetSubscriptionsRuntimeInfoAsync(topicName);
-                var subscriptionRI = subscriptionsRI.FirstOrDefault(s => subscriptionName.Equals(s.SubscriptionName, StringComparison.OrdinalIgnoreCase));
+                var subscriptionsRi = await client.GetSubscriptionsRuntimeInfoAsync(topicName);
+                var subscriptionRi = subscriptionsRi.FirstOrDefault(s => subscriptionName.Equals(s.SubscriptionName, StringComparison.OrdinalIgnoreCase));
 
-                Assert.Equal(topicName, subscriptionRI.TopicPath);
-                Assert.Equal(subscriptionName, subscriptionRI.SubscriptionName);
+                Assert.Equal(topicName, subscriptionRi.TopicPath);
+                Assert.Equal(subscriptionName, subscriptionRi.SubscriptionName);
 
-                Assert.True(subscriptionRI.CreatedAt < subscriptionRI.UpdatedAt);
-                Assert.True(subscriptionRI.UpdatedAt < subscriptionRI.AccessedAt);
+                Assert.True(subscriptionRi.CreatedAt < subscriptionRi.UpdatedAt);
+                Assert.True(subscriptionRi.UpdatedAt < subscriptionRi.AccessedAt);
 
-                Assert.Equal(1, subscriptionRI.MessageCountDetails.ActiveMessageCount);
-                Assert.Equal(1, subscriptionRI.MessageCountDetails.DeadLetterMessageCount);
-                Assert.Equal(0, subscriptionRI.MessageCountDetails.ScheduledMessageCount);
-                Assert.Equal(2, subscriptionRI.MessageCount);
+                Assert.Equal(1, subscriptionRi.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(1, subscriptionRi.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(0, subscriptionRi.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(2, subscriptionRi.MessageCount);
 
-                var singleSubscriptionRI = await client.GetSubscriptionRuntimeInfoAsync(topicName, subscriptionName);
+                var singleSubscriptionRi = await client.GetSubscriptionRuntimeInfoAsync(topicName, subscriptionName);
                 
-                Assert.Equal(subscriptionRI.CreatedAt, singleSubscriptionRI.CreatedAt);
-                Assert.Equal(subscriptionRI.AccessedAt, singleSubscriptionRI.AccessedAt);
-                Assert.Equal(subscriptionRI.UpdatedAt, singleSubscriptionRI.UpdatedAt);
-                Assert.Equal(subscriptionRI.SubscriptionName, singleSubscriptionRI.SubscriptionName);
-                Assert.Equal(subscriptionRI.MessageCount, singleSubscriptionRI.MessageCount);
-                Assert.Equal(subscriptionRI.MessageCountDetails.ActiveMessageCount, singleSubscriptionRI.MessageCountDetails.ActiveMessageCount);
-                Assert.Equal(subscriptionRI.MessageCountDetails.DeadLetterMessageCount, singleSubscriptionRI.MessageCountDetails.DeadLetterMessageCount);
-                Assert.Equal(subscriptionRI.MessageCountDetails.ScheduledMessageCount, singleSubscriptionRI.MessageCountDetails.ScheduledMessageCount);
-                Assert.Equal(subscriptionRI.TopicPath, singleSubscriptionRI.TopicPath);
+                Assert.Equal(subscriptionRi.CreatedAt, singleSubscriptionRi.CreatedAt);
+                Assert.Equal(subscriptionRi.AccessedAt, singleSubscriptionRi.AccessedAt);
+                Assert.Equal(subscriptionRi.UpdatedAt, singleSubscriptionRi.UpdatedAt);
+                Assert.Equal(subscriptionRi.SubscriptionName, singleSubscriptionRi.SubscriptionName);
+                Assert.Equal(subscriptionRi.MessageCount, singleSubscriptionRi.MessageCount);
+                Assert.Equal(subscriptionRi.MessageCountDetails.ActiveMessageCount, singleSubscriptionRi.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(subscriptionRi.MessageCountDetails.DeadLetterMessageCount, singleSubscriptionRi.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(subscriptionRi.MessageCountDetails.ScheduledMessageCount, singleSubscriptionRi.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(subscriptionRi.TopicPath, singleSubscriptionRi.TopicPath);
                 
                 await client.DeleteSubscriptionAsync(topicName, subscriptionName);
                 await client.DeleteTopicAsync(topicName);                
@@ -482,30 +482,30 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 await sender.SendAsync(new Message() { MessageId = "2" });
                 await sender.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
 
-                var topicsRI = await client.GetTopicsRuntimeInfoAsync();
-                var topicRI = topicsRI.FirstOrDefault(t => topicName.Equals(t.Path, StringComparison.OrdinalIgnoreCase));
+                var topicsRi = await client.GetTopicsRuntimeInfoAsync();
+                var topicRi = topicsRi.FirstOrDefault(t => topicName.Equals(t.Path, StringComparison.OrdinalIgnoreCase));
                 
-                Assert.Equal(topicName, topicRI.Path);
+                Assert.Equal(topicName, topicRi.Path);
 
-                Assert.True(topicRI.CreatedAt < topicRI.UpdatedAt);
-                Assert.True(topicRI.UpdatedAt < topicRI.AccessedAt);
+                Assert.True(topicRi.CreatedAt < topicRi.UpdatedAt);
+                Assert.True(topicRi.UpdatedAt < topicRi.AccessedAt);
 
-                Assert.Equal(0, topicRI.MessageCountDetails.ActiveMessageCount);
-                Assert.Equal(0, topicRI.MessageCountDetails.DeadLetterMessageCount);
-                Assert.Equal(1, topicRI.MessageCountDetails.ScheduledMessageCount);
-                Assert.Equal(1, topicRI.SubscriptionCount);
-                Assert.True(topicRI.SizeInBytes > 0);
+                Assert.Equal(0, topicRi.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(0, topicRi.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(1, topicRi.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(1, topicRi.SubscriptionCount);
+                Assert.True(topicRi.SizeInBytes > 0);
 
-                var singleTopicRI = await client.GetTopicRuntimeInfoAsync(topicRI.Path);
+                var singleTopicRi = await client.GetTopicRuntimeInfoAsync(topicRi.Path);
 
-                Assert.Equal(topicRI.AccessedAt, singleTopicRI.AccessedAt);
-                Assert.Equal(topicRI.CreatedAt, singleTopicRI.CreatedAt);
-                Assert.Equal(topicRI.UpdatedAt, singleTopicRI.UpdatedAt);
-                Assert.Equal(topicRI.MessageCountDetails.ActiveMessageCount, singleTopicRI.MessageCountDetails.ActiveMessageCount);
-                Assert.Equal(topicRI.MessageCountDetails.DeadLetterMessageCount, singleTopicRI.MessageCountDetails.DeadLetterMessageCount);
-                Assert.Equal(topicRI.MessageCountDetails.ScheduledMessageCount, singleTopicRI.MessageCountDetails.ScheduledMessageCount);
-                Assert.Equal(topicRI.SizeInBytes, singleTopicRI.SizeInBytes);
-                Assert.Equal(topicRI.SubscriptionCount, singleTopicRI.SubscriptionCount);
+                Assert.Equal(topicRi.AccessedAt, singleTopicRi.AccessedAt);
+                Assert.Equal(topicRi.CreatedAt, singleTopicRi.CreatedAt);
+                Assert.Equal(topicRi.UpdatedAt, singleTopicRi.UpdatedAt);
+                Assert.Equal(topicRi.MessageCountDetails.ActiveMessageCount, singleTopicRi.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(topicRi.MessageCountDetails.DeadLetterMessageCount, singleTopicRi.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(topicRi.MessageCountDetails.ScheduledMessageCount, singleTopicRi.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(topicRi.SizeInBytes, singleTopicRi.SizeInBytes);
+                Assert.Equal(topicRi.SubscriptionCount, singleTopicRi.SubscriptionCount);
 
                 await client.DeleteSubscriptionAsync(topicName, subscriptionName);
                 await client.DeleteTopicAsync(topicName);                
@@ -664,7 +664,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        public static IEnumerable<object[]> TestData_EntityNameValidationTest => new[]
+        public static IEnumerable<object[]> TestDataEntityNameValidationTest => new[]
         {
             new object[] {"qq@", true},
             new object[] {"qq/", true},
@@ -676,7 +676,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         };
 
         [Theory]
-        [MemberData(nameof(TestData_EntityNameValidationTest))]    
+        [MemberData(nameof(TestDataEntityNameValidationTest))]    
         [LiveTest]
         [DisplayTestMethodName]
         public void EntityNameValidationTest(string entityName, bool isPathSeparatorAllowed)

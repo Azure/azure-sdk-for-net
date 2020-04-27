@@ -19,8 +19,8 @@ namespace Microsoft.Azure.ServiceBus
     public class ServiceBusConnection
     {
 	    private static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
-	    private readonly object syncLock;
-	    private bool isClosedOrClosing;
+	    private readonly object _syncLock;
+	    private bool _isClosedOrClosing;
 
         /// <summary>
         /// Creates a new connection to service bus.
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.ServiceBus
         internal ServiceBusConnection(RetryPolicy retryPolicy = null)
         {
             RetryPolicy = retryPolicy ?? RetryPolicy.Default;
-            syncLock = new object();
+            _syncLock = new object();
         }
 
         /// <summary>
@@ -156,16 +156,16 @@ namespace Microsoft.Azure.ServiceBus
         {
             get
             {
-                lock (syncLock)
+                lock (_syncLock)
                 {
-                    return isClosedOrClosing;
+                    return _isClosedOrClosing;
                 }
             }
             internal set
             {
-                lock (syncLock)
+                lock (_syncLock)
                 {
-                    isClosedOrClosing = value;
+                    _isClosedOrClosing = value;
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.ServiceBus
         public async Task CloseAsync()
         {
             var callClose = false;
-            lock (syncLock)
+            lock (_syncLock)
             {
                 if (!IsClosedOrClosing)
                 {

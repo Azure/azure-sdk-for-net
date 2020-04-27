@@ -14,7 +14,7 @@ namespace Microsoft.Azure.ServiceBus
 
     internal class MessageSession : MessageReceiver, IMessageSession
     {
-        private readonly ServiceBusDiagnosticSource diagnosticSource;
+        private readonly ServiceBusDiagnosticSource _diagnosticSource;
 
         public MessageSession(
             string entityPath,
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.ServiceBus
             bool isSessionReceiver = false)
             : base(entityPath, entityType, receiveMode, serviceBusConnection, cbsTokenProvider, retryPolicy, prefetchCount, sessionId, isSessionReceiver)
         {
-            diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
+            _diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.ServiceBus
 
         private async Task<byte[]> OnGetStateInstrumentedAsync()
         {
-            Activity activity = diagnosticSource.GetSessionStateStart(SessionId);
+            Activity activity = _diagnosticSource.GetSessionStateStart(SessionId);
             Task<byte[]> getStateTask = null;
             byte[] state = null;
 
@@ -199,18 +199,18 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception ex)
             {
-                diagnosticSource.ReportException(ex);
+                _diagnosticSource.ReportException(ex);
                 throw;
             }
             finally
             {
-                diagnosticSource.GetSessionStateStop(activity, SessionId, state, getStateTask?.Status);
+                _diagnosticSource.GetSessionStateStop(activity, SessionId, state, getStateTask?.Status);
             }
         }
 
         private async Task OnSetStateInstrumentedAsync(byte[] sessionState)
         {
-            Activity activity = diagnosticSource.SetSessionStateStart(SessionId, sessionState);
+            Activity activity = _diagnosticSource.SetSessionStateStart(SessionId, sessionState);
             Task setStateTask = null;
 
             try
@@ -220,18 +220,18 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception ex)
             {
-                diagnosticSource.ReportException(ex);
+                _diagnosticSource.ReportException(ex);
                 throw;
             }
             finally
             {
-                diagnosticSource.SetSessionStateStop(activity, sessionState, SessionId, setStateTask?.Status);
+                _diagnosticSource.SetSessionStateStop(activity, sessionState, SessionId, setStateTask?.Status);
             }
         }
 
         private async Task OnRenewSessionLockInstrumentedAsync()
         {
-            Activity activity = diagnosticSource.RenewSessionLockStart(SessionId);
+            Activity activity = _diagnosticSource.RenewSessionLockStart(SessionId);
             Task renewTask = null;
 
             try
@@ -241,12 +241,12 @@ namespace Microsoft.Azure.ServiceBus
             }
             catch (Exception ex)
             {
-                diagnosticSource.ReportException(ex);
+                _diagnosticSource.ReportException(ex);
                 throw;
             }
             finally
             {
-                diagnosticSource.RenewSessionLockStop(activity, SessionId, renewTask?.Status);
+                _diagnosticSource.RenewSessionLockStop(activity, SessionId, renewTask?.Status);
             }
         }
 

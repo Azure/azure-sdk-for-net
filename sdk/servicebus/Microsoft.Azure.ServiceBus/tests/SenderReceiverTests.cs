@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class SenderReceiverTests : SenderReceiverClientTestBase
     {
-        private static TimeSpan TwoSeconds = TimeSpan.FromSeconds(2);
+        private static TimeSpan _twoSeconds = TimeSpan.FromSeconds(2);
 
         public static IEnumerable<object[]> TestPermutations => new[]
         {
@@ -169,22 +169,22 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     // The first ReceiveAsync() would initialize the link and block prefetch2 for receiver2
                     Assert.Equal("prefetch1", (await receiver2.ReceiveAsync().ConfigureAwait(false)).Label);
-                    await Task.Delay(TwoSeconds);
+                    await Task.Delay(_twoSeconds);
 
                     // Updating prefetch count on receiver1.
                     receiver1.PrefetchCount = 2;
-                    await Task.Delay(TwoSeconds);
+                    await Task.Delay(_twoSeconds);
 
                     // The next operation should fetch prefetch3 and prefetch4.
                     Assert.Equal("prefetch3", (await receiver1.ReceiveAsync().ConfigureAwait(false)).Label);
-                    await Task.Delay(TwoSeconds);
+                    await Task.Delay(_twoSeconds);
 
                     Assert.Equal("prefetch2", (await receiver2.ReceiveAsync().ConfigureAwait(false)).Label);
-                    await Task.Delay(TwoSeconds);
+                    await Task.Delay(_twoSeconds);
 
                     // The next operation should block prefetch6 for receiver2.
                     Assert.Equal("prefetch5", (await receiver2.ReceiveAsync().ConfigureAwait(false)).Label);
-                    await Task.Delay(TwoSeconds);
+                    await Task.Delay(_twoSeconds);
 
                     // Updates in prefetch count of receiver1 should not affect receiver2.
                     // Receiver2 should continue with 1 prefetch.

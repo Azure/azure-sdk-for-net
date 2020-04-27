@@ -12,9 +12,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
 {
 	internal static class ServiceBusScope
     {   
-        private static int randomSeed = Environment.TickCount;
+        private static int _randomSeed = Environment.TickCount;
 
-        private static readonly ThreadLocal<Random> Rng = new ThreadLocal<Random>( () => new Random(Interlocked.Increment(ref randomSeed)), false);
+        private static readonly ThreadLocal<Random> Rng = new ThreadLocal<Random>( () => new Random(Interlocked.Increment(ref _randomSeed)), false);
         private static readonly ManagementClient ManagementClient = new ManagementClient(TestUtility.NamespaceConnectionString);        
 
         /// <summary>
@@ -217,31 +217,31 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
         internal sealed class QueueScope
         {
             public readonly string Name;
-            private readonly Func<Task> CleanupAction;
+            private readonly Func<Task> _cleanupAction;
 
             public QueueScope(string name, Func<Task> cleanupAction)
             {
                 Name = name;
-                CleanupAction = cleanupAction;
+                _cleanupAction = cleanupAction;
             }
 
-            public Task CleanupAsync() => CleanupAction?.Invoke() ?? Task.CompletedTask;
+            public Task CleanupAsync() => _cleanupAction?.Invoke() ?? Task.CompletedTask;
         }
 
         internal sealed class TopicScope
         {
             public readonly string TopicName;
             public readonly string SubscriptionName;
-            private readonly Func<Task> CleanupAction;
+            private readonly Func<Task> _cleanupAction;
 
             public TopicScope(string topicName, string subscriptionName, Func<Task> cleanupAction)
             {
                 TopicName = topicName;
                 SubscriptionName = subscriptionName;
-                CleanupAction = cleanupAction;
+                _cleanupAction = cleanupAction;
             }
 
-            public Task CleanupAsync() => CleanupAction?.Invoke() ?? Task.CompletedTask;
+            public Task CleanupAsync() => _cleanupAction?.Invoke() ?? Task.CompletedTask;
         }
     }
 }

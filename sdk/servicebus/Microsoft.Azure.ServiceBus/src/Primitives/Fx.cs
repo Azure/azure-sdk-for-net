@@ -8,18 +8,18 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
     internal static class Fx
     {
-	    private static ExceptionUtility exceptionUtility;
+	    private static ExceptionUtility _exceptionUtility;
 
         public static ExceptionUtility Exception
         {
             get
             {
-                if (exceptionUtility == null)
+                if (_exceptionUtility == null)
                 {
-                    exceptionUtility = new ExceptionUtility();
+                    _exceptionUtility = new ExceptionUtility();
                 }
 
-                return exceptionUtility;
+                return _exceptionUtility;
             }
         }
 
@@ -103,26 +103,26 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             [Conditional("CODE_ANALYSIS")]
             public sealed class ExternalResourceAttribute : Attribute
             {
-	            private readonly Location location;
-	            private readonly string description;
+	            private readonly Location _location;
+	            private readonly string _description;
 
                 public ExternalResourceAttribute(Location location, string description)
                 {
-                    this.location = location;
-                    this.description = description;
+                    this._location = location;
+                    this._description = description;
                 }
 
-                public Location Location => location;
+                public Location Location => _location;
 
-                public string Description => description;
+                public string Description => _description;
             }
 
             [AttributeUsage(AttributeTargets.Field)]
             [Conditional("CODE_ANALYSIS")]
             public sealed class CacheAttribute : Attribute
             {
-	            private readonly Type elementType;
-	            private readonly CacheAttrition cacheAttrition;
+	            private readonly Type _elementType;
+	            private readonly CacheAttrition _cacheAttrition;
 
                 public CacheAttribute(Type elementType, CacheAttrition cacheAttrition)
                 {
@@ -135,13 +135,13 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                         throw Exception.ArgumentNull(nameof(elementType));
                     }
 
-                    this.elementType = elementType;
-                    this.cacheAttrition = cacheAttrition;
+                    this._elementType = elementType;
+                    this._cacheAttrition = cacheAttrition;
                 }
 
-                public Type ElementType => elementType;
+                public Type ElementType => _elementType;
 
-                public CacheAttrition CacheAttrition => cacheAttrition;
+                public CacheAttrition CacheAttrition => _cacheAttrition;
 
                 public string Scope { get; set; }
 
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             [Conditional("CODE_ANALYSIS")]
             public sealed class QueueAttribute : Attribute
             {
-	            private readonly Type elementType;
+	            private readonly Type _elementType;
 
                 public QueueAttribute(Type elementType)
                 {
@@ -166,10 +166,10 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                         throw Exception.ArgumentNull(nameof(elementType));
                     }
 
-                    this.elementType = elementType;
+                    this._elementType = elementType;
                 }
 
-                public Type ElementType => elementType;
+                public Type ElementType => _elementType;
 
                 public string Scope { get; set; }
 
@@ -204,14 +204,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             [Conditional("CODE_ANALYSIS")]
             public sealed class SynchronizationPrimitiveAttribute : Attribute
             {
-	            private readonly BlocksUsing blocksUsing;
+	            private readonly BlocksUsing _blocksUsing;
 
                 public SynchronizationPrimitiveAttribute(BlocksUsing blocksUsing)
                 {
-                    this.blocksUsing = blocksUsing;
+                    this._blocksUsing = blocksUsing;
                 }
 
-                public BlocksUsing BlocksUsing => blocksUsing;
+                public BlocksUsing BlocksUsing => _blocksUsing;
 
                 public bool SupportsAsync { get; set; }
 
@@ -252,8 +252,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 [Conditional("CODE_ANALYSIS")]
                 public class ThrowsAttribute : Attribute
                 {
-	                private readonly Type exceptionType;
-	                private readonly string diagnosis;
+	                private readonly Type _exceptionType;
+	                private readonly string _diagnosis;
 
                     public ThrowsAttribute(Type exceptionType, string diagnosis)
                     {
@@ -267,13 +267,13 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                             throw new ArgumentNullException(nameof(diagnosis));
                         }
 
-                        this.exceptionType = exceptionType;
-                        this.diagnosis = diagnosis;
+                        this._exceptionType = exceptionType;
+                        this._diagnosis = diagnosis;
                     }
 
-                    public Type ExceptionType => exceptionType;
+                    public Type ExceptionType => _exceptionType;
 
-                    public string Diagnosis => diagnosis;
+                    public string Diagnosis => _diagnosis;
                 }
 
                 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor, Inherited = false)]

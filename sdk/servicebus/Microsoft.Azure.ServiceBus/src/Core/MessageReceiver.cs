@@ -45,16 +45,16 @@ namespace Microsoft.Azure.ServiceBus.Core
     {
         private static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
 
-        private readonly ConcurrentExpiringSet<Guid> requestResponseLockedMessages;
-        private readonly bool isSessionReceiver;
-        private readonly object messageReceivePumpSyncLock;
-        private readonly ActiveClientLinkManager clientLinkManager;
-        private readonly ServiceBusDiagnosticSource diagnosticSource;
+        private readonly ConcurrentExpiringSet<Guid> _requestResponseLockedMessages;
+        private readonly bool _isSessionReceiver;
+        private readonly object _messageReceivePumpSyncLock;
+        private readonly ActiveClientLinkManager _clientLinkManager;
+        private readonly ServiceBusDiagnosticSource _diagnosticSource;
 
-        private int prefetchCount;
-        private long lastPeekedSequenceNumber;
-        private MessageReceivePump receivePump;
-        private CancellationTokenSource receivePumpCancellationTokenSource;
+        private int _prefetchCount;
+        private long _lastPeekedSequenceNumber;
+        private MessageReceivePump _receivePump;
+        private CancellationTokenSource _receivePumpCancellationTokenSource;
 
         /// <summary>
         /// Creates a new MessageReceiver from a <see cref="ServiceBusConnectionStringBuilder"/>.
@@ -186,14 +186,14 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             SessionIdInternal = sessionId;
-            this.isSessionReceiver = isSessionReceiver;
+            this._isSessionReceiver = isSessionReceiver;
             ReceiveLinkManager = new FaultTolerantAmqpObject<ReceivingAmqpLink>(CreateLinkAsync, CloseSession);
             RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(CreateRequestResponseLinkAsync, CloseRequestResponseSession);
-            requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
+            _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             PrefetchCount = prefetchCount;
-            messageReceivePumpSyncLock = new object();
-            clientLinkManager = new ActiveClientLinkManager(this, CbsTokenProvider);
-            diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
+            _messageReceivePumpSyncLock = new object();
+            _clientLinkManager = new ActiveClientLinkManager(this, CbsTokenProvider);
+            _diagnosticSource = new ServiceBusDiagnosticSource(entityPath, serviceBusConnection.Endpoint);
             MessagingEventSource.Log.MessageReceiverCreateStop(serviceBusConnection.Endpoint.Authority, entityPath, ClientId);
         }
 
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// </remarks>
         public int PrefetchCount
         {
-            get => prefetchCount;
+            get => _prefetchCount;
 
             set
             {
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     throw Fx.Exception.ArgumentOutOfRange(nameof(PrefetchCount), value, "Value cannot be less than 0.");
                 }
-                prefetchCount = value;
+                _prefetchCount = value;
                 if (ReceiveLinkManager.TryGetOpenedObject(out var link))
                 {
                     link.SetTotalLinkCredit((uint)value, true, true);
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <seealso cref="PeekAsync()"/>
         public long LastPeekedSequenceNumber
         {
-            get => lastPeekedSequenceNumber;
+            get => _lastPeekedSequenceNumber;
 
             internal set
             {
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     throw new ArgumentOutOfRangeException(nameof(LastPeekedSequenceNumber), value.ToString());
                 }
 
-                lastPeekedSequenceNumber = value;
+                _lastPeekedSequenceNumber = value;
             }
         }
 
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.MessageReceiveStart(ClientId, maxMessageCount);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.ReceiveStart(maxMessageCount) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.ReceiveStart(maxMessageCount) : null;
             Task receiveTask = null;
 
             IList<Message> unprocessedMessageList = null;
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageReceiveException(ClientId, exception);
@@ -390,7 +390,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.ReceiveStop(activity, maxMessageCount, receiveTask?.Status, unprocessedMessageList);
+                _diagnosticSource.ReceiveStop(activity, maxMessageCount, receiveTask?.Status, unprocessedMessageList);
             }
 
             MessagingEventSource.Log.MessageReceiveStop(ClientId, unprocessedMessageList?.Count ?? 0);
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.MessageReceiveDeferredMessageStart(ClientId, sequenceNumberList.Length, sequenceNumberList);
 
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.ReceiveDeferredStart(sequenceNumberList) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.ReceiveDeferredStart(sequenceNumberList) : null;
             Task receiveTask = null;
 
             IList<Message> messages = null;
@@ -463,7 +463,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageReceiveDeferredMessageException(ClientId, exception);
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.ReceiveDeferredStop(activity, sequenceNumberList, receiveTask?.Status, messages);
+                _diagnosticSource.ReceiveDeferredStop(activity, sequenceNumberList, receiveTask?.Status, messages);
             }
             MessagingEventSource.Log.MessageReceiveDeferredMessageStop(ClientId, messages?.Count ?? 0);
 
@@ -517,7 +517,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageCompleteStart(ClientId, lockTokenList.Count, lockTokenList);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.CompleteStart(lockTokenList) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.CompleteStart(lockTokenList) : null;
             Task completeTask = null;
 
             try
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageCompleteException(ClientId, exception);
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.CompleteStop(activity, lockTokenList, completeTask?.Status);
+                _diagnosticSource.CompleteStop(activity, lockTokenList, completeTask?.Status);
             }
 
             MessagingEventSource.Log.MessageCompleteStop(ClientId);
@@ -562,7 +562,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageAbandonStart(ClientId, 1, lockToken);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.DisposeStart("Abandon", lockToken) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("Abandon", lockToken) : null;
             Task abandonTask = null;
 
             try
@@ -575,7 +575,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageAbandonException(ClientId, exception);
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.DisposeStop(activity, lockToken, abandonTask?.Status);
+                _diagnosticSource.DisposeStop(activity, lockToken, abandonTask?.Status);
             }
 
 
@@ -608,7 +608,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageDeferStart(ClientId, 1, lockToken);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.DisposeStart("Defer", lockToken) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("Defer", lockToken) : null;
             Task deferTask = null;
 
             try
@@ -621,7 +621,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageDeferException(ClientId, exception);
@@ -629,7 +629,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.DisposeStop(activity, lockToken, deferTask?.Status);
+                _diagnosticSource.DisposeStop(activity, lockToken, deferTask?.Status);
             }
             MessagingEventSource.Log.MessageDeferStop(ClientId);
         }
@@ -653,7 +653,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageDeadLetterStart(ClientId, 1, lockToken);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.DisposeStart("DeadLetter", lockToken) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("DeadLetter", lockToken) : null;
             Task deadLetterTask = null;
 
             try
@@ -666,7 +666,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageDeadLetterException(ClientId, exception);
@@ -674,7 +674,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
+                _diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
             }
             MessagingEventSource.Log.MessageDeadLetterStop(ClientId);
         }
@@ -699,7 +699,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageDeadLetterStart(ClientId, 1, lockToken);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.DisposeStart("DeadLetter", lockToken) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.DisposeStart("DeadLetter", lockToken) : null;
             Task deadLetterTask = null;
 
             try
@@ -714,7 +714,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageDeadLetterException(ClientId, exception);
@@ -722,7 +722,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
+                _diagnosticSource.DisposeStop(activity, lockToken, deadLetterTask?.Status);
             }
 
             MessagingEventSource.Log.MessageDeadLetterStop(ClientId);
@@ -760,7 +760,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessageRenewLockStart(ClientId, 1, lockToken);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.RenewLockStart(lockToken) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.RenewLockStart(lockToken) : null;
             Task renewTask = null;
 
             var lockedUntilUtc = DateTime.MinValue;
@@ -776,7 +776,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessageRenewLockException(ClientId, exception);
@@ -784,7 +784,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.RenewLockStop(activity, lockToken, renewTask?.Status, lockedUntilUtc);
+                _diagnosticSource.RenewLockStop(activity, lockToken, renewTask?.Status, lockedUntilUtc);
             }
             MessagingEventSource.Log.MessageRenewLockStop(ClientId);
 
@@ -803,7 +803,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>The <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
         public Task<Message> PeekAsync()
         {
-            return PeekBySequenceNumberAsync(lastPeekedSequenceNumber + 1);
+            return PeekBySequenceNumberAsync(_lastPeekedSequenceNumber + 1);
         }
 
         /// <summary>
@@ -818,7 +818,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <returns>List of <see cref="Message" /> that represents the next message to be read. Returns null when nothing to peek.</returns>
         public Task<IList<Message>> PeekAsync(int maxMessageCount)
         {
-            return PeekBySequenceNumberAsync(lastPeekedSequenceNumber + 1, maxMessageCount);
+            return PeekBySequenceNumberAsync(_lastPeekedSequenceNumber + 1, maxMessageCount);
         }
 
         /// <summary>
@@ -843,7 +843,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.MessagePeekStart(ClientId, fromSequenceNumber, messageCount);
             bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            Activity activity = isDiagnosticSourceEnabled ? diagnosticSource.PeekStart(fromSequenceNumber, messageCount) : null;
+            Activity activity = isDiagnosticSourceEnabled ? _diagnosticSource.PeekStart(fromSequenceNumber, messageCount) : null;
             Task peekTask = null;
 
             try
@@ -860,7 +860,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             {
                 if (isDiagnosticSourceEnabled)
                 {
-                    diagnosticSource.ReportException(exception);
+                    _diagnosticSource.ReportException(exception);
                 }
 
                 MessagingEventSource.Log.MessagePeekException(ClientId, exception);
@@ -868,7 +868,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
             finally
             {
-                diagnosticSource.PeekStop(activity, fromSequenceNumber, messageCount, peekTask?.Status, messages);
+                _diagnosticSource.PeekStop(activity, fromSequenceNumber, messageCount, peekTask?.Status, messages);
             }
 
             MessagingEventSource.Log.MessagePeekStop(ClientId, messages?.Count ?? 0);
@@ -966,7 +966,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         internal async Task<AmqpResponseMessage> ExecuteRequestResponseAsync(AmqpRequestMessage amqpRequestMessage)
         {
             var amqpMessage = amqpRequestMessage.AmqpMessage;
-            if (isSessionReceiver)
+            if (_isSessionReceiver)
             {
                 ThrowIfSessionLockLost();
             }
@@ -982,7 +982,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             if (!RequestResponseLinkManager.TryGetOpenedObject(out var requestResponseAmqpLink))
             {
-                MessagingEventSource.Log.CreatingNewLink(ClientId, isSessionReceiver, SessionIdInternal, true, LinkException);
+                MessagingEventSource.Log.CreatingNewLink(ClientId, _isSessionReceiver, SessionIdInternal, true, LinkException);
                 requestResponseAmqpLink = await RequestResponseLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
             }
 
@@ -996,26 +996,26 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         protected override async Task OnClosingAsync()
         {
-            clientLinkManager.Close();
-            lock (messageReceivePumpSyncLock)
+            _clientLinkManager.Close();
+            lock (_messageReceivePumpSyncLock)
             {
-                if (receivePump != null)
+                if (_receivePump != null)
                 {
-                    receivePumpCancellationTokenSource.Cancel();
-                    receivePumpCancellationTokenSource.Dispose();
-                    receivePump = null;
+                    _receivePumpCancellationTokenSource.Cancel();
+                    _receivePumpCancellationTokenSource.Dispose();
+                    _receivePump = null;
                 }
             }
             await ReceiveLinkManager.CloseAsync().ConfigureAwait(false);
             await RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
-            requestResponseLockedMessages.Close();
+            _requestResponseLockedMessages.Close();
         }
 
         protected virtual async Task<IList<Message>> OnReceiveAsync(int maxMessageCount, TimeSpan serverWaitTime)
         {
             ReceivingAmqpLink receiveLink = null;
 
-            if (isSessionReceiver)
+            if (_isSessionReceiver)
             {
                 ThrowIfSessionLockLost();
             }
@@ -1025,7 +1025,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 var timeoutHelper = new TimeoutHelper(serverWaitTime, true);
                 if(!ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
                 {
-                    MessagingEventSource.Log.CreatingNewLink(ClientId, isSessionReceiver, SessionIdInternal, false, LinkException);
+                    MessagingEventSource.Log.CreatingNewLink(ClientId, _isSessionReceiver, SessionIdInternal, false, LinkException);
                     receiveLink = await ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 }
 
@@ -1160,7 +1160,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.SystemProperties.LockTokenGuid = lockToken;
-                            requestResponseLockedMessages.AddOrUpdate(lockToken, message.SystemProperties.LockedUntilUtc);
+                            _requestResponseLockedMessages.AddOrUpdate(lockToken, message.SystemProperties.LockedUntilUtc);
                         }
 
                         messages.Add(message);
@@ -1182,7 +1182,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         protected virtual Task OnCompleteAsync(IEnumerable<string> lockTokens)
         {
             var lockTokenGuids = lockTokens.Select(lt => new Guid(lt)).ToArray();
-            if (lockTokenGuids.Any(lt => requestResponseLockedMessages.Contains(lt)))
+            if (lockTokenGuids.Any(lt => _requestResponseLockedMessages.Contains(lt)))
             {
                 return DisposeMessageRequestResponseAsync(lockTokenGuids, DispositionStatus.Completed);
             }
@@ -1192,7 +1192,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         protected virtual Task OnAbandonAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
         {
             var lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => requestResponseLockedMessages.Contains(lt)))
+            if (lockTokens.Any(lt => _requestResponseLockedMessages.Contains(lt)))
             {
                 return DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Abandoned, propertiesToModify);
             }
@@ -1202,7 +1202,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         protected virtual Task OnDeferAsync(string lockToken, IDictionary<string, object> propertiesToModify = null)
         {
             var lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => requestResponseLockedMessages.Contains(lt)))
+            if (lockTokens.Any(lt => _requestResponseLockedMessages.Contains(lt)))
             {
                 return DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Defered, propertiesToModify);
             }
@@ -1222,7 +1222,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             var lockTokens = new[] { new Guid(lockToken) };
-            if (lockTokens.Any(lt => requestResponseLockedMessages.Contains(lt)))
+            if (lockTokens.Any(lt => _requestResponseLockedMessages.Contains(lt)))
             {
                 return DisposeMessageRequestResponseAsync(lockTokens, DispositionStatus.Suspended, propertiesToModify, deadLetterReason, deadLetterErrorDescription);
             }
@@ -1271,31 +1271,31 @@ namespace Microsoft.Azure.ServiceBus.Core
         {
             MessagingEventSource.Log.RegisterOnMessageHandlerStart(ClientId, registerHandlerOptions);
 
-            lock (messageReceivePumpSyncLock)
+            lock (_messageReceivePumpSyncLock)
             {
-                if (receivePump != null)
+                if (_receivePump != null)
                 {
                     throw new InvalidOperationException(Resources.MessageHandlerAlreadyRegistered);
                 }
 
-                receivePumpCancellationTokenSource = new CancellationTokenSource();
-                receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, ServiceBusConnection.Endpoint, receivePumpCancellationTokenSource.Token);
+                _receivePumpCancellationTokenSource = new CancellationTokenSource();
+                _receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, ServiceBusConnection.Endpoint, _receivePumpCancellationTokenSource.Token);
             }
 
             try
             {
-                receivePump.StartPump();
+                _receivePump.StartPump();
             }
             catch (Exception exception)
             {
                 MessagingEventSource.Log.RegisterOnMessageHandlerException(ClientId, exception);
-                lock (messageReceivePumpSyncLock)
+                lock (_messageReceivePumpSyncLock)
                 {
-                    if (receivePump != null)
+                    if (_receivePump != null)
                     {
-                        receivePumpCancellationTokenSource.Cancel();
-                        receivePumpCancellationTokenSource.Dispose();
-                        receivePump = null;
+                        _receivePumpCancellationTokenSource.Cancel();
+                        _receivePumpCancellationTokenSource.Dispose();
+                        _receivePump = null;
                     }
                 }
 
@@ -1357,7 +1357,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         private async Task DisposeMessagesAsync(IEnumerable<Guid> lockTokens, Outcome outcome)
         {
-            if(isSessionReceiver)
+            if(_isSessionReceiver)
             {
                 ThrowIfSessionLockLost();
             }
@@ -1377,7 +1377,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
                 if (!ReceiveLinkManager.TryGetOpenedObject(out receiveLink))
                 {
-                    MessagingEventSource.Log.CreatingNewLink(ClientId, isSessionReceiver, SessionIdInternal, false, LinkException);
+                    MessagingEventSource.Log.CreatingNewLink(ClientId, _isSessionReceiver, SessionIdInternal, false, LinkException);
                     receiveLink = await ReceiveLinkManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
                 }
 
@@ -1400,7 +1400,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         if (error.Condition.Equals(AmqpErrorCode.NotFound))
                         {
-                            if (isSessionReceiver)
+                            if (_isSessionReceiver)
                             {
                                 throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
                             }
@@ -1418,8 +1418,8 @@ namespace Microsoft.Azure.ServiceBus.Core
                     receiveLink != null && receiveLink.State != AmqpObjectState.Opened)
                 {
                     // The link state is lost, We need to return a non-retriable error.
-                    MessagingEventSource.Log.LinkStateLost(ClientId, receiveLink.Name, receiveLink.State, isSessionReceiver, exception);
-                    if (isSessionReceiver)
+                    MessagingEventSource.Log.LinkStateLost(ClientId, receiveLink.Name, receiveLink.State, _isSessionReceiver, exception);
+                    if (_isSessionReceiver)
                     {
                         throw new SessionLockLostException(Resources.SessionLockExpiredOnMessageSession);
                     }
@@ -1500,7 +1500,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
             MessagingEventSource.Log.AmqpReceiveLinkCreateStart(ClientId, false, EntityType, Path);
 
-            if (isSessionReceiver)
+            if (_isSessionReceiver)
             {
                 filterMap = new FilterSet { { AmqpClientConstants.SessionFilterName, SessionIdInternal } };
             }
@@ -1543,7 +1543,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 claims,
                 linkDetails.Item2);
 
-            clientLinkManager.SetActiveSendReceiveLink(activeSendReceiveClientLink);
+            _clientLinkManager.SetActiveSendReceiveLink(activeSendReceiveClientLink);
 
             MessagingEventSource.Log.AmqpReceiveLinkCreateStop(ClientId);
 
@@ -1580,7 +1580,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 new[] { endpointUri.AbsoluteUri },
                 claims,
                 linkDetails.Item2);
-            clientLinkManager.SetActiveRequestResponseLink(activeRequestResponseClientLink);
+            _clientLinkManager.SetActiveRequestResponseLink(activeRequestResponseClientLink);
 
             MessagingEventSource.Log.AmqpReceiveLinkCreateStop(ClientId);
             return requestResponseAmqpLink;

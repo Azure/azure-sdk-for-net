@@ -9,19 +9,19 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     [DebuggerStepThrough]
     internal struct TimeoutHelper
     {
-	    private DateTime deadline;
-	    private bool deadlineSet;
-	    private TimeSpan originalTimeout;
+	    private DateTime _deadline;
+	    private bool _deadlineSet;
+	    private TimeSpan _originalTimeout;
 
         public TimeoutHelper(TimeSpan timeout, bool startTimeout)
         {
             Debug.Assert(timeout >= TimeSpan.Zero, "timeout must be non-negative");
 
-            originalTimeout = timeout;
-            deadline = DateTime.MaxValue;
-            deadlineSet = (timeout == TimeSpan.MaxValue);
+            _originalTimeout = timeout;
+            _deadline = DateTime.MaxValue;
+            _deadlineSet = (timeout == TimeSpan.MaxValue);
 
-            if (startTimeout && !deadlineSet)
+            if (startTimeout && !_deadlineSet)
             {
                 SetDeadline();
             }
@@ -103,18 +103,18 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public TimeSpan RemainingTime()
         {
-            if (!deadlineSet)
+            if (!_deadlineSet)
             {
                 SetDeadline();
-                return originalTimeout;
+                return _originalTimeout;
             }
 
-            if (deadline == DateTime.MaxValue)
+            if (_deadline == DateTime.MaxValue)
             {
                 return TimeSpan.MaxValue;
             }
 
-            var remaining = deadline - DateTime.UtcNow;
+            var remaining = _deadline - DateTime.UtcNow;
             if (remaining <= TimeSpan.Zero)
             {
                 return TimeSpan.Zero;
@@ -125,14 +125,14 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public TimeSpan ElapsedTime()
         {
-            return originalTimeout - RemainingTime();
+            return _originalTimeout - RemainingTime();
         }
 
         private void SetDeadline()
         {
-            Debug.Assert(!deadlineSet, "TimeoutHelper deadline set twice.");
-            deadline = DateTime.UtcNow + originalTimeout;
-            deadlineSet = true;
+            Debug.Assert(!_deadlineSet, "TimeoutHelper deadline set twice.");
+            _deadline = DateTime.UtcNow + _originalTimeout;
+            _deadlineSet = true;
         }
     }
 }
