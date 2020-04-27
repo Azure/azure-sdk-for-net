@@ -198,6 +198,11 @@ namespace Azure.Core.Testing
                 var requestHeaderValues = header.Value;
                 var headerName = header.Key;
 
+                if (ignoredHeaders.Contains(headerName))
+                {
+                    continue;
+                }
+
                 if (remaining.TryGetValue(headerName, out string[] entryHeaderValues))
                 {
                     // Content-Type, Accept headers are normalized by HttpClient, re-normalize them before comparing
@@ -208,14 +213,13 @@ namespace Azure.Core.Testing
                     }
 
                     remaining.Remove(headerName);
-                    if (!ignoredHeaders.Contains(headerName) &&
-                        !entryHeaderValues.SequenceEqual(requestHeaderValues))
+                    if (!entryHeaderValues.SequenceEqual(requestHeaderValues))
                     {
                         difference++;
                         descriptionBuilder?.AppendLine($"    <{headerName}> values differ, request <{JoinHeaderValues(requestHeaderValues)}>, record <{JoinHeaderValues(entryHeaderValues)}>");
                     }
                 }
-                else if (!ignoredHeaders.Contains(headerName))
+                else
                 {
                     difference++;
                     descriptionBuilder?.AppendLine($"    <{headerName}> is absent in record, value <{JoinHeaderValues(requestHeaderValues)}>");
