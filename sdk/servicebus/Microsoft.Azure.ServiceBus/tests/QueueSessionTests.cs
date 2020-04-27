@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public sealed class QueueSessionTests
     {
-        public static IEnumerable<object[]> TestPermutations => new object[][]
+        public static IEnumerable<object[]> TestPermutations => new[]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue }
             new object[] { false, true },

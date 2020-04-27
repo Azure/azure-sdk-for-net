@@ -16,14 +16,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         static readonly string ConnectionString = TestUtility.NamespaceConnectionString;
         static readonly TimeSpan ReceiveTimeout = TimeSpan.FromSeconds(5);
 
-        public static IEnumerable<object[]> TestPermutations => new object[][]
+        public static IEnumerable<object[]> TestPermutations => new[]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue }
             new object[] { false, false },
             new object[] { true, false }
         };
 
-        public static IEnumerable<object[]> SessionTestPermutations => new object[][]
+        public static IEnumerable<object[]> SessionTestPermutations => new[]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue }
             new object[] { false, true },

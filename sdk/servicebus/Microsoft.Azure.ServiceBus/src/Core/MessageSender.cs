@@ -701,12 +701,12 @@ namespace Microsoft.Azure.ServiceBus.Core
             if (isViaSender)
             {
                 var transferDestinationEndpointUri = new Uri(ServiceBusConnection.Endpoint, TransferDestinationPath);
-                audience = new string[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
+                audience = new[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
                 amqpLinkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, TransferDestinationPath);
             }
             else
             {
-                audience = new string[] { endpointUri.AbsoluteUri };
+                audience = new[] { endpointUri.AbsoluteUri };
             }
 
             string[] claims = {ClaimConstants.Send};
@@ -739,12 +739,12 @@ namespace Microsoft.Azure.ServiceBus.Core
             if (isViaSender)
             {
                 var transferDestinationEndpointUri = new Uri(ServiceBusConnection.Endpoint, TransferDestinationPath);
-                audience = new string[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
+                audience = new[] { endpointUri.AbsoluteUri, transferDestinationEndpointUri.AbsoluteUri };
                 amqpLinkSettings.AddProperty(AmqpClientConstants.TransferDestinationAddress, TransferDestinationPath);
             }
             else
             {
-                audience = new string[] { endpointUri.AbsoluteUri };
+                audience = new[] { endpointUri.AbsoluteUri };
             }
 
             string[] claims = { ClaimConstants.Manage, ClaimConstants.Send };

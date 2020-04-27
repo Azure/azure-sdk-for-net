@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class OnMessageQueueTests : SenderReceiverClientTestBase
     {
-        public static IEnumerable<object[]> TestPermutations => new object[][]
+        public static IEnumerable<object[]> TestPermutations => new[]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue, maxCurrentCalls }
             new object[] { false, false, 1 },

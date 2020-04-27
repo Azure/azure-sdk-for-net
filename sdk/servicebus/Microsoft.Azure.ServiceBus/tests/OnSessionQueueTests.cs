@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class OnSessionQueueTests
     {
-        public static IEnumerable<object[]> TestPermutations => new object[][]
+        public static IEnumerable<object[]> TestPermutations => new[]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue, maxCurrentCalls }
             new object[] { false, true, 1 },
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { true, true, 5 },
         };
 
-        public static IEnumerable<object[]> PartitionedNonPartitionedTestPermutations => new object[][]
+        public static IEnumerable<object[]> PartitionedNonPartitionedTestPermutations => new[]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue, maxCurrentCalls }
             new object[] { false, true, 5 },

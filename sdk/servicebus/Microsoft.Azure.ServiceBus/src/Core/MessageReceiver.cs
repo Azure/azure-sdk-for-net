@@ -1527,7 +1527,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 Path,
                 ServiceBusConnection,
                 endpointUri,
-                new string[] { endpointUri.AbsoluteUri },
+                new[] { endpointUri.AbsoluteUri },
                 claims,
                 CbsTokenProvider,
                 amqpLinkSettings,
@@ -1539,7 +1539,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             var activeSendReceiveClientLink = new ActiveSendReceiveClientLink(
                 receivingAmqpLink,
                 endpointUri,
-                new string[] { endpointUri.AbsoluteUri },
+                new[] { endpointUri.AbsoluteUri },
                 claims,
                 linkDetails.Item2);
 
@@ -1565,7 +1565,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 entityPath,
                 ServiceBusConnection,
                 endpointUri,
-                new string[] { endpointUri.AbsoluteUri },
+                new[] { endpointUri.AbsoluteUri },
                 claims,
                 CbsTokenProvider,
                 amqpLinkSettings,
@@ -1577,7 +1577,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             var activeRequestResponseClientLink = new ActiveRequestResponseLink(
                 requestResponseAmqpLink,
                 endpointUri,
-                new string[] { endpointUri.AbsoluteUri },
+                new[] { endpointUri.AbsoluteUri },
                 claims,
                 linkDetails.Item2);
             clientLinkManager.SetActiveRequestResponseLink(activeRequestResponseClientLink);

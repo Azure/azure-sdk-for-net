@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class OnSessionTopicSubscriptionTests
     {
-        public static IEnumerable<object[]> TestPermutations => new object[][]
+        public static IEnumerable<object[]> TestPermutations => new[]
         {
             // Expected structure: { usePartitionedTopic, useSessionTopic, maxCurrentCalls }
             new object[] { false, true, 1 },

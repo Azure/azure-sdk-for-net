@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         private static TimeSpan TwoSeconds = TimeSpan.FromSeconds(2);
 
-        public static IEnumerable<object[]> TestPermutations => new object[][]
+        public static IEnumerable<object[]> TestPermutations => new[]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue }
             new object[] { false, false },
