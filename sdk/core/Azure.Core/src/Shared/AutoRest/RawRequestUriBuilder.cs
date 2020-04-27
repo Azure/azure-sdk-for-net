@@ -13,9 +13,22 @@ namespace Azure.Core
         private const string SchemeSeparator = "://";
         private const char HostSeparator = '/';
         private const char PortSeparator = ':';
-        private static readonly char[] HostOrPort = new[] {HostSeparator, PortSeparator};
+        private static readonly char[] HostOrPort = { HostSeparator, PortSeparator };
+        private const char QueryBeginSeparator = '?';
+        private const char QueryContinueSeparator = '&';
+        private const char QueryValueSeparator = '=';
 
         private RawWritingPosition _position = RawWritingPosition.Scheme;
+
+        private static (string Name, string Value) GetQueryParts(string queryUnparsed)
+        {
+            int separatorIndex = queryUnparsed.IndexOf(QueryValueSeparator);
+            if (separatorIndex == -1)
+            {
+                return (queryUnparsed, string.Empty);
+            }
+            return (queryUnparsed.Substring(0, separatorIndex), queryUnparsed.Substring(separatorIndex + 1));
+        }
 
         public void AppendRaw(string value, bool escape)
         {
@@ -32,10 +45,8 @@ namespace Azure.Core
                     else
                     {
                         Scheme += value.Substring(0, separator);
-
                         // TODO: Find a better way to map schemes to default ports
                         Port = string.Equals(Scheme, "https", StringComparison.OrdinalIgnoreCase) ? 443 : 80;
-
                         value = value.Substring(separator + SchemeSeparator.Length);
                         _position = RawWritingPosition.Host;
                     }
@@ -45,15 +56,22 @@ namespace Azure.Core
                     int separator = value.IndexOfAny(HostOrPort);
                     if (separator == -1)
                     {
-                        Host += value;
-                        value = string.Empty;
+                        if (string.IsNullOrEmpty(Path))
+                        {
+                            Host += value;
+                            value = string.Empty;
+                        }
+                        else
+                        {
+                            // All Host information must be written before Path information
+                            // If Path already has information, we transition to writing Path
+                            _position = RawWritingPosition.Path;
+                        }
                     }
                     else
                     {
                         Host += value.Substring(0, separator);
-
-                        _position = value[separator] == HostSeparator ? RawWritingPosition.Rest : RawWritingPosition.Port;
-
+                        _position = value[separator] == HostSeparator ? RawWritingPosition.Path : RawWritingPosition.Port;
                         value = value.Substring(separator + 1);
                     }
                 }
@@ -69,13 +87,44 @@ namespace Azure.Core
                     {
                         Port = int.Parse(value.Substring(0, separator), CultureInfo.InvariantCulture);
                         value = value.Substring(separator + 1);
-                        _position = RawWritingPosition.Rest;
+                    }
+                    // Port cannot be split (like Host), so always transition to Path when Port is parsed
+                    _position = RawWritingPosition.Path;
+                }
+                else if (_position == RawWritingPosition.Path)
+                {
+                    int separator = value.IndexOf(QueryBeginSeparator);
+                    if (separator == -1)
+                    {
+                        AppendPath(value, escape);
+                        value = string.Empty;
+                    }
+                    else
+                    {
+                        AppendPath(value.Substring(0, separator), escape);
+                        value = value.Substring(separator + 1);
+                        _position = RawWritingPosition.Query;
                     }
                 }
-                else
+                else if (_position == RawWritingPosition.Query)
                 {
-                    AppendPath(value, escape);
-                    value = string.Empty;
+                    int separator = value.IndexOf(QueryContinueSeparator);
+                    if (separator == 0)
+                    {
+                        value = value.Substring(1);
+                    }
+                    else if (separator == -1)
+                    {
+                        (string queryName, string queryValue) = GetQueryParts(value);
+                        AppendQuery(queryName, queryValue, escape);
+                        value = string.Empty;
+                    }
+                    else
+                    {
+                        (string queryName, string queryValue) = GetQueryParts(value.Substring(0, separator));
+                        AppendQuery(queryName, queryValue, escape);
+                        value = value.Substring(separator + 1);
+                    }
                 }
             }
         }
@@ -85,7 +134,20 @@ namespace Azure.Core
             Scheme,
             Host,
             Port,
-            Rest
+            Path,
+            Query
+        }
+
+        public void AppendRawNextLink(string nextLink, bool escape)
+        {
+            // If it is an absolute link, we use the nextLink as the entire url
+            if (nextLink.StartsWith(Uri.UriSchemeHttp, StringComparison.InvariantCultureIgnoreCase))
+            {
+                Reset(new Uri(nextLink));
+                return;
+            }
+
+            AppendPath(nextLink, escape);
         }
     }
 }
