@@ -16,7 +16,6 @@ namespace Azure.AI.TextAnalytics.Tests
         public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
-            Matcher = new RecordMatcher(Sanitizer);
         }
 
         public TextAnalyticsClient GetClient(AzureKeyCredential credential = default, TextAnalyticsClientOptions options = default)

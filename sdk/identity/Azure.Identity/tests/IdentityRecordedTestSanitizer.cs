@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -33,6 +34,10 @@ namespace Azure.Identity.Tests
 
         private void SanitizeTokenResponse(RecordEntry entry)
         {
+            if (entry.Response.Body == null)
+            {
+                return;
+            }
             var originalJson = JsonDocument.Parse(entry.Response.Body).RootElement;
 
             var writer = new ArrayBufferWriter<byte>(entry.Response.Body.Length);
