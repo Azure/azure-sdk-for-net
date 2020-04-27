@@ -138,7 +138,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
         /// <param name="sessionEnabled">If <c>true</c>, a session will be required on the subscription.</param>
         /// <param name="scopedOperationAsync">The asynchronous operation to be performed; the name of the topic and subscription will be passed to the operation.</param>
         /// <param name="configureTopic">If provided, an action that can override the default properties used for topic creation.</param>
-        /// <param name="configureTSubscription">If provided, an action that can override the default properties used for topic creation.</param>
+        /// <param name="configureSubscription">If provided, an action that can override the default properties used for topic creation.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
         /// 
         /// <returns>The task representing the operation being performed</returns>
