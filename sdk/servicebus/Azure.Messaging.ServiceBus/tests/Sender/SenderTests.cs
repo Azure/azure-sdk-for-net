@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendBatchAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync((ServiceBusMessageBatch)null));
         }
 
         [Test]
@@ -84,6 +84,84 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             Assert.AreEqual(queueName, sender.EntityPath);
             Assert.AreEqual(fullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             Assert.IsNotNull(sender.Identifier);
+        }
+
+        [Test]
+        public void CreateSenderUsingSendVia()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
+            var client = new ServiceBusClient(connString);
+            var sender = client.CreateSender(queueName,
+                new ServiceBusSenderOptions
+                {
+                    ViaQueueOrTopicName = "sendViaName"
+                });
+        }
+
+        [Test]
+        public void CreateSenderUsingSendViaThrowsWhenEntityPath()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;EntityPath=something;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
+            var client = new ServiceBusClient(connString);
+            Assert.That(() => client.CreateSender(queueName,
+                new ServiceBusSenderOptions
+                {
+                    ViaQueueOrTopicName = "sendViaName"
+                }),
+                Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => client.CreateSender(queueName,
+               new ServiceBusSenderOptions
+               {
+                   ViaQueueOrTopicName = queueName
+               }),
+               Throws.InstanceOf<ArgumentException>());
+        }
+
+        [Test]
+        public void CreateSenderUsingSendViaDoesNotThrowWhenSameEntityPath()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;EntityPath=something;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
+            client.CreateSender("something",
+                new ServiceBusSenderOptions
+                {
+                    ViaQueueOrTopicName = "something"
+                });
+        }
+
+        [Test]
+        public void CreateSenderUsingNullOptionsDoesNotThrow()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
+            var client = new ServiceBusClient(connString);
+            var sender = client.CreateSender(queueName,
+                null);
+        }
+
+        [Test]
+        public void CreateSenderUsingNullSendViaDoesNotThrow()
+        {
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
+            var client = new ServiceBusClient(connString);
+            var sender = client.CreateSender(queueName,
+                new ServiceBusSenderOptions
+                {
+                    ViaQueueOrTopicName = null
+                });
         }
 
         /// <summary>
@@ -125,7 +203,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
             var sender = new ServiceBusSender("dummy", null, mockConnection.Object);
-            var sendTask = sender.SendBatchAsync(batch);
+            var sendTask = sender.SendAsync(batch);
 
             Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
             completionSource.TrySetResult(true);

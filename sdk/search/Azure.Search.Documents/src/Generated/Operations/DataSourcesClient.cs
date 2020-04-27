@@ -14,6 +14,7 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
+    /// <summary> The DataSources service client. </summary>
     internal partial class DataSourcesClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;

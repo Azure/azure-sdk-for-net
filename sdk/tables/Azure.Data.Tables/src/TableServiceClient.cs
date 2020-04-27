@@ -35,7 +35,7 @@ namespace Azure.Data.Tables
         protected TableServiceClient()
         { }
 
-        public TableClient GetTableClient(string tableName)
+        public virtual TableClient GetTableClient(string tableName)
         {
             return new TableClient(tableName, _tableOperations);
         }
@@ -50,8 +50,6 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual AsyncPageable<TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            //TODO: support continuation tokens
-
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
                 var response = await _tableOperations.RestClient.QueryAsync(
@@ -59,7 +57,14 @@ namespace Azure.Data.Tables
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, (_, __) => throw new NotImplementedException());
+            }, async (nextLink, _) =>
+            {
+                var response = await _tableOperations.RestClient.QueryAsync(
+                       null,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format, NextTableName = nextLink },
+                       cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+            });
         }
 
         /// <summary>
@@ -72,8 +77,6 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual Pageable<TableResponseProperties> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            //TODO: support continuation tokens
-
             return PageableHelpers.CreateEnumerable(_ =>
             {
                 var response = _tableOperations.RestClient.Query(
@@ -81,7 +84,14 @@ namespace Azure.Data.Tables
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, (_, __) => throw new NotImplementedException());
+            }, (nextLink, _) =>
+            {
+                var response = _tableOperations.RestClient.Query(
+                       null,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format, NextTableName = nextLink },
+                       cancellationToken);
+                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+            });
         }
 
         /// <summary>

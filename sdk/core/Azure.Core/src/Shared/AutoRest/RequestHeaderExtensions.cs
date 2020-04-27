@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace Azure.Core
@@ -48,6 +49,11 @@ namespace Azure.Core
         public static void Add(this RequestHeaders headers, string name, byte[] value)
         {
             headers.Add(name, Convert.ToBase64String(value));
+        }
+
+        public static void AddDelimited<T>(this RequestHeaders headers, string name, IEnumerable<T> value, string delimiter)
+        {
+            headers.Add(name, string.Join(delimiter, value));
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
             var testKeyRepository = new TestKeyRepository();
 
-            serviceCollection.AddDataProtection().ProtectKeysWithAzureKeyVault(key.Value.Id.ToString(), credential);
+            serviceCollection.AddDataProtection().ProtectKeysWithAzureKeyVault(key.Value.Id, credential);
 
             serviceCollection.Configure<KeyManagementOptions>(options =>
             {

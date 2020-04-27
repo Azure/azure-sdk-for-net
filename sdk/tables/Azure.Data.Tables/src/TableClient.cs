@@ -42,7 +42,10 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
         public virtual async Task<Response<IReadOnlyDictionary<string, object>>> InsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
-            await InsertInternalAsync(true, entity, cancellationToken).ConfigureAwait(false);
+            await _tableOperations.InsertEntityAsync(_table,
+                                                     tableEntityProperties: entity,
+                                                     queryOptions: new QueryOptions() { Format = _format },
+                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Inserts a Table Entity into the Table.
@@ -51,7 +54,10 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
         public virtual Response<IReadOnlyDictionary<string, object>> Insert(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
-            InsertInternalAsync(false, entity, cancellationToken).EnsureCompleted();
+            _tableOperations.InsertEntity(_table,
+                                          tableEntityProperties: entity,
+                                          queryOptions: new QueryOptions() { Format = _format },
+                                          cancellationToken: cancellationToken);
 
         /// <summary>
         /// Updates the specified table entity.
@@ -62,7 +68,12 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual async Task<Response> UpdateAsync(string partitionKey, string rowKey, IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
-            await UpdateInternalAsync(true, partitionKey, rowKey, entity, cancellationToken).ConfigureAwait(false);
+            await _tableOperations.UpdateEntityAsync(_table,
+                                                     partitionKey,
+                                                     rowKey,
+                                                     tableEntityProperties: entity,
+                                                     queryOptions: new QueryOptions() { Format = _format },
+                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Updates the specified table entity.
@@ -73,7 +84,12 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response Update(string partitionKey, string rowKey, IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
-            UpdateInternalAsync(false, partitionKey, rowKey, entity, cancellationToken).EnsureCompleted();
+            _tableOperations.UpdateEntity(_table,
+                                          partitionKey,
+                                          rowKey,
+                                          tableEntityProperties: entity,
+                                          queryOptions: new QueryOptions() { Format = _format },
+                                          cancellationToken: cancellationToken);
 
         /// <summary>
         /// Queries entities in the table.
@@ -85,16 +101,29 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            //TODO: support continuation tokens
-
-            return PageableHelpers.CreateAsyncEnumerable(async tableName =>
+            return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
-                var response = await _tableOperations.RestClient.QueryEntitiesAsync(_table,
+                var response = await _tableOperations.RestClient.QueryEntitiesAsync(
+                    _table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextPartitionKey, response.GetRawResponse());
-            }, (_, __) => throw new NotImplementedException());
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return Page.FromValues(response.Value.Value,
+                                       CreateContinuationTokenFromHeaders(response.Headers),
+                                       response.GetRawResponse());
+            }, async (continuationToken, _) =>
+            {
+                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+
+                var response = await _tableOperations.RestClient.QueryEntitiesAsync(
+                    _table,
+                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select, NextPartitionKey = NextPartitionKey, NextRowKey = NextRowKey },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                return Page.FromValues(response.Value.Value,
+                                       CreateContinuationTokenFromHeaders(response.Headers),
+                                       response.GetRawResponse());
+            });
         }
 
         /// <summary>
@@ -106,60 +135,52 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Pageable<IDictionary<string, object>> Query(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            //TODO: support continuation tokens
-
-            return PageableHelpers.CreateEnumerable(tableName =>
+            return PageableHelpers.CreateEnumerable(_ =>
             {
                 var response = _tableOperations.RestClient.QueryEntities(_table,
                     queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select },
                     cancellationToken: cancellationToken);
-                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextPartitionKey, response.GetRawResponse());
-            }, (_, __) => throw new NotImplementedException());
-        }
-
-        internal async Task<Response<IReadOnlyDictionary<string, object>>> InsertInternalAsync(bool async, IDictionary<string, object> entity, CancellationToken cancellationToken)
-        {
-            Response<IReadOnlyDictionary<string, object>> response;
-
-            if (async)
+                return Page.FromValues(
+                    response.Value.Value,
+                    CreateContinuationTokenFromHeaders(response.Headers),
+                    response.GetRawResponse());
+            }, (continuationToken, _) =>
             {
-                response = await _tableOperations.InsertEntityAsync(
+                var (NextPartitionKey, NextRowKey) = ParseContinuationToken(continuationToken);
+
+                var response = _tableOperations.RestClient.QueryEntities(
                     _table,
-                    tableEntityProperties: entity,
-                    queryOptions: new QueryOptions() { Format = _format },
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            {
-                response = _tableOperations.InsertEntity(
-                    _table,
-                    tableEntityProperties: entity,
-                    queryOptions: new QueryOptions() { Format = _format },
+                    queryOptions: new QueryOptions() { Format = _format, Top = top, Filter = filter, Select = @select, NextPartitionKey = NextPartitionKey, NextRowKey = NextRowKey },
                     cancellationToken: cancellationToken);
-            }
 
-            return response;
+                return Page.FromValues(response.Value.Value,
+                                       CreateContinuationTokenFromHeaders(response.Headers),
+                                       response.GetRawResponse());
+            });
         }
 
-        internal async Task<Response> UpdateInternalAsync(bool async, string partitionKey, string rowKey, IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        private static string CreateContinuationTokenFromHeaders(TableQueryEntitiesHeaders headers)
         {
-            if (async)
+            if (headers.XMsContinuationNextPartitionKey == null && headers.XMsContinuationNextRowKey == null)
             {
-                return await _tableOperations.UpdateEntityAsync(_table,
-                                                                partitionKey,
-                                                                rowKey,
-                                                                tableEntityProperties: entity,
-                                                                queryOptions: new QueryOptions() { Format = _format },
-                                                                cancellationToken: cancellationToken).ConfigureAwait(false);
+                return null;
             }
             else
             {
-                return _tableOperations.UpdateEntity(_table,
-                                                     partitionKey,
-                                                     rowKey,
-                                                     tableEntityProperties: entity,
-                                                     queryOptions: new QueryOptions() { Format = _format },
-                                                     cancellationToken: cancellationToken);
+                return $"{headers.XMsContinuationNextPartitionKey} {headers.XMsContinuationNextRowKey}";
             }
+        }
+
+        private static (string NextPartitionKey, string NextRowKey) ParseContinuationToken(string continuationToken)
+        {
+            // There were no headers passed and the continuation token contains just the space delimiter
+            if (continuationToken?.Length <= 1)
+            {
+                return (null, null);
+            }
+
+            var tokens = continuationToken.Split(' ');
+            return (tokens[0], tokens.Length > 1 ? tokens[1] : null);
         }
     }
 }
