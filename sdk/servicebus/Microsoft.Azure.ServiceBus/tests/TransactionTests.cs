@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Microsoft.Azure.ServiceBus.UnitTests.Infrastructure;
+using Xunit.Abstractions;
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
@@ -15,10 +16,16 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class TransactionTests
     {
+	    private readonly ITestOutputHelper _testOutputHelper;
 	    private static readonly string ConnectionString = TestUtility.NamespaceConnectionString;
 	    private static readonly TimeSpan ReceiveTimeout = TimeSpan.FromSeconds(5);
 
-        public static IEnumerable<object[]> TestPermutations => new[]
+	    public TransactionTests(ITestOutputHelper testOutputHelper)
+	    {
+		    _testOutputHelper = testOutputHelper;
+	    }
+
+	    public static IEnumerable<object[]> TestPermutations => new[]
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue }
             new object[] { false, false },
@@ -363,7 +370,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    _testOutputHelper.WriteLine(e.ToString());
                 }
                 finally
                 {

@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Microsoft.Azure.ServiceBus.UnitTests.Infrastructure;
+using Xunit.Abstractions;
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
@@ -15,7 +16,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class MessageTests
     {
-        [Fact]
+	    private readonly ITestOutputHelper _testOutputHelper;
+
+	    public MessageTests(ITestOutputHelper testOutputHelper)
+	    {
+		    _testOutputHelper = testOutputHelper;
+	    }
+
+	    [Fact]
         [DisplayTestMethodName]
         public void TestClone()
         {
@@ -192,7 +200,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    _testOutputHelper.WriteLine(e.ToString());
                     throw;
                 }
                 finally
