@@ -132,7 +132,7 @@ namespace Azure.Messaging.ServiceBus
         protected ServiceBusReceiver() { }
 
         /// <summary>
-        /// Receives a batch of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
+        /// Receives a batch of <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode. <see cref="ReceiveMode"/> defaults to PeekLock mode.
         /// </summary>
         ///
         /// <param name="maxMessages">The maximum number of messages that will be received.</param>
@@ -171,7 +171,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Receives a <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
+        /// Receives a <see cref="ServiceBusReceivedMessage" /> from the entity using <see cref="ReceiveMode"/> mode. <see cref="ReceiveMode"/> defaults to PeekLock mode
         /// </summary>
         /// <param name="maxWaitTime">An optional <see cref="TimeSpan"/> specifying the maximum time to wait for a message before returning a null if no messages are available.
         /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.</param>
@@ -369,8 +369,11 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public virtual async Task CompleteAsync(
             string lockToken,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default)
+        {
+            ThrowIfLockTokenIsEmpty(lockToken);
             await CompleteAsync(new[] { lockToken }, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Completes a series of <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
@@ -482,7 +485,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(lockToken, nameof(lockToken));
+            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -637,7 +640,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = default,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(lockToken, nameof(lockToken));
+            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             ThrowIfNotPeekLockMode();
@@ -711,7 +714,7 @@ namespace Azure.Messaging.ServiceBus
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(lockToken, nameof(lockToken));
+            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -742,6 +745,17 @@ namespace Azure.Messaging.ServiceBus
             if (ReceiveMode != ReceiveMode.PeekLock)
             {
                 throw new InvalidOperationException(Resources.OperationNotSupported);
+            }
+        }
+
+        /// <summary>
+        /// Throws an InvalidOperationException when the lock token is empty.
+        /// </summary>
+        private void ThrowIfLockTokenIsEmpty(string lockToken)
+        {
+            if (Guid.Parse(lockToken) == Guid.Empty)
+            {
+                throw new InvalidOperationException(Resources.SettlementOperationNotSupported);
             }
         }
 
@@ -848,7 +862,7 @@ namespace Azure.Messaging.ServiceBus
             string lockToken,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(lockToken, nameof(lockToken));
+            ThrowIfLockTokenIsEmpty(lockToken);
             Argument.AssertNotClosed(IsDisposed, nameof(ServiceBusReceiver));
             ThrowIfNotPeekLockMode();
             ThrowIfSessionReceiver();
