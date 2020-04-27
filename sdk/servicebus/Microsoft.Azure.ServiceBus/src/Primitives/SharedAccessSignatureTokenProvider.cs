@@ -29,7 +29,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         internal SharedAccessSignatureTokenProvider(string sharedAccessSignature)
         {
             SharedAccessSignatureToken.Validate(sharedAccessSignature);
-            this._sharedAccessSignature = sharedAccessSignature;
+            _sharedAccessSignature = sharedAccessSignature;
         }
 
         internal SharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TokenScope tokenScope = TokenScope.Entity)
@@ -74,12 +74,12 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     Resources.ArgumentStringTooBig.FormatForUser(nameof(sharedAccessKey), SharedAccessSignatureToken.MaxKeyLength));
             }
 
-            this._keyName = keyName;
-            this._tokenTimeToLive = tokenTimeToLive;
+            _keyName = keyName;
+            _tokenTimeToLive = tokenTimeToLive;
             _encodedSharedAccessKey = customKeyEncoder != null ?
                 customKeyEncoder(sharedAccessKey) :
                 MessagingTokenProviderKeyEncoder(sharedAccessKey);
-            this._tokenScope = tokenScope;
+            _tokenScope = tokenScope;
         }
 
         /// <summary>

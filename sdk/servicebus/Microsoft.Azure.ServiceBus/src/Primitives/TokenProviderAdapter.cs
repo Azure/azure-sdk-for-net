@@ -19,8 +19,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         public TokenProviderAdapter(ITokenProvider tokenProvider, TimeSpan operationTimeout)
         {
             Debug.Assert(tokenProvider != null, "tokenProvider cannot be null");
-            this._tokenProvider = tokenProvider;
-            this._operationTimeout = operationTimeout;
+            _tokenProvider = tokenProvider;
+            _operationTimeout = operationTimeout;
         }
 
         public async Task<CbsToken> GetTokenAsync(Uri namespaceAddress, string appliesTo, string[] requiredClaims)

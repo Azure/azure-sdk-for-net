@@ -22,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus
 
         protected ClientEntity(string clientTypeName, string postfix, RetryPolicy retryPolicy)
         {
-            this._clientTypeName = clientTypeName;
+            _clientTypeName = clientTypeName;
             ClientId = GenerateClientId(clientTypeName, postfix);
             RetryPolicy = retryPolicy ?? RetryPolicy.Default;
             _syncLock = new object();

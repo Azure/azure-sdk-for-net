@@ -26,12 +26,12 @@ namespace Microsoft.Azure.ServiceBus
             Uri endpoint,
             CancellationToken pumpCancellationToken)
         {
-            this._messageReceiver = messageReceiver ?? throw new ArgumentNullException(nameof(messageReceiver));
-            this._registerHandlerOptions = registerHandlerOptions;
+            _messageReceiver = messageReceiver ?? throw new ArgumentNullException(nameof(messageReceiver));
+            _registerHandlerOptions = registerHandlerOptions;
             _onMessageCallback = callback;
-            this._endpoint = endpoint.Authority;
-            this._pumpCancellationToken = pumpCancellationToken;
-            _maxConcurrentCallsSemaphoreSlim = new SemaphoreSlim(this._registerHandlerOptions.MaxConcurrentCalls);
+            _endpoint = endpoint.Authority;
+            _pumpCancellationToken = pumpCancellationToken;
+            _maxConcurrentCallsSemaphoreSlim = new SemaphoreSlim(_registerHandlerOptions.MaxConcurrentCalls);
             _diagnosticSource = new ServiceBusDiagnosticSource(messageReceiver.Path, endpoint);
         }
 

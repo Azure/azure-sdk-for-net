@@ -186,7 +186,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
 
             SessionIdInternal = sessionId;
-            this._isSessionReceiver = isSessionReceiver;
+            _isSessionReceiver = isSessionReceiver;
             ReceiveLinkManager = new FaultTolerantAmqpObject<ReceivingAmqpLink>(CreateLinkAsync, CloseSession);
             RequestResponseLinkManager = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(CreateRequestResponseLinkAsync, CloseRequestResponseSession);
             _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();

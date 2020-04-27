@@ -108,8 +108,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
                 public ExternalResourceAttribute(Location location, string description)
                 {
-                    this._location = location;
-                    this._description = description;
+                    _location = location;
+                    _description = description;
                 }
 
                 public Location Location => _location;
@@ -135,8 +135,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                         throw Exception.ArgumentNull(nameof(elementType));
                     }
 
-                    this._elementType = elementType;
-                    this._cacheAttrition = cacheAttrition;
+                    _elementType = elementType;
+                    _cacheAttrition = cacheAttrition;
                 }
 
                 public Type ElementType => _elementType;
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                         throw Exception.ArgumentNull(nameof(elementType));
                     }
 
-                    this._elementType = elementType;
+                    _elementType = elementType;
                 }
 
                 public Type ElementType => _elementType;
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
                 public SynchronizationPrimitiveAttribute(BlocksUsing blocksUsing)
                 {
-                    this._blocksUsing = blocksUsing;
+                    _blocksUsing = blocksUsing;
                 }
 
                 public BlocksUsing BlocksUsing => _blocksUsing;
@@ -267,8 +267,8 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                             throw new ArgumentNullException(nameof(diagnosis));
                         }
 
-                        this._exceptionType = exceptionType;
-                        this._diagnosis = diagnosis;
+                        _exceptionType = exceptionType;
+                        _diagnosis = diagnosis;
                     }
 
                     public Type ExceptionType => _exceptionType;

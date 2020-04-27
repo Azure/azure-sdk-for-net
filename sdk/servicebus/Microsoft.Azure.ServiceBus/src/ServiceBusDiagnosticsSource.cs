@@ -32,8 +32,8 @@ namespace Microsoft.Azure.ServiceBus
 
         public ServiceBusDiagnosticSource(string entityPath, Uri endpoint)
         {
-            this._entityPath = entityPath;
-            this._endpoint = endpoint;
+            _entityPath = entityPath;
+            _endpoint = endpoint;
         }
 
         public static bool IsEnabled()

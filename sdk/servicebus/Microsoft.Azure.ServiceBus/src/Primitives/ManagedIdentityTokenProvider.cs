@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <remarks>Call that constructore to set <see cref="AzureServiceTokenProvider"/> with required Managed Identity connection string.</remarks>
         public ManagedIdentityTokenProvider(AzureServiceTokenProvider azureServiceTokenProvider)
         {
-            this._azureServiceTokenProvider = azureServiceTokenProvider;
+            _azureServiceTokenProvider = azureServiceTokenProvider;
         }
 
         /// <summary>

@@ -30,16 +30,16 @@ namespace Microsoft.Azure.ServiceBus
             Uri endpoint,
             CancellationToken token)
         {
-            this._client = client ?? throw new ArgumentException(nameof(client));
-            this._clientId = clientId;
+            _client = client ?? throw new ArgumentException(nameof(client));
+            _clientId = clientId;
             ReceiveMode = receiveMode;
-            this._sessionHandlerOptions = sessionHandlerOptions;
+            _sessionHandlerOptions = sessionHandlerOptions;
             _userOnSessionCallback = callback;
-            this._endpoint = endpoint.Authority;
+            _endpoint = endpoint.Authority;
             _entityPath = client.EntityPath;
             _pumpCancellationToken = token;
-            _maxConcurrentSessionsSemaphoreSlim = new SemaphoreSlim(this._sessionHandlerOptions.MaxConcurrentSessions);
-            _maxPendingAcceptSessionsSemaphoreSlim = new SemaphoreSlim(this._sessionHandlerOptions.MaxConcurrentAcceptSessionCalls);
+            _maxConcurrentSessionsSemaphoreSlim = new SemaphoreSlim(_sessionHandlerOptions.MaxConcurrentSessions);
+            _maxPendingAcceptSessionsSemaphoreSlim = new SemaphoreSlim(_sessionHandlerOptions.MaxConcurrentAcceptSessionCalls);
             _diagnosticSource = new ServiceBusDiagnosticSource(client.EntityPath, endpoint);
         }
 

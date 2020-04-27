@@ -21,8 +21,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             ServiceBusConnection serviceBusConnection)
         {
             _transactionId = transaction.TransactionInformation.LocalIdentifier;
-            this._transactionManager = transactionManager;
-            this._serviceBusConnection = serviceBusConnection;
+            _transactionManager = transactionManager;
+            _serviceBusConnection = serviceBusConnection;
         }
 
         public ArraySegment<byte> AmqpTransactionId { get; private set; }

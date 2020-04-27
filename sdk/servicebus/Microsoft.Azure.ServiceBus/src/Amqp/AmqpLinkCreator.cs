@@ -21,13 +21,13 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         protected AmqpLinkCreator(string entityPath, ServiceBusConnection serviceBusConnection, Uri endpointAddress, string[] audience, string[] requiredClaims, ICbsTokenProvider cbsTokenProvider, AmqpLinkSettings amqpLinkSettings, string clientId)
         {
-            this._entityPath = entityPath;
-            this._serviceBusConnection = serviceBusConnection;
-            this._endpointAddress = endpointAddress;
-            this._audience = audience;
-            this._requiredClaims = requiredClaims;
-            this._cbsTokenProvider = cbsTokenProvider;
-            this._amqpLinkSettings = amqpLinkSettings;
+            _entityPath = entityPath;
+            _serviceBusConnection = serviceBusConnection;
+            _endpointAddress = endpointAddress;
+            _audience = audience;
+            _requiredClaims = requiredClaims;
+            _cbsTokenProvider = cbsTokenProvider;
+            _amqpLinkSettings = amqpLinkSettings;
             ClientId = clientId;
         }
 

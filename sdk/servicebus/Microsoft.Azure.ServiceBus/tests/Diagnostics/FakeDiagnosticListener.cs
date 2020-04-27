@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
             public FakeDiagnosticSourceWriteObserver(Action<KeyValuePair<string, object>> writeCallback)
             {
-                this._writeCallback = writeCallback;
+                _writeCallback = writeCallback;
             }
 
             public void OnCompleted()
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         public FakeDiagnosticListener(Action<KeyValuePair<string, object>> writeCallback)
         {
-            this._writeCallback = writeCallback;            
+            _writeCallback = writeCallback;            
         }
 
         public void OnCompleted()
@@ -65,12 +65,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         public void Enable(Func<string, bool> writeObserverEnabled)
         {
-            this._writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name);
+            _writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name);
         }
 
         public void Enable(Func<string, object, object, bool> writeObserverEnabled)
         {
-            this._writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name, arg1, arg2);
+            _writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name, arg1, arg2);
         }
 
         public void Disable()

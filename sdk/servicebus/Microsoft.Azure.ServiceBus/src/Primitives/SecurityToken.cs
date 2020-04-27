@@ -50,9 +50,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             }
 
             _token = tokenString;
-            this._expiresAtUtc = expiresAtUtc;
-            this._audience = audience;
-            this._tokenType = tokenType;
+            _expiresAtUtc = expiresAtUtc;
+            _audience = audience;
+            _tokenType = tokenType;
         }
 
         /// <summary>

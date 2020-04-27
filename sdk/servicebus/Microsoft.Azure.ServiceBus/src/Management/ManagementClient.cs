@@ -51,11 +51,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
             _httpClient = new HttpClient { Timeout = connectionStringBuilder.OperationTimeout };
             _endpointFqdn = connectionStringBuilder.Endpoint;
-            this._tokenProvider = tokenProvider ?? CreateTokenProvider(connectionStringBuilder);
+            _tokenProvider = tokenProvider ?? CreateTokenProvider(connectionStringBuilder);
             _port = GetPort(connectionStringBuilder.Endpoint);
             _clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
 
-            MessagingEventSource.Log.ManagementClientCreated(_clientId, _httpClient.Timeout.TotalSeconds, this._tokenProvider.ToString());
+            MessagingEventSource.Log.ManagementClientCreated(_clientId, _httpClient.Timeout.TotalSeconds, _tokenProvider.ToString());
         }
 
         public static HttpRequestMessage CloneRequest(HttpRequestMessage req)

@@ -16,9 +16,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
 	    private AmqpResponseMessage(AmqpMessage responseMessage)
         {
-            this._responseMessage = responseMessage;
-            StatusCode = this._responseMessage.GetResponseStatusCode();
-            if (this._responseMessage.ApplicationProperties.Map.TryGetValue<string>(ManagementConstants.Properties.TrackingId, out var trackingId))
+            _responseMessage = responseMessage;
+            StatusCode = _responseMessage.GetResponseStatusCode();
+            if (_responseMessage.ApplicationProperties.Map.TryGetValue<string>(ManagementConstants.Properties.TrackingId, out var trackingId))
             {
                 TrackingId = trackingId;
             }

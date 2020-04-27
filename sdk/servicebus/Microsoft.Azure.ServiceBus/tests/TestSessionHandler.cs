@@ -32,10 +32,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             MessageSender sender,
             SessionPumpHost sessionPumpHost)
         {
-            this._receiveMode = receiveMode;
-            this._sessionHandlerOptions = sessionHandlerOptions;
-            this._sender = sender;
-            this._sessionPumpHost = sessionPumpHost;
+            _receiveMode = receiveMode;
+            _sessionHandlerOptions = sessionHandlerOptions;
+            _sender = sender;
+            _sessionPumpHost = sessionPumpHost;
             _sessionMessageMap = new ConcurrentDictionary<string, int>();
         }
 

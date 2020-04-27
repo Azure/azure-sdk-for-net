@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus
             ClientId = clientId;
             ReceiveMode = receiveMode;
             SessionClient = sessionClient;
-            this._endpoint = endpoint;
+            _endpoint = endpoint;
         }
 
         private ReceiveMode ReceiveMode { get; }

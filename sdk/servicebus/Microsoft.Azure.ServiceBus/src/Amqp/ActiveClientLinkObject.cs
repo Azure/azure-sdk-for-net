@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             LinkObject = amqpLinkObject;
             EndpointUri = endpointUri;
             Audience = audience;
-            this._requiredClaims = requiredClaims;
+            _requiredClaims = requiredClaims;
             AuthorizationValidUntilUtc = authorizationValidUntilUtc;
         }
 
