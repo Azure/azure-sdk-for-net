@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.ServiceBus.UnitTests
+namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
 {
     /// <summary>
     ///   The set of extension methods for the <see cref="Task" /> class.

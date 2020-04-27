@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
-{
-    using System;
+using System;
 
-    /// <summary>
+namespace Microsoft.Azure.ServiceBus.Filters
+{
+	/// <summary>
     /// Represents the filter actions which are allowed for the transformation
     /// of a message that have been matched by a filter expression.
     /// </summary>

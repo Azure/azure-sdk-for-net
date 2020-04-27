@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.InteropExtensions
-{
-    using System;
-    using System.IO;
-    using System.Runtime.Serialization;
-    using System.Xml;
+using System;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Xml;
 
-    /// <summary>
+namespace Microsoft.Azure.ServiceBus.Extensions
+{
+	/// <summary>
     /// This class describes a serializer class used to serialize and deserialize an Object.
     /// This class is almost identical to DataContractSerializer; only difference is that
     /// ReadObject(Stream) and WriteObject(Stream, object) pick Binary Xml Reader/Writer

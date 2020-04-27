@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using Primitives;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Microsoft.Azure.ServiceBus.Primitives;
 
-    /// <summary>
+namespace Microsoft.Azure.ServiceBus.Filters
+{
+	/// <summary>
     /// Represents a filter which is a composition of an expression and an action that is executed in the pub/sub pipeline.
     /// </summary>
     /// <remarks>

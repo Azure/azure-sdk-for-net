@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
-{
-    using System;
-    using Management;
-    using Primitives;
+using System;
+using Microsoft.Azure.ServiceBus.Primitives;
 
-    /// <summary>
+namespace Microsoft.Azure.ServiceBus.Filters
+{
+	/// <summary>
     /// Represents a description of a rule.
     /// </summary>
     public sealed class RuleDescription : IEquatable<RuleDescription>

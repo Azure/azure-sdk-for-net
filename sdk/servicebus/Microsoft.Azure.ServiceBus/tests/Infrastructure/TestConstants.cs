@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.UnitTests
-{
-    using System;
+using System;
 
-    static class TestConstants
+namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
+{
+	static class TestConstants
     {
         // Enviornment Variables
         internal const string ConnectionStringEnvironmentVariable = "SERVICE_BUS_CONNECTION_STRING";

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.UnitTests
-{
-    using System.Reflection;
-    using Extensions.PlatformAbstractions;
-    using Xunit.Sdk;
+using System.Reflection;
+using Microsoft.Extensions.PlatformAbstractions;
+using Xunit.Sdk;
 
-    public class DisplayTestMethodNameAttribute : BeforeAfterTestAttribute
+namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
+{
+	public class DisplayTestMethodNameAttribute : BeforeAfterTestAttribute
     {
         public override void Before(MethodInfo methodUnderTest)
         {

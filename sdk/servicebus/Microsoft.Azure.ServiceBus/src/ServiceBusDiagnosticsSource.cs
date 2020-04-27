@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Microsoft.Azure.ServiceBus.Extensions;
+using Microsoft.Azure.ServiceBus.Filters;
+
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
@@ -8,8 +11,6 @@ namespace Microsoft.Azure.ServiceBus
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using Diagnostics;
 
     internal class ServiceBusDiagnosticSource
     {

@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.Diagnostics
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
-    public static class MessageExtensions
+namespace Microsoft.Azure.ServiceBus.Extensions
+{
+	public static class MessageExtensions
     {
         /// <summary>
         /// Creates <see cref="Activity"/> based on the tracing context stored in the <see cref="Message"/>

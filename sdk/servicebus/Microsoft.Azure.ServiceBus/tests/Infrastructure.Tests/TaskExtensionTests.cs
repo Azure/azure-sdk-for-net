@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Microsoft.Azure.ServiceBus.UnitTests
+namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
 {
     public class TaskExtensionsTests
     {  

@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus
-{
-    using System;
-    using System.Xml.Linq;
-    using Filters;
-    using Management;
+using System;
+using System.Xml.Linq;
+using Microsoft.Azure.ServiceBus.Management;
 
-    internal static class RuleActionExtensions
+namespace Microsoft.Azure.ServiceBus.Filters
+{
+	internal static class RuleActionExtensions
     {
         internal static RuleAction ParseFromXElement(XElement xElement)
         {

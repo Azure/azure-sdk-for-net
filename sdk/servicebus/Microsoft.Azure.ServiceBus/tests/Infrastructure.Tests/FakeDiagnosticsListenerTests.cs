@@ -1,14 +1,16 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
-{
-    using System;
-    using System.Threading.Tasks;
-    using Core;
-    using Xunit;
+using System;
+using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus.Core;
+using Microsoft.Azure.ServiceBus.Filters;
+using Microsoft.Azure.ServiceBus.UnitTests.Diagnostics;
+using Xunit;
 
-    [Collection(nameof(DiagnosticsTests))]
+namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
+{
+	[Collection(nameof(DiagnosticsTests))]
     public class FakeDiagnosticsListenerTests : DiagnosticsTests
     {
         [Fact]
