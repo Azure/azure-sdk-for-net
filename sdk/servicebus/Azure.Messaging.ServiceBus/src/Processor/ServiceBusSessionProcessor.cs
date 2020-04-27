@@ -10,16 +10,12 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// A <see cref="ServiceBusSessionProcessor"/> is responsible for processing
-    /// <see cref="ServiceBusReceivedMessage" /> from a specific entity using event handlers.
-    /// It is constructed by calling
-    ///  <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusProcessorOptions, string)"/>.
+    /// The <see cref="ServiceBusSessionProcessor"/> provides an abstraction around a set of <see cref="ServiceBusSessionReceiver"/> that
+    /// allows using an event based model for processing received <see cref="ServiceBusReceivedMessage" />.
+    /// It is constructed by calling <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusProcessorOptions, string)"/>.
     /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
-    ///
-    /// <see cref="ServiceBusSessionProcessor"/> is used for receiving messages, not for sending messages.
-    /// In order to receive messages it uses <see cref="ServiceBusSessionReceiver"/> under the hood.
     /// </summary>
     public class ServiceBusSessionProcessor
     {
