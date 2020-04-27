@@ -26,7 +26,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
         public async Task<CbsToken> GetTokenAsync(Uri namespaceAddress, string appliesTo, string[] requiredClaims)
         {
-            var claim = requiredClaims?.FirstOrDefault();
             var securityToken = await _tokenProvider.GetTokenAsync(appliesTo, _operationTimeout).ConfigureAwait(false);
             return new CbsToken(securityToken.TokenValue, CbsConstants.ServiceBusSasTokenType, securityToken.ExpiresAtUtc);
         }
