@@ -5,7 +5,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System.Diagnostics;
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
 
