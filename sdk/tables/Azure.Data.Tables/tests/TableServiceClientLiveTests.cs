@@ -21,7 +21,7 @@ namespace Azure.Data.Tables.Tests
     public class TableServiceClientLiveTests : RecordedTestBase<TablesTestEnvironment>
     {
 
-        public TableServiceClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Playback /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
         {
             Sanitizer = new TablesRecordedTestSanitizer();
             Matcher = new TablesRecordMatcher(Sanitizer);
@@ -47,9 +47,9 @@ namespace Azure.Data.Tables.Tests
         [Test]
         [TestCase(null)]
         [TestCase(5)]
-        public async Task GetTablesReturnsTables(int? pageCount)
+        public async Task GetTablesReturnsTablesWithAndWithoutPagination(int? pageCount)
         {
-            string tableName = $"testtable{(IsAsync ? "async" : "sync")}{Recording.GenerateId()}";
+            string tableName = $"testtable{Recording.GenerateId()}";
             bool doCleanup = false;
             TableServiceClient service = CreateTableServiceClient();
             try
@@ -59,23 +59,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(() => createdTable.TableName, Is.EqualTo(tableName), $"Created table should be '{tableName}'");
                 doCleanup = true;
 
-                List<TableResponseProperties> tableResponses = new List<TableResponseProperties>();
-
-                await foreach (var table in service.GetTablesAsync(top: pageCount))
-                {
-                    tableResponses.Add(table);
-                }
-
-                Assert.That(() => tableResponses, Is.Not.Empty);
-                Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
-
-                // Query again with a filter.
-
-                tableResponses.Clear();
-                await foreach (var table in service.GetTablesAsync(top: pageCount, filter: $"TableName eq '{tableName}'"))
-                {
-                    tableResponses.Add(table);
-                }
+                var tableResponses = (await service.GetTablesAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
@@ -93,55 +77,24 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableServiceClient.
         /// </summary>
         [Test]
-        public async Task InsertedEntitiesCanBeQueried()
+        public async Task GetTablesReturnsTablesWithFilter()
         {
-            string tableName = $"testtable{(IsAsync ? "async" : "sync")}{Recording.GenerateId()}";
-            const string partitionKeyValue = "somPartition";
+            string tableName = $"testtable{Recording.GenerateId()}";
             bool doCleanup = false;
             TableServiceClient service = CreateTableServiceClient();
-            List<IDictionary<string, object>> entityResults = new List<IDictionary<string, object>>();
-
             try
             {
                 var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
-                TableClient client = service.GetTableClient(tableName);
 
-                // Create some entities.
+                Assert.That(() => createdTable.TableName, Is.EqualTo(tableName), $"Created table should be '{tableName}'");
+                doCleanup = true;
 
-                var entitiesToInsert = Enumerable.Range(0, 20).Select(n => {
-                    return new Dictionary<string, object>
-                    {
-                        {"PartitionKey", partitionKeyValue},
-                        {"RowKey", n.ToString("D2")},
-                        {"SomeProperty", $"This is table entity number {n:D2}"}
-                    };
-                }).ToList();
+                // Query with a filter.
 
-                // Insert the new entities.
+                var tableResponses = (await service.GetTablesAsync(filter: $"TableName eq '{tableName}'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
-                foreach (var entity in entitiesToInsert)
-                {
-                    await client.InsertAsync(entity).ConfigureAwait(false);
-                }
-
-                // Query the entities with no options.
-
-                entityResults = (await client.QueryAsync().ToEnumerableAsync().ConfigureAwait(false)).ToList();
-
-                Assert.That(() => entityResults.Count, Is.EqualTo(entitiesToInsert.Count), "The entity result count should match the inserted count");
-                entityResults.Clear();
-
-                // Query the entities with a top option.
-
-                entityResults = (await client.QueryAsync(top: 4).ToEnumerableAsync().ConfigureAwait(false)).ToList();
-
-                Assert.That(() => entityResults.Count, Is.EqualTo(entitiesToInsert.Count), "The entity result count should match the inserted count");
-
-                // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
-
-                entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey ge '10'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
-
-                Assert.That(() => entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
+                Assert.That(() => tableResponses, Is.Not.Empty);
+                Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
             }
             finally
             {
