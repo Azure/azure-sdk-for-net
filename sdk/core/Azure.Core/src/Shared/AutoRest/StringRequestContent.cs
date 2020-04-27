@@ -19,7 +19,7 @@ namespace Azure.Core
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
-            await stream.WriteAsync(_bytes, 0, _bytes.Length, cancellation);
+            await stream.WriteAsync(_bytes, 0, _bytes.Length, cancellation).ConfigureAwait(false);
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
