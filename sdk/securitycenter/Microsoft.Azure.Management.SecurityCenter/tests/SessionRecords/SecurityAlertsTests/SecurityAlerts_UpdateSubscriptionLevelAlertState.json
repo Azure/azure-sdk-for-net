@@ -65,8 +65,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/locations/centralus/alerts/2518532788749999999_66276b36-db2a-4b2c-84ad-9676fe753a02/Dismiss?api-version=2019-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvbG9jYXRpb25zL2NlbnRyYWx1cy9hbGVydHMvMjUxODUzMjc4ODc0OTk5OTk5OV82NjI3NmIzNi1kYjJhLTRiMmMtODRhZC05Njc2ZmU3NTNhMDIvRGlzbWlzcz9hcGktdmVyc2lvbj0yMDE5LTAxLTAx",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/locations/centralus/alerts/2518532788749999999_66276b36-db2a-4b2c-84ad-9676fe753a02/dismiss?api-version=2019-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvbG9jYXRpb25zL2NlbnRyYWx1cy9hbGVydHMvMjUxODUzMjc4ODc0OTk5OTk5OV82NjI3NmIzNi1kYjJhLTRiMmMtODRhZC05Njc2ZmU3NTNhMDIvZGlzbWlzcz9hcGktdmVyc2lvbj0yMDE5LTAxLTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
