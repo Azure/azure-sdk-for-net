@@ -45,26 +45,22 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             IDictionary<string, string> parsedFields = ExtractFieldValues(sharedAccessSignature);
 
-            string signature;
-            if (!parsedFields.TryGetValue(Signature, out signature))
+            if (!parsedFields.TryGetValue(Signature, out _))
             {
                 throw new ArgumentNullException(Signature);
             }
 
-            string expiry;
-            if (!parsedFields.TryGetValue(SignedExpiry, out expiry))
+            if (!parsedFields.TryGetValue(SignedExpiry, out _))
             {
                 throw new ArgumentNullException(SignedExpiry);
             }
 
-            string keyName;
-            if (!parsedFields.TryGetValue(SignedKeyName, out keyName))
+            if (!parsedFields.TryGetValue(SignedKeyName, out _))
             {
                 throw new ArgumentNullException(SignedKeyName);
             }
 
-            string encodedAudience;
-            if (!parsedFields.TryGetValue(SignedResource, out encodedAudience))
+            if (!parsedFields.TryGetValue(SignedResource, out _))
             {
                 throw new ArgumentNullException(SignedResource);
             }
