@@ -15,32 +15,29 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// An error response from the Azure Container Registry service.
+    /// inner error.
     /// </summary>
-    public partial class ErrorResponseBody
+    public partial class InnerErrorDescription
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseBody class.
+        /// Initializes a new instance of the InnerErrorDescription class.
         /// </summary>
-        public ErrorResponseBody()
+        public InnerErrorDescription()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponseBody class.
+        /// Initializes a new instance of the InnerErrorDescription class.
         /// </summary>
         /// <param name="code">error code.</param>
         /// <param name="message">error message.</param>
         /// <param name="target">target of the particular error.</param>
-        /// <param name="details">an array of additional nested error response
-        /// info objects, as described by this contract.</param>
-        public ErrorResponseBody(string code, string message, string target = default(string), InnerErrorDescription details = default(InnerErrorDescription))
+        public InnerErrorDescription(string code, string message, string target = default(string))
         {
             Code = code;
             Message = message;
             Target = target;
-            Details = details;
             CustomInit();
         }
 
@@ -68,13 +65,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public string Target { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of additional nested error response info
-        /// objects, as described by this contract.
-        /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public InnerErrorDescription Details { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -89,10 +79,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             if (Message == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Message");
-            }
-            if (Details != null)
-            {
-                Details.Validate();
             }
         }
     }
