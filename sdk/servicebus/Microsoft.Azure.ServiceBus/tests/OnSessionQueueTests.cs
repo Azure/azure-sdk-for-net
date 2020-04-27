@@ -65,8 +65,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var queueClient = new QueueClient(
                     TestUtility.NamespaceConnectionString,
-                    queueName,
-                    ReceiveMode.PeekLock);
+                    queueName);
                 try
                 {
                     var sessionHandlerOptions =

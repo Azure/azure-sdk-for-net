@@ -52,8 +52,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicClient.TopicName,
-                    subscriptionName,
-                    ReceiveMode.PeekLock);
+                    subscriptionName);
 
                 var sessionHandlerOptions = new SessionHandlerOptions(eventArgs =>
                 {
@@ -104,8 +103,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var subscriptionClient = new SubscriptionClient(
                     TestUtility.NamespaceConnectionString,
                     topicClient.TopicName,
-                    subscriptionName,
-                    ReceiveMode.PeekLock);
+                    subscriptionName);
 
                 try
                 {

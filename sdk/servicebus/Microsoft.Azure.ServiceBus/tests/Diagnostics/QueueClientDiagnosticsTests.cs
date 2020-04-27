@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = CreateEventQueue();
 
                 try
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = CreateEventQueue();
 
                 try
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = CreateEventQueue();
 
                 try
@@ -334,7 +334,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = CreateEventQueue();
 
                 try
@@ -381,7 +381,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = CreateEventQueue();
 
                 try
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = CreateEventQueue();
 
                 try
@@ -470,7 +470,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
                 var eventQueue = CreateEventQueue();
 
                 try

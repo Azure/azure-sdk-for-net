@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var amqpMessage = AmqpMessage.Create(amqpValue);
 
             var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-            Assert.Equal(messageBody, sbMessage.GetBody<byte[]>(null));
+            Assert.Equal(messageBody, sbMessage.GetBody<byte[]>());
         }
 
         [Fact]
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var amqpMessage = AmqpMessage.Create(amqpValue);
 
             var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
-            Assert.Equal(messageBody, sbMessage.GetBody<byte[]>(null));
+            Assert.Equal(messageBody, sbMessage.GetBody<byte[]>());
         }
 
         [Fact]
