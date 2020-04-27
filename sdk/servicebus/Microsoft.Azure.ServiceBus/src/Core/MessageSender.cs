@@ -36,10 +36,10 @@ namespace Microsoft.Azure.ServiceBus.Core
     /// <remarks>This uses AMQP protocol to communicate with service.</remarks>
     public class MessageSender : ClientEntity, IMessageSender
     {
-        int deliveryCount;
-        readonly ActiveClientLinkManager clientLinkManager;
-        readonly ServiceBusDiagnosticSource diagnosticSource;
-        readonly bool isViaSender;
+	    private int deliveryCount;
+	    private readonly ActiveClientLinkManager clientLinkManager;
+	    private readonly ServiceBusDiagnosticSource diagnosticSource;
+	    private readonly bool isViaSender;
 
         /// <summary>
         /// Creates a new AMQP MessageSender.
@@ -223,11 +223,11 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         internal string SendingLinkDestination { get; set; }
 
-        ICbsTokenProvider CbsTokenProvider { get; }
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
-        FaultTolerantAmqpObject<SendingAmqpLink> SendLinkManager { get; }
+        private FaultTolerantAmqpObject<SendingAmqpLink> SendLinkManager { get; }
 
-        FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
+        private FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
 
         /// <summary>
         /// Sends a message to the entity as described by <see cref="Path"/>.
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             await RequestResponseLinkManager.CloseAsync().ConfigureAwait(false);
         }
 
-        static int ValidateMessages(IList<Message> messageList)
+        private static int ValidateMessages(IList<Message> messageList)
         {
             var count = 0;
             if (messageList == null)
@@ -476,7 +476,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return count;
         }
 
-        static void ValidateMessage(Message message)
+        private static void ValidateMessage(Message message)
         {
             if (message.SystemProperties.IsLockTokenSet)
             {
@@ -484,18 +484,18 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        static void CloseSession(SendingAmqpLink link)
+        private static void CloseSession(SendingAmqpLink link)
         {
             // Note we close the session (which includes the link).
             link.Session.SafeClose();
         }
 
-        static void CloseRequestResponseSession(RequestResponseAmqpLink requestResponseAmqpLink)
+        private static void CloseRequestResponseSession(RequestResponseAmqpLink requestResponseAmqpLink)
         {
             requestResponseAmqpLink.Session.SafeClose();
         }
 
-        async Task<Message> ProcessMessage(Message message)
+        private async Task<Message> ProcessMessage(Message message)
         {
             var processedMessage = message;
             foreach (var plugin in RegisteredPlugins)
@@ -518,7 +518,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return processedMessage;
         }
 
-        async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
+        private async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
         {
             if (RegisteredPlugins.Count < 1)
             {
@@ -535,7 +535,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return processedMessageList;
         }
 
-        async Task OnSendAsync(IList<Message> messageList)
+        private async Task OnSendAsync(IList<Message> messageList)
         {
             var timeoutHelper = new TimeoutHelper(OperationTimeout, true);
             using (var amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageList))
@@ -578,7 +578,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        async Task<long> OnScheduleMessageAsync(Message message)
+        private async Task<long> OnScheduleMessageAsync(Message message)
         {
             using (var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
             {
@@ -647,7 +647,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        async Task OnCancelScheduledMessageAsync(long sequenceNumber)
+        private async Task OnCancelScheduledMessageAsync(long sequenceNumber)
         {
             var request =
                 AmqpRequestMessage.CreateRequest(
@@ -679,7 +679,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
+        private async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
             MessagingEventSource.Log.AmqpSendLinkCreateStart(ClientId, EntityType, SendingLinkDestination);
 
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return sendingAmqpLink;
         }
 
-        async Task<RequestResponseAmqpLink> CreateRequestResponseLinkAsync(TimeSpan timeout)
+        private async Task<RequestResponseAmqpLink> CreateRequestResponseLinkAsync(TimeSpan timeout)
         {
             var entityPath = SendingLinkDestination + '/' + AmqpClientConstants.ManagementAddress;
             var amqpLinkSettings = new AmqpLinkSettings();
@@ -773,7 +773,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return requestResponseAmqpLink;
         }
 
-        ArraySegment<byte> GetNextDeliveryTag()
+        private ArraySegment<byte> GetNextDeliveryTag()
         {
             var deliveryId = Interlocked.Increment(ref deliveryCount);
             return new ArraySegment<byte>(BitConverter.GetBytes(deliveryId));

@@ -14,17 +14,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using Core;
     using Xunit;
 
-    class TestSessionHandler
+    internal class TestSessionHandler
     {
-        const int NumberOfSessions = 5;
-        const int MessagesPerSession = 10;
+	    private const int NumberOfSessions = 5;
+	    private const int MessagesPerSession = 10;
 
-        readonly SessionPumpHost sessionPumpHost;
-        readonly ReceiveMode receiveMode;
-        readonly MessageSender sender;
-        readonly SessionHandlerOptions sessionHandlerOptions;
-        ConcurrentDictionary<string, int> sessionMessageMap;
-        int totalMessageCount;
+	    private readonly SessionPumpHost sessionPumpHost;
+	    private readonly ReceiveMode receiveMode;
+	    private readonly MessageSender sender;
+	    private readonly SessionHandlerOptions sessionHandlerOptions;
+	    private ConcurrentDictionary<string, int> sessionMessageMap;
+	    private int totalMessageCount;
 
         public TestSessionHandler(
             ReceiveMode receiveMode,

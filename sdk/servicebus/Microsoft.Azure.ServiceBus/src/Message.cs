@@ -343,14 +343,14 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public sealed class SystemPropertiesCollection
         {
-            int deliveryCount;
-            DateTime lockedUntilUtc;
-            long sequenceNumber = -1;
-            short partitionId;
-            long enqueuedSequenceNumber;
-            DateTime enqueuedTimeUtc;
-            Guid lockTokenGuid;
-            string deadLetterSource;
+	        private int deliveryCount;
+	        private DateTime lockedUntilUtc;
+	        private long sequenceNumber = -1;
+	        private short partitionId;
+	        private long enqueuedSequenceNumber;
+	        private DateTime enqueuedTimeUtc;
+	        private Guid lockTokenGuid;
+	        private string deadLetterSource;
 
             /// <summary>
             /// Specifies whether or not there is a lock token set on the current message.
@@ -508,7 +508,7 @@ namespace Microsoft.Azure.ServiceBus
                 set;
             }
 
-            void ThrowIfNotReceived()
+            private void ThrowIfNotReceived()
             {
                 if (!IsReceived)
                 {

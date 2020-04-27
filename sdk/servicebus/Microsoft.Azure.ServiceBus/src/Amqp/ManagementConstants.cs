@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using Microsoft.Azure.Amqp.Encoding;
 
-    static class ManagementConstants
+    internal static class ManagementConstants
     {
         public const string Microsoft = "com.microsoft";
 

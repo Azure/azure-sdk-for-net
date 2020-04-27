@@ -5,7 +5,7 @@ using System;
 
 namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
 {
-	static class TestConstants
+	internal static class TestConstants
     {
         // Enviornment Variables
         internal const string ConnectionStringEnvironmentVariable = "SERVICE_BUS_CONNECTION_STRING";

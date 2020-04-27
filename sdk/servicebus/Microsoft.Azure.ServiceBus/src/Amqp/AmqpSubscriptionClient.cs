@@ -16,9 +16,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     internal sealed class AmqpSubscriptionClient : IInnerSubscriptionClient
     {
-        int prefetchCount;
-        readonly object syncLock;
-        MessageReceiver innerReceiver;
+	    private int prefetchCount;
+	    private readonly object syncLock;
+	    private MessageReceiver innerReceiver;
 
         static AmqpSubscriptionClient()
         {
@@ -95,15 +95,15 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
         }
 
-        ServiceBusConnection ServiceBusConnection { get; }
+        private ServiceBusConnection ServiceBusConnection { get; }
 
-        RetryPolicy RetryPolicy { get; }
+        private RetryPolicy RetryPolicy { get; }
 
-        ICbsTokenProvider CbsTokenProvider { get; }
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
-        ReceiveMode ReceiveMode { get; }
+        private ReceiveMode ReceiveMode { get; }
 
-        string Path { get; }
+        private string Path { get; }
 
         public Task CloseAsync()
         {

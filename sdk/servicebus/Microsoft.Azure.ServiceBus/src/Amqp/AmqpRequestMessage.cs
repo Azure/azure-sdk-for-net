@@ -10,9 +10,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
     internal sealed class AmqpRequestMessage
     {
-        readonly AmqpMessage requestMessage;
+	    private readonly AmqpMessage requestMessage;
 
-        AmqpRequestMessage(string operation, TimeSpan timeout, string trackingId)
+	    private AmqpRequestMessage(string operation, TimeSpan timeout, string trackingId)
         {
             Map = new AmqpMap();
             requestMessage = AmqpMessage.Create(new AmqpValue { Value = Map });

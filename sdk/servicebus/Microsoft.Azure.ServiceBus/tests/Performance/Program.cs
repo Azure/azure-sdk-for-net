@@ -10,7 +10,7 @@ namespace Microsoft.Azure.ServiceBus.Performance
     using System.Threading;
     using System.Threading.Tasks;
 
-    class Program
+    internal class Program
     {
         private static readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.ServiceBus.Performance
 
         private static long _messages;
 
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var maxInflight = (args.Length >= 1 ? int.Parse(args[0]) : 1);
             Log($"Maximum inflight messages: {maxInflight}");

@@ -13,9 +13,9 @@ namespace Microsoft.Azure.ServiceBus
     /// <see cref="SubscriptionClient.RegisterSessionHandler(Func{IMessageSession, Message, CancellationToken, Task}, SessionHandlerOptions)" />.</summary>
     public sealed class SessionHandlerOptions
     {
-        int maxConcurrentSessions;
-        TimeSpan messageWaitTimeout;
-        TimeSpan maxAutoRenewDuration;
+	    private int maxConcurrentSessions;
+	    private TimeSpan messageWaitTimeout;
+	    private TimeSpan maxAutoRenewDuration;
 
         /// <summary>Initializes a new instance of the <see cref="SessionHandlerOptions" /> class.
         /// Default Values:

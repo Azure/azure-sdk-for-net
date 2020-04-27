@@ -34,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
         }
 
 
-        static RuleAction ParseFromXElementSqlRuleAction(XElement xElement)
+        private static RuleAction ParseFromXElementSqlRuleAction(XElement xElement)
         {
             var expression = xElement.Element(XName.Get("SqlExpression", ManagementClientConstants.ServiceBusNamespace))?.Value;
             if (string.IsNullOrWhiteSpace(expression))

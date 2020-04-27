@@ -15,10 +15,10 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public abstract class ClientEntity : IClientEntity
     {
-        static int nextId;
-        readonly string clientTypeName;
-        readonly object syncLock;
-        bool isClosedOrClosing;
+	    private static int nextId;
+	    private readonly string clientTypeName;
+	    private readonly object syncLock;
+	    private bool isClosedOrClosing;
 
         protected ClientEntity(string clientTypeName, string postfix, RetryPolicy retryPolicy)
         {

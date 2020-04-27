@@ -6,11 +6,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
     using System.Text;
     using Azure.Amqp;
 
-    sealed class AmqpSqlFilterCodec : AmqpFilterCodec
+    internal sealed class AmqpSqlFilterCodec : AmqpFilterCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":sql-filter:list";
         public const ulong Code = 0x000001370000006;
-        const int Fields = 2;
+        private const int Fields = 2;
 
         public AmqpSqlFilterCodec() : base(Name, Code) { }
 

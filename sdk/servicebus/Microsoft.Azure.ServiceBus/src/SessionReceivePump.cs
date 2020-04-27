@@ -9,17 +9,17 @@ namespace Microsoft.Azure.ServiceBus
     using System.Threading.Tasks;
     using Primitives;
 
-    sealed class SessionReceivePump
+    internal sealed class SessionReceivePump
     {
-        readonly string clientId;
-        readonly ISessionClient client;
-        readonly Func<IMessageSession, Message, CancellationToken, Task> userOnSessionCallback;
-        readonly SessionHandlerOptions sessionHandlerOptions;
-        readonly string endpoint;
-        readonly string entityPath;
-        readonly CancellationToken pumpCancellationToken;
-        readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
-        readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
+	    private readonly string clientId;
+	    private readonly ISessionClient client;
+	    private readonly Func<IMessageSession, Message, CancellationToken, Task> userOnSessionCallback;
+	    private readonly SessionHandlerOptions sessionHandlerOptions;
+	    private readonly string endpoint;
+	    private readonly string entityPath;
+	    private readonly CancellationToken pumpCancellationToken;
+	    private readonly SemaphoreSlim maxConcurrentSessionsSemaphoreSlim;
+	    private readonly SemaphoreSlim maxPendingAcceptSessionsSemaphoreSlim;
         private readonly ServiceBusDiagnosticSource diagnosticSource;
 
         public SessionReceivePump(string clientId,
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus
             diagnosticSource = new ServiceBusDiagnosticSource(client.EntityPath, endpoint);
         }
 
-        ReceiveMode ReceiveMode { get; }
+        private ReceiveMode ReceiveMode { get; }
 
         public void StartPump()
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        static void CancelAutoRenewLock(object state)
+        private static void CancelAutoRenewLock(object state)
         {
             var renewCancellationTokenSource = (CancellationTokenSource)state;
 
@@ -68,20 +68,20 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        bool ShouldRenewSessionLock()
+        private bool ShouldRenewSessionLock()
         {
             return
                 ReceiveMode == ReceiveMode.PeekLock &&
                 sessionHandlerOptions.AutoRenewLock;
         }
 
-        Task RaiseExceptionReceived(Exception e, string action)
+        private Task RaiseExceptionReceived(Exception e, string action)
         {
             var eventArgs = new ExceptionReceivedEventArgs(e, action, endpoint, entityPath, clientId);
             return sessionHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
-        async Task CompleteMessageIfNeededAsync(IMessageSession session, Message message)
+        private async Task CompleteMessageIfNeededAsync(IMessageSession session, Message message)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task AbandonMessageIfNeededAsync(IMessageSession session, Message message)
+        private async Task AbandonMessageIfNeededAsync(IMessageSession session, Message message)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task SessionPumpTaskAsync()
+        private async Task SessionPumpTaskAsync()
         {
             while (!pumpCancellationToken.IsCancellationRequested)
             {
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task MessagePumpTaskAsync(IMessageSession session)
+        private async Task MessagePumpTaskAsync(IMessageSession session)
         {
             if (session == null)
             {
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task CloseSessionIfNeededAsync(IMessageSession session)
+        private async Task CloseSessionIfNeededAsync(IMessageSession session)
         {
             if (!session.IsClosedOrClosing)
             {
@@ -296,7 +296,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task RenewSessionLockTaskAsync(IMessageSession session, CancellationToken renewLockCancellationToken)
+        private async Task RenewSessionLockTaskAsync(IMessageSession session, CancellationToken renewLockCancellationToken)
         {
             while (!pumpCancellationToken.IsCancellationRequested &&
                    !renewLockCancellationToken.IsCancellationRequested)

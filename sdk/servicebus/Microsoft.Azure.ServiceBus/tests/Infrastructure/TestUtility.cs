@@ -12,7 +12,7 @@ using Microsoft.Azure.ServiceBus.Core;
 
 namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
 {
-	static class TestUtility
+	internal static class TestUtility
     {
         private static readonly Lazy<string> NamespaceConnectionStringInstance = 
             new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()).ToString(), LazyThreadSafetyMode.PublicationOnly);

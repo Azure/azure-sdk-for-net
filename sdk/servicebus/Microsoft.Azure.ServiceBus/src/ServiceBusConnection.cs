@@ -18,9 +18,9 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public class ServiceBusConnection
     {
-        static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
-        readonly object syncLock;
-        bool isClosedOrClosing;
+	    private static readonly Version AmqpVersion = new Version(1, 0, 0, 0);
+	    private readonly object syncLock;
+	    private bool isClosedOrClosing;
 
         /// <summary>
         /// Creates a new connection to service bus.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        void InitializeConnection(ServiceBusConnectionStringBuilder builder)
+        private void InitializeConnection(ServiceBusConnectionStringBuilder builder)
         {
             Endpoint = new Uri(builder.Endpoint);
 
@@ -229,18 +229,18 @@ namespace Microsoft.Azure.ServiceBus
             TransactionController = new FaultTolerantAmqpObject<Controller>(CreateControllerAsync, CloseController);
         }
 
-        static void CloseConnection(AmqpConnection connection)
+        private static void CloseConnection(AmqpConnection connection)
         {
             MessagingEventSource.Log.AmqpConnectionClosed(connection);
             connection.SafeClose();
         }
 
-        static void CloseController(Controller controller)
+        private static void CloseController(Controller controller)
         {
             controller.Close();
         }
 
-        async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
+        private async Task<AmqpConnection> CreateConnectionAsync(TimeSpan timeout)
         {
             var hostName = Endpoint.Host;
 
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.ServiceBus
             return connection;
         }
 
-        async Task<Controller> CreateControllerAsync(TimeSpan timeout)
+        private async Task<Controller> CreateControllerAsync(TimeSpan timeout)
         {
             var timeoutHelper = new TimeoutHelper(timeout, true);
             var connection = await ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.ServiceBus
             return controller;
         }
 
-        TransportSettings CreateTransportSettings()
+        private TransportSettings CreateTransportSettings()
         {
             var hostName = Endpoint.Host;
             var networkHost = Endpoint.Host;

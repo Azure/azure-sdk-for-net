@@ -31,8 +31,8 @@ namespace Microsoft.Azure.ServiceBus
     /// <remarks>It uses AMQP protocol for communicating with servicebus.</remarks>
     public class TopicClient : ClientEntity, ITopicClient
     {
-        readonly object syncLock;
-        MessageSender innerSender;
+	    private readonly object syncLock;
+	    private MessageSender innerSender;
 
         /// <summary>
         /// Instantiates a new <see cref="TopicClient"/> to perform operations on a topic.
@@ -164,8 +164,8 @@ namespace Microsoft.Azure.ServiceBus
                 return innerSender;
             }
         }
-        
-        ICbsTokenProvider CbsTokenProvider { get; }
+
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
         /// Sends a message to Service Bus.

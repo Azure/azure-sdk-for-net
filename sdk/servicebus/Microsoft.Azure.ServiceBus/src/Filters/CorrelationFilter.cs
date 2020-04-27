@@ -182,7 +182,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
             return stringBuilder.ToString();
         }
 
-        void AppendPropertyExpression(ref bool firstExpression, StringBuilder builder, string propertyName, object value)
+        private void AppendPropertyExpression(ref bool firstExpression, StringBuilder builder, string propertyName, object value)
         {
             if (value != null)
             {

@@ -18,14 +18,14 @@ namespace Microsoft.Azure.ServiceBus
     {
         internal static readonly TimeSpan ServerBusyBaseSleepTime = TimeSpan.FromSeconds(10);
 
-        const int DefaultRetryMaxCount = 5;
-        static readonly TimeSpan DefaultRetryMinBackoff = TimeSpan.Zero;
-        static readonly TimeSpan DefaultRetryMaxBackoff = TimeSpan.FromSeconds(30);
+        private const int DefaultRetryMaxCount = 5;
+        private static readonly TimeSpan DefaultRetryMinBackoff = TimeSpan.Zero;
+        private static readonly TimeSpan DefaultRetryMaxBackoff = TimeSpan.FromSeconds(30);
 
-        readonly object serverBusyLock = new object();
+        private readonly object serverBusyLock = new object();
 
         // This is a volatile copy of IsServerBusy. IsServerBusy is synchronized with a lock, whereas encounteredServerBusy is kept volatile for performance reasons.
-        volatile bool encounteredServerBusy;
+        private volatile bool encounteredServerBusy;
 
         protected RetryPolicy()
         {

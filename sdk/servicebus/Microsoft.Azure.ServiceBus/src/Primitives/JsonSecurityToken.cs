@@ -23,7 +23,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         {
         }
 
-        static DateTime GetExpirationDateTimeUtcFromToken(string token)
+        private static DateTime GetExpirationDateTimeUtcFromToken(string token)
         {
             var jwtSecurityToken = new JwtSecurityToken(token);
             return jwtSecurityToken.ValidTo;

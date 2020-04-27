@@ -38,7 +38,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
             }
         }
 
-        string Filter(string text)
+        private string Filter(string text)
         {
             return string.Join(Environment.NewLine, text.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries)
                 .Where(l => !l.StartsWith("[assembly: System.Runtime.Versioning.TargetFramework"))
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.API
         ///     a concern for local runs.
         /// </remarks>
         ///
-        void CleanApprovalsTempFiles(string approvalsWorkingdDirectory)
+        private void CleanApprovalsTempFiles(string approvalsWorkingdDirectory)
         {
             foreach (var file in Directory.EnumerateFiles(approvalsWorkingdDirectory, $"{ nameof(ApiApprovals) }.*received.txt", SearchOption.AllDirectories))
             {

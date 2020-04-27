@@ -45,16 +45,16 @@ namespace Microsoft.Azure.ServiceBus.Core
     {
         private static readonly TimeSpan DefaultBatchFlushInterval = TimeSpan.FromMilliseconds(20);
 
-        readonly ConcurrentExpiringSet<Guid> requestResponseLockedMessages;
-        readonly bool isSessionReceiver;
-        readonly object messageReceivePumpSyncLock;
-        readonly ActiveClientLinkManager clientLinkManager;
-        readonly ServiceBusDiagnosticSource diagnosticSource;
+        private readonly ConcurrentExpiringSet<Guid> requestResponseLockedMessages;
+        private readonly bool isSessionReceiver;
+        private readonly object messageReceivePumpSyncLock;
+        private readonly ActiveClientLinkManager clientLinkManager;
+        private readonly ServiceBusDiagnosticSource diagnosticSource;
 
-        int prefetchCount;
-        long lastPeekedSequenceNumber;
-        MessageReceivePump receivePump;
-        CancellationTokenSource receivePumpCancellationTokenSource;
+        private int prefetchCount;
+        private long lastPeekedSequenceNumber;
+        private MessageReceivePump receivePump;
+        private CancellationTokenSource receivePumpCancellationTokenSource;
 
         /// <summary>
         /// Creates a new MessageReceiver from a <see cref="ServiceBusConnectionStringBuilder"/>.
@@ -290,13 +290,13 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         internal MessagingEntityType? EntityType { get; }
 
-        Exception LinkException { get; set; }
+        private Exception LinkException { get; set; }
 
-        ICbsTokenProvider CbsTokenProvider { get; }
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
         internal FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLinkManager { get; }
 
-        FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
+        private FaultTolerantAmqpObject<RequestResponseAmqpLink> RequestResponseLinkManager { get; }
 
         /// <summary>
         /// Receive a message from the entity defined by <see cref="Path"/> using <see cref="ReceiveMode"/> mode.
@@ -1305,17 +1305,17 @@ namespace Microsoft.Azure.ServiceBus.Core
             MessagingEventSource.Log.RegisterOnMessageHandlerStop(ClientId);
         }
 
-        static void CloseSession(ReceivingAmqpLink link)
+        private static void CloseSession(ReceivingAmqpLink link)
         {
             link.Session.SafeClose();
         }
 
-        static void CloseRequestResponseSession(RequestResponseAmqpLink requestResponseAmqpLink)
+        private static void CloseRequestResponseSession(RequestResponseAmqpLink requestResponseAmqpLink)
         {
             requestResponseAmqpLink.Session.SafeClose();
         }
 
-        async Task<Message> ProcessMessage(Message message)
+        private async Task<Message> ProcessMessage(Message message)
         {
             var processedMessage = message;
             foreach (var plugin in RegisteredPlugins)
@@ -1338,7 +1338,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return processedMessage;
         }
 
-        async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
+        private async Task<IList<Message>> ProcessMessages(IList<Message> messageList)
         {
             if (RegisteredPlugins.Count < 1)
             {
@@ -1355,7 +1355,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return processedMessageList;
         }
 
-        async Task DisposeMessagesAsync(IEnumerable<Guid> lockTokens, Outcome outcome)
+        private async Task DisposeMessagesAsync(IEnumerable<Guid> lockTokens, Outcome outcome)
         {
             if(isSessionReceiver)
             {
@@ -1431,7 +1431,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        async Task DisposeMessageRequestResponseAsync(Guid[] lockTokens, DispositionStatus dispositionStatus, IDictionary<string, object> propertiesToModify = null, string deadLetterReason = null, string deadLetterDescription = null)
+        private async Task DisposeMessageRequestResponseAsync(Guid[] lockTokens, DispositionStatus dispositionStatus, IDictionary<string, object> propertiesToModify = null, string deadLetterReason = null, string deadLetterDescription = null)
         {
             try
             {
@@ -1494,7 +1494,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        async Task<ReceivingAmqpLink> CreateLinkAsync(TimeSpan timeout)
+        private async Task<ReceivingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
             FilterSet filterMap = null;
 
@@ -1551,7 +1551,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         // TODO: Consolidate the link creation paths
-        async Task<RequestResponseAmqpLink> CreateRequestResponseLinkAsync(TimeSpan timeout)
+        private async Task<RequestResponseAmqpLink> CreateRequestResponseLinkAsync(TimeSpan timeout)
         {
             var entityPath = Path + '/' + AmqpClientConstants.ManagementAddress;
 
@@ -1586,7 +1586,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return requestResponseAmqpLink;
         }
 
-        void OnSessionReceiverLinkClosed(object sender, EventArgs e)
+        private void OnSessionReceiverLinkClosed(object sender, EventArgs e)
         {
             var receivingAmqpLink = (ReceivingAmqpLink)sender;
             if (receivingAmqpLink != null)
@@ -1602,12 +1602,12 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
+        private List<ArraySegment<byte>> ConvertLockTokensToDeliveryTags(IEnumerable<Guid> lockTokens)
         {
             return lockTokens.Select(lockToken => new ArraySegment<byte>(lockToken.ToByteArray())).ToList();
         }
 
-        void ThrowIfNotPeekLockMode()
+        private void ThrowIfNotPeekLockMode()
         {
             if (ReceiveMode != ReceiveMode.PeekLock)
             {
@@ -1615,7 +1615,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        void ThrowIfSessionLockLost()
+        private void ThrowIfSessionLockLost()
         {
             if (LinkException != null)
             {
@@ -1623,17 +1623,17 @@ namespace Microsoft.Azure.ServiceBus.Core
             }
         }
 
-        Outcome GetAbandonOutcome(IDictionary<string, object> propertiesToModify)
+        private Outcome GetAbandonOutcome(IDictionary<string, object> propertiesToModify)
         {
             return GetModifiedOutcome(propertiesToModify, false);
         }
 
-        Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify)
+        private Outcome GetDeferOutcome(IDictionary<string, object> propertiesToModify)
         {
             return GetModifiedOutcome(propertiesToModify, true);
         }
 
-        Outcome GetModifiedOutcome(IDictionary<string, object> propertiesToModify, bool undeliverableHere)
+        private Outcome GetModifiedOutcome(IDictionary<string, object> propertiesToModify, bool undeliverableHere)
         {
             Modified modified = new Modified();
             if (undeliverableHere)
@@ -1660,7 +1660,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             return modified;
         }
 
-        Rejected GetRejectedOutcome(IDictionary<string, object> propertiesToModify, string deadLetterReason, string deadLetterErrorDescription)
+        private Rejected GetRejectedOutcome(IDictionary<string, object> propertiesToModify, string deadLetterReason, string deadLetterErrorDescription)
         {
             var rejected = AmqpConstants.RejectedOutcome;
             if (deadLetterReason != null || deadLetterErrorDescription != null || propertiesToModify != null)

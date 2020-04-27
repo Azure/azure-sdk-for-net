@@ -2,7 +2,7 @@
 {
     using Microsoft.Azure.Amqp;
 
-    sealed class AmqpTrueFilterCodec : AmqpFilterCodec
+    internal sealed class AmqpTrueFilterCodec : AmqpFilterCodec
     {
         public static readonly string Name = AmqpConstants.Vendor + ":true-filter:list";
         public const ulong Code = 0x000001370000007;

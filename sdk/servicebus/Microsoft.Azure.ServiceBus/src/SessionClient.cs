@@ -44,8 +44,8 @@ namespace Microsoft.Azure.ServiceBus
     /// <seealso cref="IMessageSession"/>
     public sealed class SessionClient : ClientEntity, ISessionClient
     {
-        const int DefaultPrefetchCount = 0;
-        readonly ServiceBusDiagnosticSource diagnosticSource;
+	    private const int DefaultPrefetchCount = 0;
+	    private readonly ServiceBusDiagnosticSource diagnosticSource;
 
         /// <summary>
         /// Creates a new SessionClient from a <see cref="ServiceBusConnectionStringBuilder"/>
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        ReceiveMode ReceiveMode { get; }
+        private ReceiveMode ReceiveMode { get; }
 
         /// <summary>
         /// Gets the path of the entity. This is either the name of the queue, or the full path of the subscription.
@@ -235,11 +235,11 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public override ServiceBusConnection ServiceBusConnection { get; }
 
-        MessagingEntityType? EntityType { get; }
+        private MessagingEntityType? EntityType { get; }
 
         internal int PrefetchCount { get; set; }
 
-        ICbsTokenProvider CbsTokenProvider { get; }
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
         /// Gets a list of currently registered plugins.

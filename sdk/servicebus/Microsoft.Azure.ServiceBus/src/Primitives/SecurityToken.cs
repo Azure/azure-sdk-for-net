@@ -13,22 +13,22 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         /// <summary>
         /// Token literal
         /// </summary>
-        string token;
+        private string token;
 
         /// <summary>
         /// Expiry date-time
         /// </summary>
-        DateTime expiresAtUtc;
+        private DateTime expiresAtUtc;
 
         /// <summary>
         /// Token audience
         /// </summary>
-        string audience;
+        private string audience;
 
         /// <summary>
         /// Token type
         /// </summary>
-        string tokenType;
+        private string tokenType;
 
         /// <summary>
         /// Creates a new instance of the <see cref="SecurityToken"/> class.

@@ -14,22 +14,22 @@ namespace Microsoft.Azure.ServiceBus
     /// </summary>
     public class ServiceBusConnectionStringBuilder
     {
-        const char KeyValueSeparator = '=';
-        const char KeyValuePairDelimiter = ';';
-        const string EndpointScheme = "amqps";
-        const string EndpointConfigName = "Endpoint";
-        const string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
-        const string SharedAccessKeyConfigName = "SharedAccessKey";
-        const string SharedAccessSignatureConfigName = "SharedAccessSignature";
-        const string AuthenticationConfigName = "Authentication";
+	    private const char KeyValueSeparator = '=';
+	    private const char KeyValuePairDelimiter = ';';
+	    private const string EndpointScheme = "amqps";
+	    private const string EndpointConfigName = "Endpoint";
+	    private const string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
+	    private const string SharedAccessKeyConfigName = "SharedAccessKey";
+	    private const string SharedAccessSignatureConfigName = "SharedAccessSignature";
+	    private const string AuthenticationConfigName = "Authentication";
 
-        const string EntityPathConfigName = "EntityPath";
-        const string TransportTypeConfigName = "TransportType";
+	    private const string EntityPathConfigName = "EntityPath";
+	    private const string TransportTypeConfigName = "TransportType";
 
-        const string OperationTimeoutConfigName = "OperationTimeout";
+	    private const string OperationTimeoutConfigName = "OperationTimeout";
 
-        string entityPath, sasKeyName, sasKey, sasToken, endpoint;
-        AuthenticationType authType = AuthenticationType.Other;
+	    private string entityPath, sasKeyName, sasKey, sasToken, endpoint;
+	    private AuthenticationType authType = AuthenticationType.Other;
 
         public enum AuthenticationType
         {
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.ServiceBus
             return GetEntityConnectionString();
         }
 
-        void ParseConnectionString(string connectionString)
+        private void ParseConnectionString(string connectionString)
         {
             // First split based on ';'
             var keyValuePairs = connectionString.Split(new[] { KeyValuePairDelimiter }, StringSplitOptions.RemoveEmptyEntries);

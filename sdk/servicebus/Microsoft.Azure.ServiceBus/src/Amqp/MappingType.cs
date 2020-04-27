@@ -3,7 +3,7 @@
 
 namespace Microsoft.Azure.ServiceBus.Amqp
 {
-    enum MappingType
+	internal enum MappingType
     {
         ApplicationProperty,
         MessageBody

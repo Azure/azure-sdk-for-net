@@ -9,11 +9,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
     using Microsoft.Azure.Amqp;
     using Primitives;
 
-    class AmqpTransactionEnlistment : Singleton<AmqpTransactionEnlistment>, IPromotableSinglePhaseNotification
+    internal class AmqpTransactionEnlistment : Singleton<AmqpTransactionEnlistment>, IPromotableSinglePhaseNotification
     {
-        readonly string transactionId;
-        readonly AmqpTransactionManager transactionManager;
-        readonly ServiceBusConnection serviceBusConnection;
+	    private readonly string transactionId;
+	    private readonly AmqpTransactionManager transactionManager;
+	    private readonly ServiceBusConnection serviceBusConnection;
 
         public AmqpTransactionEnlistment(
             Transaction transaction,
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             TaskExtensionHelper.Schedule(() => SinglePhaseCommitAsync(singlePhaseEnlistment));
         }
 
-        async Task SinglePhaseCommitAsync(SinglePhaseEnlistment singlePhaseEnlistment)
+        private async Task SinglePhaseCommitAsync(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             TaskExtensionHelper.Schedule(() => RollbackAsync(singlePhaseEnlistment));
         }
 
-        async Task RollbackAsync(SinglePhaseEnlistment singlePhaseEnlistment)
+        private async Task RollbackAsync(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             try
             {

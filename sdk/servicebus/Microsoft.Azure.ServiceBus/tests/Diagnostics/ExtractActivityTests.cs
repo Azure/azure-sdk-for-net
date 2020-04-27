@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
     {
         [Fact]
         [DisplayTestMethodName]
-        void ValidIdAndContextAreExtracted()
+        private void ValidIdAndContextAreExtracted()
         {
             var message = new Message();
             message.UserProperties["Diagnostic-Id"] = "diagnostic-id";
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         [Fact]
         [DisplayTestMethodName]
-        void ValidIdAndMultipleContextAreExtracted()
+        private void ValidIdAndMultipleContextAreExtracted()
         {
             var message = new Message();
             message.UserProperties["Diagnostic-Id"] = "diagnostic-id";
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         [Fact]
         [DisplayTestMethodName]
-        void ActivityNameCouldBeChanged()
+        private void ActivityNameCouldBeChanged()
         {
             var message = new Message();
             message.UserProperties["Diagnostic-Id"] = "diagnostic-id";
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         [Fact]
         [DisplayTestMethodName]
-        void ValidIdAndNoContextAreExtracted()
+        private void ValidIdAndNoContextAreExtracted()
         {
             var message = new Message();
             message.UserProperties["Diagnostic-Id"] = "diagnostic-id";
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         [InlineData("not valid context")]
         [InlineData("not,valid,context")]
         [DisplayTestMethodName]
-        void ValidIdAndInvalidContextAreExtracted(string context)
+        private void ValidIdAndInvalidContextAreExtracted(string context)
         {
             var message = new Message();
             message.UserProperties["Diagnostic-Id"] = "diagnostic-id";
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         [InlineData(null)]
         [InlineData("")]
         [DisplayTestMethodName]
-        void EmptyIdResultsInActivityWithoutParent(string id)
+        private void EmptyIdResultsInActivityWithoutParent(string id)
         {
             var message = new Message();
             message.UserProperties["Diagnostic-Id"] = id;

@@ -13,9 +13,9 @@ namespace Microsoft.Azure.ServiceBus.Management
     {
         internal TimeSpan duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
         internal string path;
-        TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
-        TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
-        string userMetadata = null;
+        private TimeSpan defaultMessageTimeToLive = TimeSpan.MaxValue;
+        private TimeSpan autoDeleteOnIdle = TimeSpan.MaxValue;
+        private string userMetadata = null;
 
         /// <summary>
         /// Initializes a new instance of TopicDescription class with the specified relative path.

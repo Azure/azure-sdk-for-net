@@ -11,9 +11,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// </summary>
     public class AzureActiveDirectoryTokenProvider : TokenProvider
     {
-        readonly string authority;
-        readonly object authCallbackState;
-        event AuthenticationCallback AuthCallback;
+	    private readonly string authority;
+	    private readonly object authCallbackState;
+	    private event AuthenticationCallback AuthCallback;
 
         public delegate Task<string> AuthenticationCallback(string audience, string authority, object state);
 

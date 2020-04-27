@@ -15,8 +15,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class TransactionTests
     {
-        static readonly string ConnectionString = TestUtility.NamespaceConnectionString;
-        static readonly TimeSpan ReceiveTimeout = TimeSpan.FromSeconds(5);
+	    private static readonly string ConnectionString = TestUtility.NamespaceConnectionString;
+	    private static readonly TimeSpan ReceiveTimeout = TimeSpan.FromSeconds(5);
 
         public static IEnumerable<object[]> TestPermutations => new[]
         {

@@ -6,7 +6,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp.Framing
     using Azure.Amqp.Framing;
     using Azure.Amqp;
 
-    abstract class AmqpFilterCodec : DescribedList
+    internal abstract class AmqpFilterCodec : DescribedList
     {
         protected AmqpFilterCodec(string name, ulong code)
             : base(name, code)

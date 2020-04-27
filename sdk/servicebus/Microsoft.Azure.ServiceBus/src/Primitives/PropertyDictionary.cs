@@ -8,9 +8,9 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     using System.Collections.Generic;
     using Amqp;
 
-    sealed class PropertyDictionary : IDictionary<string, object>
+    internal sealed class PropertyDictionary : IDictionary<string, object>
     {
-        readonly IDictionary<string, object> inner;
+	    private readonly IDictionary<string, object> inner;
 
         public PropertyDictionary()
         {
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
             return inner.GetEnumerator();
         }
 
-        bool IsSupportedObject(object value)
+        private bool IsSupportedObject(object value)
         {
             if (value != null)
             {

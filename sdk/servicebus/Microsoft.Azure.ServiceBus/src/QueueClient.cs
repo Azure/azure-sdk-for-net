@@ -54,13 +54,13 @@ namespace Microsoft.Azure.ServiceBus
     /// It uses AMQP protocol for communicating with servicebus.</remarks>
     public class QueueClient : ClientEntity, IQueueClient
     {
-        readonly object syncLock;
+	    private readonly object syncLock;
 
-        int prefetchCount;
-        MessageSender innerSender;
-        MessageReceiver innerReceiver;
-        SessionClient sessionClient;
-        SessionPumpHost sessionPumpHost;
+	    private int prefetchCount;
+	    private MessageSender innerSender;
+	    private MessageReceiver innerReceiver;
+	    private SessionClient sessionClient;
+	    private SessionPumpHost sessionPumpHost;
 
         /// <summary>
         /// Instantiates a new <see cref="QueueClient"/> to perform operations on a queue.
@@ -328,8 +328,8 @@ namespace Microsoft.Azure.ServiceBus
                 return sessionPumpHost;
             }
         }
-        
-        ICbsTokenProvider CbsTokenProvider { get; }
+
+        private ICbsTokenProvider CbsTokenProvider { get; }
 
         /// <summary>
         /// Sends a message to Service Bus.

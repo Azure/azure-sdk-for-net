@@ -10,15 +10,15 @@ namespace Microsoft.Azure.ServiceBus
     using Core;
     using Primitives;
 
-    sealed class MessageReceivePump
+    internal sealed class MessageReceivePump
     {
-        readonly Func<Message, CancellationToken, Task> onMessageCallback;
-        readonly string endpoint;
-        readonly MessageHandlerOptions registerHandlerOptions;
-        readonly IMessageReceiver messageReceiver;
-        readonly CancellationToken pumpCancellationToken;
-        readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
-        readonly ServiceBusDiagnosticSource diagnosticSource;
+	    private readonly Func<Message, CancellationToken, Task> onMessageCallback;
+	    private readonly string endpoint;
+	    private readonly MessageHandlerOptions registerHandlerOptions;
+	    private readonly IMessageReceiver messageReceiver;
+	    private readonly CancellationToken pumpCancellationToken;
+	    private readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
+	    private readonly ServiceBusDiagnosticSource diagnosticSource;
 
         public MessageReceivePump(IMessageReceiver messageReceiver,
             MessageHandlerOptions registerHandlerOptions,
@@ -40,20 +40,20 @@ namespace Microsoft.Azure.ServiceBus
             TaskExtensionHelper.Schedule(() => MessagePumpTaskAsync());
         }
 
-        bool ShouldRenewLock()
+        private bool ShouldRenewLock()
         {
             return
                 messageReceiver.ReceiveMode == ReceiveMode.PeekLock &&
                 registerHandlerOptions.AutoRenewLock;
         }
 
-        Task RaiseExceptionReceived(Exception e, string action)
+        private Task RaiseExceptionReceived(Exception e, string action)
         {
             var eventArgs = new ExceptionReceivedEventArgs(e, action, endpoint, messageReceiver.Path, messageReceiver.ClientId);
             return registerHandlerOptions.RaiseExceptionReceived(eventArgs);
         }
 
-        async Task MessagePumpTaskAsync()
+        private async Task MessagePumpTaskAsync()
         {
             while (!pumpCancellationToken.IsCancellationRequested)
             {
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task MessageDispatchTaskInstrumented(Message message)
+        private async Task MessageDispatchTaskInstrumented(Message message)
         {
             Activity activity = diagnosticSource.ProcessStart(message);
             Task processTask = null;
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task MessageDispatchTask(Message message)
+        private async Task MessageDispatchTask(Message message)
         {
             CancellationTokenSource renewLockCancellationTokenSource = null;
             Timer autoRenewLockCancellationTimer = null;
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.ServiceBus
             MessagingEventSource.Log.MessageReceiverPumpDispatchTaskStop(messageReceiver.ClientId, message, maxConcurrentCallsSemaphoreSlim.CurrentCount);
         }
 
-        void CancelAutoRenewLock(object state)
+        private void CancelAutoRenewLock(object state)
         {
             var renewLockCancellationTokenSource = (CancellationTokenSource)state;
             try
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task AbandonMessageIfNeededAsync(Message message)
+        private async Task AbandonMessageIfNeededAsync(Message message)
         {
             try
             {
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task CompleteMessageIfNeededAsync(Message message)
+        private async Task CompleteMessageIfNeededAsync(Message message)
         {
             try
             {
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.ServiceBus
             }
         }
 
-        async Task RenewMessageLockTask(Message message, CancellationToken renewLockCancellationToken)
+        private async Task RenewMessageLockTask(Message message, CancellationToken renewLockCancellationToken)
         {
             while (!pumpCancellationToken.IsCancellationRequested &&
                    !renewLockCancellationToken.IsCancellationRequested)

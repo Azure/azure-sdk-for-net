@@ -5,7 +5,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
 
-    class ExceptionUtility
+    internal class ExceptionUtility
     {
         public ArgumentException Argument(string paramName, string message)
         {
