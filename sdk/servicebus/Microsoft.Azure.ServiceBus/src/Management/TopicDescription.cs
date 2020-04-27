@@ -15,7 +15,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         internal string path;
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
-        private string _userMetadata = null;
+        private string _userMetadata;
 
         /// <summary>
         /// Initializes a new instance of TopicDescription class with the specified relative path.

@@ -19,9 +19,9 @@ namespace Microsoft.Azure.ServiceBus.Management
 	    private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
 	    private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
 	    private int _maxDeliveryCount = 10;
-	    private string _forwardTo = null;
-	    private string _forwardDeadLetteredMessagesTo = null;
-	    private string _userMetadata = null;
+	    private string _forwardTo;
+	    private string _forwardDeadLetteredMessagesTo;
+	    private string _userMetadata;
 
         /// <summary>
         /// Initializes a new instance of SubscriptionDescription class with the specified name and topic path.
