@@ -212,9 +212,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
                 var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
 
-                /// Only following value types are supported:
-                /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
-                /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
+                // Only following value types are supported:
+                // byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
+                // bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
                 var msg = new Message();
                 msg.UserProperties.Add("byte", (byte)2);
                 msg.UserProperties.Add("sbyte", (sbyte)3);
