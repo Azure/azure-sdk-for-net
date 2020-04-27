@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -308,6 +309,14 @@ namespace Azure.AI.FormRecognizer.Tests
             cancellationSource.Cancel();
 
             Assert.ThrowsAsync<TaskCanceledException>(async () => await client.StartRecognizeCustomFormsFromUriAsync("00000000-0000-0000-0000-000000000000", fakeUri, cancellationToken: cancellationSource.Token));
+        }
+
+        [Test]
+        public void CreateFormTrainingClientFromFormRecognizerClient()
+        {
+            var client = CreateClient();
+            FormTrainingClient trainingClient = client.GetFormTrainingClient();
+            Assert.IsNotNull(trainingClient);
         }
     }
 }
