@@ -131,12 +131,25 @@ namespace Azure.Core.Testing
                 return 1;
             }
 
-            if (!requestBody.SequenceEqual(requestBody))
+            if (!requestBody.SequenceEqual(responseBody))
             {
                 if (descriptionBuilder != null)
                 {
-                    descriptionBuilder.AppendLine("Request and response bodies do not match");
-
+                    var minLength = Math.Min(requestBody.Length, responseBody.Length);
+                    int i;
+                    for (i = 0; i < minLength - 1; i++)
+                    {
+                        if (requestBody[i] != responseBody[i])
+                        {
+                            break;
+                        }
+                    }
+                    descriptionBuilder.AppendLine($"Request and response bodies do not match at index {i}:");
+                    var before = Math.Max(0, i - 10);
+                    var afterRequest = Math.Min(i + 20, requestBody.Length);
+                    var afterResponse = Math.Min(i + 20, responseBody.Length);
+                    descriptionBuilder.AppendLine($"     request:  \"{Encoding.UTF8.GetString(requestBody, before, afterRequest - before)}\"");
+                    descriptionBuilder.AppendLine($"     response: \"{Encoding.UTF8.GetString(responseBody, before, afterResponse - before)}\"");
                 }
                 return 1;
             }

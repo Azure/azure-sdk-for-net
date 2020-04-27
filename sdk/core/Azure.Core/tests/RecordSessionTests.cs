@@ -87,7 +87,7 @@ namespace Azure.Core.Tests
             mockRequest.Uri.Reset(new Uri("http://localhost"));
             mockRequest.Headers.Add("Some-Header", "Random value");
             mockRequest.Headers.Add("Some-Other-Header", "V");
-
+            mockRequest.Content = RequestContent.Create(Encoding.UTF8.GetBytes("This is request body, it's nice and long."));
             RecordEntry[] entries = new[]
             {
                 new RecordEntry()
@@ -98,9 +98,11 @@ namespace Azure.Core.Tests
                     {
                         Headers =
                             {
+                                { "Content-Length", new[] { "41"}},
                                 { "Some-Header", new[] { "Non-Random value"}},
                                 { "Extra-Header", new[] { "Extra-Value" }}
-                            }
+                            },
+                        Body = Encoding.UTF8.GetBytes("This is request body, it's nice and long but it also doesn't match.")
                     }
                 }
             };
@@ -115,7 +117,11 @@ namespace Azure.Core.Tests
                 "Header differences:" + Environment.NewLine +
                 "    <Some-Header> values differ, request <Random value>, record <Non-Random value>" + Environment.NewLine +
                 "    <Some-Other-Header> is absent in record, value <V>" + Environment.NewLine +
-                "    <Extra-Header> is absent in request, value <Extra-Value>" + Environment.NewLine,
+                "    <Extra-Header> is absent in request, value <Extra-Value>" + Environment.NewLine +
+                "Body differences:" + Environment.NewLine +
+                "Request and response bodies do not match at index 40:" + Environment.NewLine +
+                "     request:  \"e and long.\"" + Environment.NewLine +
+                "     response: \"e and long but it also doesn't\"" + Environment.NewLine,
                 exception.Message);
         }
 
