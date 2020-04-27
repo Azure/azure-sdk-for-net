@@ -65,7 +65,7 @@ namespace Azure.Core.Testing
             return request;
         }
 
-        public RecordEntry CreateEntry(Request request, Response response)
+        internal static RecordEntry CreateEntry(Request request, Response response)
         {
             var entry = new RecordEntry
             {
@@ -105,7 +105,7 @@ namespace Azure.Core.Testing
             return entry;
         }
 
-        private byte[] ReadToEnd(Response response)
+        private static byte[] ReadToEnd(Response response)
         {
             Stream responseContentStream = response.ContentStream;
             if (responseContentStream == null)
@@ -122,7 +122,7 @@ namespace Azure.Core.Testing
             return memoryStream.ToArray();
         }
 
-        private byte[] ReadToEnd(RequestContent requestContent)
+        private static byte[] ReadToEnd(RequestContent requestContent)
         {
             if (requestContent == null)
             {

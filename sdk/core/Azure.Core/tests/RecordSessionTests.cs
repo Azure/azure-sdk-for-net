@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Moq;
 using NUnit.Framework;
@@ -198,6 +199,31 @@ namespace Azure.Core.Tests
             var text = File.ReadAllText(tempFile);
 
             StringAssert.DoesNotContain("secret", text);
+        }
+
+        [Theory]
+        [TestCase("Content-Type")]
+        [TestCase("Accept")]
+        [TestCase("Random-Header")]
+        public void SpecialHeadersNormalizedForMatching(string name)
+        {
+            // Use HttpClientTransport as it does header normalization
+            var originalRequest = new HttpClientTransport().CreateRequest();
+            originalRequest.Method = RequestMethod.Get;
+            originalRequest.Uri.Reset(new Uri("http://localhost"));
+            originalRequest.Headers.Add(name, "application/json;odata=nometadata");
+            originalRequest.Headers.Add("Date", "This should be ignored");
+
+            var playbackRequest = new MockTransport().CreateRequest();
+            playbackRequest.Method = RequestMethod.Get;
+            playbackRequest.Uri.Reset(new Uri("http://localhost"));
+            playbackRequest.Headers.Add(name, "application/json;odata=nometadata");
+            originalRequest.Headers.Add("Date", "It doesn't match");
+
+            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+            var entry = RecordTransport.CreateEntry(originalRequest, new MockResponse(200));
+
+            Assert.NotNull(matcher.FindMatch(playbackRequest, new[] { entry }));
         }
 
         private class TestSanitizer : RecordedTestSanitizer

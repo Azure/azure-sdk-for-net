@@ -13,6 +13,13 @@ namespace Azure.Core.Testing
     {
         private readonly RecordedTestSanitizer _sanitizer;
 
+        // Headers that are normalized by HttpClient
+        private HashSet<string> _normalizedHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "Accept",
+            "Content-Type"
+        };
+
         public RecordMatcher(RecordedTestSanitizer sanitizer)
         {
             _sanitizer = sanitizer;
@@ -187,26 +194,51 @@ namespace Azure.Core.Testing
             return string.Join(",", values);
         }
 
+        private string[] RenormalizeSemicolons(string[] values)
+        {
+            string[] outputs = new string[values.Length];
+            for (int i = 0; i < values.Length; i++)
+            {
+                outputs[i] = string.Join("; ", values[i].Split(';').Select(part => part.Trim()));
+            }
+
+            return outputs;
+        }
+
         private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders, HashSet<string> ignoredHeaders, StringBuilder descriptionBuilder = null)
         {
             int difference = 0;
             var remaining = new SortedDictionary<string, string[]>(entryHeaders, entryHeaders.Comparer);
             foreach (KeyValuePair<string, string[]> header in headers)
             {
-                if (remaining.TryGetValue(header.Key, out string[] values))
+                var requestHeaderValues = header.Value;
+                var headerName = header.Key;
+
+                if (ignoredHeaders.Contains(headerName))
                 {
-                    remaining.Remove(header.Key);
-                    if (!ignoredHeaders.Contains(header.Key) &&
-                        !values.SequenceEqual(header.Value))
+                    continue;
+                }
+
+                if (remaining.TryGetValue(headerName, out string[] entryHeaderValues))
+                {
+                    // Content-Type, Accept headers are normalized by HttpClient, re-normalize them before comparing
+                    if (_normalizedHeaders.Contains(headerName))
+                    {
+                        requestHeaderValues = RenormalizeSemicolons(requestHeaderValues);
+                        entryHeaderValues = RenormalizeSemicolons(entryHeaderValues);
+                    }
+
+                    remaining.Remove(headerName);
+                    if (!entryHeaderValues.SequenceEqual(requestHeaderValues))
                     {
                         difference++;
-                        descriptionBuilder?.AppendLine($"    <{header.Key}> values differ, request <{JoinHeaderValues(header.Value)}>, record <{JoinHeaderValues(values)}>");
+                        descriptionBuilder?.AppendLine($"    <{headerName}> values differ, request <{JoinHeaderValues(requestHeaderValues)}>, record <{JoinHeaderValues(entryHeaderValues)}>");
                     }
                 }
-                else if (!ignoredHeaders.Contains(header.Key))
+                else
                 {
                     difference++;
-                    descriptionBuilder?.AppendLine($"    <{header.Key}> is absent in record, value <{JoinHeaderValues(header.Value)}>");
+                    descriptionBuilder?.AppendLine($"    <{headerName}> is absent in record, value <{JoinHeaderValues(requestHeaderValues)}>");
                 }
             }
 
