@@ -893,7 +893,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 await client.CreateTopicAsync(topicName);
                 await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-                new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName);
+                var _ = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName);
                 var filter = new CorrelationFilter();
                 filter.Properties.Add("stringKey", "stringVal");
                 filter.Properties.Add("intKey", 5);
