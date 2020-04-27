@@ -10,9 +10,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
     public class AuthorizationRules : List<AuthorizationRule>, IEquatable<AuthorizationRules>
     {
-        private bool RequiresEncryption => Count > 0;
-
-        internal XElement Serialize()
+	    internal XElement Serialize()
         {
             var rules = new XElement(
                 XName.Get("AuthorizationRules", ManagementClientConstants.ServiceBusNamespace),

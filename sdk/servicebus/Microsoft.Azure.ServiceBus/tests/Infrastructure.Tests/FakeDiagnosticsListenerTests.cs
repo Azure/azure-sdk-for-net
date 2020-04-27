@@ -27,16 +27,16 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
                 try
                 {
                     using (var listener = CreateEventListener(entityName, eventQueue))
-                    using (var subscription = SubscribeToEvents(listener))
+                    using (SubscribeToEvents(listener))
                     {
-                        listener.Disable();
+	                    listener.Disable();
 
-                        var ruleName = Guid.NewGuid().ToString();
-                        await subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
-                        await subscriptionClient.GetRulesAsync();
-                        await subscriptionClient.RemoveRuleAsync(ruleName);
+	                    var ruleName = Guid.NewGuid().ToString();
+	                    await subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
+	                    await subscriptionClient.GetRulesAsync();
+	                    await subscriptionClient.RemoveRuleAsync(ruleName);
 
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
+	                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                     }
                 }
                 finally
@@ -59,27 +59,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
                 try
                 {
                     using (var listener = CreateEventListener(queueName, eventQueue))
-                    using (var subscription = SubscribeToEvents(listener))
+                    using (SubscribeToEvents(listener))
                     {
-                        listener.Disable();
+	                    listener.Disable();
 
-                        var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+	                    var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        queueClient.RegisterMessageHandler((msg, ct) =>
-                        {
-                            tcs.TrySetResult(0);
-                            return Task.CompletedTask;
-                        },
-                        exArgs =>
-                        {
-                            // An exception is not interesting in this context; ignore any
-                            // that may occur.
-                            return Task.CompletedTask;
-                        });
+	                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+	                    queueClient.RegisterMessageHandler((msg, ct) =>
+		                    {
+			                    tcs.TrySetResult(0);
+			                    return Task.CompletedTask;
+		                    },
+		                    exArgs =>
+		                    {
+			                    // An exception is not interesting in this context; ignore any
+			                    // that may occur.
+			                    return Task.CompletedTask;
+		                    });
 
-                        await tcs.Task.WithTimeout(DefaultTimeout);
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
+	                    await tcs.Task.WithTimeout(DefaultTimeout);
+	                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                     }
                 }
                 finally
@@ -102,28 +102,28 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
                 try
                 {
                     using (var listener = CreateEventListener(queueName, eventQueue))
-                    using (var subscription = SubscribeToEvents(listener))
+                    using (SubscribeToEvents(listener))
                     {
-                        listener.Enable((name, queue, arg) => queue?.ToString() != queueName);
+	                    listener.Enable((name, queue, arg) => queue?.ToString() != queueName);
 
-                        var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+	                    var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                        queueClient.RegisterMessageHandler((msg, ct) =>
-                        {
-                            tcs.TrySetResult(0);
-                            return Task.CompletedTask;
-                        },
-                        exArgs =>
-                        {
-                            // An exception is not interesting in this context; ignore any
-                            // that may occur.
-                            return Task.CompletedTask;
-                        });
+	                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+	                    queueClient.RegisterMessageHandler((msg, ct) =>
+		                    {
+			                    tcs.TrySetResult(0);
+			                    return Task.CompletedTask;
+		                    },
+		                    exArgs =>
+		                    {
+			                    // An exception is not interesting in this context; ignore any
+			                    // that may occur.
+			                    return Task.CompletedTask;
+		                    });
 
-                        await tcs.Task.WithTimeout(DefaultTimeout);
+	                    await tcs.Task.WithTimeout(DefaultTimeout);
 
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
+	                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                     }
                 }
                 finally
@@ -148,25 +148,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
                 try
                 {
                     using (var listener = CreateEventListener(queueName, eventQueue))
-                    using (var subscription = SubscribeToEvents(listener))
+                    using (SubscribeToEvents(listener))
                     {
-                        listener.Disable();
+	                    listener.Disable();
 
-                        var sessionId = Guid.NewGuid().ToString();
-                        await messageSender.SendAsync(new Message
-                        {
-                            MessageId = "messageId",
-                            SessionId = sessionId
-                        });
+	                    var sessionId = Guid.NewGuid().ToString();
+	                    await messageSender.SendAsync(new Message
+	                    {
+		                    MessageId = "messageId",
+		                    SessionId = sessionId
+	                    });
 
-                        messageSession = await sessionClient.AcceptMessageSessionAsync(sessionId);
+	                    messageSession = await sessionClient.AcceptMessageSessionAsync(sessionId);
 
-                        await messageSession.SetStateAsync(new byte[] { 1 });
-                        await messageSession.GetStateAsync();
-                        await messageSession.SetStateAsync(new byte[] { });
-                        await messageSession.ReceiveAsync();
+	                    await messageSession.SetStateAsync(new byte[] { 1 });
+	                    await messageSession.GetStateAsync();
+	                    await messageSession.SetStateAsync(new byte[] { });
+	                    await messageSession.ReceiveAsync();
 
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
+	                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                     }
                 }
                 finally
@@ -192,29 +192,29 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure.Tests
                 try
                 {
                     using (var listener = CreateEventListener(queueName, eventQueue))
-                    using (var subscription = SubscribeToEvents(listener))
+                    using (SubscribeToEvents(listener))
                     {
-                        listener.Enable((name, queue, arg) => 
-                            !name.Contains("Send") && !name.Contains("Process") && !name.Contains("Receive") && !name.Contains("Exception"));
+	                    listener.Enable((name, queue, arg) => 
+		                    !name.Contains("Send") && !name.Contains("Process") && !name.Contains("Receive") && !name.Contains("Exception"));
 
-                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+	                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
 
-                        var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
+	                    var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                        queueClient.RegisterMessageHandler((msg, ct) =>
-                        {
-                            tcs.TrySetResult(0);
-                            return Task.CompletedTask;
-                        },
-                        exArgs => 
-                        {
-                            // An exception is not interesting in this context; ignore any
-                            // that may occur.
-                            return Task.CompletedTask;
-                        });
+	                    queueClient.RegisterMessageHandler((msg, ct) =>
+		                    {
+			                    tcs.TrySetResult(0);
+			                    return Task.CompletedTask;
+		                    },
+		                    exArgs => 
+		                    {
+			                    // An exception is not interesting in this context; ignore any
+			                    // that may occur.
+			                    return Task.CompletedTask;
+		                    });
 
-                        await tcs.Task.WithTimeout(DefaultTimeout);
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
+	                    await tcs.Task.WithTimeout(DefaultTimeout);
+	                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                     }
                 }
                 finally

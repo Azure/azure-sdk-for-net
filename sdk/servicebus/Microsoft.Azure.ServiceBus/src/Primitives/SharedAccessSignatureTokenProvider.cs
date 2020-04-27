@@ -17,9 +17,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     /// </summary>
     public class SharedAccessSignatureTokenProvider : TokenProvider
     {
-	    private const TokenScope DefaultTokenScope = TokenScope.Entity;
-
-        internal static readonly TimeSpan DefaultTokenTTL = TimeSpan.FromMinutes(60);
+	    internal static readonly TimeSpan DefaultTokenTTL = TimeSpan.FromMinutes(60);
 
         private readonly byte[] encodedSharedAccessKey;
         private readonly string keyName;

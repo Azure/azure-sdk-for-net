@@ -30,8 +30,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var contentType = Guid.NewGuid().ToString();
             var replyTo = Guid.NewGuid().ToString();
             var replyToSessionId = Guid.NewGuid().ToString();
-            var publisher = Guid.NewGuid().ToString();
-            var properties = Guid.NewGuid().ToString();
 
             var brokeredMessage = new Message(messageBody)
             {

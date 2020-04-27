@@ -82,9 +82,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 {
                     string body = Guid.NewGuid().ToString("N");
                     var message = new Message(body.GetBytes()) { PartitionKey = "pk" };
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await sender.SendAsync(message).ConfigureAwait(false);
+	                    await sender.SendAsync(message).ConfigureAwait(false);
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -164,9 +164,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.NotNull(receivedMessage);
                     Assert.Equal(body, receivedMessage.Body.GetString());
 
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+	                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -210,9 +210,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.NotNull(receivedMessage);
                     Assert.Equal(body, receivedMessage.Body.GetString());
 
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+	                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -265,9 +265,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     var deferredMessage = await receiver.ReceiveDeferredMessageAsync(sequenceNumber);
 
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken);
+	                    await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken);
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -448,10 +448,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.NotNull(receivedMessage);
                     Assert.Equal(body1, receivedMessage.Body.GetString());
 
-                    using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                    using (new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
-                        await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
-                        await sender.SendAsync(message2).ConfigureAwait(false);
+	                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
+	                    await sender.SendAsync(message2).ConfigureAwait(false);
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.

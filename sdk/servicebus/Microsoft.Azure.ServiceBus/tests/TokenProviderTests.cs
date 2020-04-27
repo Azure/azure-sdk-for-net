@@ -30,7 +30,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                 try
                 {
-                    var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+	                await receiver.ReceiveAsync(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
                 }
                 finally
                 {

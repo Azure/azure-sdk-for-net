@@ -907,8 +907,8 @@ namespace Microsoft.Azure.ServiceBus.Management
 
             try
             {
-                // TODO: Optimize by removing deserialization costs.
-                var qd = await GetQueueAsync(queuePath, cancellationToken).ConfigureAwait(false);
+	            // TODO: Optimize by removing deserialization costs.
+	            await GetQueueAsync(queuePath, cancellationToken).ConfigureAwait(false);
             }
             catch (MessagingEntityNotFoundException)
             {
@@ -935,8 +935,8 @@ namespace Microsoft.Azure.ServiceBus.Management
 
             try
             {
-                // TODO: Optimize by removing deserialization costs.
-                var td = await GetTopicAsync(topicPath, cancellationToken).ConfigureAwait(false);
+	            // TODO: Optimize by removing deserialization costs.
+	            await GetTopicAsync(topicPath, cancellationToken).ConfigureAwait(false);
             }
             catch (MessagingEntityNotFoundException)
             {
@@ -965,8 +965,8 @@ namespace Microsoft.Azure.ServiceBus.Management
 
             try
             {
-                // TODO: Optimize by removing deserialization costs.
-                var sd = await GetSubscriptionAsync(topicPath, subscriptionName, cancellationToken).ConfigureAwait(false);
+	            // TODO: Optimize by removing deserialization costs.
+	            await GetSubscriptionAsync(topicPath, subscriptionName, cancellationToken).ConfigureAwait(false);
             }
             catch (MessagingEntityNotFoundException)
             {

@@ -328,7 +328,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 // Changing Last Updated Time
                 qd.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
-                var updatedQ = await client.UpdateQueueAsync(qd);
+                await client.UpdateQueueAsync(qd);
 
                 // Populating 1 active message, 1 dead letter message and 1 scheduled message
                 // Changing Last Accessed Time
@@ -709,18 +709,18 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
             try
             {
-                var dlqDestinationQ = await client.CreateQueueAsync(dlqDestinationName);
-                var destinationQ = await client.CreateQueueAsync(
-                    new QueueDescription(destinationName)
-                    {
-                        ForwardDeadLetteredMessagesTo = dlqDestinationName
-                    });
+                await client.CreateQueueAsync(dlqDestinationName);
+                await client.CreateQueueAsync(
+	                new QueueDescription(destinationName)
+	                {
+		                ForwardDeadLetteredMessagesTo = dlqDestinationName
+	                });
 
                 var qd = new QueueDescription(queueName)
                 {
                     ForwardTo = destinationName
                 };
-                var baseQ = await client.CreateQueueAsync(qd);
+                await client.CreateQueueAsync(qd);
 
                 
                 await sender.SendAsync(new Message() { MessageId = "mid" });
@@ -893,7 +893,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 await client.CreateTopicAsync(topicName);
                 await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-                var sClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName);
+                new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName);
                 var filter = new CorrelationFilter();
                 filter.Properties.Add("stringKey", "stringVal");
                 filter.Properties.Add("intKey", 5);

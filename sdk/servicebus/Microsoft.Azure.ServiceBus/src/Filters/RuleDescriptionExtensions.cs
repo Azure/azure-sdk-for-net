@@ -97,7 +97,6 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
         private static RuleDescription ParseFromEntryElement(XElement xEntry)
         {
-            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
             var ruleDescription = new RuleDescription();
 
             var rdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?

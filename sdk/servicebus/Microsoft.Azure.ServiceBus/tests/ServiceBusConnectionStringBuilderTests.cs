@@ -190,7 +190,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 csb.EntityPath = queueName;
 
                 var receiver = new MessageReceiver(csb);
-                var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
 
                 await receiver.CloseAsync();
             });

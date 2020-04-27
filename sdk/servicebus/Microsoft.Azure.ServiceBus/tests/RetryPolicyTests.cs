@@ -39,20 +39,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var retryPolicy = RetryPolicy.Default;
             var numberOfExecutions = 0;
 
-            using (var tx = new TransactionScope(TransactionScopeOption.RequiresNew, TransactionScopeAsyncFlowOption.Enabled))
+            using (new TransactionScope(TransactionScopeOption.RequiresNew, TransactionScopeAsyncFlowOption.Enabled))
             {
-                await Assert.ThrowsAsync<ServerBusyException>(() =>
-                    retryPolicy.RunOperation(() =>
-                    {
-                        if (numberOfExecutions > 1)
-                        {
-                            return Task.CompletedTask;
-                        }
+	            await Assert.ThrowsAsync<ServerBusyException>(() =>
+		            retryPolicy.RunOperation(() =>
+		            {
+			            if (numberOfExecutions > 1)
+			            {
+				            return Task.CompletedTask;
+			            }
 
-                        numberOfExecutions++;
+			            numberOfExecutions++;
 
-                        throw new ServerBusyException("Rico KABOOM!");
-                    }, TimeSpan.FromSeconds(30)));
+			            throw new ServerBusyException("Rico KABOOM!");
+		            }, TimeSpan.FromSeconds(30)));
             }
 
             Assert.Equal(1, numberOfExecutions);

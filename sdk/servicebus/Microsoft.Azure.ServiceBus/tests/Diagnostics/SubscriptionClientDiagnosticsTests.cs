@@ -29,34 +29,34 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 try
                 {
                     using (var listener = CreateEventListener(entityName, eventQueue))
-                    using (var subscription = SubscribeToEvents(listener))
+                    using (SubscribeToEvents(listener))
                     {
-                        listener.Enable((name, queue, id) => name.Contains("Rule"));
+	                    listener.Enable((name, queue, id) => name.Contains("Rule"));
 
-                        var ruleName = Guid.NewGuid().ToString();
-                        await subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
-                        await subscriptionClient.GetRulesAsync();
-                        await subscriptionClient.RemoveRuleAsync(ruleName);
+	                    var ruleName = Guid.NewGuid().ToString();
+	                    await subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
+	                    await subscriptionClient.GetRulesAsync();
+	                    await subscriptionClient.RemoveRuleAsync(ruleName);
 
-                        Assert.True(eventQueue.TryDequeue(out var addRuleStart));
-                        AssertAddRuleStart(entityName, addRuleStart.eventName, addRuleStart.payload, addRuleStart.activity);
+	                    Assert.True(eventQueue.TryDequeue(out var addRuleStart));
+	                    AssertAddRuleStart(entityName, addRuleStart.eventName, addRuleStart.payload, addRuleStart.activity);
 
-                        Assert.True(eventQueue.TryDequeue(out var addRuleStop));
-                        AssertAddRuleStop(entityName, addRuleStop.eventName, addRuleStop.payload, addRuleStop.activity, addRuleStart.activity);
+	                    Assert.True(eventQueue.TryDequeue(out var addRuleStop));
+	                    AssertAddRuleStop(entityName, addRuleStop.eventName, addRuleStop.payload, addRuleStop.activity, addRuleStart.activity);
 
-                        Assert.True(eventQueue.TryDequeue(out var getRulesStart));
-                        AssertGetRulesStart(entityName, getRulesStart.eventName, getRulesStart.payload, getRulesStart.activity);
+	                    Assert.True(eventQueue.TryDequeue(out var getRulesStart));
+	                    AssertGetRulesStart(entityName, getRulesStart.eventName, getRulesStart.payload, getRulesStart.activity);
 
-                        Assert.True(eventQueue.TryDequeue(out var getRulesStop));
-                        AssertGetRulesStop(entityName, getRulesStop.eventName, getRulesStop.payload, getRulesStop.activity, getRulesStart.activity);
+	                    Assert.True(eventQueue.TryDequeue(out var getRulesStop));
+	                    AssertGetRulesStop(entityName, getRulesStop.eventName, getRulesStop.payload, getRulesStop.activity, getRulesStart.activity);
 
-                        Assert.True(eventQueue.TryDequeue(out var removeRuleStart));
-                        AssertRemoveRuleStart(entityName, removeRuleStart.eventName, removeRuleStart.payload, removeRuleStart.activity);
+	                    Assert.True(eventQueue.TryDequeue(out var removeRuleStart));
+	                    AssertRemoveRuleStart(entityName, removeRuleStart.eventName, removeRuleStart.payload, removeRuleStart.activity);
 
-                        Assert.True(eventQueue.TryDequeue(out var removeRuleStop));
-                        AssertRemoveRuleStop(entityName, removeRuleStop.eventName, removeRuleStop.payload, removeRuleStop.activity, removeRuleStart.activity);
+	                    Assert.True(eventQueue.TryDequeue(out var removeRuleStop));
+	                    AssertRemoveRuleStop(entityName, removeRuleStop.eventName, removeRuleStop.payload, removeRuleStop.activity, removeRuleStart.activity);
 
-                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
+	                    Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
                     }
                 }
                 finally
