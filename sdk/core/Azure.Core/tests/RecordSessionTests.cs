@@ -212,11 +212,13 @@ namespace Azure.Core.Tests
             originalRequest.Method = RequestMethod.Get;
             originalRequest.Uri.Reset(new Uri("http://localhost"));
             originalRequest.Headers.Add(name, "application/json;odata=nometadata");
+            originalRequest.Headers.Add("Date", "This should be ignored");
 
             var playbackRequest = new MockTransport().CreateRequest();
             playbackRequest.Method = RequestMethod.Get;
             playbackRequest.Uri.Reset(new Uri("http://localhost"));
             playbackRequest.Headers.Add(name, "application/json;odata=nometadata");
+            originalRequest.Headers.Add("Date", "It doesn't match");
 
             var matcher = new RecordMatcher(new RecordedTestSanitizer());
             var entry = RecordTransport.CreateEntry(originalRequest, new MockResponse(200));
