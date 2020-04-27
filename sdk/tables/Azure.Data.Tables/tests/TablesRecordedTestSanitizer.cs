@@ -11,7 +11,7 @@ namespace Azure.Data.Tables.Tests
         {
             return variableName switch
             {
-                "TABLES_STORAGE_ACCOUNT_KEY" => string.Empty,
+                "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY" => string.Empty,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }

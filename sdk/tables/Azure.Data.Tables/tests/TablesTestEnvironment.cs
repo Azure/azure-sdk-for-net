@@ -12,7 +12,7 @@ namespace Azure.Data.Tables.Tests
         }
 
         private const string StorageUriFormat = "https://{0}.table.core.windows.net";
-        public string PrimaryStorageAccountKey => GetRecordedVariable("TABLES_STORAGE_ACCOUNT_KEY");
+        public string PrimaryStorageAccountKey => GetRecordedVariable("TABLES_PRIMARY_STORAGE_ACCOUNT_KEY");
         public string AccountName => GetRecordedVariable("TABLES_STORAGE_ACCOUNT_NAME");
         public string StorageUri => string.Format(StorageUriFormat, AccountName);
     }
