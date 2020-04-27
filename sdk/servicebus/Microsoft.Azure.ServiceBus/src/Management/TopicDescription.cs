@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 if (value < ManagementClientConstants.MinimumAllowedTimeToLive || value > ManagementClientConstants.MaximumAllowedTimeToLive)
                 {
                     throw new ArgumentOutOfRangeException(nameof(DefaultMessageTimeToLive),
-                        $"The value must be between {ManagementClientConstants.MinimumAllowedTimeToLive} and {ManagementClientConstants.MaximumAllowedTimeToLive}");
+                        $@"The value must be between {ManagementClientConstants.MinimumAllowedTimeToLive} and {ManagementClientConstants.MaximumAllowedTimeToLive}");
                 }
 
                 defaultMessageTimeToLive = value;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 if (value < ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle)
                 {
                     throw new ArgumentOutOfRangeException(nameof(AutoDeleteOnIdle),
-                        $"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}");
+                        $@"The value must be greater than {ManagementClientConstants.MinimumAllowedAutoDeleteOnIdle}");
                 }
 
                 autoDeleteOnIdle = value;
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 if (value < ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow || value > ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow)
                 {
                     throw new ArgumentOutOfRangeException(nameof(DuplicateDetectionHistoryTimeWindow),
-                        $"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}");
+                        $@"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}");
                 }
 
                 duplicateDetectionHistoryTimeWindow = value;
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
                 if (value.Length > ManagementClientConstants.MaxUserMetadataLength)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(UserMetadata), $"Length cannot cross {ManagementClientConstants.MaxUserMetadataLength} characters");
+                    throw new ArgumentOutOfRangeException(nameof(UserMetadata), $@"Length cannot cross {ManagementClientConstants.MaxUserMetadataLength} characters");
                 }
 
                 userMetadata = value;

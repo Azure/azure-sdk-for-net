@@ -1213,12 +1213,12 @@ namespace Microsoft.Azure.ServiceBus.Core
         {
             if (deadLetterReason != null && deadLetterReason.Length > Constants.MaxDeadLetterReasonLength)
             {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterReason), $"Maximum permitted length is {Constants.MaxDeadLetterReasonLength}");
+                throw new ArgumentOutOfRangeException(nameof(deadLetterReason), $@"Maximum permitted length is {Constants.MaxDeadLetterReasonLength}");
             }
 
             if (deadLetterErrorDescription != null && deadLetterErrorDescription.Length > Constants.MaxDeadLetterReasonLength)
             {
-                throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), $"Maximum permitted length is {Constants.MaxDeadLetterReasonLength}");
+                throw new ArgumentOutOfRangeException(nameof(deadLetterErrorDescription), $@"Maximum permitted length is {Constants.MaxDeadLetterReasonLength}");
             }
 
             var lockTokens = new[] { new Guid(lockToken) };

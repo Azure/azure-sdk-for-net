@@ -364,11 +364,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
             if (count > 100 || count < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+                throw new ArgumentOutOfRangeException(nameof(count), @"Value should be between 1 and 100");
             }
             if (skip < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(skip), @"Value cannot be negative");
             }
 
             var content = await GetEntity("$Resources/queues", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
@@ -393,11 +393,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
             if (count > 100 || count < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+                throw new ArgumentOutOfRangeException(nameof(count), @"Value should be between 1 and 100");
             }
             if (skip < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(skip), @"Value cannot be negative");
             }
 
             var content = await GetEntity("$Resources/topics", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
@@ -424,11 +424,11 @@ namespace Microsoft.Azure.ServiceBus.Management
             EntityNameHelper.CheckValidTopicName(topicPath);
             if (count > 100 || count < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+                throw new ArgumentOutOfRangeException(nameof(count), @"Value should be between 1 and 100");
             }
             if (skip < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(skip), @"Value cannot be negative");
             }
 
             var content = await GetEntity($"{topicPath}/Subscriptions", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
@@ -459,11 +459,11 @@ namespace Microsoft.Azure.ServiceBus.Management
             EntityNameHelper.CheckValidSubscriptionName(subscriptionName);
             if (count > 100 || count < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+                throw new ArgumentOutOfRangeException(nameof(count), @"Value should be between 1 and 100");
             }
             if (skip < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(skip), @"Value cannot be negative");
             }
 
             var content = await GetEntity($"{topicPath}/Subscriptions/{subscriptionName}/rules", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
@@ -491,11 +491,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
             if (count > 100 || count < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+                throw new ArgumentOutOfRangeException(nameof(count), @"Value should be between 1 and 100");
             }
             if (skip < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(skip), @"Value cannot be negative");
             }
 
             var content = await GetEntity("$Resources/queues", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
@@ -520,11 +520,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
              if (count > 100 || count < 1)
              { 
-                 throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+                 throw new ArgumentOutOfRangeException(nameof(count), @"Value should be between 1 and 100");
              }
              if (skip < 0)
              {
-                 throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+                 throw new ArgumentOutOfRangeException(nameof(skip), @"Value cannot be negative");
              }
 
              var content = await GetEntity("$Resources/topics", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);
@@ -551,11 +551,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
              if (count > 100 || count < 1)
              { 
-                 throw new ArgumentOutOfRangeException(nameof(count), "Value should be between 1 and 100");
+                 throw new ArgumentOutOfRangeException(nameof(count), @"Value should be between 1 and 100");
              }
              if (skip < 0)
              {
-                 throw new ArgumentOutOfRangeException(nameof(skip), "Value cannot be negative");
+                 throw new ArgumentOutOfRangeException(nameof(skip), @"Value cannot be negative");
              }
 
              var content = await GetEntity($"{topicPath}/Subscriptions", $"$skip={skip}&$top={count}", false, cancellationToken).ConfigureAwait(false);

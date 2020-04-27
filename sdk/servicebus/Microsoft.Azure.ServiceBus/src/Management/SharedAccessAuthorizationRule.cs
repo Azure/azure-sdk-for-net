@@ -79,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 if (value.Length > SharedAccessSignatureToken.MaxKeyNameLength)
                 {
                     throw new ArgumentOutOfRangeException(
-                        nameof(KeyName), $"The argument cannot exceed {SharedAccessSignatureToken.MaxKeyNameLength} characters");
+                        nameof(KeyName), $@"The argument cannot exceed {SharedAccessSignatureToken.MaxKeyNameLength} characters");
                 }
 
                 if (!string.Equals(value, HttpUtility.UrlEncode(value)))
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
                 if (Encoding.ASCII.GetByteCount(value) != SupportedSASKeyLength)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(PrimaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes");
+                    throw new ArgumentOutOfRangeException(nameof(PrimaryKey), $@"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes");
                 }
 
                 if (!CheckBase64(value))
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
                 if (Encoding.ASCII.GetByteCount(value) != SupportedSASKeyLength)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(SecondaryKey), $"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes");
+                    throw new ArgumentOutOfRangeException(nameof(SecondaryKey), $@"{nameof(SharedAccessAuthorizationRule)} only supports keys of size {SupportedSASKeyLength} bytes");
                 }
 
                 if (!CheckBase64(value))
