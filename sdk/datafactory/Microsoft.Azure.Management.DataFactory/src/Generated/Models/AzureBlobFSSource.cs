@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Azure BlobFS source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("AzureBlobFSSource")]
     public partial class AzureBlobFSSource : CopySource
     {
         /// <summary>

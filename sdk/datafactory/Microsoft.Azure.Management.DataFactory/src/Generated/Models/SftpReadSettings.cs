@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Sftp read settings.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("SftpReadSettings")]
     public partial class SftpReadSettings : StoreReadSettings
     {
         /// <summary>
@@ -43,6 +44,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="wildcardFileName">Sftp wildcardFileName. Type: string
         /// (or Expression with resultType string).</param>
+        /// <param name="enablePartitionDiscovery">Indicates whether to enable
+        /// partition discovery.</param>
+        /// <param name="partitionRootPath">Specify the root path where
+        /// partition discovery starts from. Type: string (or Expression with
+        /// resultType string).</param>
         /// <param name="fileListPath">Point to a text file that lists each
         /// file (relative path to the path configured in the dataset) that you
         /// want to copy. Type: string (or Expression with resultType
@@ -53,12 +59,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public SftpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object fileListPath = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+        public SftpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object partitionRootPath = default(object), object fileListPath = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
             : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
+            EnablePartitionDiscovery = enablePartitionDiscovery;
+            PartitionRootPath = partitionRootPath;
             FileListPath = fileListPath;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
@@ -91,6 +99,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "wildcardFileName")]
         public object WildcardFileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether to enable partition discovery.
+        /// </summary>
+        [JsonProperty(PropertyName = "enablePartitionDiscovery")]
+        public bool? EnablePartitionDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify the root path where partition discovery starts
+        /// from. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "partitionRootPath")]
+        public object PartitionRootPath { get; set; }
 
         /// <summary>
         /// Gets or sets point to a text file that lists each file (relative

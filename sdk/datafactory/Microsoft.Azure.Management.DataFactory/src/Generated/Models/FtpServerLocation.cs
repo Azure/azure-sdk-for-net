@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -17,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// The location of ftp server dataset.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FtpServerLocation")]
     public partial class FtpServerLocation : DatasetLocation
     {
         /// <summary>

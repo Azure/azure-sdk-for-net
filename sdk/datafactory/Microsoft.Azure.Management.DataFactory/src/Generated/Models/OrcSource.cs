@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity ORC source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OrcSource")]
     public partial class OrcSource : CopySource
     {
         /// <summary>

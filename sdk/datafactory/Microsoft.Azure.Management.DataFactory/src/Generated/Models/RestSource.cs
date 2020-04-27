@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Rest service source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RestSource")]
     public partial class RestSource : CopySource
     {
         /// <summary>

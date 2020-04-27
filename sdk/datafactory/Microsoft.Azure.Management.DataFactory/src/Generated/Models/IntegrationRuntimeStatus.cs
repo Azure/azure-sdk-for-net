@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Integration runtime status.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("IntegrationRuntimeStatus")]
     public partial class IntegrationRuntimeStatus
     {
         /// <summary>

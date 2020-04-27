@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity source for ODBC databases.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("OdbcSource")]
     public partial class OdbcSource : TabularSource
     {
         /// <summary>

@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// A copy activity Document Database Collection source.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("DocumentDbCollectionSource")]
     public partial class DocumentDbCollectionSource : CopySource
     {
         /// <summary>
