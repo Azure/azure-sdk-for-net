@@ -13,7 +13,7 @@
     -->
     <AutorestAdditionalParameters></AutorestAdditionalParameters>
     <_SharedCodeDirectory>$(MSBuildThisFileDirectory)../sdk/core/Azure.Core/src/Shared/</_SharedCodeDirectory>
-    <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)Autorest/</_AutoRestSharedCodeDirectory>
+    <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)AutoRest/</_AutoRestSharedCodeDirectory>
 
     <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutorestInput)' != ''">true</_GenerateCode>
     <UsesJsonSerialization Condition="'$(UsesJsonSerialization)' == ''">true</UsesJsonSerialization>
