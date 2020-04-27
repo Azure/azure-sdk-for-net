@@ -13,6 +13,7 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
+    /// <summary> The Service service client. </summary>
     public partial class MiniSecretClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;

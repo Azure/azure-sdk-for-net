@@ -14,6 +14,7 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
+    /// <summary> The Indexers service client. </summary>
     internal partial class IndexersClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;

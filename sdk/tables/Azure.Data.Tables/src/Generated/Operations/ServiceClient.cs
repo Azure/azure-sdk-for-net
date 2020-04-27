@@ -13,6 +13,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
+    /// <summary> The Service service client. </summary>
     internal partial class ServiceClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
