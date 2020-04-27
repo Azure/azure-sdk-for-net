@@ -132,8 +132,11 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             }
 
             var interval = activeClientLinkObject.AuthorizationValidUntilUtc.Subtract(utcNow) - TokenRefreshBuffer;
+            
             if (interval < TokenRefreshBuffer)
-                interval = TimeSpan.Zero;
+            {
+	            interval = TimeSpan.Zero;
+            }
 
             interval = TimeoutHelper.Min(interval, MaxTokenRefreshTime);
 
