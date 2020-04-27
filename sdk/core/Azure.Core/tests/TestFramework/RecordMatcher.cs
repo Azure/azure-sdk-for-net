@@ -148,8 +148,8 @@ namespace Azure.Core.Testing
                     var before = Math.Max(0, i - 10);
                     var afterRequest = Math.Min(i + 20, requestBody.Length);
                     var afterResponse = Math.Min(i + 20, responseBody.Length);
-                    descriptionBuilder.AppendLine($"     request:  \"{Encoding.UTF8.GetString(requestBody, before, afterRequest - before)}\"");
-                    descriptionBuilder.AppendLine($"     response: \"{Encoding.UTF8.GetString(responseBody, before, afterResponse - before)}\"");
+                    descriptionBuilder.AppendLine($"     request: \"{Encoding.UTF8.GetString(requestBody, before, afterRequest - before)}\"");
+                    descriptionBuilder.AppendLine($"     record:  \"{Encoding.UTF8.GetString(responseBody, before, afterResponse - before)}\"");
                 }
                 return 1;
             }
