@@ -137,7 +137,7 @@ In some cases, you might want to test against the latest versions of the client 
 
 ## Public API additions
 
-If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings.
+If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in `/sdk/template/Azure.Template/api/Azure.Template.netstandard2.0.cs`. Note that this file is not required if each csproj in the library has the `EnableApiCompat` parameter set to false.
 
 Running the script for a project in `sdk\tables` would look like this: 
 ```
@@ -151,7 +151,7 @@ eng\scripts\Export-API.ps1 tables
 ### How it works
 We use a dummy project called [ApiCompat](https://github.com/Azure/azure-sdk-for-net/tree/master/eng/ApiCompat/ApiCompat.csproj) to enforce API compatibility between the GA'ed libraries and the most recent version available on Nuget. This project includes package references to all GA'ed libraries and to Microsoft.DotNet.ApiCompat.
 Each listed library package is restored from Nuget via the package references listed in the `ApiCompat.csproj` file, in combination with the version listed for that package in [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props).
-The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced in the [eng/Directory.Build.Data.targets](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.targets) which causes this target to be executed for each csproj that has the `EnableApiCompat` parameter set to true. The `EnableApiCompat` parameter defaults to the value of the `IsShippingClientLibrary` parameter, which is defined in [eng/Directory.Build.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.props).
+The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced in the [eng/Directory.Build.Data.targets](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.targets) which causes this target to be executed for each csproj that has the `EnableApiCompat` parameter set to true. The `EnableApiCompat` parameter defaults to the value of the `IsShippingClientLibrary` parameter, which is defined in [eng/Directory.Build.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.props). For libraries that are in preview or do not have a public package for comparison, set `<EnableApiCompat>false</EnableApiCompat>` in the csproj.
 
 ### Adding a new GA'ed library
 To include add a new GA'ed library in the `ApiCompatVerification` target, add a package reference for the library to the `ApiCompat.csproj` file. You will also need to include the latest GA version of the library in [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props). 
