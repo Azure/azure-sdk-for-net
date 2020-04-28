@@ -74,25 +74,29 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             amqpMessage = AmqpMessage.Create(dataList);
             amqpMessage.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
 
-            if (firstMessage.MessageId != null)
+            if (firstMessage != null)
             {
-                amqpMessage.Properties.MessageId = firstMessage.MessageId;
-            }
-            if (firstMessage.SessionId != null)
-            {
-                amqpMessage.Properties.GroupId = firstMessage.SessionId;
-            }
+	            if (firstMessage.MessageId != null)
+	            {
+		            amqpMessage.Properties.MessageId = firstMessage.MessageId;
+	            }
 
-            if (firstMessage.PartitionKey != null)
-            {
-                amqpMessage.MessageAnnotations.Map[PartitionKeyName] =
-                    firstMessage.PartitionKey;
-            }
+	            if (firstMessage.SessionId != null)
+	            {
+		            amqpMessage.Properties.GroupId = firstMessage.SessionId;
+	            }
 
-            if (firstMessage.ViaPartitionKey != null)
-            {
-                amqpMessage.MessageAnnotations.Map[ViaPartitionKeyName] =
-                    firstMessage.ViaPartitionKey;
+	            if (firstMessage.PartitionKey != null)
+	            {
+		            amqpMessage.MessageAnnotations.Map[PartitionKeyName] =
+			            firstMessage.PartitionKey;
+	            }
+
+	            if (firstMessage.ViaPartitionKey != null)
+	            {
+		            amqpMessage.MessageAnnotations.Map[ViaPartitionKeyName] =
+			            firstMessage.ViaPartitionKey;
+	            }
             }
 
             amqpMessage.Batchable = true;
