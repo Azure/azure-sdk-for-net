@@ -20,9 +20,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
     /// </remarks>
     public class SqlFilter : Filter
     {
-        internal PropertyDictionary parameters;
-
-        /// <summary>
+	    /// <summary>
         /// Initializes a new instance of the <see cref="SqlFilter" /> class using the specified SQL expression.
         /// </summary>
         /// <remarks>Max allowed length of sql expression is 1024 chars.</remarks>
@@ -57,7 +55,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
         /// Allowed types: string, int, long, bool, double
         /// </summary>
         /// <value>The value of a filter expression.</value>
-        public IDictionary<string, object> Parameters => parameters ?? (parameters = new PropertyDictionary());
+        public IDictionary<string, object> Parameters { get; } = new PropertyDictionary();
 
         /// <summary>
         /// Returns a string representation of <see cref="SqlFilter" />.
@@ -81,32 +79,29 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
         public override bool Equals(Filter other)
         {
-            if (other is SqlFilter sqlFilter)
+	        if (!(other is SqlFilter sqlFilter))
+	        {
+		        return false;
+	        }
+
+	        if (!string.Equals(SqlExpression, sqlFilter.SqlExpression, StringComparison.OrdinalIgnoreCase))
             {
-                if (string.Equals(SqlExpression, sqlFilter.SqlExpression, StringComparison.OrdinalIgnoreCase)
-                    && (parameters != null && sqlFilter.parameters != null
-                        || parameters == null && sqlFilter.parameters == null))
-                {
-                    if (parameters != null)
-                    {
-                        if (parameters.Count != sqlFilter.parameters.Count)
-                        {
-                            return false;
-                        }
+	            return false;
+            }
 
-                        foreach (var param in parameters)
-                        {
-                            if (!sqlFilter.parameters.TryGetValue(param.Key, out var otherParamValue) ||
-                                param.Value == null ^ otherParamValue == null ||
-                                param.Value != null && !param.Value.Equals(otherParamValue))
-                            {
-                                return false;
-                            }
-                        }
-                    }
+            if (Parameters.Count != sqlFilter.Parameters.Count)
+            {
+	            return false;
+            }
 
-                    return true;
-                }
+            foreach (var param in Parameters)
+            {
+	            if (!sqlFilter.Parameters.TryGetValue(param.Key, out var otherParamValue) ||
+	                param.Value == null ^ otherParamValue == null ||
+	                param.Value != null && !param.Value.Equals(otherParamValue))
+	            {
+		            return false;
+	            }
             }
 
             return false;

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
         public static XElement Serialize(this SqlFilter filter, string filterName)
         {
             XElement parameterElement = null;
-            if (filter.parameters != null)
+            if (filter.Parameters.Count > 0)
             {
                 parameterElement = new XElement(XName.Get("Parameters", ManagementClientConstants.ServiceBusNamespace));
                 foreach (var param in filter.Parameters)
