@@ -264,7 +264,8 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
             try
             {
-                Convert.FromBase64String(base64EncodedString);
+                var _ = Convert.FromBase64String(base64EncodedString);
+                
                 return true;
             }
             catch (Exception)
