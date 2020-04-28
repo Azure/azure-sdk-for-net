@@ -161,7 +161,8 @@ namespace Microsoft.Azure.ServiceBus.Management
 
                 if (value.Contains(AccessRights.Manage) && value.Count != 3)
                 {
-                    throw new ArgumentException(nameof(Rights), "Manage permission should also include Send and Listen");
+	                throw new ArgumentException(@"Manage permission should also include Send and Listen",
+		                nameof(Rights));
                 }
 
                 _internalRights = value;
