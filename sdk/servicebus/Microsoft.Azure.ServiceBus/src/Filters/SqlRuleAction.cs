@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
                 {
                     if (Properties != null)
                     {
-                        if (Properties.Count != sqlAction.Properties.Count)
+                        if (Properties.Count != sqlAction.Properties?.Count)
                         {
                             return false;
                         }
