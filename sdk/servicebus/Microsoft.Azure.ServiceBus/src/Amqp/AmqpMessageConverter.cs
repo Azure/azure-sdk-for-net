@@ -131,7 +131,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 }
             }
 
-            if (sbMessage.ScheduledEnqueueTimeUtc != null && sbMessage.ScheduledEnqueueTimeUtc > DateTime.MinValue)
+            if (sbMessage.ScheduledEnqueueTimeUtc > DateTime.MinValue)
             {
                 amqpMessage.MessageAnnotations.Map.Add(ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTimeUtc);
             }
