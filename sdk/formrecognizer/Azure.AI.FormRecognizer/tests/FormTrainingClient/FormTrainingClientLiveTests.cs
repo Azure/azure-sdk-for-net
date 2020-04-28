@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public FormTrainingClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new FormRecognizerRecordedTestSanitizer();
-            Matcher = new FormRecognizerRecordMatcher(Sanitizer);
+            Matcher = new FormRecognizerRecordMatcher();
         }
 
         /// <summary>
