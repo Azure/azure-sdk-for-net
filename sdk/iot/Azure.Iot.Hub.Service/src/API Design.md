@@ -58,8 +58,22 @@ This document outlines the APIs for the Azure Iot Hub Service SDK
 ```
 </details>
 
+<details><summary><b>Cloud to Device Messaging</b></summary>
+No sign of this in the swagger    
+```csharp
+
+```
+</details>
+
 <details><summary><b>Feedback Message</b></summary>
     
+```csharp
+
+```
+</details>
+
+<details><summary><b>File Upload Notifications</b></summary>
+No sign of this in the swagger
 ```csharp
 
 ```
