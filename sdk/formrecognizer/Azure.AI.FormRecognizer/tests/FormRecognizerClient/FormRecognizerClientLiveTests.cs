@@ -29,6 +29,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new FormRecognizerRecordedTestSanitizer();
         }
 
         /// <summary>
