@@ -191,25 +191,21 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public bool Equals(TopicDescription otherDescription)
         {
-            if (otherDescription is TopicDescription other
-                && Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
-                && AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
-                && DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
-                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
-                && EnableBatchedOperations == other.EnableBatchedOperations
-                && EnablePartitioning == other.EnablePartitioning
-                && MaxSizeInMB == other.MaxSizeInMB
-                && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
-                && Status.Equals(other.Status)
-                && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (AuthorizationRules != null && other.AuthorizationRules != null
-                    || AuthorizationRules == null && other.AuthorizationRules == null)
-                && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules)))
-            {
-                return true;
-            }
-
-            return false;
+	        return otherDescription != null
+	               && Path.Equals(otherDescription.Path, StringComparison.OrdinalIgnoreCase)
+	               && AutoDeleteOnIdle.Equals(otherDescription.AutoDeleteOnIdle)
+	               && DefaultMessageTimeToLive.Equals(otherDescription.DefaultMessageTimeToLive)
+	               && (!RequiresDuplicateDetection ||
+	                   DuplicateDetectionHistoryTimeWindow.Equals(otherDescription.DuplicateDetectionHistoryTimeWindow))
+	               && EnableBatchedOperations == otherDescription.EnableBatchedOperations
+	               && EnablePartitioning == otherDescription.EnablePartitioning
+	               && MaxSizeInMB == otherDescription.MaxSizeInMB
+	               && RequiresDuplicateDetection.Equals(otherDescription.RequiresDuplicateDetection)
+	               && Status.Equals(otherDescription.Status)
+	               && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase)
+	               && (AuthorizationRules != null && otherDescription.AuthorizationRules != null
+	                   || AuthorizationRules == null && otherDescription.AuthorizationRules == null)
+	               && (AuthorizationRules == null || AuthorizationRules.Equals(otherDescription.AuthorizationRules));
         }
 
         public static bool operator ==(TopicDescription o1, TopicDescription o2)
