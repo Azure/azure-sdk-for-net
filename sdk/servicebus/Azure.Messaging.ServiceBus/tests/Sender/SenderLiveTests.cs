@@ -281,7 +281,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 }
                 foreach (ServiceBusReceivedMessage msg in receivedMessages)
                 {
-                    await sender.SendAsync(ServiceBusMessage.CreateFrom(msg));
+                    await sender.SendAsync(new ServiceBusMessage(msg));
                 }
 
                 var messageEnum = receivedMessages.GetEnumerator();
