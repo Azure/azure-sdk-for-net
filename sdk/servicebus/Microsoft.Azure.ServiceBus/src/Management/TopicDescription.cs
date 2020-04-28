@@ -11,8 +11,8 @@ namespace Microsoft.Azure.ServiceBus.Management
     /// </summary>
     public class TopicDescription : IEquatable<TopicDescription>
     {
-        internal TimeSpan duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
-        internal string path;
+        private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
+        private string _path;
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
         private string _userMetadata;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// </remarks>
         public TimeSpan DuplicateDetectionHistoryTimeWindow
         {
-            get => duplicateDetectionHistoryTimeWindow;
+            get => _duplicateDetectionHistoryTimeWindow;
             set
             {
                 if (value < ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow || value > ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow)
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $@"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}");
                 }
 
-                duplicateDetectionHistoryTimeWindow = value;
+                _duplicateDetectionHistoryTimeWindow = value;
             }
         }
 
@@ -111,11 +111,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
         public string Path
         {
-            get => path;
+            get => _path;
             set
             {
                 EntityNameHelper.CheckValidTopicName(value, nameof(Path));
-                path = value;
+                _path = value;
             }
         }
 
