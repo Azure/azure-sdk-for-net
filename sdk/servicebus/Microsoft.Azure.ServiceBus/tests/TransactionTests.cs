@@ -595,7 +595,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             }
 
-            return Task.WhenAll(clientEntities.Select(entity => closeEntity(entity)));
+            return Task.WhenAll(clientEntities.Select(closeEntity));
         }
     }
 }
