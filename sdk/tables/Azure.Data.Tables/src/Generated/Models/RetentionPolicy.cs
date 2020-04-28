@@ -27,7 +27,7 @@ namespace Azure.Data.Tables.Models
         }
 
         /// <summary> Indicates whether a retention policy is enabled for the storage service. </summary>
-        public bool Enabled { get; }
+        public bool Enabled { get; set; }
         /// <summary> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </summary>
         public int? Days { get; set; }
     }

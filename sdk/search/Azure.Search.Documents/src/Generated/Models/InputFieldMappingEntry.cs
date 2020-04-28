@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the input. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The source of the input. </summary>
         public string Source { get; set; }
         /// <summary> The source context used for selecting recursive inputs. </summary>

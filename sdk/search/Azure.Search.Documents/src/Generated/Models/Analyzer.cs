@@ -37,6 +37,6 @@ namespace Azure.Search.Documents.Models
         /// <summary> Identifies the concrete type of the analyzer. </summary>
         internal string ODataType { get; set; }
         /// <summary> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

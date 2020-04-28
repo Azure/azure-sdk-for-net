@@ -59,8 +59,8 @@ namespace Azure.Search.Documents.Models
         /// <summary> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </summary>
         public string Context { get; set; }
         /// <summary> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </summary>
-        public IList<InputFieldMappingEntry> Inputs { get; }
+        public IList<InputFieldMappingEntry> Inputs { get; set; }
         /// <summary> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </summary>
-        public IList<OutputFieldMappingEntry> Outputs { get; }
+        public IList<OutputFieldMappingEntry> Outputs { get; set; }
     }
 }

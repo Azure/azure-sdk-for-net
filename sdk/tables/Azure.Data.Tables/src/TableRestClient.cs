@@ -6,7 +6,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
-    internal partial class TableRestClient
+    internal partial class TableInternalRestClient
     {
         // Should be unnecessary when https://github.com/Azure/azure-rest-api-specs/pull/8151/files#r414749024 is implemented.
         internal HttpMessage CreateDeleteRequest(string table, string requestId)

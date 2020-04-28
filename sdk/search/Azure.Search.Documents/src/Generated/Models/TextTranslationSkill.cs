@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The language code to translate documents into for documents that don&apos;t specify the to language explicitly. </summary>
-        public TextTranslationSkillLanguage DefaultToLanguageCode { get; }
+        public TextTranslationSkillLanguage DefaultToLanguageCode { get; set; }
         /// <summary> The language code to translate documents from for documents that don&apos;t specify the from language explicitly. </summary>
         public TextTranslationSkillLanguage? DefaultFromLanguageCode { get; set; }
         /// <summary> The language code to translate documents from when neither the fromLanguageCode input nor the defaultFromLanguageCode parameter are provided, and the automatic language detection is unsuccessful. Default is en. </summary>

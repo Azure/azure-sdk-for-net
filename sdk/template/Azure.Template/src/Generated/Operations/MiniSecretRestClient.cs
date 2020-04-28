@@ -16,15 +16,15 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
-    internal partial class ServiceRestClient
+    internal partial class MiniSecretRestClient
     {
         private string vaultBaseUrl;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        /// <summary> Initializes a new instance of ServiceRestClient. </summary>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
+        /// <summary> Initializes a new instance of MiniSecretRestClient. </summary>
+        public MiniSecretRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
             if (vaultBaseUrl == null)
             {
@@ -65,7 +65,7 @@ namespace Azure.Template
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetSecret");
+            using var scope = _clientDiagnostics.CreateScope("MiniSecretClient.GetSecret");
             scope.Start();
             try
             {
@@ -108,7 +108,7 @@ namespace Azure.Template
                 throw new ArgumentNullException(nameof(secretName));
             }
 
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetSecret");
+            using var scope = _clientDiagnostics.CreateScope("MiniSecretClient.GetSecret");
             scope.Start();
             try
             {
