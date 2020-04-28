@@ -10,6 +10,5 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class LiveTestAttribute : Attribute, ITraitAttribute
     {
-        public LiveTestAttribute(string name = "TestCategory", string value = "Live") {}
     }
 }
