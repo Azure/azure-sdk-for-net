@@ -43,6 +43,8 @@
 
 /sdk/textanalytics/                             @annelo-msft @maririos
 
+/sdk/textanalytics/                             @annelo-msft @kinelski @maririos
+
 # Management Plane
 /**/*Management*/                               @isra-fel @erich-wang
 
