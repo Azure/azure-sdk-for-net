@@ -13,12 +13,12 @@ using Azure.Template.Models;
 
 namespace Azure.Template
 {
-    /// <summary> The Service service client. </summary>
+    /// <summary> The MiniSecret service client. </summary>
     public partial class MiniSecretClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
-        internal ServiceRestClient RestClient { get; }
+        internal MiniSecretRestClient RestClient { get; }
         /// <summary> Initializes a new instance of MiniSecretClient for mocking. </summary>
         protected MiniSecretClient()
         {
@@ -26,7 +26,7 @@ namespace Azure.Template
         /// <summary> Initializes a new instance of MiniSecretClient. </summary>
         internal MiniSecretClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
-            RestClient = new ServiceRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
+            RestClient = new MiniSecretRestClient(clientDiagnostics, pipeline, vaultBaseUrl, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

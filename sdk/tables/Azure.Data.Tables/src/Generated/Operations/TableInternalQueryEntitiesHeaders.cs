@@ -10,13 +10,15 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableDeleteEntityHeaders
+    internal class TableInternalQueryEntitiesHeaders
     {
         private readonly Response _response;
-        public TableDeleteEntityHeaders(Response response)
+        public TableInternalQueryEntitiesHeaders(Response response)
         {
             _response = response;
         }
         public string XMsVersion => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        public string XMsContinuationNextPartitionKey => _response.Headers.TryGetValue("x-ms-continuation-NextPartitionKey", out string value) ? value : null;
+        public string XMsContinuationNextRowKey => _response.Headers.TryGetValue("x-ms-continuation-NextRowKey", out string value) ? value : null;
     }
 }

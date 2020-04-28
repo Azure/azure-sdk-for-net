@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> A list of words to mark as keywords. </summary>
-        public IList<string> Keywords { get; }
+        public IList<string> Keywords { get; set; }
         /// <summary> A value indicating whether to ignore case. If true, all words are converted to lower case first. Default is false. </summary>
         public bool? IgnoreCase { get; set; }
     }

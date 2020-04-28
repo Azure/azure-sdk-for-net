@@ -43,6 +43,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> A list of stemming rules in the following format: &quot;word =&gt; stem&quot;, for example: &quot;ran =&gt; run&quot;. </summary>
-        public IList<string> Rules { get; }
+        public IList<string> Rules { get; set; }
     }
 }

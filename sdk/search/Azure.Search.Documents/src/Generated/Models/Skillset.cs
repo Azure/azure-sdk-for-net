@@ -54,11 +54,11 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the skillset. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The description of the skillset. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> A list of skills in the skillset. </summary>
-        public IList<Skill> Skills { get; }
+        public IList<Skill> Skills { get; set; }
         /// <summary> Details about cognitive services to be used when running skills. </summary>
         public CognitiveServicesAccount CognitiveServicesAccount { get; set; }
     }

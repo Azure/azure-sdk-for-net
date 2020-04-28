@@ -43,18 +43,18 @@ namespace Azure.Data.Tables.Models
     public partial class AccessPolicy
     {
         public AccessPolicy(System.DateTimeOffset start, System.DateTimeOffset expiry, string permission) { }
-        public System.DateTimeOffset Expiry { get { throw null; } }
-        public string Permission { get { throw null; } }
-        public System.DateTimeOffset Start { get { throw null; } }
+        public System.DateTimeOffset Expiry { get { throw null; } set { } }
+        public string Permission { get { throw null; } set { } }
+        public System.DateTimeOffset Start { get { throw null; } set { } }
     }
     public partial class CorsRule
     {
         public CorsRule(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, int maxAgeInSeconds) { }
-        public string AllowedHeaders { get { throw null; } }
-        public string AllowedMethods { get { throw null; } }
-        public string AllowedOrigins { get { throw null; } }
-        public string ExposedHeaders { get { throw null; } }
-        public int MaxAgeInSeconds { get { throw null; } }
+        public string AllowedHeaders { get { throw null; } set { } }
+        public string AllowedMethods { get { throw null; } set { } }
+        public string AllowedOrigins { get { throw null; } set { } }
+        public string ExposedHeaders { get { throw null; } set { } }
+        public int MaxAgeInSeconds { get { throw null; } set { } }
     }
     public partial class GeoReplication
     {
@@ -84,11 +84,11 @@ namespace Azure.Data.Tables.Models
     public partial class LoggingSettings
     {
         public LoggingSettings(string version, bool delete, bool read, bool write, Azure.Data.Tables.Models.RetentionPolicy retentionPolicy) { }
-        public bool Delete { get { throw null; } }
-        public bool Read { get { throw null; } }
-        public Azure.Data.Tables.Models.RetentionPolicy RetentionPolicy { get { throw null; } }
-        public string Version { get { throw null; } }
-        public bool Write { get { throw null; } }
+        public bool Delete { get { throw null; } set { } }
+        public bool Read { get { throw null; } set { } }
+        public Azure.Data.Tables.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        public bool Write { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OdataMetadataFormat : System.IEquatable<Azure.Data.Tables.Models.OdataMetadataFormat>
@@ -112,7 +112,7 @@ namespace Azure.Data.Tables.Models
     public partial class RequestMetrics
     {
         public RequestMetrics(bool enabled) { }
-        public bool Enabled { get { throw null; } }
+        public bool Enabled { get { throw null; } set { } }
         public bool? IncludeAPIs { get { throw null; } set { } }
         public Azure.Data.Tables.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
@@ -121,13 +121,13 @@ namespace Azure.Data.Tables.Models
     {
         public RetentionPolicy(bool enabled) { }
         public int? Days { get { throw null; } set { } }
-        public bool Enabled { get { throw null; } }
+        public bool Enabled { get { throw null; } set { } }
     }
     public partial class SignedIdentifier
     {
         public SignedIdentifier(string id, Azure.Data.Tables.Models.AccessPolicy accessPolicy) { }
-        public Azure.Data.Tables.Models.AccessPolicy AccessPolicy { get { throw null; } }
-        public string Id { get { throw null; } }
+        public Azure.Data.Tables.Models.AccessPolicy AccessPolicy { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
     }
     public partial class StorageError
     {
