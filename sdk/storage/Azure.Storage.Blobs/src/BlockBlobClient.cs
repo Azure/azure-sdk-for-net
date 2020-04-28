@@ -1929,20 +1929,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="query">
         /// The query.
         /// </param>
-        /// <param name="inputTextConfiguration">
-        /// Optional input text configuration.
-        /// </param>
-        /// <param name="outputTextConfiguration">
-        /// Optional output text configuration.
-        /// </param>
-        /// <param name="errorReceiver">
-        /// Optional error receiver.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional request conditions.
-        /// </param>
-        /// <param name="progressReceiver">
-        /// Optional progress receiver.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1953,23 +1941,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         /// <returns>
-        /// A <see cref="Response{BlobQueryInfo}"/>.
+        /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         public virtual Response<BlobDownloadInfo> Query(
             string query,
-            BlobQueryTextConfiguration inputTextConfiguration = default,
-            BlobQueryTextConfiguration outputTextConfiguration = default,
-            IBlobQueryErrorReceiver errorReceiver = default,
-            BlobRequestConditions conditions = default,
-            IProgress<long> progressReceiver = default,
+            BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
             QueryInternal(
                 query,
-                inputTextConfiguration,
-                outputTextConfiguration,
-                errorReceiver,
-                conditions,
-                progressReceiver,
+                options,
                 async: false,
                 cancellationToken)
             .EnsureCompleted();
@@ -1981,20 +1961,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="query">
         /// The query.
         /// </param>
-        /// <param name="inputTextConfiguration">
-        /// Optional input text configuration.
-        /// </param>
-        /// <param name="outputTextConfiguration">
-        /// Optional output text configuration.
-        /// </param>
-        /// <param name="errorReceiver">
-        /// Optional error receiver.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional request conditions.
-        /// </param>
-        /// <param name="progressReceiver">
-        /// Optional progress receiver.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2005,23 +1973,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         /// <returns>
-        /// A <see cref="Response{BlobQueryInfo}"/>.
+        /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         public virtual async Task<Response<BlobDownloadInfo>> QueryAsync(
             string query,
-            BlobQueryTextConfiguration inputTextConfiguration = default,
-            BlobQueryTextConfiguration outputTextConfiguration = default,
-            IBlobQueryErrorReceiver errorReceiver = default,
-            BlobRequestConditions conditions = default,
-            IProgress<long> progressReceiver = default,
+            BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
             await QueryInternal(
                 query,
-                inputTextConfiguration,
-                outputTextConfiguration,
-                errorReceiver,
-                conditions,
-                progressReceiver,
+                options,
                 async: true,
                 cancellationToken)
             .ConfigureAwait(false);
@@ -2033,20 +1993,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="query">
         /// The query.
         /// </param>
-        /// <param name="inputTextConfiguration">
-        /// Optional input text configuration.
-        /// </param>
-        /// <param name="outputTextConfiguration">
-        /// Optional output text configuration.
-        /// </param>
-        /// <param name="nonFatalErrorReceiver">
-        /// Optional non-fatal error receiver.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional request conditions.
-        /// </param>
-        /// <param name="progressReceiver">
-        /// Optional progress receiver.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2060,15 +2008,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         /// <returns>
-        /// A <see cref="Response{BlobQueryInfo}"/>.
+        /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
         private async Task<Response<BlobDownloadInfo>> QueryInternal(
             string query,
-            BlobQueryTextConfiguration inputTextConfiguration,
-            BlobQueryTextConfiguration outputTextConfiguration,
-            IBlobQueryErrorReceiver nonFatalErrorReceiver,
-            BlobRequestConditions conditions,
-            IProgress<long> progressReceiver,
+            BlobQueryOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2082,8 +2026,8 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
                         Expression = query,
-                        InputSerialization = inputTextConfiguration.ToQuickQuerySerialization(),
-                        OutputSerialization = outputTextConfiguration.ToQuickQuerySerialization()
+                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
+                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
                     };
                     Response<BlobQuickQueryResult> result = await BlobRestClient.Blob.QuickQueryAsync(
                         clientDiagnostics: ClientDiagnostics,
@@ -2091,22 +2035,21 @@ namespace Azure.Storage.Blobs.Specialized
                         resourceUri: Uri,
                         version: Version.ToVersionString(),
                         queryRequest: queryRequest,
-                        leaseId: conditions?.LeaseId,
+                        leaseId: options?.Conditions?.LeaseId,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
+                        ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                        ifMatch: options?.Conditions?.IfMatch,
+                        ifNoneMatch: options?.Conditions?.IfNoneMatch,
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(Query)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
-                    Stream parsedStream = new BlobQuickQueryStream(result.Value.Body, progressReceiver, nonFatalErrorReceiver);
+                    Stream parsedStream = new BlobQuickQueryStream(result.Value.Body, options?.ProgressHandler, options?.ErrorHandler);
                     result.Value.Body = parsedStream;
-
 
                     return Response.FromValue(result.Value.ToBlobDownloadInfo(), result.GetRawResponse());
                 }

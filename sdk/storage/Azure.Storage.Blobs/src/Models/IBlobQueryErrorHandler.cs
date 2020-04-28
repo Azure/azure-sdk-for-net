@@ -6,7 +6,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Interface for user-implemented handlers for <see cref="BlobQueryError"/>.
     /// </summary>
-    public interface IBlobQueryErrorReceiver
+    public interface IBlobQueryErrorHandler
     {
         /// <summary>
         /// Method to be called when a <see cref="BlobQueryError"/> occurs.

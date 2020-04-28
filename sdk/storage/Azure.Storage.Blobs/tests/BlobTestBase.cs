@@ -565,7 +565,7 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        public class ErrorReceiver : IBlobQueryErrorReceiver
+        public class ErrorReceiver : IBlobQueryErrorHandler
         {
             private readonly BlobQueryError _expectedBlobQueryError;
 

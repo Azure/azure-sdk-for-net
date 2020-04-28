@@ -98,9 +98,13 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestProgress progressReporter = new TestProgress();
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                ProgressHandler = progressReporter
+            };
             Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
                 query,
-                progressReceiver: progressReporter);
+                options);
 
             stream.Seek(0, SeekOrigin.Begin);
             using StreamReader expectedStreamReader = new StreamReader(stream);
@@ -136,9 +140,13 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             TestProgress progressReporter = new TestProgress();
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                ProgressHandler = progressReporter
+            };
             Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
                 query,
-                progressReceiver: progressReporter);
+                options);
 
             stream.Seek(0, SeekOrigin.Begin);
             using StreamReader expectedStreamReader = new StreamReader(stream);
@@ -165,10 +173,14 @@ namespace Azure.Storage.Blobs.Test
             // Act
             string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
             TestProgress progressReporter = new TestProgress();
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                ProgressHandler = progressReporter
+            };
 
             Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
                 query,
-                progressReceiver: progressReporter);
+                options);
 
             using StreamReader streamReader = new StreamReader(response.Value.Content);
             await streamReader.ReadToEndAsync();
@@ -190,7 +202,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             string query = @"SELECT _2 from BlobStorage WHERE _1 > 250;";
 
-            BlobQueryCsvTextConfiguration cvsTextConfiguration = new BlobQueryCsvTextConfiguration
+            BlobQueryCsvTextConfiguration csvTextConfiguration = new BlobQueryCsvTextConfiguration
             {
                 ColumnSeparator = ",",
                 FieldQuote = '"',
@@ -204,11 +216,16 @@ namespace Azure.Storage.Blobs.Test
                 RecordSeparator = "\n"
             };
 
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                InputTextConfiguration = csvTextConfiguration,
+                OutputTextConfiguration = jsonTextConfiguration
+            };
+
             // Act
             Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
                 query,
-                inputTextConfiguration: cvsTextConfiguration,
-                outputTextConfiguration: jsonTextConfiguration);
+                options);
 
             using StreamReader streamReader = new StreamReader(response.Value.Content);
             string s = await streamReader.ReadToEndAsync();
@@ -245,9 +262,14 @@ namespace Azure.Storage.Blobs.Test
                 Position = 0
             };
 
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                ErrorHandler = new ErrorReceiver(expectedBlobQueryError)
+            };
+
             response = await blockBlobClient.QueryAsync(
                 query,
-                errorReceiver: new ErrorReceiver(expectedBlobQueryError));
+                options);
             using StreamReader streamReader2 = new StreamReader(response.Value.Content);
             s = await streamReader2.ReadToEndAsync();
         }
@@ -266,11 +288,15 @@ namespace Azure.Storage.Blobs.Test
             {
                 RecordSeparator = "\n"
             };
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                InputTextConfiguration = jsonTextConfiguration
+            };
 
             // Act - with no IBlobQueryErrorReceiver
             Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
                 query,
-                inputTextConfiguration: jsonTextConfiguration);
+                options);
             using StreamReader streamReader = new StreamReader(response.Value.Content);
             string s = await streamReader.ReadToEndAsync();
 
@@ -282,11 +308,15 @@ namespace Azure.Storage.Blobs.Test
                 Description = "Unexpected token ',' at [byte: 3]. Expecting tokens '{', or '['.",
                 Position = 0
             };
+            options = new BlobQueryOptions
+            {
+                InputTextConfiguration = jsonTextConfiguration,
+                ErrorHandler = new ErrorReceiver(expectedBlobQueryError)
+            };
 
             response = await blockBlobClient.QueryAsync(
                 query,
-                inputTextConfiguration: jsonTextConfiguration,
-                errorReceiver: new ErrorReceiver(expectedBlobQueryError));
+                options);
             using StreamReader streamReader2 = new StreamReader(response.Value.Content);
             s = await streamReader2.ReadToEndAsync();
 
@@ -310,13 +340,17 @@ namespace Azure.Storage.Blobs.Test
                 BlobRequestConditions accessConditions = BuildAccessConditions(
                     parameters: parameters,
                     lease: true);
+                BlobQueryOptions options = new BlobQueryOptions
+                {
+                    Conditions = accessConditions
+                };
 
                 string query = @"SELECT * from BlobStorage";
 
                 // Act
                 Response<BlobDownloadInfo> response = await blockBlobClient.QueryAsync(
                     query,
-                    conditions: accessConditions);
+                    options);
 
                 // Assert
                 Assert.IsNotNull(response.Value.Details.ETag);
@@ -338,6 +372,10 @@ namespace Azure.Storage.Blobs.Test
 
                 parameters.NoneMatch = await SetupBlobMatchCondition(blockBlobClient, parameters.NoneMatch);
                 BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
+                BlobQueryOptions options = new BlobQueryOptions
+                {
+                    Conditions = accessConditions
+                };
 
                 string query = @"SELECT * from BlobStorage";
 
@@ -345,7 +383,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blockBlobClient.QueryAsync(
                         query,
-                        conditions: accessConditions),
+                        options),
                     e => { });
             }
         }
