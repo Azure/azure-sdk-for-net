@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.2 (Unreleased)
+Release notes will be provided here when the final set of features for the release is available.
+
 ## 1.0.0-preview.1 (04-23-2020)
 This is the first preview Azure Form Recognizer client library that follows the [.NET Azure SDK Design Guidelines][guidelines].
 This library replaces the package [`Microsoft.Azure.CognitiveServices.FormRecognizer`][cognitiveServices_fr_nuget].
