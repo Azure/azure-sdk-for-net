@@ -309,9 +309,10 @@ namespace Azure.Storage.Test.Shared
             string containerName,
             string blobName,
             BlobSasPermissions permissions,
-            StorageSharedKeyCredential sharedKeyCredential = default)
+            StorageSharedKeyCredential sharedKeyCredential = default,
+            string sasVersion = default)
         {
-            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName);
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
             return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
         }
@@ -321,9 +322,10 @@ namespace Azure.Storage.Test.Shared
             string blobName,
             BlobSasPermissions permissions,
             UserDelegationKey userDelegationKey,
-            string accountName)
+            string accountName,
+            string sasVersion = default)
         {
-            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName);
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
             return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
         }
@@ -331,9 +333,10 @@ namespace Azure.Storage.Test.Shared
         public BlobSasQueryParameters GetContainerSas(
             string containerName,
             BlobContainerSasPermissions permissions,
-            StorageSharedKeyCredential sharedKeyCredential = default)
+            StorageSharedKeyCredential sharedKeyCredential = default,
+            string sasVersion = default)
         {
-            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName);
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
             return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
         }
@@ -342,9 +345,10 @@ namespace Azure.Storage.Test.Shared
             string containerName,
             BlobContainerSasPermissions permissions,
             UserDelegationKey userDelegationKey,
-            string accountName)
+            string accountName,
+            string sasVersion = default)
         {
-            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName);
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
             return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
         }
@@ -354,9 +358,10 @@ namespace Azure.Storage.Test.Shared
             string blobName,
             string blobVersion,
             BlobVersionSasPermissions permissions,
-            StorageSharedKeyCredential sharedKeyCredential = default)
+            StorageSharedKeyCredential sharedKeyCredential = default,
+            string sasVersion = default)
         {
-            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, blobVersion: blobVersion);
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, blobVersion: blobVersion, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
             return sasBuilder.ToSasQueryParameters(sharedKeyCredential ?? GetNewSharedKeyCredentials());
         }
@@ -367,9 +372,10 @@ namespace Azure.Storage.Test.Shared
             string blobVersion,
             BlobVersionSasPermissions permissions,
             UserDelegationKey userDelegationKey,
-            string accountName)
+            string accountName,
+            string sasVersion = default)
         {
-            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, blobVersion: blobVersion);
+            BlobSasBuilder sasBuilder = GetBlobSasBuilder(containerName, blobName, blobVersion: blobVersion, sasVersion: sasVersion);
             sasBuilder.SetPermissions(permissions);
             return sasBuilder.ToSasQueryParameters(userDelegationKey, accountName);
         }
@@ -378,7 +384,8 @@ namespace Azure.Storage.Test.Shared
             string containerName,
             string blobName = default,
             string snapshot = default,
-            string blobVersion = default)
+            string blobVersion = default,
+            string sasVersion = default)
             => new BlobSasBuilder
             {
                 BlobContainerName = containerName,
@@ -389,7 +396,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = ToSasVersion(_serviceVersion)
+                Version = sasVersion ?? ToSasVersion(_serviceVersion)
             };
 
         public BlobSasQueryParameters GetNewBlobServiceIdentitySasCredentialsBlob(string containerName, string blobName, UserDelegationKey userDelegationKey, string accountName)

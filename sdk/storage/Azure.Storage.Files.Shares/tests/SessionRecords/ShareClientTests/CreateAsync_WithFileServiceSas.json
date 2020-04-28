@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://blobindex1.file.core.windows.net/test-share-1e9a96eb-3acc-196c-a797-e4947f209a29?sv=2019-12-12\u0026st=2020-04-25T16%3A32%3A36Z\u0026se=2020-04-25T18%3A32%3A36Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=share",
+      "RequestUri": "https://blobindex1.file.core.windows.net/test-share-1e9a96eb-3acc-196c-a797-e4947f209a29?sv=2019-10-10\u0026st=2020-04-28T21%3A17%3A21Z\u0026se=2020-04-28T23%3A17%3A21Z\u0026sr=s\u0026sp=rcwdl\u0026sig=Sanitized\u0026restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "traceparent": "00-07eaa02c92e97247b93b357c64ba34db-17104a498a79ff45-00",
+        "traceparent": "00-eb6adf75ca1f504188a8c2c7bd395a3c-9ba432645a0d6948-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200425.1",
+          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200428.1",
           "(.NET Core 4.6.28325.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "56591757-4010-490e-f8e7-6572152ca846",
@@ -19,25 +19,25 @@
       "ResponseHeaders": {
         "Content-Length": "246",
         "Content-Type": "application/xml",
-        "Date": "Sat, 25 Apr 2020 17:32:36 GMT",
+        "Date": "Tue, 28 Apr 2020 22:17:21 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "56591757-4010-490e-f8e7-6572152ca846",
         "x-ms-error-code": "AuthorizationFailure",
-        "x-ms-request-id": "2487d00f-101a-009c-5827-1be0c6000000",
+        "x-ms-request-id": "d2b750b1-401a-005a-0daa-1d2b47000000",
         "x-ms-version": "2019-12-12"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationFailure\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation.\n",
-        "RequestId:2487d00f-101a-009c-5827-1be0c6000000\n",
-        "Time:2020-04-25T17:32:36.5771289Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:d2b750b1-401a-005a-0daa-1d2b47000000\n",
+        "Time:2020-04-28T22:17:21.2589877Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2020-04-25T10:32:36.4226187-07:00",
+    "DateTimeOffsetNow": "2020-04-28T15:17:21.4409701-07:00",
     "RandomSeed": "300503664",
     "Storage_TestConfigDefault": "ProductionTenant\nblobindex1\nU2FuaXRpemVk\nhttps://blobindex1.blob.core.windows.net\nhttps://blobindex1.file.core.windows.net\nhttps://blobindex1.queue.core.windows.net\nhttps://blobindex1.table.core.windows.net\n\n\n\n\nhttps://blobindex1-secondary.blob.core.windows.net\nhttps://blobindex1-secondary.file.core.windows.net\nhttps://blobindex1-secondary.queue.core.windows.net\nhttps://blobindex1-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://blobindex1.blob.core.windows.net/;QueueEndpoint=https://blobindex1.queue.core.windows.net/;FileEndpoint=https://blobindex1.file.core.windows.net/;BlobSecondaryEndpoint=https://blobindex1-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://blobindex1-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://blobindex1-secondary.file.core.windows.net/;AccountName=blobindex1;AccountKey=Sanitized\nseanscope1"
   }
