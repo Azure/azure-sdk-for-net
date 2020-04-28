@@ -261,7 +261,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(UserMetadata), $"Value cannot be null");
+                    throw new ArgumentNullException(nameof(UserMetadata), @"Value cannot be null");
                 }
 
                 if (value.Length > ManagementClientConstants.MaxUserMetadataLength)
