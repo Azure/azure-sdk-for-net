@@ -64,7 +64,10 @@ namespace Azure.Core.Pipeline
                 {
                     responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
                         .ConfigureAwait(false);
-                    contentStream = await responseMessage.Content.ReadAsStreamAsync() .ConfigureAwait(false);;
+                    if (responseMessage.Content != null)
+                    {
+                        contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    }
                 }
                 catch (HttpRequestException e)
                 {
