@@ -1842,11 +1842,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobCopyInfo> CopyFromUri(
+        public virtual Response<BlobCopyInfo> SyncCopyFromUri(
             Uri source,
             BlobCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
-            => CopyFromUriInternal(
+            => SyncCopyFromUriInternal(
                 source: source,
                 metadata: options?.Metadata,
                 tags: options?.Tags,
@@ -1891,11 +1891,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobCopyInfo>> CopyFromUriAsync(
+        public virtual async Task<Response<BlobCopyInfo>> SyncCopyFromUriAsync(
             Uri source,
             BlobCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
-            => await CopyFromUriInternal(
+            => await SyncCopyFromUriInternal(
                 source: source,
                 metadata: options?.Metadata,
                 tags: options?.Tags,
@@ -1962,7 +1962,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobCopyInfo>> CopyFromUriInternal(
+        private async Task<Response<BlobCopyInfo>> SyncCopyFromUriInternal(
             Uri source,
             Metadata metadata,
             Tags tags,
@@ -2005,7 +2005,7 @@ namespace Azure.Storage.Blobs.Specialized
                         blobTagsString: tags?.ToTagsString(),
                         sealBlob: sealBlob,
                         async: async,
-                        operationName: $"{nameof(BlobBaseClient)}.{nameof(CopyFromUri)}",
+                        operationName: $"{nameof(BlobBaseClient)}.{nameof(SyncCopyFromUri)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

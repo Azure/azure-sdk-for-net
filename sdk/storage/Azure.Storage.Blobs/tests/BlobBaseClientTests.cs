@@ -1328,7 +1328,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CopyFromUriAsync()
+        public async Task SyncCopyFromUriAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1337,7 +1337,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act
-            Response<BlobCopyInfo> copyResponse = await destBlob.CopyFromUriAsync(srcBlob.Uri);
+            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri);
 
             // Check that destBlob actually exists
             await destBlob.GetPropertiesAsync();
@@ -1351,7 +1351,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task CopyFromUriAsync_Tags()
+        public async Task SyncCopyFromUriAsync_Tags()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1365,7 +1365,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            Response<BlobCopyInfo> copyResponse = await destBlob.CopyFromUriAsync(srcBlob.Uri, options);
+            Response<BlobCopyInfo> copyResponse = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
 
             // Assert
             Response<IDictionary<string, string>> response = await destBlob.GetTagsAsync();
@@ -1373,7 +1373,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CopyFromUriAsync_Metadata()
+        public async Task SyncCopyFromUriAsync_Metadata()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1388,7 +1388,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act
-            await destBlob.CopyFromUriAsync(
+            await destBlob.SyncCopyFromUriAsync(
                 source: srcBlob.Uri,
                 options);
 
@@ -1398,7 +1398,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CopyFromUriAsync_Source_AccessConditions()
+        public async Task SyncCopyFromUriAsync_Source_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in NoLease_AccessConditions_Data)
@@ -1420,7 +1420,7 @@ namespace Azure.Storage.Blobs.Test
                 BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
                 // Act
-                Response<BlobCopyInfo> response = await destBlob.CopyFromUriAsync(
+                Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(
                     source: srcBlob.Uri,
                     options);
 
@@ -1430,7 +1430,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CopyFromUriAsync_Source_AccessConditionsFail()
+        public async Task SyncCopyFromUriAsync_Source_AccessConditionsFail()
         {
             foreach (AccessConditionParameters parameters in NoLease_AccessConditionsFail_Data)
             {
@@ -1453,7 +1453,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    destBlob.CopyFromUriAsync(
+                    destBlob.SyncCopyFromUriAsync(
                         source: srcBlob.Uri,
                         options),
                     e => { });
@@ -1461,7 +1461,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CopyFromUriAsync_Destination_AccessConditions()
+        public async Task SyncCopyFromUriAsync_Destination_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in AccessConditions_Data)
@@ -1494,7 +1494,7 @@ namespace Azure.Storage.Blobs.Test
                 };
 
                 // Act
-                Response<BlobCopyInfo> response = await destBlob.CopyFromUriAsync(
+                Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(
                     source: srcBlob.Uri,
                     options);
 
@@ -1505,7 +1505,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CopyFromUriAsync_Destination_AccessConditionsFail()
+        public async Task SyncCopyFromUriAsync_Destination_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
             foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
@@ -1537,7 +1537,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    destBlob.CopyFromUriAsync(
+                    destBlob.SyncCopyFromUriAsync(
                         source: srcBlob.Uri,
                         options),
                     e => { });
@@ -1546,7 +1546,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [Ignore("Inducing a 500 in the service")]
-        public async Task CopyFromUriAsync_AccessTier()
+        public async Task SyncCopyFromUriAsync_AccessTier()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1559,7 +1559,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            await destBlob.CopyFromUriAsync(
+            await destBlob.SyncCopyFromUriAsync(
                 srcBlob.Uri,
                 options);
 
@@ -1570,7 +1570,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CopyFromUriAsync_AccessTierFail()
+        public async Task SyncCopyFromUriAsync_AccessTierFail()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1584,14 +1584,14 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.CopyFromUriAsync(
+                destBlob.SyncCopyFromUriAsync(
                 srcBlob.Uri,
                 options),
                 e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
         }
 
         [Test]
-        public async Task CopyFromUriAsync_Error()
+        public async Task SyncCopyFromUriAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1601,13 +1601,13 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destBlob.CopyFromUriAsync(srcBlob.Uri),
+                destBlob.SyncCopyFromUriAsync(srcBlob.Uri),
                 e => Assert.AreEqual(BlobErrorCode.CannotVerifyCopySource.ToString(), e.ErrorCode));
         }
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
-        public async Task CopyFromUriAsync_VersionId()
+        public async Task SyncCopyFromUriAsync_VersionId()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
@@ -1616,7 +1616,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
 
             // Act
-            Response<BlobCopyInfo> response = await destBlob.CopyFromUriAsync(srcBlob.Uri);
+            Response<BlobCopyInfo> response = await destBlob.SyncCopyFromUriAsync(srcBlob.Uri);
 
             // Assert
             Assert.IsNotNull(response.Value.VersionId);
