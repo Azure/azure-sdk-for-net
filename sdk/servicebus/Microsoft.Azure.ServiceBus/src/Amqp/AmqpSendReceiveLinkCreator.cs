@@ -5,7 +5,6 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
     using Microsoft.Azure.Amqp;
-    using Primitives;
 
     internal class AmqpSendReceiveLinkCreator : AmqpLinkCreator
     {

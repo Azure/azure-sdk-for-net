@@ -4,8 +4,6 @@
 namespace Microsoft.Azure.ServiceBus.Primitives
 {
     using System;
-    using System.Collections.ObjectModel;
-    using System.IdentityModel.Tokens;
     using System.IdentityModel.Tokens.Jwt;
 
     /// <summary>
