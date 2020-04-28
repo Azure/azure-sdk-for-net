@@ -275,7 +275,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Connection object to the service bus namespace.
         /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
+        public sealed override ServiceBusConnection ServiceBusConnection { get; }
 
         /// <summary>
         /// Gets the DateTime that the current receiver is locked until. This is only applicable when Sessions are used.

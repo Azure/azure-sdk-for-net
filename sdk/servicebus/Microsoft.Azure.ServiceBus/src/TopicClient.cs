@@ -138,7 +138,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Connection object to the service bus namespace.
         /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
+        public sealed override ServiceBusConnection ServiceBusConnection { get; }
 
         internal MessageSender InnerSender
         {

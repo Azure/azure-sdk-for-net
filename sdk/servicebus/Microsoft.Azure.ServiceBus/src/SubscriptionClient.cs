@@ -166,7 +166,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Gets the formatted path of the subscription client.
         /// </summary>
         /// <seealso cref="EntityNameHelper.FormatSubscriptionPath(string, string)"/>
-        public override string Path { get; }
+        public sealed override string Path { get; }
 
         /// <summary>
         /// Gets the name of the subscription.
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Connection object to the service bus namespace.
         /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
+        public sealed override ServiceBusConnection ServiceBusConnection { get; }
 
         internal IInnerSubscriptionClient InnerSubscriptionClient
         {

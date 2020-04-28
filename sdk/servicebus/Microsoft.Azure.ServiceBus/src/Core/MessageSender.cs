@@ -216,7 +216,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         /// <summary>
         /// Connection object to the service bus namespace.
         /// </summary>
-        public override ServiceBusConnection ServiceBusConnection { get; }
+        public sealed override ServiceBusConnection ServiceBusConnection { get; }
 
         internal MessagingEntityType? EntityType { get; }
 
