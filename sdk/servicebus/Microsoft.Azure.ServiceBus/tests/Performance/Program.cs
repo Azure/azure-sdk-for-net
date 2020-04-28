@@ -100,7 +100,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Performance
 
         private static void Log(string message)
         {
-            Console.WriteLine($"[{DateTime.Now.ToString("hh:mm:ss.fff")}] {message}");
+            Console.WriteLine($@"[{DateTime.Now:hh:mm:ss.fff}] {message}");
         }
     }
 }
