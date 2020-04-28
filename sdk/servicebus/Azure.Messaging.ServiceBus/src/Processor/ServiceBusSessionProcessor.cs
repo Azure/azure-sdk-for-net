@@ -153,6 +153,45 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Optional event that can be set to be notified when a new session is about to be processed.
+        /// </summary>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessSessionEventArgs, Task> SessionInitializingAsync
+        {
+            add
+            {
+                _innerProcessor.SessionInitializingAsync += value;
+
+            }
+
+            remove
+            {
+                _innerProcessor.SessionInitializingAsync -= value;
+            }
+        }
+
+        /// <summary>
+        /// Optional event that can be set to be notified when a session is about to be closed for processing.
+        /// This means that the most recent ReceiveAsync call timed out so there are currently no messages
+        /// available to be received for the session.
+        /// </summary>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ProcessSessionEventArgs, Task> SessionClosingAsync
+        {
+            add
+            {
+                _innerProcessor.SessionClosingAsync += value;
+            }
+
+            remove
+            {
+                _innerProcessor.SessionClosingAsync -= value;
+            }
+        }
+
+        /// <summary>
         /// Signals the <see cref="ServiceBusSessionProcessor" /> to begin processing messages. Should this method be called while the processor
         /// is running, no action is taken.
         /// </summary>

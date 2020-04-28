@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Tests.Infrastructure;
 using Moq;
 using NUnit.Framework;
 
@@ -17,7 +18,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
     public class SessionProcessorLiveTests : ServiceBusLiveTestBase
     {
         [Test]
-        public async Task CannotAddHandlerWhileProcessorIsRunning()
+        public async Task CannotRemoveHandlersWhileProcessorIsRunning()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
@@ -29,6 +30,48 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
                 Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
+                Func<ProcessSessionEventArgs, Task> sessionhandler = eventArgs => Task.CompletedTask;
+                processor.ProcessMessageAsync += eventHandler;
+                processor.ProcessErrorAsync += errorHandler;
+                processor.SessionInitializingAsync += sessionhandler;
+                processor.SessionClosingAsync += sessionhandler;
+
+                await processor.StartProcessingAsync();
+
+                Assert.That(() => processor.ProcessMessageAsync -= eventHandler, Throws.InstanceOf<InvalidOperationException>());
+                Assert.That(() => processor.ProcessErrorAsync -= errorHandler, Throws.InstanceOf<InvalidOperationException>());
+                Assert.That(() => processor.SessionInitializingAsync -= sessionhandler, Throws.InstanceOf<InvalidOperationException>());
+                Assert.That(() => processor.SessionClosingAsync -= sessionhandler, Throws.InstanceOf<InvalidOperationException>());
+
+                await processor.StopProcessingAsync();
+
+                // Once stopped, the processor should allow handlers to be removed, and re-added.
+                Assert.That(() => processor.ProcessMessageAsync -= eventHandler, Throws.Nothing);
+                Assert.That(() => processor.ProcessErrorAsync -= errorHandler, Throws.Nothing);
+                Assert.That(() => processor.SessionInitializingAsync -= sessionhandler, Throws.Nothing);
+                Assert.That(() => processor.SessionClosingAsync -= sessionhandler, Throws.Nothing);
+
+                Assert.That(() => processor.ProcessMessageAsync += eventHandler, Throws.Nothing);
+                Assert.That(() => processor.ProcessErrorAsync += errorHandler, Throws.Nothing);
+                Assert.That(() => processor.SessionInitializingAsync += sessionhandler, Throws.Nothing);
+                Assert.That(() => processor.SessionClosingAsync += sessionhandler, Throws.Nothing);
+            }
+        }
+
+        [Test]
+        public async Task CannotAddHandlersWhileProcessorIsRunning()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = GetClient();
+
+                var processor = client.CreateSessionProcessor(scope.QueueName);
+
+                Func<ProcessSessionMessageEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
+                Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
+                Func<ProcessSessionEventArgs, Task> sessionhandler = eventArgs => Task.CompletedTask;
                 processor.ProcessMessageAsync += eventHandler;
                 processor.ProcessErrorAsync += errorHandler;
 
@@ -36,6 +79,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Assert.That(() => processor.ProcessMessageAsync -= eventHandler, Throws.InstanceOf<InvalidOperationException>());
                 Assert.That(() => processor.ProcessErrorAsync -= errorHandler, Throws.InstanceOf<InvalidOperationException>());
+                Assert.That(() => processor.SessionInitializingAsync += sessionhandler, Throws.InstanceOf<InvalidOperationException>());
+                Assert.That(() => processor.SessionClosingAsync += sessionhandler, Throws.InstanceOf<InvalidOperationException>());
 
                 await processor.StopProcessingAsync();
 
@@ -45,6 +90,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 Assert.That(() => processor.ProcessMessageAsync += eventHandler, Throws.Nothing);
                 Assert.That(() => processor.ProcessErrorAsync += errorHandler, Throws.Nothing);
+                Assert.That(() => processor.SessionInitializingAsync += sessionhandler, Throws.Nothing);
+                Assert.That(() => processor.SessionClosingAsync += sessionhandler, Throws.Nothing);
             }
         }
 
@@ -63,6 +110,97 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
 
                 // send 1 message for each thread and use a different session for each message
+                ConcurrentDictionary<string, byte[]> sessions = new ConcurrentDictionary<string, byte[]>();
+                for (int i = 0; i < numThreads; i++)
+                {
+                    var sessionId = Guid.NewGuid().ToString();
+                    await sender.SendAsync(GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, null);
+                }
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = autoComplete
+                };
+                var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                int messageCt = 0;
+                int sessionEventCt = 0;
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+
+                var completionSourceIndex = -1;
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.SessionInitializingAsync += SessionInitHandler;
+                processor.SessionClosingAsync += SessionCloseHandler;
+
+                await processor.StartProcessingAsync();
+
+                async Task SessionInitHandler(ProcessSessionEventArgs args)
+                {
+                    Interlocked.Increment(ref sessionEventCt);
+                    byte[] state = GetRandomBuffer(100);
+                    await args.SetSessionStateAsync(state);
+                    sessions[args.SessionId] = state;
+                }
+
+                async Task SessionCloseHandler(ProcessSessionEventArgs args)
+                {
+                    Interlocked.Increment(ref sessionEventCt);
+                    var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                    completionSources[setIndex].SetResult(true);
+                    sessions.TryRemove(args.SessionId, out byte[] state);
+                    byte[] getState = await args.GetSessionStateAsync();
+                    Assert.AreEqual(state, getState);
+                }
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    var message = args.Message;
+                    if (!autoComplete)
+                    {
+                        await args.CompleteAsync(message);
+                    }
+                    Interlocked.Increment(ref messageCt);
+                    Assert.AreEqual(message.SessionId, args.SessionId);
+                    Assert.IsNotNull(args.SessionLockedUntil);
+                }
+
+                await Task.WhenAll(completionSources.Select(source => source.Task));
+                await processor.StopProcessingAsync();
+
+                // there is only one message for each session, and one
+                // thread for each session, so the total messages processed
+                // should equal the number of threads
+                Assert.AreEqual(numThreads, messageCt);
+
+                // we should have received messages from each of the sessions
+                Assert.AreEqual(0, sessions.Count);
+
+                // there are two session events per session
+                Assert.AreEqual(numThreads * 2, sessionEventCt);
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(20)]
+        public async Task UserSettlingWithAutoCompleteDoesNotThrow(int numThreads)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+               enablePartitioning: false,
+               enableSession: true))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                // send 1 message for each thread and use a different session for each message
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
                 for (int i = 0; i < numThreads; i++)
                 {
@@ -73,7 +211,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
-                    AutoComplete = autoComplete
+                    AutoComplete = true
                 };
                 var processor = client.CreateSessionProcessor(scope.QueueName, options);
                 int messageCt = 0;
@@ -94,9 +232,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     try
                     {
                         var message = args.Message;
-                        if (!autoComplete)
+                        switch (numThreads)
                         {
-                            await args.CompleteAsync(message);
+                            case 1:
+                                await args.CompleteAsync(message, args.CancellationToken);
+                                break;
+                            case 5:
+                                await args.AbandonAsync(message);
+                                break;
+                            case 10:
+                                await args.DeadLetterAsync(message);
+                                break;
+                            case 20:
+                                await args.DeferAsync(message);
+                                break;
                         }
                         Interlocked.Increment(ref messageCt);
                         sessions.TryRemove(message.SessionId, out bool _);
@@ -115,7 +264,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // there is only one message for each session, and one
                 // thread for each session, so the total messages processed
                 // should equal the number of threads
-                Assert.AreEqual(numThreads, messageCt);
+                if (numThreads == 5)
+                {
+                    // when abandoning, it is possible we could process the same message more than once
+                    // since the service will make the message available immediately
+                    Assert.LessOrEqual(numThreads, messageCt);
+                }
+                else
+                {
+                    Assert.AreEqual(numThreads, messageCt);
+                }
 
                 // we should have received messages from each of the sessions
                 Assert.AreEqual(0, sessions.Count);
@@ -540,8 +698,84 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.StopProcessingAsync();
                 Assert.That(
-                    async() => await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
+                    async () => await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
+            }
+        }
+
+        [Test]
+        [TestCase("")]
+        [TestCase("Abandon")]
+        [TestCase("Complete")]
+        [TestCase("Defer")]
+        [TestCase("Deadletter")]
+        [TestCase("DeadletterOverload")]
+        public async Task UserCallbackThrowingCausesMessageToBeAbandonedIfNotSettled(string settleMethod)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = GetClient();
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendAsync(GetMessage("sessionId"));
+                var processor = client.CreateSessionProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    AutoComplete = true
+                });
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    switch (settleMethod)
+                    {
+                        case "Abandon":
+                            await args.AbandonAsync(args.Message);
+                            break;
+                        case "Complete":
+                            await args.CompleteAsync(args.Message);
+                            break;
+                        case "Defer":
+                            await args.DeferAsync(args.Message);
+                            break;
+                        case "Deadletter":
+                            await args.DeadLetterAsync(args.Message);
+                            break;
+                        case "DeadletterOverload":
+                            await args.DeadLetterAsync(args.Message, "reason");
+                            break;
+                    }
+                    throw new TestException();
+                }
+
+                Task ExceptionHandler(ProcessErrorEventArgs args)
+                {
+                    tcs.SetResult(true);
+                    if (!(args.Exception is TestException))
+                    {
+                        Assert.Fail(args.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+
+                if (settleMethod == "" || settleMethod == "Abandon")
+                {
+                    var receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
+                    var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                    Assert.IsNotNull(msg);
+                }
+                else
+                {
+                    Assert.That(
+                        async () => await GetNoRetryClient().CreateSessionReceiverAsync(scope.QueueName),
+                        Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusException.FailureReason.ServiceTimeout));
+                }
             }
         }
 
