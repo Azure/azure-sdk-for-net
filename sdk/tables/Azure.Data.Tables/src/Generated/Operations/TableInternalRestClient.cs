@@ -42,40 +42,6 @@ namespace Azure.Data.Tables
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryRequest(string requestId, QueryOptions queryOptions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
-            uri.AppendPath("/Tables", false);
-            if (queryOptions?.Format != null)
-            {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
-            }
-            if (queryOptions?.Top != null)
-            {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
-            }
-            if (queryOptions?.Select != null)
-            {
-                uri.AppendQuery("$select", queryOptions.Select, true);
-            }
-            if (queryOptions?.Filter != null)
-            {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            if (requestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", requestId);
-            }
-            request.Headers.Add("DataServiceVersion", "3.0");
-            return message;
-        }
-
         /// <summary> Queries tables under the given account. </summary>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
         /// <param name="queryOptions"> Parameter group. </param>
@@ -278,25 +244,6 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string table, string requestId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
-            uri.AppendPath("/Tables('", false);
-            uri.AppendPath(table, true);
-            uri.AppendPath("')", false);
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            if (requestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", requestId);
-            }
-            return message;
-        }
-
         /// <summary> Operation permanently deletes the specified table. </summary>
         /// <param name="table"> The name of the table. </param>
         /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
@@ -361,46 +308,6 @@ namespace Azure.Data.Tables
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateQueryEntitiesRequest(string table, int? timeout, string requestId, QueryOptions queryOptions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(table, true);
-            uri.AppendPath("()", false);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (queryOptions?.Format != null)
-            {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
-            }
-            if (queryOptions?.Top != null)
-            {
-                uri.AppendQuery("$top", queryOptions.Top.Value, true);
-            }
-            if (queryOptions?.Select != null)
-            {
-                uri.AppendQuery("$select", queryOptions.Select, true);
-            }
-            if (queryOptions?.Filter != null)
-            {
-                uri.AppendQuery("$filter", queryOptions.Filter, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            if (requestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", requestId);
-            }
-            request.Headers.Add("DataServiceVersion", "3.0");
-            return message;
         }
 
         /// <summary> Queries entities in a table. </summary>
