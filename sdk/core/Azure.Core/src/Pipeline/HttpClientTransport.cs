@@ -59,7 +59,7 @@ namespace Azure.Core.Pipeline
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
                 HttpResponseMessage responseMessage;
-                Stream? contentStream;
+                Stream? contentStream = null;
                 try
                 {
                     responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
