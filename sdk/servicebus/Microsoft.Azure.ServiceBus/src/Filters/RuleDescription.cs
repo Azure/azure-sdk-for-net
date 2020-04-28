@@ -118,15 +118,10 @@ namespace Microsoft.Azure.ServiceBus.Filters
 
         public bool Equals(RuleDescription otherRule)
         {
-            if (otherRule is RuleDescription other
-                && string.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase)
-                && (Filter == null || Filter.Equals(other.Filter))
-                && (Action == null || Action.Equals(other.Action)))
-            {
-                return true;
-            }
-
-            return false;
+	        return otherRule != null
+	               && string.Equals(Name, otherRule.Name, StringComparison.OrdinalIgnoreCase)
+	               && (Filter == null || Filter.Equals(otherRule.Filter))
+	               && (Action == null || Action.Equals(otherRule.Action));
         }
 
         public static bool operator ==(RuleDescription o1, RuleDescription o2)
