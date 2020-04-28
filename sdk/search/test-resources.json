@@ -63,11 +63,11 @@
         }
     ],
     "outputs": {
-        "AZURE_SEARCH_STORAGE_NAME": {
+        "SEARCH_STORAGE_NAME": {
             "type": "string",
             "value": "[variables('storageAccountName')]"
         },
-        "AZURE_SEARCH_STORAGE_KEY": {
+        "SEARCH_STORAGE_KEY": {
             "type": "string",
             "value": "[listKeys(variables('storageAccountName'), variables('storageApiVersion')).keys[0].value]"
         }

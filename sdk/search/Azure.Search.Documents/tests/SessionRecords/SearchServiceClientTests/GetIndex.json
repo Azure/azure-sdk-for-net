@@ -1,14 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://azs-net-sahucyha.search.windows.net/indexes(\u0027kxklglir\u0027)?api-version=2019-05-06-Preview",
+      "RequestUri": "https://azs-net-yrbgrolr.search.windows.net/indexes(\u0027ravlytke\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-a71de8ccbf839b438672faae51ec8edb-d73dfb39e86fdb45-00",
+        "traceparent": "00-055317ca7a1b5c4ba035709777355f35-8f3d69068f13b349-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/1.0.0-dev.20200327.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Search.Documents/1.0.0-dev.20200424.1",
+          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "7b47ca4dbdfaf4d11dfd7df45a34096b",
         "x-ms-return-client-request-id": "true"
@@ -18,10 +19,10 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "6158",
-        "Content-Type": "application/json; odata.metadata=minimal; odata.streaming=true",
-        "Date": "Sat, 28 Mar 2020 00:13:24 GMT",
-        "elapsed-time": "44",
-        "ETag": "W/\u00220x8D7D2ACC6E5387D\u0022",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Sat, 25 Apr 2020 01:16:34 GMT",
+        "elapsed-time": "28",
+        "ETag": "W/\u00220x8D7E8B63E0DD31F\u0022",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -30,9 +31,9 @@
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains"
       },
       "ResponseBody": {
-        "@odata.context": "https://azs-net-sahucyha.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D7D2ACC6E5387D\u0022",
-        "name": "kxklglir",
+        "@odata.context": "https://azs-net-yrbgrolr.search.windows.net/$metadata#indexes/$entity",
+        "@odata.etag": "\u00220x8D7E8B63E0DD31F\u0022",
+        "name": "ravlytke",
         "defaultScoringProfile": null,
         "fields": [
           {
@@ -427,8 +428,13 @@
     }
   ],
   "Variables": {
+    "CLIENT_ID": "f9ab11db-b032-44b3-af0a-44713541cc40",
+    "LOCATION": "westus2",
     "RandomSeed": "436223391",
-    "SearchIndexName": "kxklglir",
-    "SearchServiceName": "azs-net-sahucyha"
+    "RESOURCE_GROUP": "heaths-search",
+    "SearchIndexName": "ravlytke",
+    "SearchServiceName": "azs-net-yrbgrolr",
+    "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
+    "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
   }
 }

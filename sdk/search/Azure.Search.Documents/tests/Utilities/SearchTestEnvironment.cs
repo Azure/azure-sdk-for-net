@@ -11,9 +11,9 @@ namespace Azure.Search.Documents.Tests
         {
         }
 
-        public string SearchStorageName => GetRecordedVariable("AZURE_SEARCH_STORAGE_NAME");
+        public string SearchStorageName => GetRecordedVariable("SEARCH_STORAGE_NAME");
         public string SearchStorageKey => GetRecordedVariable(StorageAccountKeyVariableName);
 
-        public static string StorageAccountKeyVariableName = "AZURE_SEARCH_STORAGE_KEY";
+        public static string StorageAccountKeyVariableName = "SEARCH_STORAGE_KEY";
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.Identity.Tests
         {
             entry.Request.Body = Encoding.UTF8.GetBytes("Sanitized");
 
-            UpdateSanitizedContentLength(entry.Request.Headers, 0, entry.Request.Body.Length);
+            UpdateSanitizedContentLength(entry.Request.Headers, entry.Request.Body.Length);
 
         }
 
