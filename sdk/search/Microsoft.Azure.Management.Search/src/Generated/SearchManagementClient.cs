@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.Search
     using System.Net.Http;
 
     /// <summary>
-    /// Client that can be used to manage Azure Search services and API keys.
+    /// Client that can be used to manage Azure Cognitive Search services and
+    /// API keys.
     /// </summary>
     public partial class SearchManagementClient : ServiceClient<SearchManagementClient>, ISearchManagementClient, IAzureClient
     {
