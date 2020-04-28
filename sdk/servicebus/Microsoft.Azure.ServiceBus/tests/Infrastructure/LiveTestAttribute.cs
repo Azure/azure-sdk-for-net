@@ -7,7 +7,7 @@ using Xunit.Sdk;
 namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
 {
 	[TraitDiscoverer("Xunit.Sdk.TraitDiscoverer", "xunit.core")]
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class LiveTestAttribute : Attribute, ITraitAttribute
     {
         public LiveTestAttribute(string name = "TestCategory", string value = "Live") {}

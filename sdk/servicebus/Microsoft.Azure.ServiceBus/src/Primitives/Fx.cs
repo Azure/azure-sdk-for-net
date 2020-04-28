@@ -200,7 +200,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 public SynchronizationKind Kind { get; set; }
             }
 
-            [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = true)]
+            [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
             [Conditional("CODE_ANALYSIS")]
             public sealed class SynchronizationPrimitiveAttribute : Attribute
             {
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                     AttributeTargets.Assembly | AttributeTargets.Module | AttributeTargets.Class |
                     AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method |
                     AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Interface |
-                    AttributeTargets.Delegate, AllowMultiple = false,
+                    AttributeTargets.Delegate,
                     Inherited = false)]
                 [Conditional("CODE_ANALYSIS")]
                 public sealed class SecurityNoteAttribute : Attribute
