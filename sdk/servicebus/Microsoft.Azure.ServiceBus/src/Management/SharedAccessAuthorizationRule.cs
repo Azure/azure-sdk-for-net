@@ -143,7 +143,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             }
         }
 
-        public override List<AccessRights> Rights
+        public sealed override List<AccessRights> Rights
         {
             get => _internalRights;
             set
