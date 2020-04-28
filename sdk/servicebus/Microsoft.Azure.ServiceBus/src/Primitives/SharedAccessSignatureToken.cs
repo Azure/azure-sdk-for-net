@@ -118,7 +118,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 throw new FormatException(Resources.TokenMissingExpiresOn);
             }
 
-            var expiresOn = (Constants.EpochTime + TimeSpan.FromSeconds(double.Parse(expiresIn, CultureInfo.InvariantCulture)));
+            var expiresOn = Constants.EpochTime + TimeSpan.FromSeconds(double.Parse(expiresIn, CultureInfo.InvariantCulture));
 
             return expiresOn;
         }

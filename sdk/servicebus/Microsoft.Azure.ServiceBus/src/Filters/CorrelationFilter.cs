@@ -204,9 +204,9 @@ namespace Microsoft.Azure.ServiceBus.Filters
             var hash = 13;
             unchecked
             {
-                hash = (hash * 7) + CorrelationId?.GetHashCode() ?? 0;
-                hash = (hash * 7) + MessageId?.GetHashCode() ?? 0;
-                hash = (hash * 7) + SessionId?.GetHashCode() ?? 0; 
+                hash = hash * 7 + CorrelationId?.GetHashCode() ?? 0;
+                hash = hash * 7 + MessageId?.GetHashCode() ?? 0;
+                hash = hash * 7 + SessionId?.GetHashCode() ?? 0; 
             }
 
             return hash;
@@ -243,8 +243,8 @@ namespace Microsoft.Azure.ServiceBus.Filters
                         foreach (var param in properties)
                         {
                             if (!correlationFilter.properties.TryGetValue(param.Key, out var otherParamValue) ||
-                                (param.Value == null ^ otherParamValue == null) ||
-                                (param.Value != null && !param.Value.Equals(otherParamValue)))
+                                param.Value == null ^ otherParamValue == null ||
+                                param.Value != null && !param.Value.Equals(otherParamValue))
                             {
                                 return false;
                             }

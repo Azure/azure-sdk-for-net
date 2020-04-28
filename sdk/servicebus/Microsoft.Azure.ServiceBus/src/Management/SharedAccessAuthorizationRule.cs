@@ -175,10 +175,10 @@ namespace Microsoft.Azure.ServiceBus.Management
             var hash = 13;
             unchecked
             {
-                hash = (hash * 7) + KeyName?.GetHashCode() ?? 0;
-                hash = (hash * 7) + PrimaryKey?.GetHashCode() ?? 0;
-                hash = (hash * 7) + SecondaryKey?.GetHashCode() ?? 0;
-                hash = (hash * 7) + Rights.GetHashCode(); 
+                hash = hash * 7 + KeyName?.GetHashCode() ?? 0;
+                hash = hash * 7 + PrimaryKey?.GetHashCode() ?? 0;
+                hash = hash * 7 + SecondaryKey?.GetHashCode() ?? 0;
+                hash = hash * 7 + Rights.GetHashCode(); 
             }
 
             return hash;
@@ -208,8 +208,8 @@ namespace Microsoft.Azure.ServiceBus.Management
                 return false;
             }
 
-            if ((Rights != null && comparand.Rights == null) ||
-                (Rights == null && comparand.Rights != null))
+            if (Rights != null && comparand.Rights == null ||
+                Rights == null && comparand.Rights != null)
             {
                 return false;
             }

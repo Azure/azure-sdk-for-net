@@ -264,8 +264,8 @@ namespace Microsoft.Azure.ServiceBus.Management
             var hash = 7;
             unchecked
             {
-                hash = (hash * 7) + TopicPath?.GetHashCode() ?? 0;
-                hash = (hash * 7) + SubscriptionName?.GetHashCode() ?? 0;
+                hash = hash * 7 + TopicPath?.GetHashCode() ?? 0;
+                hash = hash * 7 + SubscriptionName?.GetHashCode() ?? 0;
             }
 
             return hash;

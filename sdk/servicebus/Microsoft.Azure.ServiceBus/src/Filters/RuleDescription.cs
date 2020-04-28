@@ -104,8 +104,8 @@ namespace Microsoft.Azure.ServiceBus.Filters
             var hash = 13;
             unchecked
             {
-                hash = (hash * 7) + _filter?.GetHashCode() ?? 0;
-                hash = (hash * 7) + Action?.GetHashCode() ?? 0; 
+                hash = hash * 7 + _filter?.GetHashCode() ?? 0;
+                hash = hash * 7 + Action?.GetHashCode() ?? 0; 
             }
             return hash;
         }

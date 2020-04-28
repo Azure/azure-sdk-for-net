@@ -1115,7 +1115,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
-                    (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
+                    amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition()))
                 {
                     return messages;
                 }
@@ -1394,7 +1394,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 Error error = null;
                 foreach (var item in outcomes)
                 {
-                    var disposedOutcome = item.DescriptorCode == Rejected.Code && ((error = ((Rejected)item).Error) != null) ? item : null;
+                    var disposedOutcome = item.DescriptorCode == Rejected.Code && (error = ((Rejected)item).Error) != null ? item : null;
                     if (disposedOutcome != null)
                     {
                         if (error.Condition.Equals(AmqpErrorCode.NotFound))
@@ -1510,7 +1510,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                 TotalLinkCredit = (uint)PrefetchCount,
                 AutoSendFlow = PrefetchCount > 0,
                 Source = new Source { Address = Path, FilterSet = filterMap },
-                SettleType = (ReceiveMode == ReceiveMode.PeekLock) ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend
+                SettleType = ReceiveMode == ReceiveMode.PeekLock ? SettleMode.SettleOnDispose : SettleMode.SettleOnSend
             };
 
             if (EntityType != null)

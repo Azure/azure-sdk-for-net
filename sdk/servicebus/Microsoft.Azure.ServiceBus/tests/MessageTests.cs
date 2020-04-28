@@ -148,7 +148,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     try
                     { 
-                        var maxMessageSize = (256 * 1024) - 77;     // 77 bytes is the current serialization hit.
+                        var maxMessageSize = 256 * 1024 - 77;     // 77 bytes is the current serialization hit.
                         var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray(); 
                         var maxSizeMessage = new Message(maxPayload);
 

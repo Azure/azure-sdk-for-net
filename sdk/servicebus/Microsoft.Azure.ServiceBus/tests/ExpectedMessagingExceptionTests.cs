@@ -107,7 +107,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     // Let the Session expire with some buffer time
                     TestUtility.Log($"Waiting for session lock to time out...");
-                    await Task.Delay((sessionReceiver.LockedUntilUtc - DateTime.UtcNow) + TimeSpan.FromSeconds(10));
+                    await Task.Delay(sessionReceiver.LockedUntilUtc - DateTime.UtcNow + TimeSpan.FromSeconds(10));
 
                     await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.ReceiveAsync());
                     await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.RenewSessionLockAsync());

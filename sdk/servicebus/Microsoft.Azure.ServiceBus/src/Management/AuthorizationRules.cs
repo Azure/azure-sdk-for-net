@@ -34,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             {    
                 foreach (var rule in this)
                 {
-                    hash = (hash * 7) + rule.GetHashCode();
+                    hash = hash * 7 + rule.GetHashCode();
                 } 
             }
 

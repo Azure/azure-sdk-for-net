@@ -90,8 +90,8 @@ namespace Microsoft.Azure.ServiceBus.Filters
                         foreach (var param in parameters)
                         {
                             if (!sqlAction.parameters.TryGetValue(param.Key, out var otherParamValue) ||
-                                (param.Value == null ^ otherParamValue == null) ||
-                                (param.Value != null && !param.Value.Equals(otherParamValue)))
+                                param.Value == null ^ otherParamValue == null ||
+                                param.Value != null && !param.Value.Equals(otherParamValue))
                             {
                                 return false;
                             }

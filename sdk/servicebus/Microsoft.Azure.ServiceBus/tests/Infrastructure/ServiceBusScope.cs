@@ -71,7 +71,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
                                                               [CallerMemberName] string caller = "")
         {
             var topicName = $"{ caller }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
-            var subscripionName = (sessionEnabled) ? TestConstants.SessionSubscriptionName : TestConstants.SubscriptionName;
+            var subscripionName = sessionEnabled ? TestConstants.SessionSubscriptionName : TestConstants.SubscriptionName;
             var topicDescription = BuildTopicDescription(topicName, partitioned);
             var subscriptionDescription = BuildSubscriptionDescription(subscripionName, topicName, sessionEnabled);
 
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Infrastructure
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
-            TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (Rng.Value.NextDouble() * baseJitterSeconds));
+            TimeSpan.FromSeconds(Math.Pow(2, attempt) * exponentialBackoffSeconds + Rng.Value.NextDouble() * baseJitterSeconds);
 
         private static QueueDescription BuildQueueDescription(string name, bool partitioned, bool sessionEnabled) =>
             new QueueDescription(name)

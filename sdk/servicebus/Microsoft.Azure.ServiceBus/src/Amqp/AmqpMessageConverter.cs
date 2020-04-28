@@ -127,7 +127,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 }
             }
 
-            if ((sbMessage.ScheduledEnqueueTimeUtc != null) && sbMessage.ScheduledEnqueueTimeUtc > DateTime.MinValue)
+            if (sbMessage.ScheduledEnqueueTimeUtc != null && sbMessage.ScheduledEnqueueTimeUtc > DateTime.MinValue)
             {
                 amqpMessage.MessageAnnotations.Map.Add(ScheduledEnqueueTimeUtcName, sbMessage.ScheduledEnqueueTimeUtc);
             }
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
                 if (amqpMessage.Header.DeliveryCount != null)
                 {
-                    sbMessage.SystemProperties.DeliveryCount = isPeeked ? (int)(amqpMessage.Header.DeliveryCount.Value) : (int)(amqpMessage.Header.DeliveryCount.Value + 1);
+                    sbMessage.SystemProperties.DeliveryCount = isPeeked ? (int)amqpMessage.Header.DeliveryCount.Value : (int)(amqpMessage.Header.DeliveryCount.Value + 1);
                 }
             }
 
@@ -564,7 +564,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 case PropertyValueType.Unknown:
                     if (amqpObject is AmqpSymbol amqpObjectAsAmqpSymbol)
                     {
-                        netObject = (amqpObjectAsAmqpSymbol).Value;
+                        netObject = amqpObjectAsAmqpSymbol.Value;
                     }
                     else if (amqpObject is ArraySegment<byte> amqpObjectAsArraySegment)
                     {

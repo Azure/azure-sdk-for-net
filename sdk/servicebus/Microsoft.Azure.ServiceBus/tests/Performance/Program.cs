@@ -19,10 +19,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Performance
 
         internal static async Task Main(string[] args)
         {
-            var maxInflight = (args.Length >= 1 ? int.Parse(args[0]) : 1);
+            var maxInflight = args.Length >= 1 ? int.Parse(args[0]) : 1;
             Log($"Maximum inflight messages: {maxInflight}");
 
-            var messages = (args.Length >= 2 ? long.Parse(args[1]) : 10);
+            var messages = args.Length >= 2 ? long.Parse(args[1]) : 10;
 
             var connectionString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONNECTION_STRING");
             var entityPath = Environment.GetEnvironmentVariable("SERVICE_BUS_QUEUE_NAME");
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Performance
                 var currentElapsed = elapsed - lastElapsed;
                 lastElapsed = elapsed;
 
-                if ((currentMessages / currentElapsed.TotalSeconds) > (maxMessages / maxElapsed.TotalSeconds)) {
+                if (currentMessages / currentElapsed.TotalSeconds > maxMessages / maxElapsed.TotalSeconds) {
                     maxMessages = currentMessages;
                     maxElapsed = currentElapsed;
                 }

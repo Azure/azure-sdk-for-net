@@ -19,7 +19,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 
             _originalTimeout = timeout;
             _deadline = DateTime.MaxValue;
-            _deadlineSet = (timeout == TimeSpan.MaxValue);
+            _deadlineSet = timeout == TimeSpan.MaxValue;
 
             if (startTimeout && !_deadlineSet)
             {
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 return TimeSpan.MaxValue;
             }
 
-            return Ticks.ToTimeSpan((Ticks.FromTimeSpan(timeout) / factor) + 1);
+            return Ticks.ToTimeSpan(Ticks.FromTimeSpan(timeout) / factor + 1);
         }
 
         public static TimeSpan Min(TimeSpan time1, TimeSpan time2)
