@@ -11,9 +11,8 @@ namespace Microsoft.Azure.ServiceBus.Performance
 {
 	internal class Program
     {
-        private static readonly Stopwatch _stopwatch = Stopwatch.StartNew();
-
-        private static readonly byte[] _payload = new byte[1024];
+        private static readonly Stopwatch Stopwatch = Stopwatch.StartNew();
+        private static readonly byte[] Payload = new byte[1024];
 
         private static long _messages;
 
@@ -52,7 +51,7 @@ namespace Microsoft.Azure.ServiceBus.Performance
         {
             while (Interlocked.Increment(ref _messages) <= messages)
             {
-                await sender.SendAsync(new Message(_payload));
+                await sender.SendAsync(new Message(Payload));
             }
             
             // Undo last increment, since a message was never sent on the final loop iteration
@@ -74,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.Performance
                 var currentMessages = sentMessages - lastMessages;
                 lastMessages = sentMessages;
 
-                var elapsed = _stopwatch.Elapsed;
+                var elapsed = Stopwatch.Elapsed;
                 var currentElapsed = elapsed - lastElapsed;
                 lastElapsed = elapsed;
 
