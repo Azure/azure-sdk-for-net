@@ -46,7 +46,7 @@ namespace Microsoft.Azure.ServiceBus
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="namespaceConnectionString">Namespace connection string.</param>
-        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="Microsoft.Azure.ServiceBus.RetryPolicy.Default"/></param>
         /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
         public ServiceBusConnection(string namespaceConnectionString, RetryPolicy retryPolicy = null)
             : this(retryPolicy)
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="namespaceConnectionString">Namespace connection string.</param>
         /// <param name="operationTimeout">Duration after which individual operations will timeout.</param>
-        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="Microsoft.Azure.ServiceBus.RetryPolicy.Default"/></param>
         /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
         [Obsolete("This constructor is obsolete. Use ServiceBusConnection(string namespaceConnectionString, RetryPolicy retryPolicy) constructor instead, providing operationTimeout in the connection string.")]
         public ServiceBusConnection(string namespaceConnectionString, TimeSpan operationTimeout, RetryPolicy retryPolicy = null)
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="transportType">Transport type.</param>
-        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="Microsoft.Azure.ServiceBus.RetryPolicy.Default"/></param>
         public ServiceBusConnection(string endpoint, TransportType transportType, RetryPolicy retryPolicy = null)
             : this(retryPolicy)
         {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Retry policy for operations performed on the connection.
         /// </summary>
-        /// <remarks>Defaults to <see cref="RetryPolicy.Default"/></remarks>
+        /// <remarks>Defaults to <see cref="Microsoft.Azure.ServiceBus.RetryPolicy.Default"/></remarks>
         public RetryPolicy RetryPolicy { get; set; }
 
         /// <summary>
