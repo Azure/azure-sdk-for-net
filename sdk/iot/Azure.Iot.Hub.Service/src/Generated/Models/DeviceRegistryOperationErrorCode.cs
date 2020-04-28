@@ -201,7 +201,7 @@ namespace Azure.Iot.Hub.Service.Models
         private const string AzureTableStoreErrorValue = "AzureTableStoreError";
         private const string CheckpointStoreNotFoundValue = "CheckpointStoreNotFound";
         private const string DocumentDbInvalidReturnValueValue = "DocumentDbInvalidReturnValue";
-        private const string ReliableDocDbStoreStoreErrorValue = "ReliableDocDbStoreStoreError";
+        private const string ReliableDocDbStoreErrorValue = "ReliableDocDbStoreStoreError";
         private const string ReliableBlobStoreTimeoutErrorValue = "ReliableBlobStoreTimeoutError";
         private const string ConfigReadFailedValue = "ConfigReadFailed";
         private const string InvalidContainerReceiveLinkValue = "InvalidContainerReceiveLink";
@@ -598,7 +598,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> DocumentDbInvalidReturnValue. </summary>
         public static DeviceRegistryOperationErrorCode DocumentDbInvalidReturnValue { get; } = new DeviceRegistryOperationErrorCode(DocumentDbInvalidReturnValueValue);
         /// <summary> ReliableDocDbStoreStoreError. </summary>
-        public static DeviceRegistryOperationErrorCode ReliableDocDbStoreStoreError { get; } = new DeviceRegistryOperationErrorCode(ReliableDocDbStoreStoreErrorValue);
+        public static DeviceRegistryOperationErrorCode ReliableDocDbStoreError { get; } = new DeviceRegistryOperationErrorCode(ReliableDocDbStoreErrorValue);
         /// <summary> ReliableBlobStoreTimeoutError. </summary>
         public static DeviceRegistryOperationErrorCode ReliableBlobStoreTimeoutError { get; } = new DeviceRegistryOperationErrorCode(ReliableBlobStoreTimeoutErrorValue);
         /// <summary> ConfigReadFailed. </summary>

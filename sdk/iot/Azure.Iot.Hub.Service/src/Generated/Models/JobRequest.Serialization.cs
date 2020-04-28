@@ -43,7 +43,7 @@ namespace Azure.Iot.Hub.Service.Models
             if (StartTime != null)
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartTime.Value, "S");
             }
             if (MaxExecutionTimeInSeconds != null)
             {

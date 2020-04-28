@@ -11,21 +11,30 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class DigitalTwinInterfaces
+    public partial class Interface
     {
-        internal static DigitalTwinInterfaces DeserializeDigitalTwinInterfaces(JsonElement element)
+        internal static Interface DeserializeInterface(JsonElement element)
         {
-            IReadOnlyDictionary<string, Interface> interfaces = default;
-            long? version = default;
+            string name = default;
+            IReadOnlyDictionary<string, Property> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("interfaces"))
+                if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, Interface> dictionary = new Dictionary<string, Interface>();
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, Property> dictionary = new Dictionary<string, Property>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -34,23 +43,14 @@ namespace Azure.Iot.Hub.Service.Models
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, Interface.DeserializeInterface(property0.Value));
+                            dictionary.Add(property0.Name, Property.DeserializeProperty(property0.Value));
                         }
                     }
-                    interfaces = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("version"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    version = property.Value.GetInt64();
+                    properties = dictionary;
                     continue;
                 }
             }
-            return new DigitalTwinInterfaces(interfaces, version);
+            return new Interface(name, properties);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.Iot.Hub.Service.Models
             if (LastUpdatedTimeUtc != null)
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc");
-                writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedTimeUtc.Value, "S");
             }
             writer.WriteEndObject();
         }
@@ -65,7 +65,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
+                    lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
             }

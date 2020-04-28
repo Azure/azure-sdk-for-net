@@ -22,8 +22,8 @@ namespace Azure.Iot.Hub.Service.Models
             DateTimeOffset? endTime = default;
             long? maxExecutionTimeInSeconds = default;
             JobResponseType? type = default;
-            CloudToDeviceMethodRequest cloudToDeviceMethod = default;
-            TwinData updateTwin = default;
+            CloudToDeviceMethod cloudToDeviceMethod = default;
+            Twin updateTwin = default;
             JobResponseStatus? status = default;
             string failureReason = default;
             string statusMessage = default;
@@ -54,7 +54,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    createdTime = property.Value.GetDateTimeOffset("O");
+                    createdTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("startTime"))
@@ -63,7 +63,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("endTime"))
@@ -72,7 +72,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("maxExecutionTimeInSeconds"))
@@ -99,7 +99,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    cloudToDeviceMethod = CloudToDeviceMethodRequest.DeserializeCloudToDeviceMethodRequest(property.Value);
+                    cloudToDeviceMethod = CloudToDeviceMethod.DeserializeCloudToDeviceMethod(property.Value);
                     continue;
                 }
                 if (property.NameEquals("updateTwin"))
@@ -108,7 +108,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    updateTwin = TwinData.DeserializeTwinData(property.Value);
+                    updateTwin = Twin.DeserializeTwin(property.Value);
                     continue;
                 }
                 if (property.NameEquals("status"))

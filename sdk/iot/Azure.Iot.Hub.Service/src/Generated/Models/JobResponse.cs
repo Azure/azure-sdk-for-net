@@ -47,7 +47,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// </param>
         /// <param name="statusMessage"> Status message for the job. </param>
         /// <param name="deviceJobStatistics"> Job details. </param>
-        internal JobResponse(string jobId, string queryCondition, DateTimeOffset? createdTime, DateTimeOffset? startTime, DateTimeOffset? endTime, long? maxExecutionTimeInSeconds, JobResponseType? type, CloudToDeviceMethodRequest cloudToDeviceMethod, TwinData updateTwin, JobResponseStatus? status, string failureReason, string statusMessage, DeviceJobStatistics deviceJobStatistics)
+        internal JobResponse(string jobId, string queryCondition, DateTimeOffset? createdTime, DateTimeOffset? startTime, DateTimeOffset? endTime, long? maxExecutionTimeInSeconds, JobResponseType? type, CloudToDeviceMethod cloudToDeviceMethod, Twin updateTwin, JobResponseStatus? status, string failureReason, string statusMessage, DeviceJobStatistics deviceJobStatistics)
         {
             JobId = jobId;
             QueryCondition = queryCondition;
@@ -91,9 +91,9 @@ namespace Azure.Iot.Hub.Service.Models
         /// 
         /// The method type and parameters.
         /// </summary>
-        public CloudToDeviceMethodRequest CloudToDeviceMethod { get; }
+        public CloudToDeviceMethod CloudToDeviceMethod { get; }
         /// <summary> Twin Representation. </summary>
-        public TwinData UpdateTwin { get; }
+        public Twin UpdateTwin { get; }
         /// <summary> System generated.  Ignored at creation. </summary>
         public JobResponseStatus? Status { get; }
         /// <summary>

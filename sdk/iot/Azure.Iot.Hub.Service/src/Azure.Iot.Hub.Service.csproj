@@ -4,7 +4,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
     <!-- These supressions should be removed in a production library -->
-    <NoWarn>$(NoWarn);CA1812;1591</NoWarn>
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
   </PropertyGroup>
 
   <!-- Nuget properties -->
@@ -45,9 +45,6 @@
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs">
-      <LinkBase>Shared\Azure.Core</LinkBase>
-    </Compile>
-    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs">
       <LinkBase>Shared\Azure.Core</LinkBase>
     </Compile>
   </ItemGroup>

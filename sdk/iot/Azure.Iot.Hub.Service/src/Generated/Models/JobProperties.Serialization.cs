@@ -24,12 +24,12 @@ namespace Azure.Iot.Hub.Service.Models
             if (StartTimeUtc != null)
             {
                 writer.WritePropertyName("startTimeUtc");
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartTimeUtc.Value, "S");
             }
             if (EndTimeUtc != null)
             {
                 writer.WritePropertyName("endTimeUtc");
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndTimeUtc.Value, "S");
             }
             if (Type != null)
             {
@@ -116,7 +116,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    startTimeUtc = property.Value.GetDateTimeOffset("O");
+                    startTimeUtc = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("endTimeUtc"))
@@ -125,7 +125,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    endTimeUtc = property.Value.GetDateTimeOffset("O");
+                    endTimeUtc = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("type"))
