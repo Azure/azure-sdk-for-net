@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.Azure.ServiceBus.Extensions;
-using Microsoft.Azure.ServiceBus.UnitTests.Infrastructure;
-
 #if FullNetFx
 namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 {
@@ -13,13 +10,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
     using System.Text;
     using System.Threading.Tasks;
     using Xunit;
+    using InteropExtensions;
 
     public class MessageInteropEnd2EndTests
     {
         public static IEnumerable<object[]> TestEnd2EndEntityPermutations => new[]
         {
-            new object[] { TransportType.NetMessaging, MessageInteropEnd2EndTests.GetSbConnectionString(TransportType.NetMessaging) },
-            new object[] { TransportType.Amqp, MessageInteropEnd2EndTests.GetSbConnectionString(TransportType.Amqp) }
+            new object[] { TransportType.NetMessaging, GetSbConnectionString(TransportType.NetMessaging) },
+            new object[] { TransportType.Amqp, GetSbConnectionString(TransportType.Amqp) }
         };
 
         [Theory]
