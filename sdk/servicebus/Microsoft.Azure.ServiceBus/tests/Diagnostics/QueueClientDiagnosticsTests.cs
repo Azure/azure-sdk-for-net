@@ -437,7 +437,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 try
                 {
                     using (var listener = CreateEventListener(queueName, eventQueue))
-                    using (SubscribeToEvents(listener) ?? throw new ArgumentNullException("SubscribeToEvents(listener)"))
+                    using (SubscribeToEvents(listener) ?? throw new InvalidOperationException("SubscribeToEvents(listener)"))
                     {
 	                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
 	                    var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
