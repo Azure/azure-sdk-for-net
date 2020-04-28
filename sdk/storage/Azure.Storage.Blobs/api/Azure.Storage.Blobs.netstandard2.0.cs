@@ -1364,12 +1364,14 @@ namespace Azure.Storage.Sas
         Write = 8,
         Delete = 16,
         List = 32,
+        Tag = 64,
     }
     public partial class BlobSasBuilder
     {
         public BlobSasBuilder() { }
         public string BlobContainerName { get { throw null; } set { } }
         public string BlobName { get { throw null; } set { } }
+        public string BlobVersion { get { throw null; } set { } }
         public string CacheControl { get { throw null; } set { } }
         public string ContentDisposition { get { throw null; } set { } }
         public string ContentEncoding { get { throw null; } set { } }
@@ -1391,6 +1393,7 @@ namespace Azure.Storage.Sas
         public void SetPermissions(Azure.Storage.Sas.BlobAccountSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.BlobContainerSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.BlobSasPermissions permissions) { }
+        public void SetPermissions(Azure.Storage.Sas.BlobVersionSasPermissions permissions) { }
         public void SetPermissions(Azure.Storage.Sas.SnapshotSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
         public Azure.Storage.Sas.BlobSasQueryParameters ToSasQueryParameters(Azure.Storage.Blobs.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }
@@ -1407,6 +1410,7 @@ namespace Azure.Storage.Sas
         Create = 4,
         Write = 8,
         Delete = 16,
+        Tag = 32,
     }
     public sealed partial class BlobSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {
@@ -1419,6 +1423,12 @@ namespace Azure.Storage.Sas
         public string KeyTenantId { get { throw null; } }
         public string KeyVersion { get { throw null; } }
         public override string ToString() { throw null; }
+    }
+    [System.FlagsAttribute]
+    public enum BlobVersionSasPermissions
+    {
+        All = -1,
+        Delete = 1,
     }
     [System.FlagsAttribute]
     public enum SnapshotSasPermissions
