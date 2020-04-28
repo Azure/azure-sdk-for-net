@@ -485,9 +485,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 var topicsRi = await client.GetTopicsRuntimeInfoAsync();
                 var topicRi = topicsRi.FirstOrDefault(t => topicName.Equals(t.Path, StringComparison.OrdinalIgnoreCase));
                 
-                Assert.Equal(topicName, topicRi.Path);
+                Assert.Equal(topicName, topicRi?.Path);
 
-                Assert.True(topicRi.CreatedAt < topicRi.UpdatedAt);
+                Assert.True(topicRi?.CreatedAt < topicRi?.UpdatedAt);
                 Assert.True(topicRi.UpdatedAt < topicRi.AccessedAt);
 
                 Assert.Equal(0, topicRi.MessageCountDetails.ActiveMessageCount);
