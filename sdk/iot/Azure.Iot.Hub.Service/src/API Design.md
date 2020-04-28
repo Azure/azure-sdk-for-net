@@ -2,12 +2,14 @@
 This document outlines the APIs for the Azure Iot Hub Service SDK
 
 <details><summary><b>Constructors</b></summary>
+    
 ```csharp
 
 ```
 </details>
 
 <details><summary><b>Configuration APIs</b></summary>
+    
 ```csharp
 
 ```
@@ -21,12 +23,14 @@ This document outlines the APIs for the Azure Iot Hub Service SDK
 </details>
 
 <details><summary><b>Registry APIs</b></summary>
+    
 ```csharp
 
 ```
 </details>
 
 <details><summary><b>Job APIs</b></summary>
+    
 ```csharp
 
 ```
@@ -41,24 +45,28 @@ This document outlines the APIs for the Azure Iot Hub Service SDK
 </details>
 
 <details><summary><b>Twin APIs</b></summary>
+    
 ```csharp
 
 ```
 </details>
 
 <details><summary><b>Method APIs</b></summary>
+    
 ```csharp
 
 ```
 </details>
 
 <details><summary><b>Feedback Message APIs</b></summary>
+    
 ```csharp
 
 ```
 </details>
 
 <details><summary><b>Query APIs</b></summary>
+    
 ```csharp
 
 ```
