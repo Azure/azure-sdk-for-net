@@ -17,7 +17,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Performance
 
         private static long _messages;
 
-        private static async Task Main(string[] args)
+        internal static async Task Main(string[] args)
         {
             var maxInflight = (args.Length >= 1 ? int.Parse(args[0]) : 1);
             Log($"Maximum inflight messages: {maxInflight}");
