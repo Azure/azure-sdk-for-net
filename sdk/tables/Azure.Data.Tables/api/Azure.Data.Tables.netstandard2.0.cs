@@ -12,17 +12,21 @@ namespace Azure.Data.Tables
     }
     public partial class TableClientOptions : Azure.Core.ClientOptions
     {
-        public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2018_10_10) { }
+        public TableClientOptions(Azure.Data.Tables.TableClientOptions.ServiceVersion serviceVersion = Azure.Data.Tables.TableClientOptions.ServiceVersion.V2019_02_02) { }
         public enum ServiceVersion
         {
-            V2018_10_10 = 1,
+            V2019_02_02 = 1,
         }
     }
     public partial class TableServiceClient
     {
         protected TableServiceClient() { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TablesSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
-        public Azure.Data.Tables.TableClient GetTableClient(string tableName) { throw null; }
+        public virtual Azure.Data.Tables.Models.TableResponse CreateTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Data.Tables.Models.TableResponse> CreateTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Data.Tables.TableClient GetTableClient(string tableName) { throw null; }
         public virtual Azure.Pageable<Azure.Data.Tables.Models.TableResponseProperties> GetTables(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.Tables.Models.TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -104,14 +108,6 @@ namespace Azure.Data.Tables.Models
         public static implicit operator Azure.Data.Tables.Models.OdataMetadataFormat (string value) { throw null; }
         public static bool operator !=(Azure.Data.Tables.Models.OdataMetadataFormat left, Azure.Data.Tables.Models.OdataMetadataFormat right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class QueryOptions
-    {
-        public QueryOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public Azure.Data.Tables.Models.OdataMetadataFormat? Format { get { throw null; } set { } }
-        public string Select { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public partial class RequestMetrics
     {

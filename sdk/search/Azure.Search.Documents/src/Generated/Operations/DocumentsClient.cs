@@ -15,6 +15,7 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
+    /// <summary> The Documents service client. </summary>
     internal partial class DocumentsClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;

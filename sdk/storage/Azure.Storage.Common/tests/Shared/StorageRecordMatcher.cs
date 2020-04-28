@@ -83,9 +83,8 @@ namespace Azure.Storage.Test.Shared
         /// Creates a new StorageRecordMatcher to determine whether recordings
         /// have been meaningfully updated.
         /// </summary>
-        /// <param name="sanitizer">The test record sanitizer.</param>
-        public StorageRecordMatcher(RecordedTestSanitizer sanitizer)
-            : base(sanitizer)
+        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11632
+        public StorageRecordMatcher():base(compareBodies: false)
         {
             // Storage specific request headers to ignore
             VolatileHeaders.Add("x-ms-source-if-match");

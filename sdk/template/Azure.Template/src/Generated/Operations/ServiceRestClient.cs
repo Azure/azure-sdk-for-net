@@ -18,57 +18,64 @@ namespace Azure.Template
 {
     internal partial class ServiceRestClient
     {
-        private string host;
+        private string vaultBaseUrl;
+        private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
         /// <summary> Initializes a new instance of ServiceRestClient. </summary>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host = "http://localhost:3000")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string vaultBaseUrl, string apiVersion = "7.0")
         {
-            if (host == null)
+            if (vaultBaseUrl == null)
             {
-                throw new ArgumentNullException(nameof(host));
+                throw new ArgumentNullException(nameof(vaultBaseUrl));
+            }
+            if (apiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(apiVersion));
             }
 
-            this.host = host;
+            this.vaultBaseUrl = vaultBaseUrl;
+            this.apiVersion = apiVersion;
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateOperationRequest(ServiceModel body)
+        internal HttpMessage CreateGetSecretRequest(string secretName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Patch;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(host, false);
-            uri.AppendPath("/Operation/", false);
+            uri.AppendRaw(vaultBaseUrl, false);
+            uri.AppendPath("/secrets/", false);
+            uri.AppendPath(secretName, true);
+            uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            if (body != null)
-            {
-                using var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
-                request.Content = content;
-            }
             return message;
         }
 
-        /// <param name="body"> The ServiceModel to use. </param>
+        /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
+        /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<ServiceModel>> OperationAsync(ServiceModel body = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SecretBundle>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.Operation");
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetSecret");
             scope.Start();
             try
             {
-                using var message = CreateOperationRequest(body);
+                using var message = CreateGetSecretRequest(secretName);
                 await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
-                            ServiceModel value = default;
+                            SecretBundle value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -76,7 +83,7 @@ namespace Azure.Template
                             }
                             else
                             {
-                                value = ServiceModel.DeserializeServiceModel(document.RootElement);
+                                value = SecretBundle.DeserializeSecretBundle(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -91,21 +98,27 @@ namespace Azure.Template
             }
         }
 
-        /// <param name="body"> The ServiceModel to use. </param>
+        /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
+        /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<ServiceModel> Operation(ServiceModel body = null, CancellationToken cancellationToken = default)
+        public Response<SecretBundle> GetSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope("ServiceClient.Operation");
+            if (secretName == null)
+            {
+                throw new ArgumentNullException(nameof(secretName));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("ServiceClient.GetSecret");
             scope.Start();
             try
             {
-                using var message = CreateOperationRequest(body);
+                using var message = CreateGetSecretRequest(secretName);
                 _pipeline.Send(message, cancellationToken);
                 switch (message.Response.Status)
                 {
                     case 200:
                         {
-                            ServiceModel value = default;
+                            SecretBundle value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -113,7 +126,7 @@ namespace Azure.Template
                             }
                             else
                             {
-                                value = ServiceModel.DeserializeServiceModel(document.RootElement);
+                                value = SecretBundle.DeserializeSecretBundle(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }

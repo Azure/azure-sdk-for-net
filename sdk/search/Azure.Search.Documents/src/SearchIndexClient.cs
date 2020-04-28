@@ -1567,6 +1567,7 @@ namespace Azure.Search.Documents
                     {
                         request.ClientRequestId = options?.ClientRequestId.ToString();
                     }
+                    request.Headers.Add("Accept", "application/json; odata.metadata=none");
                     request.Headers.Add("Content-Type", "application/json");
                     using Utf8JsonRequestContent content = new Utf8JsonRequestContent();
                     content.JsonWriter.WriteObjectValue(documents);

@@ -35,7 +35,7 @@ namespace Azure.Core.Testing
         protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync)
         {
             Sanitizer = new RecordedTestSanitizer();
-            Matcher = new RecordMatcher(Sanitizer);
+            Matcher = new RecordMatcher();
             Mode = mode;
         }
 

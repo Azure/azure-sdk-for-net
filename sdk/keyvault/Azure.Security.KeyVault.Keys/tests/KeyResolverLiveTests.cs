@@ -20,6 +20,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public KeyResolverLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
             _serviceVersion = serviceVersion;
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         public KeyResolver Resolver { get { return GetResolver(); } }

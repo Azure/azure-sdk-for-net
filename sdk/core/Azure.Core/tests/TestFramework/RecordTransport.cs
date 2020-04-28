@@ -65,7 +65,7 @@ namespace Azure.Core.Testing
             return request;
         }
 
-        public RecordEntry CreateEntry(Request request, Response response)
+        internal static RecordEntry CreateEntry(Request request, Response response)
         {
             var entry = new RecordEntry
             {
@@ -75,11 +75,6 @@ namespace Azure.Core.Testing
                 {
                     Body = ReadToEnd(request.Content),
                 },
-                Response =
-                {
-                    Body = ReadToEnd(response),
-                },
-                StatusCode = response.Status
             };
 
             foreach (HttpHeader requestHeader in request.Headers)
@@ -95,17 +90,22 @@ namespace Azure.Core.Testing
                 entry.Request.Headers.Add("Content-Length", new[] { computedLength.ToString(CultureInfo.InvariantCulture) });
             }
 
-            foreach (HttpHeader responseHeader in response.Headers)
+            if (response != null)
             {
-                var gotHeader = response.Headers.TryGetValues(responseHeader.Name, out IEnumerable<string> headerValues);
-                Debug.Assert(gotHeader);
-                entry.Response.Headers.Add(responseHeader.Name, headerValues.ToArray());
+                entry.Response.Body = ReadToEnd(response);
+                entry.StatusCode = response.Status;
+                foreach (HttpHeader responseHeader in response.Headers)
+                {
+                    var gotHeader = response.Headers.TryGetValues(responseHeader.Name, out IEnumerable<string> headerValues);
+                    Debug.Assert(gotHeader);
+                    entry.Response.Headers.Add(responseHeader.Name, headerValues.ToArray());
+                }
             }
 
             return entry;
         }
 
-        private byte[] ReadToEnd(Response response)
+        private static byte[] ReadToEnd(Response response)
         {
             Stream responseContentStream = response.ContentStream;
             if (responseContentStream == null)
@@ -122,7 +122,7 @@ namespace Azure.Core.Testing
             return memoryStream.ToArray();
         }
 
-        private byte[] ReadToEnd(RequestContent requestContent)
+        private static byte[] ReadToEnd(RequestContent requestContent)
         {
             if (requestContent == null)
             {

@@ -4,6 +4,7 @@
       "RequestUri": "https://azs-net-upjoqfhr.search.windows.net/synonymmaps?api-version=2019-05-06-Preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "69",
         "Content-Type": "application/json",
@@ -49,6 +50,7 @@
       "RequestUri": "https://azs-net-upjoqfhr.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "118",
         "Content-Type": "application/json",
@@ -96,6 +98,7 @@
       "RequestUri": "https://azs-net-upjoqfhr.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "Content-Length": "118",
         "Content-Type": "application/json",
@@ -178,6 +181,7 @@
       "RequestUri": "https://azs-net-upjoqfhr.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "traceparent": "00-224b638cb0d54346904bea57b795f07b-eaa4973ec0757146-00",
         "User-Agent": [
@@ -216,6 +220,7 @@
       "RequestUri": "https://azs-net-upjoqfhr.search.windows.net/synonymmaps(\u0027byaqwdpt\u0027)?api-version=2019-05-06-Preview",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
         "If-Match": "\u00220x8D7E5A1F393B326\u0022",
         "traceparent": "00-78d477d2fa1a1d4ba479a1330da7acc7-d4e6a0ae0d1afa40-00",

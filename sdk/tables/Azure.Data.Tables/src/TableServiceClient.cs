@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
@@ -21,10 +22,10 @@ namespace Azure.Data.Tables
 
             options ??= new TableClientOptions();
 
-            var endpoint1 = endpoint.ToString();
+            var endpointString = endpoint.ToString();
             var pipeline = HttpPipelineBuilder.Build(options, new TablesSharedKeyPipelinePolicy(credential));
             var diagnostics = new ClientDiagnostics(options);
-            _tableOperations = new TableInternalClient(diagnostics, pipeline, endpoint1, "2019-02-02");
+            _tableOperations = new TableInternalClient(diagnostics, pipeline, endpointString);
         }
 
         /// <summary>
@@ -34,7 +35,7 @@ namespace Azure.Data.Tables
         protected TableServiceClient()
         { }
 
-        public TableClient GetTableClient(string tableName)
+        public virtual TableClient GetTableClient(string tableName)
         {
             return new TableClient(tableName, _tableOperations);
         }
@@ -49,8 +50,6 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual AsyncPageable<TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            //TODO: support continuation tokens
-
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
                 var response = await _tableOperations.RestClient.QueryAsync(
@@ -58,7 +57,14 @@ namespace Azure.Data.Tables
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken).ConfigureAwait(false);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, (_, __) => throw new NotImplementedException());
+            }, async (nextLink, _) =>
+            {
+                var response = await _tableOperations.RestClient.QueryAsync(
+                       null,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format, NextTableName = nextLink },
+                       cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+            });
         }
 
         /// <summary>
@@ -71,8 +77,6 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         public virtual Pageable<TableResponseProperties> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            //TODO: support continuation tokens
-
             return PageableHelpers.CreateEnumerable(_ =>
             {
                 var response = _tableOperations.RestClient.Query(
@@ -80,7 +84,55 @@ namespace Azure.Data.Tables
                     new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format },
                     cancellationToken);
                 return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
-            }, (_, __) => throw new NotImplementedException());
+            }, (nextLink, _) =>
+            {
+                var response = _tableOperations.RestClient.Query(
+                       null,
+                       new QueryOptions() { Filter = filter, Select = select, Top = top, Format = _format, NextTableName = nextLink },
+                       cancellationToken);
+                return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+            });
         }
+
+        /// <summary>
+        /// Creates a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual TableResponse CreateTable(string tableName, CancellationToken cancellationToken = default) =>
+            _tableOperations.RestClient.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// Creates a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual async Task<TableResponse> CreateTableAsync(string tableName, CancellationToken cancellationToken = default) =>
+            await _tableOperations.RestClient.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Deletes a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual Response DeleteTable(string tableName, CancellationToken cancellationToken = default) =>
+            _tableOperations.Delete(tableName, null, cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// Deletes a table in the storage account.
+        /// </summary>
+        /// <param name="tableName">The table name to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        [ForwardsClientCalls]
+        public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default) =>
+            await _tableOperations.DeleteAsync(tableName, null, cancellationToken: cancellationToken).ConfigureAwait(false);
+
     }
 }

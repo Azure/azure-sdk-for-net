@@ -14,6 +14,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
+    /// <summary> The Table service client. </summary>
     internal partial class TableInternalClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -24,7 +25,7 @@ namespace Azure.Data.Tables
         {
         }
         /// <summary> Initializes a new instance of TableInternalClient. </summary>
-        internal TableInternalClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-10-10")
+        internal TableInternalClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
         {
             RestClient = new TableRestClient(clientDiagnostics, pipeline, url, version);
             _clientDiagnostics = clientDiagnostics;

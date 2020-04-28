@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Moq;
 using NUnit.Framework;
@@ -78,15 +79,23 @@ namespace Azure.Core.Tests
         [Test]
         public void RecordMatcherThrowsExceptionsWithDetails()
         {
-            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+            var matcher = new RecordMatcher();
 
-            MockRequest mockRequest = new MockRequest
+            var requestEntry = new RecordEntry()
             {
-                Method = RequestMethod.Head
+                RequestUri = "http://localhost/",
+                RequestMethod = RequestMethod.Head,
+                Request =
+                {
+                    Headers =
+                    {
+                        {"Content-Length", new[] {"41"}},
+                        {"Some-Header", new[] {"Random value"}},
+                        {"Some-Other-Header", new[] {"V"}}
+                    },
+                    Body = Encoding.UTF8.GetBytes("This is request body, it's nice and long.")
+                }
             };
-            mockRequest.Uri.Reset(new Uri("http://localhost"));
-            mockRequest.Headers.Add("Some-Header", "Random value");
-            mockRequest.Headers.Add("Some-Other-Header", "V");
 
             RecordEntry[] entries = new[]
             {
@@ -98,14 +107,16 @@ namespace Azure.Core.Tests
                     {
                         Headers =
                             {
+                                { "Content-Length", new[] { "41"}},
                                 { "Some-Header", new[] { "Non-Random value"}},
                                 { "Extra-Header", new[] { "Extra-Value" }}
-                            }
+                            },
+                        Body = Encoding.UTF8.GetBytes("This is request body, it's nice and long but it also doesn't match.")
                     }
                 }
             };
 
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(mockRequest, entries));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => matcher.FindMatch(requestEntry, entries));
             Assert.AreEqual(
                 "Unable to find a record for the request HEAD http://localhost/" + Environment.NewLine +
                 "Method doesn't match, request <HEAD> record <PUT>" + Environment.NewLine +
@@ -115,20 +126,24 @@ namespace Azure.Core.Tests
                 "Header differences:" + Environment.NewLine +
                 "    <Some-Header> values differ, request <Random value>, record <Non-Random value>" + Environment.NewLine +
                 "    <Some-Other-Header> is absent in record, value <V>" + Environment.NewLine +
-                "    <Extra-Header> is absent in request, value <Extra-Value>" + Environment.NewLine,
+                "    <Extra-Header> is absent in request, value <Extra-Value>" + Environment.NewLine +
+                "Body differences:" + Environment.NewLine +
+                "Request and response bodies do not match at index 40:" + Environment.NewLine +
+                "     request: \"e and long.\"" + Environment.NewLine +
+                "     record:  \"e and long but it also doesn't\"" + Environment.NewLine,
                 exception.Message);
         }
 
         [Test]
         public void RecordMatcherIgnoresIgnoredHeaders()
         {
-            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+            var matcher = new RecordMatcher();
 
-            MockRequest mockRequest = new MockRequest
+            var mockRequest = new RecordEntry()
             {
-                Method = RequestMethod.Put
+                RequestUri = "http://localhost",
+                RequestMethod = RequestMethod.Put,
             };
-            mockRequest.Uri.Reset(new Uri("http://localhost"));
 
             RecordEntry[] entries = new[]
             {
@@ -152,15 +167,13 @@ namespace Azure.Core.Tests
         [Test]
         public void RecordMatcherThrowsExceptionsWhenNoRecordsLeft()
         {
-            var matcher = new RecordMatcher(new RecordedTestSanitizer());
+            var matcher = new RecordMatcher();
 
-            MockRequest mockRequest = new MockRequest
+            var mockRequest = new RecordEntry()
             {
-                Method = RequestMethod.Head
+                RequestUri = "http://localhost/",
+                RequestMethod = RequestMethod.Head
             };
-            mockRequest.Uri.Reset(new Uri("http://localhost"));
-            mockRequest.Headers.Add("Some-Header", "Random value");
-            mockRequest.Headers.Add("Some-Other-Header", "V");
 
             RecordEntry[] entries = { };
 
@@ -190,7 +203,7 @@ namespace Azure.Core.Tests
         {
             var tempFile = Path.GetTempFileName();
             var sanitizer = new TestSanitizer();
-            TestRecording recording = new TestRecording(RecordedTestMode.Record, tempFile, sanitizer, new RecordMatcher(sanitizer));
+            TestRecording recording = new TestRecording(RecordedTestMode.Record, tempFile, sanitizer, new RecordMatcher());
 
             recording.SetVariable("A", "secret");
             recording.Dispose(true);
@@ -198,6 +211,32 @@ namespace Azure.Core.Tests
             var text = File.ReadAllText(tempFile);
 
             StringAssert.DoesNotContain("secret", text);
+        }
+
+        [Theory]
+        [TestCase("Content-Type")]
+        [TestCase("Accept")]
+        [TestCase("Random-Header")]
+        public void SpecialHeadersNormalizedForMatching(string name)
+        {
+            // Use HttpClientTransport as it does header normalization
+            var originalRequest = new HttpClientTransport().CreateRequest();
+            originalRequest.Method = RequestMethod.Get;
+            originalRequest.Uri.Reset(new Uri("http://localhost"));
+            originalRequest.Headers.Add(name, "application/json;odata=nometadata");
+            originalRequest.Headers.Add("Date", "This should be ignored");
+
+            var playbackRequest = new MockTransport().CreateRequest();
+            playbackRequest.Method = RequestMethod.Get;
+            playbackRequest.Uri.Reset(new Uri("http://localhost"));
+            playbackRequest.Headers.Add(name, "application/json;odata=nometadata");
+            playbackRequest.Headers.Add("Date", "It doesn't match");
+
+            var matcher = new RecordMatcher();
+            var requestEntry = RecordTransport.CreateEntry(originalRequest, null);
+            var entry = RecordTransport.CreateEntry(originalRequest, new MockResponse(200));
+
+            Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }));
         }
 
         private class TestSanitizer : RecordedTestSanitizer
