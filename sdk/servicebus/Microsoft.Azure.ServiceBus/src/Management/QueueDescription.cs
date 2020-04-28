@@ -292,31 +292,28 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         public bool Equals(QueueDescription otherDescription)
         {
-            if (otherDescription is QueueDescription other
-                && Path.Equals(other.Path, StringComparison.OrdinalIgnoreCase)
-                && AutoDeleteOnIdle.Equals(other.AutoDeleteOnIdle)
-                && DefaultMessageTimeToLive.Equals(other.DefaultMessageTimeToLive)
-                && (!RequiresDuplicateDetection || DuplicateDetectionHistoryTimeWindow.Equals(other.DuplicateDetectionHistoryTimeWindow))
-                && EnableBatchedOperations == other.EnableBatchedOperations
-                && EnableDeadLetteringOnMessageExpiration == other.EnableDeadLetteringOnMessageExpiration
-                && EnablePartitioning == other.EnablePartitioning
-                && string.Equals(ForwardDeadLetteredMessagesTo, other.ForwardDeadLetteredMessagesTo, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(ForwardTo, other.ForwardTo, StringComparison.OrdinalIgnoreCase)
-                && LockDuration.Equals(other.LockDuration)
-                && MaxDeliveryCount == other.MaxDeliveryCount
-                && MaxSizeInMB == other.MaxSizeInMB
-                && RequiresDuplicateDetection.Equals(other.RequiresDuplicateDetection)
-                && RequiresSession.Equals(other.RequiresSession)
-                && Status.Equals(other.Status)
-                && string.Equals(_userMetadata, other._userMetadata, StringComparison.OrdinalIgnoreCase)
-                && (AuthorizationRules != null && other.AuthorizationRules != null
-                    || AuthorizationRules == null && other.AuthorizationRules == null)
-                && (AuthorizationRules == null || AuthorizationRules.Equals(other.AuthorizationRules)))
-            {
-                return true;
-            }
-
-            return false;
+	        return otherDescription != null
+	               && Path.Equals(otherDescription.Path, StringComparison.OrdinalIgnoreCase)
+	               && AutoDeleteOnIdle.Equals(otherDescription.AutoDeleteOnIdle)
+	               && DefaultMessageTimeToLive.Equals(otherDescription.DefaultMessageTimeToLive)
+	               && (!RequiresDuplicateDetection ||
+	                   DuplicateDetectionHistoryTimeWindow.Equals(otherDescription.DuplicateDetectionHistoryTimeWindow))
+	               && EnableBatchedOperations == otherDescription.EnableBatchedOperations
+	               && EnableDeadLetteringOnMessageExpiration == otherDescription.EnableDeadLetteringOnMessageExpiration
+	               && EnablePartitioning == otherDescription.EnablePartitioning
+	               && string.Equals(ForwardDeadLetteredMessagesTo, otherDescription.ForwardDeadLetteredMessagesTo,
+		               StringComparison.OrdinalIgnoreCase)
+	               && string.Equals(ForwardTo, otherDescription.ForwardTo, StringComparison.OrdinalIgnoreCase)
+	               && LockDuration.Equals(otherDescription.LockDuration)
+	               && MaxDeliveryCount == otherDescription.MaxDeliveryCount
+	               && MaxSizeInMB == otherDescription.MaxSizeInMB
+	               && RequiresDuplicateDetection.Equals(otherDescription.RequiresDuplicateDetection)
+	               && RequiresSession.Equals(otherDescription.RequiresSession)
+	               && Status.Equals(otherDescription.Status)
+	               && string.Equals(_userMetadata, otherDescription._userMetadata, StringComparison.OrdinalIgnoreCase)
+	               && (AuthorizationRules != null && otherDescription.AuthorizationRules != null
+	                   || AuthorizationRules == null && otherDescription.AuthorizationRules == null)
+	               && (AuthorizationRules == null || AuthorizationRules.Equals(otherDescription.AuthorizationRules));
         }
 
         public static bool operator ==(QueueDescription o1, QueueDescription o2)
