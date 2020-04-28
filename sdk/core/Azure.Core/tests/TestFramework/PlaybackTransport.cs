@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -15,13 +14,16 @@ namespace Azure.Core.Testing
 
         private readonly RecordMatcher _matcher;
 
+        private readonly RecordedTestSanitizer _sanitizer;
+
         private readonly Random _random;
 
-        public PlaybackTransport(RecordSession session, RecordMatcher matcher, Random random)
+        public PlaybackTransport(RecordSession session, RecordMatcher matcher, RecordedTestSanitizer sanitizer, Random random)
         {
             _session = session;
             _matcher = matcher;
             _random = random;
+            _sanitizer = sanitizer;
         }
 
         public override void Process(HttpMessage message)
@@ -39,7 +41,7 @@ namespace Azure.Core.Testing
                 }
             }
 
-            message.Response = GetResponse(_session.Lookup(message.Request, _matcher));
+            message.Response = GetResponse(_session.Lookup(message.Request, _matcher, _sanitizer));
         }
 
         public override async ValueTask ProcessAsync(HttpMessage message)
@@ -57,7 +59,7 @@ namespace Azure.Core.Testing
                 }
             }
 
-            message.Response = GetResponse(_session.Lookup(message.Request, _matcher));
+            message.Response = GetResponse(_session.Lookup(message.Request, _matcher, _sanitizer));
         }
 
         public override Request CreateRequest()

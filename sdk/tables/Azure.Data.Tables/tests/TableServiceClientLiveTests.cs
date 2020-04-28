@@ -24,7 +24,6 @@ namespace Azure.Data.Tables.Tests
         public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
         {
             Sanitizer = new TablesRecordedTestSanitizer();
-            Matcher = new TablesRecordMatcher(Sanitizer);
         }
 
         /// <summary>

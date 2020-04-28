@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Tests
         {
             ServiceVersion = serviceVersion;
             Sanitizer = new SearchRecordedTestSanitizer();
-            Matcher = new RecordMatcher(Sanitizer);
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         /// <summary>

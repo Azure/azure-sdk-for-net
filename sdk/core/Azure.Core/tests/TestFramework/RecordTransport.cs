@@ -75,11 +75,6 @@ namespace Azure.Core.Testing
                 {
                     Body = ReadToEnd(request.Content),
                 },
-                Response =
-                {
-                    Body = ReadToEnd(response),
-                },
-                StatusCode = response.Status
             };
 
             foreach (HttpHeader requestHeader in request.Headers)
@@ -95,11 +90,16 @@ namespace Azure.Core.Testing
                 entry.Request.Headers.Add("Content-Length", new[] { computedLength.ToString(CultureInfo.InvariantCulture) });
             }
 
-            foreach (HttpHeader responseHeader in response.Headers)
+            if (response != null)
             {
-                var gotHeader = response.Headers.TryGetValues(responseHeader.Name, out IEnumerable<string> headerValues);
-                Debug.Assert(gotHeader);
-                entry.Response.Headers.Add(responseHeader.Name, headerValues.ToArray());
+                entry.Response.Body = ReadToEnd(response);
+                entry.StatusCode = response.Status;
+                foreach (HttpHeader responseHeader in response.Headers)
+                {
+                    var gotHeader = response.Headers.TryGetValues(responseHeader.Name, out IEnumerable<string> headerValues);
+                    Debug.Assert(gotHeader);
+                    entry.Response.Headers.Add(responseHeader.Name, headerValues.ToArray());
+                }
             }
 
             return entry;
