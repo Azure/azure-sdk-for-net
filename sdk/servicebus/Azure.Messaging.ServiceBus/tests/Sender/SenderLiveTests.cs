@@ -86,7 +86,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, 3);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>()));
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
                 batch.TryAdd(new ServiceBusMessage(new byte[100000 / 3]));
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[200000])), Is.True, "A message was rejected by the batch; all messages should be accepted.");
                 Assert.That(() => batch.TryAdd(new ServiceBusMessage(new byte[200000])), Is.False, "A message was rejected by the batch; message size exceed.");
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 }
                 foreach (ServiceBusReceivedMessage msg in receivedMessages)
                 {
-                    await sender.SendAsync(ServiceBusMessage.CreateFrom(msg));
+                    await sender.SendAsync(new ServiceBusMessage(msg));
                 }
 
                 var messageEnum = receivedMessages.GetEnumerator();

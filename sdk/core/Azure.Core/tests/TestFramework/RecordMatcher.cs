@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -11,11 +10,18 @@ namespace Azure.Core.Testing
 {
     public class RecordMatcher
     {
-        private readonly RecordedTestSanitizer _sanitizer;
-
-        public RecordMatcher(RecordedTestSanitizer sanitizer)
+        // Headers that are normalized by HttpClient
+        private HashSet<string> _normalizedHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            _sanitizer = sanitizer;
+            "Accept",
+            "Content-Type"
+        };
+
+        private bool _compareBodies;
+
+        public RecordMatcher(bool compareBodies = true)
+        {
+            _compareBodies = compareBodies;
         }
 
         public HashSet<string> ExcludeHeaders = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -52,21 +58,8 @@ namespace Azure.Core.Testing
             "x-ms-correlation-request-id"
         };
 
-        public virtual RecordEntry FindMatch(Request request, IList<RecordEntry> entries)
+        public virtual RecordEntry FindMatch(RecordEntry request, IList<RecordEntry> entries)
         {
-            SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
-
-            foreach (HttpHeader header in request.Headers)
-            {
-                var gotHeader = request.Headers.TryGetValues(header.Name, out IEnumerable<string> values);
-                Debug.Assert(gotHeader);
-                headers[header.Name] = values.ToArray();
-            }
-
-            _sanitizer.SanitizeHeaders(headers);
-
-            string uri = _sanitizer.SanitizeUri(request.Uri.ToString());
-
             int bestScore = int.MaxValue;
             RecordEntry bestScoreEntry = null;
 
@@ -74,17 +67,36 @@ namespace Azure.Core.Testing
             {
                 int score = 0;
 
-                if (!AreUrisSame(entry.RequestUri, uri))
+                var uri = request.RequestUri;
+                var recordRequestUri = entry.RequestUri;
+                if (entry.IsTrack1Recording)
+                {
+                    //there's no domain name for request uri in track 1 record, so add it from reqeust uri
+                    int len = 8; //length of "https://"
+                    int domainEndingIndex = uri.IndexOf('/', len);
+                    if (domainEndingIndex > 0)
+                    {
+                        recordRequestUri = uri.Substring(0, domainEndingIndex) + recordRequestUri;
+                    }
+                }
+
+                if (!AreUrisSame(recordRequestUri, uri))
                 {
                     score++;
                 }
 
-                if (entry.RequestMethod != request.Method)
+                if (entry.RequestMethod != request.RequestMethod)
                 {
                     score++;
                 }
 
-                score += CompareHeaderDictionaries(headers, entry.Request.Headers, ExcludeHeaders);
+                //we only check Uri + RequestMethod for track1 record
+                if (entry.IsTrack1Recording)
+                {
+                    score += CompareHeaderDictionaries(request.Request.Headers, entry.Request.Headers, ExcludeHeaders);
+                }
+
+                score += CompareBodies(request.Request.Body, entry.Request.Body);
 
                 if (score == 0)
                 {
@@ -98,7 +110,57 @@ namespace Azure.Core.Testing
                 }
             }
 
-            throw new InvalidOperationException(GenerateException(request.Method, uri, headers, bestScoreEntry));
+            throw new InvalidOperationException(GenerateException(request, bestScoreEntry));
+        }
+
+        private int CompareBodies(byte[] requestBody, byte[] responseBody, StringBuilder descriptionBuilder = null)
+        {
+            if (!_compareBodies)
+            {
+                return 0;
+            }
+
+            if (requestBody == null && responseBody == null)
+            {
+                return 0;
+            }
+
+            if (requestBody == null)
+            {
+                descriptionBuilder?.AppendLine("Request has body but response doesn't");
+                return 1;
+            }
+
+            if (responseBody == null)
+            {
+                descriptionBuilder?.AppendLine("Response has body but request doesn't");
+                return 1;
+            }
+
+            if (!requestBody.SequenceEqual(responseBody))
+            {
+                if (descriptionBuilder != null)
+                {
+                    var minLength = Math.Min(requestBody.Length, responseBody.Length);
+                    int i;
+                    for (i = 0; i < minLength - 1; i++)
+                    {
+                        if (requestBody[i] != responseBody[i])
+                        {
+                            break;
+                        }
+                    }
+                    descriptionBuilder.AppendLine($"Request and response bodies do not match at index {i}:");
+                    var before = Math.Max(0, i - 10);
+                    var afterRequest = Math.Min(i + 20, requestBody.Length);
+                    var afterResponse = Math.Min(i + 20, responseBody.Length);
+                    descriptionBuilder.AppendLine($"     request: \"{Encoding.UTF8.GetString(requestBody, before, afterRequest - before)}\"");
+                    descriptionBuilder.AppendLine($"     record:  \"{Encoding.UTF8.GetString(responseBody, before, afterResponse - before)}\"");
+                }
+                return 1;
+            }
+
+            return 0;
         }
 
         public virtual bool IsEquivalentRecord(RecordEntry entry, RecordEntry otherEntry) =>
@@ -136,10 +198,10 @@ namespace Azure.Core.Testing
                 .SequenceEqual((otherRecord.Response.Body ?? Array.Empty<byte>()));
         }
 
-        private string GenerateException(RequestMethod requestMethod, string uri, SortedDictionary<string, string[]> headers, RecordEntry bestScoreEntry)
+        private string GenerateException(RecordEntry request, RecordEntry bestScoreEntry)
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine($"Unable to find a record for the request {requestMethod} {uri}");
+            builder.AppendLine($"Unable to find a record for the request {request.RequestMethod} {request.RequestUri}");
 
             if (bestScoreEntry == null)
             {
@@ -147,21 +209,25 @@ namespace Azure.Core.Testing
                 return builder.ToString();
             }
 
-            if (requestMethod != bestScoreEntry.RequestMethod)
+            if (request.RequestMethod != bestScoreEntry.RequestMethod)
             {
-                builder.AppendLine($"Method doesn't match, request <{requestMethod}> record <{bestScoreEntry.RequestMethod}>");
+                builder.AppendLine($"Method doesn't match, request <{request.RequestMethod}> record <{bestScoreEntry.RequestMethod}>");
             }
 
-            if (!AreUrisSame(uri, bestScoreEntry.RequestUri))
+            if (!AreUrisSame(request.RequestUri, bestScoreEntry.RequestUri))
             {
                 builder.AppendLine("Uri doesn't match:");
-                builder.AppendLine($"    request <{uri}>");
+                builder.AppendLine($"    request <{request.RequestUri}>");
                 builder.AppendLine($"    record  <{bestScoreEntry.RequestUri}>");
             }
 
             builder.AppendLine("Header differences:");
 
-            CompareHeaderDictionaries(headers, bestScoreEntry.Request.Headers, ExcludeHeaders, builder);
+            CompareHeaderDictionaries(request.Request.Headers, bestScoreEntry.Request.Headers, ExcludeHeaders, builder);
+
+            builder.AppendLine("Body differences:");
+
+            CompareBodies(request.Request.Body, bestScoreEntry.Request.Body, builder);
 
             return builder.ToString();
         }
@@ -171,26 +237,51 @@ namespace Azure.Core.Testing
             return string.Join(",", values);
         }
 
+        private string[] RenormalizeSemicolons(string[] values)
+        {
+            string[] outputs = new string[values.Length];
+            for (int i = 0; i < values.Length; i++)
+            {
+                outputs[i] = string.Join("; ", values[i].Split(';').Select(part => part.Trim()));
+            }
+
+            return outputs;
+        }
+
         private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders, HashSet<string> ignoredHeaders, StringBuilder descriptionBuilder = null)
         {
             int difference = 0;
             var remaining = new SortedDictionary<string, string[]>(entryHeaders, entryHeaders.Comparer);
             foreach (KeyValuePair<string, string[]> header in headers)
             {
-                if (remaining.TryGetValue(header.Key, out string[] values))
+                var requestHeaderValues = header.Value;
+                var headerName = header.Key;
+
+                if (ignoredHeaders.Contains(headerName))
                 {
-                    remaining.Remove(header.Key);
-                    if (!ignoredHeaders.Contains(header.Key) &&
-                        !values.SequenceEqual(header.Value))
+                    continue;
+                }
+
+                if (remaining.TryGetValue(headerName, out string[] entryHeaderValues))
+                {
+                    // Content-Type, Accept headers are normalized by HttpClient, re-normalize them before comparing
+                    if (_normalizedHeaders.Contains(headerName))
+                    {
+                        requestHeaderValues = RenormalizeSemicolons(requestHeaderValues);
+                        entryHeaderValues = RenormalizeSemicolons(entryHeaderValues);
+                    }
+
+                    remaining.Remove(headerName);
+                    if (!entryHeaderValues.SequenceEqual(requestHeaderValues))
                     {
                         difference++;
-                        descriptionBuilder?.AppendLine($"    <{header.Key}> values differ, request <{JoinHeaderValues(header.Value)}>, record <{JoinHeaderValues(values)}>");
+                        descriptionBuilder?.AppendLine($"    <{headerName}> values differ, request <{JoinHeaderValues(requestHeaderValues)}>, record <{JoinHeaderValues(entryHeaderValues)}>");
                     }
                 }
-                else if (!ignoredHeaders.Contains(header.Key))
+                else
                 {
                     difference++;
-                    descriptionBuilder?.AppendLine($"    <{header.Key}> is absent in record, value <{JoinHeaderValues(header.Value)}>");
+                    descriptionBuilder?.AppendLine($"    <{headerName}> is absent in record, value <{JoinHeaderValues(requestHeaderValues)}>");
                 }
             }
 

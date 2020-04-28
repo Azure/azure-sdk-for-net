@@ -36,10 +36,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="skipLineCount">Indicates the number of non-empty rows
         /// to skip when reading data from input files. Type: integer (or
         /// Expression with resultType integer).</param>
-        public DelimitedTextReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object))
+        /// <param name="compressionProperties">Compression settings.</param>
+        public DelimitedTextReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object skipLineCount = default(object), CompressionReadSettings compressionProperties = default(CompressionReadSettings))
             : base(additionalProperties)
         {
             SkipLineCount = skipLineCount;
+            CompressionProperties = compressionProperties;
             CustomInit();
         }
 
@@ -55,6 +57,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "skipLineCount")]
         public object SkipLineCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets compression settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "compressionProperties")]
+        public CompressionReadSettings CompressionProperties { get; set; }
 
     }
 }

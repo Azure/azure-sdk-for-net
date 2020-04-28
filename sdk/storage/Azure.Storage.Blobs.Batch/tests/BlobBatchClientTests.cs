@@ -20,6 +20,8 @@ namespace Azure.Storage.Blobs.Test
         public BlobBatchClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            // Batch delimiters are random so disable body comparison
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         [SetUp]

@@ -52,7 +52,7 @@ messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
 messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
-await sender.SendBatchAsync(messageBatch);
+await sender.SendAsync(messageBatch);
 
 // create a receiver that we can use to receive the messages
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);

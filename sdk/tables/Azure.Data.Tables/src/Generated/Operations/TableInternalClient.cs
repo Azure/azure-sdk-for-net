@@ -14,6 +14,7 @@ using Azure.Data.Tables.Models;
 
 namespace Azure.Data.Tables
 {
+    /// <summary> The Table service client. </summary>
     internal partial class TableInternalClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;

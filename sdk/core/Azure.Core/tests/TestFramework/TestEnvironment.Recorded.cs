@@ -2,18 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Identity;
 
 namespace Azure.Core.Testing
 {
     public partial class TestEnvironment
     {
         private TestRecording _recording;
-        private RecordedTestMode _mode;
+        private RecordedTestMode? _mode;
 
-        public void SetMode(RecordedTestMode mode)
+        public void SetMode(RecordedTestMode? mode)
         {
             _mode = mode;
         }
@@ -41,6 +38,11 @@ namespace Azure.Core.Testing
 
         partial void SetRecordedValue(string name, string value)
         {
+            if (!_mode.HasValue)
+            {
+                return;
+            }
+
             if (_recording == null)
             {
                 throw new InvalidOperationException("Recorded value should not be retrieved outside the test method invocation");
