@@ -240,25 +240,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        private async Task AcceptAndCompleteSessionsAsync(SessionClient sessionClient, string sessionId, string messageId)
-        {
-            var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
-            if (sessionId != null)
-            {
-                Assert.True(sessionReceiver.SessionId == sessionId);
-            }
-
-            var message = await sessionReceiver.ReceiveAsync();
-            Assert.True(message.MessageId == messageId);
-            TestUtility.Log($"Received Message: {message.MessageId} from Session: {sessionReceiver.SessionId}");
-
-            await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
-            await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
-            TestUtility.Log($"Completed Message: {message.MessageId} for Session: {sessionReceiver.SessionId}");
-
-            await sessionReceiver.CloseAsync();
-        }
-
         private async Task PeekAndDeleteMessageAsync(SessionClient sessionClient, string sessionId, string messageId)
         {
             var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
