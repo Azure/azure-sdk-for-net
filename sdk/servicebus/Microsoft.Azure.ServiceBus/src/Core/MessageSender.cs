@@ -537,7 +537,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         private async Task OnSendAsync(IList<Message> messageList)
         {
             var timeoutHelper = new TimeoutHelper(OperationTimeout, true);
-            using (var amqpMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messageList))
+            using (var amqpMessage = AmqpMessageConverter.Convert(messageList))
             {
                 SendingAmqpLink amqpLink = null;
                 try
@@ -579,7 +579,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
         private async Task<long> OnScheduleMessageAsync(Message message)
         {
-            using (var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
+            using (var amqpMessage = AmqpMessageConverter.Convert(message))
             {
                 var request = AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.ScheduleMessageOperation,

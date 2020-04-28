@@ -1051,7 +1051,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                             receiveLink.DisposeDelivery(amqpMessage, true, AmqpConstants.AcceptedOutcome);
                         }
 
-                        var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = AmqpMessageConverter.Convert(amqpMessage);
                         if (brokeredMessages == null)
                         {
                             brokeredMessages = new List<Message>();
@@ -1102,7 +1102,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                        message = AmqpMessageConverter.Convert(amqpMessage, true);
                         messages.Add(message);
                     }
 
@@ -1155,7 +1155,7 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = AmqpMessageConverter.Convert(amqpMessage);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.SystemProperties.LockTokenGuid = lockToken;

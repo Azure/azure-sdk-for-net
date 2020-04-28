@@ -33,7 +33,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 	    private const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
 	    private const int GuidSize = 16;
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<SBMessage> sbMessages)
+        public static AmqpMessage Convert(IEnumerable<SBMessage> sbMessages)
         {
             if (sbMessages == null)
             {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 messageCount++;
 
-                amqpMessage = SBMessageToAmqpMessage(sbMessage);
+                amqpMessage = Convert(sbMessage);
                 if (firstAmqpMessage == null)
                 {
                     firstAmqpMessage = amqpMessage;
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return amqpMessage;
         }
 
-        public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
+        public static AmqpMessage Convert(SBMessage sbMessage)
         {
             var amqpMessage = sbMessage.Body == null ? AmqpMessage.Create() : AmqpMessage.Create(new Data { Value = new ArraySegment<byte>(sbMessage.Body) });
 
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             return amqpMessage;
         }
 
-        public static SBMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
+        public static SBMessage Convert(AmqpMessage amqpMessage, bool isPeeked = false)
         {
             if (amqpMessage == null)
             {

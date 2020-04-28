@@ -25,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             amqpValue.Value = new ArraySegment<byte>(messageBody);
             var amqpMessage = AmqpMessage.Create(amqpValue);
 
-            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            var sbMessage = AmqpMessageConverter.Convert(amqpMessage);
             Assert.Equal(messageBody, sbMessage.GetBody<byte[]>());
         }
 
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             amqpValue.Value = messageBody;
             var amqpMessage = AmqpMessage.Create(amqpValue);
 
-            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            var sbMessage = AmqpMessageConverter.Convert(amqpMessage);
             Assert.Equal(messageBody, sbMessage.GetBody<byte[]>());
         }
 
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             data.Value = new ArraySegment<byte>(messageBody);
             var amqpMessage = AmqpMessage.Create(data);
 
-            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            var sbMessage = AmqpMessageConverter.Convert(amqpMessage);
             Assert.Equal(messageBody, sbMessage.Body);
         }
 
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             data.Value = messageBody;
             var amqpMessage = AmqpMessage.Create(data);
 
-            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            var sbMessage = AmqpMessageConverter.Convert(amqpMessage);
             Assert.Equal(messageBody, sbMessage.Body);
         }
 
@@ -104,8 +104,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             };
             sbMessage.UserProperties.Add("UserProperty", "SomeUserProperty");
 
-            var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(sbMessage);
-            var convertedSbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+            var amqpMessage = AmqpMessageConverter.Convert(sbMessage);
+            var convertedSbMessage = AmqpMessageConverter.Convert(amqpMessage);
 
             Assert.Equal("SomeUserProperty", convertedSbMessage.UserProperties["UserProperty"]);
             Assert.Equal(messageBody, convertedSbMessage.Body);
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             var sbMessage = new Message();
 
-            var amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(sbMessage);
+            var amqpMessage = AmqpMessageConverter.Convert(sbMessage);
 
             Assert.Null(amqpMessage.Header.Ttl);
         }
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var amqpMessage = AmqpMessage.Create(amqpValue);
             amqpMessage.Header.DeliveryCount = 2;
 
-            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, isPeeked: true);
+            var sbMessage = AmqpMessageConverter.Convert(amqpMessage, isPeeked: true);
             sbMessage.SystemProperties.SequenceNumber = 1L;
 
             Assert.Equal(2, sbMessage.SystemProperties.DeliveryCount);
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var amqpMessage = AmqpMessage.Create(amqpValue);
             amqpMessage.Header.DeliveryCount = 2;
 
-            var sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, isPeeked: false);
+            var sbMessage = AmqpMessageConverter.Convert(amqpMessage, isPeeked: false);
             sbMessage.SystemProperties.SequenceNumber = 1L;
 
             Assert.Equal(3, sbMessage.SystemProperties.DeliveryCount);
