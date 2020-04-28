@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus.Core;
 
-namespace Microsoft.Azure.ServiceBus.UnitTests.Performance
+namespace Microsoft.Azure.ServiceBus.Performance
 {
 	internal class Program
     {
