@@ -27,10 +27,6 @@ namespace Microsoft.Azure.ServiceBus
         // This is a volatile copy of IsServerBusy. IsServerBusy is synchronized with a lock, whereas encounteredServerBusy is kept volatile for performance reasons.
         private volatile bool _encounteredServerBusy;
 
-        protected RetryPolicy()
-        {
-        }
-
         /// <summary>
         /// Returns the default retry policy, <see cref="RetryExponential"/>.
         /// </summary>
