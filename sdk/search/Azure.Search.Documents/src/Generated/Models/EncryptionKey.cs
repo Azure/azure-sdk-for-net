@@ -50,11 +50,11 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of your Azure Key Vault key to be used to encrypt your data at rest. </summary>
-        public string KeyVaultKeyName { get; }
+        public string KeyVaultKeyName { get; set; }
         /// <summary> The version of your Azure Key Vault key to be used to encrypt your data at rest. </summary>
-        public string KeyVaultKeyVersion { get; }
+        public string KeyVaultKeyVersion { get; set; }
         /// <summary> The URI of your Azure Key Vault, also referred to as DNS name, that contains the key to be used to encrypt your data at rest. An example URI might be https://my-keyvault-name.vault.azure.net. </summary>
-        public string KeyVaultUri { get; }
+        public string KeyVaultUri { get; set; }
         /// <summary> Optional Azure Active Directory credentials used for accessing your Azure Key Vault. Not required if using managed identity instead. </summary>
         public AzureActiveDirectoryApplicationCredentials AccessCredentials { get; set; }
     }

@@ -10,13 +10,14 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableDeleteHeaders
+    internal class TableInternalQueryHeaders
     {
         private readonly Response _response;
-        public TableDeleteHeaders(Response response)
+        public TableInternalQueryHeaders(Response response)
         {
             _response = response;
         }
         public string XMsVersion => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
+        public string XMsContinuationNextTableName => _response.Headers.TryGetValue("x-ms-continuation-NextTableName", out string value) ? value : null;
     }
 }

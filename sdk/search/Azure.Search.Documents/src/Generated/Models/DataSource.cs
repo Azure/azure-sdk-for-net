@@ -60,15 +60,15 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the datasource. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The description of the datasource. </summary>
         public string Description { get; set; }
         /// <summary> The type of the datasource. </summary>
-        public DataSourceType Type { get; }
+        public DataSourceType Type { get; set; }
         /// <summary> Credentials for the datasource. </summary>
-        public DataSourceCredentials Credentials { get; }
+        public DataSourceCredentials Credentials { get; set; }
         /// <summary> The data container for the datasource. </summary>
-        public DataContainer Container { get; }
+        public DataContainer Container { get; set; }
         /// <summary> The data change detection policy for the datasource. </summary>
         public DataChangeDetectionPolicy DataChangeDetectionPolicy { get; set; }
         /// <summary> The data deletion detection policy for the datasource. </summary>

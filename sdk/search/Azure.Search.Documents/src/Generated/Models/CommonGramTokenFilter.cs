@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The set of common words. </summary>
-        public IList<string> CommonWords { get; }
+        public IList<string> CommonWords { get; set; }
         /// <summary> A value indicating whether common words matching will be case insensitive. Default is false. </summary>
         public bool? IgnoreCase { get; set; }
         /// <summary> A value that indicates whether the token filter is in query mode. When in query mode, the token filter generates bigrams and then removes common words and single terms followed by a common word. Default is false. </summary>
