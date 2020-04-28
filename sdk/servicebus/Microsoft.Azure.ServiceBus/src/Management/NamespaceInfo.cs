@@ -31,13 +31,13 @@ namespace Microsoft.Azure.ServiceBus.Management
         public DateTime ModifiedTime { get; set; }
 
         /// <summary>
-        /// The SKU/tier of the namespace. Valid only for <see cref="NamespaceType.ServiceBus"/>
+        /// The SKU/tier of the namespace. Valid only for <see cref="Microsoft.Azure.ServiceBus.Management.NamespaceType.ServiceBus"/>
         /// </summary>
         public MessagingSku MessagingSku { get; set; }
 
         /// <summary>
         /// Number of messaging units allocated for namespace. 
-        /// Valid only for <see cref="NamespaceType.ServiceBus"/> and <see cref="MessagingSku.Premium"/>
+        /// Valid only for <see cref="Microsoft.Azure.ServiceBus.Management.NamespaceType.ServiceBus"/> and <see cref="Microsoft.Azure.ServiceBus.Management.MessagingSku.Premium"/>
         /// </summary>
         public int MessagingUnits { get; set; }
 
