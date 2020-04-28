@@ -19,7 +19,8 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods for the args.
+        /// The <see cref="ServiceBusSessionReceiver"/> that will be used for setting and getting session
+        /// state.
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
