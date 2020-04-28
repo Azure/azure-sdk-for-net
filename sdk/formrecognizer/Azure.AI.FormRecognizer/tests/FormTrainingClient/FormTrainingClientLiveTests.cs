@@ -25,6 +25,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormTrainingClientLiveTests(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new FormRecognizerRecordedTestSanitizer();
+            Matcher = new FormRecognizerRecordMatcher(Sanitizer);
         }
 
         /// <summary>
@@ -50,8 +52,13 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedClient();
             var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            TrainingOperation operation;
 
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFiles, labeled);
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartTrainingAsync(trainingFiles, labeled);
+            }
 
             await operation.WaitForCompletionAsync();
 
@@ -123,8 +130,13 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateInstrumentedClient();
             var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            TrainingOperation operation;
 
-            TrainingOperation operation = await client.StartTrainingAsync(trainingFiles, labeled);
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartTrainingAsync(trainingFiles, labeled);
+            }
 
             await operation.WaitForCompletionAsync();
 

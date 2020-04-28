@@ -2,31 +2,17 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using Azure.Core.Testing;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
     public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
     {
-        private const string TestEndpoint = "https://test-endpoint.cognitiveservices.azure.com";
-        private const string EndpointPattern = @"^.*://.*\.cognitiveservices\.azure\.com";
-        private const string OperationLocationHeader = "Operation-Location";
-
-        public override string SanitizeUri(string uri) => ReplaceEndpoint(uri);
-
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
             if (headers.ContainsKey(Constants.AuthorizationHeader))
             {
                 headers[Constants.AuthorizationHeader] = new[] { SanitizeValue };
-            }
-
-            if (headers.TryGetValue(OperationLocationHeader, out string[] operationLocationHeader))
-            {
-                string operationLocation = operationLocationHeader.Single();
-                headers[OperationLocationHeader] = new[] { ReplaceEndpoint(operationLocation) };
             }
         }
 
@@ -34,13 +20,19 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             return variableName switch
             {
-                "FORM_RECOGNIZER_ENDPOINT" => TestEndpoint,
                 "FORM_RECOGNIZER_API_KEY" => SanitizeValue,
+                "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL" => SanitizeSasToken(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }
 
-        private string ReplaceEndpoint(string uri)
-            => Regex.Replace(uri, EndpointPattern, TestEndpoint, RegexOptions.IgnoreCase);
+        private string SanitizeSasToken(string sasUri)
+        {
+            var queryStartIndex = sasUri.IndexOf('?') + 1;
+
+            return queryStartIndex < sasUri.Length
+                ? sasUri.Remove(queryStartIndex) + SanitizeValue
+                : sasUri;
+        }
     }
 }

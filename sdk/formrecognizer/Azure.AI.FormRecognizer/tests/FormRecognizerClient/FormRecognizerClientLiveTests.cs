@@ -30,6 +30,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new FormRecognizerRecordedTestSanitizer();
+            Matcher = new FormRecognizerRecordMatcher(Sanitizer);
         }
 
         /// <summary>
@@ -79,7 +80,10 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
-                operation = await client.StartRecognizeContentAsync(stream);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeContentAsync(stream);
+                }
             }
             else
             {
@@ -186,7 +190,10 @@ namespace Azure.AI.FormRecognizer.Tests
             if (useStream)
             {
                 using var stream = new FileStream(FormRecognizerTestEnvironment.JpgReceiptPath, FileMode.Open);
-                operation = await client.StartRecognizeReceiptsAsync(stream);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeReceiptsAsync(stream);
+                }
             }
             else
             {
@@ -287,7 +294,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 if (useStream)
                 {
                     using var stream = new FileStream(FormRecognizerTestEnvironment.FormPath, FileMode.Open);
-                    operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                    using (Recording.DisableRequestBodyRecording())
+                    {
+                        operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                    }
                 }
                 else
                 {
@@ -342,7 +352,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 if (useStream)
                 {
                     using var stream = new FileStream(FormRecognizerTestEnvironment.FormPath, FileMode.Open);
-                    operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                    using (Recording.DisableRequestBodyRecording())
+                    {
+                        operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                    }
                 }
                 else
                 {
@@ -436,7 +449,13 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
             FormTrainingClient client = CreateInstrumentedFormTrainingClient();
-            TrainingOperation trainedModel = await client.StartTrainingAsync(trainingFiles, useLabels);
+            TrainingOperation trainedModel;
+
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                trainedModel = await client.StartTrainingAsync(trainingFiles, useLabels);
+            }
 
             await trainedModel.WaitForCompletionAsync();
 
