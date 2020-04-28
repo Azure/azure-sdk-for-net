@@ -46,8 +46,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="container"> The data container for the datasource. </param>
         /// <param name="dataChangeDetectionPolicy"> The data change detection policy for the datasource. </param>
         /// <param name="dataDeletionDetectionPolicy"> The data deletion detection policy for the datasource. </param>
-        /// <param name="eTag"> The ETag of the DataSource. </param>
-        internal DataSource(string name, string description, DataSourceType type, DataSourceCredentials credentials, DataContainer container, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string eTag)
+        /// <param name="Etag"> The ETag of the DataSource. </param>
+        internal DataSource(string name, string description, DataSourceType type, DataSourceCredentials credentials, DataContainer container, DataChangeDetectionPolicy dataChangeDetectionPolicy, DataDeletionDetectionPolicy dataDeletionDetectionPolicy, string Etag)
         {
             Name = name;
             Description = description;
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Models
             Container = container;
             DataChangeDetectionPolicy = dataChangeDetectionPolicy;
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
-            ETag = eTag;
+            _etag = Etag;
         }
 
         /// <summary> The name of the datasource. </summary>
@@ -73,7 +73,5 @@ namespace Azure.Search.Documents.Models
         public DataChangeDetectionPolicy DataChangeDetectionPolicy { get; set; }
         /// <summary> The data deletion detection policy for the datasource. </summary>
         public DataDeletionDetectionPolicy DataDeletionDetectionPolicy { get; set; }
-        /// <summary> The ETag of the DataSource. </summary>
-        public string ETag { get; set; }
     }
 }

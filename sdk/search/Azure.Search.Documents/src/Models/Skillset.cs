@@ -1,18 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    [CodeGenModel("Indexer")]
-    public partial class SearchIndexer
+    public partial class Skillset
     {
         [CodeGenMember("etag")]
         private string _etag;
 
         /// <summary>
-        /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndexer"/>.
+        /// The <see cref="Azure.ETag"/> of the <see cref="Skillset"/>.
         /// </summary>
         public ETag? ETag
         {

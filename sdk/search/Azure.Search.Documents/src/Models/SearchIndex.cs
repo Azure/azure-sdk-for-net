@@ -10,7 +10,8 @@ namespace Azure.Search.Documents.Models
     [CodeGenModel("Index")]
     public partial class SearchIndex
     {
-        // TODO: Replace constructor and read-only properties when https://github.com/Azure/autorest.csharp/issues/554 is fixed.
+        [CodeGenMember("etag")]
+        private string _etag;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchIndex"/> class.
@@ -105,5 +106,14 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
         public IList<Tokenizer> Tokenizers { get; }
+
+        /// <summary>
+        /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndex"/>.
+        /// </summary>
+        public ETag? ETag
+        {
+            get => _etag is null ? (ETag?)null : new ETag(_etag);
+            set => _etag = value?.ToString();
+        }
     }
 }
