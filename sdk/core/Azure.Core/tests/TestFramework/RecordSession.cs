@@ -94,15 +94,7 @@ namespace Azure.Core.Testing
         {
             lock (Entries)
             {
-                foreach (RecordEntry entry in Entries)
-                {
-                    sanitizer.Sanitize(entry);
-                }
-
-                foreach (var variable in Variables.ToArray())
-                {
-                    Variables[variable.Key] = sanitizer.SanitizeVariable(variable.Key, variable.Value);
-                }
+                sanitizer.Sanitize(this);
             }
         }
 

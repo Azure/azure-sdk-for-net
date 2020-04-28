@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
