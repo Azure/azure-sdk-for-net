@@ -17,13 +17,13 @@ namespace Azure.Core.Testing
     {
         private readonly HttpPipelineTransport _innerTransport;
 
-        private readonly Func<RecordEntry, bool> _filter;
+        private readonly Func<RecordEntry, EntryRecordModel> _filter;
 
         private readonly Random _random;
 
         private readonly RecordSession _session;
 
-        public RecordTransport(RecordSession session, HttpPipelineTransport innerTransport, Func<RecordEntry, bool> filter, Random random)
+        public RecordTransport(RecordSession session, HttpPipelineTransport innerTransport, Func<RecordEntry, EntryRecordModel> filter, Random random)
         {
             _innerTransport = innerTransport;
             _filter = filter;
@@ -46,9 +46,18 @@ namespace Azure.Core.Testing
         private void Record(HttpMessage message)
         {
             RecordEntry recordEntry = CreateEntry(message.Request, message.Response);
-            if (_filter(recordEntry))
+
+            switch (_filter(recordEntry))
             {
-                _session.Record(recordEntry);
+                case EntryRecordModel.Record:
+                    _session.Record(recordEntry);
+                    break;
+                case EntryRecordModel.RecordWithoutRequestBody:
+                    recordEntry.Request.Body = null;
+                    _session.Record(recordEntry);
+                    break;
+                default:
+                    break;
             }
         }
 

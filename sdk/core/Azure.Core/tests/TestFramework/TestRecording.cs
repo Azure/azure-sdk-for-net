@@ -48,7 +48,7 @@ namespace Azure.Core.Testing
 
         public RecordedTestMode Mode { get; }
 
-        private readonly AsyncLocal<bool> _disableRecording = new AsyncLocal<bool>();
+        private readonly AsyncLocal<EntryRecordModel> _disableRecording = new AsyncLocal<EntryRecordModel>();
 
         private readonly string _sessionFile;
 
@@ -190,7 +190,7 @@ namespace Azure.Core.Testing
             return Mode switch
             {
                 RecordedTestMode.Live => currentTransport,
-                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random),
+                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => _disableRecording.Value, Random),
                 RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, Random),
                 _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
             };
@@ -237,22 +237,27 @@ namespace Azure.Core.Testing
 
         public DisableRecordingScope DisableRecording()
         {
-            return new DisableRecordingScope(this);
+            return new DisableRecordingScope(this, EntryRecordModel.DontRecord);
+        }
+
+        public DisableRecordingScope DisableRequestBodyRecording()
+        {
+            return new DisableRecordingScope(this, EntryRecordModel.RecordWithoutRequestBody);
         }
 
         public struct DisableRecordingScope : IDisposable
         {
             private readonly TestRecording _testRecording;
 
-            public DisableRecordingScope(TestRecording testRecording)
+            public DisableRecordingScope(TestRecording testRecording, EntryRecordModel entryRecordModel)
             {
                 _testRecording = testRecording;
-                _testRecording._disableRecording.Value = true;
+                _testRecording._disableRecording.Value = entryRecordModel;
             }
 
             public void Dispose()
             {
-                _testRecording._disableRecording.Value = false;
+                _testRecording._disableRecording.Value = EntryRecordModel.Record;
             }
         }
     }
