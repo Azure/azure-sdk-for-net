@@ -342,7 +342,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// This operation can only be performed on a message that was received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -363,7 +366,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// This operation can only be performed on a message that was received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -384,7 +390,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -407,7 +416,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -449,7 +461,10 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -476,7 +491,10 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this receiver
-        /// when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -521,7 +539,10 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
         /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
         /// to create a receiver for the queue or subscription.
-        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// </remarks>
         public virtual async Task DeadLetterAsync(
             ServiceBusReceivedMessage message,
@@ -548,7 +569,10 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, ServiceBusReceiverOptions)"/>
         /// or <see cref="ServiceBusClient.CreateDeadLetterReceiver(string, string, ServiceBusReceiverOptions)"/>
         /// to create a receiver for the queue or subscription.
-        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// </remarks>
         public virtual async Task DeadLetterAsync(
             string lockToken,
@@ -570,7 +594,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// only when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
@@ -600,7 +627,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// only when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
@@ -628,7 +658,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// only when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
@@ -673,7 +706,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// only when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
         /// and receive it using <see cref="ReceiveDeferredMessageAsync(long, CancellationToken)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
@@ -701,7 +737,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
-        /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
+        /// only when <see cref="ReceiveMode"/> is set to <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// .
         /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
         /// and receive it using <see cref="ReceiveDeferredMessageAsync(long, CancellationToken)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
@@ -826,12 +865,14 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <remarks>
-        /// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
+        /// When a message is received in <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
         /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.
         /// </remarks>
-        ///
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to renew the lock for.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         public virtual async Task RenewMessageLockAsync(
@@ -850,7 +891,10 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <remarks>
-        /// When a message is received in <see cref="ReceiveMode.PeekLock"/> mode, the message is locked on the server for this
+        /// When a message is received in <see>
+        ///     <cref>ReceiveMode.PeekLock</cref>
+        /// </see>
+        /// mode, the message is locked on the server for this
         /// receiver instance for a duration as specified during the Queue/Subscription creation (LockDuration).
         /// If processing of the message requires longer than this duration, the lock needs to be renewed.
         /// For each renewal, it resets the time the message is locked by the LockDuration set on the Entity.

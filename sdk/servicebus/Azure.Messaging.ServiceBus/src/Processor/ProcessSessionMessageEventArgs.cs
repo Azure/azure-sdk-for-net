@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus
         /// A lock token can be found in <see cref="ServiceBusReceivedMessage.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
         /// In order to receive this message again in the future, you will need to save the <see cref="ServiceBusReceivedMessage.SequenceNumber"/>
-        /// and receive it using <see cref="ServiceBusReceiver.ReceiveDeferredMessageAsync(long, CancellationToken)"/>.
+        /// and receive it using <see cref="ServiceBusReceiver.ReceiveDeferredMessageAsync(long, System.Threading.CancellationToken)"/>.
         /// Deferring messages does not impact message's expiration, meaning that deferred messages can still expire.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>

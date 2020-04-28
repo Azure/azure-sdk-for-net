@@ -16,7 +16,7 @@ namespace Azure.Core
         private const int DefaultInitialBufferSize = 256;
 
         /// <summary>
-        /// Creates an instance of an <see cref="ArrayBufferWriter{T}"/>, in which data can be written to,
+        /// Creates an instance of an <see cref="Core.ArrayBufferWriter{T}"/>, in which data can be written to,
         /// with the default initial capacity.
         /// </summary>
         public ArrayBufferWriter()
@@ -26,7 +26,7 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Creates an instance of an <see cref="ArrayBufferWriter{T}"/>, in which data can be written to,
+        /// Creates an instance of an <see cref="Core.ArrayBufferWriter{T}"/>, in which data can be written to,
         /// with an initial capacity specified.
         /// </summary>
         /// <param name="initialCapacity">The minimum capacity with which to initialize the underlying buffer.</param>
@@ -73,7 +73,7 @@ namespace Azure.Core
         /// Clears the data written to the underlying buffer.
         /// </summary>
         /// <remarks>
-        /// You must clear the <see cref="ArrayBufferWriter{T}"/> before trying to re-use it.
+        /// You must clear the <see cref="Core.ArrayBufferWriter{T}"/> before trying to re-use it.
         /// </remarks>
         public void Clear()
         {
