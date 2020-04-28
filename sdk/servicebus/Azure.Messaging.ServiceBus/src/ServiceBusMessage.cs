@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Azure.Core;
 using Azure.Messaging.ServiceBus.Primitives;
 
 namespace Azure.Messaging.ServiceBus
@@ -47,6 +48,8 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="receivedMessage">The received message to copy the data from.</param>
         public ServiceBusMessage(ServiceBusReceivedMessage receivedMessage)
         {
+            Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
+
             Body = receivedMessage.Body;
             ContentType = receivedMessage.ContentType;
             CorrelationId = receivedMessage.CorrelationId;
