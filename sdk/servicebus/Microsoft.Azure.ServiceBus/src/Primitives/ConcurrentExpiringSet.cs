@@ -8,16 +8,16 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     using System.Collections.Concurrent;
     using System.Threading;
     using System.Threading.Tasks;
-
+    
     internal sealed class ConcurrentExpiringSet<TKey>
     {
+	    private static readonly TimeSpan DelayBetweenCleanups = TimeSpan.FromSeconds(30);
 	    private readonly ConcurrentDictionary<TKey, DateTime> _dictionary;
 	    private readonly ICollection<KeyValuePair<TKey, DateTime>> _dictionaryAsCollection;
 	    private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
 	    private volatile TaskCompletionSource<bool> _cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 	    private int _closeSignaled;
 	    private bool _closed;
-	    private static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
 
         public ConcurrentExpiringSet()
         {
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
                 try
                 {
                     await _cleanupTaskCompletionSource.Task.ConfigureAwait(false);
-                    await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
+                    await Task.Delay(DelayBetweenCleanups, token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
