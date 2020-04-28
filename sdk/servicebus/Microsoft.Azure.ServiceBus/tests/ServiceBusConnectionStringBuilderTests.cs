@@ -212,7 +212,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             var builder = new ServiceBusConnectionStringBuilder(connectionString);
             var connection = new ServiceBusConnection(builder);
-            new ManagementClient(builder); // Will throw without a valid TokenProvider
+            var _ = new ManagementClient(builder); // Will throw without a valid TokenProvider
             Assert.Equal(typeof(ManagedIdentityTokenProvider), connection.TokenProvider.GetType());
         }
 
