@@ -12,8 +12,8 @@ namespace Microsoft.Azure.ServiceBus.Management
     /// </summary>
     public class QueueDescription : IEquatable<QueueDescription>
     {
-        internal TimeSpan duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
-        internal string path;
+        private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);
+        private string _path;
         private TimeSpan _lockDuration = TimeSpan.FromSeconds(60);
         private TimeSpan _defaultMessageTimeToLive = TimeSpan.MaxValue;
         private TimeSpan _autoDeleteOnIdle = TimeSpan.MaxValue;
@@ -38,11 +38,11 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// Cannot have restricted characters: '@','?','#','*'</remarks>
         public string Path
         {
-            get => path;
+            get => _path;
             set
             {
                 EntityNameHelper.CheckValidQueueName(value, nameof(Path));
-                path = value;
+                _path = value;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// </remarks>
         public TimeSpan DuplicateDetectionHistoryTimeWindow
         {
-            get => duplicateDetectionHistoryTimeWindow;
+            get => _duplicateDetectionHistoryTimeWindow;
             set
             {
                 if (value < ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow || value > ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow)
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                         $@"The value must be between {ManagementClientConstants.MinimumDuplicateDetectionHistoryTimeWindow} and {ManagementClientConstants.MaximumDuplicateDetectionHistoryTimeWindow}");
                 }
 
-                duplicateDetectionHistoryTimeWindow = value;
+                _duplicateDetectionHistoryTimeWindow = value;
             }
         }
 
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 }
 
                 EntityNameHelper.CheckValidQueueName(value, nameof(ForwardTo));
-                if (path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (Path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 }
 
                 EntityNameHelper.CheckValidQueueName(value, nameof(ForwardDeadLetteredMessagesTo));
-                if (path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
+                if (Path.Equals(value, StringComparison.CurrentCultureIgnoreCase))
                 {
                     throw new InvalidOperationException("Entity cannot have auto-forwarding policy to itself");
                 }
