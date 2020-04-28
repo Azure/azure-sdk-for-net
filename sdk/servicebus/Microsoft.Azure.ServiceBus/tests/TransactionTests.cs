@@ -586,7 +586,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             async Task closeEntity(IClientEntity entity)
             {
                 try { await entity.CloseAsync(); }  catch {}
-            };
+            }
 
             return Task.WhenAll(clientEntities.Select(entity => closeEntity(entity)));
         }
