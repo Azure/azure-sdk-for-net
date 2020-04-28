@@ -22,12 +22,17 @@ namespace Microsoft.Azure.ServiceBus.Management
         public const string ApiVersion = "2017-04";
 
         public const string ServiceBusSupplementaryAuthorizationHeaderName = "ServiceBusSupplementaryAuthorization";
-        public const string ServiceBusDlqSupplementaryAuthorizationHeaderName = "ServiceBusDlqSupplementaryAuthorization";
+
+        public const string ServiceBusDlqSupplementaryAuthorizationHeaderName =
+	        "ServiceBusDlqSupplementaryAuthorization";
+
         public const string HttpErrorSubCodeFormatString = "SubCode={0}";
-        public static string ConflictOperationInProgressSubCode =
-            string.Format(HttpErrorSubCodeFormatString, ExceptionErrorCodes.ConflictOperationInProgress.ToString("D"));
-        public static string ForbiddenInvalidOperationSubCode =
-            string.Format(HttpErrorSubCodeFormatString, ExceptionErrorCodes.ForbiddenInvalidOperation.ToString("D"));
+
+        public static readonly string ConflictOperationInProgressSubCode =
+	        string.Format(HttpErrorSubCodeFormatString, ExceptionErrorCodes.ConflictOperationInProgress.ToString("D"));
+
+        public static readonly string ForbiddenInvalidOperationSubCode =
+	        string.Format(HttpErrorSubCodeFormatString, ExceptionErrorCodes.ForbiddenInvalidOperation.ToString("D"));
 
         public static readonly TimeSpan MinimumAllowedTimeToLive = TimeSpan.FromSeconds(1);
         public static readonly TimeSpan MaximumAllowedTimeToLive = TimeSpan.MaxValue;
@@ -36,13 +41,13 @@ namespace Microsoft.Azure.ServiceBus.Management
         public static readonly TimeSpan MinimumAllowedAutoDeleteOnIdle = TimeSpan.FromMinutes(5);
         public static readonly TimeSpan MaximumDuplicateDetectionHistoryTimeWindow = TimeSpan.FromDays(7);
         public static readonly TimeSpan MinimumDuplicateDetectionHistoryTimeWindow = TimeSpan.FromSeconds(20);
-        public static readonly int MinAllowedMaxDeliveryCount = 1;
-        public static readonly int MaxUserMetadataLength = 1024;
+        public const int MinAllowedMaxDeliveryCount = 1;
+        public const int MaxUserMetadataLength = 1024;
 
-        public static char[] InvalidEntityPathCharacters = { '@', '?', '#', '*' };
+        public static readonly char[] InvalidEntityPathCharacters = { '@', '?', '#', '*' };
 
         // Authorization constants
-        public static readonly int SupportedClaimsCount = 3;
+        public const int SupportedClaimsCount = 3;
 
         /// <summary>Specifies the error codes of the exceptions.</summary>
         public enum ExceptionErrorCodes
