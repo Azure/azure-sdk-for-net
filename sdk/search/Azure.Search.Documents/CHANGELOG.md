@@ -6,7 +6,7 @@
 
 - Removed constructor from `SynonymMap` with `IEnumerable<string>` parameter.
 - `SearchServiceClient.GetIndexes` and `SearchServiceClient.GetIndexesAsync` now return `Pageable<SearchIndex>` and `AsyncPageable<SearchIndex>` respectively.
-- Combined `MatchConditions` and `SearchRequestOptions` into `SearchConditionalOptions`.
+- Replaced `MatchConditions` parameters with `bool onlyIfUnchanged` parameters that require a model with an `ETag` property.
 - `ETag` properties have been redefined from `string` to `Azure.ETag?` consistent with other packages.
 
 ## 1.0.0-preview.2 (2020-04-06)
