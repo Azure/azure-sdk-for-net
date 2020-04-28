@@ -63,7 +63,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
             if (action is SqlRuleAction sqlRuleAction)
             {
                 XElement parameterElement = null;
-                if (sqlRuleAction.parameters != null)
+                if (sqlRuleAction.Properties != null)
                 {
                     parameterElement = new XElement(XName.Get("Parameters", ManagementClientConstants.ServiceBusNamespace));
                     foreach (var param in sqlRuleAction.Parameters)

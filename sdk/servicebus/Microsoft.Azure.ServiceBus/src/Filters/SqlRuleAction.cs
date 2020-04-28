@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
     /// </summary>
     public sealed class SqlRuleAction : RuleAction
     {
-        internal PropertyDictionary parameters;
+        internal PropertyDictionary Properties;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlRuleAction" /> class with the specified SQL expression.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
         /// Sets the value of a rule action.
         /// </summary>
         /// <value>The value of a rule action.</value>
-        public IDictionary<string, object> Parameters => parameters ?? (parameters = new PropertyDictionary());
+        public IDictionary<string, object> Parameters => Properties ?? (Properties = new PropertyDictionary());
 
         /// <summary>
         /// Returns a string representation of <see cref="SqlRuleAction" />.
@@ -77,19 +77,19 @@ namespace Microsoft.Azure.ServiceBus.Filters
             if (other is SqlRuleAction sqlAction)
             {
                 if (string.Equals(SqlExpression, sqlAction.SqlExpression, StringComparison.OrdinalIgnoreCase)
-                    && (parameters != null && sqlAction.parameters != null
-                        || parameters == null && sqlAction.parameters == null))
+                    && (Properties != null && sqlAction.Properties != null
+                        || Properties == null && sqlAction.Properties == null))
                 {
-                    if (parameters != null)
+                    if (Properties != null)
                     {
-                        if (parameters.Count != sqlAction.parameters.Count)
+                        if (Properties.Count != sqlAction.Properties.Count)
                         {
                             return false;
                         }
 
-                        foreach (var param in parameters)
+                        foreach (var param in Properties)
                         {
-                            if (!sqlAction.parameters.TryGetValue(param.Key, out var otherParamValue) ||
+                            if (!sqlAction.Properties.TryGetValue(param.Key, out var otherParamValue) ||
                                 param.Value == null ^ otherParamValue == null ||
                                 param.Value != null && !param.Value.Equals(otherParamValue))
                             {
