@@ -8,35 +8,35 @@ This document outlines the APIs for the Azure Iot Hub Service SDK
 ```
 </details>
 
-<details><summary><b>Configuration APIs</b></summary>
+<details><summary><b>Configuration</b></summary>
     
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>Statistics APIs</b></summary>
+<details><summary><b>Statistics</b></summary>
 
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>Registry APIs</b></summary>
+<details><summary><b>Registry</b></summary>
     
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>Job APIs</b></summary>
+<details><summary><b>Job</b></summary>
     
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>V2 Job APIs</b></summary>
+<details><summary><b>V2 Job</b></summary>
 (maybe combine with job APIs, or maybe don't expose v1 job APIs. Talk with service about this)
 
 ```csharp
@@ -44,28 +44,28 @@ This document outlines the APIs for the Azure Iot Hub Service SDK
 ```
 </details>
 
-<details><summary><b>Twin APIs</b></summary>
+<details><summary><b>Twin</b></summary>
     
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>Method APIs</b></summary>
+<details><summary><b>Method</b></summary>
     
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>Feedback Message APIs</b></summary>
+<details><summary><b>Feedback Message</b></summary>
     
 ```csharp
 
 ```
 </details>
 
-<details><summary><b>Query APIs</b></summary>
+<details><summary><b>Query</b></summary>
     
 ```csharp
 
