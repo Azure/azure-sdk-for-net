@@ -235,7 +235,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
                 {
                     if (FilterProperties != null)
                     {
-                        if (FilterProperties.Count != correlationFilter.FilterProperties.Count)
+                        if (FilterProperties.Count != correlationFilter.FilterProperties?.Count)
                         {
                             return false;
                         }
