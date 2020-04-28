@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Linq;
 using Microsoft.Azure.ServiceBus.Filters;
 
 namespace Microsoft.Azure.ServiceBus.Amqp
@@ -566,60 +567,66 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     netObject = amqpObject;
                     break;
                 case PropertyValueType.Unknown:
-                    if (amqpObject is AmqpSymbol amqpObjectAsAmqpSymbol)
+                    switch (amqpObject)
                     {
-                        netObject = amqpObjectAsAmqpSymbol.Value;
-                    }
-                    else if (amqpObject is ArraySegment<byte> binValue &&
-                             binValue.Array != null)
-                    {
-                        if (binValue.Count == binValue.Array.Length)
-                        {
-                            netObject = binValue.Array;
-                        }
-                        else
-                        {
-                            var buffer = new byte[binValue.Count];
-                            Buffer.BlockCopy(binValue.Array, binValue.Offset, buffer, 0, binValue.Count);
-                            netObject = buffer;
-                        }
-                    }
-                    else if (amqpObject is DescribedType amqpObjectAsDescribedType)
-                    {
-                        if (amqpObjectAsDescribedType.Descriptor is AmqpSymbol)
-                        {
-                            var amqpSymbol = (AmqpSymbol)amqpObjectAsDescribedType.Descriptor;
-                            if (amqpSymbol.Equals((AmqpSymbol)UriName))
-                            {
-                                netObject = new Uri((string)amqpObjectAsDescribedType.Value);
-                            }
-                            else if (amqpSymbol.Equals((AmqpSymbol)TimeSpanName))
-                            {
-                                netObject = new TimeSpan((long)amqpObjectAsDescribedType.Value);
-                            }
-                            else if (amqpSymbol.Equals((AmqpSymbol)DateTimeOffsetName))
-                            {
-                                netObject = new DateTimeOffset(new DateTime((long)amqpObjectAsDescribedType.Value, DateTimeKind.Utc));
-                            }
-                        }
-                    }
-                    else if (mappingType == MappingType.ApplicationProperty)
-                    {
-                        throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName)));
-                    }
-                    else if (amqpObject is AmqpMap map)
-                    {
-                        var dictionary = new Dictionary<string, object>();
-                        foreach (var pair in map)
-                        {
-                            dictionary.Add(pair.Key.ToString(), pair.Value);
-                        }
+	                    case AmqpSymbol amqpObjectAsAmqpSymbol:
+		                    netObject = amqpObjectAsAmqpSymbol.Value;
+		                    break;
+	                    case ArraySegment<byte> binValue when binValue.Array != null:
+	                    {
+		                    if (binValue.Count == binValue.Array.Length)
+		                    {
+			                    netObject = binValue.Array;
+		                    }
+		                    else
+		                    {
+			                    var buffer = new byte[binValue.Count];
+			                    Buffer.BlockCopy(binValue.Array, binValue.Offset, buffer, 0, binValue.Count);
+			                    netObject = buffer;
+		                    }
 
-                        netObject = dictionary;
-                    }
-                    else
-                    {
-                        netObject = amqpObject;
+		                    break;
+	                    }
+	                    case DescribedType amqpObjectAsDescribedType:
+	                    {
+		                    if (amqpObjectAsDescribedType.Descriptor is AmqpSymbol amqpSymbol)
+		                    {
+			                    if (amqpSymbol.Equals((AmqpSymbol)UriName))
+			                    {
+				                    netObject = new Uri((string)amqpObjectAsDescribedType.Value);
+			                    }
+			                    else if (amqpSymbol.Equals((AmqpSymbol)TimeSpanName))
+			                    {
+				                    netObject = new TimeSpan((long)amqpObjectAsDescribedType.Value);
+			                    }
+			                    else if (amqpSymbol.Equals((AmqpSymbol)DateTimeOffsetName))
+			                    {
+				                    netObject = new DateTimeOffset(new DateTime((long)amqpObjectAsDescribedType.Value, DateTimeKind.Utc));
+			                    }
+		                    }
+
+		                    break;
+	                    }
+	                    default:
+	                    {
+		                    if (mappingType == MappingType.ApplicationProperty)
+		                    {
+			                    throw Fx.Exception.AsError(new SerializationException(Resources.FailedToSerializeUnsupportedType.FormatForUser(amqpObject.GetType().FullName)));
+		                    }
+
+		                    if (amqpObject is AmqpMap map)
+		                    {
+			                    var dictionary = map.ToDictionary(pair => pair.Key.ToString(), pair => pair.Value);
+
+			                    netObject = dictionary;
+		                    }
+		                    else
+		                    {
+			                    netObject = amqpObject;
+		                    }
+
+		                    break;
+	                    }
                     }
                     break;
             }
