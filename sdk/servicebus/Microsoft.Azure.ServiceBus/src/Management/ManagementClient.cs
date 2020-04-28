@@ -1114,7 +1114,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         {
             MessagingEventSource.Log.ManagementOperationStart(_clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");
 
-            var queryString = $"{ManagementClientConstants.apiVersionQuery}&enrich={enrich}";
+            var queryString = $"{ManagementClientConstants.ApiVersionQuery}&enrich={enrich}";
             if (query != null)
             {
                 queryString = queryString + "&" + query;
@@ -1144,7 +1144,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 Path = path,
                 Port = _port,
                 Scheme = Uri.UriSchemeHttps,
-                Query = $"{ManagementClientConstants.apiVersionQuery}"
+                Query = $"{ManagementClientConstants.ApiVersionQuery}"
             }.Uri;
 
             var request = new HttpRequestMessage(HttpMethod.Put, uri);
@@ -1187,7 +1187,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 Path = path,
                 Scheme = Uri.UriSchemeHttps,
                 Port = _port,
-                Query = ManagementClientConstants.apiVersionQuery
+                Query = ManagementClientConstants.ApiVersionQuery
             }.Uri;
 
             var request = new HttpRequestMessage(HttpMethod.Delete, uri);
