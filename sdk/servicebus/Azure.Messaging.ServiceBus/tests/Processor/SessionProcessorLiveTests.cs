@@ -264,7 +264,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 // there is only one message for each session, and one
                 // thread for each session, so the total messages processed
                 // should equal the number of threads
-                Assert.AreEqual(numThreads, messageCt);
+                if (numThreads == 5)
+                {
+                    // when abandoning, it is possible we could process the same message more than once
+                    // since the service will make the message available immediately
+                    Assert.LessOrEqual(numThreads, messageCt);
+                }
+                else
+                {
+                    Assert.AreEqual(numThreads, messageCt);
+                }
 
                 // we should have received messages from each of the sessions
                 Assert.AreEqual(0, sessions.Count);
