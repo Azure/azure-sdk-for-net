@@ -124,26 +124,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 new Mock<ServiceBusReceiver>().Object,
                 CancellationToken.None);
 
-            Assert.IsFalse(args.UserSettled);
+            Assert.IsFalse(args.IsMessageSettled);
 
-            args.UserSettled = false;
+            args.IsMessageSettled = false;
             await args.AbandonAsync(msg);
-            Assert.IsTrue(args.UserSettled);
+            Assert.IsTrue(args.IsMessageSettled);
 
             await args.CompleteAsync(msg);
-            Assert.IsTrue(args.UserSettled);
+            Assert.IsTrue(args.IsMessageSettled);
 
-            args.UserSettled = false;
+            args.IsMessageSettled = false;
             await args.DeadLetterAsync(msg);
-            Assert.IsTrue(args.UserSettled);
+            Assert.IsTrue(args.IsMessageSettled);
 
-            args.UserSettled = false;
+            args.IsMessageSettled = false;
             await args.DeadLetterAsync(msg, "reason");
-            Assert.IsTrue(args.UserSettled);
+            Assert.IsTrue(args.IsMessageSettled);
 
-            args.UserSettled = false;
+            args.IsMessageSettled = false;
             await args.DeferAsync(msg);
-            Assert.IsTrue(args.UserSettled);
+            Assert.IsTrue(args.IsMessageSettled);
         }
 
         [Test]
@@ -192,31 +192,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 mockReceiver.Object,
                 CancellationToken.None);
 
-            Assert.IsFalse(args.UserSettled);
+            Assert.IsFalse(args.IsMessageSettled);
 
-            args.UserSettled = false;
+            args.IsMessageSettled = false;
             Assert.That(async () => await args.AbandonAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.UserSettled);
+            Assert.IsFalse(args.IsMessageSettled);
 
             Assert.That(async () => await args.CompleteAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.UserSettled);
+            Assert.IsFalse(args.IsMessageSettled);
 
-            args.UserSettled = false;
+            args.IsMessageSettled = false;
             Assert.That(async () => await args.DeadLetterAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.UserSettled);
+            Assert.IsFalse(args.IsMessageSettled);
 
-            args.UserSettled = false;
+            args.IsMessageSettled = false;
             Assert.That(async () => await args.DeadLetterAsync(msg, "reason"),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.UserSettled);
+            Assert.IsFalse(args.IsMessageSettled);
 
-            args.UserSettled = false;
+            args.IsMessageSettled = false;
             Assert.That(async () => await args.DeferAsync(msg),
                 Throws.InstanceOf<Exception>());
-            Assert.IsFalse(args.UserSettled);
+            Assert.IsFalse(args.IsMessageSettled);
         }
     }
 }

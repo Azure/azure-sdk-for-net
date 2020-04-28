@@ -842,7 +842,7 @@ namespace Azure.Messaging.ServiceBus
                     }
                     finally
                     {
-                        userSettled = args.UserSettled;
+                        userSettled = args.IsMessageSettled;
                     }
                 }
                 else
@@ -857,7 +857,7 @@ namespace Azure.Messaging.ServiceBus
                     }
                     finally
                     {
-                        userSettled = args.UserSettled;
+                        userSettled = args.IsMessageSettled;
                     }
                 }
 

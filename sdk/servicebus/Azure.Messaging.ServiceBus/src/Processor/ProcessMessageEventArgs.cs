@@ -26,10 +26,10 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// Indicates whether the user has attempted to settle the message as part of their callback.
+        /// Indicates whether the user has settled the message as part of their callback.
         /// If they have done so, we will not autocomplete.
         /// </summary>
-        internal bool UserSettled { get; set; }
+        internal bool IsMessageSettled { get; set; }
 
         private readonly ServiceBusReceiver _receiver;
 
@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus
         {
             await _receiver.AbandonAsync(message, propertiesToModify, cancellationToken)
             .ConfigureAwait(false);
-            UserSettled = true;
+            IsMessageSettled = true;
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.Messaging.ServiceBus
                 message,
                 cancellationToken)
             .ConfigureAwait(false);
-            UserSettled = true;
+            IsMessageSettled = true;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus
                 deadLetterErrorDescription,
                 cancellationToken)
             .ConfigureAwait(false);
-            UserSettled = true;
+            IsMessageSettled = true;
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
-            UserSettled = true;
+            IsMessageSettled = true;
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus
                 propertiesToModify,
                 cancellationToken)
             .ConfigureAwait(false);
-            UserSettled = true;
+            IsMessageSettled = true;
         }
     }
 }
