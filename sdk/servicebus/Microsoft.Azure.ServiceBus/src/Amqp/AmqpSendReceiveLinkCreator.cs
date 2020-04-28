@@ -24,7 +24,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 amqpLink = new SendingAmqpLink(linkSettings);
             }
-            linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{amqpSession.Identifier}:{amqpLink.Identifier}:{linkSettings.Source.ToString()}:{ClientId}";
+            linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{amqpSession.Identifier}:{amqpLink.Identifier}:{linkSettings.Source}:{ClientId}";
             amqpLink.AttachTo(amqpSession);
             return amqpLink;
         }

@@ -107,7 +107,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 
             if (transportType == TransportType.Amqp)
             {
-                sbConnectionString += ';' + nameof(TransportType) + '=' + TransportType.Amqp.ToString();
+                sbConnectionString += ';' + nameof(TransportType) + '=' + TransportType.Amqp;
             }
 
             return sbConnectionString;
