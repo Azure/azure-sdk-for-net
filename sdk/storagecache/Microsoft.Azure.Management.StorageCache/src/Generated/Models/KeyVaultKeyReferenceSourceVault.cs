@@ -10,25 +10,27 @@ namespace Microsoft.Azure.Management.StorageCache.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties pertained to ClfsTarget
+    /// Describes a resource Id to source Key Vault.
     /// </summary>
-    public partial class ClfsTarget
+    public partial class KeyVaultKeyReferenceSourceVault
     {
         /// <summary>
-        /// Initializes a new instance of the ClfsTarget class.
+        /// Initializes a new instance of the KeyVaultKeyReferenceSourceVault
+        /// class.
         /// </summary>
-        public ClfsTarget()
+        public KeyVaultKeyReferenceSourceVault()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ClfsTarget class.
+        /// Initializes a new instance of the KeyVaultKeyReferenceSourceVault
+        /// class.
         /// </summary>
-        /// <param name="target">Resource ID of storage container.</param>
-        public ClfsTarget(string target = default(string))
+        /// <param name="id">Resource Id.</param>
+        public KeyVaultKeyReferenceSourceVault(string id = default(string))
         {
-            Target = target;
+            Id = id;
             CustomInit();
         }
 
@@ -38,10 +40,10 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resource ID of storage container.
+        /// Gets or sets resource Id.
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }
