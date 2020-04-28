@@ -1,24 +1,64 @@
-﻿
-
-
-
-# Azure Iot Hub Service API Design Doc
+﻿# Azure Iot Hub Service API Design Doc
 This document outlines the APIs for the Azure Iot Hub Service SDK
 
-## Azure.Core usage
-Within this SDK, we will make use of several Azure.Core library classes
+<details><summary><b>Constructors</b></summary>
+```csharp
 
-[AsyncPageable\<T>](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/AsyncPageable.cs): An enumerable set of items that are retrieved asynchronously over multiple http requests
+```
+</details>
 
-[Pageable\<T>](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/Pageable.cs): An enumerable set of items that are retrieved synchronously over multiple http requests
+<details><summary><b>Configuration APIs</b></summary>
+```csharp
 
-[Page\<T>](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/Page.cs): A single page within a Pageable. Should not be exposed to the user, since we strive to abstract out the pagination
+```
+</details>
 
-[Response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/Response.cs): Contains the raw HTTP response details
+<details><summary><b>Statistics APIs</b></summary>
 
-[Response\<T>](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/src/Response%7BT%7D.cs): Contains a Response instance and a parsed type derived from that HTTP response (for instance, Response\<ModelData> when retrieving models)
-<details><summary><b>Sample</b></summary>
+```csharp
 
+```
+</details>
+
+<details><summary><b>Registry APIs</b></summary>
+```csharp
+
+```
+</details>
+
+<details><summary><b>Job APIs</b></summary>
+```csharp
+
+```
+</details>
+
+<details><summary><b>V2 Job APIs</b></summary>
+(maybe combine with job APIs, or maybe don't expose v1 job APIs. Talk with service about this)
+
+```csharp
+
+```
+</details>
+
+<details><summary><b>Twin APIs</b></summary>
+```csharp
+
+```
+</details>
+
+<details><summary><b>Method APIs</b></summary>
+```csharp
+
+```
+</details>
+
+<details><summary><b>Feedback Message APIs</b></summary>
+```csharp
+
+```
+</details>
+
+<details><summary><b>Query APIs</b></summary>
 ```csharp
 
 ```
