@@ -30,7 +30,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
     /// </remarks>
     public sealed class CorrelationFilter : Filter
     {
-        internal PropertyDictionary properties;
+        internal PropertyDictionary FilterProperties;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CorrelationFilter" /> class with default values.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.ServiceBus.Filters
         /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan, Stream, byte[],
         /// and IList / IDictionary of supported types
         /// </remarks>
-        public IDictionary<string, object> Properties => properties ?? (properties = new PropertyDictionary());
+        public IDictionary<string, object> Properties => FilterProperties ?? (FilterProperties = new PropertyDictionary());
 
         /// <summary>
         /// Converts the value of the current instance to its equivalent string representation.
@@ -230,19 +230,19 @@ namespace Microsoft.Azure.ServiceBus.Filters
                     && string.Equals(SessionId, correlationFilter.SessionId, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(ReplyToSessionId, correlationFilter.ReplyToSessionId, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(ContentType, correlationFilter.ContentType, StringComparison.OrdinalIgnoreCase)
-                    && (properties != null && correlationFilter.properties != null
-                        || properties == null && correlationFilter.properties == null))
+                    && (FilterProperties != null && correlationFilter.FilterProperties != null
+                        || FilterProperties == null && correlationFilter.FilterProperties == null))
                 {
-                    if (properties != null)
+                    if (FilterProperties != null)
                     {
-                        if (properties.Count != correlationFilter.properties.Count)
+                        if (FilterProperties.Count != correlationFilter.FilterProperties.Count)
                         {
                             return false;
                         }
 
-                        foreach (var param in properties)
+                        foreach (var param in FilterProperties)
                         {
-                            if (!correlationFilter.properties.TryGetValue(param.Key, out var otherParamValue) ||
+                            if (!correlationFilter.FilterProperties.TryGetValue(param.Key, out var otherParamValue) ||
                                 param.Value == null ^ otherParamValue == null ||
                                 param.Value != null && !param.Value.Equals(otherParamValue))
                             {

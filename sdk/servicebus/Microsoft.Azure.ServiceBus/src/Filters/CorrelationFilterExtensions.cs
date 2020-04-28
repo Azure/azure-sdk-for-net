@@ -61,10 +61,10 @@ namespace Microsoft.Azure.ServiceBus.Filters
         public static XElement Serialize(this CorrelationFilter filter)
         {
             XElement parameterElement = null;
-            if (filter.properties != null)
+            if (filter.FilterProperties != null)
             {
                 parameterElement = new XElement(XName.Get("Properties", ManagementClientConstants.ServiceBusNamespace));
-                foreach (var param in filter.properties)
+                foreach (var param in filter.FilterProperties)
                 {
                     parameterElement.Add(
                         new XElement(XName.Get("KeyValueOfstringanyType", ManagementClientConstants.ServiceBusNamespace),
