@@ -62,7 +62,7 @@ namespace Microsoft.Azure.ServiceBus.Management
 
         private static TopicDescription ParseFromEntryElement(XElement xEntry)
         {
-            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace)).Value;
+            var name = xEntry.Element(XName.Get("title", ManagementClientConstants.AtomNamespace))?.Value;
             var topicDesc = new TopicDescription(name);
 
             var qdXml = xEntry.Element(XName.Get("content", ManagementClientConstants.AtomNamespace))?
