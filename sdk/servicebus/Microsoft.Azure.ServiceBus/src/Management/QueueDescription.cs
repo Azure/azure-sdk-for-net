@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// will be discarded.
         /// </summary>
         /// <remarks>Defaults to false.</remarks>
-        public bool RequiresDuplicateDetection { get; set; } = false;
+        public bool RequiresDuplicateDetection { get; set; }
 
         /// <summary>
         /// This indicates whether the queue supports the concept of session. Sessionful-messages follow FIFO ordering.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// If true, the receiver can only receive messages using <see cref="SessionClient.AcceptMessageSessionAsync()"/>.
         /// Defaults to false.
         /// </remarks>
-        public bool RequiresSession { get; set; } = false;
+        public bool RequiresSession { get; set; }
 
         /// <summary>
         /// The default time to live value for the messages. This is the duration after which the message expires, starting from when
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// Indicates whether this queue has dead letter support when a message expires.
         /// </summary>
         /// <remarks>If true, the expired messages are moved to dead-letter sub-queue. Default value is false.</remarks>
-        public bool EnableDeadLetteringOnMessageExpiration { get; set; } = false;
+        public bool EnableDeadLetteringOnMessageExpiration { get; set; }
 
         /// <summary>
         /// The <see cref="TimeSpan"/> duration of duplicate detection history that is maintained by the service.
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// Indicates whether the queue is to be partitioned across multiple message brokers.
         /// </summary>
         /// <remarks>Defaults to false.</remarks>
-        public bool EnablePartitioning { get; set; } = false;
+        public bool EnablePartitioning { get; set; }
 
         /// <summary>
         /// Custom metdata that user can associate with the description.
