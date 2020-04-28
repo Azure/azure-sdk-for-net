@@ -17,6 +17,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         [SetUp]
