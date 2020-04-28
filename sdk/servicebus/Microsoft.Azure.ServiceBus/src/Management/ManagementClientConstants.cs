@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public const string ApiVersionQuery = "api-version=" + ApiVersion;
         public const string ApiVersion = "2017-04";
 
-        public const string ServiceBusSupplementartyAuthorizationHeaderName = "ServiceBusSupplementaryAuthorization";
+        public const string ServiceBusSupplementaryAuthorizationHeaderName = "ServiceBusSupplementaryAuthorization";
         public const string ServiceBusDlqSupplementaryAuthorizationHeaderName = "ServiceBusDlqSupplementaryAuthorization";
         public const string HttpErrorSubCodeFormatString = "SubCode={0}";
         public static string ConflictOperationInProgressSubCode =

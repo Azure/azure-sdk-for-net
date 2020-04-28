@@ -1162,7 +1162,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             if (!string.IsNullOrWhiteSpace(forwardTo))
             {
                 var token = await GetToken(forwardTo).ConfigureAwait(false);
-                request.Headers.Add(ManagementClientConstants.ServiceBusSupplementartyAuthorizationHeaderName, token);
+                request.Headers.Add(ManagementClientConstants.ServiceBusSupplementaryAuthorizationHeaderName, token);
             }
 
             if (!string.IsNullOrWhiteSpace(fwdDeadLetterTo))
