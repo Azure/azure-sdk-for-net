@@ -566,9 +566,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     {
                         netObject = amqpObjectAsAmqpSymbol.Value;
                     }
-                    else if (amqpObject is ArraySegment<byte> amqpObjectAsArraySegment)
+                    else if (amqpObject is ArraySegment<byte> binValue &&
+                             binValue.Array != null)
                     {
-                        var binValue = amqpObjectAsArraySegment;
                         if (binValue.Count == binValue.Array.Length)
                         {
                             netObject = binValue.Array;
