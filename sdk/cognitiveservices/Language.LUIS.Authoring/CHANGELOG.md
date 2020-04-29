@@ -1,5 +1,8 @@
 # Release History
 
+## 3.2.0-preview.3 (Unreleased)
+
+
 ## 3.2.0-preview.2 (Unreleased)
 ### Added
 - Adding Luis App import and export in .lu format
