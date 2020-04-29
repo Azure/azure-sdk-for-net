@@ -25,12 +25,7 @@ namespace Azure.AI.TextAnalytics
             /// <summary>
             /// Version 3.0-preview.1
             /// </summary>
-            V3_0_preview_1 = 1,
-
-            /// <summary>
-            /// Version 3.0-preview.1
-            /// </summary>
-            V3_0 = 2
+            V3_0 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -71,9 +66,6 @@ namespace Azure.AI.TextAnalytics
         {
             switch (Version)
             {
-                case ServiceVersion.V3_0_preview_1:
-                    return "v3.0-preview.1";
-
                 case ServiceVersion.V3_0:
                     return "v3.0";
 
