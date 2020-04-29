@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://amandacanary.queue.core.windows.net/test-queue-3e8215a0-cde2-6723-fb7c-f43a934150f3",
+      "RequestUri": "http://gapradev.queue.core.windows.net/test-queue-3e8215a0-cde2-6723-fb7c-f43a934150f3",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-ccad49b5c93ed14783ead19c1686c04c-23260185efbb0745-00",
+        "Request-Id": "|ef385ee9-4771f0c8af167685.",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.4.0-dev.20200424.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190912.1+9a86ae3367dccb76004b59b244c982904496250d",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "e886747d-fbd6-4cf4-b382-915dd6fd0b7c",
-        "x-ms-date": "Sat, 25 Apr 2020 01:22:13 GMT",
+        "x-ms-date": "Thu, 12 Sep 2019 22:23:17 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -19,27 +19,27 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Sat, 25 Apr 2020 01:22:13 GMT",
+        "Date": "Thu, 12 Sep 2019 22:23:16 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "2fbfdbf2-a003-0028-539f-1a4401000000",
+        "x-ms-request-id": "769b729f-a003-0020-47b8-69e99c000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://amandacanary.queue.core.windows.net/?comp=list",
+      "RequestUri": "http://gapradev.queue.core.windows.net/?comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.4.0-dev.20200424.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190912.1+9a86ae3367dccb76004b59b244c982904496250d",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "1ebda860-68ba-851d-fa2f-5ef6eaeffc0e",
-        "x-ms-date": "Sat, 25 Apr 2020 01:22:13 GMT",
+        "x-ms-date": "Thu, 12 Sep 2019 22:23:17 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -48,29 +48,29 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/xml",
-        "Date": "Sat, 25 Apr 2020 01:22:13 GMT",
+        "Date": "Thu, 12 Sep 2019 22:23:16 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-request-id": "2fbfdbf9-a003-0028-589f-1a4401000000",
+        "x-ms-request-id": "769b72a1-a003-0020-48b8-69e99c000000",
         "x-ms-version": "2018-11-09"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://amandacanary.queue.core.windows.net/\u0022\u003E\u003CQueues\u003E\u003CQueue\u003E\u003CName\u003Etest-queue-1ba0a7dd-52b0-dd28-abad-83e118022f66\u003C/Name\u003E\u003C/Queue\u003E\u003CQueue\u003E\u003CName\u003Etest-queue-3e8215a0-cde2-6723-fb7c-f43a934150f3\u003C/Name\u003E\u003C/Queue\u003E\u003CQueue\u003E\u003CName\u003Etest-queue-f17d7841-f019-2517-34b7-be0816c64006\u003C/Name\u003E\u003C/Queue\u003E\u003C/Queues\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"http://gapradev.queue.core.windows.net/\"><Queues><Queue><Name>test-queue-1ba0a7dd-52b0-dd28-abad-83e118022f66</Name></Queue><Queue><Name>test-queue-3e8215a0-cde2-6723-fb7c-f43a934150f3</Name></Queue><Queue><Name>test-queue-f17d7841-f019-2517-34b7-be0816c64006</Name></Queue></Queues><NextMarker /></EnumerationResults>"
     },
     {
-      "RequestUri": "http://amandacanary.queue.core.windows.net/test-queue-3e8215a0-cde2-6723-fb7c-f43a934150f3",
+      "RequestUri": "http://gapradev.queue.core.windows.net/test-queue-3e8215a0-cde2-6723-fb7c-f43a934150f3",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-e43d3d469859be46929fdd8b8bce8aaf-b1f7a37bc8c31e43-00",
+        "Request-Id": "|ef385eea-4771f0c8af167685.",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.4.0-dev.20200424.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
+          "azsdk-net-Storage.Queues/12.0.0-dev.20190912.1+9a86ae3367dccb76004b59b244c982904496250d",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "2dfc4f92-ec40-4bc1-a3fc-7aa3d32e39d8",
-        "x-ms-date": "Sat, 25 Apr 2020 01:22:13 GMT",
+        "x-ms-date": "Thu, 12 Sep 2019 22:23:17 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -78,12 +78,12 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Sat, 25 Apr 2020 01:22:13 GMT",
+        "Date": "Thu, 12 Sep 2019 22:23:16 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "2fbfdbfd-a003-0028-5b9f-1a4401000000",
+        "x-ms-request-id": "769b72a2-a003-0020-49b8-69e99c000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
@@ -91,6 +91,6 @@
   ],
   "Variables": {
     "RandomSeed": "1900615743",
-    "Storage_TestConfigDefault": "ProductionTenant\namandacanary\nU2FuaXRpemVk\nhttp://amandacanary.blob.core.windows.net\nhttp://amandacanary.file.core.windows.net\nhttp://amandacanary.queue.core.windows.net\nhttp://amandacanary.table.core.windows.net\n\n\n\n\nhttp://amandacanary-secondary.blob.core.windows.net\nhttp://amandacanary-secondary.file.core.windows.net\nhttp://amandacanary-secondary.queue.core.windows.net\nhttp://amandacanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://amandacanary.blob.core.windows.net/;QueueEndpoint=http://amandacanary.queue.core.windows.net/;FileEndpoint=http://amandacanary.file.core.windows.net/;BlobSecondaryEndpoint=http://amandacanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://amandacanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://amandacanary-secondary.file.core.windows.net/;AccountName=amandacanary;AccountKey=Sanitized\n\nDefaultEndpointsProtocol=https;AccountName=ortestsaccountcbn1;AccountKey=OrRfzSm3ktQSklAGiL90/QusS7SdS6Y5S/AJoxZEeyKYDtnue7OKYIMLOraTnT4xcOyhYbqzWVmtTKappcc5Fg==;EndpointSuffix=core.windows.net\nDefaultEndpointsProtocol=https;AccountName=vbalaorcentral1;AccountKey=vlHMz/LZ3Sx7r/1bdTQT26pG0tqORQ4uTIcxGhHB0LQhIhqGxfv2TXV7u\u002BI2ra4UWXrWGGHG2N6l\u002BBfb5FgAcQ==;EndpointSuffix=core.windows.net"
+    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp://gapradev.blob.core.windows.net\nhttp://gapradev.file.core.windows.net\nhttp://gapradev.queue.core.windows.net\nhttp://gapradev.table.core.windows.net\n\n\n\n\nhttp://gapradev-secondary.blob.core.windows.net\nhttp://gapradev-secondary.file.core.windows.net\nhttp://gapradev-secondary.queue.core.windows.net\nhttp://gapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://gapradev.blob.core.windows.net/;QueueEndpoint=http://gapradev.queue.core.windows.net/;TableEndpoint=http://gapradev.table.core.windows.net/;FileEndpoint=http://gapradev.file.core.windows.net/;BlobSecondaryEndpoint=http://gapradev-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://gapradev-secondary.queue.core.windows.net/;TableSecondaryEndpoint=http://gapradev-secondary.table.core.windows.net/;FileSecondaryEndpoint=http://gapradev-secondary.file.core.windows.net/;AccountName=gapradev;AccountKey=Sanitized\nseanscope1"
   }
 }
