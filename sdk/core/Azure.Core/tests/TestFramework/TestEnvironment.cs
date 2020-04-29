@@ -2,6 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,14 +17,73 @@ namespace Azure.Core.Testing
     ///   Represents the ambient environment in which the test suite is
     ///   being run.
     /// </summary>
-    public partial class TestEnvironment
+    public abstract partial class TestEnvironment
     {
+        private static readonly string TestEnvironmentDirectory;
         private TokenCredential _credential;
         private readonly string _prefix;
+        private readonly Dictionary<string, string> _environmentFile;
 
-        public TestEnvironment(string serviceName)
+        protected TestEnvironment(string serviceName)
         {
             _prefix = serviceName.ToUpperInvariant() + "_";
+            if (TestEnvironmentDirectory != null)
+            {
+                var testEnvironmentFile = Path.Combine(TestEnvironmentDirectory, serviceName);
+                if (File.Exists(testEnvironmentFile))
+                {
+                    var json = JsonDocument.Parse(
+                        ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
+                    );
+
+                    _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                    foreach (var property in json.RootElement.EnumerateObject())
+                    {
+                        _environmentFile[property.Name] = property.Value.GetString();
+                    }
+                }
+            }
+        }
+
+        static TestEnvironment()
+        {
+            // Traverse parent directories until we find an "artifacts" directory
+            // parent of that would become a repo root for test environment resolution purposes
+            var directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
+
+            while (directoryInfo.Name != "artifacts")
+            {
+                if (directoryInfo.Parent == null)
+                {
+                    return;
+                }
+
+                directoryInfo = directoryInfo.Parent;
+            }
+
+            var repositoryRoot = directoryInfo.Parent;
+
+            // Calculate a hash of repo root
+            using var sha1 = HashAlgorithm.Create("SHA1");
+            var repositoryRootHashBytes = sha1.ComputeHash(Encoding.UTF8.GetBytes(repositoryRoot.FullName));
+
+            var repositoryRootHash = new StringBuilder();
+            foreach (var b in repositoryRootHashBytes)
+            {
+                repositoryRootHash.Append(b.ToString("X2"));
+            }
+
+            var testEnvironmentDirectory = Path.Combine(
+                Environment.GetEnvironmentVariable("USERPROFILE"),
+                ".Azure",
+                "TestEnvironments",
+                repositoryRootHash.ToString()
+            );
+
+            if (Directory.Exists(testEnvironmentDirectory))
+            {
+                TestEnvironmentDirectory = testEnvironmentDirectory;
+            }
         }
 
         /// <summary>
@@ -99,8 +164,6 @@ namespace Azure.Core.Testing
         /// </summary>
         protected string GetRecordedOptionalVariable(string name)
         {
-            var prefixedName = _prefix + name;
-
             string value = null;
             bool isPlayback = false;
 
@@ -111,8 +174,7 @@ namespace Azure.Core.Testing
                 return value;
             }
 
-            value = Environment.GetEnvironmentVariable(prefixedName) ??
-                   Environment.GetEnvironmentVariable(name);
+            value = GetOptionalVariable(name);
 
             SetRecordedValue(name, value);
 
@@ -138,8 +200,19 @@ namespace Azure.Core.Testing
         {
             var prefixedName = _prefix + name;
 
+            // Environment variables override the environment file
             var value = Environment.GetEnvironmentVariable(prefixedName) ??
                         Environment.GetEnvironmentVariable(name);
+
+            if (value == null)
+            {
+                _environmentFile.TryGetValue(prefixedName, out value);
+            }
+
+            if (value == null)
+            {
+                _environmentFile.TryGetValue(name, out value);
+            }
 
             return value;
         }
