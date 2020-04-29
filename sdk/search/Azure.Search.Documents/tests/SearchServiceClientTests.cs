@@ -193,8 +193,8 @@ namespace Azure.Search.Documents.Tests
                     Pattern = @"[0-9a-z]+",
                     Flags =
                     {
-                        RegexFlags.CaseInsensitive,
-                        RegexFlags.Multiline,
+                        RegexFlag.CaseInsensitive,
+                        RegexFlag.Multiline,
                     },
                     Stopwords =
                     {

@@ -36,15 +36,15 @@ namespace Azure.Search.Documents.Tests.Models
                 {
                     Flags =
                     {
-                        RegexFlags.CaseInsensitive,
+                        RegexFlag.CaseInsensitive,
                     }
                 };
                 yield return new PatternAnalyzer("test")
                 {
                     Flags =
                     {
-                        RegexFlags.CaseInsensitive,
-                        RegexFlags.Literal
+                        RegexFlag.CaseInsensitive,
+                        RegexFlag.Literal
                     }
                 };
             }
