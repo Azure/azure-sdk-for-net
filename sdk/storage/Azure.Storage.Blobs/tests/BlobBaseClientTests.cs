@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -479,14 +480,17 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task DownloadAsync_ObjectReplication()
         {
+            BlobServiceClient sourceServiceClient = GetServiceClient_OrSource();
+            BlobServiceClient destinationServiceClient = GetServiceClient_OrDestination();
+
             // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
-            var SourceContainer = InstrumentClient(new BlobContainerClient(TestConfigDefault.ObjectReplicationSource, "test1", GetOptions()));
-            var DestinationContainer = InstrumentClient(new BlobContainerClient(TestConfigDefault.ObjectReplicationDestination, "test2",GetOptions()));
+            var sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+            var destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
 
             // Arrange
             string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
-            var source_blob = SourceContainer.GetBlobClient(blob_name);
-            var dest_blob = DestinationContainer.GetBlobClient(blob_name);
+            var source_blob = sourceContainer.GetBlobClient(blob_name);
+            var dest_blob = destinationContainer.GetBlobClient(blob_name);
 
             //Act
             var source_response = await source_blob.DownloadAsync();
@@ -2377,14 +2381,17 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetPropertiesAsync_ObjectReplication()
         {
+            BlobServiceClient sourceServiceClient = GetServiceClient_OrSource();
+            BlobServiceClient destinationServiceClient = GetServiceClient_OrDestination();
+
             // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
-            var SourceContainer = InstrumentClient(new BlobContainerClient(TestConfigDefault.ObjectReplicationSource, "test1", GetOptions()));
-            var DestinationContainer = InstrumentClient(new BlobContainerClient(TestConfigDefault.ObjectReplicationDestination, "test2", GetOptions()));
+            var sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+            var destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
 
             // Arrange
             string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
-            var source_blob = SourceContainer.GetBlobClient(blob_name);
-            var dest_blob = DestinationContainer.GetBlobClient(blob_name);
+            var source_blob = sourceContainer.GetBlobClient(blob_name);
+            var dest_blob = destinationContainer.GetBlobClient(blob_name);
 
             // Act
             var source_response = await source_blob.GetPropertiesAsync();
