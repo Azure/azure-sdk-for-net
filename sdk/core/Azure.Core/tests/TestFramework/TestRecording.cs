@@ -211,6 +211,11 @@ namespace Azure.Core.Testing
             return Random.Next().ToString();
         }
 
+        public string GenerateId(string prefix, int maxLength)
+        {
+            return $"{prefix}{Random.Next()}".Substring(0, maxLength);
+        }
+
         public string GenerateAssetName(string prefix, [CallerMemberName]string callerMethodName = "testframework_failed")
         {
             if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
