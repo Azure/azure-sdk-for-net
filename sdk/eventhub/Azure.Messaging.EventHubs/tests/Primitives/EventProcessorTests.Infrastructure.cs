@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var processorCancellation = new CancellationTokenSource();
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };
@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task ReadLastEnqueuedEventPropertiesThrowsWhenThePartitionIsNotOwned()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };

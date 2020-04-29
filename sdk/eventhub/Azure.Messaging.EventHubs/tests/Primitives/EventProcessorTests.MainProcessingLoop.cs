@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingDispatchesTopLevelExceptions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingLogsTopLevelExceptions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -131,7 +131,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingToleratesPartitionIdQueryFailure()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingToleratesALoadBalancingRunFailure()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionIds = new[] { "0", "1" };
             var expectedException = new DivideByZeroException("BOOM!");
@@ -249,7 +249,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingToleratesAnOwnershipClaimFailureWhenThePartitionIsOwned()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };
@@ -331,7 +331,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingToleratesAnOwnershipClaimFailureWhenThePartitionIsUnowned()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId };
@@ -405,7 +405,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingToleratesAnOwnershipClaimFailureWhenThePartitionIsNotSet()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionIds = new[] { "0", "13" };
             var wrappedExcepton = new NotImplementedException("BOOM!");
@@ -878,7 +878,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingRestartsProcessingForFaultedPartitions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var firstProcessorCreate = true;
             var partitionId = "27";
@@ -956,7 +956,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingUsesCheckpointsWhenProcessingPartitions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedStartingPosition = EventPosition.FromOffset(775, true);
             var partitionId = "27";
@@ -1028,7 +1028,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingDelegatesInitializationWhenProcessingClaimedPartitions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedDescription = "This is a custom partition.";
             var partitionId = "27";
@@ -1103,7 +1103,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingLogsWhenStartingToProcessClaimedPartitions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
@@ -1186,7 +1186,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingLogsWhenStartingToProcessClaimedPartitionsFails()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var firstProcessorCreate = true;
             var expectedException = new FormatException("This was a bad idea");
@@ -1283,7 +1283,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingDispatchesExceptionsWhenStartingToProcessClaimedPartitionsFails()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var firstProcessorCreate = true;
             var expectedException = new FormatException("This was a bad idea");
@@ -1375,7 +1375,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingLogsWhenSurrenderingClaimedPartitions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
@@ -1461,7 +1461,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task BackgroundProcessingDelegatesStopNotificationWhenSurrenderingClaimedPartitions()
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitionId = "27";
             var partitionIds = new[] { "0", partitionId, "111" };
