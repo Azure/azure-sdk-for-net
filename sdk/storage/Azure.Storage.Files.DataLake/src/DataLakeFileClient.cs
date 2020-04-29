@@ -2641,7 +2641,7 @@ namespace Azure.Storage.Files.DataLake
                 options?.Umask,
                 options?.Conditions,
                 options?.ProgressHandler,
-                transferOptions: options.TransferOptions,
+                options?.TransferOptions ?? default,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2791,13 +2791,13 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
-                options.HttpHeaders,
-                options.Metadata,
-                options.Permissions,
-                options.Umask,
-                options.Conditions,
-                options.ProgressHandler,
-                options.TransferOptions,
+                options?.HttpHeaders,
+                options?.Metadata,
+                options?.Permissions,
+                options?.Umask,
+                options?.Conditions,
+                options?.ProgressHandler,
+                options?.TransferOptions ?? default,
                 async: true,
                 cancellationToken: cancellationToken);
 
@@ -2948,13 +2948,13 @@ namespace Azure.Storage.Files.DataLake
             {
                 return StagedUploadAsync(
                     stream,
-                    options.HttpHeaders,
-                    options.Metadata,
-                    options.Permissions,
-                    options.Umask,
-                    options.Conditions,
-                    options.ProgressHandler,
-                    options.TransferOptions,
+                    options?.HttpHeaders,
+                    options?.Metadata,
+                    options?.Permissions,
+                    options?.Umask,
+                    options?.Conditions,
+                    options?.ProgressHandler,
+                    options?.TransferOptions ?? default,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -3120,7 +3120,7 @@ namespace Azure.Storage.Files.DataLake
                     options?.Umask,
                     options?.Conditions,
                     options?.ProgressHandler,
-                    options.TransferOptions,
+                    options?.TransferOptions ?? default,
                     async: true,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
