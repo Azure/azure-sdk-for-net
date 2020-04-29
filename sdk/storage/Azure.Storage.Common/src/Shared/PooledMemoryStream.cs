@@ -4,7 +4,6 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -105,15 +104,21 @@ namespace Azure.Storage.Shared
             long totalRead = 0;
             var streamPartition = new PooledMemoryStream(arrayPool, absolutePosition, maxArrayPoolRentalSize ?? DefaultMaxArrayPoolRentalSize);
 
-            int maxCountIndividualBuffer; // max count to write into buffer
-            int minCountIndividualBuffer; // min count to write into buffer
-            int readIndividualBuffer;     // the amount that was written into buffer
+            // max count to write into a single array
+            int maxCountIndividualBuffer;
+            // min count to write into a single array
+            int minCountIndividualBuffer;
+            // the amount that was written into the current array
+            int readIndividualBuffer;
             do
             {
-                byte[] buffer; // buffer to write to
-                int offset;    // offset to start writing at
+                // buffer to write to
+                byte[] buffer;
+                // offset to start writing at
+                int offset;
                 BufferPartition latestBuffer = streamPartition.GetLatestBufferWithAvailableSpaceOrDefault();
-                bool newbuffer; // whether we got a brand new buffer to write into
+                // whether we got a brand new buffer to write into
+                bool newbuffer;
                 if (latestBuffer != default)
                 {
                     buffer = latestBuffer.Buffer;
@@ -129,7 +134,8 @@ namespace Azure.Storage.Shared
 
                 // limit max and min count for this buffer by buffer length
                 maxCountIndividualBuffer = (int)Math.Min(maxCount - totalRead, buffer.Length - offset);
-                minCountIndividualBuffer = (int)Math.Min(minCount - totalRead, maxCountIndividualBuffer); // definitionally limited by max; we won't ever have a swapped min/max range
+                // definitionally limited by max; we won't ever have a swapped min/max range
+                minCountIndividualBuffer = (int)Math.Min(minCount - totalRead, maxCountIndividualBuffer);
 
                 readIndividualBuffer = await ReadLoopInternal(
                     stream,
@@ -139,11 +145,13 @@ namespace Azure.Storage.Shared
                     maxCountIndividualBuffer,
                     async,
                     cancellationToken).ConfigureAwait(false);
-                if (readIndividualBuffer == 0 && newbuffer) // nothing was placed in a brand new array
+                // if nothing was placed in a brand new array
+                if (readIndividualBuffer == 0 && newbuffer)
                 {
                     arrayPool.Return(buffer);
                 }
-                else if (newbuffer) // brand new array and we did place data in it
+                // if brand new array and we did place data in it
+                else if (newbuffer)
                 {
                     streamPartition.BufferSet.Add(new BufferPartition
                     {
@@ -151,7 +159,8 @@ namespace Azure.Storage.Shared
                         DataLength = readIndividualBuffer
                     });
                 }
-                else // added to an existing array that was not entirely filled
+                // added to an existing array that was not entirely filled
+                else
                 {
                     latestBuffer.DataLength += readIndividualBuffer;
                 }
@@ -165,9 +174,12 @@ namespace Azure.Storage.Shared
              * try another read regardless of whether we hit min count.
              */
             } while (
-                readIndividualBuffer != 0 &&                                                 // stream is done if this value is zero; no other check matters
-                totalRead < maxCount &&                                                      // stop filling the partition if we've hit the max size of the partition
-                (totalRead < minCount || readIndividualBuffer == maxCountIndividualBuffer)); // stop filling the partition if we've reached min count and we know we've hit at least a pause in the stream
+                // stream is done if this value is zero; no other check matters
+                readIndividualBuffer != 0 &&
+                // stop filling the partition if we've hit the max size of the partition
+                totalRead < maxCount &&
+                // stop filling the partition if we've reached min count and we know we've hit at least a pause in the stream
+                (totalRead < minCount || readIndividualBuffer == maxCountIndividualBuffer));
 
             return streamPartition;
         }
@@ -182,11 +194,11 @@ namespace Azure.Storage.Shared
         /// </remarks>
         private static async Task<int> ReadLoopInternal(Stream stream, byte[] buffer, int offset, int minCount, int maxCount, bool async, CancellationToken cancellationToken)
         {
-            if (minCount > maxCount) // nonsensical; don't allow caller methods to produce this
+            if (minCount > maxCount)
             {
                 throw new ArgumentException($"{nameof(minCount)} cannot be greater than {nameof(maxCount)}.");
             }
-            if (maxCount <= 0) // useless; don't allow caller methods to produce this
+            if (maxCount <= 0)
             {
                 throw new ArgumentException("Cannot read a non-positive number of bytes.");
             }
@@ -197,13 +209,15 @@ namespace Azure.Storage.Shared
                 int read = async
                     ? await stream.ReadAsync(buffer, offset + totalRead, maxCount - totalRead, cancellationToken).ConfigureAwait(false)
                     : stream.Read(buffer, offset + totalRead, maxCount - totalRead);
-                if (read == 0) // either we have read maxCount in total or the stream has ended
+                // either we have read maxCount in total or the stream has ended
+                if (read == 0)
                 {
                     break;
                 }
                 totalRead += read;
-            } while (totalRead < minCount); // we always request the number that will bring our total read to maxCount
-                                            // if the stream can only give us so much at the moment and we've at least hit minCount, we can exit
+            // we always request the number that will bring our total read to maxCount
+            // if the stream can only give us so much at the moment and we've at least hit minCount, we can exit
+            } while (totalRead < minCount);
             return totalRead;
         }
 
@@ -234,7 +248,7 @@ namespace Azure.Storage.Shared
             {
                 (byte[] currentBuffer, int bufferCount, long offsetOfBuffer) = GetBufferFromPosition();
 
-                int toCopy = (int)MultiParamMin(
+                int toCopy = (int)Min(
                     Length - Position,
                     bufferCount - (Position - offsetOfBuffer),
                     count - read);
@@ -333,18 +347,10 @@ namespace Azure.Storage.Shared
             return latestBuffer;
         }
 
-        private static long MultiParamMin(params long[] values)
+        private static long Min(long val1, long val2, long val3)
         {
-            if (values.Length == 0)
-            {
-                throw new ArgumentException("Cannot take the minimum of no values.");
-            }
-
-            long result = long.MaxValue;
-            foreach (var value in values)
-            {
-                result = Math.Min(result, value);
-            }
+            long result = Math.Min(val1, val2);
+            result = Math.Min(result, val3);
 
             return result;
         }

@@ -163,7 +163,7 @@ namespace Azure.Storage
                 public const int DefaultInitalDownloadRangeSize = 256 * Constants.MB; // 256 MB
                 public const long MaxUploadBytes = 5000L * Constants.MB; // 5000MB
                 public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
-                public const long MaxStageBytes = 4000L * Constants.MB; // 5000MB
+                public const long MaxStageBytes = 4000L * Constants.MB; // 4000MB
                 public const int MaxBlocks = 50000;
             }
 

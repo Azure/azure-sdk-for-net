@@ -57,10 +57,13 @@ namespace Azure.Storage.Shared
             // if we know the data length, assert boundaries before spending resources uploading beyond service capabilities
             if (stream.CanSeek)
             {
+                // service has a max block count per blob
+                // block size * block count limit = max data length to upload
+                // if stream length is longer than specified max block size allows, can't upload
                 long minRequiredBlockSize = (long)Math.Ceiling((double)stream.Length / Constants.Blob.Block.MaxBlocks);
                 if (blockSize < minRequiredBlockSize)
                 {
-                    throw new ArgumentException($"Max block size {blockSize} not large enough for Storage to hold {stream.Length}.");
+                    throw Errors.InsufficientStorageTransferOptions(stream.Length, blockSize, minRequiredBlockSize);
                 }
                 // bring min up to our min required by the service
                 acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
