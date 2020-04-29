@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "azhang@microsoft.com",
+  "classifications": [ "ClassLibrary" ],
+  "identity": "Azure.Management.TemplateProject",
+  "name": "Azure Management SDK template: client project",
+  "shortName": "azuremgmt",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "Azure.Management.Template",
+  "preferNameDirectory": true,
+  "guids": [
+    "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC",
+    "F58E71A4-DED3-4714-B107-4E0E899BECEF",
+    "3E25C0E3-A852-4DCB-B406-66E5565551DC"
+  ],
+  "symbols": {
+    "swagger": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": true,
+      "description": "The path to swagger json file or Azure Rest API spec README.MD and tag",
+      "replaces": "AutoRestSwaggerPath"
+    },
+    "provider": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": true,
+      "description": "The Azure provider name. ie. Microsoft.Network or Microsoft.Compute",
+      "replaces": "ProviderFullName"
+    },
+    "ProviderShortNameLowercase": {
+      "type": "derived",
+      "datatype": "text",
+      "valueSource": "provider",
+      "valueTransform": "ProviderShortNameLowerForm",
+      "replaces": "ProviderNameLowercase"
+    },
+    "ProviderShortName": {
+      "type": "derived",
+      "datatype": "text",
+      "valueSource": "provider",
+      "valueTransform": "ProviderShortNameForm",
+      "replaces": "ProviderShortName",
+      "fileRename": "ProviderShortName"
+    }
+  },
+  "forms": {
+    "ProviderShortNameForm": {
+      "identifier": "replace",
+      "pattern": "^[mM]icrosoft\\.",
+      "replacement": ""
+    },
+    "ProviderShortNameLowerForm": {
+      "identifier": "chain",
+      "steps": [
+        "ProviderShortNameForm",
+        "lowerCase"
+      ]
+    }
+  }
+}

@@ -35,6 +35,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Management.'))">true</IsMgmtClientLibrary>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="$(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
     <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
@@ -130,4 +131,10 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
+
+  <!-- Management Client Library Specific Overrides -->
+  <PropertyGroup Condition="'$(IsMgmtClientLibrary)' == 'true'">
+    <EnableApiCompat>false</EnableApiCompat>
+  </PropertyGroup>
+
 </Project>

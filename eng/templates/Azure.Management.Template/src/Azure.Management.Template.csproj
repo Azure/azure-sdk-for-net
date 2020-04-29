@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <PackageId>Azure.Management.Template</PackageId>
+    <Description>Azure management client SDK for AzureRP </Description>
+    <PackageTags>azure;management;ProviderNameLowercase</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>($NoWarn);CA1812;</NoWarn>
+  </PropertyGroup>
+</Project>
