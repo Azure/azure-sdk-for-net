@@ -90,13 +90,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlockBlobMaxUploadBlobBytesLong"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual int BlockBlobMaxUploadBlobBytes => int.MaxValue;
+        public virtual int BlockBlobMaxUploadBlobBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
+            : int.MaxValue; // value is larger than can be represented by an int
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>.
         /// </summary>
-        public virtual long BlockBlobMaxUploadBlobBytesLong => Constants.Blob.Block.MaxUploadBytes;
+        public virtual long BlockBlobMaxUploadBlobBytesLong => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
+            : Constants.Blob.Block.MaxUploadBytes;
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
@@ -105,13 +109,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlockBlobMaxStageBlockBytesLong"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual int BlockBlobMaxStageBlockBytes => int.MaxValue;
+        public virtual int BlockBlobMaxStageBlockBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxStageBytes
+            : int.MaxValue; // value is larger than can be represented by an int
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public virtual long BlockBlobMaxStageBlockBytesLong => Constants.Blob.Block.MaxStageBytes;
+        public virtual long BlockBlobMaxStageBlockBytesLong => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxStageBytes
+            : Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Gets the maximum number of blocks allowed in a block blob.
