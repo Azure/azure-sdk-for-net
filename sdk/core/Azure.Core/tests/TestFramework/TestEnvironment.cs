@@ -70,7 +70,7 @@ namespace Azure.Core.Testing
             var repositoryRootHash = new StringBuilder();
             foreach (var b in repositoryRootHashBytes)
             {
-                repositoryRootHash.Append(b.ToString("X2"));
+                repositoryRootHash.Append(b.ToString("x2"));
             }
 
             var testEnvironmentDirectory = Path.Combine(
