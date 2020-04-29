@@ -65,7 +65,7 @@ param (
     [switch] $Force,
 
     [Parameter()]
-    [switch] $File
+    [switch] $OutFile
 )
 
 # By default stop for any error.
@@ -111,7 +111,8 @@ trap {
 }
 
 # Enumerate test resources to deploy. Fail if none found.
-$root = [System.IO.Path]::Combine("$PSScriptRoot/../../../sdk", $ServiceDirectory) | Resolve-Path
+$repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
+$root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
 
@@ -311,19 +312,29 @@ foreach ($templateFile in $templateFiles) {
         }
     }
 
-    if ($File)
+    if ($OutFile)
     {
-        if (!($IsWindows))
+        if (!$IsWindows)
         {
             Write-Host "File option is supported only on Windows"
         }
 
-        $outputPath = Join-Path $env:USERPROFILE ".Azure" "TestEnvironments"
+        # Compute a hash of repository root to scope the test environment file
+        $repositoryRootHash = New-Object System.Text.StringBuilder
+        [System.Security.Cryptography.HashAlgorithm]::Create("SHA1").ComputeHash([System.Text.Encoding]::UTF8.GetBytes($repositoryRoot)) | `
+            %{ [Void]$repositoryRootHash.Append($_.ToString("x2")) }
+
+        $outputPath = Join-Path $env:USERPROFILE ".Azure" "TestEnvironments" $repositoryRootHash
+        $environmentInfoFile =  Join-Path $outputPath "environment.txt"
+
+        # Write an environment info file
+        Set-Content $environmentInfoFile -Value "Test environments for $repositoryRoot repository" -Force
+
         $outputFile = Join-Path $outputPath $serviceName
 
         $environmentText = $deploymentOutputs | ConvertTo-Json;
         $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
-        $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::LocalMachine)
+        $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
 
         New-Item -Type Directory $outputPath -Force | Out-Null
         Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
@@ -352,13 +363,12 @@ foreach ($templateFile in $templateFiles) {
                 Write-Host ($shellExportFormat -f $key, $value)
             }
         }
-    }
 
-
-    if ($key) {
-        # Isolate the environment variables for easy reading.
-        Write-Host "`n"
-        $key = $null
+        if ($key) {
+            # Isolate the environment variables for easy reading.
+            Write-Host "`n"
+            $key = $null
+        }
     }
 
     $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
@@ -489,8 +499,9 @@ Deployment (CI/CD) build (only Azure Pipelines is currently supported).
 .PARAMETER Force
 Force creation of resources instead of being prompted.
 
-.PARAMETER File
+.PARAMETER OutFile
 Save test environment settings into a file in the %HOME%/.Azure/TestEnvironments/ directory. File is protected via DPAPI. Supported only on windows.
+The environment file would be scoped to the current repository directory.
 
 .EXAMPLE
 Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
