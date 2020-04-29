@@ -74,7 +74,7 @@ namespace Azure.Core.Testing
             return request;
         }
 
-        internal static RecordEntry CreateEntry(Request request, Response response)
+        public static RecordEntry CreateEntry(Request request, Response response)
         {
             var entry = new RecordEntry
             {

@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Azure.Core.Testing
 {
-    internal class NonSeekableMemoryStream : MemoryStream
+    public class NonSeekableMemoryStream : MemoryStream
     {
         public NonSeekableMemoryStream()
         {

@@ -3,9 +3,10 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
-
-  <ItemGroup>
+  <!-- Import the test recording props to support recording live tests -->
+  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework\TestRecording.props" />
+  
+    <ItemGroup>
     <PackageReference Include="nunit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\tests\TestFramework\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="..\src\Azure.AI.FormRecognizer.csproj" />
   </ItemGroup>
 </Project>

@@ -44,7 +44,7 @@ namespace Azure.Core.Testing
 
         public IEnumerable GetData(IParameterInfo parameter) => GetMembers(parameter.ParameterType, parameter.ParameterInfo?.Name);
 
-        internal IEnumerable<object> GetMembers(Type parameterType, string parameterName)
+        public IEnumerable<object> GetMembers(Type parameterType, string parameterName)
         {
             object[] data = GetMembersImpl(parameterType).ToArray();
             if (data is null || data.Length == 0)

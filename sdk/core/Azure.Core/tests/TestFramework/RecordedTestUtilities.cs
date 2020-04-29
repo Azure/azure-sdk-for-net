@@ -5,11 +5,11 @@ using System;
 
 namespace Azure.Core.Testing
 {
-    internal static class RecordedTestUtilities
+    public static class RecordedTestUtilities
     {
         private const string ModeEnvironmentVariableName = "AZURE_TEST_MODE";
 
-        internal static RecordedTestMode GetModeFromEnvironment()
+        public static RecordedTestMode GetModeFromEnvironment()
         {
             string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
 

@@ -5,7 +5,7 @@ using System.Diagnostics.Tracing;
 
 namespace Azure.Core.Testing
 {
-    internal static class TestEventListenerExtensions
+    public static class TestEventListenerExtensions
     {
         public static T GetProperty<T>(this EventWrittenEventArgs data, string propName)
             => (T)data.Payload[data.PayloadNames.IndexOf(propName)];

@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
+    <DefineConstants>$(DefineConstants);TESTFRAMEWORK</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,13 +9,11 @@
     <PackageReference Include="nunit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Moq" />
   </ItemGroup>
-
+  <!-- Import Azure.Core shared source -->
   <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\tests\TestFramework\Azure.Core.TestFramework.csproj" />
-    <ProjectReference Include="..\src\Azure.Extensions.AspNetCore.DataProtection.Blobs.csproj" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" Link="Shared\EventSourceEventFormatting.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\ContentTypeUtilities.cs" />
   </ItemGroup>
-
 </Project>
