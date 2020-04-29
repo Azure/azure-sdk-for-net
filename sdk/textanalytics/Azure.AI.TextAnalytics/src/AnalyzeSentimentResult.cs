@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -14,8 +15,8 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly DocumentSentiment _documentSentiment;
 
-        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
-            : base(id, statistics)
+        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, IList<TextAnalyticsWarning> warnings, DocumentSentiment documentSentiment)
+            : base(id, statistics, warnings)
         {
             _documentSentiment = documentSentiment;
         }

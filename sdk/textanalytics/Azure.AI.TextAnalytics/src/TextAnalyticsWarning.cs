@@ -4,19 +4,18 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Text Analytics Error.
+    /// Text Analytics Warning.
     /// </summary>
-    public struct TextAnalyticsError
+    public struct TextAnalyticsWarning
     {
-        internal TextAnalyticsError(string code, string message, string target = null)
+        internal TextAnalyticsWarning(string code, string message)
         {
             Code = code;
             Message = message;
-            Target = target;
         }
 
         /// <summary>
-        /// Error code that serves as an indicator of the HTTP error code.
+        /// Code indicating the type of the warning.
         /// </summary>
         public string Code { get; }
 
@@ -24,11 +23,5 @@ namespace Azure.AI.TextAnalytics
         /// Message that contains more information about the reason of the error.
         /// </summary>
         public string Message { get; }
-
-        /// <summary>
-        /// Target of the particular error (e.g. the name of
-        /// the property in error).
-        /// </summary>
-        public string Target { get; }
     }
 }

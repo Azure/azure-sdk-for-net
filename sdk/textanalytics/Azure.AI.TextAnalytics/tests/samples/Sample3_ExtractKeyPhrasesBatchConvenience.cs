@@ -45,6 +45,36 @@ namespace Azure.AI.TextAnalytics.Samples
                     Debug.WriteLine($"    {keyPhrase}");
                 }
             }
+
+            // Illustrate Warnings
+            var longDocuments = new List<string>
+            {
+                "Thisisaveryveryverylongtextwhichgoesonforalongtimeandwhichalmostdoesn'tseemtostopatanygivenpointintime.ThereasonforthistestistotryandseewhathappenswhenwesubmitaveryveryverylongtexttoLanguage.Thisshouldworkjustfinebutjustincaseitisalwaysgoodtohaveatestcase.ThisallowsustotestwhathappensifitisnotOK.Ofcourseitisgoingtobeokbutthenagainitisalsobettertobesure!"
+            };
+
+            ExtractKeyPhrasesResultCollection longDocumentResults = client.ExtractKeyPhrasesBatch(longDocuments);
+
+            Debug.WriteLine($"Extracted key phrases for each document are:");
+            i = 0;
+            foreach (ExtractKeyPhrasesResult result in longDocumentResults)
+            {
+                Debug.WriteLine($"For document: \"{longDocumentResults[i++]}\",");
+
+                if (result.HasWarnings)
+                {
+                    foreach (TextAnalyticsWarning warning in result.Warnings)
+                    {
+                        Debug.WriteLine($"    Warning: Code: {warning.Code}, Message: {warning.Message}");
+                    }
+                }
+
+                Debug.WriteLine($"the following {result.KeyPhrases.Count()} key phrases were found: ");
+
+                foreach (string keyPhrase in result.KeyPhrases)
+                {
+                    Debug.WriteLine($"    {keyPhrase}");
+                }
+            }
         }
     }
 }

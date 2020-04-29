@@ -14,8 +14,8 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly IReadOnlyCollection<string> _keyPhrases;
 
-        internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, IList<string> keyPhrases)
-            : base(id, statistics)
+        internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, IList<TextAnalyticsWarning> warnings, IList<string> keyPhrases)
+            : base(id, statistics, warnings)
         {
             _keyPhrases = new ReadOnlyCollection<string>(keyPhrases);
         }

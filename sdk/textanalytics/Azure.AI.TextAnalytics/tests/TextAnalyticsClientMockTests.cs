@@ -38,12 +38,12 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var mockResults = new List<RecognizeEntitiesResult>()
             {
-                new RecognizeEntitiesResult("1", new TextDocumentStatistics(), new List<CategorizedEntity>()
+                new RecognizeEntitiesResult("1", new TextDocumentStatistics(), new List<TextAnalyticsWarning>(), new List<CategorizedEntity>()
                 {
                     new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
                     new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
                 }),
-                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<CategorizedEntity>()
+                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<TextAnalyticsWarning>(), new List<CategorizedEntity>()
                 {
                     new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
                     new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
@@ -77,12 +77,12 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var mockResults = new List<RecognizeEntitiesResult>()
             {
-                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<CategorizedEntity>()
+                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<TextAnalyticsWarning>(), new List<CategorizedEntity>()
                 {
                     new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
                     new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
                 }),
-                new RecognizeEntitiesResult("3", new TextDocumentStatistics(), new List<CategorizedEntity>()
+                new RecognizeEntitiesResult("3", new TextDocumentStatistics(), new List<TextAnalyticsWarning>(), new List<CategorizedEntity>()
                 {
                     new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
                     new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),

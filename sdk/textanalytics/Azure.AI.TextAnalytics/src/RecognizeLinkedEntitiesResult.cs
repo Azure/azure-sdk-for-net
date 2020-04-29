@@ -16,8 +16,8 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly IReadOnlyCollection<LinkedEntity> _linkedEntities;
 
-        internal RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, IList<LinkedEntity> linkedEntities)
-            : base(id, statistics)
+        internal RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, IList<TextAnalyticsWarning> warnings, IList<LinkedEntity> linkedEntities)
+            : base(id, statistics, warnings)
         {
             _linkedEntities = new ReadOnlyCollection<LinkedEntity>(linkedEntities);
         }

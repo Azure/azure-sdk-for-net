@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #endregion
 
             #region Snippet:ExtractKeyPhrases
-            string document = "My cat might need to see a veterinarian.";
+            string document = "Thisisaveryveryverylongtextwhichgoesonforalongtimeandwhichalmostdoesn'tseemtostopatanygivenpointintime.ThereasonforthistestistotryandseewhathappenswhenwesubmitaveryveryverylongtexttoLanguage.Thisshouldworkjustfinebutjustincaseitisalwaysgoodtohaveatestcase.ThisallowsustotestwhathappensifitisnotOK.Ofcourseitisgoingtobeokbutthenagainitisalsobettertobesure!";
 
             IReadOnlyCollection<string> keyPhrases = client.ExtractKeyPhrases(document).Value;
 

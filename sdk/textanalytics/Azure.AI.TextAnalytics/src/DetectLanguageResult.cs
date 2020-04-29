@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -13,8 +14,8 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly DetectedLanguage _primaryLanguage;
 
-        internal DetectLanguageResult(string id, TextDocumentStatistics statistics, DetectedLanguage detectedLanguage)
-            : base(id, statistics)
+        internal DetectLanguageResult(string id, TextDocumentStatistics statistics, IList<TextAnalyticsWarning> warnings, DetectedLanguage detectedLanguage)
+            : base(id, statistics, warnings)
         {
             _primaryLanguage = detectedLanguage;
         }

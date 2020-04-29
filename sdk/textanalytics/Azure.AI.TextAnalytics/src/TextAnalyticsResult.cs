@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -10,10 +13,11 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class TextAnalyticsResult
     {
-        internal TextAnalyticsResult(string id, TextDocumentStatistics statistics)
+        internal TextAnalyticsResult(string id, TextDocumentStatistics statistics, IList<TextAnalyticsWarning> warnings)
         {
             Id = id;
             Statistics = statistics;
+            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
         internal TextAnalyticsResult(string id, TextAnalyticsError error)
@@ -43,8 +47,20 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsError Error { get; }
 
         /// <summary>
+        /// Gets the error explaining why the operation failed on this
+        /// document. This property will have a value only when the document
+        /// cannot be processed.
+        /// </summary>
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
+
+        /// <summary>
         /// Indicates that the document was not successfully processed and an error was returned for this document.
         /// </summary>
         public bool HasError => Error.Code != default;
+
+        /// <summary>
+        /// Indicates that the document was not successfully processed and an error was returned for this document.
+        /// </summary>
+        public bool HasWarnings => Warnings != default && Warnings.Count > 0;
     }
 }
