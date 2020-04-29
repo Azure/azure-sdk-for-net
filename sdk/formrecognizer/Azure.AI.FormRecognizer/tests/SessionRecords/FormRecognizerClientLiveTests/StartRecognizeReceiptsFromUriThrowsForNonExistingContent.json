@@ -7,9 +7,9 @@
         "Content-Length": "34",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-7c68e09e5bb0fa4baf7ddb201fe884e0-a75dd13ffea60447-00",
+        "traceparent": "00-eff439d2369b774092c1d72a5583924f-d97faa1ec69d1847-00",
         "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/1.0.0-dev.20200428.1",
+          "azsdk-net-AI.FormRecognizer/1.0.0-dev.20200429.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f498a6e23fef4b5d1909e8e2405f128e",
@@ -20,19 +20,19 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "60cf223d-add7-44cc-89b7-255e5bb97207",
+        "apim-request-id": "65afaab1-037f-4842-b1df-55a920e5e442",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 28 Apr 2020 21:18:47 GMT",
+        "Date": "Wed, 29 Apr 2020 19:32:15 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "3513"
+        "x-envoy-upstream-service-time": "3278"
       },
       "ResponseBody": {
         "error": {
           "code": "FailedToDownloadImage",
           "innerError": {
-            "requestId": "60cf223d-add7-44cc-89b7-255e5bb97207"
+            "requestId": "65afaab1-037f-4842-b1df-55a920e5e442"
           },
           "message": "Failed to download image from input URL."
         }

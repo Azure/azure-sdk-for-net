@@ -8,6 +8,8 @@ namespace Azure.AI.FormRecognizer.Tests
 {
     public class FormRecognizerRecordedTestSanitizer : RecordedTestSanitizer
     {
+        private const string SanitizedSasUri = "https://sanitized.blob.core.windows.net";
+
         public override void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
             if (headers.ContainsKey(Constants.AuthorizationHeader))
@@ -20,19 +22,10 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             return variableName switch
             {
-                "FORM_RECOGNIZER_API_KEY" => SanitizeValue,
-                "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL" => SanitizeSasToken(environmentVariableValue),
+                FormRecognizerTestEnvironment.ApiKeyEnvironmentVariableName => SanitizeValue,
+                FormRecognizerTestEnvironment.BlobContainerSasUrlEnvironmentVariableName => SanitizedSasUri,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
-        }
-
-        private string SanitizeSasToken(string sasUri)
-        {
-            var queryStartIndex = sasUri.IndexOf('?') + 1;
-
-            return queryStartIndex < sasUri.Length
-                ? sasUri.Remove(queryStartIndex) + SanitizeValue
-                : sasUri;
         }
     }
 }
