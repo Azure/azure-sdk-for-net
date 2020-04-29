@@ -159,7 +159,7 @@ namespace Azure.Data.Tables
             });
         }
 
-        private static string CreateContinuationTokenFromHeaders(TableQueryEntitiesHeaders headers)
+        private static string CreateContinuationTokenFromHeaders(TableInternalQueryEntitiesHeaders headers)
         {
             if (headers.XMsContinuationNextPartitionKey == null && headers.XMsContinuationNextRowKey == null)
             {

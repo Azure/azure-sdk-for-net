@@ -7,10 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -1411,12 +1409,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                     var options = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(250) };
-                    var desiredEmptyEvents = 8;
+                    var desiredEmptyEvents = 10;
                     var minimumEmptyEvents = 5;
 
                     var readTime = TimeSpan
                         .FromSeconds(options.MaximumWaitTime.Value.TotalSeconds * desiredEmptyEvents)
-                        .Add(TimeSpan.FromSeconds(1));
+                        .Add(TimeSpan.FromSeconds(2));
 
                     // Attempt to read from the empty partition and verify that no events are observed.  Because no events are expected, the
                     // read operation will not naturally complete; limit the read to only a couple of seconds and trigger cancellation.

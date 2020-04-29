@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableGetAccessPolicyHeaders
+    internal class TableInternalCreateHeaders
     {
         private readonly Response _response;
-        public TableGetAccessPolicyHeaders(Response response)
+        public TableInternalCreateHeaders(Response response)
         {
             _response = response;
         }

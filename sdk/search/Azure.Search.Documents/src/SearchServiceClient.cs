@@ -306,8 +306,7 @@ namespace Azure.Search.Documents
         /// Creates a new data source or updates an existing data source.
         /// </summary>
         /// <param name="dataSource">Required. The <see cref="DataSource"/> to create or update.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the data source should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="DataSource"/> that was created.
@@ -318,23 +317,21 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response<DataSource> CreateOrUpdateDataSource(
             DataSource dataSource,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             DataSourcesClient.CreateOrUpdate(
                 dataSource?.Name,
                 dataSource,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
         /// Creates a new data source or updates an existing data source.
         /// </summary>
         /// <param name="dataSource">Required. The <see cref="DataSource"/> to create or update.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the data source should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="DataSource"/> that was created.
@@ -345,15 +342,14 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response<DataSource>> CreateOrUpdateDataSourceAsync(
             DataSource dataSource,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await DataSourcesClient.CreateOrUpdateAsync(
                 dataSource?.Name,
                 dataSource,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -361,8 +357,7 @@ namespace Azure.Search.Documents
         /// Deletes a data source.
         /// </summary>
         /// <param name="dataSourceName">The name of the data source to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the data source should be deleted based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
@@ -370,22 +365,20 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response DeleteDataSource(
             string dataSourceName,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             DataSourcesClient.Delete(
                 dataSourceName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
         /// Deletes a data source.
         /// </summary>
         /// <param name="dataSourceName">The name of the data source to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the data source should be deleted based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
@@ -393,14 +386,13 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDataSourceAsync(
             string dataSourceName,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await DataSourcesClient.DeleteAsync(
                 dataSourceName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -601,8 +593,7 @@ namespace Azure.Search.Documents
         /// offline for a few seconds. The default is false. This temporarily causes indexing and queries to fail.
         /// Performance and write availability of the index can be impaired for several minutes after the index is updated, or longer for very large indexes.
         /// </param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the index should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndex"/> that was created or updated.
@@ -614,16 +605,15 @@ namespace Azure.Search.Documents
         public virtual Response<SearchIndex> CreateOrUpdateIndex(
             SearchIndex index,
             bool allowIndexDowntime = false,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             IndexesClient.CreateOrUpdate(
                 index?.Name,
                 index,
                 allowIndexDowntime,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
@@ -635,8 +625,7 @@ namespace Azure.Search.Documents
         /// offline for a few seconds. The default is false. This temporarily causes indexing and queries to fail.
         /// Performance and write availability of the index can be impaired for several minutes after the index is updated, or longer for very large indexes.
         /// </param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the index should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndex"/> that was created or updated.
@@ -648,16 +637,15 @@ namespace Azure.Search.Documents
         public virtual async Task<Response<SearchIndex>> CreateOrUpdateIndexAsync(
             SearchIndex index,
             bool allowIndexDowntime = false,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await IndexesClient.CreateOrUpdateAsync(
                 index?.Name,
                 index,
                 allowIndexDowntime,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -665,8 +653,7 @@ namespace Azure.Search.Documents
         /// Deletes a search index and all the documents it contains.
         /// </summary>
         /// <param name="indexName">Required. The name of the index to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the index should be deleted based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
@@ -674,22 +661,20 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response DeleteIndex(
             string indexName,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             IndexesClient.Delete(
                 indexName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
         /// </summary>
         /// <param name="indexName">Required. The name of the index to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the index should be deleted based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
@@ -697,14 +682,13 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexAsync(
             string indexName,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await IndexesClient.DeleteAsync(
                 indexName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -892,8 +876,7 @@ namespace Azure.Search.Documents
         /// Creates a new indexer or updates an existing indexer.
         /// </summary>
         /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the indexer should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -904,23 +887,21 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             IndexersClient.CreateOrUpdate(
                 indexer?.Name,
                 indexer,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
         /// Creates a new indexer or updates an existing indexer.
         /// </summary>
         /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the indexer should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -931,15 +912,14 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
             SearchIndexer indexer,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await IndexersClient.CreateOrUpdateAsync(
                 indexer?.Name,
                 indexer,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -947,8 +927,7 @@ namespace Azure.Search.Documents
         /// Deletes an indexer.
         /// </summary>
         /// <param name="indexerName">The name of the indexer to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the indexer should be deleted based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
@@ -956,22 +935,20 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response DeleteIndexer(
             string indexerName,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             IndexersClient.Delete(
                 indexerName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
         /// Deletes an indexer.
         /// </summary>
         /// <param name="indexerName">The name of the indexer to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the indexer should be deleted based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
@@ -979,14 +956,13 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await IndexersClient.DeleteAsync(
                 indexerName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1242,8 +1218,7 @@ namespace Azure.Search.Documents
         /// Creates a new skillset or updates an existing skillset.
         /// </summary>
         /// <param name="skillset">Required. The <see cref="Skillset"/> to create or update.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the skillset should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="Skillset"/> that was created.
@@ -1254,23 +1229,21 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response<Skillset> CreateOrUpdateSkillset(
             Skillset skillset,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             SkillsetsClient.CreateOrUpdate(
                 skillset?.Name,
                 skillset,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
         /// Creates a new skillset or updates an existing skillset.
         /// </summary>
         /// <param name="skillset">Required. The <see cref="Skillset"/> to create or update.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the skillset should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="Skillset"/> that was created.
@@ -1281,15 +1254,14 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response<Skillset>> CreateOrUpdateSkillsetAsync(
             Skillset skillset,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SkillsetsClient.CreateOrUpdateAsync(
                 skillset?.Name,
                 skillset,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1297,8 +1269,7 @@ namespace Azure.Search.Documents
         /// Deletes a skillset.
         /// </summary>
         /// <param name="skillsetName">The name of the skillset to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the skillset should be deleted based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
@@ -1306,22 +1277,20 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response DeleteSkillset(
             string skillsetName,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             SkillsetsClient.Delete(
                 skillsetName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken);
 
         /// <summary>
         /// Deletes a skillset.
         /// </summary>
         /// <param name="skillsetName">The name of the skillset to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the skillset should be deleted based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
@@ -1329,14 +1298,13 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSkillsetAsync(
             string skillsetName,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SkillsetsClient.DeleteAsync(
                 skillsetName,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                options?.IfMatch?.ToString(),
+                options?.IfNoneMatch?.ToString(),
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1475,7 +1443,10 @@ namespace Azure.Search.Documents
         /// Creates a new synonym map or updates an existing synonym map.
         /// </summary>
         /// <param name="synonymMap">Required. The <see cref="SynonymMap"/> to create or update.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the synonym map should be updated based on whether it changed.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
@@ -1487,23 +1458,26 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual Response<SynonymMap> CreateOrUpdateSynonymMap(
             SynonymMap synonymMap,
-            MatchConditions accessConditions = null,
+            bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             SynonymMapsClient.CreateOrUpdate(
                 synonymMap?.Name,
                 synonymMap,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                null,
                 cancellationToken);
 
         /// <summary>
         /// Creates a new synonym map or updates an existing synonym map.
         /// </summary>
         /// <param name="synonymMap">Required. The <see cref="SynonymMap"/> to create or update.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the synonym map should be updated based on whether it changed.</param>
-        /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SynonymMap"/> that was created.
@@ -1514,62 +1488,68 @@ namespace Azure.Search.Documents
         [ForwardsClientCalls]
         public virtual async Task<Response<SynonymMap>> CreateOrUpdateSynonymMapAsync(
             SynonymMap synonymMap,
-            MatchConditions accessConditions = null,
-            SearchRequestOptions options = null,
+            bool onlyIfUnchanged = false,
+            SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SynonymMapsClient.CreateOrUpdateAsync(
                 synonymMap?.Name,
                 synonymMap,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                null,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a synonym map.
         /// </summary>
-        /// <param name="synonymMapName">The name of the synonym map to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the synonym map should be deleted based on whether it changed.</param>
+        /// <param name="synonymMap">The <see cref="SynonymMap"/> to delete.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMap"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual Response DeleteSynonymMap(
-            string synonymMapName,
-            MatchConditions accessConditions = null,
+            SynonymMap synonymMap,
+            bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             SynonymMapsClient.Delete(
-                synonymMapName,
+                synonymMap?.Name,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                null,
                 cancellationToken);
 
         /// <summary>
         /// Deletes a synonym map.
         /// </summary>
-        /// <param name="synonymMapName">The name of the synonym map to delete.</param>
-        /// <param name="accessConditions">Optional match conditions used to determine whether the synonym map should be deleted based on whether it changed.</param>
+        /// <param name="synonymMap">The <see cref="SynonymMap"/> to delete.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SynonymMap.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMap"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSynonymMapAsync(
-            string synonymMapName,
-            MatchConditions accessConditions = null,
+            SynonymMap synonymMap,
+            bool onlyIfUnchanged = false,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SynonymMapsClient.DeleteAsync(
-                synonymMapName,
+                synonymMap?.Name,
                 options?.ClientRequestId,
-                accessConditions?.IfMatch?.ToString(),
-                accessConditions?.IfNoneMatch?.ToString(),
+                onlyIfUnchanged ? synonymMap?.ETag?.ToString() : null,
+                null,
                 cancellationToken)
                 .ConfigureAwait(false);
 

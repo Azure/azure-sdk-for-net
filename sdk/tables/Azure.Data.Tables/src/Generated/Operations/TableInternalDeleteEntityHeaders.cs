@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TableSetAccessPolicyHeaders
+    internal class TableInternalDeleteEntityHeaders
     {
         private readonly Response _response;
-        public TableSetAccessPolicyHeaders(Response response)
+        public TableInternalDeleteEntityHeaders(Response response)
         {
             _response = response;
         }

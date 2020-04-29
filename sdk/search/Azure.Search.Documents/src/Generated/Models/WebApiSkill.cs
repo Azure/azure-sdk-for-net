@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The url for the Web API. </summary>
-        public string Uri { get; }
+        public string Uri { get; set; }
         /// <summary> The headers required to make the http request. </summary>
         public IDictionary<string, string> HttpHeaders { get; set; }
         /// <summary> The method for the http request. </summary>
