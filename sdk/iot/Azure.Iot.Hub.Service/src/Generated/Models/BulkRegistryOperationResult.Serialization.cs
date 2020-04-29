@@ -16,8 +16,8 @@ namespace Azure.Iot.Hub.Service.Models
         internal static BulkRegistryOperationResult DeserializeBulkRegistryOperationResult(JsonElement element)
         {
             bool? isSuccessful = default;
-            IReadOnlyList<DeviceRegistryOperationError> errors = default;
-            IReadOnlyList<DeviceRegistryOperationWarning> warnings = default;
+            IReadOnlyList<RegistryOperationError> errors = default;
+            IReadOnlyList<RegistryOperationWarning> warnings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSuccessful"))
@@ -35,7 +35,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    List<DeviceRegistryOperationError> array = new List<DeviceRegistryOperationError>();
+                    List<RegistryOperationError> array = new List<RegistryOperationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -44,7 +44,7 @@ namespace Azure.Iot.Hub.Service.Models
                         }
                         else
                         {
-                            array.Add(DeviceRegistryOperationError.DeserializeDeviceRegistryOperationError(item));
+                            array.Add(RegistryOperationError.DeserializeRegistryOperationError(item));
                         }
                     }
                     errors = array;
@@ -56,7 +56,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    List<DeviceRegistryOperationWarning> array = new List<DeviceRegistryOperationWarning>();
+                    List<RegistryOperationWarning> array = new List<RegistryOperationWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -65,7 +65,7 @@ namespace Azure.Iot.Hub.Service.Models
                         }
                         else
                         {
-                            array.Add(DeviceRegistryOperationWarning.DeserializeDeviceRegistryOperationWarning(item));
+                            array.Add(RegistryOperationWarning.DeserializeRegistryOperationWarning(item));
                         }
                     }
                     warnings = array;

@@ -2,7 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "2020-03-13",
-    "title": "IotHub Gateway Service APIs"
+    "title": "IotHub Gateway Service APIs",
+	"description": "THIS SWAGGER FILE IS NOT DEPLOYED IN PRODUCTION. It only exists for the SDK team to organize the changes to the official swagger that we want to see the service team make"
   },
   "host": "fully-qualified-iothubname.azure-devices.net",
   "schemes": [
@@ -264,7 +265,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Device"
+                "$ref": "#/definitions/DeviceIdentity"
               }
             }
           }
@@ -288,7 +289,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/ExportImportDevice"
+                "$ref": "#/definitions/RegistryOperation"
               }
             }
           },
@@ -396,7 +397,7 @@
           "200": {
             "description": "Returns the Device object",
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/DeviceIdentity"
             }
           }
         }
@@ -424,7 +425,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/DeviceIdentity"
             }
           },
           {
@@ -441,7 +442,7 @@
           "200": {
             "description": "Returns the Device object",
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/DeviceIdentity"
             }
           }
         }
@@ -1379,7 +1380,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Module"
+                "$ref": "#/definitions/ModuleIdentity"
               }
             }
           }
@@ -1418,7 +1419,7 @@
           "200": {
             "description": "Returns the DeviceModule object",
             "schema": {
-              "$ref": "#/definitions/Module"
+              "$ref": "#/definitions/ModuleIdentity"
             }
           }
         }
@@ -1453,7 +1454,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Module"
+              "$ref": "#/definitions/ModuleIdentity"
             }
           },
           {
@@ -1470,13 +1471,13 @@
           "200": {
             "description": "Returns the updated DeviceModule object",
             "schema": {
-              "$ref": "#/definitions/Module"
+              "$ref": "#/definitions/ModuleIdentity"
             }
           },
           "201": {
             "description": "Returns the created DeviceModule object",
             "schema": {
-              "$ref": "#/definitions/Module"
+              "$ref": "#/definitions/ModuleIdentity"
             }
           }
         }
@@ -1926,76 +1927,98 @@
         }
       }
     },
-    "Device": {
+    "DeviceIdentity": {
       "type": "object",
       "properties": {
         "deviceId": {
-          "type": "string"
+          "type": "string",
+		  "description": "The unique identifier of this device"
         },
         "generationId": {
-          "type": "string"
+          "type": "string",
+		  "description": "An IoT hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created."
         },
         "etag": {
-          "type": "string"
+          "type": "string",
+		  "description": "A string representing a weak ETag for the device identity, as per RFC7232"
         },
         "connectionState": {
           "enum": [
             "Disconnected",
             "Connected"
           ],
-          "type": "string"
+          "type": "string",
+		  "description": "Tells whether the device is connected or not",
+		  "readOnly": true
         },
         "status": {
           "enum": [
             "enabled",
             "disabled"
           ],
-          "type": "string"
+          "type": "string",
+		  "description": "An access indicator. Can be Enabled or Disabled. If Enabled, the device is allowed to connect. If Disabled, this device cannot access any device-facing endpoint."
         },
         "statusReason": {
-          "type": "string"
+          "type": "string",
+		  "description": "A 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed"
         },
         "connectionStateUpdatedTime": {
           "format": "date-time",
-          "type": "string"
+          "type": "string",
+		  "description": "A temporal indicator, showing the date and last time the connection state was updated",
+		  "readOnly": true
         },
         "statusUpdatedTime": {
           "format": "date-time",
-          "type": "string"
+          "type": "string",
+		  "description": "The last timestamp of when the status field was updated",
+		  "readOnly": true
         },
         "lastActivityTime": {
           "format": "date-time",
-          "type": "string"
+          "type": "string",
+		  "description": "A temporal indicator, showing the date and last time the device connected, received, or sent a message",
+		  "readOnly": true
         },
         "cloudToDeviceMessageCount": {
           "format": "int32",
-          "type": "integer"
+          "type": "integer",
+		  "description": "The number of cloud to device messages currently queued to be sent to the device",
+		  "readOnly": true
         },
         "authentication": {
-          "$ref": "#/definitions/AuthenticationMechanism"
+          "$ref": "#/definitions/AuthenticationMechanism",
+		  "description": "The details on what authentication mechanisms are used by this device"
         },
         "capabilities": {
-          "$ref": "#/definitions/DeviceCapabilities"
+          "$ref": "#/definitions/DeviceCapabilities",
+		  "description": "The set of capabilities that this device has"
         },
         "deviceScope": {
-          "type": "string"
+          "type": "string",
+		  "description": "The scope that this device belongs to"
         },
         "parentScopes": {
           "type": "array",
+		  "description": "TODO, ask service folks to explain this",
           "items": {
             "type": "string"
           }
         }
-      }
+      },
+	  "required" : ["deviceId"]
     },
     "AuthenticationMechanism": {
       "type": "object",
       "properties": {
         "symmetricKey": {
-          "$ref": "#/definitions/SymmetricKey"
+          "$ref": "#/definitions/SymmetricKey",
+		  "description": "The primary and secondary keys used for SAS based authentication"
         },
         "x509Thumbprint": {
-          "$ref": "#/definitions/X509Thumbprint"
+          "$ref": "#/definitions/X509Thumbprint",
+		  "description": "The primary and secondary x509 thumbprints used for x509 based authentication"
         },
         "type": {
           "enum": [
@@ -2004,7 +2027,8 @@
             "certificateAuthority",
             "none"
           ],
-          "type": "string"
+          "type": "string",
+		  "description": "The type of authentication used when connecting to the service"
         }
       }
     },
@@ -2013,7 +2037,8 @@
       "type": "object",
       "properties": {
         "iotEdge": {
-          "type": "boolean"
+          "type": "boolean",
+		  "description": "Whether or not this device is an edge device or not. If null, this device is not an edge device"
         }
       }
     },
@@ -2021,10 +2046,12 @@
       "type": "object",
       "properties": {
         "primaryKey": {
-          "type": "string"
+          "type": "string",
+		  "description" : "The base 64 encoded primary key of your device"
         },
         "secondaryKey": {
-          "type": "string"
+          "type": "string",
+		  "description" : "The base 64 encoded secondary key of your device"
         }
       }
     },
@@ -2032,29 +2059,31 @@
       "type": "object",
       "properties": {
         "primaryThumbprint": {
-          "type": "string"
+          "type": "string",
+		  "description" : "The base 64 encoded primary thumbprint of your x509 certificate"
         },
         "secondaryThumbprint": {
-          "type": "string"
+          "type": "string",
+		  "description" : "The base 64 encoded secondary thumbprint of your x509 certificate"
         }
       }
     },
-    "ExportImportDevice": {
+    "RegistryOperation": {
       "type": "object",
       "properties": {
         "id": {
-          "description": "Device Id is always required",
+          "description": "Id of the device to perform this operation on",
           "type": "string"
         },
         "moduleId": {
-          "description": "ModuleId is applicable to modules only",
+          "description": "Id of the module to perform this operation on, if it is a module operation",
           "type": "string"
         },
         "eTag": {
-          "description": "ETag parameter is only used for pre-conditioning the update when importMode is updateIfMatchETag",
+          "description": "ETag parameter is only used for pre-conditioning the update when registryOperationType is updateIfMatchETag",
           "type": "string"
         },
-        "importMode": {
+        "registryOperationType": {
           "enum": [
             "create",
             "update",
@@ -2064,10 +2093,11 @@
             "updateTwin",
             "updateTwinIfMatchETag"
           ],
-          "type": "string"
+          "type": "string",
+		  "description": "The type of registry operation and if ETag should be ignored or not"
         },
         "status": {
-          "description": "Status is optional and defaults to enabled",
+          "description": "An access indicator. Can be Enabled or Disabled. If Enabled, the device is allowed to connect. If Disabled, this device cannot access any device-facing endpoint.",
           "enum": [
             "enabled",
             "disabled"
@@ -2075,17 +2105,19 @@
           "type": "string"
         },
         "statusReason": {
-          "type": "string"
+          "type": "string",
+		  "description": "A 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed."
         },
         "authentication": {
           "$ref": "#/definitions/AuthenticationMechanism",
           "description": "Authentication parameter is optional and defaults to SAS if not provided. In that case, we auto-generate primary/secondary access keys"
         },
         "twinETag": {
-          "description": "twinETag parameter is only used for pre-conditioning the update when importMode is updateTwinIfMatchETag",
+          "description": "twinETag parameter is only used for pre-conditioning the update when registryOperationType is updateTwinIfMatchETag",
           "type": "string"
         },
         "tags": {
+		  "description": "A JSON document read and written by the solution back end. Tags are not visible to device apps.",
           "type": "object",
           "additionalProperties": {
             "type": "object"
@@ -2100,15 +2132,18 @@
           "description": "Capabilities param is optional and defaults to no capability"
         },
         "deviceScope": {
-          "type": "string"
+          "type": "string",
+		  "description": "The scope that this identity belongs to"
         },
         "parentScopes": {
           "type": "array",
+		  "description": "TODO, ask service folks to explain this",
           "items": {
             "type": "string"
           }
         }
-      }
+      },
+	  "required" : ["id"]
     },
     "PropertyContainer": {
       "description": "Represents Twin properties",
@@ -2136,34 +2171,39 @@
       "properties": {
         "isSuccessful": {
           "description": "Whether or not the operation was successful.",
-          "type": "boolean"
+          "type": "boolean",
+		  "readOnly": true
         },
         "errors": {
-          "description": "If the operation was not successful, this contains an array of DeviceRegistryOperationError objects.",
+          "description": "If the operation was not successful, this contains an array of RegistryOperationError objects.",
           "type": "array",
+		  "readOnly": true,
           "items": {
-            "$ref": "#/definitions/DeviceRegistryOperationError"
+            "$ref": "#/definitions/RegistryOperationError"
           }
         },
         "warnings": {
-          "description": "If the operation was partially successful, this contains an array of DeviceRegistryOperationWarning objects.",
+          "description": "If the operation was partially successful, this contains an array of RegistryOperationWarning objects.",
           "type": "array",
+		  "readOnly": true,
           "items": {
-            "$ref": "#/definitions/DeviceRegistryOperationWarning"
+            "$ref": "#/definitions/RegistryOperationWarning"
           }
         }
       }
     },
-    "DeviceRegistryOperationError": {
+    "RegistryOperationError": {
       "description": "Encapsulates device registry operation error details.",
       "type": "object",
       "properties": {
         "deviceId": {
           "description": "The ID of the device that indicated the error.",
-          "type": "string"
+          "type": "string",
+		  "readOnly": true
         },
         "errorCode": {
           "description": "ErrorCode associated with the error.",
+		  "readOnly": true,
           "enum": [
             "InvalidErrorCode",
             "GenericBadRequest",
@@ -2385,33 +2425,41 @@
         },
         "errorStatus": {
           "description": "Additional details associated with the error.",
+		  "readOnly": true,
           "type": "string"
         },
         "moduleId": {
+          "description": "The ID of the module associated with the error, if the operation involved a module",
           "type": "string"
         },
         "operation": {
+          "description": "The type of the operation that failed",
+		  "readOnly": true,
           "type": "string"
         }
       }
     },
-    "DeviceRegistryOperationWarning": {
+    "RegistryOperationWarning": {
       "description": "Encapsulates device registry operation error details.",
       "type": "object",
       "properties": {
         "deviceId": {
           "description": "The ID of the device that indicated the warning.",
+		  "readOnly": true,
           "type": "string"
         },
         "warningCode": {
           "enum": [
             "DeviceRegisteredWithoutTwin"
           ],
-          "type": "string"
+          "description": "The code associated with the warning.",
+          "type": "string",
+		  "readOnly": true
         },
         "warningStatus": {
           "description": "Additional details associated with the warning.",
-          "type": "string"
+          "type": "string",
+		  "readOnly": true
         }
       }
     },
@@ -2518,6 +2566,7 @@
         },
         "parentScopes": {
           "type": "array",
+		  "description": "TODO, ask service folks to explain this",
           "items": {
             "type": "string"
           }
@@ -2989,46 +3038,60 @@
         }
       }
     },
-    "Module": {
+    "ModuleIdentity": {
       "description": "Module identity on a device",
       "type": "object",
       "properties": {
         "moduleId": {
-          "type": "string"
+          "type": "string",
+		  "description": "The unique identifier of this module"
         },
         "managedBy": {
+		  "description": "Identifies who manages this module. For instance, this value is \"IotEdge\" if the edge runtime owns this module",
           "type": "string"
         },
         "deviceId": {
-          "type": "string"
+          "type": "string",
+		  "description": "The unique identifier of the device that has this module"
         },
         "generationId": {
-          "type": "string"
+          "type": "string",
+		  "description": "An IoT hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish modules with the same moduleId, when they have been deleted and re-created"
         },
         "etag": {
-          "type": "string"
+          "type": "string",
+		  "description": "A string representing a weak ETag for the module identity, as per RFC7232"
         },
         "connectionState": {
           "enum": [
             "Disconnected",
             "Connected"
           ],
-          "type": "string"
+          "type": "string",
+		  "description": "Tells whether the module is connected or not",
+		  "readOnly": true
         },
         "connectionStateUpdatedTime": {
           "format": "date-time",
-          "type": "string"
+          "type": "string",
+		  "description": "A temporal indicator, showing the date and last time the connection state was updated",
+		  "readOnly": true
         },
         "lastActivityTime": {
           "format": "date-time",
-          "type": "string"
+          "type": "string",
+		  "description": "A temporal indicator, showing the date and last time the device connected, received, or sent a message",
+		  "readOnly": true
         },
         "cloudToDeviceMessageCount": {
           "format": "int32",
-          "type": "integer"
+          "type": "integer",
+		  "description": "The number of cloud to module messages currently queued to be sent to the module",
+		  "readOnly": true
         },
         "authentication": {
-          "$ref": "#/definitions/AuthenticationMechanism"
+          "$ref": "#/definitions/AuthenticationMechanism",
+		  "description": "The details on what authentication mechanisms are used by this module"
         }
       }
     },

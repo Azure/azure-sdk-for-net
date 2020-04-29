@@ -236,7 +236,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> This parameter when specified, defines the maximum number of device identities that are returned. Any value outside the range of 1-1000 is considered to be 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<Device>>> GetDevicesAsync(int? top = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<IReadOnlyList<DeviceIdentity>>> GetDevicesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetDevices");
             scope.Start();
@@ -248,7 +248,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            IReadOnlyList<Device> value = default;
+                            IReadOnlyList<DeviceIdentity> value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -256,7 +256,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                List<Device> array = new List<Device>();
+                                List<DeviceIdentity> array = new List<DeviceIdentity>();
                                 foreach (var item in document.RootElement.EnumerateArray())
                                 {
                                     if (item.ValueKind == JsonValueKind.Null)
@@ -265,7 +265,7 @@ namespace Azure.Iot.Hub.Service
                                     }
                                     else
                                     {
-                                        array.Add(Device.DeserializeDevice(item));
+                                        array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
                                     }
                                 }
                                 value = array;
@@ -286,7 +286,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="top"> This parameter when specified, defines the maximum number of device identities that are returned. Any value outside the range of 1-1000 is considered to be 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<Device>> GetDevices(int? top = null, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<DeviceIdentity>> GetDevices(int? top = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RegistryManagerClient.GetDevices");
             scope.Start();
@@ -298,7 +298,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            IReadOnlyList<Device> value = default;
+                            IReadOnlyList<DeviceIdentity> value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -306,7 +306,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                List<Device> array = new List<Device>();
+                                List<DeviceIdentity> array = new List<DeviceIdentity>();
                                 foreach (var item in document.RootElement.EnumerateArray())
                                 {
                                     if (item.ValueKind == JsonValueKind.Null)
@@ -315,7 +315,7 @@ namespace Azure.Iot.Hub.Service
                                     }
                                     else
                                     {
-                                        array.Add(Device.DeserializeDevice(item));
+                                        array.Add(DeviceIdentity.DeserializeDeviceIdentity(item));
                                     }
                                 }
                                 value = array;
@@ -333,7 +333,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateBulkDeviceCrudRequest(IEnumerable<ExportImportDevice> devices)
+        internal HttpMessage CreateBulkDeviceCrudRequest(IEnumerable<RegistryOperation> devices)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -356,9 +356,9 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary> Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="devices"> The ArrayOfExportImportDevice to use. </param>
+        /// <param name="devices"> The ArrayOfRegistryOperation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<BulkRegistryOperationResult>> BulkDeviceCrudAsync(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<BulkRegistryOperationResult>> BulkDeviceCrudAsync(IEnumerable<RegistryOperation> devices, CancellationToken cancellationToken = default)
         {
             if (devices == null)
             {
@@ -400,9 +400,9 @@ namespace Azure.Iot.Hub.Service
         }
 
         /// <summary> Create, update, or delete the identiies of multiple devices from the IoT hub identity registry. A device identity can be specified only once in the list. Different operations (create, update, delete) on different devices are allowed. A maximum of 100 devices can be specified per invocation. For large scale operations, consider using the import feature using blob storage(https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-identity-registry#import-and-export-device-identities). For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
-        /// <param name="devices"> The ArrayOfExportImportDevice to use. </param>
+        /// <param name="devices"> The ArrayOfRegistryOperation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<BulkRegistryOperationResult> BulkDeviceCrud(IEnumerable<ExportImportDevice> devices, CancellationToken cancellationToken = default)
+        public Response<BulkRegistryOperationResult> BulkDeviceCrud(IEnumerable<RegistryOperation> devices, CancellationToken cancellationToken = default)
         {
             if (devices == null)
             {
@@ -601,7 +601,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Retrieve a device from the identity registry of an IoT hub. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Device>> GetDeviceAsync(string id, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<DeviceIdentity>> GetDeviceAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -618,7 +618,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            Device value = default;
+                            DeviceIdentity value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -626,7 +626,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                value = Device.DeserializeDevice(document.RootElement);
+                                value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -644,7 +644,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary> Retrieve a device from the identity registry of an IoT hub. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Device> GetDevice(string id, CancellationToken cancellationToken = default)
+        public Response<DeviceIdentity> GetDevice(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -661,7 +661,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            Device value = default;
+                            DeviceIdentity value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -669,7 +669,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                value = Device.DeserializeDevice(document.RootElement);
+                                value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -684,7 +684,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateDeviceRequest(string id, Device device, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateDeviceRequest(string id, DeviceIdentity device, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -708,10 +708,10 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> Create or update the identity of a device in the identity registry of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that generationId and deviceId cannot be updated by the user. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
-        /// <param name="device"> The Device to use. </param>
+        /// <param name="device"> The DeviceIdentity to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Device>> CreateOrUpdateDeviceAsync(string id, Device device, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<DeviceIdentity>> CreateOrUpdateDeviceAsync(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -732,7 +732,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            Device value = default;
+                            DeviceIdentity value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -740,7 +740,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                value = Device.DeserializeDevice(document.RootElement);
+                                value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -757,10 +757,10 @@ namespace Azure.Iot.Hub.Service
 
         /// <summary> Create or update the identity of a device in the identity registry of an IoT hub. An ETag must not be specified for the create operation. An ETag must be specified for the update operation. Note that generationId and deviceId cannot be updated by the user. For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
-        /// <param name="device"> The Device to use. </param>
+        /// <param name="device"> The DeviceIdentity to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Device> CreateOrUpdateDevice(string id, Device device, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<DeviceIdentity> CreateOrUpdateDevice(string id, DeviceIdentity device, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -781,7 +781,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            Device value = default;
+                            DeviceIdentity value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -789,7 +789,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                value = Device.DeserializeDevice(document.RootElement);
+                                value = DeviceIdentity.DeserializeDeviceIdentity(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -1005,7 +1005,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IReadOnlyList<Module>>> GetModulesOnDeviceAsync(string id, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<IReadOnlyList<ModuleIdentity>>> GetModulesOnDeviceAsync(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -1022,7 +1022,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            IReadOnlyList<Module> value = default;
+                            IReadOnlyList<ModuleIdentity> value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -1030,7 +1030,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                List<Module> array = new List<Module>();
+                                List<ModuleIdentity> array = new List<ModuleIdentity>();
                                 foreach (var item in document.RootElement.EnumerateArray())
                                 {
                                     if (item.ValueKind == JsonValueKind.Null)
@@ -1039,7 +1039,7 @@ namespace Azure.Iot.Hub.Service
                                     }
                                     else
                                     {
-                                        array.Add(Module.DeserializeModule(item));
+                                        array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
                                     }
                                 }
                                 value = array;
@@ -1060,7 +1060,7 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<Module>> GetModulesOnDevice(string id, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<ModuleIdentity>> GetModulesOnDevice(string id, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -1077,7 +1077,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            IReadOnlyList<Module> value = default;
+                            IReadOnlyList<ModuleIdentity> value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -1085,7 +1085,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                List<Module> array = new List<Module>();
+                                List<ModuleIdentity> array = new List<ModuleIdentity>();
                                 foreach (var item in document.RootElement.EnumerateArray())
                                 {
                                     if (item.ValueKind == JsonValueKind.Null)
@@ -1094,7 +1094,7 @@ namespace Azure.Iot.Hub.Service
                                     }
                                     else
                                     {
-                                        array.Add(Module.DeserializeModule(item));
+                                        array.Add(ModuleIdentity.DeserializeModuleIdentity(item));
                                     }
                                 }
                                 value = array;
@@ -1132,7 +1132,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> Device ID. </param>
         /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Module>> GetModuleAsync(string id, string mid, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<ModuleIdentity>> GetModuleAsync(string id, string mid, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -1153,7 +1153,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            Module value = default;
+                            ModuleIdentity value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -1161,7 +1161,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                value = Module.DeserializeModule(document.RootElement);
+                                value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -1180,7 +1180,7 @@ namespace Azure.Iot.Hub.Service
         /// <param name="id"> Device ID. </param>
         /// <param name="mid"> Module ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Module> GetModule(string id, string mid, CancellationToken cancellationToken = default)
+        public Response<ModuleIdentity> GetModule(string id, string mid, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -1201,7 +1201,7 @@ namespace Azure.Iot.Hub.Service
                 {
                     case 200:
                         {
-                            Module value = default;
+                            ModuleIdentity value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -1209,7 +1209,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                value = Module.DeserializeModule(document.RootElement);
+                                value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -1224,7 +1224,7 @@ namespace Azure.Iot.Hub.Service
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateModuleRequest(string id, string mid, Module module, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateModuleRequest(string id, string mid, ModuleIdentity module, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1251,10 +1251,10 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="mid"> Module ID. </param>
-        /// <param name="module"> The Module to use. </param>
+        /// <param name="module"> The ModuleIdentity to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<Module>> CreateOrUpdateModuleAsync(string id, string mid, Module module, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<ModuleIdentity>> CreateOrUpdateModuleAsync(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -1280,7 +1280,7 @@ namespace Azure.Iot.Hub.Service
                     case 200:
                     case 201:
                         {
-                            Module value = default;
+                            ModuleIdentity value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -1288,7 +1288,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                value = Module.DeserializeModule(document.RootElement);
+                                value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -1306,10 +1306,10 @@ namespace Azure.Iot.Hub.Service
         /// <summary>  For IoT Hub VNET related features(https://docs.microsoft.com/en-us/azure/iot-hub/virtual-network-support) please use API version &apos;2020-03-13&apos;.These features are currently in general availability in the East US, West US 2, and Southcentral US regions only. We are actively working to expand the availability of these features to all regions by end of month May. For rest of the APIs please continue using API version &apos;2019-10-01&apos;. </summary>
         /// <param name="id"> Device ID. </param>
         /// <param name="mid"> Module ID. </param>
-        /// <param name="module"> The Module to use. </param>
+        /// <param name="module"> The ModuleIdentity to use. </param>
         /// <param name="ifMatch"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<Module> CreateOrUpdateModule(string id, string mid, Module module, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ModuleIdentity> CreateOrUpdateModule(string id, string mid, ModuleIdentity module, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
@@ -1335,7 +1335,7 @@ namespace Azure.Iot.Hub.Service
                     case 200:
                     case 201:
                         {
-                            Module value = default;
+                            ModuleIdentity value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -1343,7 +1343,7 @@ namespace Azure.Iot.Hub.Service
                             }
                             else
                             {
-                                value = Module.DeserializeModule(document.RootElement);
+                                value = ModuleIdentity.DeserializeModuleIdentity(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class DeviceRegistryOperationWarning
+    public partial class RegistryOperationWarning
     {
-        internal static DeviceRegistryOperationWarning DeserializeDeviceRegistryOperationWarning(JsonElement element)
+        internal static RegistryOperationWarning DeserializeRegistryOperationWarning(JsonElement element)
         {
             string deviceId = default;
             string warningCode = default;
@@ -47,7 +47,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceRegistryOperationWarning(deviceId, warningCode, warningStatus);
+            return new RegistryOperationWarning(deviceId, warningCode, warningStatus);
         }
     }
 }

@@ -8,20 +8,20 @@
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> Encapsulates device registry operation error details. </summary>
-    public partial class DeviceRegistryOperationError
+    public partial class RegistryOperationError
     {
-        /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
-        internal DeviceRegistryOperationError()
+        /// <summary> Initializes a new instance of RegistryOperationError. </summary>
+        internal RegistryOperationError()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceRegistryOperationError. </summary>
+        /// <summary> Initializes a new instance of RegistryOperationError. </summary>
         /// <param name="deviceId"> The ID of the device that indicated the error. </param>
         /// <param name="errorCode"> ErrorCode associated with the error. </param>
         /// <param name="errorStatus"> Additional details associated with the error. </param>
-        /// <param name="moduleId"> . </param>
-        /// <param name="operation"> . </param>
-        internal DeviceRegistryOperationError(string deviceId, DeviceRegistryOperationErrorCode? errorCode, string errorStatus, string moduleId, string operation)
+        /// <param name="moduleId"> The ID of the module associated with the error, if the operation involved a module. </param>
+        /// <param name="operation"> The type of the operation that failed. </param>
+        internal RegistryOperationError(string deviceId, RegistryOperationErrorCode? errorCode, string errorStatus, string moduleId, string operation)
         {
             DeviceId = deviceId;
             ErrorCode = errorCode;
@@ -33,10 +33,12 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> The ID of the device that indicated the error. </summary>
         public string DeviceId { get; }
         /// <summary> ErrorCode associated with the error. </summary>
-        public DeviceRegistryOperationErrorCode? ErrorCode { get; }
+        public RegistryOperationErrorCode? ErrorCode { get; }
         /// <summary> Additional details associated with the error. </summary>
         public string ErrorStatus { get; }
+        /// <summary> The ID of the module associated with the error, if the operation involved a module. </summary>
         public string ModuleId { get; }
+        /// <summary> The type of the operation that failed. </summary>
         public string Operation { get; }
     }
 }

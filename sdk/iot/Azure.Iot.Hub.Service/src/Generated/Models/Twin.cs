@@ -36,7 +36,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <param name="x509Thumbprint"> Corresponding Device&apos;s X509 thumbprint. </param>
         /// <param name="capabilities"> Status of Capabilities enabled on the device. </param>
         /// <param name="deviceScope"> . </param>
-        /// <param name="parentScopes"> . </param>
+        /// <param name="parentScopes"> TODO, ask service folks to explain this. </param>
         internal Twin(string deviceId, string moduleId, IDictionary<string, object> tags, TwinProperties properties, string etag, long? version, string deviceEtag, TwinStatus? status, string statusReason, DateTimeOffset? statusUpdateTime, TwinConnectionState? connectionState, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, TwinAuthenticationType? authenticationType, X509Thumbprint x509Thumbprint, DeviceCapabilities capabilities, string deviceScope, IList<string> parentScopes)
         {
             DeviceId = deviceId;
@@ -92,6 +92,7 @@ namespace Azure.Iot.Hub.Service.Models
         /// <summary> Status of Capabilities enabled on the device. </summary>
         public DeviceCapabilities Capabilities { get; set; }
         public string DeviceScope { get; set; }
+        /// <summary> TODO, ask service folks to explain this. </summary>
         public IList<string> ParentScopes { get; set; }
     }
 }

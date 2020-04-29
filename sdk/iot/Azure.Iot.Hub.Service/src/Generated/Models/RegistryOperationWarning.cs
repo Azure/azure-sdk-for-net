@@ -8,18 +8,18 @@
 namespace Azure.Iot.Hub.Service.Models
 {
     /// <summary> Encapsulates device registry operation error details. </summary>
-    public partial class DeviceRegistryOperationWarning
+    public partial class RegistryOperationWarning
     {
-        /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
-        internal DeviceRegistryOperationWarning()
+        /// <summary> Initializes a new instance of RegistryOperationWarning. </summary>
+        internal RegistryOperationWarning()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
+        /// <summary> Initializes a new instance of RegistryOperationWarning. </summary>
         /// <param name="deviceId"> The ID of the device that indicated the warning. </param>
-        /// <param name="warningCode"> . </param>
+        /// <param name="warningCode"> The code associated with the warning. </param>
         /// <param name="warningStatus"> Additional details associated with the warning. </param>
-        internal DeviceRegistryOperationWarning(string deviceId, string warningCode, string warningStatus)
+        internal RegistryOperationWarning(string deviceId, string warningCode, string warningStatus)
         {
             DeviceId = deviceId;
             WarningCode = warningCode;
@@ -28,6 +28,7 @@ namespace Azure.Iot.Hub.Service.Models
 
         /// <summary> The ID of the device that indicated the warning. </summary>
         public string DeviceId { get; }
+        /// <summary> The code associated with the warning. </summary>
         public string WarningCode { get; }
         /// <summary> Additional details associated with the warning. </summary>
         public string WarningStatus { get; }

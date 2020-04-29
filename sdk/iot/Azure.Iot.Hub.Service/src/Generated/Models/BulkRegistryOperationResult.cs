@@ -19,9 +19,9 @@ namespace Azure.Iot.Hub.Service.Models
 
         /// <summary> Initializes a new instance of BulkRegistryOperationResult. </summary>
         /// <param name="isSuccessful"> Whether or not the operation was successful. </param>
-        /// <param name="errors"> If the operation was not successful, this contains an array of DeviceRegistryOperationError objects. </param>
-        /// <param name="warnings"> If the operation was partially successful, this contains an array of DeviceRegistryOperationWarning objects. </param>
-        internal BulkRegistryOperationResult(bool? isSuccessful, IReadOnlyList<DeviceRegistryOperationError> errors, IReadOnlyList<DeviceRegistryOperationWarning> warnings)
+        /// <param name="errors"> If the operation was not successful, this contains an array of RegistryOperationError objects. </param>
+        /// <param name="warnings"> If the operation was partially successful, this contains an array of RegistryOperationWarning objects. </param>
+        internal BulkRegistryOperationResult(bool? isSuccessful, IReadOnlyList<RegistryOperationError> errors, IReadOnlyList<RegistryOperationWarning> warnings)
         {
             IsSuccessful = isSuccessful;
             Errors = errors;
@@ -30,9 +30,9 @@ namespace Azure.Iot.Hub.Service.Models
 
         /// <summary> Whether or not the operation was successful. </summary>
         public bool? IsSuccessful { get; }
-        /// <summary> If the operation was not successful, this contains an array of DeviceRegistryOperationError objects. </summary>
-        public IReadOnlyList<DeviceRegistryOperationError> Errors { get; }
-        /// <summary> If the operation was partially successful, this contains an array of DeviceRegistryOperationWarning objects. </summary>
-        public IReadOnlyList<DeviceRegistryOperationWarning> Warnings { get; }
+        /// <summary> If the operation was not successful, this contains an array of RegistryOperationError objects. </summary>
+        public IReadOnlyList<RegistryOperationError> Errors { get; }
+        /// <summary> If the operation was partially successful, this contains an array of RegistryOperationWarning objects. </summary>
+        public IReadOnlyList<RegistryOperationWarning> Warnings { get; }
     }
 }

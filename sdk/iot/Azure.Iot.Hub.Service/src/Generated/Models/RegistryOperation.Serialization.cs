@@ -10,16 +10,13 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class ExportImportDevice : IUtf8JsonSerializable
+    public partial class RegistryOperation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("id");
+            writer.WriteStringValue(Id);
             if (ModuleId != null)
             {
                 writer.WritePropertyName("moduleId");
@@ -30,10 +27,10 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("eTag");
                 writer.WriteStringValue(ETag);
             }
-            if (ImportMode != null)
+            if (RegistryOperationType != null)
             {
-                writer.WritePropertyName("importMode");
-                writer.WriteStringValue(ImportMode.Value.ToString());
+                writer.WritePropertyName("registryOperationType");
+                writer.WriteStringValue(RegistryOperationType.Value.ToString());
             }
             if (Status != null)
             {

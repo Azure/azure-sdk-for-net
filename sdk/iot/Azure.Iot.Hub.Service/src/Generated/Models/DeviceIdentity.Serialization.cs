@@ -6,31 +6,19 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class Module : IUtf8JsonSerializable
+    public partial class DeviceIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ModuleId != null)
-            {
-                writer.WritePropertyName("moduleId");
-                writer.WriteStringValue(ModuleId);
-            }
-            if (ManagedBy != null)
-            {
-                writer.WritePropertyName("managedBy");
-                writer.WriteStringValue(ManagedBy);
-            }
-            if (DeviceId != null)
-            {
-                writer.WritePropertyName("deviceId");
-                writer.WriteStringValue(DeviceId);
-            }
+            writer.WritePropertyName("deviceId");
+            writer.WriteStringValue(DeviceId);
             if (GenerationId != null)
             {
                 writer.WritePropertyName("generationId");
@@ -46,10 +34,25 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("connectionState");
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
+            if (Status != null)
+            {
+                writer.WritePropertyName("status");
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (StatusReason != null)
+            {
+                writer.WritePropertyName("statusReason");
+                writer.WriteStringValue(StatusReason);
+            }
             if (ConnectionStateUpdatedTime != null)
             {
                 writer.WritePropertyName("connectionStateUpdatedTime");
                 writer.WriteStringValue(ConnectionStateUpdatedTime.Value, "S");
+            }
+            if (StatusUpdatedTime != null)
+            {
+                writer.WritePropertyName("statusUpdatedTime");
+                writer.WriteStringValue(StatusUpdatedTime.Value, "S");
             }
             if (LastActivityTime != null)
             {
@@ -66,47 +69,49 @@ namespace Azure.Iot.Hub.Service.Models
                 writer.WritePropertyName("authentication");
                 writer.WriteObjectValue(Authentication);
             }
+            if (Capabilities != null)
+            {
+                writer.WritePropertyName("capabilities");
+                writer.WriteObjectValue(Capabilities);
+            }
+            if (DeviceScope != null)
+            {
+                writer.WritePropertyName("deviceScope");
+                writer.WriteStringValue(DeviceScope);
+            }
+            if (ParentScopes != null)
+            {
+                writer.WritePropertyName("parentScopes");
+                writer.WriteStartArray();
+                foreach (var item in ParentScopes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
-        internal static Module DeserializeModule(JsonElement element)
+        internal static DeviceIdentity DeserializeDeviceIdentity(JsonElement element)
         {
-            string moduleId = default;
-            string managedBy = default;
             string deviceId = default;
             string generationId = default;
             string etag = default;
-            ModuleConnectionState? connectionState = default;
+            DeviceIdentityConnectionState? connectionState = default;
+            DeviceIdentityStatus? status = default;
+            string statusReason = default;
             DateTimeOffset? connectionStateUpdatedTime = default;
+            DateTimeOffset? statusUpdatedTime = default;
             DateTimeOffset? lastActivityTime = default;
             int? cloudToDeviceMessageCount = default;
             AuthenticationMechanism authentication = default;
+            DeviceCapabilities capabilities = default;
+            string deviceScope = default;
+            IList<string> parentScopes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("moduleId"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    moduleId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("managedBy"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    managedBy = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("deviceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     deviceId = property.Value.GetString();
                     continue;
                 }
@@ -134,7 +139,25 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    connectionState = new ModuleConnectionState(property.Value.GetString());
+                    connectionState = new DeviceIdentityConnectionState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new DeviceIdentityStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("statusReason"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statusReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectionStateUpdatedTime"))
@@ -144,6 +167,15 @@ namespace Azure.Iot.Hub.Service.Models
                         continue;
                     }
                     connectionStateUpdatedTime = property.Value.GetDateTimeOffset("S");
+                    continue;
+                }
+                if (property.NameEquals("statusUpdatedTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statusUpdatedTime = property.Value.GetDateTimeOffset("S");
                     continue;
                 }
                 if (property.NameEquals("lastActivityTime"))
@@ -173,8 +205,47 @@ namespace Azure.Iot.Hub.Service.Models
                     authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);
                     continue;
                 }
+                if (property.NameEquals("capabilities"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capabilities = DeviceCapabilities.DeserializeDeviceCapabilities(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deviceScope"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceScope = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("parentScopes"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    parentScopes = array;
+                    continue;
+                }
             }
-            return new Module(moduleId, managedBy, deviceId, generationId, etag, connectionState, connectionStateUpdatedTime, lastActivityTime, cloudToDeviceMessageCount, authentication);
+            return new DeviceIdentity(deviceId, generationId, etag, connectionState, status, statusReason, connectionStateUpdatedTime, statusUpdatedTime, lastActivityTime, cloudToDeviceMessageCount, authentication, capabilities, deviceScope, parentScopes);
         }
     }
 }

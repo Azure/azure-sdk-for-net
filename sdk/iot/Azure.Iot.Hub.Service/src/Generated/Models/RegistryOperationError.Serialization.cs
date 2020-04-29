@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service.Models
 {
-    public partial class DeviceRegistryOperationError
+    public partial class RegistryOperationError
     {
-        internal static DeviceRegistryOperationError DeserializeDeviceRegistryOperationError(JsonElement element)
+        internal static RegistryOperationError DeserializeRegistryOperationError(JsonElement element)
         {
             string deviceId = default;
-            DeviceRegistryOperationErrorCode? errorCode = default;
+            RegistryOperationErrorCode? errorCode = default;
             string errorStatus = default;
             string moduleId = default;
             string operation = default;
@@ -36,7 +36,7 @@ namespace Azure.Iot.Hub.Service.Models
                     {
                         continue;
                     }
-                    errorCode = new DeviceRegistryOperationErrorCode(property.Value.GetString());
+                    errorCode = new RegistryOperationErrorCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorStatus"))
@@ -67,7 +67,7 @@ namespace Azure.Iot.Hub.Service.Models
                     continue;
                 }
             }
-            return new DeviceRegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation);
+            return new RegistryOperationError(deviceId, errorCode, errorStatus, moduleId, operation);
         }
     }
 }

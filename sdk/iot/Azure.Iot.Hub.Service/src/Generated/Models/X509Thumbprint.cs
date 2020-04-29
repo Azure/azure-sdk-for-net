@@ -16,15 +16,17 @@ namespace Azure.Iot.Hub.Service.Models
         }
 
         /// <summary> Initializes a new instance of X509Thumbprint. </summary>
-        /// <param name="primaryThumbprint"> . </param>
-        /// <param name="secondaryThumbprint"> . </param>
+        /// <param name="primaryThumbprint"> The base 64 encoded primary thumbprint of your x509 certificate. </param>
+        /// <param name="secondaryThumbprint"> The base 64 encoded secondary thumbprint of your x509 certificate. </param>
         internal X509Thumbprint(string primaryThumbprint, string secondaryThumbprint)
         {
             PrimaryThumbprint = primaryThumbprint;
             SecondaryThumbprint = secondaryThumbprint;
         }
 
+        /// <summary> The base 64 encoded primary thumbprint of your x509 certificate. </summary>
         public string PrimaryThumbprint { get; set; }
+        /// <summary> The base 64 encoded secondary thumbprint of your x509 certificate. </summary>
         public string SecondaryThumbprint { get; set; }
     }
 }
