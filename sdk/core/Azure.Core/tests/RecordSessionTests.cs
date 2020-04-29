@@ -239,6 +239,34 @@ namespace Azure.Core.Tests
             Assert.NotNull(matcher.FindMatch(requestEntry, new[] { entry }));
         }
 
+        [Test]
+        public void DisableRequestBodyRecordingMakesRequestBodyNull()
+        {
+            var tempFile = Path.GetTempFileName();
+            TestRecording recording = new TestRecording(RecordedTestMode.Record, tempFile, new TestSanitizer(), new RecordMatcher());
+            HttpPipelineTransport transport = recording.CreateTransport(Mock.Of<HttpPipelineTransport>());
+
+            var body = "A nice and long body.";
+
+            var request = new MockRequest();
+            request.Content = RequestContent.Create(Encoding.UTF8.GetBytes(body));
+            request.Headers.Add("Content-Type", "text/json");
+
+            HttpMessage message = new HttpMessage(request, null);
+            message.Response = new MockResponse(200);
+
+            using (recording.DisableRequestBodyRecording())
+            {
+                transport.Process(message);
+            }
+
+            recording.Dispose(true);
+            var text = File.ReadAllText(tempFile);
+
+            StringAssert.DoesNotContain(body, text);
+            StringAssert.Contains($"\"RequestBody\": null", text);
+        }
+
         private class TestSanitizer : RecordedTestSanitizer
         {
             public override string SanitizeVariable(string variableName, string environmentVariableValue)

@@ -62,6 +62,15 @@ namespace Azure.AI.FormRecognizer.Training
             ServiceClient = new ServiceClient(diagnostics, pipeline, endpoint.ToString());
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FormTrainingClient"/> class.
+        /// </summary>
+        /// <param name="serviceClient">Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</param>
+        internal FormTrainingClient(ServiceClient serviceClient)
+        {
+            ServiceClient = serviceClient;
+        }
+
         #region Training
 
         /// <summary>
