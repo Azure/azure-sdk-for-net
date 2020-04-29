@@ -194,7 +194,7 @@ namespace Azure.Search.Documents.Models
         public AnalyzeRequest(string text) { }
         public Azure.Search.Documents.Models.AnalyzerName? Analyzer { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> CharFilters { get { throw null; } set { } }
-        public string Text { get { throw null; } set { } }
+        public string Text { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Models.TokenFilterName> TokenFilters { get { throw null; } set { } }
         public Azure.Search.Documents.Models.TokenizerName? Tokenizer { get { throw null; } set { } }
     }
