@@ -510,33 +510,5 @@ namespace Azure.Storage.Blobs.Models
                 IsFatal = isFatal,
                 Position = position
             };
-
-        /// <summary>
-        /// Creates a new BlobQueryJsonTextConfiguration instance for mocking.
-        /// </summary>
-        public static BlobQueryJsonTextConfiguration BlobQueryJsonTextConfiguration(
-            string recordSeparator = default)
-            => new BlobQueryJsonTextConfiguration
-            {
-                RecordSeparator = recordSeparator
-            };
-
-        /// <summary>
-        /// Creates a new BlobQueryCsvTextConfiguration instance for mocking.
-        /// </summary>
-        public static BlobQueryCsvTextConfiguration BlobQueryCsvTextConfiguration(
-            string recordSeparator = default,
-            string columnSeparator = default,
-            char? fieldQuote = default,
-            char? escapeCharacter = default,
-            bool hasHeader = default)
-            => new BlobQueryCsvTextConfiguration
-            {
-                RecordSeparator = recordSeparator,
-                ColumnSeparator = columnSeparator,
-                FieldQuote = fieldQuote,
-                EscapeCharacter = escapeCharacter,
-                HasHeaders = hasHeader
-            };
     }
 }

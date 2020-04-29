@@ -319,7 +319,6 @@ namespace Azure.Storage.Blobs.Test
                 options);
             using StreamReader streamReader2 = new StreamReader(response.Value.Content);
             s = await streamReader2.ReadToEndAsync();
-
         }
 
         [Test]

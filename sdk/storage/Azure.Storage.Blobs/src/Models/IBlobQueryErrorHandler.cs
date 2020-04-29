@@ -11,7 +11,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Method to be called when a <see cref="BlobQueryError"/> occurs.
         /// </summary>
-        /// <param name="blobQueryError"><see cref="BlobQueryError"/> to handle.</param>
+        /// <param name="blobQueryError">
+        /// <see cref="BlobQueryError"/> to handle.
+        /// </param>
         public void ReportError(BlobQueryError blobQueryError);
     }
 }
