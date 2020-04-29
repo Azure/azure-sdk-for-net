@@ -319,24 +319,12 @@ foreach ($templateFile in $templateFiles) {
             Write-Host "File option is supported only on Windows"
         }
 
-        # Compute a hash of repository root to scope the test environment file
-        $repositoryRootHash = New-Object System.Text.StringBuilder
-        [System.Security.Cryptography.HashAlgorithm]::Create("SHA1").ComputeHash([System.Text.Encoding]::UTF8.GetBytes($repositoryRoot)) | `
-            %{ [Void]$repositoryRootHash.Append($_.ToString("x2")) }
-
-        $outputPath = Join-Path $env:USERPROFILE ".Azure" "TestEnvironments" $repositoryRootHash
-        $environmentInfoFile =  Join-Path $outputPath "environment.txt"
-
-        # Write an environment info file
-        Set-Content $environmentInfoFile -Value "Test environments for $repositoryRoot repository" -Force
-
-        $outputFile = Join-Path $outputPath $serviceName
+        $outputFile = "$templateFile.env"
 
         $environmentText = $deploymentOutputs | ConvertTo-Json;
         $bytes = ([System.Text.Encoding]::UTF8).GetBytes($environmentText)
         $protectedBytes = [Security.Cryptography.ProtectedData]::Protect($bytes, $null, [Security.Cryptography.DataProtectionScope]::CurrentUser)
 
-        New-Item -Type Directory $outputPath -Force | Out-Null
         Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
 
         Write-Host "Test environment settings`n $environmentText`nstored into encrypted $outputFile"

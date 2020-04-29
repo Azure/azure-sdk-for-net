@@ -19,7 +19,7 @@ namespace Azure.Core.Testing
     /// </summary>
     public abstract partial class TestEnvironment
     {
-        private static readonly string TestEnvironmentDirectory;
+        private static readonly string RepositoryRoot;
         private TokenCredential _credential;
         private readonly string _prefix;
         private readonly Dictionary<string, string> _environmentFile;
@@ -27,20 +27,22 @@ namespace Azure.Core.Testing
         protected TestEnvironment(string serviceName)
         {
             _prefix = serviceName.ToUpperInvariant() + "_";
-            if (TestEnvironmentDirectory != null)
+            if (RepositoryRoot == null)
             {
-                var testEnvironmentFile = Path.Combine(TestEnvironmentDirectory, serviceName);
-                if (File.Exists(testEnvironmentFile))
-                {
-                    var json = JsonDocument.Parse(
-                        ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
-                    );
+                throw new InvalidOperationException("Unexpected error, repository root not found");
+            }
 
-                    _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-                    foreach (var property in json.RootElement.EnumerateObject())
-                    {
-                        _environmentFile[property.Name] = property.Value.GetString();
-                    }
+            var testEnvironmentFile = Path.Combine(RepositoryRoot, "sdk", serviceName, "test-resources.json.env");
+            if (File.Exists(testEnvironmentFile))
+            {
+                var json = JsonDocument.Parse(
+                    ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
+                );
+
+                _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                foreach (var property in json.RootElement.EnumerateObject())
+                {
+                    _environmentFile[property.Name] = property.Value.GetString();
                 }
             }
         }
@@ -61,29 +63,7 @@ namespace Azure.Core.Testing
                 directoryInfo = directoryInfo.Parent;
             }
 
-            var repositoryRoot = directoryInfo.Parent;
-
-            // Calculate a hash of repo root
-            using var sha1 = HashAlgorithm.Create("SHA1");
-            var repositoryRootHashBytes = sha1.ComputeHash(Encoding.UTF8.GetBytes(repositoryRoot.FullName));
-
-            var repositoryRootHash = new StringBuilder();
-            foreach (var b in repositoryRootHashBytes)
-            {
-                repositoryRootHash.Append(b.ToString("x2"));
-            }
-
-            var testEnvironmentDirectory = Path.Combine(
-                Environment.GetEnvironmentVariable("USERPROFILE"),
-                ".Azure",
-                "TestEnvironments",
-                repositoryRootHash.ToString()
-            );
-
-            if (Directory.Exists(testEnvironmentDirectory))
-            {
-                TestEnvironmentDirectory = testEnvironmentDirectory;
-            }
+            RepositoryRoot = directoryInfo.Parent.FullName;
         }
 
         /// <summary>
