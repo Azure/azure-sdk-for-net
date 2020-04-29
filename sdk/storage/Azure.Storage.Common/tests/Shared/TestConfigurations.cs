@@ -85,6 +85,18 @@ namespace Azure.Storage.Test
         private string TargetSoftDeleteTenantName { get; set; }
 
         /// <summary>
+        /// Gets the name of the source tenant in the Tenants dictionary to use for
+        /// any tests related to Object Replication
+        /// </summary>
+        public string TargetOrSourceTenantName { get; set; }
+
+        /// <summary>
+        /// Gets the name of the destination tenant in the Tenants dictionary to use for
+        /// any tests related to Object Replication
+        /// </summary>
+        public string TargetOrDestinationTenantName { get; set; }
+
+        /// <summary>
         /// Gets the tenant to use by default for our tests.
         /// </summary>
         public static TenantConfiguration DefaultTargetTenant =>
@@ -128,12 +140,23 @@ namespace Azure.Storage.Test
         public static TenantConfiguration DefaultTargetManagedDiskTenant =>
             GetTenant("TargetManagedDiskTenant", s_configurations.Value.TargetManagedDiskTenantName);
 
-
         /// <summary>
         /// Gets a tenant to use for any tests related to blob or container soft delete.
         /// </summary>
         public static TenantConfiguration DefaultTargetSoftDeleteTenant =>
             GetTenant("TargetBlobAndContainerSoftDeleteTenant", s_configurations.Value.TargetSoftDeleteTenantName);
+
+        /// <summary>
+        /// Gets the source tenant to use for any tests related to Object Replication.
+        /// </summary>
+        public static TenantConfiguration DefaultObjectReplicationSourceTenant =>
+            GetTenant("TargetObjectReplicationSourceTenant", s_configurations.Value.TargetOrSourceTenantName);
+
+        /// <summary>
+        /// Gets the source tenant to use for any tests related to Object Replication.
+        /// </summary>
+        public static TenantConfiguration DefaultObjectReplicationDestinationTenant =>
+            GetTenant("TargetObjectReplicationDestinationTenant", s_configurations.Value.TargetOrDestinationTenantName);
 
         /// <summary>
         /// When loading our test configuration, we'll check the
@@ -233,6 +256,8 @@ namespace Azure.Storage.Test
                 TargetHierarchicalNamespaceTenantName = Get("TargetHierarchicalNamespaceTenant"),
                 TargetManagedDiskTenantName = Get("TargetManagedDiskTenant"),
                 TargetSoftDeleteTenantName = Get("TargetBlobAndContainerSoftDeleteTenant"),
+                TargetOrSourceTenantName = Get("TargetObjectReplicationSourceTenant"),
+                TargetOrDestinationTenantName = Get("TargetObjectReplicationDestinationTenant"),
                 Tenants =
                     config.Element("TenantConfigurations").Elements("TenantConfiguration")
                     .Select(TenantConfiguration.Parse)
