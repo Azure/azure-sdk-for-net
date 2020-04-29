@@ -204,8 +204,9 @@ stages:
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
       - download: current
         artifact: ${{parameters.ArtifactName}}-signed
-      - task: MSBuild@1
-        displayName: 'Publish to blobfeed'
+      - task: NuGetCommand@2
+        displayName: 'Publish to DevOps Feed'
         inputs:
-          solution: '$(AzureSDKBuildToolsPath)/tools/blobfeedtool/BlobFeedPublishHelper.proj'
-          msbuildArguments: '/p:AccountKey=$(azuresdkartifacts-access-key) /p:ExpectedFeedUrl=$(BlobFeedUrl) /p:PackagesPath="$(Pipeline.Workspace)/packages-signed"'
+          command: push
+          packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
+          publishVstsFeed: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
