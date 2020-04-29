@@ -46,6 +46,12 @@ jobs:
       vmImage: "$(OSVmImage)"
 
     steps:
+      # Work around DNS issues encountered on Ubuntu 18
+      # https://github.com/actions/virtual-environments/issues/798
+      - script: sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+        displayName: Bypass local DNS server to workaround issue resolving cognitiveservices names
+        condition: and(succeededOrFailed(), eq(variables['OSVmImage'], 'ubuntu-18.04'))
+
       - ${{ parameters.PreSteps }}
 
       - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
