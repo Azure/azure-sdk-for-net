@@ -488,7 +488,7 @@ Deployment (CI/CD) build (only Azure Pipelines is currently supported).
 Force creation of resources instead of being prompted.
 
 .PARAMETER OutFile
-Save test environment settings into a file in the %HOME%/.Azure/TestEnvironments/ directory. File is protected via DPAPI. Supported only on windows.
+Save test environment settings into a test-resources.json.env file next to test-resources.json. File is protected via DPAPI. Supported only on windows.
 The environment file would be scoped to the current repository directory.
 
 .EXAMPLE
