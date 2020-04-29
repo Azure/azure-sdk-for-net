@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -86,6 +86,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -125,7 +132,17 @@ namespace Microsoft.Azure.Management.CosmosDB
                     throw new ValidationException(ValidationRules.Pattern, "accountName", "^[a-z0-9]+(-[a-z0-9]+)*");
                 }
             }
-            string apiVersion = "2020-03-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -135,7 +152,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListGremlinDatabases", tracingParameters);
             }
@@ -146,9 +162,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -280,7 +296,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account with the provided name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -314,6 +330,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -357,7 +380,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            string apiVersion = "2020-03-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -368,7 +401,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetGremlinDatabase", tracingParameters);
             }
@@ -380,9 +412,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -513,7 +545,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB Gremlin database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -541,7 +573,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB Gremlin database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -567,7 +599,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Cosmos DB database account with the provided name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -601,6 +633,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -644,7 +683,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            string apiVersion = "2020-03-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -655,7 +704,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetGremlinDatabaseThroughput", tracingParameters);
             }
@@ -667,9 +715,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -800,7 +848,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB Gremlin database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -829,7 +877,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Lists the Gremlin graph under an existing Azure Cosmos DB database account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -863,6 +911,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -906,7 +961,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            string apiVersion = "2020-03-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -917,7 +982,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListGremlinGraphs", tracingParameters);
             }
@@ -929,9 +993,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1062,7 +1126,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the Gremlin graph under an existing Azure Cosmos DB database account.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1099,6 +1163,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -1146,7 +1217,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "graphName");
             }
-            string apiVersion = "2020-03-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1158,7 +1239,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("graphName", graphName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetGremlinGraph", tracingParameters);
             }
@@ -1171,9 +1251,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{graphName}", System.Uri.EscapeDataString(graphName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1304,7 +1384,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB Gremlin graph
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1335,7 +1415,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB Gremlin graph.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1364,7 +1444,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// database account with the provided name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1401,6 +1481,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -1448,7 +1535,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "graphName");
             }
-            string apiVersion = "2020-03-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1460,7 +1557,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("graphName", graphName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetGremlinGraphThroughput", tracingParameters);
             }
@@ -1473,9 +1569,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{graphName}", System.Uri.EscapeDataString(graphName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1606,7 +1702,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB Gremlin graph
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1638,7 +1734,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB Gremlin database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1675,6 +1771,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -1718,6 +1821,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (createUpdateGremlinDatabaseParameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "createUpdateGremlinDatabaseParameters");
@@ -1726,7 +1840,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 createUpdateGremlinDatabaseParameters.Validate();
             }
-            string apiVersion = "2020-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1737,7 +1850,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("createUpdateGremlinDatabaseParameters", createUpdateGremlinDatabaseParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateUpdateGremlinDatabase", tracingParameters);
@@ -1750,9 +1862,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1810,7 +1922,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            System.Uri _originRequestUri = _httpRequest.RequestUri;
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
@@ -1819,10 +1930,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if (!((int)_statusCode != 200 && (int)_statusCode != 202))
-            {
-                _httpRequest.RequestUri = _originRequestUri;
-            }
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
@@ -1894,7 +2001,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB Gremlin database.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -1925,6 +2032,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -1968,7 +2082,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
-            string apiVersion = "2020-03-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1979,7 +2103,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDeleteGremlinDatabase", tracingParameters);
             }
@@ -1991,9 +2114,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2045,7 +2168,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            System.Uri _originRequestUri = _httpRequest.RequestUri;
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
@@ -2054,10 +2176,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if (!((int)_statusCode != 202 && (int)_statusCode != 204))
-            {
-                _httpRequest.RequestUri = _originRequestUri;
-            }
             if ((int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
@@ -2111,7 +2229,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB Gremlin database
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -2149,6 +2267,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -2192,6 +2317,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "databaseName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (updateThroughputParameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "updateThroughputParameters");
@@ -2200,7 +2336,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 updateThroughputParameters.Validate();
             }
-            string apiVersion = "2020-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2211,7 +2346,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("updateThroughputParameters", updateThroughputParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdateGremlinDatabaseThroughput", tracingParameters);
@@ -2224,9 +2358,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{accountName}", System.Uri.EscapeDataString(accountName));
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2284,7 +2418,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            System.Uri _originRequestUri = _httpRequest.RequestUri;
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
@@ -2293,10 +2426,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if (!((int)_statusCode != 200 && (int)_statusCode != 202))
-            {
-                _httpRequest.RequestUri = _originRequestUri;
-            }
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
@@ -2368,7 +2497,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Create or update an Azure Cosmos DB Gremlin graph
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -2408,6 +2537,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -2455,6 +2591,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "graphName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (createUpdateGremlinGraphParameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "createUpdateGremlinGraphParameters");
@@ -2463,7 +2610,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 createUpdateGremlinGraphParameters.Validate();
             }
-            string apiVersion = "2020-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2475,7 +2621,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("graphName", graphName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("createUpdateGremlinGraphParameters", createUpdateGremlinGraphParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateUpdateGremlinGraph", tracingParameters);
@@ -2489,9 +2634,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{graphName}", System.Uri.EscapeDataString(graphName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2549,7 +2694,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            System.Uri _originRequestUri = _httpRequest.RequestUri;
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
@@ -2558,10 +2702,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if (!((int)_statusCode != 200 && (int)_statusCode != 202))
-            {
-                _httpRequest.RequestUri = _originRequestUri;
-            }
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
@@ -2633,7 +2773,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Deletes an existing Azure Cosmos DB Gremlin graph.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -2667,6 +2807,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -2714,7 +2861,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "graphName");
             }
-            string apiVersion = "2020-03-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2726,7 +2883,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("graphName", graphName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDeleteGremlinGraph", tracingParameters);
             }
@@ -2739,9 +2895,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{graphName}", System.Uri.EscapeDataString(graphName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2793,7 +2949,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            System.Uri _originRequestUri = _httpRequest.RequestUri;
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
@@ -2802,10 +2957,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if (!((int)_statusCode != 202 && (int)_statusCode != 204))
-            {
-                _httpRequest.RequestUri = _originRequestUri;
-            }
             if ((int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
@@ -2859,7 +3010,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB Gremlin graph
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of an Azure resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='accountName'>
         /// Cosmos DB database account name.
@@ -2900,6 +3051,13 @@ namespace Microsoft.Azure.Management.CosmosDB
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             if (resourceGroupName == null)
             {
@@ -2947,6 +3105,17 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "graphName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (updateThroughputParameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "updateThroughputParameters");
@@ -2955,7 +3124,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 updateThroughputParameters.Validate();
             }
-            string apiVersion = "2020-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2967,7 +3135,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("graphName", graphName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("updateThroughputParameters", updateThroughputParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdateGremlinGraphThroughput", tracingParameters);
@@ -2981,9 +3148,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{databaseName}", System.Uri.EscapeDataString(databaseName));
             _url = _url.Replace("{graphName}", System.Uri.EscapeDataString(graphName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3041,7 +3208,6 @@ namespace Microsoft.Azure.Management.CosmosDB
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            System.Uri _originRequestUri = _httpRequest.RequestUri;
             _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
@@ -3050,10 +3216,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if (!((int)_statusCode != 200 && (int)_statusCode != 202))
-            {
-                _httpRequest.RequestUri = _originRequestUri;
-            }
             if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
