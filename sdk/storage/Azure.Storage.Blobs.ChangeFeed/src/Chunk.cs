@@ -39,12 +39,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// The byte offset of the beginning of the current
         /// Block.
         /// </summary>
-        public long BlockOffset { get; private set; }
+        public virtual long BlockOffset { get; private set; }
 
         /// <summary>
         /// The index of the Event within the current block.
         /// </summary>
-        public long EventIndex { get; private set; }
+        public virtual long EventIndex { get; private set; }
 
         public Chunk(
             BlobContainerClient containerClient,
@@ -81,19 +81,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
         }
 
-        /// <summary>
-        /// Constructor for testing.  Do not use.
-        /// </summary>
-        internal Chunk(AvroReader avroReader)
-        {
-            _avroReader = avroReader;
-        }
-
         //TODO what if the Segment isn't Finalized??
-        public bool HasNext()
+        public virtual bool HasNext()
             => _avroReader.HasNext();
 
-        public async Task<BlobChangeFeedEvent> Next(bool async)
+        public virtual async Task<BlobChangeFeedEvent> Next(bool async)
         {
             Dictionary<string, object> result;
 
@@ -114,5 +106,18 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _headStream.Dispose();
             GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Constructor for testing.  Do not use.
+        /// </summary>
+        internal Chunk(AvroReader avroReader)
+        {
+            _avroReader = avroReader;
+        }
+
+        /// <summary>
+        /// Constructor for mocking.  Do not use.
+        /// </summary>
+        internal Chunk() { }
     }
 }

@@ -159,24 +159,5 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     null,
                     BlobsModelFactory.BlobItem("idx/segments/2020/03/05/1700/meta.json", false, null)),
             });
-
-        private class BlobHierarchyItemPage : Page<BlobHierarchyItem>
-        {
-            private List<BlobHierarchyItem> _items;
-
-            public BlobHierarchyItemPage(List<BlobHierarchyItem> items)
-            {
-                _items = items;
-            }
-
-            public override IReadOnlyList<BlobHierarchyItem> Values => _items;
-
-            public override string ContinuationToken => null;
-
-            public override Response GetRawResponse()
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 }

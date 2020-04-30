@@ -102,5 +102,24 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 }
             }
         }
+
+        public class BlobHierarchyItemPage : Page<BlobHierarchyItem>
+        {
+            private List<BlobHierarchyItem> _items;
+
+            public BlobHierarchyItemPage(List<BlobHierarchyItem> items)
+            {
+                _items = items;
+            }
+
+            public override IReadOnlyList<BlobHierarchyItem> Values => _items;
+
+            public override string ContinuationToken => null;
+
+            public override Response GetRawResponse()
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

@@ -38,15 +38,17 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         /// <summary>
         /// The byte offset of the beginning of the
-        /// current Avro block.
+        /// current Avro block.  Only used to initalize a
+        /// Shard from a Sursor.
         /// </summary>
-        private long _blockOffset;
+        private readonly long _blockOffset;
 
         /// <summary>
         /// Index of the current event within the
-        /// Avro block.
+        /// Avro block.  Only used to initalize a
+        /// Shard from a Sursor.
         /// </summary>
-        private long _eventIndex;
+        private readonly long _eventIndex;
 
         /// <summary>
         /// If this Shard has been initalized.
@@ -156,5 +158,22 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         /// <inheritdoc/>
         public void Dispose() => _currentChunk.Dispose();
+
+        /// <summary>
+        /// Constructor for testing.  Do not use.
+        /// </summary>
+        internal Shard(
+            Chunk chunk = default,
+            long chunkIndex = default,
+            bool isInitalized = default,
+            Queue<string> chunks = default,
+            BlobContainerClient containerClient = default)
+        {
+            _currentChunk = chunk;
+            _chunkIndex = chunkIndex;
+            _isInitialized = isInitalized;
+            _chunks = chunks;
+            _containerClient = containerClient;
+        }
     }
 }
