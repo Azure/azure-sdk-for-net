@@ -11,28 +11,30 @@
 namespace Microsoft.Azure.Management.Reservations.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// The error details.
+    /// </summary>
+    public partial class ServiceErrorDetail
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the ServiceErrorDetail class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public ServiceErrorDetail()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the ServiceErrorDetail class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        public ServiceErrorDetail(string code = default(string), string message = default(string))
         {
-            Scopes = scopes;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -42,9 +44,16 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; private set; }
+
+        /// <summary>
+        /// Gets the error message.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
 
     }
 }
