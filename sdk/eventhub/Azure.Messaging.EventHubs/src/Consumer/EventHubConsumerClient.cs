@@ -601,7 +601,7 @@ namespace Azure.Messaging.EventHubs.Consumer
 
             IsClosed = true;
 
-            var clientHash = GetHashCode().ToString();
+            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
             EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubConsumerClient), EventHubName, clientHash);
 
             // Attempt to close the active transport consumers.  In the event that an exception is encountered,

@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the scoring profile. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Parameters that boost scoring based on text matches in certain index fields. </summary>
         public TextWeights TextWeights { get; set; }
         /// <summary> The collection of functions that influence the scoring of documents. </summary>

@@ -68,7 +68,7 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environmentName);
 
-                if (!IsBase64UrlString(storedCredentials))
+                if (!IsRefreshTokenString(storedCredentials))
                 {
                     throw new CredentialUnavailableException("Need to re-authenticate user in VSCode Azure Account.");
                 }
@@ -87,12 +87,12 @@ namespace Azure.Identity
             }
         }
 
-        private static bool IsBase64UrlString(string str)
+        private static bool IsRefreshTokenString(string str)
         {
             for (var index = 0; index < str.Length; index++)
             {
                 var ch = (uint)str[index];
-                if ((ch < '0' || ch > '9') && (ch < 'A' || ch > 'Z') && (ch < 'a' || ch > 'z') && ch != '_' && ch != '-')
+                if ((ch < '0' || ch > '9') && (ch < 'A' || ch > 'Z') && (ch < 'a' || ch > 'z') && ch != '_' && ch != '-' && ch != '.')
                 {
                     return false;
                 }

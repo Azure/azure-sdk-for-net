@@ -23,9 +23,9 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             try
             {
-                if (TestEnvironment.ShouldRemoveNamespaceAfterTestRunCompletion)
+                if (EventHubsTestEnvironment.Instance.ShouldRemoveNamespaceAfterTestRunCompletion)
                 {
-                    EventHubScope.DeleteNamespaceAsync(TestEnvironment.EventHubsNamespace).GetAwaiter().GetResult();
+                    EventHubScope.DeleteNamespaceAsync(EventHubsTestEnvironment.Instance.EventHubsNamespace).GetAwaiter().GetResult();
                 }
             }
             catch

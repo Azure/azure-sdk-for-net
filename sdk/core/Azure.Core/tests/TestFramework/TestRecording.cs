@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
@@ -23,7 +25,6 @@ namespace Azure.Core.Testing
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
             _matcher = matcher;
-
 
             switch (Mode)
             {
@@ -49,7 +50,7 @@ namespace Azure.Core.Testing
 
         public RecordedTestMode Mode { get; }
 
-        private readonly AsyncLocal<bool> _disableRecording = new AsyncLocal<bool>();
+        private readonly AsyncLocal<EntryRecordModel> _disableRecording = new AsyncLocal<EntryRecordModel>();
 
         private readonly string _sessionFile;
 
@@ -91,7 +92,15 @@ namespace Azure.Core.Testing
                             _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
-                            _random = new TestRandom(Mode, int.Parse(_session.Variables[RandomSeedVariableKey]));
+                            if (IsTrack1SessionRecord())
+                            {
+                                //random is not really used for track 1 playback, so randomly pick one as seed
+                                _random = new TestRandom(Mode, (int)DateTime.UtcNow.Ticks);
+                            }
+                            else
+                            {
+                                _random = new TestRandom(Mode, int.Parse(_session.Variables[RandomSeedVariableKey]));
+                            }
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -191,8 +200,8 @@ namespace Azure.Core.Testing
             return Mode switch
             {
                 RecordedTestMode.Live => currentTransport,
-                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random),
-                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, Random),
+                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => _disableRecording.Value, Random),
+                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, _sanitizer, Random),
                 _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
             };
         }
@@ -202,21 +211,26 @@ namespace Azure.Core.Testing
             return Random.Next().ToString();
         }
 
-        public string GetVariableFromEnvironment(string variableName)
+        public string GenerateId(string prefix, int maxLength)
         {
-            var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
-            switch (Mode)
+            return $"{prefix}{Random.Next()}".Substring(0, maxLength);
+        }
+
+        public string GenerateAssetName(string prefix, [CallerMemberName]string callerMethodName = "testframework_failed")
+        {
+            if (Mode == RecordedTestMode.Playback && IsTrack1SessionRecord())
             {
-                case RecordedTestMode.Record:
-                    _session.Variables[variableName] = _sanitizer.SanitizeVariable(variableName, environmentVariableValue);
-                    return environmentVariableValue;
-                case RecordedTestMode.Live:
-                    return environmentVariableValue;
-                case RecordedTestMode.Playback:
-                    return _session.Variables[variableName];
-                default:
-                    throw new ArgumentOutOfRangeException();
+                return _session.Names[callerMethodName].Dequeue();
             }
+            else
+            {
+                return prefix + Random.Next(9999);
+            }
+        }
+
+        public bool IsTrack1SessionRecord()
+        {
+            return _session.Entries.FirstOrDefault()?.IsTrack1Recording ?? false;
         }
 
         public string GetVariable(string variableName, string defaultValue)
@@ -229,7 +243,8 @@ namespace Azure.Core.Testing
                 case RecordedTestMode.Live:
                     return defaultValue;
                 case RecordedTestMode.Playback:
-                    return _session.Variables[variableName];
+                    _session.Variables.TryGetValue(variableName, out string value);
+                    return value;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -247,47 +262,34 @@ namespace Azure.Core.Testing
             }
         }
 
-        public TokenCredential GetCredential(TokenCredential defaultCredential)
-        {
-            return Mode == RecordedTestMode.Playback ? new TestCredential() : defaultCredential;
-        }
-
         public void DisableIdReuse()
         {
             _previousSession = null;
         }
 
-        private class TestCredential : TokenCredential
-        {
-            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
-            }
-
-            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-            {
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue);
-            }
-        }
-
         public DisableRecordingScope DisableRecording()
         {
-            return new DisableRecordingScope(this);
+            return new DisableRecordingScope(this, EntryRecordModel.DontRecord);
+        }
+
+        public DisableRecordingScope DisableRequestBodyRecording()
+        {
+            return new DisableRecordingScope(this, EntryRecordModel.RecordWithoutRequestBody);
         }
 
         public struct DisableRecordingScope : IDisposable
         {
             private readonly TestRecording _testRecording;
 
-            public DisableRecordingScope(TestRecording testRecording)
+            public DisableRecordingScope(TestRecording testRecording, EntryRecordModel entryRecordModel)
             {
                 _testRecording = testRecording;
-                _testRecording._disableRecording.Value = true;
+                _testRecording._disableRecording.Value = entryRecordModel;
             }
 
             public void Dispose()
             {
-                _testRecording._disableRecording.Value = false;
+                _testRecording._disableRecording.Value = EntryRecordModel.Record;
             }
         }
     }

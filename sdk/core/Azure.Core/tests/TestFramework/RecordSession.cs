@@ -14,6 +14,9 @@ namespace Azure.Core.Testing
 
         public SortedDictionary<string, string> Variables { get; } = new SortedDictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
+        //Used only for deserializing track 1 session record files
+        public Dictionary<string, Queue<string>> Names { get; set; } = new Dictionary<string, Queue<string>>();
+
         public void Serialize(Utf8JsonWriter jsonWriter)
         {
             jsonWriter.WriteStartObject();
@@ -52,6 +55,19 @@ namespace Azure.Core.Testing
                     session.Variables[item.Name] = item.Value.GetString();
                 }
             }
+
+            if (element.TryGetProperty(nameof(Names), out property))
+            {
+                foreach (JsonProperty item in property.EnumerateObject())
+                {
+                    var queue = new Queue<string>();
+                    foreach (JsonElement subItem in item.Value.EnumerateArray())
+                    {
+                        queue.Enqueue(subItem.GetString());
+                    }
+                    session.Names[item.Name] = queue;
+                }
+            }
             return session;
         }
 
@@ -63,11 +79,14 @@ namespace Azure.Core.Testing
             }
         }
 
-        public RecordEntry Lookup(Request request, RecordMatcher matcher)
+        public RecordEntry Lookup(Request request, RecordMatcher matcher, RecordedTestSanitizer sanitizer)
         {
+            var requestEntry = RecordTransport.CreateEntry(request, null);
+            sanitizer.Sanitize(requestEntry);
+
             lock (Entries)
             {
-                RecordEntry entry = matcher.FindMatch(request, Entries);
+                RecordEntry entry = matcher.FindMatch(requestEntry, Entries);
                 Entries.Remove(entry);
                 return entry;
             }
@@ -78,10 +97,7 @@ namespace Azure.Core.Testing
         {
             lock (Entries)
             {
-                foreach (RecordEntry entry in Entries)
-                {
-                    sanitizer.Sanitize(entry);
-                }
+                sanitizer.Sanitize(this);
             }
         }
 

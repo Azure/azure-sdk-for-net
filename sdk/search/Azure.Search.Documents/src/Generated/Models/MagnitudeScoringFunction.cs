@@ -26,6 +26,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Parameter values for the magnitude scoring function. </summary>
-        public MagnitudeScoringParameters Parameters { get; }
+        public MagnitudeScoringParameters Parameters { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Data.AppConfiguration.Tests
             "etag"
         };
 
-        public ConfigurationRecordMatcher(RecordedTestSanitizer sanitizer) : base(sanitizer)
+        public ConfigurationRecordMatcher()
         {
             VolatileResponseHeaders.Add("Sync-Token");
         }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
@@ -16,6 +17,8 @@ namespace Azure.Core.Testing
         public RecordEntryMessage Response { get; } = new RecordEntryMessage();
 
         public string RequestUri { get; set; }
+
+        public bool IsTrack1Recording { get; set; }
 
         public RequestMethod RequestMethod { get; set; }
 
@@ -33,6 +36,11 @@ namespace Azure.Core.Testing
             if (element.TryGetProperty(nameof(RequestUri), out property))
             {
                 record.RequestUri = property.GetString();
+            }
+
+            if (element.TryGetProperty("EncodedRequestUri", out property))
+            {
+                record.IsTrack1Recording = true;
             }
 
             if (element.TryGetProperty("RequestHeaders", out property))
@@ -75,11 +83,11 @@ namespace Azure.Core.Testing
             {
                 if (property.ValueKind == JsonValueKind.Object)
                 {
-                    var arrayBufferWriter = new ArrayBufferWriter<byte>();
-                    using var writer = new Utf8JsonWriter(arrayBufferWriter);
+                    using var memoryStream = new MemoryStream();
+                    using var writer = new Utf8JsonWriter(memoryStream);
                     property.WriteTo(writer);
                     writer.Flush();
-                    return arrayBufferWriter.WrittenMemory.ToArray();
+                    return memoryStream.ToArray();
                 }
                 else if (property.ValueKind == JsonValueKind.Array)
                 {
@@ -166,9 +174,16 @@ namespace Azure.Core.Testing
                 try
                 {
                     using JsonDocument document = JsonDocument.Parse(requestBody);
-                    jsonWriter.WritePropertyName(name.AsSpan());
-                    document.RootElement.WriteTo(jsonWriter);
-                    return;
+
+                    // We use array as a wrapper for string based serialization
+                    // so if the root is an array we can't write it directly
+                    // fallback to generic string writing
+                    if (document.RootElement.ValueKind != JsonValueKind.Array)
+                    {
+                        jsonWriter.WritePropertyName(name.AsSpan());
+                        document.RootElement.WriteTo(jsonWriter);
+                        return;
+                    }
                 }
                 catch (Exception)
                 {

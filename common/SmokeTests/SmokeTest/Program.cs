@@ -1,10 +1,10 @@
-﻿// ------------------------------------
-// Copyright(c) Microsoft Corporation.
+﻿
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-// ------------------------------------
-// ------------------------------------
+
 using System;
 using System.Threading.Tasks;
+using SmokeTest.Samples;
 
 namespace SmokeTest
 {
@@ -22,6 +22,15 @@ namespace SmokeTest
             // https://github.com/Azure/azure-sdk-for-net/issues/11297
             // await CosmosDBTest.RunTests();
 
+            Console.WriteLine();
+            Console.WriteLine("LIBRARY TESTS COMPLETE");
+            Console.WriteLine();
+            Console.WriteLine("SMOKE TEST FOR TRACK 2 SAMPLES");
+
+            await IotHubConnectionTests.RunTests();
+
+            Console.WriteLine("SAMPLES TESTS COMPLETE");
+            Console.WriteLine();
             return 0;
         }
     }

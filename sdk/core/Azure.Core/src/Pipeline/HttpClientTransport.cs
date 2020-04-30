@@ -59,17 +59,22 @@ namespace Azure.Core.Pipeline
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
                 HttpResponseMessage responseMessage;
+                Stream? contentStream = null;
                 try
                 {
                     responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
                         .ConfigureAwait(false);
+                    if (responseMessage.Content != null)
+                    {
+                        contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    }
                 }
                 catch (HttpRequestException e)
                 {
                     throw new RequestFailedException(e.Message, e);
                 }
 
-                message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
+                message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage, contentStream);
             }
         }
 
@@ -350,10 +355,11 @@ namespace Azure.Core.Pipeline
 
             private Stream? _contentStream;
 
-            public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
+            public PipelineResponse(string requestId, HttpResponseMessage responseMessage, Stream? contentStream)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
+                _contentStream = contentStream;
                 _responseContent = _responseMessage.Content;
             }
 
@@ -363,31 +369,7 @@ namespace Azure.Core.Pipeline
 
             public override Stream? ContentStream
             {
-                get
-                {
-                    if (_contentStream != null)
-                    {
-                        return _contentStream;
-                    }
-
-                    if (_responseMessage.Content == null)
-                    {
-                        return null;
-                    }
-
-                    Task<Stream> contentTask = _responseMessage.Content.ReadAsStreamAsync();
-
-                    if (contentTask.IsCompleted)
-                    {
-                        _contentStream = contentTask.GetAwaiter().GetResult();
-                    }
-                    else
-                    {
-                        _contentStream = new ContentStream(contentTask);
-                    }
-
-                    return _contentStream;
-                }
+                get => _contentStream;
                 set
                 {
                     // Make sure we don't dispose the content if the stream was replaced
@@ -413,92 +395,6 @@ namespace Azure.Core.Pipeline
             }
 
             public override string ToString() => _responseMessage.ToString();
-        }
-
-        private class ContentStream : ReadOnlyStream
-        {
-            private readonly Task<Stream> _contentTask;
-            private Stream? _contentStream;
-
-            public ContentStream(Task<Stream> contentTask)
-            {
-                _contentTask = contentTask;
-            }
-
-            public override long Seek(long offset, SeekOrigin origin)
-            {
-                return Stream.Seek(offset, origin);
-            }
-
-            public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
-            {
-                await EnsureStreamAsync().ConfigureAwait(false);
-                return await Stream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
-            }
-
-            public override int Read(byte[] buffer, int offset, int count)
-            {
-                return Stream.Read(buffer, offset, count);
-            }
-
-            public override bool CanRead
-            {
-                get
-                {
-                    return Stream.CanRead;
-                }
-            }
-
-            public override bool CanSeek
-            {
-                get
-                {
-                    return Stream.CanSeek;
-                }
-            }
-
-            public override long Length
-            {
-                get
-                {
-                    return Stream.Length;
-                }
-            }
-
-            public override long Position
-            {
-                get
-                {
-                    return Stream.Position;
-                }
-                set
-                {
-                    Stream.Position = value;
-                }
-            }
-
-            private Stream Stream
-            {
-                get
-                {
-                    if (_contentStream == null)
-                    {
-                        return EnsureStreamAsync().GetAwaiter().GetResult();
-                    }
-
-                    return _contentStream;
-                }
-            }
-
-            private ValueTask<Stream> EnsureStreamAsync()
-            {
-                async ValueTask<Stream> EnsureStreamAsyncImpl()
-                {
-                    return (_contentStream = await _contentTask.ConfigureAwait(false));
-                }
-
-                return _contentStream == null ? EnsureStreamAsyncImpl() : new ValueTask<Stream>(_contentStream);
-            }
         }
     }
 }

@@ -14,6 +14,7 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
+    /// <summary> The Skillsets service client. </summary>
     internal partial class SkillsetsClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;

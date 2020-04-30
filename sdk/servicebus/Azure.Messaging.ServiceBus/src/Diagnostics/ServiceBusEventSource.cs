@@ -657,7 +657,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(47, identifiers, sessionId);
+                WriteEvent(62, identifiers, sessionId);
             }
         }
 
@@ -666,7 +666,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(48, identifier);
+                WriteEvent(63, identifier);
             }
         }
 
@@ -675,7 +675,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(49, identifier, exception.ToString());
+                WriteEvent(64, identifier, exception.ToString());
             }
         }
 
@@ -684,7 +684,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(47, identifiers, sessionId);
+                WriteEvent(65, identifiers, sessionId);
             }
         }
 
@@ -693,7 +693,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(48, identifier);
+                WriteEvent(66, identifier);
             }
         }
 
@@ -702,7 +702,88 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(49, identifier, exception.ToString());
+                WriteEvent(67, identifier, exception.ToString());
+            }
+        }
+
+        [Event(68, Level = EventLevel.Informational, Message = "{0}: Add rule start. RuleName = {1}")]
+        public void AddRuleStart(string identifiers, string ruleName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(68, identifiers, ruleName);
+            }
+        }
+
+        [Event(69, Level = EventLevel.Informational, Message = "{0}: Add rule done.")]
+        public void AddRuleComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(69, identifier);
+            }
+        }
+
+        [Event(70, Level = EventLevel.Error, Message = "{0}: Add rule Exception: {1}.")]
+        public void AddRuleException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(70, identifier, exception.ToString());
+            }
+        }
+
+        [Event(71, Level = EventLevel.Informational, Message = "{0}: Remove rule start. RuleName = {1}")]
+        public void RemoveRuleStart(string identifiers, string ruleName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(71, identifiers, ruleName);
+            }
+        }
+
+        [Event(72, Level = EventLevel.Informational, Message = "{0}: Remove rule done.")]
+        public void RemoveRuleComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(72, identifier);
+            }
+        }
+
+        [Event(73, Level = EventLevel.Error, Message = "{0}: Remove rule Exception: {1}.")]
+        public void RemoveRuleException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(73, identifier, exception.ToString());
+            }
+        }
+
+        [Event(74, Level = EventLevel.Informational, Message = "{0}: Get rule start.")]
+        public void GetRuleStart(string identifiers)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(74, identifiers);
+            }
+        }
+
+        [Event(75, Level = EventLevel.Informational, Message = "{0}: Get rule done.")]
+        public void GetRuleComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(75, identifier);
+            }
+        }
+
+        [Event(76, Level = EventLevel.Error, Message = "{0}: Get rule Exception: {1}.")]
+        public void GetRuleException(string identifier, Exception exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(76, identifier, exception.ToString());
             }
         }
     }

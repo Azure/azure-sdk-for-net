@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = TestEnvironment.EventHubsConnectionString;
+                var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
                 Assert.That(async () => await sample.RunAsync(connectionString, scope.EventHubName), Throws.Nothing);
             }
         }
@@ -74,11 +74,11 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                Assert.That(async () => await sample.RunAsync(TestEnvironment.FullyQualifiedNamespace,
+                Assert.That(async () => await sample.RunAsync(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
                                                               scope.EventHubName,
-                                                              TestEnvironment.EventHubsTenant,
-                                                              TestEnvironment.EventHubsClient,
-                                                              TestEnvironment.EventHubsSecret), Throws.Nothing);
+                                                              EventHubsTestEnvironment.Instance.TenantId,
+                                                              EventHubsTestEnvironment.Instance.ClientId,
+                                                              EventHubsTestEnvironment.Instance.ClientSecret), Throws.Nothing);
             }
         }
     }

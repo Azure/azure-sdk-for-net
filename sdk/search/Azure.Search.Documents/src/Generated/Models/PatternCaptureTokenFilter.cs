@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> A list of patterns to match against each token. </summary>
-        public IList<string> Patterns { get; }
+        public IList<string> Patterns { get; set; }
         /// <summary> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </summary>
         public bool? PreserveOriginal { get; set; }
     }

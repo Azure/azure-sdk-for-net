@@ -1,27 +1,27 @@
 <Project>
 
   <PropertyGroup>
-    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6221/autorest-3.0.6221.tgz</_AutoRestVersion>
-    <_AutoRestCoreVersion>3.0.6280</_AutoRestCoreVersion>
-    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200415.7/autorest-csharp-v3-3.0.0-dev.20200415.7.tgz</_AutoRestCSharpVersion>
+    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6222/autorest-3.0.6222.tgz</_AutoRestVersion>
+    <_AutoRestCoreVersion>3.0.6282</_AutoRestCoreVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/3.0.0-dev.20200427.5/autorest-csharp-v3-3.0.0-dev.20200427.5.tgz</_AutoRestCSharpVersion>
     <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
     <_DefaultInputName Condition="Exists('$(MSBuildProjectDirectory)/autorest.md')">$(MSBuildProjectDirectory)/autorest.md</_DefaultInputName>
-    <AutorestInput Condition="'$(AutorestInput)' == ''">$(_DefaultInputName)</AutorestInput>
+    <AutoRestInput Condition="'$(AutoRestInput)' == ''">$(_DefaultInputName)</AutoRestInput>
     <!--
       Allows passing additional AutoRest command line arguments, for example to run in interactive mode 
-      use the following command line (remove the space between minus minus): dotnet msbuild /t:GenerateCode /p:AutorestAdditionalParameters="- -interactive"
+      use the following command line (remove the space between minus minus): dotnet msbuild /t:GenerateCode /p:AutoRestAdditionalParameters="- -interactive"
     -->
-    <AutorestAdditionalParameters></AutorestAdditionalParameters>
+    <AutoRestAdditionalParameters></AutoRestAdditionalParameters>
     <_SharedCodeDirectory>$(MSBuildThisFileDirectory)../sdk/core/Azure.Core/src/Shared/</_SharedCodeDirectory>
-    <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)Autorest/</_AutoRestSharedCodeDirectory>
+    <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)AutoRest/</_AutoRestSharedCodeDirectory>
 
-    <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutorestInput)' != ''">true</_GenerateCode>
+    <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND '$(AutoRestInput)' != ''">true</_GenerateCode>
     <UsesJsonSerialization Condition="'$(UsesJsonSerialization)' == ''">true</UsesJsonSerialization>
   </PropertyGroup>
 
   <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
     <RemoveDir Directories="$(MSBuildProjectDirectory)/Generated"/>
-    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutorestInput) $(AutorestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory) --verbose" />
+    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) $(AutoRestInput) $(AutoRestAdditionalParameters) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory) --verbose" />
   </Target>
 
   <ItemGroup Condition="'$(_GenerateCode)' == 'true'">

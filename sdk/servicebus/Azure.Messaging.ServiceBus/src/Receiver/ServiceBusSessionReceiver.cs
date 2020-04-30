@@ -75,6 +75,12 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusReceiver"/> class for mocking.
+        /// </summary>
+        ///
+        protected ServiceBusSessionReceiver() : base() { }
+
+        /// <summary>
         /// Gets the session state.
         /// </summary>
         ///

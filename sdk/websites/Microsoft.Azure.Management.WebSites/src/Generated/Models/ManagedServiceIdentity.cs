@@ -32,8 +32,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the ManagedServiceIdentity class.
         /// </summary>
         /// <param name="type">Type of managed service identity. Possible
-        /// values include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
-        /// UserAssigned', 'None'</param>
+        /// values include: 'None', 'SystemAssigned', 'UserAssigned'</param>
         /// <param name="tenantId">Tenant of managed service identity.</param>
         /// <param name="principalId">Principal Id of managed service
         /// identity.</param>
@@ -41,7 +40,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// identities associated with the resource. The user identity
         /// dictionary key references will be ARM resource ids in the form:
         /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}</param>
-        public ManagedServiceIdentity(string type = default(string), string tenantId = default(string), string principalId = default(string), IDictionary<string, ManagedServiceIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, ManagedServiceIdentityUserAssignedIdentitiesValue>))
+        public ManagedServiceIdentity(ManagedServiceIdentityType? type = default(ManagedServiceIdentityType?), string tenantId = default(string), string principalId = default(string), IDictionary<string, ManagedServiceIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, ManagedServiceIdentityUserAssignedIdentitiesValue>))
         {
             Type = type;
             TenantId = tenantId;
@@ -57,11 +56,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Gets or sets type of managed service identity. Possible values
-        /// include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
-        /// UserAssigned', 'None'
+        /// include: 'None', 'SystemAssigned', 'UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public ManagedServiceIdentityType? Type { get; set; }
 
         /// <summary>
         /// Gets tenant of managed service identity.
