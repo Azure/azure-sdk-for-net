@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class FormTrainingClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
+    public class FormTrainingClientLiveTests : FormRecognizerLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FormTrainingClientLiveTests"/> class.
@@ -25,24 +25,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormTrainingClientLiveTests(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new FormRecognizerRecordedTestSanitizer();
-            Matcher = new FormRecognizerRecordMatcher();
-        }
-
-        /// <summary>
-        /// Creates a <see cref="FormTrainingClient" /> with the endpoint and API key provided via environment
-        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
-        /// </summary>
-        /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
-        private FormTrainingClient CreateInstrumentedClient()
-        {
-            var endpoint = new Uri(TestEnvironment.Endpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-
-            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
-            var client = new FormTrainingClient(endpoint, credential, options);
-
-            return InstrumentClient(client);
         }
 
         [Test]
@@ -50,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartTraining(bool labeled)
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormTrainingClient();
             var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation operation;
 
@@ -100,7 +82,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public async Task StartTrainingError()
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormTrainingClient();
 
             var containerUrl = new Uri("https://someUrl");
 
@@ -128,7 +110,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task TrainingOps(bool labeled)
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormTrainingClient();
             var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
             TrainingOperation operation;
 
