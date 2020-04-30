@@ -301,6 +301,19 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// ChangeFeed constant values.
+        /// </summary>
+        internal static class ChangeFeed
+        {
+            public const string ChangeFeedContainerName = "$blobchangefeed";
+            public const string SegmentPrefix = "idx/segments/";
+            public const string InitalizationManifestPath = "/0000/";
+            public const string InitalizationSegment = "1601";
+            public const string MetaSegmentsPath = "meta/segments.json";
+            public const long ChunkBlockDownloadSize = MB;
+        }
+
+        /// <summary>
         /// Sas constant values.
         /// </summary>
         internal static class Sas

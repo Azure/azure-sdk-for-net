@@ -23,6 +23,7 @@
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.0.1" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.1.1" />
     <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.0.0" />
+    <PackageReference Update="Azure.Storage.Blobs.ChangeFeed" Version="12.0.0-preview.1" />
     <PackageReference Update="BenchmarkDotNet" Version="0.11.5" />
     <PackageReference Update="FsCheck.Xunit" Version="2.14.0" />
     <PackageReference Update="Microsoft.Azure.Amqp" Version="[2.4.2, 3.0.0)" />
