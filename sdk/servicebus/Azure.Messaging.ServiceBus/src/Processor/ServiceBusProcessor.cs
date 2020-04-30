@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -207,7 +209,11 @@ namespace Azure.Messaging.ServiceBus
 
         internal bool AutoRenewLock => MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
-        private readonly string _sessionId;
+        private readonly IList<string> _sessionIds;
+
+        private ConcurrentDictionary<string, ServiceBusReceiver> sessionIdsReceiverMap = new ConcurrentDictionary<string, ServiceBusReceiver>();
+
+        private ConcurrentDictionary<string, SemaphoreSlim> receiverCreationSemaphore = new ConcurrentDictionary<string, SemaphoreSlim>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -215,7 +221,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="entityPath"></param>
         /// <param name="isSessionEntity"></param>
-        /// <param name="sessionId"></param>
+        /// <param name="sessionIds"></param>
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="options"></param>
         ///
@@ -224,7 +230,7 @@ namespace Azure.Messaging.ServiceBus
             string entityPath,
             bool isSessionEntity,
             ServiceBusProcessorOptions options,
-            string sessionId = default)
+            IList<string> sessionIds = default)
         {
             Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connection, nameof(connection));
@@ -245,7 +251,16 @@ namespace Azure.Messaging.ServiceBus
 
             EntityPath = entityPath;
             IsSessionProcessor = isSessionEntity;
-            _sessionId = sessionId;
+            _sessionIds = sessionIds;
+            if (sessionIds != null)
+            {
+                foreach (var sessionId in sessionIds)
+                {
+                    // Instantiating a Singleton of the Semaphore with a value of 1.
+                    // This means that only 1 thread can be granted access at a time.
+                    receiverCreationSemaphore.TryAdd(sessionId, new SemaphoreSlim(1, 1));
+                }
+            }
         }
 
         /// <summary>
@@ -476,17 +491,6 @@ namespace Azure.Messaging.ServiceBus
                         {
                             MaxConcurrentCalls = DefaultMaxConcurrentSessions;
                         }
-                        if (_sessionId != null)
-                        {
-                            // only create a new receiver if a specific session
-                            // is specified, otherwise thread local receivers will be used
-                            Receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
-                                EntityPath,
-                                _connection,
-                                _sessionId,
-                                receiverOptions,
-                                cancellationToken).ConfigureAwait(false);
-                        }
                     }
                     else
                     {
@@ -634,13 +638,26 @@ namespace Azure.Messaging.ServiceBus
             IList<Task> tasks = new List<Task>();
             try
             {
+                int sessionIndex = 0;
+                string sessionId = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     await MessageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
                     // hold onto all the tasks that we are starting so that when cancellation is requested,
                     // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                     // other than TaskCanceledExceptions
-                    tasks.Add(GetAndProcessMessagesAsync(cancellationToken));
+
+                    if (IsSessionProcessor && _sessionIds != null)
+                    {
+                        sessionId = _sessionIds.ElementAt(sessionIndex);
+                        sessionIndex++;
+                        if (sessionIndex == _sessionIds.Count)
+                        {
+                            sessionIndex = 0;
+                        }
+
+                    }
+                    tasks.Add(GetAndProcessMessagesAsync(cancellationToken, sessionId));
                 }
             }
             finally
@@ -650,20 +667,19 @@ namespace Azure.Messaging.ServiceBus
         }
 
         private async Task GetAndProcessMessagesAsync(
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            string sessionId = default)
         {
             ServiceBusReceiver receiver = null;
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.Receive;
-            bool useThreadLocalReceiver = false;
             CancellationTokenSource renewSessionLockCancellationSource = null;
             Task renewSessionLock = null;
             try
             {
                 ServiceBusReceiverOptions receiverOptions = CreateReceiverOptions();
-                if (IsSessionProcessor && _sessionId == null)
+                if (IsSessionProcessor)
                 {
                     errorSource = ServiceBusErrorSource.AcceptMessageSession;
-                    useThreadLocalReceiver = true;
                     bool releaseSemaphore = false;
                     try
                     {
@@ -681,16 +697,61 @@ namespace Azure.Messaging.ServiceBus
                         }
                         try
                         {
-                            receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
-                                entityPath: EntityPath,
-                                connection: _connection,
-                                options: receiverOptions,
-                                cancellationToken: cancellationToken).ConfigureAwait(false);
+                            if (sessionId != null)
+                            {
+                                // Adding double-checked locking, which checks whether sessionIdsReceiverMap contains sessionId or not.
+                                // This is efficient because it avoids creating a receiver for the same session Ids for multiple threads.
+                                // Otherwise, we will get session lock lost error whenever multiple threads will try to create a receiver for
+                                // the same session id.
+                                if (!sessionIdsReceiverMap.ContainsKey(sessionId))
+                                {
+                                    await receiverCreationSemaphore[sessionId].WaitAsync(cancellationToken).ConfigureAwait(false);
+                                    try
+                                    {
+                                        if (!sessionIdsReceiverMap.ContainsKey(sessionId))
+                                        {
+                                            receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+                                                EntityPath,
+                                                _connection,
+                                                 sessionId,
+                                                receiverOptions,
+                                                cancellationToken).ConfigureAwait(false);
 
-                            await OnSessionInitializingAsync(
-                                (ServiceBusSessionReceiver)receiver,
-                                cancellationToken).
-                                ConfigureAwait(false);
+                                            sessionIdsReceiverMap.TryAdd(sessionId, receiver);
+
+                                            await OnSessionInitializingAsync(
+                                                (ServiceBusSessionReceiver)receiver,
+                                                cancellationToken).
+                                                ConfigureAwait(false);
+                                        }
+                                        else
+                                        {
+                                            receiver = sessionIdsReceiverMap[sessionId];
+                                        }
+                                    }
+                                    finally
+                                    {
+                                        receiverCreationSemaphore[sessionId].Release();
+                                    }
+                                }
+                                else
+                                {
+                                    receiver = sessionIdsReceiverMap[sessionId];
+                                }
+                            }
+                            else
+                            {
+                                receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+                                    entityPath: EntityPath,
+                                    connection: _connection,
+                                    options: receiverOptions,
+                                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                                await OnSessionInitializingAsync(
+                                    (ServiceBusSessionReceiver)receiver,
+                                    cancellationToken).
+                                    ConfigureAwait(false);
+                            }
                         }
                         catch (ServiceBusException ex)
                         when (ex.Reason == ServiceBusException.FailureReason.ServiceTimeout)
@@ -729,7 +790,7 @@ namespace Azure.Messaging.ServiceBus
                         // if we are processing next available session, and no messages were returned:
                         // 1. cancel the renew session lock task
                         // 2. break out of the loop to allow requesting another session from the service
-                        if (IsSessionProcessor && _sessionId == null)
+                        if (IsSessionProcessor && _sessionIds == null)
                         {
                             await OnSessionClosingAsync(
                                 (ServiceBusSessionReceiver)receiver,
@@ -739,6 +800,10 @@ namespace Azure.Messaging.ServiceBus
                                 renewSessionLockCancellationSource,
                                 renewSessionLock).ConfigureAwait(false);
 
+                            break;
+                        }
+                        else if (IsSessionProcessor && _sessionIds != null && _sessionIds.Count > 1)
+                        {
                             break;
                         }
                         // otherwise just continue receiving using this receiver, since the link wouldn't
@@ -770,7 +835,7 @@ namespace Azure.Messaging.ServiceBus
             finally
             {
                 MessageHandlerSemaphore.Release();
-                if (useThreadLocalReceiver && receiver != null)
+                if (receiver != null && IsSessionProcessor && _sessionIds == null)
                 {
                     await receiver.DisposeAsync().ConfigureAwait(false);
                 }

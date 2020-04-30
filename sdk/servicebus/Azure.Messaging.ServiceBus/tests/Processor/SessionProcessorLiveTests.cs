@@ -483,10 +483,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AutoComplete = autoComplete,
                 };
 
+                var sessionIds = new List<string>();
+                sessionIds.Add(sessionId);
                 var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options,
-                    sessionId); // using the last sessionId from the loop
+                    sessionIds); // using the last sessionId from the loop
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
@@ -779,5 +781,92 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             }
         }
 
+
+        [Test]
+        [TestCase(1, 2, false)]
+        [TestCase(5, 3, true)]
+        [TestCase(10, 10, false)]
+        [TestCase(20, 10, false)]
+        public async Task ProcessMessagesFromMultipleNamedSessions(int numThreads, int specifiedSessionCount, bool autoComplete)
+        {
+
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                var sessionIds = new List<string>();
+                for (int i = 0; i < specifiedSessionCount; i++)
+                {
+                    var sessionId = Guid.NewGuid().ToString();
+                    sessionIds.Add(sessionId);
+                    await sender.SendAsync(GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, true);
+                }
+
+                // sending 2 more messages and not specifying these sessionIds when creating a processor,
+                // to make sure that these messages will not be received.
+                var sessionId1 = Guid.NewGuid().ToString();
+                await sender.SendAsync(GetMessage(sessionId1));
+                sessions.TryAdd(sessionId1, true);
+
+                var sessionId2 = Guid.NewGuid().ToString();
+                await sender.SendAsync(GetMessage(sessionId2));
+                sessions.TryAdd(sessionId2, true);
+
+
+                int messageCt = 0;
+
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = autoComplete,
+                };
+
+                var processor = client.CreateSessionProcessor(
+                    scope.QueueName,
+                    options,
+                    sessionIds); // using the last sessionId from the loop
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    try
+                    {
+                        var message = args.Message;
+                        if (!autoComplete)
+                        {
+                            await args.CompleteAsync(message);
+                        }
+                        sessions.TryRemove(message.SessionId, out bool _);
+                        Assert.IsTrue(sessionIds.Contains(message.SessionId));
+                        Assert.IsTrue(sessionIds.Contains(args.SessionId));
+                        Assert.IsNotNull(args.SessionLockedUntil);
+                    }
+                    finally
+                    {
+                        var ct = Interlocked.Increment(ref messageCt);
+                        if (ct == specifiedSessionCount)
+                        {
+                            tcs.SetResult(true);
+                        }
+                    }
+                }
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+
+                Assert.AreEqual(specifiedSessionCount, messageCt);
+
+                // we should have received messages from only the specified sessions
+                Assert.AreEqual(2, sessions.Count);
+            }
+        }
     }
 }
