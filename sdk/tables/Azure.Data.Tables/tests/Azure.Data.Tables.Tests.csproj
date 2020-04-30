@@ -19,7 +19,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\TableServiceClientLiveTests\" />
+    <Folder Include="SessionRecords\" />
   </ItemGroup>
   
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
