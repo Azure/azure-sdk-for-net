@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of an Azure resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='accountName'>
             /// Cosmos DB database account name.
