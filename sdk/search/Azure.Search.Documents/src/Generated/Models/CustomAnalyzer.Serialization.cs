@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
 
         internal static CustomAnalyzer DeserializeCustomAnalyzer(JsonElement element)
         {
-            TokenizerName tokenizer = default;
+            LexicalTokenizerName tokenizer = default;
             IList<TokenFilterName> tokenFilters = default;
             IList<string> charFilters = default;
             string odataType = default;
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Models
             {
                 if (property.NameEquals("tokenizer"))
                 {
-                    tokenizer = new TokenizerName(property.Value.GetString());
+                    tokenizer = new LexicalTokenizerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tokenFilters"))

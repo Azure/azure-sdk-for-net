@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A skill to translate text from one language to another. </summary>
-    public partial class TextTranslationSkill : Skill
+    public partial class TextTranslationSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of TextTranslationSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

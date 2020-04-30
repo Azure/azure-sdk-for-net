@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="indexAnalyzer"> The name of the analyzer used at indexing time for the field. This option can be used only with searchable fields. It must be set together with searchAnalyzer and it cannot be set together with the analyzer option.  This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
         /// <param name="synonymMaps"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
-        internal SearchField(string name, DataType type, bool? isKey, bool? isRetrievable, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, AnalyzerName? analyzer, AnalyzerName? searchAnalyzer, AnalyzerName? indexAnalyzer, IList<string> synonymMaps, IList<SearchField> fields)
+        internal SearchField(string name, SearchFieldDataType type, bool? isKey, bool? isRetrievable, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, LexicalAnalyzerName? analyzer, LexicalAnalyzerName? searchAnalyzer, LexicalAnalyzerName? indexAnalyzer, IList<string> synonymMaps, IList<SearchField> fields)
         {
             Name = name;
             Type = type;
@@ -45,10 +45,10 @@ namespace Azure.Search.Documents.Models
             Fields = fields;
         }
         /// <summary> The name of the analyzer to use for the field. This option can be used only with searchable fields and it can&apos;t be set together with either searchAnalyzer or indexAnalyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields. </summary>
-        public AnalyzerName? Analyzer { get; set; }
+        public LexicalAnalyzerName? Analyzer { get; set; }
         /// <summary> The name of the analyzer used at search time for the field. This option can be used only with searchable fields. It must be set together with indexAnalyzer and it cannot be set together with the analyzer option. This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. This analyzer can be updated on an existing field. Must be null for complex fields. </summary>
-        public AnalyzerName? SearchAnalyzer { get; set; }
+        public LexicalAnalyzerName? SearchAnalyzer { get; set; }
         /// <summary> The name of the analyzer used at indexing time for the field. This option can be used only with searchable fields. It must be set together with searchAnalyzer and it cannot be set together with the analyzer option.  This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields. </summary>
-        public AnalyzerName? IndexAnalyzer { get; set; }
+        public LexicalAnalyzerName? IndexAnalyzer { get; set; }
     }
 }
