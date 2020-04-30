@@ -15,27 +15,27 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// The SKU (tier) of a workspace.
+    /// A tag of a saved search.
     /// </summary>
-    public partial class Sku
+    public partial class Tag
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the Tag class.
         /// </summary>
-        public Sku()
+        public Tag()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the Tag class.
         /// </summary>
-        /// <param name="name">The name of the SKU. Possible values include:
-        /// 'Free', 'Standard', 'Premium', 'PerNode', 'PerGB2018',
-        /// 'Standalone'</param>
-        public Sku(string name)
+        /// <param name="name">The tag name.</param>
+        /// <param name="value">The tag value.</param>
+        public Tag(string name, string value)
         {
             Name = name;
+            Value = value;
             CustomInit();
         }
 
@@ -45,11 +45,16 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the SKU. Possible values include: 'Free',
-        /// 'Standard', 'Premium', 'PerNode', 'PerGB2018', 'Standalone'
+        /// Gets or sets the tag name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tag value.
+        /// </summary>
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -62,6 +67,10 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
         }
     }
