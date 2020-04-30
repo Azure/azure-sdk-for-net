@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Security
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2015-06-01-preview"),
+                new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdaptiveNetworkHardenings", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2019-01-01"),
                 new Tuple<string, string, string>("Security", "Alerts", "2019-01-01"),
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Security
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/security/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Workspace\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "36f3546ab1f27bb38fa895bbaa90dd9f3e3f80cd";
+      public static readonly String GithubCommidId = "154f39fa5d487cc87e70c738847372a664a99278";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

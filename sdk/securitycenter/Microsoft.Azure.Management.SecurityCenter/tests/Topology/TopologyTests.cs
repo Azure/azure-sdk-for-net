@@ -35,6 +35,7 @@ namespace SecurityCenter.Tests
 
         #endregion
 
+        #region Topology Tests
         [Fact]
         public void Topology_List()
         {
@@ -56,6 +57,8 @@ namespace SecurityCenter.Tests
                 ValidateTopologyResource(topologyResource);
             }
         }
+
+        #endregion
 
         #region Validations
 

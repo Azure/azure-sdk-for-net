@@ -78,7 +78,6 @@ namespace Microsoft.Azure.Management.Security
         /// Name of an application control VM/server group
         /// </param>
         /// <param name='body'>
-        /// The updated VM/server group data
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -95,7 +94,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingPutGroupData body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an application control VM/server group
         /// </summary>

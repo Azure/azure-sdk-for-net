@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Security
                     throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
                 }
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -453,7 +453,6 @@ namespace Microsoft.Azure.Management.Security
         /// Name of an application control VM/server group
         /// </param>
         /// <param name='body'>
-        /// The updated VM/server group data
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -476,7 +475,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingPutGroupData body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AppWhitelistingGroup>> PutWithHttpMessagesAsync(string groupName, AppWhitelistingGroup body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -501,7 +500,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -702,7 +701,7 @@ namespace Microsoft.Azure.Management.Security
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "groupName");
             }
-            string apiVersion = "2015-06-01-preview";
+            string apiVersion = "2020-01-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

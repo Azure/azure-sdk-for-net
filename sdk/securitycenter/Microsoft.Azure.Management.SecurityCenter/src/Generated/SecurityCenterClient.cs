@@ -137,11 +137,6 @@ namespace Microsoft.Azure.Management.Security
         public virtual IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; private set; }
 
         /// <summary>
-        /// Gets the IAdaptiveApplicationControlsOperations.
-        /// </summary>
-        public virtual IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; private set; }
-
-        /// <summary>
         /// Gets the ILocationsOperations.
         /// </summary>
         public virtual ILocationsOperations Locations { get; private set; }
@@ -220,6 +215,11 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IAssessmentsOperations.
         /// </summary>
         public virtual IAssessmentsOperations Assessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAdaptiveApplicationControlsOperations.
+        /// </summary>
+        public virtual IAdaptiveApplicationControlsOperations AdaptiveApplicationControls { get; private set; }
 
         /// <summary>
         /// Gets the IAdaptiveNetworkHardeningsOperations.
@@ -494,7 +494,6 @@ namespace Microsoft.Azure.Management.Security
             IotSecuritySolutionsAnalyticsRecommendation = new IotSecuritySolutionsAnalyticsRecommendationOperations(this);
             DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
             ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
-            AdaptiveApplicationControls = new AdaptiveApplicationControlsOperations(this);
             Locations = new LocationsOperations(this);
             Operations = new Operations(this);
             Tasks = new TasksOperations(this);
@@ -511,6 +510,7 @@ namespace Microsoft.Azure.Management.Security
             Automations = new AutomationsOperations(this);
             AssessmentsMetadata = new AssessmentsMetadataOperations(this);
             Assessments = new AssessmentsOperations(this);
+            AdaptiveApplicationControls = new AdaptiveApplicationControlsOperations(this);
             AdaptiveNetworkHardenings = new AdaptiveNetworkHardeningsOperations(this);
             AllowedConnections = new AllowedConnectionsOperations(this);
             Topology = new TopologyOperations(this);

@@ -105,9 +105,8 @@ namespace Microsoft.Azure.Management.Security
             /// Name of an application control VM/server group
             /// </param>
             /// <param name='body'>
-            /// The updated VM/server group data
             /// </param>
-            public static AppWhitelistingGroup Put(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingPutGroupData body)
+            public static AppWhitelistingGroup Put(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingGroup body)
             {
                 return operations.PutAsync(groupName, body).GetAwaiter().GetResult();
             }
@@ -122,12 +121,11 @@ namespace Microsoft.Azure.Management.Security
             /// Name of an application control VM/server group
             /// </param>
             /// <param name='body'>
-            /// The updated VM/server group data
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AppWhitelistingGroup> PutAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingPutGroupData body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppWhitelistingGroup> PutAsync(this IAdaptiveApplicationControlsOperations operations, string groupName, AppWhitelistingGroup body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PutWithHttpMessagesAsync(groupName, body, null, cancellationToken).ConfigureAwait(false))
                 {

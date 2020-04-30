@@ -36,6 +36,7 @@ namespace SecurityCenter.Tests
 
         #endregion
 
+        #region AdaptiveNetworkHardenings Tests
         [Fact]
         public void AdaptiveNetworkHardenings_Get()
         {
@@ -63,11 +64,13 @@ namespace SecurityCenter.Tests
                     {
                        new Rule("SystemGenerated", "Inbound", 3389, new List<string>() { "TCP"}, new List<string>())
                     },
-                    new [] { "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/MyResourceGroup/providers/Microsoft.Network/networkSecurityGroups/MyNsg" }).Result;
+                    new[] { "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/MyResourceGroup/providers/Microsoft.Network/networkSecurityGroups/MyNsg" }).Result;
 
                 Assert.Equal(HttpStatusCode.Accepted, response.Response.StatusCode);
             }
         }
+
+        #endregion
 
         #region Validations
 

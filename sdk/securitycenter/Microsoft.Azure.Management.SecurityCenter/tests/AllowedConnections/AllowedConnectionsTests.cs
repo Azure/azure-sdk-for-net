@@ -35,6 +35,8 @@ namespace SecurityCenter.Tests
 
         #endregion
 
+        #region AllowedConnections tests
+
         [Fact]
         public void AllowedConnections_List()
         {
@@ -56,6 +58,8 @@ namespace SecurityCenter.Tests
                 ValidateAllowedConnectionsResource(allowedConnectionsResource);
             }
         }
+
+        #endregion
 
         #region Validations
 
