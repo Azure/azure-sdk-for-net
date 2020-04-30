@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "monitor/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "applicationinsights/resource-manager" -AutoRestVersion "2.0.4413"
