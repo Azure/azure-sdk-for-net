@@ -49,12 +49,9 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\core\Azure.Core\tests\TestFramework\Azure.Core.TestFramework.csproj" />
-    <None Include="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
-  <!-- Import the test recording props to support recording live tests -->
-  <Import Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\tests\TestFramework\TestRecording.props" />
   
   <!--Add shared storage properties-->
   <PropertyGroup>

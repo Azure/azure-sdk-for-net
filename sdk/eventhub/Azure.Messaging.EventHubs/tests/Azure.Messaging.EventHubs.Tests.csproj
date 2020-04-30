@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\core\Azure.Core\tests\TestFramework\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
     <ProjectReference Include="..\samples\Azure.Messaging.EventHubs.Samples.csproj" />
   </ItemGroup>

@@ -20,7 +20,7 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
-    <ProjectReference Include="..\..\..\core\Azure.Core\tests\TestFramework\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->
@@ -38,7 +38,4 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-  
-  <!-- Import the test recording props to support recording live tests -->
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework\TestRecording.props" />
 </Project>

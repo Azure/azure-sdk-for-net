@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
 
