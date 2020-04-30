@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.AI.FormRecognizer.Models;
 
 namespace Azure.AI.FormRecognizer.Tests

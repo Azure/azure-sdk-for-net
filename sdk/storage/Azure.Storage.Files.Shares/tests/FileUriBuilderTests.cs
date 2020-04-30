@@ -3,7 +3,7 @@
 
 using System;
 using System.Net;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;

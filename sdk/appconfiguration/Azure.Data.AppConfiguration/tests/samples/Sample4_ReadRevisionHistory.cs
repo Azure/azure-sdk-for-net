@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
