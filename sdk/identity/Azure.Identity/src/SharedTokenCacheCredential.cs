@@ -116,12 +116,7 @@ namespace Azure.Identity
             }
             catch (MsalUiRequiredException)
             {
-                throw scope.Failed(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
+                throw scope.FailAndWrap(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
             }
             catch (Exception e)
             {

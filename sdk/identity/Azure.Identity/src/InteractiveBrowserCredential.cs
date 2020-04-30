@@ -52,12 +52,17 @@ namespace Azure.Identity
         }
 
         internal InteractiveBrowserCredential(string tenantId, string clientId, CredentialPipeline pipeline)
+            : this(tenantId, clientId, pipeline, default)
+        {
+        }
+
+        internal InteractiveBrowserCredential(string tenantId, string clientId, CredentialPipeline pipeline, MsalPublicClient client)
         {
             if (clientId is null) throw new ArgumentNullException(nameof(clientId));
 
             _pipeline = pipeline;
 
-            _client = _pipeline.CreateMsalPublicClient(clientId, tenantId, "http://localhost");
+            _client = client ?? _pipeline.CreateMsalPublicClient(clientId, tenantId, "http://localhost");
         }
 
         internal InteractiveBrowserCredential(CredentialPipeline pipeline, MsalPublicClient client)
@@ -116,12 +121,6 @@ namespace Azure.Identity
 
                     return scope.Succeeded(token);
                 }
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
             }
             catch (Exception e)
             {

@@ -125,7 +125,7 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                throw scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage));
+                throw scope.FailAndWrap(new CredentialUnavailableException(UnavailbleErrorMessage));
             }
 
             try
@@ -135,12 +135,6 @@ namespace Azure.Identity
                     : _credential.GetToken(requestContext, cancellationToken);
 
                 return scope.Succeeded(token);
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
             }
             catch (Exception e)
             {

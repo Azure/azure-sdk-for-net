@@ -112,11 +112,6 @@ namespace Azure.Identity
 
                 return scope.Succeeded(token);
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-                throw;
-            }
             catch (Exception e) when (!(e is CredentialUnavailableException))
             {
                throw scope.FailAndWrap(new AuthenticationFailedException(UnhandledExceptionMessage, e));
@@ -125,7 +120,6 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> GetTokenFromSourcesAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-
             int i;
 
             List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();

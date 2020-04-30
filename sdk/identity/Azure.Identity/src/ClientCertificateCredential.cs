@@ -145,12 +145,6 @@ namespace Azure.Identity
                 X509Certificate2 cert = ClientCertificateProvider.GetCertificateAsync(false, cancellationToken).EnsureCompleted();
                 return scope.Succeeded(_client.Authenticate(TenantId, ClientId, cert, requestContext.Scopes, cancellationToken));
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
             catch (Exception e)
             {
                 throw scope.FailAndWrap(e);
@@ -171,12 +165,6 @@ namespace Azure.Identity
             {
                 X509Certificate2 cert = await ClientCertificateProvider.GetCertificateAsync(true, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(await _client.AuthenticateAsync(TenantId, ClientId, cert, requestContext.Scopes, cancellationToken).ConfigureAwait(false));
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
             }
             catch (Exception e)
             {
