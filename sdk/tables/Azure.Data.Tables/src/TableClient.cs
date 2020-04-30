@@ -36,6 +36,22 @@ namespace Azure.Data.Tables
         { }
 
         /// <summary>
+        /// Creates the table in the storage account.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual TableResponse Create(CancellationToken cancellationToken = default) =>
+            _tableOperations.RestClient.Create(new TableProperties(_table), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// Creates the table in the storage account.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns></returns>
+        public virtual async Task<TableResponse> CreateAsync(CancellationToken cancellationToken = default) =>
+            await _tableOperations.CreateAsync(new TableProperties(_table), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// Inserts a Table Entity into the Table.
         /// </summary>
         /// <param name="entity">The entity to insert.</param>
@@ -60,36 +76,174 @@ namespace Azure.Data.Tables
                                           cancellationToken: cancellationToken);
 
         /// <summary>
-        /// Updates the specified table entity.
+        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
-        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
-        /// <param name="rowKey">The rowKey  that identifies the table entity.</param>
-        /// <param name="entity">The entity to update.</param>
+        /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual async Task<Response> UpdateAsync(string partitionKey, string rowKey, IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
-            await _tableOperations.UpdateEntityAsync(_table,
-                                                     partitionKey,
-                                                     rowKey,
+        public virtual async Task<Response> UpsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        {
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+            }
+
+            return await _tableOperations.UpdateEntityAsync(_table,
+                                                     partitionKey as string,
+                                                     rowKey as string,
                                                      tableEntityProperties: entity,
                                                      queryOptions: new QueryOptions() { Format = _format },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
-        /// Updates the specified table entity.
+        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
         /// </summary>
-        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
-        /// <param name="rowKey">The rowKey  that identifies the table entity.</param>
-        /// <param name="entity">The entity to update.</param>
+        /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        public virtual Response Update(string partitionKey, string rowKey, IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
-            _tableOperations.UpdateEntity(_table,
-                                          partitionKey,
-                                          rowKey,
+        public virtual Response Upsert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
+        {
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+            }
+
+            return _tableOperations.UpdateEntity(_table,
+                                          partitionKey as string,
+                                          rowKey as string,
                                           tableEntityProperties: entity,
                                           queryOptions: new QueryOptions() { Format = _format },
                                           cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// </summary>
+        /// <param name="entity">The entity to update.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual async Task<Response> UpdateAsync(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
+
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+            }
+
+            return await _tableOperations.UpdateEntityAsync(_table,
+                                                     partitionKey as string,
+                                                     rowKey as string,
+                                                     tableEntityProperties: entity,
+                                                     queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Replaces the specified table entity, if it exists. Inserts the entity if it does not exist.
+        /// </summary>
+        /// <param name="entity">The entity to update.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual Response Update(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
+
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+            }
+
+            return _tableOperations.UpdateEntity(_table,
+                                          partitionKey as string,
+                                          rowKey as string,
+                                          tableEntityProperties: entity,
+                                          queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                          cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
+        /// </summary>
+        /// <param name="entity">The entity to merge.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
+        {
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+            }
+
+            return (await _tableOperations.RestClient.MergeEntityAsync(_table,
+                                                     partitionKey as string,
+                                                     rowKey as string,
+                                                     tableEntityProperties: entity,
+                                                     queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                                     cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
+        }
+
+        /// <summary>
+        /// Merges the specified table entity by updating only the properties present in the supplied entity, if it exists. Inserts the entity if it does not exist.
+        /// </summary>
+        /// <param name="entity">The entity to merge.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual Response Merge(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
+        {
+            //TODO: Create Resource strings
+            if (!entity.TryGetValue(TableConstants.PropertyNames.PartitionKey, out var partitionKey))
+            {
+                throw new ArgumentException("The entity must contain a PartitionKey value", nameof(entity));
+            }
+
+            if (!entity.TryGetValue(TableConstants.PropertyNames.RowKey, out var rowKey))
+            {
+                throw new ArgumentException("The entity must contain a RowKey value", nameof(entity));
+            }
+
+            return _tableOperations.RestClient.MergeEntity(_table,
+                                          partitionKey as string,
+                                          rowKey as string,
+                                          tableEntityProperties: entity,
+                                          queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                          cancellationToken: cancellationToken).GetRawResponse();
+        }
 
         /// <summary>
         /// Queries entities in the table.
@@ -157,6 +311,46 @@ namespace Azure.Data.Tables
                                        CreateContinuationTokenFromHeaders(response.Headers),
                                        response.GetRawResponse());
             });
+        }
+
+        /// <summary>
+        /// Deletes the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual async Task<Response> DeleteAsync(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(partitionKey, nameof(partitionKey));
+            Argument.AssertNotNull(rowKey, nameof(rowKey));
+
+            return await _tableOperations.DeleteEntityAsync(_table,
+                                                     partitionKey as string,
+                                                     rowKey as string,
+                                                     queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                                     cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes the specified table entity.
+        /// </summary>
+        /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
+        /// <param name="rowKey">The rowKey that identifies the table entity.</param>
+        /// <param name="eTag">The ETag value to be used for optimistic concurrency. The default is to delete unconditionally.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        public virtual Response Delete(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(partitionKey, nameof(partitionKey));
+            Argument.AssertNotNull(rowKey, nameof(rowKey));
+
+            return _tableOperations.DeleteEntity(_table,
+                                          partitionKey as string,
+                                          rowKey as string,
+                                          queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                          cancellationToken: cancellationToken);
         }
 
         private static string CreateContinuationTokenFromHeaders(TableInternalQueryEntitiesHeaders headers)

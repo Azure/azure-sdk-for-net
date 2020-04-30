@@ -12,5 +12,7 @@ namespace Azure.Data.Tables.Models
         public string NextPartitionKey { get; set; }
         /// <summary> The row key continuation token for an Entity request. </summary>
         public string NextRowKey { get; set; }
+        /// <summary> The If-Match header value for an Entity request. </summary>
+        public string ETag { get; set; }
     }
 }
