@@ -165,6 +165,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         public virtual IGremlinResourcesOperations GremlinResources { get; private set; }
 
         /// <summary>
+        /// Gets the INotebookWorkspacesOperations.
+        /// </summary>
+        public virtual INotebookWorkspacesOperations NotebookWorkspaces { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
@@ -433,6 +438,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             TableResources = new TableResourcesOperations(this);
             CassandraResources = new CassandraResourcesOperations(this);
             GremlinResources = new GremlinResourcesOperations(this);
+            NotebookWorkspaces = new NotebookWorkspacesOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
