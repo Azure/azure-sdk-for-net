@@ -50,7 +50,5 @@ namespace Azure.AI.FormRecognizer
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
             };
         }
-
-        internal FormRecognizerClientOptions Clone() => new FormRecognizerClientOptions(Version) { };
     }
 }
