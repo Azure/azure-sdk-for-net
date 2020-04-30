@@ -820,11 +820,6 @@ namespace Azure.Search.Documents.Models
         public bool? ConsumeAllTokens { get { throw null; } set { } }
         public int? MaxTokenCount { get { throw null; } set { } }
     }
-    public partial class ListSynonymMapsResult
-    {
-        internal ListSynonymMapsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.SynonymMap> SynonymMaps { get { throw null; } }
-    }
     public partial class LuceneStandardAnalyzer : Azure.Search.Documents.Models.LexicalAnalyzer
     {
         public LuceneStandardAnalyzer(string name) : base (default(string)) { }
