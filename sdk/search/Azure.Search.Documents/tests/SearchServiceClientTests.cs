@@ -293,13 +293,13 @@ namespace Azure.Search.Documents.Tests
             SearchServiceClient serviceClient = resources.GetServiceClient();
 
             // Create the Azure Blob data source and indexer.
-            DataSource dataSource = new DataSource(
+            SearchIndexerDataSource dataSource = new SearchIndexerDataSource(
                 resources.StorageAccountName,
-                DataSourceType.AzureBlob,
-                new DataSourceCredentials(resources.StorageAccountConnectionString),
-                new DataContainer(resources.BlobContainerName));
+                SearchIndexerDataSourceType.AzureBlob,
+                resources.StorageAccountConnectionString,
+                new SearchIndexerDataContainer(resources.BlobContainerName));
 
-            DataSource actualSource = await serviceClient.CreateDataSourceAsync(
+            SearchIndexerDataSource actualSource = await serviceClient.CreateDataSourceAsync(
                 dataSource,
                 GetOptions());
 
@@ -416,7 +416,7 @@ namespace Azure.Search.Documents.Tests
             {
                 await DelayAsync(delay, cancellationToken: cts.Token);
 
-                IndexerExecutionInfo status = await client.GetIndexerStatusAsync(
+                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
                     indexerName,
                     GetOptions(),
                     cts.Token);

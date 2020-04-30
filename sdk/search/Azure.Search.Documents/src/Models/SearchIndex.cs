@@ -25,13 +25,13 @@ namespace Azure.Search.Documents.Models
 
             Name = name;
 
-            Analyzers = new List<Analyzer>();
+            Analyzers = new List<LexicalAnalyzer>();
             CharFilters = new List<CharFilter>();
             Fields = new List<SearchField>();
             ScoringProfiles = new List<ScoringProfile>();
             Suggesters = new List<Suggester>();
             TokenFilters = new List<TokenFilter>();
-            Tokenizers = new List<Tokenizer>();
+            Tokenizers = new List<LexicalTokenizer>();
         }
 
         /// <summary>
@@ -48,13 +48,13 @@ namespace Azure.Search.Documents.Models
 
             Name = name;
 
-            Analyzers = new List<Analyzer>();
+            Analyzers = new List<LexicalAnalyzer>();
             CharFilters = new List<CharFilter>();
             Fields = new List<SearchField>(fields);
             ScoringProfiles = new List<ScoringProfile>();
             Suggesters = new List<Suggester>();
             TokenFilters = new List<TokenFilter>();
-            Tokenizers = new List<Tokenizer>();
+            Tokenizers = new List<LexicalTokenizer>();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Models
         /// Gets the analyzers for the index.
         /// </summary>
         [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
-        public IList<Analyzer> Analyzers { get; }
+        public IList<LexicalAnalyzer> Analyzers { get; }
 
         /// <summary>
         /// Gets the character filters for the index.
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Models
         /// Gets the tokenizers for the index.
         /// </summary>
         [CodeGenMember(Initialize = true, EmptyAsUndefined = true)]
-        public IList<Tokenizer> Tokenizers { get; }
+        public IList<LexicalTokenizer> Tokenizers { get; }
 
         /// <summary>
         /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndex"/>.

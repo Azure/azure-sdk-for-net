@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests.Models
             }
 
             using JsonDocument doc = JsonDocument.Parse(stream.ToArray());
-            PatternTokenizer actual = Tokenizer.DeserializeTokenizer(doc.RootElement) as PatternTokenizer;
+            PatternTokenizer actual = LexicalTokenizer.DeserializeLexicalTokenizer(doc.RootElement) as PatternTokenizer;
 
             CollectionAssert.AreEqual(expected.Flags, actual?.Flags);
         }

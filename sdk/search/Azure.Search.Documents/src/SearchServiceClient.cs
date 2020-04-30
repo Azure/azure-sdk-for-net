@@ -260,18 +260,18 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Creates a new data source.
         /// </summary>
-        /// <param name="dataSource">Required. The <see cref="DataSource"/> to create.</param>
+        /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="DataSource"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<DataSource> CreateDataSource(
-            DataSource dataSource,
+        public virtual Response<SearchIndexerDataSource> CreateDataSource(
+            SearchIndexerDataSource dataSource,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             DataSourcesClient.Create(
@@ -282,18 +282,18 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Creates a new data source.
         /// </summary>
-        /// <param name="dataSource">Required. The <see cref="DataSource"/> to create.</param>
+        /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="DataSource"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataSource>> CreateDataSourceAsync(
-            DataSource dataSource,
+        public virtual async Task<Response<SearchIndexerDataSource>> CreateDataSourceAsync(
+            SearchIndexerDataSource dataSource,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             await DataSourcesClient.CreateAsync(
@@ -305,18 +305,18 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Creates a new data source or updates an existing data source.
         /// </summary>
-        /// <param name="dataSource">Required. The <see cref="DataSource"/> to create or update.</param>
+        /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create or update.</param>
         /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="DataSource"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<DataSource> CreateOrUpdateDataSource(
-            DataSource dataSource,
+        public virtual Response<SearchIndexerDataSource> CreateOrUpdateDataSource(
+            SearchIndexerDataSource dataSource,
             SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             DataSourcesClient.CreateOrUpdate(
@@ -330,18 +330,18 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Creates a new data source or updates an existing data source.
         /// </summary>
-        /// <param name="dataSource">Required. The <see cref="DataSource"/> to create or update.</param>
+        /// <param name="dataSource">Required. The <see cref="SearchIndexerDataSource"/> to create or update.</param>
         /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="DataSource"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSource"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSource"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataSource>> CreateOrUpdateDataSourceAsync(
-            DataSource dataSource,
+        public virtual async Task<Response<SearchIndexerDataSource>> CreateOrUpdateDataSourceAsync(
+            SearchIndexerDataSource dataSource,
             SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await DataSourcesClient.CreateOrUpdateAsync(
@@ -397,16 +397,16 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Gets a specific <see cref="DataSource"/>.
+        /// Gets a specific <see cref="SearchIndexerDataSource"/>.
         /// </summary>
-        /// <param name="dataSourceName">Required. The name of the <see cref="DataSource"/> to get.</param>
+        /// <param name="dataSourceName">Required. The name of the <see cref="SearchIndexerDataSource"/> to get.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="DataSource"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<DataSource> GetDataSource(
+        public virtual Response<SearchIndexerDataSource> GetDataSource(
             string dataSourceName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -416,16 +416,16 @@ namespace Azure.Search.Documents
                 cancellationToken);
 
         /// <summary>
-        /// Gets a specific <see cref="DataSource"/>.
+        /// Gets a specific <see cref="SearchIndexerDataSource"/>.
         /// </summary>
-        /// <param name="dataSourceName">Required. The name of the <see cref="DataSource"/> to get.</param>
+        /// <param name="dataSourceName">Required. The name of the <see cref="SearchIndexerDataSource"/> to get.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="DataSource"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataSource>> GetDataSourceAsync(
+        public virtual async Task<Response<SearchIndexerDataSource>> GetDataSourceAsync(
             string dataSourceName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -441,10 +441,10 @@ namespace Azure.Search.Documents
         /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="DataSource"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<IReadOnlyList<DataSource>> GetDataSources(
+        public virtual Response<IReadOnlyList<SearchIndexerDataSource>> GetDataSources(
             IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
@@ -463,10 +463,10 @@ namespace Azure.Search.Documents
         /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="DataSource"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerDataSource"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IReadOnlyList<DataSource>>> GetDataSourcesAsync(
+        public virtual async Task<Response<IReadOnlyList<SearchIndexerDataSource>>> GetDataSourcesAsync(
             IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
@@ -490,12 +490,12 @@ namespace Azure.Search.Documents
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing a list of <see cref="TokenInfo"/> for analyzed text.
+        /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="analyzeRequest"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<IReadOnlyList<TokenInfo>> AnalyzeText(
+        public virtual Response<IReadOnlyList<AnalyzedTokenInfo>> AnalyzeText(
             string indexName,
             AnalyzeRequest analyzeRequest,
             SearchRequestOptions options = null,
@@ -518,12 +518,12 @@ namespace Azure.Search.Documents
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing a list of <see cref="TokenInfo"/> for analyzed text.
+        /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="analyzeRequest"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IReadOnlyList<TokenInfo>>> AnalyzeTextAsync(
+        public virtual async Task<Response<IReadOnlyList<AnalyzedTokenInfo>>> AnalyzeTextAsync(
             string indexName,
             AnalyzeRequest analyzeRequest,
             SearchRequestOptions options = null,
@@ -1056,11 +1056,11 @@ namespace Azure.Search.Documents
         /// <param name="indexerName">Required. The name of the indexer for which to retrieve status.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="IndexerExecutionInfo"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerStatus"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<IndexerExecutionInfo> GetIndexerStatus(
+        public virtual Response<SearchIndexerStatus> GetIndexerStatus(
             string indexerName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1075,11 +1075,11 @@ namespace Azure.Search.Documents
         /// <param name="indexerName">Required. The name of the indexer for which to retrieve status.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="IndexerExecutionInfo"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerStatus"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IndexerExecutionInfo>> GetIndexerStatusAsync(
+        public virtual async Task<Response<SearchIndexerStatus>> GetIndexerStatusAsync(
             string indexerName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1172,18 +1172,18 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Creates a new skillset.
         /// </summary>
-        /// <param name="skillset">Required. The <see cref="Skillset"/> to create.</param>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="Skillset"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<Skillset> CreateSkillset(
-            Skillset skillset,
+        public virtual Response<SearchIndexerSkillset> CreateSkillset(
+            SearchIndexerSkillset skillset,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             SkillsetsClient.Create(
@@ -1194,18 +1194,18 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Creates a new skillset.
         /// </summary>
-        /// <param name="skillset">Required. The <see cref="Skillset"/> to create.</param>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="Skillset"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<Skillset>> CreateSkillsetAsync(
-            Skillset skillset,
+        public virtual async Task<Response<SearchIndexerSkillset>> CreateSkillsetAsync(
+            SearchIndexerSkillset skillset,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SkillsetsClient.CreateAsync(
@@ -1217,18 +1217,18 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Creates a new skillset or updates an existing skillset.
         /// </summary>
-        /// <param name="skillset">Required. The <see cref="Skillset"/> to create or update.</param>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
         /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="Skillset"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<Skillset> CreateOrUpdateSkillset(
-            Skillset skillset,
+        public virtual Response<SearchIndexerSkillset> CreateOrUpdateSkillset(
+            SearchIndexerSkillset skillset,
             SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             SkillsetsClient.CreateOrUpdate(
@@ -1242,18 +1242,18 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Creates a new skillset or updates an existing skillset.
         /// </summary>
-        /// <param name="skillset">Required. The <see cref="Skillset"/> to create or update.</param>
+        /// <param name="skillset">Required. The <see cref="SearchIndexerSkillset"/> to create or update.</param>
         /// <param name="options">Optional <see cref="SearchConditionalOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
-        /// The <see cref="Response{T}"/> from the server containing the <see cref="Skillset"/> that was created.
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerSkillset"/> that was created.
         /// This may differ slightly from what was passed in since the service may return back properties set to their default values.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillset"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<Skillset>> CreateOrUpdateSkillsetAsync(
-            Skillset skillset,
+        public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateSkillsetAsync(
+            SearchIndexerSkillset skillset,
             SearchConditionalOptions options = null,
             CancellationToken cancellationToken = default) =>
             await SkillsetsClient.CreateOrUpdateAsync(
@@ -1309,16 +1309,16 @@ namespace Azure.Search.Documents
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// Gets a specific <see cref="Skillset"/>.
+        /// Gets a specific <see cref="SearchIndexerSkillset"/>.
         /// </summary>
-        /// <param name="skillsetName">Required. The name of the <see cref="Skillset"/> to get.</param>
+        /// <param name="skillsetName">Required. The name of the <see cref="SearchIndexerSkillset"/> to get.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="Skillset"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<Skillset> GetSkillset(
+        public virtual Response<SearchIndexerSkillset> GetSkillset(
             string skillsetName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1328,16 +1328,16 @@ namespace Azure.Search.Documents
                 cancellationToken);
 
         /// <summary>
-        /// Gets a specific <see cref="Skillset"/>.
+        /// Gets a specific <see cref="SearchIndexerSkillset"/>.
         /// </summary>
-        /// <param name="skillsetName">Required. The name of the <see cref="Skillset"/> to get.</param>
+        /// <param name="skillsetName">Required. The name of the <see cref="SearchIndexerSkillset"/> to get.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="Skillset"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing the requested <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<Skillset>> GetSkillsetAsync(
+        public virtual async Task<Response<SearchIndexerSkillset>> GetSkillsetAsync(
             string skillsetName,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default) =>
@@ -1353,10 +1353,10 @@ namespace Azure.Search.Documents
         /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="Skillset"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual Response<IReadOnlyList<Skillset>> GetSkillsets(
+        public virtual Response<IReadOnlyList<SearchIndexerSkillset>> GetSkillsets(
             IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)
@@ -1375,10 +1375,10 @@ namespace Azure.Search.Documents
         /// <param name="selectProperties">Optional property names to select. The default is all properties.</param>
         /// <param name="options">Optional <see cref="SearchRequestOptions"/> to customize the operation's behavior.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
-        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="Skillset"/>.</returns>
+        /// <returns>The <see cref="Response{T}"/> from the server containing a list of <see cref="SearchIndexerSkillset"/>.</returns>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IReadOnlyList<Skillset>>> GetSkillsetsAsync(
+        public virtual async Task<Response<IReadOnlyList<SearchIndexerSkillset>>> GetSkillsetsAsync(
             IEnumerable<string> selectProperties = null,
             SearchRequestOptions options = null,
             CancellationToken cancellationToken = default)

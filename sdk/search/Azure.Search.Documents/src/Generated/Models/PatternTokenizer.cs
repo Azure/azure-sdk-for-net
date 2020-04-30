@@ -10,7 +10,7 @@ using System;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Tokenizer that uses regex pattern matching to construct distinct tokens. This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class PatternTokenizer : Tokenizer
+    public partial class PatternTokenizer : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of PatternTokenizer. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
