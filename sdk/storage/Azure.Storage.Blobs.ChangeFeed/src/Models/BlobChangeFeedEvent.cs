@@ -19,15 +19,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// </summary>
         internal BlobChangeFeedEvent(Dictionary<string, object> record)
         {
-            Topic = (string)record["topic"];
-            Subject = (string)record["subject"];
-            EventType = ToBlobChangeFeedEventType((string)record["eventType"]);
-            EventTime = DateTimeOffset.Parse((string)record["eventTime"], CultureInfo.InvariantCulture);
-            Id = Guid.Parse((string)record["id"]);
-            EventData = new BlobChangeFeedEventData((Dictionary<string, object>)record["data"]);
-            record.TryGetValue("dataVersion", out object dataVersion);
+            Topic = (string)record[Constants.ChangeFeed.Event.Topic];
+            Subject = (string)record[Constants.ChangeFeed.Event.Subject];
+            EventType = ToBlobChangeFeedEventType((string)record[Constants.ChangeFeed.Event.EventType]);
+            EventTime = DateTimeOffset.Parse((string)record[Constants.ChangeFeed.Event.EventTime], CultureInfo.InvariantCulture);
+            Id = Guid.Parse((string)record[Constants.ChangeFeed.Event.EventId]);
+            EventData = new BlobChangeFeedEventData((Dictionary<string, object>)record[Constants.ChangeFeed.Event.Data]);
+            record.TryGetValue(Constants.ChangeFeed.Event.DataVersion, out object dataVersion);
             DataVersion = (long?)dataVersion;
-            record.TryGetValue("metadataVersion", out object metadataVersion);
+            record.TryGetValue(Constants.ChangeFeed.Event.MetadataVersion, out object metadataVersion);
             MetadataVersion = (string)metadataVersion;
         }
 

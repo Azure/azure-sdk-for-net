@@ -23,7 +23,17 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <summary>
         /// Avro Reader to parser the Events.
         /// </summary>
-        private AvroReader _avroReader;
+        private readonly AvroReader _avroReader;
+
+        /// <summary>
+        /// Data stream.
+        /// </summary>
+        private readonly Stream _dataStream;
+
+        /// <summary>
+        /// Avro head stream.
+        /// </summary>
+        private readonly Stream _headStream;
 
         /// <summary>
         /// The byte offset of the beginning of the current
@@ -35,17 +45,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// The index of the Event within the current block.
         /// </summary>
         public long EventIndex { get; private set; }
-
-
-        /// <summary>
-        /// Data stream.
-        /// </summary>
-        private LazyLoadingBlobStream _dataStream;
-
-        /// <summary>
-        /// Avro head stream.
-        /// </summary>
-        private Stream _headStream;
 
         public Chunk(
             BlobContainerClient containerClient,
@@ -80,6 +79,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 _avroReader = new AvroReader(_dataStream);
             }
+        }
+
+        /// <summary>
+        /// Constructor for testing.  Do not use.
+        /// </summary>
+        internal Chunk(AvroReader avroReader)
+        {
+            _avroReader = avroReader;
         }
 
         //TODO what if the Segment isn't Finalized??

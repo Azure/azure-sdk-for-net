@@ -19,30 +19,30 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
 
         internal BlobChangeFeedEventData(Dictionary<string, object> record)
         {
-            Api = ((string)record["api"]);
-            ClientRequestId = Guid.Parse((string)record["clientRequestId"]);
-            RequestId = Guid.Parse((string)record["requestId"]);
-            ETag = new ETag((string)record["etag"]);
-            ContentType = (string)record["contentType"];
-            ContentLength = (long)record["contentLength"];
-            BlobType = ((string)record["blobType"]) switch
+            Api = ((string)record[Constants.ChangeFeed.EventData.Api]);
+            ClientRequestId = Guid.Parse((string)record[Constants.ChangeFeed.EventData.ClientRequestId]);
+            RequestId = Guid.Parse((string)record[Constants.ChangeFeed.EventData.RequestId]);
+            ETag = new ETag((string)record[Constants.ChangeFeed.EventData.Etag]);
+            ContentType = (string)record[Constants.ChangeFeed.EventData.ContentType];
+            ContentLength = (long)record[Constants.ChangeFeed.EventData.ContentLength];
+            BlobType = ((string)record[Constants.ChangeFeed.EventData.BlobType]) switch
             {
-                "BlockBlob" => BlobType.Block,
-                "PageBlob" => BlobType.Page,
-                "AppendBlob" => BlobType.Append,
+                Constants.ChangeFeed.EventData.BlockBlob => BlobType.Block,
+                Constants.ChangeFeed.EventData.PageBlob => BlobType.Page,
+                Constants.ChangeFeed.EventData.AppendBlob => BlobType.Append,
                 _ => default
             };
-            record.TryGetValue("contentOffset", out object contentOffset);
+            record.TryGetValue(Constants.ChangeFeed.EventData.ContentOffset, out object contentOffset);
             ContentOffset = (long?)contentOffset;
-            record.TryGetValue("destinationUrl", out object destinationUrl);
+            record.TryGetValue(Constants.ChangeFeed.EventData.DestinationUrl, out object destinationUrl);
             DestinationUri = !string.IsNullOrEmpty((string)destinationUrl) ? new Uri((string)destinationUrl) : null;
-            record.TryGetValue("sourceUrl", out object sourceUrl);
+            record.TryGetValue(Constants.ChangeFeed.EventData.SourceUrl, out object sourceUrl);
             SourceUri = !string.IsNullOrEmpty((string)sourceUrl) ? new Uri((string)sourceUrl) : null;
-            record.TryGetValue("url", out object url);
+            record.TryGetValue(Constants.ChangeFeed.EventData.Url, out object url);
             Uri = !string.IsNullOrEmpty((string)url) ? new Uri((string)url) : null;
-            record.TryGetValue("recursive", out object recursive);
+            record.TryGetValue(Constants.ChangeFeed.EventData.Recursive, out object recursive);
             Recursive = (bool?)recursive;
-            Sequencer = (string)record["sequencer"];
+            Sequencer = (string)record[Constants.ChangeFeed.EventData.Sequencer];
         }
 
         /// <summary>
