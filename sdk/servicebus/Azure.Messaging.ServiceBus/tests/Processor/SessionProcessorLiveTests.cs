@@ -830,7 +830,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options,
-                    sessionIds); // using the last sessionId from the loop
+                    sessionIds);
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
