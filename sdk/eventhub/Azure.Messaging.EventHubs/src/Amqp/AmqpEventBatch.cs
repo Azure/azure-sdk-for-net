@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private readonly long ReservedSize;
 
         /// <summary>A flag that indicates whether or not the instance has been disposed.</summary>
-        private bool _disposed = false;
+        private volatile bool _disposed = false;
 
         /// <summary>The size of the batch, in bytes, as it will be sent via the AMQP transport.</summary>
         private long _sizeBytes = 0;
