@@ -9,30 +9,6 @@
                 "description": "The base resource name."
             }
         },
-        "tenantId": {
-            "type": "string",
-            "metadata": {
-                "description": "The tenant ID to which the application and resources belong."
-            }
-        },
-        "testApplicationId": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client ID used to run tests."
-            }
-        },
-        "testApplicationSecret": {
-            "type": "string",
-            "metadata": {
-                "description": "The application client secret used to run tests."
-            }
-        },
-        "testApplicationOid": {
-            "type": "string",
-            "metadata": {
-                "description": "The client OID to grant access to test resources."
-            }
-        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
@@ -47,11 +23,32 @@
         "endpointSuffix": {
             "defaultValue": ".cognitiveservices.azure.com",
             "type": "string"
+        },
+        "trainingDataAccount": {
+            "type": "string",
+            "defaultValue": "azuresdktrainingdata"
+        },
+        "trainingDataContainer": {
+            "type": "string",
+            "defaultValue": "trainingdata"
+        },
+        "trainingDataResourceId": {
+            "type": "string",
+            "defaultValue": "[resourceId('2cd617ea-1866-46b1-90e3-fffb087ebf9b', 'TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+        },
+        "trainingDataSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('trainingDataContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rl",
+                "signedResource": "c"
+            }
         }
     },
     "variables": {
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]" 
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]"
     },
     "resources": [
         {
@@ -69,18 +66,6 @@
         }
     ],
     "outputs": {
-        "AZURE_TENANT_ID": {
-            "type": "string",
-            "value": "[parameters('tenantId')]"
-        },
-        "AZURE_CLIENT_ID": {
-            "type": "string",
-            "value": "[parameters('testApplicationId')]"
-        },
-        "AZURE_CLIENT_SECRET": {
-            "type": "string",
-            "value": "[parameters('testApplicationSecret')]"
-        },
         "FORM_RECOGNIZER_API_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"
@@ -88,6 +73,10 @@
         "FORM_RECOGNIZER_ENDPOINT": {
             "type": "string",
             "value": "[variables('endpointValue')]"
+        },
+        "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('trainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('trainingDataSasProperties')).serviceSasToken)]"
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Models
             int? maxTokenLength = default;
             bool? isSearchTokenizer = default;
             MicrosoftTokenizerLanguage? language = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new MicrosoftLanguageTokenizer(odatatype, name, maxTokenLength, isSearchTokenizer, language);
+            return new MicrosoftLanguageTokenizer(odataType, name, maxTokenLength, isSearchTokenizer, language);
         }
     }
 }

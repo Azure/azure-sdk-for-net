@@ -35,6 +35,13 @@ namespace Azure.Search.Documents.Tests
         private StringBuilder _log;
 
         /// <summary>
+        /// Gets a value indicating whether or not to log output for successful tests.
+        /// This could be treated as a numeric level in the future if we wanted different
+        /// levels of verbosity, but for now is only boolean.
+        /// </summary>
+        private readonly bool _verbose = Environment.GetEnvironmentVariable("AZURE_SEARCH_TEST_VERBOSE") != null;
+
+        /// <summary>
         /// Start collecting AzureSDK events to log.
         /// </summary>
         public TestLogger() =>
@@ -54,7 +61,7 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         public void OutputEventsForTest()
         {
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            if (_verbose || TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
                 TestContext.Out.WriteLine(_log.ToString());
             }

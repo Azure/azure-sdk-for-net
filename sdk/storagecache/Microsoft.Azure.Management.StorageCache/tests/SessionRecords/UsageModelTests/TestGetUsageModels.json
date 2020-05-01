@@ -1,21 +1,21 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/8c39d797-d54a-4a41-9ade-2eea7c88f549/providers/Microsoft.StorageCache/register?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGMzOWQ3OTctZDU0YS00YTQxLTlhZGUtMmVlYTdjODhmNTQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZUNhY2hlL3JlZ2lzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/d9372f89-091f-468e-8d5a-c48e899f9bd3/providers/Microsoft.StorageCache/register?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDkzNzJmODktMDkxZi00NjhlLThkNWEtYzQ4ZTg5OWY5YmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZUNhY2hlL3JlZ2lzdGVyP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b4466f90-eabd-4d39-a9d5-5acf4bcf7f38"
+          "55e73d54-6414-4a6d-8533-d7489b307217"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28516.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.19592.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -30,13 +30,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "35ca5bbc-56fe-471d-a027-649d98291b97"
+          "279fc9f2-3df4-4b9c-b0c5-6a9623dfda16"
         ],
         "x-ms-correlation-request-id": [
-          "35ca5bbc-56fe-471d-a027-649d98291b97"
+          "279fc9f2-3df4-4b9c-b0c5-6a9623dfda16"
         ],
         "x-ms-routing-request-id": [
-          "CANADACENTRAL:20191102T184553Z:35ca5bbc-56fe-471d-a027-649d98291b97"
+          "CANADACENTRAL:20200423T212641Z:279fc9f2-3df4-4b9c-b0c5-6a9623dfda16"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -45,10 +45,10 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 02 Nov 2019 18:45:52 GMT"
+          "Thu, 23 Apr 2020 21:26:41 GMT"
         ],
         "Content-Length": [
-          "1390"
+          "1826"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -57,25 +57,25 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8c39d797-d54a-4a41-9ade-2eea7c88f549/providers/Microsoft.StorageCache\",\r\n  \"namespace\": \"Microsoft.StorageCache\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"4392ab71-2ce2-4b0d-8770-b352745c73f5\",\r\n      \"roleDefinitionId\": \"e27430df-bd6b-4f3a-bd6d-d52ad1a7d075\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"caches\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"caches/storageTargets\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"usageModels\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/ascoperations\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d9372f89-091f-468e-8d5a-c48e899f9bd3/providers/Microsoft.StorageCache\",\r\n  \"namespace\": \"Microsoft.StorageCache\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"4392ab71-2ce2-4b0d-8770-b352745c73f5\",\r\n      \"roleDefinitionId\": \"e27430df-bd6b-4f3a-bd6d-d52ad1a7d075\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"caches\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Central US EUAP\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ],\r\n      \"capabilities\": \"SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"caches/storageTargets\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Central US EUAP\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"usageModels\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Central US EUAP\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/ascoperations\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Central US EUAP\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8c39d797-d54a-4a41-9ade-2eea7c88f549/providers/Microsoft.StorageCache?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGMzOWQ3OTctZDU0YS00YTQxLTlhZGUtMmVlYTdjODhmNTQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZUNhY2hlP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/d9372f89-091f-468e-8d5a-c48e899f9bd3/providers/Microsoft.StorageCache?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDkzNzJmODktMDkxZi00NjhlLThkNWEtYzQ4ZTg5OWY5YmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZUNhY2hlP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d05fcd76-93fd-431d-9f65-467a131e38e0"
+          "0fbc60d6-960d-4f36-a023-2f1a47a32860"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28516.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "OSVersion/Microsoft.Windows.10.0.19592.",
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
         ]
       },
@@ -87,16 +87,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11996"
         ],
         "x-ms-request-id": [
-          "7a71a3c6-2f53-4760-a273-23f7a6bdc414"
+          "2cb909f4-b3e0-4dfa-8f85-6dafdc704539"
         ],
         "x-ms-correlation-request-id": [
-          "7a71a3c6-2f53-4760-a273-23f7a6bdc414"
+          "2cb909f4-b3e0-4dfa-8f85-6dafdc704539"
         ],
         "x-ms-routing-request-id": [
-          "CANADACENTRAL:20191102T184553Z:7a71a3c6-2f53-4760-a273-23f7a6bdc414"
+          "CANADACENTRAL:20200423T212642Z:2cb909f4-b3e0-4dfa-8f85-6dafdc704539"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -105,7 +105,7 @@
           "nosniff"
         ],
         "Date": [
-          "Sat, 02 Nov 2019 18:45:52 GMT"
+          "Thu, 23 Apr 2020 21:26:41 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -114,23 +114,23 @@
           "-1"
         ],
         "Content-Length": [
-          "1390"
+          "1826"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/8c39d797-d54a-4a41-9ade-2eea7c88f549/providers/Microsoft.StorageCache\",\r\n  \"namespace\": \"Microsoft.StorageCache\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"4392ab71-2ce2-4b0d-8770-b352745c73f5\",\r\n      \"roleDefinitionId\": \"e27430df-bd6b-4f3a-bd6d-d52ad1a7d075\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"caches\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ],\r\n      \"capabilities\": \"None\"\r\n    },\r\n    {\r\n      \"resourceType\": \"caches/storageTargets\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"usageModels\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/ascoperations\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"East US 2 EUAP\",\r\n        \"East US\",\r\n        \"West US 2\",\r\n        \"East US 2\",\r\n        \"Southeast Asia\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d9372f89-091f-468e-8d5a-c48e899f9bd3/providers/Microsoft.StorageCache\",\r\n  \"namespace\": \"Microsoft.StorageCache\",\r\n  \"authorizations\": [\r\n    {\r\n      \"applicationId\": \"4392ab71-2ce2-4b0d-8770-b352745c73f5\",\r\n      \"roleDefinitionId\": \"e27430df-bd6b-4f3a-bd6d-d52ad1a7d075\"\r\n    }\r\n  ],\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"caches\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Central US EUAP\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ],\r\n      \"capabilities\": \"SystemAssignedResourceIdentity\"\r\n    },\r\n    {\r\n      \"resourceType\": \"caches/storageTargets\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Central US EUAP\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"usageModels\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Central US EUAP\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/ascoperations\",\r\n      \"locations\": [\r\n        \"Australia East\",\r\n        \"Central US EUAP\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"East US 2 EUAP\",\r\n        \"Korea Central\",\r\n        \"North Europe\",\r\n        \"South Central US\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US 2\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2020-03-01\",\r\n        \"2019-11-01\",\r\n        \"2019-08-01-preview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/8c39d797-d54a-4a41-9ade-2eea7c88f549/providers/Microsoft.StorageCache/usageModels?api-version=2019-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOGMzOWQ3OTctZDU0YS00YTQxLTlhZGUtMmVlYTdjODhmNTQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZUNhY2hlL3VzYWdlTW9kZWxzP2FwaS12ZXJzaW9uPTIwMTktMTEtMDE=",
+      "RequestUri": "/subscriptions/d9372f89-091f-468e-8d5a-c48e899f9bd3/providers/Microsoft.StorageCache/usageModels?api-version=2020-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDkzNzJmODktMDkxZi00NjhlLThkNWEtYzQ4ZTg5OWY5YmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZUNhY2hlL3VzYWdlTW9kZWxzP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28516.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.StorageCache.StorageCacheManagementClient/1.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19592.",
+          "Microsoft.Azure.Management.StorageCache.StorageCacheManagementClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -144,29 +144,29 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "f1ea2c42-6cb8-4bca-8081-052d27d1ddad_132115757675971631,f1ea2c42-6cb8-4bca-8081-052d27d1ddad_132115757675971631"
+          "20f76c93-b3de-47b4-87ae-d6f54736e44d_132175340082713088,20f76c93-b3de-47b4-87ae-d6f54736e44d_132175340082713088"
         ],
         "x-ms-request-id": [
-          "b5faa6ff-e085-4eda-95a2-e10dd9938b8d"
+          "1716633a-0c65-45f8-97a8-ad6fa8d7b4fc"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "c6560353-b504-4bde-a932-3272884e6d81"
+          "a0f203db-56d8-4e70-9082-2faaf705879b"
         ],
         "x-ms-routing-request-id": [
-          "CANADACENTRAL:20191102T184554Z:c6560353-b504-4bde-a932-3272884e6d81"
+          "CANADACENTRAL:20200423T212643Z:a0f203db-56d8-4e70-9082-2faaf705879b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Sat, 02 Nov 2019 18:45:53 GMT"
+          "Thu, 23 Apr 2020 21:26:43 GMT"
         ],
         "Content-Length": [
           "540"
@@ -184,6 +184,7 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "8c39d797-d54a-4a41-9ade-2eea7c88f549"
+    "SubscriptionId": "d9372f89-091f-468e-8d5a-c48e899f9bd3",
+    "DefaultAPIVersion": "2020-03-01"
   }
 }

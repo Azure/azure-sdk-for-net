@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -173,6 +175,59 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task UpdateIndex()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithNoIndexesAsync(this);
+
+            string indexName = Recording.Random.GetName();
+            SearchIndex initialIndex = SearchResources.GetHotelIndex(indexName);
+
+            SearchServiceClient client = resources.GetServiceClient();
+            SearchIndex createdIndex = await client.CreateIndexAsync(initialIndex);
+
+            string analyzerName = "asciiTags";
+
+            createdIndex.Analyzers.Add(
+                new PatternAnalyzer(analyzerName)
+                {
+                    Pattern = @"[0-9a-z]+",
+                    Flags =
+                    {
+                        RegexFlag.CaseInsensitive,
+                        RegexFlag.Multiline,
+                    },
+                    Stopwords =
+                    {
+                        "a",
+                        "and",
+                        "the",
+                    },
+                });
+
+            createdIndex.Fields.Add(
+                new SearchableField("asciiTags", collection: true)
+                {
+                    Analyzer = analyzerName,
+                    IsFacetable = true,
+                    IsFilterable = true,
+                });
+
+            SearchIndex updatedIndex = await client.CreateOrUpdateIndexAsync(
+                createdIndex,
+                allowIndexDowntime: true,
+                options: new SearchConditionalOptions { IfMatch = createdIndex.ETag });
+
+            Assert.AreEqual(createdIndex.Name, updatedIndex.Name);
+            Assert.That(updatedIndex.Fields, Is.EqualTo(updatedIndex.Fields).Using(SearchFieldComparer.Shared));
+            Assert.AreEqual(createdIndex.Suggesters.Count, updatedIndex.Suggesters.Count);
+            Assert.AreEqual(createdIndex.Suggesters[0].Name, updatedIndex.Suggesters[0].Name);
+            Assert.AreEqual(createdIndex.ScoringProfiles.Count, updatedIndex.ScoringProfiles.Count);
+            Assert.AreEqual(createdIndex.ScoringProfiles[0].Name, updatedIndex.ScoringProfiles[0].Name);
+            Assert.AreEqual(createdIndex.Analyzers.Count, updatedIndex.Analyzers.Count);
+            Assert.AreEqual(createdIndex.Analyzers[0].Name, updatedIndex.Analyzers[0].Name);
+        }
+
+        [Test]
         public void GetIndexParameterValidation()
         {
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
@@ -199,6 +254,38 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task GetIndexes()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchServiceClient client = resources.GetServiceClient();
+
+            bool found = false;
+            await foreach (SearchIndex index in client.GetIndexesAsync())
+            {
+                found |= string.Equals(resources.IndexName, index.Name, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            Assert.IsTrue(found, "Shared index not found");
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task GetIndexesNextPageThrows()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchServiceClient client = resources.GetServiceClient();
+            AsyncPageable<SearchIndex> pageable = client.GetIndexesAsync();
+
+            string continuationToken = Recording.GenerateId();
+            IAsyncEnumerator<Page<SearchIndex>> e = pageable.AsPages(continuationToken).GetAsyncEnumerator();
+
+            // Given a continuationToken above, this actually starts with the second page.
+            Assert.ThrowsAsync<NotSupportedException>(async () => await e.MoveNextAsync());
+        }
+
+        [Test]
         public async Task CreateAzureBlobIndexer()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAndIndexAsync(this);
@@ -206,18 +293,15 @@ namespace Azure.Search.Documents.Tests
             SearchServiceClient serviceClient = resources.GetServiceClient();
 
             // Create the Azure Blob data source and indexer.
-            DataSource dataSource = new DataSource(
+            SearchIndexerDataSource dataSource = new SearchIndexerDataSource(
                 resources.StorageAccountName,
-                DataSourceType.AzureBlob,
-                new DataSourceCredentials(resources.StorageAccountConnectionString),
-                new DataContainer(resources.BlobContainerName));
+                SearchIndexerDataSourceType.AzureBlob,
+                resources.StorageAccountConnectionString,
+                new SearchIndexerDataContainer(resources.BlobContainerName));
 
-            DataSource actualSource = await serviceClient.CreateDataSourceAsync(
+            SearchIndexerDataSource actualSource = await serviceClient.CreateDataSourceAsync(
                 dataSource,
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions());
 
             SearchIndexer indexer = new SearchIndexer(
                 Recording.Random.GetName(8),
@@ -226,46 +310,123 @@ namespace Azure.Search.Documents.Tests
 
             SearchIndexer actualIndexer = await serviceClient.CreateIndexerAsync(
                 indexer,
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions());
 
             // Update the indexer.
             actualIndexer.Description = "Updated description";
             await serviceClient.CreateOrUpdateIndexerAsync(
                 actualIndexer,
-                new MatchConditions
-                {
-                    IfMatch = new ETag(actualIndexer.ETag),
-                },
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions(ifMatch: actualIndexer.ETag));
+
+            await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Run the indexer.
             await serviceClient.RunIndexerAsync(
                 indexer.Name,
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions());
 
-            // Indexers may take longer than indexing documents uploaded to the Search service.
-            await DelayAsync(TimeSpan.FromSeconds(5));
+            await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Query the index.
             SearchIndexClient indexClient = serviceClient.GetSearchIndexClient(
                 resources.IndexName);
 
             long count = await indexClient.GetDocumentCountAsync(
-                new SearchRequestOptions
-                {
-                    ClientRequestId = Recording.Random.NewGuid(),
-                });
+                GetOptions());
 
             Assert.AreEqual(SearchResources.TestDocuments.Length, count);
+        }
+
+        [Test]
+        public async Task CrudSynonymMaps()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            string synonymMapName = Recording.Random.GetName();
+
+            SearchServiceClient client = resources.GetServiceClient();
+
+            SynonymMap createdMap = await client.CreateSynonymMapAsync(new SynonymMap(synonymMapName, "msft=>Microsoft"));
+            Assert.AreEqual(synonymMapName, createdMap.Name);
+            Assert.AreEqual("solr", createdMap.Format);
+            Assert.AreEqual("msft=>Microsoft", createdMap.Synonyms);
+
+            SynonymMap updatedMap = await client.CreateOrUpdateSynonymMapAsync(
+                new SynonymMap(synonymMapName, "ms,msft=>Microsoft")
+                {
+                    ETag = createdMap.ETag,
+                },
+                onlyIfUnchanged: true);
+            Assert.AreEqual(synonymMapName, updatedMap.Name);
+            Assert.AreEqual("solr", updatedMap.Format);
+            Assert.AreEqual("ms,msft=>Microsoft", updatedMap.Synonyms);
+
+            RequestFailedException ex = await CatchAsync<RequestFailedException>(async () =>
+                await client.CreateOrUpdateSynonymMapAsync(
+                    new SynonymMap(synonymMapName, "ms,msft=>Microsoft")
+                    {
+                        ETag = createdMap.ETag,
+                    },
+                    onlyIfUnchanged: true));
+            Assert.AreEqual((int)HttpStatusCode.PreconditionFailed, ex.Status);
+
+            Response<IReadOnlyList<SynonymMap>> mapsResponse = await client.GetSynonymMapsAsync(new[] { nameof(SynonymMap.Name) });
+            foreach (SynonymMap namedMap in mapsResponse.Value)
+            {
+                if (string.Equals(updatedMap.Name, namedMap.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    SynonymMap fetchedMap = await client.GetSynonymMapAsync(namedMap.Name);
+                    Assert.AreEqual(updatedMap.Synonyms, fetchedMap.Synonyms);
+                }
+            }
+
+            await client.DeleteSynonymMapAsync(updatedMap, onlyIfUnchanged: true);
+        }
+
+        /// <summary>
+        /// Gets a new <see cref="SearchRequestOptions"/>.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="SearchRequestOptions"/> with a new <see cref="SearchRequestOptions.ClientRequestId"/>.
+        /// </returns>
+        private SearchConditionalOptions GetOptions(ETag? ifMatch = default) => new SearchConditionalOptions
+        {
+            ClientRequestId = Recording.Random.NewGuid(),
+            IfMatch = ifMatch,
+        };
+
+        /// <summary>
+        /// Waits for an indexer to complete up to the given <paramref name="timeout"/>.
+        /// </summary>
+        /// <param name="client">The <see cref="SearchServiceClient"/> to use for requests.</param>
+        /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to check.</param>
+        /// <param name="timeout">The amount of time before being canceled. The default is 1 minute.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        private async Task WaitForIndexingAsync(
+            SearchServiceClient client,
+            string indexerName,
+            TimeSpan? timeout = null)
+        {
+            TimeSpan delay = TimeSpan.FromSeconds(10);
+            timeout ??= TimeSpan.FromMinutes(1);
+
+            using CancellationTokenSource cts = new CancellationTokenSource(timeout.Value);
+
+            while (true)
+            {
+                await DelayAsync(delay, cancellationToken: cts.Token);
+
+                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
+                    indexerName,
+                    GetOptions(),
+                    cts.Token);
+
+                if (status.Status == IndexerStatus.Running &&
+                    status.LastResult?.Status == IndexerExecutionStatus.Success)
+                {
+                    return;
+                }
+            }
         }
     }
 }

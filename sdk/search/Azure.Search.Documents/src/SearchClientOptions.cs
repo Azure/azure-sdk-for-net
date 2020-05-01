@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -129,6 +128,7 @@ namespace Azure.Search.Documents
         private void AddLoggingQueryParameters()
         {
             Diagnostics.LoggedQueryParameters.Add("api-version");
+            Diagnostics.LoggedQueryParameters.Add("allowIndexDowntime");
             Diagnostics.LoggedQueryParameters.Add("$select");
         }
     }

@@ -15,20 +15,16 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   A connection to the Azure Service Bus service, enabling client communications with a specific
-    ///   Service Bus entity instance within an Service Bus namespace.  A single connection may be shared among multiple
-    ///   Service Bus entity producers and/or consumers, or may be used as a dedicated connection for a single
-    ///   producer or consumer client.
+    ///   Service Bus entity instance within an Service Bus namespace.  A single connection may be
+    ///   shared among multiple Service Bus entity senders and/or receivers, or may be used as a
+    ///   dedicated connection for a single sender or receiver client.
     /// </summary>
-    ///
-    /// <seealso href="https://docs.microsoft.com/en-us/Azure/event-hubs/event-hubs-about" />
-    ///
     internal class ServiceBusConnection : IAsyncDisposable
     {
         /// <summary>
-        ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
-        ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        ///   The fully qualified Service Bus namespace that the connection is associated with.
+        ///   This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
-        ///
         public string FullyQualifiedNamespace { get; }
 
         /// <summary>
@@ -38,9 +34,11 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the connection is closed; otherwise, <c>false</c>.
         /// </value>
-        ///
         public bool IsClosed => _innerClient.IsClosed;
 
+        /// <summary>
+        /// The entity path that the connection is bound to.
+        /// </summary>
         public string EntityPath { get; }
 
         /// <summary>
@@ -48,7 +46,6 @@ namespace Azure.Messaging.ServiceBus
         ///   This is essentially the <see cref="FullyQualifiedNamespace"/> but with
         ///   the scheme included.
         /// </summary>
-        ///
         internal Uri ServiceEndpoint => _innerClient.ServiceEndpoint;
 
         /// <summary>
@@ -125,7 +122,6 @@ namespace Azure.Messaging.ServiceBus
             _innerClient = CreateTransportClient(tokenCredential, options);
         }
 
-
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
         /// </summary>
@@ -133,7 +129,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="options">A set of options to apply when configuring the connection.</param>
-        ///
         internal ServiceBusConnection(
             string fullyQualifiedNamespace,
             TokenCredential credential,
@@ -175,7 +170,6 @@ namespace Azure.Messaging.ServiceBus
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default) =>
             await _innerClient.CloseAsync(cancellationToken).ConfigureAwait(false);
 
-
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
         ///   including ensuring that the connection itself has been closed.
@@ -214,8 +208,11 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        internal TransportSender CreateTransportSender(string entityName, ServiceBusRetryPolicy retryPolicy) =>
-            _innerClient.CreateSender(entityName, retryPolicy);
+        internal virtual TransportSender CreateTransportSender(
+            string entityPath,
+            string viaEntityPath,
+            ServiceBusRetryPolicy retryPolicy) =>
+            _innerClient.CreateSender(entityPath, viaEntityPath, retryPolicy);
 
         internal virtual TransportReceiver CreateTransportReceiver(
             string entityPath,
@@ -234,9 +231,14 @@ namespace Azure.Messaging.ServiceBus
                     sessionId,
                     isSessionReceiver);
 
+        internal virtual TransportRuleManager CreateTransportRuleManager(
+            string subscriptionPath,
+            ServiceBusRetryPolicy retryPolicy) =>
+            _innerClient.CreateRuleManager(subscriptionPath, retryPolicy);
+
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the
-        ///   requested connection type of the _connectionOptions />.
+        ///   requested connection type of the <see cref="ServiceBusClientOptions"/>.
         /// </summary>
         ///
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
@@ -277,9 +279,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
-        private static string BuildAudienceResource(ServiceBusTransportType transportType,
-                                                    string fullyQualifiedNamespace,
-                                                    string entityName)
+        private static string BuildAudienceResource(
+            ServiceBusTransportType transportType,
+            string fullyQualifiedNamespace,
+            string entityName)
         {
             var builder = new UriBuilder(fullyQualifiedNamespace)
             {

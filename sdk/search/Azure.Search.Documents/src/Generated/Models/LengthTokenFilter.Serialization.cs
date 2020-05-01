@@ -15,15 +15,15 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Min != null)
+            if (MinLength != null)
             {
                 writer.WritePropertyName("min");
-                writer.WriteNumberValue(Min.Value);
+                writer.WriteNumberValue(MinLength.Value);
             }
-            if (Max != null)
+            if (MaxLength != null)
             {
                 writer.WritePropertyName("max");
-                writer.WriteNumberValue(Max.Value);
+                writer.WriteNumberValue(MaxLength.Value);
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Models
         {
             int? min = default;
             int? max = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -69,7 +69,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new LengthTokenFilter(odatatype, name, min, max);
+            return new LengthTokenFilter(odataType, name, min, max);
         }
     }
 }

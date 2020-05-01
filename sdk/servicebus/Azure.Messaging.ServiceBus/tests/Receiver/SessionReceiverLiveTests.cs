@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> sentMessages = AddMessages(batch, messageCt, sessionId, partitionKey).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
                 foreach (ServiceBusMessage message in sentMessages)
                 {
@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messageBatch = AddMessages(batch, messageCt, sessionId);
 
-                await sender.SendBatchAsync(messageBatch);
+                await sender.SendAsync(messageBatch);
 
                 ServiceBusReceiver receiver1 = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messagebatch = AddMessages(batch, messageCt, sessionId);
 
-                await sender.SendBatchAsync(messagebatch);
+                await sender.SendAsync(messagebatch);
                 ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
 
                 long seq = 0;
@@ -149,7 +149,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 ServiceBusMessageBatch messagebatch = AddMessages(batch, messageCt, sessionId);
 
-                await sender.SendBatchAsync(messagebatch);
+                await sender.SendAsync(messagebatch);
 
                 ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
 
@@ -182,7 +182,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 {
                     using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                     ServiceBusMessageBatch messageBatch = AddMessages(batch, messageCt, session);
-                    await sender.SendBatchAsync(messageBatch);
+                    await sender.SendAsync(messageBatch);
                 }
 
                 // create receiver not scoped to a specific session
@@ -216,7 +216,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(scope.QueueName);
 
@@ -253,7 +253,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var clientOptions = new ServiceBusReceiverOptions()
                 {
@@ -300,7 +300,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
@@ -341,7 +341,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 ServiceBusReceiver receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
@@ -398,7 +398,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,
@@ -460,7 +460,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
                 var topicName = scope.TopicName;
                 var subscriptionName = scope.SubscriptionNames.First();
 
@@ -533,7 +533,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 using ServiceBusMessageBatch batch = await sender.CreateBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
 
-                await sender.SendBatchAsync(batch);
+                await sender.SendAsync(batch);
 
                 var receiver = await client.CreateSessionReceiverAsync(
                     scope.QueueName,

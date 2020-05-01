@@ -3,10 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -15,7 +16,7 @@ using Microsoft.Azure.Amqp.Framing;
 namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
-    ///   A transport producer abstraction responsible for brokering operations for AMQP-based connections.
+    ///   A transport sender abstraction responsible for brokering operations for AMQP-based connections.
     ///   It is intended that the public <see cref="ServiceBusSender" /> make use of an instance
     ///   via containment and delegate operations to it.
     /// </summary>
@@ -31,11 +32,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private int _deliveryCount = 0;
 
         /// <summary>
-        ///   Indicates whether or not this producer has been closed.
+        ///   Indicates whether or not this sender has been closed.
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the producer is closed; otherwise, <c>false</c>.
+        ///   <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
         ///
         public override bool IsClosed => _closed;
@@ -45,6 +46,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private readonly string _entityPath;
+
+        /// <summary>
+        /// An optional entity path to route the message through. Useful for transactions.
+        /// </summary>
+        private readonly string _viaEntityPath;
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -64,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         /// <summary>
         ///   The maximum size of an AMQP message allowed by the associated
-        ///   producer link.
+        ///   sender link.
         /// </summary>
         ///
         /// <value>The maximum message size, in bytes.</value>
@@ -76,6 +82,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="entityPath">The name of the entity to which messages will be sent.</param>
+        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         ///
@@ -90,6 +97,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public AmqpSender(
             string entityPath,
+            string viaEntityPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy)
         {
@@ -98,6 +106,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _entityPath = entityPath;
+            _viaEntityPath = viaEntityPath;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
 
@@ -211,56 +220,77 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            var stopWatch = Stopwatch.StartNew();
+            var stopWatch = ValueStopwatch.StartNew();
+            var link = default(SendingAmqpLink);
 
-            using (AmqpMessage batchMessage = messageFactory())
+            try
             {
-                //ServiceBusEventSource.Log.SendStart(Entityname, messageHash);
-
-                string messageHash = batchMessage.GetHashCode().ToString();
-
-                SendingAmqpLink link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
-
-                // Validate that the message is not too large to send.  This is done after the link is created to ensure
-                // that the maximum message size is known, as it is dictated by the service using the link.
-
-                if (batchMessage.SerializedMessageSize > MaxMessageSize)
+                using (AmqpMessage batchMessage = messageFactory())
                 {
-                    throw new ServiceBusException(string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
+
+                    string messageHash = batchMessage.GetHashCode().ToString();
+
+                    ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+                    Transaction ambientTransaction = Transaction.Current;
+                    if (ambientTransaction != null)
+                    {
+                        transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
+                            ambientTransaction,
+                            _connectionScope,
+                            timeout).ConfigureAwait(false);
+                    }
+
+                    link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+
+                    // Validate that the message is not too large to send.  This is done after the link is created to ensure
+                    // that the maximum message size is known, as it is dictated by the service using the link.
+
+                    if (batchMessage.SerializedMessageSize > MaxMessageSize)
+                    {
+                        throw new ServiceBusException(string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusException.FailureReason.MessageSizeExceeded);
+                    }
+
+                    // Attempt to send the message batch.
+
+                    var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
+                    Outcome outcome = await link.SendMessageAsync(
+                        batchMessage,
+                        deliveryTag,
+                    transactionId, timeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                    if (outcome.DescriptorCode != Accepted.Code)
+                    {
+                        throw (outcome as Rejected)?.Error.ToMessagingContractException();
+                    }
+
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 }
-
-                // Attempt to send the message batch.
-
-                var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
-                var outcome = await link.SendMessageAsync(batchMessage, deliveryTag, AmqpConstants.NullBinary, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                if (outcome.DescriptorCode != Accepted.Code)
-                {
-                    throw (outcome as Rejected)?.Error.ToMessagingContractException();
-                }
-
-                //ServiceBusEventSource.Log.SendStop(Entityname, messageHash);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                stopWatch.Stop();
+            }
+            catch (Exception exception)
+            {
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    link?.GetTrackingId(),
+                    null,
+                    link?.IsClosing() ?? false);
             }
         }
 
         /// <summary>
-        ///   Sends a message to the associated Service Bus entity.
+        ///   Sends a list of messages to the associated Service Bus entity using a batched approach.
+        ///   If the size of the messages exceed the maximum size of a single batch,
+        ///   an exception will be triggered and the send will fail. In order to ensure that the messages
+        ///   being sent will fit in a batch, use <see cref="SendBatchAsync"/> instead.
         /// </summary>
         ///
-        /// <param name="message">A message to send.</param>
+        /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         public override async Task SendAsync(
-            ServiceBusMessage message,
+            IList<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
-            Argument.AssertNotNull(message, nameof(message));
-            Argument.AssertNotClosed(_closed, nameof(AmqpSender));
-            AmqpMessage messageFactory() => AmqpMessageConverter.SBMessageToAmqpMessage(message);
+            AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages);
             await _retryPolicy.RunOperation(async (timeout) =>
              await SendBatchInternalAsync(
                     messageFactory,
@@ -295,7 +325,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     await _sendLink.CloseAsync().ConfigureAwait(false);
                 }
 
+                if (_managementLink?.TryGetOpenedObject(out var _) == true)
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    await _managementLink.CloseAsync().ConfigureAwait(false);
+                }
+
                 _sendLink?.Dispose();
+                _managementLink?.Dispose();
             }
             catch (Exception)
             {
@@ -340,78 +377,82 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
-            var stopWatch = Stopwatch.StartNew();
-
-            using (AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
+            var sendLink = default(SendingAmqpLink);
+            try
             {
-
-                var request = AmqpRequestMessage.CreateRequest(
-                        ManagementConstants.Operations.ScheduleMessageOperation,
-                        timeout,
-                        null);
-
-                if (_sendLink.TryGetOpenedObject(out SendingAmqpLink sendLink))
+                using (AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
                 {
-                    request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
-                }
 
-                ArraySegment<byte>[] payload = amqpMessage.GetPayload();
-                var buffer = new BufferListStream(payload);
-                ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+                    var request = AmqpRequestMessage.CreateRequest(
+                            ManagementConstants.Operations.ScheduleMessageOperation,
+                            timeout,
+                            null);
 
-                var entry = new AmqpMap();
-                {
-                    entry[ManagementConstants.Properties.Message] = value;
-                    entry[ManagementConstants.Properties.MessageId] = message.MessageId;
-
-                    if (!string.IsNullOrWhiteSpace(message.SessionId))
+                    if (_sendLink.TryGetOpenedObject(out sendLink))
                     {
-                        entry[ManagementConstants.Properties.SessionId] = message.SessionId;
+                        request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
                     }
 
-                    if (!string.IsNullOrWhiteSpace(message.PartitionKey))
+                    ArraySegment<byte>[] payload = amqpMessage.GetPayload();
+                    var buffer = new BufferListStream(payload);
+                    ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+
+                    var entry = new AmqpMap();
                     {
-                        entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
+                        entry[ManagementConstants.Properties.Message] = value;
+                        entry[ManagementConstants.Properties.MessageId] = message.MessageId;
+
+                        if (!string.IsNullOrWhiteSpace(message.SessionId))
+                        {
+                            entry[ManagementConstants.Properties.SessionId] = message.SessionId;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(message.PartitionKey))
+                        {
+                            entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(message.ViaPartitionKey))
+                        {
+                            entry[ManagementConstants.Properties.ViaPartitionKey] = message.ViaPartitionKey;
+                        }
                     }
 
-                    if (!string.IsNullOrWhiteSpace(message.ViaPartitionKey))
+                    request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
+
+
+                    AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
+                        _connectionScope,
+                        _managementLink,
+                        request,
+                        timeout).ConfigureAwait(false);
+
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                    if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                     {
-                        entry[ManagementConstants.Properties.ViaPartitionKey] = message.ViaPartitionKey;
+                        var sequenceNumbers = amqpResponseMessage.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
+                        if (sequenceNumbers == null || sequenceNumbers.Length < 1)
+                        {
+                            throw new ServiceBusException(true, "Could not schedule message successfully.");
+                        }
+
+                        return sequenceNumbers[0];
+
+                    }
+                    else
+                    {
+                        throw amqpResponseMessage.ToMessagingContractException();
                     }
                 }
-
-                request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
-
-                RequestResponseAmqpLink mgmtLink = await _managementLink.GetOrCreateAsync(
-                    UseMinimum(_connectionScope.SessionTimeout,
-                    timeout.CalculateRemaining(stopWatch.Elapsed)))
-                    .ConfigureAwait(false);
-
-                using AmqpMessage response = await mgmtLink.RequestAsync(
-                    request.AmqpMessage,
-                    timeout.CalculateRemaining(stopWatch.Elapsed))
-                    .ConfigureAwait(false);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                stopWatch.Stop();
-
-                AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
-
-                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
-                {
-                    var sequenceNumbers = amqpResponseMessage.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
-                    if (sequenceNumbers == null || sequenceNumbers.Length < 1)
-                    {
-                        throw new ServiceBusException(true, "Could not schedule message successfully.");
-                    }
-
-                    return sequenceNumbers[0];
-
-                }
-                else
-                {
-                    throw amqpResponseMessage.ToMessagingContractException();
-                }
+            }
+            catch (Exception exception)
+            {
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    sendLink?.GetTrackingId(),
+                    null,
+                    sendLink?.IsClosing() ?? false);
             }
         }
 
@@ -449,50 +490,54 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
-            var stopWatch = Stopwatch.StartNew();
-
-            var request = AmqpRequestMessage.CreateRequest(
-                ManagementConstants.Operations.CancelScheduledMessageOperation,
-                timeout,
-                null);
-
-            if (_sendLink.TryGetOpenedObject(out SendingAmqpLink sendLink))
+            var sendLink = default(SendingAmqpLink);
+            try
             {
-                request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
+                var request = AmqpRequestMessage.CreateRequest(
+                    ManagementConstants.Operations.CancelScheduledMessageOperation,
+                    timeout,
+                    null);
+
+                if (_sendLink.TryGetOpenedObject(out sendLink))
+                {
+                    request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = sendLink.Name;
+                }
+
+                request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
+
+                AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
+                        _connectionScope,
+                        _managementLink,
+                        request,
+                        timeout).ConfigureAwait(false);
+
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
+                {
+                    throw amqpResponseMessage.ToMessagingContractException();
+                }
             }
-
-            request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
-
-            RequestResponseAmqpLink mgmtLink = await _managementLink.GetOrCreateAsync(
-                    UseMinimum(_connectionScope.SessionTimeout,
-                    timeout.CalculateRemaining(stopWatch.Elapsed)))
-                    .ConfigureAwait(false);
-
-            using AmqpMessage response = await mgmtLink.RequestAsync(
-                request.AmqpMessage,
-                timeout.CalculateRemaining(stopWatch.Elapsed))
-                .ConfigureAwait(false);
-
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            stopWatch.Stop();
-            AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
-
-            if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
+            catch (Exception exception)
             {
-                throw amqpResponseMessage.ToMessagingContractException();
+                throw AmqpExceptionHelper.TranslateException(
+                    exception,
+                    sendLink?.GetTrackingId(),
+                    null,
+                    sendLink?.IsClosing() ?? false);
             }
         }
 
         /// <summary>
-        ///   Creates the AMQP link to be used for producer-related operations and ensures
-        ///   that the corresponding state for the producer has been updated based on the link
+        ///   Creates the AMQP link to be used for sender-related operations and ensures
+        ///   that the corresponding state for the sender has been updated based on the link
         ///   configuration.
         /// </summary>
         ///
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">The cancellation token to consider when creating the link.</param>
         ///
-        /// <returns>The AMQP link to use for producer-related operations.</returns>
+        /// <returns>The AMQP link to use for sender-related operations.</returns>
         ///
         /// <remarks>
         ///   This method will modify class-level state, setting those attributes that depend on the AMQP
@@ -507,6 +552,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
                 _entityPath,
+                _viaEntityPath,
                 timeout,
                 cancellationToken).ConfigureAwait(false);
 

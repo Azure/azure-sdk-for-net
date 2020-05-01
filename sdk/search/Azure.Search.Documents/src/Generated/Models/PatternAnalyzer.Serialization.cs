@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,12 +27,12 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Flags != null)
+            if (FlagsInternal != null)
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(Flags.Value.ToString());
+                writer.WriteStringValue(FlagsInternal);
             }
-            if (Stopwords != null)
+            if (Stopwords != null && Stopwords.Any())
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();
@@ -52,9 +53,9 @@ namespace Azure.Search.Documents.Models
         {
             bool? lowercase = default;
             string pattern = default;
-            RegexFlags? flags = default;
+            string flags = default;
             IList<string> stopwords = default;
-            string odatatype = default;
+            string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,7 +83,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    flags = new RegexFlags(property.Value.GetString());
+                    flags = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("stopwords"))
@@ -94,14 +95,21 @@ namespace Azure.Search.Documents.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     stopwords = array;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
                 {
-                    odatatype = property.Value.GetString();
+                    odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -110,7 +118,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odatatype, name, lowercase, pattern, flags, stopwords);
+            return new PatternAnalyzer(odataType, name, lowercase, pattern, flags, stopwords);
         }
     }
 }
