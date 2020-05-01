@@ -831,6 +831,11 @@ namespace Azure.Search.Documents.Models
         public LuceneStandardTokenizer(string name) { }
         public int? MaxTokenLength { get { throw null; } set { } }
     }
+    public partial class LuceneStandardTokenizerV2 : Azure.Search.Documents.Models.LexicalTokenizer
+    {
+        public LuceneStandardTokenizerV2(string name) { }
+        public int? MaxTokenLength { get { throw null; } set { } }
+    }
     public partial class MagnitudeScoringFunction : Azure.Search.Documents.Models.ScoringFunction
     {
         public MagnitudeScoringFunction(string fieldName, double boost, Azure.Search.Documents.Models.MagnitudeScoringParameters parameters) { }
@@ -1584,11 +1589,6 @@ namespace Azure.Search.Documents.Models
     public partial class SqlIntegratedChangeTrackingPolicy : Azure.Search.Documents.Models.DataChangeDetectionPolicy
     {
         public SqlIntegratedChangeTrackingPolicy() { }
-    }
-    public partial class StandardTokenizerV2 : Azure.Search.Documents.Models.LexicalTokenizer
-    {
-        public StandardTokenizerV2(string name) { }
-        public int? MaxTokenLength { get { throw null; } set { } }
     }
     public partial class StemmerOverrideTokenFilter : Azure.Search.Documents.Models.TokenFilter
     {
