@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8B8C
 		samples\Sample03_SendReceiveSessions.md = samples\Sample03_SendReceiveSessions.md
 		samples\Sample04_Processor.md = samples\Sample04_Processor.md
 		samples\Sample05_SessionProcessor.md = samples\Sample05_SessionProcessor.md
+		Sample06_Transactions.md = Sample06_Transactions.md
 	EndProjectSection
 EndProject
 Global

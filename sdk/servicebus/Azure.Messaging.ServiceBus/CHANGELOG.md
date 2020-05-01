@@ -4,12 +4,12 @@
 
 ### Acknowledgements
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions and design input for this release:
-- Daniel Marbach _([GitHub](https://github.com/danielmarbach))
-- Sean Feldman _([GitHub](https://github.com/SeanFeldman))
+- Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
+- Sean Feldman _([GitHub](https://github.com/SeanFeldman))_
 
 ### Added
 - Allow specifying a list of named sessions when using ServiceBusSessionProcessor
-- Transactions support
+- Transactions/Send via support
 - Add SessionInitializingAsync/SessionClosingAsync events in ServiceBusSessionProcessor
 - Do not attempt to autocomplete messages with the processor if the user settled the message in their callback
 - Add SendAsync overload accepting an IEnumerable of ServiceBusMessage
@@ -26,6 +26,7 @@ _(A community contribution, courtesy of [danielmarbach](https://github.com/danie
 - Remove cancellation token from CreateProcessor and CreateSessionProcessor
 _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 - Rename SendBatchAsync to SendAsync
+- Add SenderOptions parameter to CreateSender method.
 
 ## 7.0.0-preview.1 (2020-04-07)
 - Initial preview for new version of Service Bus library.
