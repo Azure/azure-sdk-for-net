@@ -597,6 +597,7 @@ namespace Azure.Messaging.ServiceBus
                     RunningTaskTokenSource.Dispose();
                     RunningTaskTokenSource = null;
 
+                    // Calling SessionClosingAsync event on each receiver close
                     foreach (var receiverMap in sessionIdsReceiverMap)
                     {
                         if (!receiverMap.Value.IsDisposed)
@@ -610,7 +611,6 @@ namespace Azure.Messaging.ServiceBus
 
                     // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
                     // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
-                    
                     try
                     {
                         await ActiveReceiveTask.ConfigureAwait(false);
