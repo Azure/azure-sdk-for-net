@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
     public class BlobChangeFeedAsyncPagableTests : ChangeFeedTestBase
     {
         public BlobChangeFeedAsyncPagableTests(bool async)
-            : base(async, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         //TODO page size tests
 
         [Test]
-        //[Ignore("")]
+        [Ignore("")]
         public async Task Test()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
