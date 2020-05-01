@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A skill that uses text analytics for key phrase extraction. </summary>
-    public partial class KeyPhraseExtractionSkill : Skill
+    public partial class KeyPhraseExtractionSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

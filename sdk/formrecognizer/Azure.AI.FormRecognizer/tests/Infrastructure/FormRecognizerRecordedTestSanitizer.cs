@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Tests
 {

@@ -10,7 +10,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.Management.ResourceManager.Fluent;

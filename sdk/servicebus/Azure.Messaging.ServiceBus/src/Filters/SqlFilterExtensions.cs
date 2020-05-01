@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Filters
 {
     internal static class SqlFilterExtensions
     {
-        public static Filter ParseFromXElement(XElement xElement)
+        internal static Filter ParseFromXElement(XElement xElement)
         {
             var expression = xElement.Element(XName.Get("SqlExpression", ManagementClientConstants.ServiceBusNamespace))?.Value;
             if (string.IsNullOrWhiteSpace(expression))

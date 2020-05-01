@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests
 {

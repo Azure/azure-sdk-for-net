@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Newtonsoft.Json.Linq;
 
 namespace Azure.Data.AppConfiguration.Tests

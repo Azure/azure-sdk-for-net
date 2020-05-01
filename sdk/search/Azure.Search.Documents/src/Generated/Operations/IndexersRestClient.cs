@@ -786,7 +786,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async ValueTask<Response<IndexerExecutionInfo>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public async ValueTask<Response<SearchIndexerStatus>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -803,7 +803,7 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
-                            IndexerExecutionInfo value = default;
+                            SearchIndexerStatus value = default;
                             using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -811,7 +811,7 @@ namespace Azure.Search.Documents
                             }
                             else
                             {
-                                value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
+                                value = SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }
@@ -830,7 +830,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IndexerExecutionInfo> GetStatus(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public Response<SearchIndexerStatus> GetStatus(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             if (indexerName == null)
             {
@@ -847,7 +847,7 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                         {
-                            IndexerExecutionInfo value = default;
+                            SearchIndexerStatus value = default;
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             if (document.RootElement.ValueKind == JsonValueKind.Null)
                             {
@@ -855,7 +855,7 @@ namespace Azure.Search.Documents
                             }
                             else
                             {
-                                value = IndexerExecutionInfo.DeserializeIndexerExecutionInfo(document.RootElement);
+                                value = SearchIndexerStatus.DeserializeSearchIndexerStatus(document.RootElement);
                             }
                             return Response.FromValue(value, message.Response);
                         }

@@ -847,7 +847,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingIsSafeToCallInTheErrorHandler(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var capturedException = default(Exception);
             var expectedException = new DivideByZeroException("BOOM!");
