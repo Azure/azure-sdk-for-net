@@ -16,20 +16,36 @@ jobs:
     strategy:
       maxParallel: ${{ parameters.MaxParallel }}
       matrix:
-        Linux:
+        Linux_NetCoreApp2.1:
           OSName: "Linux"
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
           CloudType: AzureCloud
-        Windows_NetCoreApp:
+        Linux_NetCoreApp3.1:
+          OSName: "Linux"
+          OSVmImage: "ubuntu-18.04"
+          TestTargetFramework: netcoreapp3.1
+          CloudType: AzureCloud
+        Windows_NetCoreApp2.1:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
           CloudType: AzureCloud
-        Windows_NetCoreApp_ProjectReferences:
+        Windows_NetCoreApp3.1:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp3.1
+          CloudType: AzureCloud
+        Windows_NetCoreApp2.1_ProjectReferences:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          CloudType: AzureCloud
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+        Windows_NetCoreApp3.1_ProjectReferences:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp3.1
           CloudType: AzureCloud
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
@@ -37,10 +53,15 @@ jobs:
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
           CloudType: AzureCloud
-        MacOs:
+        MacOs_NetCoreApp2.1:
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+          CloudType: AzureCloud
+        MacOs_NetCoreApp3.1:
+          OSName: "MacOS"
+          OSVmImage: "macOS-10.15"
+          TestTargetFramework: netcoreapp3.1
           CloudType: AzureCloud
     pool:
       vmImage: "$(OSVmImage)"
@@ -55,10 +76,18 @@ jobs:
           OSName: $(OSName)
 
       - task: UseDotNet@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        condition: eq(variables['TestTargetFramework'], 'netcoreapp2.1')
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion2.1)"
         inputs:
           packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
+          version: "$(DotNetCoreRuntimeVersion2.1)"
+
+      - task: UseDotNet@2
+        condition: eq(variables['TestTargetFramework'], 'netcoreapp3.1')
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion3.1)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion3.1)"
 
       - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"

@@ -110,39 +110,63 @@ jobs:
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
-        Linux:
+        Linux_NetCoreApp2.1:
           OSName: "Linux"
           OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp:
+        Linux_NetCoreApp3.1:
+          OSName: "Linux"
+          OSVmImage: "ubuntu-18.04"
+          TestTargetFramework: netcoreapp3.1
+        Windows_NetCoreApp2.1:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
-        Windows_NetCoreApp_ProjectReferences:
+        Windows_NetCoreApp3.1:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp3.1
+        Windows_NetCoreApp2.1_ProjectReferences:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: netcoreapp2.1
+          ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
+        Windows_NetCoreApp3.1_ProjectReferences:
+          OSName: "Windows"
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp3.1
           ConvertToProjectReferenceOption: /p:UseProjectReferenceToAzureClients=true
         Windows_NetFramework:
           OSName: "Windows"
           OSVmImage: "windows-2019"
           TestTargetFramework: net461
-        MacOs:
+        MacOs_NetCoreApp2.1:
           OSName: "MacOS"
           OSVmImage: "macOS-10.15"
           TestTargetFramework: netcoreapp2.1
+        MacOs_NetCoreApp3.1:
+          OSName: "MacOS"
+          OSVmImage: "macOS-10.15"
+          TestTargetFramework: netcoreapp3.1
     pool:
       vmImage: "$(OSVmImage)"
     steps:
       - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
         parameters:
           OSName: $(OSName)
-      - task: DotNetCoreInstaller@2
-        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+      - task: UseDotNet@2
+        condition: eq(variables['TestTargetFramework'], 'netcoreapp2.1')
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion2.1)"
         inputs:
           packageType: runtime
-          version: "$(DotNetCoreRuntimeVersion)"
-      - task: DotNetCoreInstaller@2
+          version: "$(DotNetCoreRuntimeVersion2.1)"
+      - task: UseDotNet@2
+        condition: eq(variables['TestTargetFramework'], 'netcoreapp3.1')
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion3.1)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion3.1)"
+      - task: UseDotNet@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
           packageType: sdk
