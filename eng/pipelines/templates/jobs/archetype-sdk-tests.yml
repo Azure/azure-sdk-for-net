@@ -46,7 +46,7 @@ jobs:
       vmImage: "$(OSVmImage)"
 
     steps:
-      - template: eng/common/pipelines/templates/steps/bypass-local-dns.yml
+      - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
       
       - ${{ parameters.PreSteps }}
 
