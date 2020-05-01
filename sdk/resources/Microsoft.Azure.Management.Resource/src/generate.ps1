@@ -12,4 +12,4 @@
 # Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-policy-2019-09" -SdkGenerationDirectory "$PSScriptRoot\Generated"
 
 # Generate package with deployment scripts
- Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-deploymentscripts-2019-10-preview" -SdkGenerationDirectory "$PSScriptRoot\Generated\DeploymentScripts"
+ Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-features-2015-12" -SdkGenerationDirectory "$PSScriptRoot\Generated\Features"
