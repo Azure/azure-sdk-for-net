@@ -140,22 +140,23 @@ namespace Azure.Messaging.ServiceBus
 
                     catch (Exception ex)
                     {
-                        ExceptionDispatchInfo activeEx = ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(ex));
+                        Exception activeEx = AmqpExceptionHelper.TranslateException(ex);
 
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, throw the translated exception.
 
                         ++failedAttemptCount;
-                        TimeSpan? retryDelay = CalculateRetryDelay(activeEx.SourceException, failedAttemptCount);
+                        TimeSpan? retryDelay = CalculateRetryDelay(activeEx, failedAttemptCount);
                         if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
                         {
-                            ServiceBusEventSource.Log.RunOperationExceptionEncountered(activeEx.SourceException);
+                            ServiceBusEventSource.Log.RunOperationExceptionEncountered(activeEx);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
                             tryTimeout = CalculateTryTimeout(failedAttemptCount);
                         }
                         else
                         {
-                            activeEx.Throw();
+                            ExceptionDispatchInfo.Capture(activeEx)
+                                .Throw();
                         }
                     }
                 }
