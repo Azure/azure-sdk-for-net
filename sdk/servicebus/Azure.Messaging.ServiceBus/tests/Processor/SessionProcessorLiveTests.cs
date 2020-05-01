@@ -6,11 +6,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
@@ -483,12 +481,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     AutoComplete = autoComplete,
                 };
 
-                var sessionIds = new List<string>();
-                sessionIds.Add(sessionId);
                 var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options,
-                    sessionIds); // using the last sessionId from the loop
+                    sessionId); // using the last sessionId from the loop
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
@@ -781,7 +777,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             }
         }
 
-
         [Test]
         [TestCase(1, 2, false)]
         [TestCase(5, 3, true)]
@@ -789,7 +784,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         [TestCase(20, 10, false)]
         public async Task ProcessMessagesFromMultipleNamedSessions(int numThreads, int specifiedSessionCount, bool autoComplete)
         {
-
             await using (var scope = await ServiceBusScope.CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: true))
@@ -817,10 +811,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await sender.SendAsync(GetMessage(sessionId2));
                 sessions.TryAdd(sessionId2, true);
 
-
-                int messageCt = 0;
-
+                TaskCompletionSource<bool>[] closeEventCompletionSources = Enumerable
+                .Range(0, specifiedSessionCount)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                var completionSourceIndex = -1;
+                int messageCt = 0;
+                int sessionCloseEventCt = 0;
+
                 var options = new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = numThreads,
@@ -830,11 +830,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 var processor = client.CreateSessionProcessor(
                     scope.QueueName,
                     options,
-                    sessionIds);
+                    sessionIds.ToArray());
 
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ExceptionHandler;
+                processor.SessionClosingAsync += SessionCloseHandler;
                 await processor.StartProcessingAsync();
+
+                async Task SessionCloseHandler(ProcessSessionEventArgs args)
+                {
+                    Interlocked.Increment(ref sessionCloseEventCt);
+                    var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                    closeEventCompletionSources[setIndex].SetResult(true);
+                    await args.GetSessionStateAsync();
+                    Assert.IsTrue(sessionIds.Contains(args.SessionId));
+                }
 
                 async Task ProcessMessage(ProcessSessionMessageEventArgs args)
                 {
@@ -861,11 +871,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await tcs.Task;
                 await processor.StopProcessingAsync();
+                await Task.WhenAll(closeEventCompletionSources.Select(source => source.Task));
 
                 Assert.AreEqual(specifiedSessionCount, messageCt);
 
-                // we should have received messages from only the specified sessions
+                // We should have received messages from only the specified sessions
                 Assert.AreEqual(2, sessions.Count);
+
+                // Close event handler should be called on each receiver close
+                Assert.AreEqual(specifiedSessionCount, sessionCloseEventCt);
             }
         }
     }
