@@ -6,7 +6,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Core.Testing;
+using Azure.AI.FormRecognizer.Training;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -311,13 +312,11 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
-        public void FormRecognizerClientOptionsClone()
+        public void CreateFormTrainingClientFromFormRecognizerClient()
         {
-            var options = new FormRecognizerClientOptions();
-            FormRecognizerClientOptions clone = options.Clone();
-            Assert.IsNotNull(clone);
-            Assert.AreNotSame(options, clone);
-            Assert.AreEqual(options.Version, clone.Version);
+            var client = CreateClient();
+            FormTrainingClient trainingClient = client.GetFormTrainingClient();
+            Assert.IsNotNull(trainingClient);
         }
     }
 }

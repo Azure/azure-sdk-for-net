@@ -33,7 +33,7 @@ namespace Azure.Data.Tables.Models
         /// <summary> The version of Storage Analytics to configure. </summary>
         public string Version { get; set; }
         /// <summary> Indicates whether metrics are enabled for the Queue service. </summary>
-        public bool Enabled { get; }
+        public bool Enabled { get; set; }
         /// <summary> Indicates whether metrics should generate summary statistics for called API operations. </summary>
         public bool? IncludeAPIs { get; set; }
         /// <summary> the retention policy. </summary>

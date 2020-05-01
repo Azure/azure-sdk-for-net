@@ -25,6 +25,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The name of the parameter passed in search queries to specify the list of tags to compare against the target field. </summary>
-        public string TagsParameter { get; }
+        public string TagsParameter { get; set; }
     }
 }

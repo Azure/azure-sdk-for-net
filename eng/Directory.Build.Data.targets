@@ -104,6 +104,8 @@
 
   <Import Project="CodeGeneration.targets" />
 
+  <Import Project="TestFramework.targets" Condition="'$(IsTestProject)' == 'true'"/>
+
   <!-- CentralPackageVersions properties -->
   <PropertyGroup>
     <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>

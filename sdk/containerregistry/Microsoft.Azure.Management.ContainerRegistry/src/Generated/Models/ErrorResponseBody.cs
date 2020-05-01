@@ -32,10 +32,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         /// <param name="code">error code.</param>
         /// <param name="message">error message.</param>
-        public ErrorResponseBody(string code, string message)
+        /// <param name="target">target of the particular error.</param>
+        /// <param name="details">an array of additional nested error response
+        /// info objects, as described by this contract.</param>
+        public ErrorResponseBody(string code, string message, string target = default(string), InnerErrorDescription details = default(InnerErrorDescription))
         {
             Code = code;
             Message = message;
+            Target = target;
+            Details = details;
             CustomInit();
         }
 
@@ -57,6 +62,19 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public string Message { get; set; }
 
         /// <summary>
+        /// Gets or sets target of the particular error.
+        /// </summary>
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of additional nested error response info
+        /// objects, as described by this contract.
+        /// </summary>
+        [JsonProperty(PropertyName = "details")]
+        public InnerErrorDescription Details { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -71,6 +89,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             if (Message == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Message");
+            }
+            if (Details != null)
+            {
+                Details.Validate();
             }
         }
     }

@@ -69,6 +69,8 @@
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
   </PropertyGroup>
 
+  <Import Project="TestFramework.props" Condition="'$(IsTestProject)' == 'true'"/>
+
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
@@ -120,6 +122,7 @@
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>
     <AzureCoreSharedSources>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
+    <AzureCoreTestFramework>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj</AzureCoreTestFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">

@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
@@ -15,21 +15,20 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
     ///
     public class StorageTestEnvironment: TestEnvironment
     {
-        public StorageTestEnvironment() : base("eventhubs")
-        {
-            ActiveStorageAccount = new Lazy<StorageProperties>(EnsureStorageAccount, LazyThreadSafetyMode.ExecutionAndPublication);
-        }
-
-        /// <summary>
-        /// A shared instance of <see cref="StorageTestEnvironment"/>.
-        /// </summary>
-        public static StorageTestEnvironment Instance { get; } = new StorageTestEnvironment();
-
-        /// <summary>The environment variable value for the storage account connection string, lazily evaluated.</summary>
-        private string StorageAccountConnectionString => GetOptionalVariable("EVENT_PROCESSOR_STORAGE_CONNECTION_STRING");
+        /// <summary>The singleton instance of the <see cref="StorageTestEnvironment" />, lazily created.</summary>
+        private static readonly Lazy<StorageTestEnvironment> Singleton = new Lazy<StorageTestEnvironment>(() => new StorageTestEnvironment(), LazyThreadSafetyMode.ExecutionAndPublication);
 
         /// <summary>The active Azure storage connection for this test run, lazily created.</summary>
         private readonly Lazy<StorageProperties> ActiveStorageAccount;
+
+        /// <summary>
+        ///   The shared instance of the <see cref="StorageTestEnvironment"/> to be used during test runs.
+        /// </summary>
+        ///
+        public static StorageTestEnvironment Instance => Singleton.Value;
+
+        /// <summary>The environment variable value for the storage account connection string, lazily evaluated.</summary>
+        private string StorageAccountConnectionString => GetOptionalVariable("EVENT_PROCESSOR_STORAGE_CONNECTION_STRING");
 
         /// <summary>
         ///   Indicates whether or not an ephemeral storage account was created for the current test execution.
@@ -54,6 +53,15 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <value>The connection string will be determined by creating an ephemeral Azure storage account for the test execution.</value>
         ///
         public string StorageConnectionString => ActiveStorageAccount.Value.ConnectionString;
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StorageTestEnvironment"/> class.
+        /// </summary>
+        ///
+        public StorageTestEnvironment() : base("eventhubs")
+        {
+            ActiveStorageAccount = new Lazy<StorageProperties>(EnsureStorageAccount, LazyThreadSafetyMode.ExecutionAndPublication);
+        }
 
         /// <summary>
         ///   It tries to read the <see cref="StorageAccountConnectionString" />.

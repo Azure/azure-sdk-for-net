@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests.Models
             }
 
             using JsonDocument doc = JsonDocument.Parse(stream.ToArray());
-            PatternAnalyzer actual = Analyzer.DeserializeAnalyzer(doc.RootElement) as PatternAnalyzer;
+            PatternAnalyzer actual = LexicalAnalyzer.DeserializeLexicalAnalyzer(doc.RootElement) as PatternAnalyzer;
 
             CollectionAssert.AreEqual(expected.Flags, actual?.Flags);
         }
@@ -36,15 +36,15 @@ namespace Azure.Search.Documents.Tests.Models
                 {
                     Flags =
                     {
-                        RegexFlags.CaseInsensitive,
+                        RegexFlag.CaseInsensitive,
                     }
                 };
                 yield return new PatternAnalyzer("test")
                 {
                     Flags =
                     {
-                        RegexFlags.CaseInsensitive,
-                        RegexFlags.Literal
+                        RegexFlag.CaseInsensitive,
+                        RegexFlag.Literal
                     }
                 };
             }

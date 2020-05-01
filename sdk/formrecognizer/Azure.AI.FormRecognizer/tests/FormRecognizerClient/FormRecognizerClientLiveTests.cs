@@ -8,8 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
@@ -20,25 +21,16 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [LiveOnly]
     public class FormRecognizerClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
     {
-        private readonly Uri _containerUri;
-        private readonly Uri _endpoint;
-        private readonly AzureKeyCredential _credential;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
-            _containerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            _endpoint = new Uri(TestEnvironment.Endpoint);
-            _credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-
-            Assert.NotNull(_endpoint);
-            Assert.NotNull(_credential);
+            Sanitizer = new FormRecognizerRecordedTestSanitizer();
+            Matcher = new FormRecognizerRecordMatcher();
         }
 
         /// <summary>
@@ -46,9 +38,31 @@ namespace Azure.AI.FormRecognizer.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
-        private FormRecognizerClient CreateInstrumentedClient()
+        private FormRecognizerClient CreateInstrumentedFormRecognizerClient()
         {
-            return InstrumentClient(new FormRecognizerClient(_endpoint, _credential));
+            var endpoint = new Uri(TestEnvironment.Endpoint);
+            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+
+            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
+            var client = new FormRecognizerClient(endpoint, credential, options);
+
+            return InstrumentClient(client);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FormTrainingClient" /> with the endpoint and API key provided via environment
+        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
+        /// </summary>
+        /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
+        private FormTrainingClient CreateInstrumentedFormTrainingClient()
+        {
+            var endpoint = new Uri(TestEnvironment.Endpoint);
+            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+
+            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
+            var client = new FormTrainingClient(endpoint, credential, options);
+
+            return InstrumentClient(client);
         }
 
         /// <summary>
@@ -60,13 +74,16 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeContentPopulatesFormPage(bool useStream)
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormRecognizerClient();
             Operation<IReadOnlyList<FormPage>> operation;
 
             if (useStream)
             {
                 using var stream = new FileStream(FormRecognizerTestEnvironment.RetrieveInvoicePath(1, ContentType.Pdf), FileMode.Open);
-                operation = await client.StartRecognizeContentAsync(stream);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeContentAsync(stream);
+                }
             }
             else
             {
@@ -152,7 +169,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartRecognizeContentFromUriThrowsForNonExistingContent()
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
@@ -167,13 +184,16 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceipt(bool useStream)
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormRecognizerClient();
             Operation<IReadOnlyList<RecognizedReceipt>> operation;
 
             if (useStream)
             {
                 using var stream = new FileStream(FormRecognizerTestEnvironment.JpgReceiptPath, FileMode.Open);
-                operation = await client.StartRecognizeReceiptsAsync(stream);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeReceiptsAsync(stream);
+                }
             }
             else
             {
@@ -249,7 +269,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [Test]
         public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(invalidUri));
@@ -264,7 +284,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabels(bool useStream)
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
             string modelId = await GetModelIdAsync(useLabels: true);
@@ -274,7 +294,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 if (useStream)
                 {
                     using var stream = new FileStream(FormRecognizerTestEnvironment.FormPath, FileMode.Open);
-                    operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                    using (Recording.DisableRequestBodyRecording())
+                    {
+                        operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                    }
                 }
                 else
                 {
@@ -319,7 +342,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeCustomForms(bool useStream)
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
             string modelId = await GetModelIdAsync();
@@ -329,7 +352,10 @@ namespace Azure.AI.FormRecognizer.Tests
                 if (useStream)
                 {
                     using var stream = new FileStream(FormRecognizerTestEnvironment.FormPath, FileMode.Open);
-                    operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                    using (Recording.DisableRequestBodyRecording())
+                    {
+                        operation = await client.StartRecognizeCustomFormsAsync(modelId, stream);
+                    }
                 }
                 else
                 {
@@ -378,7 +404,7 @@ namespace Azure.AI.FormRecognizer.Tests
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useLabels)
         {
-            var client = CreateInstrumentedClient();
+            var client = CreateInstrumentedFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
             var modelId = await GetModelIdAsync(useLabels);
 
@@ -411,34 +437,42 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
-        public void CreateFormTrainingClientFromFormRecognizerClient()
-        {
-            FormRecognizerClient client = CreateInstrumentedClient();
-            FormTrainingClient trainingClient = client.GetFormTrainingClient();
-            Assert.IsNotNull(trainingClient);
-        }
-
         /// <summary>
-        ///  For testing purposes, we are training our models using the client library functionalities.
-        ///  Please note that models can also be trained using a graphical user interface
-        ///  such as the Form Recognizer Labeling Tool found here:
-        ///  <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
+        /// For testing purposes, we are training our models using the client library functionalities.
+        /// Please note that models can also be trained using a graphical user interface
+        /// such as the Form Recognizer Labeling Tool found here:
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool"/>.
         /// </summary>
+        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <returns>The identifier of the trained model.</returns>
         private async Task<string> GetModelIdAsync(bool useLabels = false)
         {
-            FormTrainingClient trainingClient = InstrumentClient(new FormTrainingClient(_endpoint, _credential));
-            TrainingOperation trainedModel = await trainingClient.StartTrainingAsync(_containerUri, useLabels);
+            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+            FormTrainingClient client = CreateInstrumentedFormTrainingClient();
+            TrainingOperation trainedModel;
+
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                trainedModel = await client.StartTrainingAsync(trainingFiles, useLabels);
+            }
+
             await trainedModel.WaitForCompletionAsync();
+
             Assert.IsTrue(trainedModel.HasValue);
+            Assert.AreEqual(CustomFormModelStatus.Ready, trainedModel.Value.Status);
 
             return trainedModel.Value.ModelId;
         }
 
+        /// <summary>
+        /// Deletes the model with the specified model ID.
+        /// </summary>
+        /// <param name="modelId">The ID of the model to delete.</param>
         private async void DeleteModel(string modelId)
         {
-            FormTrainingClient trainingClient = InstrumentClient(new FormTrainingClient(_endpoint, _credential));
-            await trainingClient.DeleteModelAsync(modelId).ConfigureAwait(false);
+            FormTrainingClient client = CreateInstrumentedFormTrainingClient();
+            await client.DeleteModelAsync(modelId);
         }
     }
 }

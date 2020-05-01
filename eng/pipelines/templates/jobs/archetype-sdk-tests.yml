@@ -87,6 +87,8 @@ jobs:
           ${{ insert }}: ${{ parameters.EnvVars }}
 
       - template: /eng/common/TestResources/remove-test-resources.yml
+        parameters:
+          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
 
       - task: PublishTestResults@2
         condition: always()

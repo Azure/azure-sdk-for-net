@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Data.Tables.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -21,7 +22,5 @@
   <ItemGroup>
     <Folder Include="SessionRecords\TableServiceClientLiveTests\" />
   </ItemGroup>
-  
-  <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 
 </Project>

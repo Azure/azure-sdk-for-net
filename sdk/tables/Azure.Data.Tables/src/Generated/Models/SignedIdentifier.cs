@@ -31,8 +31,8 @@ namespace Azure.Data.Tables.Models
         }
 
         /// <summary> a unique id. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> The access policy. </summary>
-        public AccessPolicy AccessPolicy { get; }
+        public AccessPolicy AccessPolicy { get; set; }
     }
 }
