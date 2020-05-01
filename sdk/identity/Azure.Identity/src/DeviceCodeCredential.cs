@@ -65,7 +65,7 @@ namespace Azure.Identity
             : this(deviceCodeCallback, options?.TenantId, options?.ClientId, CredentialPipeline.GetInstance(options), options?.EnablePersistentCache ?? false)
         {
             _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
-            _record = options?.AuthenticationProfile;
+            _record = options?.AuthenticationRecord;
         }
 
         internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, CredentialPipeline pipeline, bool attachSharedCache)

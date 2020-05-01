@@ -32,8 +32,8 @@ namespace Azure.Identity
         public bool EnablePersistentCache { get; set; }
 
         /// <summary>
-        /// The <see cref="AuthenticationProfile"/> captured from a previous authentication.
+        /// The <see cref="Identity.AuthenticationRecord"/> captured from a previous authentication.
         /// </summary>
-        public AuthenticationRecord AuthenticationProfile { get; set; }
+        public AuthenticationRecord AuthenticationRecord { get; set; }
     }
 }

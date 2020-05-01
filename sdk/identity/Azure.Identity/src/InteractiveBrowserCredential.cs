@@ -39,7 +39,7 @@ namespace Azure.Identity
             : this(options?.TenantId, options?.ClientId ?? Constants.DeveloperSignOnClientId, CredentialPipeline.GetInstance(options), options?.EnablePersistentCache ?? false)
         {
             _disableAutomaticAuthentication = options?.DisableAutomaticAuthentication ?? false;
-            _record = options?.AuthenticationProfile;
+            _record = options?.AuthenticationRecord;
         }
 
         /// <summary>
