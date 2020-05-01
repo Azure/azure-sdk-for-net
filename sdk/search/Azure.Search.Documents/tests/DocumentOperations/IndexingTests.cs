@@ -57,7 +57,7 @@ namespace Azure.Search.Documents.Tests
         public async Task DynamicDocuments()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             IndexDocumentsBatch<SearchDocument> batch = IndexDocumentsBatch.Create(
                 IndexDocumentsAction.Upload(
                     new SearchDocument
@@ -206,7 +206,7 @@ namespace Azure.Search.Documents.Tests
         public async Task StaticDocuments()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
                 IndexDocumentsAction.Upload(
                     new Hotel
@@ -381,7 +381,7 @@ namespace Azure.Search.Documents.Tests
         public async Task StructDocuments()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient index = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             IndexDocumentsBatch<SimpleStructHotel> batch = IndexDocumentsBatch.Create(
                 IndexDocumentsAction.Upload(
                     new SimpleStructHotel
@@ -414,7 +414,7 @@ namespace Azure.Search.Documents.Tests
                         HotelName = null
                     }));
 
-            Response<IndexDocumentsResult> response = await index.IndexDocumentsAsync(batch);
+            Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
             Assert.AreEqual(5, response.Value.Results.Count);
 
             AssertPartialFailure(response, "3");
@@ -428,7 +428,7 @@ namespace Azure.Search.Documents.Tests
 
             await resources.WaitForIndexingAsync();
 
-            long count = await index.GetDocumentCountAsync();
+            long count = await client.GetDocumentCountAsync();
             Assert.AreEqual(3L, count);
         }
 
@@ -436,7 +436,7 @@ namespace Azure.Search.Documents.Tests
         public async Task DoesNotThrowOnSuccess()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Upload(
                 new[] { new Hotel() { HotelId = "1" } });
             Response<IndexDocumentsResult> response = await client.IndexDocumentsAsync(batch);
@@ -449,7 +449,7 @@ namespace Azure.Search.Documents.Tests
         public async Task DoesNotThrowOnPartialSuccess()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
                 IndexDocumentsAction.Upload(new Hotel { HotelId = "1" }),
                 IndexDocumentsAction.Merge(new Hotel { HotelId = "2" }));
@@ -465,7 +465,7 @@ namespace Azure.Search.Documents.Tests
         public async Task ThrowsOnPartialSuccessWhenAsked()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
 
             IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Create(
                 IndexDocumentsAction.Upload(new Hotel { HotelId = "1", Category = "Luxury" }),
@@ -482,7 +482,7 @@ namespace Azure.Search.Documents.Tests
         public async Task DoesNotThrowDeletingExtraStatic()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
 
             Hotel document = new Hotel() { HotelId = "1", Category = "Luxury" };
             IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Upload(new[] { document });
@@ -507,7 +507,7 @@ namespace Azure.Search.Documents.Tests
         public async Task DoesNotThrowDeletingExtraDynamic()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
 
             SearchDocument document = new SearchDocument() { ["hotelId"] = "1", ["category"] = "Luxury" };
             IndexDocumentsBatch<SearchDocument> batch = IndexDocumentsBatch.Upload(new[] { document });
@@ -532,7 +532,7 @@ namespace Azure.Search.Documents.Tests
         public async Task DeleteByKeys()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Upload(
                 new[]
                 {
@@ -565,7 +565,7 @@ namespace Azure.Search.Documents.Tests
 
                 Index index = Book.DefineIndex();
                 serviceClient.Indexes.Create(index);
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+                SearchClient indexClient = Data.GetSearchClient(index.Name);
 
                 var batch =
                     IndexBatch.Upload(new[]
@@ -598,7 +598,7 @@ namespace Azure.Search.Documents.Tests
 
                 Index index = Book.DefineIndex();
                 serviceClient.Indexes.Create(index);
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+                SearchClient indexClient = Data.GetSearchClient(index.Name);
 
                 // Can't test local date time since we might be testing against a pre-recorded mock response.
                 var utcDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -632,7 +632,7 @@ namespace Azure.Search.Documents.Tests
 
                 Index index = Book.DefineIndex();
                 serviceClient.Indexes.Create(index);
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+                SearchClient indexClient = Data.GetSearchClient(index.Name);
 
                 // Can't test local date time since we might be testing against a pre-recorded mock response.
                 var utcDateTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -662,7 +662,7 @@ namespace Azure.Search.Documents.Tests
         public async Task ThrowsOnInvalidDocument()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
 
             IndexDocumentsBatch<SearchDocument> batch = IndexDocumentsBatch.Upload(
                 new[] { new SearchDocument() });
@@ -678,7 +678,7 @@ namespace Azure.Search.Documents.Tests
         public async Task CountStartsAtZero()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            long count = await resources.GetIndexClient().GetDocumentCountAsync();
+            long count = await resources.GetSearchClient().GetDocumentCountAsync();
             Assert.AreEqual(0, count);
         }
 
@@ -686,7 +686,7 @@ namespace Azure.Search.Documents.Tests
         public async Task MergeDocumentsDynamic()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             SearchDocument original =
                 new SearchDocument
                 {
@@ -828,7 +828,7 @@ namespace Azure.Search.Documents.Tests
         public async Task MergeDocumentsStatic()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             Hotel original =
                 new Hotel
                 {
@@ -976,7 +976,7 @@ namespace Azure.Search.Documents.Tests
         {
             Run(() =>
             {
-                SearchIndexClient client = Data.GetSearchIndexClient();
+                SearchClient client = Data.GetSearchClient();
 
                 // This is just so we can use the LoudHotel class instead of Hotel since it has per-property
                 // NullValueHandling set.
@@ -1123,7 +1123,7 @@ namespace Azure.Search.Documents.Tests
         public async Task RoundtripBoundaryValues()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             Hotel[] expected = new[]
             {
                 // Minimum values
@@ -1244,7 +1244,7 @@ namespace Azure.Search.Documents.Tests
         public async Task ThrowsWhenMergingWithNewKey()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
 
             IndexDocumentsBatch<SearchDocument> batch = IndexDocumentsBatch.Merge(
                 new[] { new SearchDocument { ["hotelId"] = "42" } });
@@ -1267,7 +1267,7 @@ namespace Azure.Search.Documents.Tests
                 Index index = Book.DefineIndex();
                 serviceClient.Indexes.Create(index);
 
-                SearchIndexClient client = Data.GetSearchIndexClient(index.Name);
+                SearchClient client = Data.GetSearchClient(index.Name);
                 var resolver = new MyCustomContractResolver();
                 client.SerializationSettings.ContractResolver = resolver;
                 client.DeserializationSettings.ContractResolver = resolver;
@@ -1308,7 +1308,7 @@ namespace Azure.Search.Documents.Tests
         {
             Run(() =>
             {
-                SearchIndexClient client = Data.GetSearchIndexClient();
+                SearchClient client = Data.GetSearchClient();
                 var resolver = new MyCustomContractResolver();
                 client.SerializationSettings.ContractResolver = resolver;
                 client.DeserializationSettings.ContractResolver = resolver;
@@ -1387,7 +1387,7 @@ namespace Azure.Search.Documents.Tests
                 Index index = Book.DefineIndex(useCamelCase: true);
                 serviceClient.Indexes.Create(index);
 
-                SearchIndexClient client = Data.GetSearchIndexClient(index.Name);
+                SearchClient client = Data.GetSearchClient(index.Name);
                 client.SerializationSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
                 var expectedBook =
@@ -1422,7 +1422,7 @@ namespace Azure.Search.Documents.Tests
         [Fact]
         public void CanIndexAndRetrieveWithCustomConverterViaSettings()
         {
-            void CustomizeSettings(SearchIndexClient client)
+            void CustomizeSettings(SearchClient client)
             {
                 var bookConverter = new CustomBookConverter<CustomBook, CustomAuthor>();
                 bookConverter.Install(client);
@@ -1450,7 +1450,7 @@ namespace Azure.Search.Documents.Tests
 
                 serviceClient.Indexes.Create(indexWithReservedName);
 
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(indexWithReservedName.Name);
+                SearchClient indexClient = Data.GetSearchClient(indexWithReservedName.Name);
 
                 var batch = IndexBatch.Upload(new[] { new Document() { { "ID", "1" } } });
                 indexClient.Documents.Index(batch);
@@ -1462,7 +1462,7 @@ namespace Azure.Search.Documents.Tests
             });
         }
 
-        private void TestCanIndexAndRetrieveWithCustomConverter<TBook, TAuthor>(Action<SearchIndexClient> customizeSettings = null)
+        private void TestCanIndexAndRetrieveWithCustomConverter<TBook, TAuthor>(Action<SearchClient> customizeSettings = null)
             where TBook : CustomBookBase<TAuthor>, new()
             where TAuthor : CustomAuthor, new()
         {
@@ -1472,7 +1472,7 @@ namespace Azure.Search.Documents.Tests
             Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
 
-            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+            SearchClient indexClient = Data.GetSearchClient(index.Name);
             customizeSettings(indexClient);
 
             // Pre-index the document so we can test that Merge works with the custom converter.

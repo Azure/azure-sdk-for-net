@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.SuggestAsync"/> that
+    /// Options for <see cref="SearchClient.SuggestAsync"/> that
     /// allow specifying filtering, sorting, and other suggestions query
     /// behaviors.
     /// </summary>

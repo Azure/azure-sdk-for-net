@@ -7,9 +7,9 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    public class SearchIndexClientTests : SearchTestBase
+    public class SearchClientTests : SearchTestBase
     {
-        public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public SearchClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
@@ -20,24 +20,24 @@ namespace Azure.Search.Documents.Tests
             var serviceName = "my-svc-name";
             var indexName = "my-index-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
-            var index = new SearchIndexClient(endpoint, indexName, new AzureKeyCredential("fake"));
-            Assert.NotNull(index);
-            Assert.AreEqual(endpoint, index.Endpoint);
-            Assert.AreEqual(serviceName, index.ServiceName);
-            Assert.AreEqual(indexName, index.IndexName);
+            var client = new SearchClient(endpoint, indexName, new AzureKeyCredential("fake"));
+            Assert.NotNull(client);
+            Assert.AreEqual(endpoint, client.Endpoint);
+            Assert.AreEqual(serviceName, client.ServiceName);
+            Assert.AreEqual(indexName, client.IndexName);
 
-            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(null, indexName, new AzureKeyCredential("fake")));
-            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, null, new AzureKeyCredential("fake")));
-            Assert.Throws<ArgumentException>(() => new SearchIndexClient(endpoint, string.Empty, new AzureKeyCredential("fake")));
-            Assert.Throws<ArgumentNullException>(() => new SearchIndexClient(endpoint, indexName, null));
-            Assert.Throws<ArgumentException>(() => new SearchIndexClient(new Uri("http://bing.com"), indexName, null));
+            Assert.Throws<ArgumentNullException>(() => new SearchClient(null, indexName, new AzureKeyCredential("fake")));
+            Assert.Throws<ArgumentNullException>(() => new SearchClient(endpoint, null, new AzureKeyCredential("fake")));
+            Assert.Throws<ArgumentException>(() => new SearchClient(endpoint, string.Empty, new AzureKeyCredential("fake")));
+            Assert.Throws<ArgumentNullException>(() => new SearchClient(endpoint, indexName, null));
+            Assert.Throws<ArgumentException>(() => new SearchClient(new Uri("http://bing.com"), indexName, null));
         }
 
         [Test]
         public async Task ClientRequestIdRountrips()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetIndexClient();
+            SearchClient client = resources.GetSearchClient();
             Guid id = Recording.Random.NewGuid();
             Response<long> response = await client.GetDocumentCountAsync(
                 new SearchRequestOptions { ClientRequestId = id });
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources search = await SearchResources.GetSharedHotelsIndexAsync(this);
 
-            SearchIndexClient client = search.GetIndexClient();
+            SearchClient client = search.GetSearchClient();
             Response<long> response = await client.GetDocumentCountAsync();
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(SearchResources.TestDocuments.Length, response.Value);

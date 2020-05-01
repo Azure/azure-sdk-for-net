@@ -259,27 +259,27 @@ namespace Azure.Search.Documents.Tests
                     TestFixture.GetSearchClientOptions(options)));
 
         /// <summary>
-        /// Get a SearchIndexClient to use for testing with an Admin API key.
+        /// Get a SearchClient to use for testing with an Admin API key.
         /// </summary>
         /// <param name="options">Optional client options.</param>
-        /// <returns>A SearchIndexClient instance.</returns>
-        public SearchIndexClient GetIndexClient(SearchClientOptions options = null)
+        /// <returns>A SearchClient instance.</returns>
+        public SearchClient GetSearchClient(SearchClientOptions options = null)
         {
             Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
             return TestFixture.InstrumentClient(
-                GetServiceClient(options).GetSearchIndexClient(IndexName));
+                GetServiceClient(options).GetSearchClient(IndexName));
         }
 
         /// <summary>
-        /// Get a SearchIndexClient to use for testing with a query API key.
+        /// Get a SearchClient to use for testing with a query API key.
         /// </summary>
         /// <param name="options">Optional client options.</param>
-        /// <returns>A SearchIndexClient instance.</returns>
-        public SearchIndexClient GetQueryClient(SearchClientOptions options = null)
+        /// <returns>A SearchClient instance.</returns>
+        public SearchClient GetQueryClient(SearchClientOptions options = null)
         {
             Assert.IsNotNull(IndexName, "No index was created for these TestResources!");
             return TestFixture.InstrumentClient(
-                new SearchIndexClient(
+                new SearchClient(
                     Endpoint,
                     IndexName,
                     new AzureKeyCredential(QueryApiKey),
@@ -457,7 +457,7 @@ namespace Azure.Search.Documents.Tests
             // Upload the documents
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
-                SearchIndexClient client = new SearchIndexClient(Endpoint, IndexName, new AzureKeyCredential(PrimaryApiKey));
+                SearchClient client = new SearchClient(Endpoint, IndexName, new AzureKeyCredential(PrimaryApiKey));
                 IndexDocumentsBatch<Hotel> batch = IndexDocumentsBatch.Upload(TestDocuments);
                 await client.IndexDocumentsAsync(batch);
 

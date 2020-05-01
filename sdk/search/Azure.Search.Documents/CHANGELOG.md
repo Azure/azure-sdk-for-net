@@ -4,6 +4,7 @@
 
 ### Breaking Changes
 
+- Renamed `SearchIndexClient` to `SearchClient`.
 - Removed constructor from `SynonymMap` with `IEnumerable<string>` parameter.
 - `SearchServiceClient.GetIndexes` and `SearchServiceClient.GetIndexesAsync` now return `Pageable<SearchIndex>` and `AsyncPageable<SearchIndex>` respectively.
 - Replaced `MatchConditions` parameters with `bool onlyIfUnchanged` parameters that require a model with an `ETag` property.
