@@ -131,6 +131,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{BB8D02AF-F5C3-4D85-8B3E-884BFB820AB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{86E547CF-D43E-4874-9EAD-738E95800B57}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\keyvault\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{359ffa3a-4f5d-411c-8978-28e58f50eea3}*SharedItemsImports = 5
@@ -917,6 +919,18 @@ Global
 		{BB8D02AF-F5C3-4D85-8B3E-884BFB820AB3}.Release|x64.Build.0 = Release|Any CPU
 		{BB8D02AF-F5C3-4D85-8B3E-884BFB820AB3}.Release|x86.ActiveCfg = Release|Any CPU
 		{BB8D02AF-F5C3-4D85-8B3E-884BFB820AB3}.Release|x86.Build.0 = Release|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Debug|x64.Build.0 = Debug|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Debug|x86.Build.0 = Debug|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Release|x64.ActiveCfg = Release|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Release|x64.Build.0 = Release|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Release|x86.ActiveCfg = Release|Any CPU
+		{86E547CF-D43E-4874-9EAD-738E95800B57}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,7 +22,7 @@ namespace Azure.Core.TestFramework
         private static readonly string RepositoryRoot;
         private TokenCredential _credential;
         private readonly string _prefix;
-        private readonly Dictionary<string, string> _environmentFile;
+        private readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         protected TestEnvironment(string serviceName)
         {
@@ -39,7 +39,6 @@ namespace Azure.Core.TestFramework
                     ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
                 );
 
-                _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 foreach (var property in json.RootElement.EnumerateObject())
                 {
                     _environmentFile[property.Name] = property.Value.GetString();
