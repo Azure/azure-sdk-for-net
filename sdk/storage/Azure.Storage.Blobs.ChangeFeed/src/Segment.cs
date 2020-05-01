@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
@@ -123,7 +124,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         public async Task<List<BlobChangeFeedEvent>> GetPage(
             bool async,
-            int? pageSize)
+            int? pageSize,
+            CancellationToken cancellationToken = default)
         {
             List<BlobChangeFeedEvent> changeFeedEventList = new List<BlobChangeFeedEvent>();
 
@@ -142,7 +144,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             {
                 Shard currentShard = _shards[_shardIndex];
 
-                BlobChangeFeedEvent changeFeedEvent = await currentShard.Next(async).ConfigureAwait(false);
+                BlobChangeFeedEvent changeFeedEvent = await currentShard.Next(async, cancellationToken).ConfigureAwait(false);
 
                 changeFeedEventList.Add(changeFeedEvent);
 

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Internal.Avro;
@@ -85,7 +86,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public virtual bool HasNext()
             => _avroReader.HasNext();
 
-        public virtual async Task<BlobChangeFeedEvent> Next(bool async)
+        public virtual async Task<BlobChangeFeedEvent> Next(
+            bool async,
+            CancellationToken cancellationToken = default)
         {
             Dictionary<string, object> result;
 
@@ -94,7 +97,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 return null;
             }
 
-            result = (Dictionary<string, object>)await _avroReader.Next(async).ConfigureAwait(false);
+            result = (Dictionary<string, object>)await _avroReader.Next(async, cancellationToken).ConfigureAwait(false);
             BlockOffset = _avroReader.BlockOffset;
             EventIndex = _avroReader.ObjectIndex;
             return new BlobChangeFeedEvent(result);

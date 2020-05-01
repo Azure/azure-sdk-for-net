@@ -11,6 +11,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.ChangeFeed.Models;
+using System.Threading;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -184,7 +185,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         // The last segment may still be adding chunks.
         public async Task<Page<BlobChangeFeedEvent>> GetPage(
             bool async,
-            int pageSize = 512)
+            int pageSize = 512,
+            CancellationToken cancellationToken = default)
         {
             if (!_isInitalized)
             {
@@ -216,7 +218,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 && HasNext())
             {
                 //TODO what if segment doesn't have a page size worth of data?
-                List<BlobChangeFeedEvent> newEvents = await _currentSegment.GetPage(async, remainingEvents).ConfigureAwait(false);
+                List<BlobChangeFeedEvent> newEvents = await _currentSegment.GetPage(
+                    async,
+                    remainingEvents,
+                    cancellationToken).ConfigureAwait(false);
                 blobChangeFeedEvents.AddRange(newEvents);
                 remainingEvents -= newEvents.Count;
                 await AdvanceSegmentIfNecessary(async).ConfigureAwait(false);

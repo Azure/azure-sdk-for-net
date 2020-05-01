@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.ChangeFeed.Models;
+using System.Threading;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
@@ -131,7 +132,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return _chunks.Count > 0 || _currentChunk.HasNext();
         }
 
-        public virtual async Task<BlobChangeFeedEvent> Next(bool async)
+        public virtual async Task<BlobChangeFeedEvent> Next(
+            bool async,
+            CancellationToken cancellationToken = default)
         {
             if (!_isInitialized)
             {
@@ -145,7 +148,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             BlobChangeFeedEvent changeFeedEvent;
 
-            changeFeedEvent = await _currentChunk.Next(async).ConfigureAwait(false);
+            changeFeedEvent = await _currentChunk.Next(async, cancellationToken).ConfigureAwait(false);
 
             // Remove currentChunk if it doesn't have another event.
             if (!_currentChunk.HasNext() && _chunks.Count > 0)

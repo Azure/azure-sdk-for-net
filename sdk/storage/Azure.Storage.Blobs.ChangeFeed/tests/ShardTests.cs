@@ -133,7 +133,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             Mock<Chunk> chunk = new Mock<Chunk>(MockBehavior.Strict);
             chunk.Setup(r => r.HasNext()).Returns(true);
-            chunk.Setup(r => r.Next(It.IsAny<bool>())).Returns(Task.FromResult(expectedChangeFeedEvent));
+            chunk.Setup(r => r.Next(It.IsAny<bool>(), default)).Returns(Task.FromResult(expectedChangeFeedEvent));
             chunk.Setup(r => r.HasNext()).Returns(false);
 
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
@@ -156,7 +156,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual(1, cursor.ChunkIndex);
 
             chunk.Verify(r => r.HasNext());
-            chunk.Verify(r => r.Next(IsAsync));
+            chunk.Verify(r => r.Next(IsAsync, default));
             chunk.Verify(r => r.HasNext());
 
             containerClient.Verify(r => r.GetBlobClient(secondChunkName));
