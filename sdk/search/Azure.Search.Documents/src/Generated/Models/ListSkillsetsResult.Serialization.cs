@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Models
     {
         internal static ListSkillsetsResult DeserializeListSkillsetsResult(JsonElement element)
         {
-            IReadOnlyList<Skillset> value = default;
+            IReadOnlyList<SearchIndexerSkillset> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<Skillset> array = new List<Skillset>();
+                    List<SearchIndexerSkillset> array = new List<SearchIndexerSkillset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
                         }
                         else
                         {
-                            array.Add(Skillset.DeserializeSkillset(item));
+                            array.Add(SearchIndexerSkillset.DeserializeSearchIndexerSkillset(item));
                         }
                     }
                     value = array;

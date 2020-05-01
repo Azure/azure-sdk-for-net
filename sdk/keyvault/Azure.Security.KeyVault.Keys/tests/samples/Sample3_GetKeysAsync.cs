@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Keys.Samples
 {
@@ -20,7 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
         public async Task GetKeysAsync()
         {
             // Environment variable with the Key Vault endpoint.
-            string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
+            string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             // Instantiate a key client that will be used to call the service. Notice that the client is using default Azure
             // credentials. To make default credentials work, ensure that environment variables 'AZURE_CLIENT_ID',
@@ -52,6 +53,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // So, for each returned key we call GetKey to get the actual key.
             await foreach (KeyProperties key in client.GetPropertiesOfKeysAsync())
             {
+                /*@@*/ if (key.Managed) continue;
                 KeyVaultKey keyWithType = await client.GetKeyAsync(key.Name);
                 Debug.WriteLine($"Key is returned with name {keyWithType.Name} and type {keyWithType.KeyType}");
             }

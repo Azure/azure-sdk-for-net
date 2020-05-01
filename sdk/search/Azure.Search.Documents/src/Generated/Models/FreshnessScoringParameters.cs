@@ -20,6 +20,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The expiration period after which boosting will stop for a particular document. </summary>
-        public TimeSpan BoostingDuration { get; }
+        public TimeSpan BoostingDuration { get; set; }
     }
 }

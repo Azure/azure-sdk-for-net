@@ -21,6 +21,8 @@ trigger:
     include:
     - sdk/core/
     - eng/
+    exclude:
+    - eng/mgmt/
 
 pr:
   branches:
@@ -34,6 +36,8 @@ pr:
     - sdk/core/
     - eng/
     - samples/
+    exclude:
+    - eng/mgmt/
 
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

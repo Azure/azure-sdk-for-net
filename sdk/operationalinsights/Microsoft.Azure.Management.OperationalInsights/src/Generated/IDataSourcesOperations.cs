@@ -28,12 +28,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Create or update a data source.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case
-        /// insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the
-        /// datasource
+        /// The name of the workspace.
         /// </param>
         /// <param name='dataSourceName'>
         /// The name of the datasource resource.
@@ -61,11 +59,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Deletes a data source instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case
-        /// insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contains the datasource.
+        /// The name of the workspace.
         /// </param>
         /// <param name='dataSourceName'>
         /// Name of the datasource.
@@ -87,11 +84,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets a datasource instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case
-        /// insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contains the datasource.
+        /// The name of the workspace.
         /// </param>
         /// <param name='dataSourceName'>
         /// Name of the datasource
@@ -120,11 +116,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case
-        /// insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The workspace that contains the data sources.
+        /// The name of the workspace.
         /// </param>
         /// <param name='skiptoken'>
         /// Starting point of the collection of data source instances.

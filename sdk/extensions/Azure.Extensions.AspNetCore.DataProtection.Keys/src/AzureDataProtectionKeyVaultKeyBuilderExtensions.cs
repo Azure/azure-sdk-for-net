@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Extensions.AspNetCore.DataProtection.Keys;
 using Azure.Core;
 using Azure.Core.Cryptography;
@@ -24,9 +25,10 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <param name="keyIdentifier">The Azure Key Vault key identifier used for key encryption.</param>
         /// <param name="tokenCredential">The token credential to use for authentication.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
-        public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, TokenCredential tokenCredential)
+        public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, Uri keyIdentifier, TokenCredential tokenCredential)
         {
-            return ProtectKeysWithAzureKeyVault(builder, keyIdentifier, new KeyResolver(tokenCredential));
+            Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
+            return ProtectKeysWithAzureKeyVault(builder, keyIdentifier.ToString(), new KeyResolver(tokenCredential));
         }
 
         /// <summary>

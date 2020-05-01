@@ -86,8 +86,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             if ((token == null) || (token.ExpiresOn <= DateTimeOffset.UtcNow.Add(CredentialRefreshBuffer)))
             {
-                var credential = new ClientCredential(TestEnvironment.EventHubsClient, TestEnvironment.EventHubsSecret);
-                var context = new AuthenticationContext($"https://login.windows.net/{ TestEnvironment.EventHubsTenant }");
+                var credential = new ClientCredential(EventHubsTestEnvironment.Instance.ClientId, EventHubsTestEnvironment.Instance.ClientSecret);
+                var context = new AuthenticationContext($"https://login.windows.net/{ EventHubsTestEnvironment.Instance.TenantId }");
                 AuthenticationResult result = await context.AcquireTokenAsync("https://management.core.windows.net/", credential).ConfigureAwait(false);
 
                 if ((string.IsNullOrEmpty(result?.AccessToken)))

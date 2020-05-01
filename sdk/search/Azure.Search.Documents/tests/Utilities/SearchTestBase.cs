@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Tests
     /// of the Azure.Core testing framework.
     /// </summary>
     [ClientTestFixture(SearchClientOptions.ServiceVersion.V2019_05_06_Preview)]
-    public abstract partial class SearchTestBase : RecordedTestBase
+    public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
         /// The maximum number of retries for service requests.
@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Tests
         {
             ServiceVersion = serviceVersion;
             Sanitizer = new SearchRecordedTestSanitizer();
-            Matcher = new RecordMatcher(Sanitizer);
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         /// <summary>

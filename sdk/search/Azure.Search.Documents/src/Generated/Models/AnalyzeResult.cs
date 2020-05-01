@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
-        internal AnalyzeResult(IEnumerable<TokenInfo> tokens)
+        internal AnalyzeResult(IEnumerable<AnalyzedTokenInfo> tokens)
         {
             if (tokens == null)
             {
@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of AnalyzeResult. </summary>
         /// <param name="tokens"> The list of tokens returned by the analyzer specified in the request. </param>
-        internal AnalyzeResult(IReadOnlyList<TokenInfo> tokens)
+        internal AnalyzeResult(IReadOnlyList<AnalyzedTokenInfo> tokens)
         {
             Tokens = tokens;
         }
 
         /// <summary> The list of tokens returned by the analyzer specified in the request. </summary>
-        public IReadOnlyList<TokenInfo> Tokens { get; }
+        public IReadOnlyList<AnalyzedTokenInfo> Tokens { get; }
     }
 }

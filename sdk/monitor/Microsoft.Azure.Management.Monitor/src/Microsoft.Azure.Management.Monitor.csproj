@@ -6,11 +6,11 @@
 	<PropertyGroup>
 		<Description>Microsoft Azure Monitor Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Monitor</AssemblyName>
-		<Version>0.25.0-preview</Version>
+		<Version>0.25.1-preview</Version>
 		<PackageId>Microsoft.Azure.Management.Monitor</PackageId>
 		<PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;privatelinkscope</PackageTags>
 		<PackageReleaseNotes>
-      - Adding API **2019-10-17-preview/privateLinkScopes_API**. Support CRUD for private link scope.
+	  - Fixing API **2018-03-01/metricAlert_API**. Fix WebtestLocationAvailabilityCriteria criteria type.
     </PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

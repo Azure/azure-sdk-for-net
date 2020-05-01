@@ -10,7 +10,7 @@ using System;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Emits the entire input as a single token. This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class KeywordTokenizerV2 : Tokenizer
+    public partial class KeywordTokenizerV2 : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of KeywordTokenizerV2. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>

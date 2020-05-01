@@ -121,7 +121,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                     });
                 var received = await receiver.ReceiveAsync();
                 AssertMessagesEqual(msg, received);
-                var toSend = ServiceBusMessage.CreateFrom(received);
+                var toSend = new ServiceBusMessage(received);
                 AssertMessagesEqual(toSend, received);
 
                 void AssertMessagesEqual(ServiceBusMessage sentMessage, ServiceBusReceivedMessage received)
