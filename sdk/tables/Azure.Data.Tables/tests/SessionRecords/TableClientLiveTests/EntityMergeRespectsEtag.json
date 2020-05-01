@@ -8,58 +8,58 @@
         "Content-Length": "35",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-94c08b0e3684c24bbace99f29c23d5da-5cfe76228ff83d4a-00",
+        "traceparent": "00-a01f8141e1607142ace32d81688b1684-9c4ead94acf76544-00",
         "User-Agent": [
           "azsdk-net-Data.Tables/1.0.0-dev.20200501.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "94d6dc8dfc173f4fff076782d8d570a6",
-        "x-ms-date": "Fri, 01 May 2020 15:54:13 GMT",
+        "x-ms-client-request-id": "2bfc07dd6c23d3a45e01efa5145d6357",
+        "x-ms-date": "Fri, 01 May 2020 16:05:29 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "TableName": "testtable1702471356"
+        "TableName": "testtable1444996964"
       },
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Fri, 01 May 2020 15:54:12 GMT",
-        "Location": "https://chrissprim.table.core.windows.net/Tables(\u0027testtable1702471356\u0027)",
+        "Date": "Fri, 01 May 2020 16:05:29 GMT",
+        "Location": "https://chrissprim.table.core.windows.net/Tables(\u0027testtable1444996964\u0027)",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "94d6dc8dfc173f4fff076782d8d570a6",
-        "x-ms-request-id": "775772f8-2002-0059-21d0-1fe4ad000000",
+        "x-ms-client-request-id": "2bfc07dd6c23d3a45e01efa5145d6357",
+        "x-ms-request-id": "db0b964c-8002-007d-1dd2-1f7de3000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
         "odata.metadata": "https://chrissprim.table.core.windows.net/$metadata#Tables/@Element",
         "odata.type": "chrissprim.Tables",
-        "odata.id": "https://chrissprim.table.core.windows.net/Tables(\u0027testtable1702471356\u0027)",
-        "odata.editLink": "Tables(\u0027testtable1702471356\u0027)",
-        "TableName": "testtable1702471356"
+        "odata.id": "https://chrissprim.table.core.windows.net/Tables(\u0027testtable1444996964\u0027)",
+        "odata.editLink": "Tables(\u0027testtable1444996964\u0027)",
+        "TableName": "testtable1444996964"
       }
     },
     {
-      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "88",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "traceparent": "00-914dee01258a7548b380071f8b7fc7a3-0fa74a2b4fad2c44-00",
+        "traceparent": "00-fd4d5f0ddbc09d45af9029988bc6f099-a2f62296707ff149-00",
         "User-Agent": [
           "azsdk-net-Data.Tables/1.0.0-dev.20200501.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "c38c5ac2e4570eefe1fb1cd3d6987fe6",
-        "x-ms-date": "Fri, 01 May 2020 15:54:13 GMT",
+        "x-ms-client-request-id": "ac6a575bc7650ad135d23574c9590d43",
+        "x-ms-date": "Fri, 01 May 2020 16:05:29 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -72,21 +72,21 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Fri, 01 May 2020 15:54:12 GMT",
-        "ETag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.7072976Z\u0027\u0022",
+        "Date": "Fri, 01 May 2020 16:05:29 GMT",
+        "ETag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.596628Z\u0027\u0022",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "c38c5ac2e4570eefe1fb1cd3d6987fe6",
-        "x-ms-request-id": "77577302-2002-0059-29d0-1fe4ad000000",
+        "x-ms-client-request-id": "ac6a575bc7650ad135d23574c9590d43",
+        "x-ms-request-id": "db0b9664-8002-007d-33d2-1f7de3000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1702471356()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
+      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1444996964()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -95,8 +95,8 @@
           "azsdk-net-Data.Tables/1.0.0-dev.20200501.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "03bfccfdd3837b5f1632bab9e4edf993",
-        "x-ms-date": "Fri, 01 May 2020 15:54:14 GMT",
+        "x-ms-client-request-id": "9c961499766500f6556a46f19d86873c",
+        "x-ms-date": "Fri, 01 May 2020 16:05:29 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -105,83 +105,83 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Fri, 01 May 2020 15:54:12 GMT",
+        "Date": "Fri, 01 May 2020 16:05:29 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "03bfccfdd3837b5f1632bab9e4edf993",
-        "x-ms-request-id": "77577314-2002-0059-38d0-1fe4ad000000",
+        "x-ms-client-request-id": "9c961499766500f6556a46f19d86873c",
+        "x-ms-request-id": "db0b9688-8002-007d-56d2-1f7de3000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://chrissprim.table.core.windows.net/$metadata#testtable1702471356",
+        "odata.metadata": "https://chrissprim.table.core.windows.net/$metadata#testtable1444996964",
         "value": [
           {
-            "odata.type": "chrissprim.testtable1702471356",
-            "odata.id": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.7072976Z\u0027\u0022",
-            "odata.editLink": "testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+            "odata.type": "chrissprim.testtable1444996964",
+            "odata.id": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+            "odata.etag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.596628Z\u0027\u0022",
+            "odata.editLink": "testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "1",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-05-01T15:54:13.7072976Z",
+            "Timestamp": "2020-05-01T16:05:29.596628Z",
             "SomeStringProperty": "This is the original"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "MERGE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "536",
+        "Content-Length": "534",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
         "If-Match": "*",
-        "traceparent": "00-b0914cd13fad714088a859ce63ab6b97-439c7e4bb90e4f41-00",
+        "traceparent": "00-3a48fd595dd60b48bcade9506a5e10c4-84b2eadc6389ae47-00",
         "User-Agent": [
           "azsdk-net-Data.Tables/1.0.0-dev.20200501.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "7f0baae7e2cfa864ecc8b31cdf7c6866",
-        "x-ms-date": "Fri, 01 May 2020 15:54:14 GMT",
+        "x-ms-client-request-id": "28971fbe331116ff36f1f651362f0a05",
+        "x-ms-date": "Fri, 01 May 2020 16:05:30 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "odata.type": "chrissprim.testtable1702471356",
-        "odata.id": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.7072976Z\u0027\u0022",
-        "odata.editLink": "testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+        "odata.type": "chrissprim.testtable1444996964",
+        "odata.id": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+        "odata.etag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.596628Z\u0027\u0022",
+        "odata.editLink": "testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "1",
         "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-05-01T15:54:13.7072976Z",
+        "Timestamp": "2020-05-01T16:05:29.596628Z",
         "SomeStringProperty": "This is new and improved!"
       },
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Fri, 01 May 2020 15:54:12 GMT",
-        "ETag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.8624009Z\u0027\u0022",
+        "Date": "Fri, 01 May 2020 16:05:29 GMT",
+        "ETag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.7517313Z\u0027\u0022",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "7f0baae7e2cfa864ecc8b31cdf7c6866",
-        "x-ms-request-id": "7757731e-2002-0059-42d0-1fe4ad000000",
+        "x-ms-client-request-id": "28971fbe331116ff36f1f651362f0a05",
+        "x-ms-request-id": "db0b96a8-8002-007d-71d2-1f7de3000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1702471356()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
+      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1444996964()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -190,8 +190,8 @@
           "azsdk-net-Data.Tables/1.0.0-dev.20200501.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "0c8481886d16ef22fb10ac25293629f3",
-        "x-ms-date": "Fri, 01 May 2020 15:54:14 GMT",
+        "x-ms-client-request-id": "ff0bacf4c6c7e5f2606956fb81df6dae",
+        "x-ms-date": "Fri, 01 May 2020 16:05:30 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -200,77 +200,77 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Fri, 01 May 2020 15:54:13 GMT",
+        "Date": "Fri, 01 May 2020 16:05:29 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "0c8481886d16ef22fb10ac25293629f3",
-        "x-ms-request-id": "77577324-2002-0059-48d0-1fe4ad000000",
+        "x-ms-client-request-id": "ff0bacf4c6c7e5f2606956fb81df6dae",
+        "x-ms-request-id": "db0b96c6-8002-007d-0ed2-1f7de3000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://chrissprim.table.core.windows.net/$metadata#testtable1702471356",
+        "odata.metadata": "https://chrissprim.table.core.windows.net/$metadata#testtable1444996964",
         "value": [
           {
-            "odata.type": "chrissprim.testtable1702471356",
-            "odata.id": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.8624009Z\u0027\u0022",
-            "odata.editLink": "testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+            "odata.type": "chrissprim.testtable1444996964",
+            "odata.id": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+            "odata.etag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.7517313Z\u0027\u0022",
+            "odata.editLink": "testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "1",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-05-01T15:54:13.8624009Z",
+            "Timestamp": "2020-05-01T16:05:29.7517313Z",
             "SomeStringProperty": "This is new and improved!"
           }
         ]
       }
     },
     {
-      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "MERGE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "546",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "If-Match": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.7072976Z\u0027\u0022",
-        "traceparent": "00-4995820a5e377343b984a6889f435fba-350438af9b2a2548-00",
+        "If-Match": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.596628Z\u0027\u0022",
+        "traceparent": "00-6d180518dd4ec84595a4ff0d451eb819-8483e9f2f1cd6c40-00",
         "User-Agent": [
           "azsdk-net-Data.Tables/1.0.0-dev.20200501.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "2cec8902ff8c1b17671617bb20429c9a",
-        "x-ms-date": "Fri, 01 May 2020 15:54:14 GMT",
+        "x-ms-client-request-id": "a9b6f94be4c16631157f66737fa5c925",
+        "x-ms-date": "Fri, 01 May 2020 16:05:30 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "odata.type": "chrissprim.testtable1702471356",
-        "odata.id": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.8624009Z\u0027\u0022",
-        "odata.editLink": "testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+        "odata.type": "chrissprim.testtable1444996964",
+        "odata.id": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+        "odata.etag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.7517313Z\u0027\u0022",
+        "odata.editLink": "testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "1",
         "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-05-01T15:54:13.8624009Z",
+        "Timestamp": "2020-05-01T16:05:29.7517313Z",
         "SomeStringProperty": "This changed due to a matching Etag"
       },
       "StatusCode": 412,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Fri, 01 May 2020 15:54:13 GMT",
+        "Date": "Fri, 01 May 2020 16:05:29 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "2cec8902ff8c1b17671617bb20429c9a",
-        "x-ms-request-id": "7757732f-2002-0059-53d0-1fe4ad000000",
+        "x-ms-client-request-id": "a9b6f94be4c16631157f66737fa5c925",
+        "x-ms-request-id": "db0b96f1-8002-007d-39d2-1f7de3000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
@@ -278,60 +278,60 @@
           "code": "UpdateConditionNotSatisfied",
           "message": {
             "lang": "en-US",
-            "value": "The update condition specified in the request was not satisfied.\nRequestId:7757732f-2002-0059-53d0-1fe4ad000000\nTime:2020-05-01T15:54:14.0161067Z"
+            "value": "The update condition specified in the request was not satisfied.\nRequestId:db0b96f1-8002-007d-39d2-1f7de3000000\nTime:2020-05-01T16:05:29.9182504Z"
           }
         }
       }
     },
     {
-      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dfullmetadata",
+      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)?$format=application%2Fjson%3Bodata%3Dfullmetadata",
       "RequestMethod": "MERGE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "546",
         "Content-Type": "application/json; odata=nometadata",
         "DataServiceVersion": "3.0",
-        "If-Match": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.8624009Z\u0027\u0022",
-        "traceparent": "00-4e85fef5dc5e3a42bee48623a0c78c5b-52e7080d1ded2c4a-00",
+        "If-Match": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.7517313Z\u0027\u0022",
+        "traceparent": "00-4820d221af519547ba72d51f590f9898-729c43753edbaa4c-00",
         "User-Agent": [
           "azsdk-net-Data.Tables/1.0.0-dev.20200501.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "633054caec697a7c871c84be363f7fb6",
-        "x-ms-date": "Fri, 01 May 2020 15:54:14 GMT",
+        "x-ms-client-request-id": "f0fd4060877bf7742db2c8a7dc049556",
+        "x-ms-date": "Fri, 01 May 2020 16:05:30 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
       "RequestBody": {
-        "odata.type": "chrissprim.testtable1702471356",
-        "odata.id": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-        "odata.etag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A13.8624009Z\u0027\u0022",
-        "odata.editLink": "testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+        "odata.type": "chrissprim.testtable1444996964",
+        "odata.id": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+        "odata.etag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.7517313Z\u0027\u0022",
+        "odata.editLink": "testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
         "PartitionKey": "somPartition",
         "RowKey": "1",
         "Timestamp@odata.type": "Edm.DateTime",
-        "Timestamp": "2020-05-01T15:54:13.8624009Z",
+        "Timestamp": "2020-05-01T16:05:29.7517313Z",
         "SomeStringProperty": "This changed due to a matching Etag"
       },
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Fri, 01 May 2020 15:54:13 GMT",
-        "ETag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A14.1025617Z\u0027\u0022",
+        "Date": "Fri, 01 May 2020 16:05:29 GMT",
+        "ETag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.9968952Z\u0027\u0022",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "633054caec697a7c871c84be363f7fb6",
-        "x-ms-request-id": "77577340-2002-0059-64d0-1fe4ad000000",
+        "x-ms-client-request-id": "f0fd4060877bf7742db2c8a7dc049556",
+        "x-ms-request-id": "db0b9711-8002-007d-56d2-1f7de3000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1702471356()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
+      "RequestUri": "https://chrissprim.table.core.windows.net/testtable1444996964()?$format=application%2Fjson%3Bodata%3Dfullmetadata\u0026$filter=PartitionKey%20eq%20%27somPartition%27%20and%20RowKey%20eq%20%271%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -340,8 +340,8 @@
           "azsdk-net-Data.Tables/1.0.0-dev.20200501.1",
           "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "5519bf9e3c9089d96968a5005667cfb8",
-        "x-ms-date": "Fri, 01 May 2020 15:54:14 GMT",
+        "x-ms-client-request-id": "3c05488460790f447aa5e948607e65ba",
+        "x-ms-date": "Fri, 01 May 2020 16:05:30 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-02-02"
       },
@@ -350,29 +350,29 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Type": "application/json; odata=fullmetadata; streaming=true; charset=utf-8",
-        "Date": "Fri, 01 May 2020 15:54:13 GMT",
+        "Date": "Fri, 01 May 2020 16:05:29 GMT",
         "Server": [
           "Windows-Azure-Table/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5519bf9e3c9089d96968a5005667cfb8",
-        "x-ms-request-id": "77577349-2002-0059-6dd0-1fe4ad000000",
+        "x-ms-client-request-id": "3c05488460790f447aa5e948607e65ba",
+        "x-ms-request-id": "db0b9736-8002-007d-77d2-1f7de3000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": {
-        "odata.metadata": "https://chrissprim.table.core.windows.net/$metadata#testtable1702471356",
+        "odata.metadata": "https://chrissprim.table.core.windows.net/$metadata#testtable1444996964",
         "value": [
           {
-            "odata.type": "chrissprim.testtable1702471356",
-            "odata.id": "https://chrissprim.table.core.windows.net/testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
-            "odata.etag": "W/\u0022datetime\u00272020-05-01T15%3A54%3A14.1025617Z\u0027\u0022",
-            "odata.editLink": "testtable1702471356(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+            "odata.type": "chrissprim.testtable1444996964",
+            "odata.id": "https://chrissprim.table.core.windows.net/testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
+            "odata.etag": "W/\u0022datetime\u00272020-05-01T16%3A05%3A29.9968952Z\u0027\u0022",
+            "odata.editLink": "testtable1444996964(PartitionKey=\u0027somPartition\u0027,RowKey=\u00271\u0027)",
             "PartitionKey": "somPartition",
             "RowKey": "1",
             "Timestamp@odata.type": "Edm.DateTime",
-            "Timestamp": "2020-05-01T15:54:14.1025617Z",
+            "Timestamp": "2020-05-01T16:05:29.9968952Z",
             "SomeStringProperty": "This changed due to a matching Etag"
           }
         ]
@@ -380,7 +380,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "372262658",
+    "RandomSeed": "262018088",
     "TABLES_PRIMARY_STORAGE_ACCOUNT_KEY": "",
     "TABLES_STORAGE_ACCOUNT_NAME": "chrissprim"
   }

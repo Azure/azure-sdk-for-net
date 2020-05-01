@@ -495,7 +495,7 @@ namespace Azure.Data.Tables.Tests
                         {"PartitionKey", partitionKeyValue},
                         {"RowKey", n.ToString("D2")},
                         {"SomeStringProperty", $"This is table entity number {n:D2}"},
-                        {"SomeDateProperty", new DateTime(2020, 1,1).AddMinutes(n)},
+                        {"SomeDateProperty", new DateTime(2020, 1,1).AddMinutes(n).ToUniversalTime()},
                         {"SomeGuidProperty", new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
                         {"SomeBinaryProperty", new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {"SomeInt64Property", long.Parse(number)},
