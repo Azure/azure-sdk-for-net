@@ -39,7 +39,7 @@ namespace Azure.Identity
             return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
         }
 
-        public MsalPublicClient CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
+        public MsalPublicClient CreateMsalPublicClient(string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = true)
         {
             return new MsalPublicClient(HttpPipeline, clientId, tenantId, redirectUrl, attachSharedCache);
         }

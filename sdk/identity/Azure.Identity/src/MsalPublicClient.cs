@@ -8,13 +8,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extensions.Msal;
 
 namespace Azure.Identity
 {
     internal class MsalPublicClient
     {
         private readonly IPublicClientApplication _client;
-        private readonly MsalCacheReader _cacheReader;
+        private readonly bool _attachSharedCache;
+        private readonly string _clientId;
+        private readonly Lazy<Task> _ensureInitAsync;
 
         protected MsalPublicClient()
         {
@@ -35,34 +38,75 @@ namespace Azure.Identity
 
             _client = pubAppBuilder.Build();
 
-            if (attachSharedCache)
+            int i = 0;
+
+            _client.UserTokenCache.SetBeforeAccessAsync(async args => { if (++i > 1) { throw new InvalidOperationException(); } await Task.CompletedTask.ConfigureAwait(false);  });
+
+            _clientId = clientId;
+
+            _ensureInitAsync = new Lazy<Task>(InitializeAsync);
+
+            _attachSharedCache = attachSharedCache;
+        }
+
+        private async Task InitializeAsync()
+        {
+            if (_attachSharedCache)
             {
-                _cacheReader = new MsalCacheReader(_client.UserTokenCache, Constants.SharedTokenCacheFilePath, Constants.SharedTokenCacheAccessRetryCount, Constants.SharedTokenCacheAccessRetryDelay);
+                StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(Constants.DefaultMsalTokenCacheName, Constants.DefaultMsalTokenCacheDirectory, _clientId).Build();
+
+                MsalCacheHelper cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
+
+                cacheHelper.RegisterCache(_client.UserTokenCache);
+            }
+        }
+
+        private async ValueTask EnsureInitializedAsync(bool async)
+        {
+            if (async)
+            {
+                await _ensureInitAsync.Value.ConfigureAwait(false);
+            }
+            else
+            {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                _ensureInitAsync.Value.GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
         }
 
         public virtual async Task<IEnumerable<IAccount>> GetAccountsAsync()
         {
+            await EnsureInitializedAsync(true).ConfigureAwait(false);
+
             return await _client.GetAccountsAsync().ConfigureAwait(false);
         }
 
         public virtual async Task<AuthenticationResult> AcquireTokenSilentAsync(string[] scopes, IAccount account, bool async, CancellationToken cancellationToken)
         {
+            await EnsureInitializedAsync(async).ConfigureAwait(false);
+
             return await _client.AcquireTokenSilent(scopes, account).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
         public virtual async Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, Prompt prompt, bool async, CancellationToken cancellationToken)
         {
+            await EnsureInitializedAsync(async).ConfigureAwait(false);
+
             return await _client.AcquireTokenInteractive(scopes).WithPrompt(prompt).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
         public virtual async Task<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string username, SecureString password, bool async, CancellationToken cancellationToken)
         {
+            await EnsureInitializedAsync(async).ConfigureAwait(false);
+
             return await _client.AcquireTokenByUsernamePassword(scopes, username, password).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
         public virtual async Task<AuthenticationResult> AcquireTokenWithDeviceCodeAsync(string[] scopes, Func<DeviceCodeResult, Task> deviceCodeCallback, bool async, CancellationToken cancellationToken)
         {
+            await EnsureInitializedAsync(async).ConfigureAwait(false);
+
             return await _client.AcquireTokenWithDeviceCode(scopes, deviceCodeCallback).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
