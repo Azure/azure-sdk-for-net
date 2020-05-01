@@ -23,6 +23,7 @@ namespace Azure.Identity
         private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
         private bool _disableAutomaticAuthentication = false;
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to initiate the device code authentication.";
+        private const string NoDefaultScopeMessage = "Authenticating in this environment requires the specifying a TokenRequestContext.";
 
         /// <summary>
         /// Protected constructor for mocking
@@ -69,7 +70,7 @@ namespace Azure.Identity
         }
 
         internal DeviceCodeCredential(Func<DeviceCodeInfo, CancellationToken, Task> deviceCodeCallback, string tenantId, string clientId, CredentialPipeline pipeline, bool attachSharedCache)
-            : this(deviceCodeCallback, clientId, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId, redirectUrl: "https://login.microsoftonline.com/common/oauth2/nativeclient", attachSharedCache))
+            : this(deviceCodeCallback, clientId, pipeline, pipeline.CreateMsalPublicClient(clientId, tenantId, redirectUrl: KnownAuthorityHosts.GetDeviceCodeRedirectUri(pipeline.AuthorityHost).ToString(), attachSharedCache))
         {
         }
 
@@ -91,7 +92,10 @@ namespace Azure.Identity
         /// <returns>The result of the authentication request, containing the acquired <see cref="AccessToken"/>, and the <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account.</returns>
         public virtual AuthenticationRecord Authenticate(CancellationToken cancellationToken = default)
         {
-            return Authenticate(new TokenRequestContext(new string[] { "https://management.azure.com//.default" }), cancellationToken);
+            // get the default scope for the authority, throw if no default scope exists
+            string defaultScope = KnownAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+
+            return Authenticate(new TokenRequestContext(new string[] { defaultScope }), cancellationToken);
         }
 
         /// <summary>
@@ -101,7 +105,10 @@ namespace Azure.Identity
         /// <returns>The <see cref="AuthenticationRecord"/> which can be used to silently authenticate the account on future execution if persistent caching was enabled via <see cref="DeviceCodeCredentialOptions.EnablePersistentCache"/> when credential was instantiated.</returns>
         public virtual async Task<AuthenticationRecord> AuthenticateAsync(CancellationToken cancellationToken = default)
         {
-            return await AuthenticateAsync(new TokenRequestContext(new string[] { "https://management.azure.com//.default" }), cancellationToken).ConfigureAwait(false);
+            // get the default scope for the authority, throw if no default scope exists
+            string defaultScope = KnownAuthorityHosts.GetDefaultScope(_pipeline.AuthorityHost) ?? throw new CredentialUnavailableException(NoDefaultScopeMessage);
+
+            return await AuthenticateAsync(new TokenRequestContext(new string[] { defaultScope }), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

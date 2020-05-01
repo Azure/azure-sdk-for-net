@@ -23,11 +23,13 @@ namespace Azure.Identity
         {
         }
 
-        public MsalPublicClient(HttpPipeline pipeline, string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
+        public MsalPublicClient(HttpPipeline pipeline, Uri authorityHost, string clientId, string tenantId = default, string redirectUrl = default, bool attachSharedCache = false)
         {
-            PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline));
-
             tenantId ??= Constants.OrganizationsTenantId;
+
+            var authorityUri = new UriBuilder(authorityHost.Scheme, authorityHost.Host, authorityHost.Port, tenantId).Uri;
+
+            PublicClientApplicationBuilder pubAppBuilder = PublicClientApplicationBuilder.Create(clientId).WithAuthority(authorityUri).WithHttpClientFactory(new HttpPipelineClientFactory(pipeline));
 
             pubAppBuilder = pubAppBuilder.WithTenantId(tenantId);
 
