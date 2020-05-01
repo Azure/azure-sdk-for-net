@@ -3,7 +3,7 @@
 ## Azure.Management SDK client library template
 
 ### To install the template (one-time step), run following commands:
-* dotnet new -i `Path to SDK repo`\eng\templates\AzureManagement.Template
+* dotnet new -i `Path to SDK repo`\eng\templates\Azure.Management.Template
 
 ---
 
