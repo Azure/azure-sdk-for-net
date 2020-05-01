@@ -835,7 +835,6 @@ namespace Azure.Messaging.ServiceBus
                     sessionIdsReceiverMap.TryRemove(sessionReceiver.SessionId, out var _);
                 }
 
-                // remove entry from the map if we get sessionlock lost
                 // Our token would only be canceled when user calls StopProcessingAsync. We don't
                 // need to spam the exception handler with these exceptions.
                 if (!(ex is TaskCanceledException))
