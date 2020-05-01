@@ -14,9 +14,9 @@ namespace Azure.Identity
 
 
     /// <summary>
-    /// Account profile information relating to an authentication request.
+    /// Account information relating to an authentication request.
     /// </summary>
-    public class AuthenticationProfile
+    public class AuthenticationRecord
     {
         private const string UsernamePropertyName = "username";
         private const string AuthorityPropertyName = "authority";
@@ -32,12 +32,12 @@ namespace Azure.Identity
 
         private Lazy<Dictionary<string, string>> _additionalData = new Lazy<Dictionary<string, string>>();
 
-        internal AuthenticationProfile()
+        internal AuthenticationRecord()
         {
 
         }
 
-        internal AuthenticationProfile(Microsoft.Identity.Client.AuthenticationResult authResult)
+        internal AuthenticationRecord(Microsoft.Identity.Client.AuthenticationResult authResult)
         {
             Username = authResult.Account.Username;
             Authority = authResult.Account.Environment;
@@ -66,16 +66,16 @@ namespace Azure.Identity
         public string TenantId { get; private set; }
 
         /// <summary>
-        /// Additional data to be stored in the <see cref="AuthenticationProfile"/>.
+        /// Additional data to be stored in the <see cref="AuthenticationRecord"/>.
         /// </summary>
         public Dictionary<string, string> AdditionalData => _additionalData.Value;
 
         internal AccountId AccountId { get; private set; }
 
         /// <summary>
-        /// Serializes the <see cref="AuthenticationProfile"/> to the specified <see cref="Stream"/>.
+        /// Serializes the <see cref="AuthenticationRecord"/> to the specified <see cref="Stream"/>.
         /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> which the serialized <see cref="AuthenticationProfile"/> will be written to.</param>
+        /// <param name="stream">The <see cref="Stream"/> which the serialized <see cref="AuthenticationRecord"/> will be written to.</param>
         public void Serialize(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
@@ -84,9 +84,9 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Serializes the <see cref="AuthenticationProfile"/> to the specified <see cref="Stream"/>.
+        /// Serializes the <see cref="AuthenticationRecord"/> to the specified <see cref="Stream"/>.
         /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> to which the serialized <see cref="AuthenticationProfile"/> will be written.</param>
+        /// <param name="stream">The <see cref="Stream"/> to which the serialized <see cref="AuthenticationRecord"/> will be written.</param>
         public async Task SerializeAsync(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
@@ -96,10 +96,10 @@ namespace Azure.Identity
 
 
         /// <summary>
-        /// Deserializes the <see cref="AuthenticationProfile"/> from the specified <see cref="Stream"/>.
+        /// Deserializes the <see cref="AuthenticationRecord"/> from the specified <see cref="Stream"/>.
         /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="AuthenticationProfile"/> will be read.</param>
-        public static AuthenticationProfile Deserialize(Stream stream)
+        /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="AuthenticationRecord"/> will be read.</param>
+        public static AuthenticationRecord Deserialize(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
@@ -107,10 +107,10 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Deserializes the <see cref="AuthenticationProfile"/> from the specified <see cref="Stream"/>.
+        /// Deserializes the <see cref="AuthenticationRecord"/> from the specified <see cref="Stream"/>.
         /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="AuthenticationProfile"/> will be read.</param>
-        public static async Task<AuthenticationProfile> DeserializeAsync(Stream stream)
+        /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="AuthenticationRecord"/> will be read.</param>
+        public static async Task<AuthenticationRecord> DeserializeAsync(Stream stream)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
@@ -157,9 +157,9 @@ namespace Azure.Identity
             }
         }
 
-        private static async Task<AuthenticationProfile> DeserializeAsync(Stream stream, bool async)
+        private static async Task<AuthenticationRecord> DeserializeAsync(Stream stream, bool async)
         {
-            var authProfile = new AuthenticationProfile();
+            var authProfile = new AuthenticationRecord();
 
             using JsonDocument doc = async ? await JsonDocument.ParseAsync(stream).ConfigureAwait(false) : JsonDocument.Parse(stream);
 

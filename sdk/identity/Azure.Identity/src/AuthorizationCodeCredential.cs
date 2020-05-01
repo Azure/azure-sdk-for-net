@@ -22,7 +22,7 @@ namespace Azure.Identity
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly string _authCode;
         private readonly CredentialPipeline _pipeline;
-        private AuthenticationProfile _profile;
+        private AuthenticationRecord _record;
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -102,17 +102,17 @@ namespace Azure.Identity
             {
                 AccessToken token = default;
 
-                if (_profile is null)
+                if (_record is null)
                 {
                     AuthenticationResult result = await _confidentialClient.AcquireTokenByAuthorizationCode(requestContext.Scopes, _authCode).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
-                    _profile = new AuthenticationProfile(result);
+                    _record = new AuthenticationRecord(result);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
                 else
                 {
-                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, (AuthenticationAccount)_profile).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
+                    AuthenticationResult result = await _confidentialClient.AcquireTokenSilent(requestContext.Scopes, (AuthenticationAccount)_record).ExecuteAsync(async, cancellationToken).ConfigureAwait(false);
 
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }

@@ -6,9 +6,9 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {   internal class AuthenticationAccount : IAccount
     {
-        private AuthenticationProfile _profile;
+        private AuthenticationRecord _profile;
 
-        internal AuthenticationAccount(AuthenticationProfile profile)
+        internal AuthenticationAccount(AuthenticationRecord profile)
         {
             _profile = profile;
         }
@@ -19,7 +19,7 @@ namespace Azure.Identity
 
         AccountId IAccount.HomeAccountId => _profile.AccountId;
 
-        public static explicit operator AuthenticationAccount(AuthenticationProfile profile) => new AuthenticationAccount(profile);
-        public static explicit operator AuthenticationProfile(AuthenticationAccount account) => account._profile;
+        public static explicit operator AuthenticationAccount(AuthenticationRecord profile) => new AuthenticationAccount(profile);
+        public static explicit operator AuthenticationRecord(AuthenticationAccount account) => account._profile;
     }
 }

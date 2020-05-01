@@ -27,8 +27,13 @@ namespace Azure.Identity
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
         /// <summary>
+        /// If set to true the credential will store tokens in a persistent cache shared by other user credentials.
+        /// </summary>
+        public bool EnablePersistentCache { get; set; }
+
+        /// <summary>
         /// The <see cref="AuthenticationProfile"/> captured from a previous authentication.
         /// </summary>
-        public AuthenticationProfile AuthenticationProfile { get; set; }
+        public AuthenticationRecord AuthenticationProfile { get; set; }
     }
 }
