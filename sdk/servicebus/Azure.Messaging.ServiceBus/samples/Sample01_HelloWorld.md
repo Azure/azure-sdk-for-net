@@ -38,34 +38,11 @@ Console.WriteLine(body);
 We can send several messages at once using a `ServiceBusMessageBatch`. 
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
-string connectionString = "<connection_string>";
-string queueName = "<queue_name>";
-// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-await using var client = new ServiceBusClient(connectionString);
-
-// create the sender
-ServiceBusSender sender = client.CreateSender(queueName);
-
-// create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
-
-// send the message batch
-await sender.SendAsync(messageBatch);
-
-// create a receiver that we can use to receive the messages
-ServiceBusReceiver receiver = client.CreateReceiver(queueName);
-
-// the received message is a different type as it contains some service set properties
-IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
-
-foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
-{
-    // get the message body as a string
-    string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
-    Console.WriteLine(body);
-}
+IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
+messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+// send the messages
+await sender.SendAsync(messages);
 ```
 
 ## Peeking a message
