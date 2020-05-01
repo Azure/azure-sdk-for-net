@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of ListSkillsetsResult. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
-        internal ListSkillsetsResult(IEnumerable<Skillset> skillsets)
+        internal ListSkillsetsResult(IEnumerable<SearchIndexerSkillset> skillsets)
         {
             if (skillsets == null)
             {
@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of ListSkillsetsResult. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
-        internal ListSkillsetsResult(IReadOnlyList<Skillset> skillsets)
+        internal ListSkillsetsResult(IReadOnlyList<SearchIndexerSkillset> skillsets)
         {
             Skillsets = skillsets;
         }
 
         /// <summary> The skillsets defined in the Search service. </summary>
-        public IReadOnlyList<Skillset> Skillsets { get; }
+        public IReadOnlyList<SearchIndexerSkillset> Skillsets { get; }
     }
 }

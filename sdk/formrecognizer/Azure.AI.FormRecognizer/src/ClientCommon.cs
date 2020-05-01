@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer
         /// <param name="modelId">The model identifier to be parsed into a <see cref="Guid"/>.</param>
         /// <param name="paramName">The original parameter name of the <paramref name="modelId"/>. Used to create exceptions in case of failure.</param>
         /// <returns>The <see cref="Guid"/> instance created from the <paramref name="modelId"/>.</returns>
-        /// <exception cref="ArgumentException">Happens when parsing fails.</exception>
+        /// <exception cref="ArgumentException">Thrown when parsing fails.</exception>
         public static Guid ValidateModelId(string modelId, string paramName)
         {
             Guid guid;

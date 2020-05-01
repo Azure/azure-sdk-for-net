@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -182,7 +183,11 @@ namespace Azure.Messaging.EventHubs.Primitives
             InitialPosition = eventPosition;
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
+
         }
 
         /// <summary>
@@ -219,7 +224,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             InitialPosition = eventPosition;
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -251,7 +259,10 @@ namespace Azure.Messaging.EventHubs.Primitives
             InitialPosition = eventPosition;
             DefaultMaximumWaitTime = options.DefaultMaximumReceiveWaitTime;
             RetryPolicy = options.RetryOptions.ToRetryPolicy();
+
+#pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
             InnerConsumer = CreateTransportConsumer(consumerGroup, partitionId, eventPosition, RetryPolicy, options);
+#pragma warning restore CA2214 // Do not call overridable methods in constructors.
         }
 
         /// <summary>
@@ -348,7 +359,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             IsClosed = true;
 
-            var clientHash = GetHashCode().ToString();
+            var clientHash = GetHashCode().ToString(CultureInfo.InvariantCulture);
             Logger.ClientCloseStart(typeof(PartitionReceiver), EventHubName, clientHash);
 
             // Attempt to close the transport consumer.  In the event that an exception is encountered,

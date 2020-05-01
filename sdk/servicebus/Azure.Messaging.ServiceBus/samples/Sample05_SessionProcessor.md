@@ -30,7 +30,7 @@ messageBatch.TryAdd(
     });
 
 // send the message batch
-await sender.SendBatchAsync(messageBatch);
+await sender.SendAsync(messageBatch);
 
 // get the options to use for configuring the processor
 var options = new ServiceBusProcessorOptions

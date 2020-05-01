@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StartProcessingStartsTheProcessing(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StartProcessingStartsTheLoadBalancer(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partitions = new[] { "67", "125" };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StartProcessingDoesNotAttemptToStartWhenRunning(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
@@ -217,7 +217,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StartProcessingLogsNormalStartup(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
@@ -270,7 +270,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StartProcessingLogsErrorDuringStartup(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
@@ -361,7 +361,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingStopsProcessing(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
@@ -400,7 +400,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingStopsTheLoadBalancer(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var startCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var stopCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -463,7 +463,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void StopProcessingIsSafeToCallWhenNotProcessing(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
@@ -495,7 +495,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingIsSafeToCallAfterStopping(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
@@ -549,7 +549,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingSurfacesExceptions(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new DivideByZeroException("BOOM!");
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -591,7 +591,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingResetsState(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new DivideByZeroException("BOOM!");
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
@@ -667,7 +667,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingLogsNormalShutdown(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
@@ -720,7 +720,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingLogsErrorDuringShutdown(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
             var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
@@ -785,7 +785,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingLogsFaultedTaskDuringShutdown(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedException = new DivideByZeroException("BOOM!");
             var mockEventSource = new Mock<EventHubsEventSource>() { CallBase = true };
@@ -847,7 +847,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingIsSafeToCallInTheErrorHandler(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var capturedException = default(Exception);
             var expectedException = new DivideByZeroException("BOOM!");

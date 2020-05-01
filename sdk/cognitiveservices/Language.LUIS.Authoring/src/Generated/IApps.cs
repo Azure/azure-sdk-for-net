@@ -577,7 +577,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Imports an application to LUIS, the application's structure is
         /// included in the request body.
         /// </summary>
-        /// <param name='luisApplu'>
+        /// <param name='luisAppLu'>
         /// A LUIS application structure.
         /// </param>
         /// <param name='appName'>
@@ -600,6 +600,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> ImportLuFromatWithHttpMessagesAsync(string luisApplu, string appName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> ImportLuFormatWithHttpMessagesAsync(string luisAppLu, string appName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

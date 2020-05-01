@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_Namespaces
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;

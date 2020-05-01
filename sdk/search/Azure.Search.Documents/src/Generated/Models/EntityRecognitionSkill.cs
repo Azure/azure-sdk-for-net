@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Text analytics entity recognition. </summary>
-    public partial class EntityRecognitionSkill : Skill
+    public partial class EntityRecognitionSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of EntityRecognitionSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>

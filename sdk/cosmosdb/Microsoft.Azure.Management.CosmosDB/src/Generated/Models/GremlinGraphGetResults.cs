@@ -40,10 +40,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        public GremlinGraphGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GremlinGraphGetPropertiesResource resource = default(GremlinGraphGetPropertiesResource))
+        public GremlinGraphGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GremlinGraphGetPropertiesResource resource = default(GremlinGraphGetPropertiesResource), GremlinGraphGetPropertiesOptions options = default(GremlinGraphGetPropertiesOptions))
             : base(id, name, type, location, tags)
         {
             Resource = resource;
+            Options = options;
             CustomInit();
         }
 
@@ -56,6 +57,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resource")]
         public GremlinGraphGetPropertiesResource Resource { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.options")]
+        public GremlinGraphGetPropertiesOptions Options { get; set; }
 
         /// <summary>
         /// Validate the object.

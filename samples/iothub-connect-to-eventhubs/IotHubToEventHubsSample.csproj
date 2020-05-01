@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="README.md" />
+    <None Remove="sample-resources.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.3" />
+    <PackageReference Include="Microsoft.Azure.Devices" Version="1.20.1" />
+  </ItemGroup>
+</Project>

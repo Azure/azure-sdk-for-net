@@ -7,7 +7,7 @@
     <PackageId>StorageCache.Tests</PackageId>
     <Description>StorageCache.Tests Class Library</Description>
     <AssemblyName>StorageCache.Tests</AssemblyName>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.1.0</VersionPrefix>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 

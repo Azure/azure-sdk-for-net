@@ -36,6 +36,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The key used to provision the cognitive service resource attached to a skillset. </summary>
-        public string Key { get; }
+        public string Key { get; set; }
     }
 }

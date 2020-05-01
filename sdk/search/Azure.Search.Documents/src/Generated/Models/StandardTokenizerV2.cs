@@ -10,7 +10,7 @@ using System;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Breaks text following the Unicode Text Segmentation rules. This tokenizer is implemented using Apache Lucene. </summary>
-    public partial class StandardTokenizerV2 : Tokenizer
+    public partial class StandardTokenizerV2 : LexicalTokenizer
     {
         /// <summary> Initializes a new instance of StandardTokenizerV2. </summary>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>

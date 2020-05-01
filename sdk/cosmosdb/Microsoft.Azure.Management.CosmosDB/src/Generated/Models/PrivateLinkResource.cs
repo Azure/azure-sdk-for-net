@@ -41,11 +41,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="groupId">The private link resource group id.</param>
         /// <param name="requiredMembers">The private link resource required
         /// member names.</param>
-        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), string groupId = default(string), IList<string> requiredMembers = default(IList<string>))
+        /// <param name="requiredZoneNames">The private link resource required
+        /// zone names.</param>
+        public PrivateLinkResource(string id = default(string), string name = default(string), string type = default(string), string groupId = default(string), IList<string> requiredMembers = default(IList<string>), IList<string> requiredZoneNames = default(IList<string>))
             : base(id, name, type)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
+            RequiredZoneNames = requiredZoneNames;
             CustomInit();
         }
 
@@ -65,6 +68,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiredMembers")]
         public IList<string> RequiredMembers { get; private set; }
+
+        /// <summary>
+        /// Gets the private link resource required zone names.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.requiredZoneNames")]
+        public IList<string> RequiredZoneNames { get; private set; }
 
     }
 }

@@ -10,7 +10,7 @@ using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using Azure.Storage.Blobs;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
@@ -30,85 +30,25 @@ namespace Azure.Search.Documents.Tests
     public partial class SearchResources : IAsyncDisposable
     {
         /// <summary>
-        /// Settings used to create test resources.
+        /// A source of randomness for creating live test resources.  This
+        /// should not be tied into test recordings because live resource
+        /// creation is independent and not recorded.
         /// </summary>
-        private static class Settings
-        {
-            /// <summary>
-            /// A source of randomness for creating live test resources.  This
-            /// should not be tied into test recordings because live resource
-            /// creation is independent and not recorded.
-            /// </summary>
-            public static Random Random { get; } = new Random(Environment.TickCount);
+        public static Random Random { get; } = new Random(Environment.TickCount);
 
-            /// <summary>
-            /// The prefix we use when creating resources - which can help make
-            /// it a little easier to identify anything that leaks while
-            /// debugging locally.
-            /// </summary>
-            public const string ResourcePrefix = "azs-net-";
+        /// <summary>
+        /// The prefix we use when creating resources - which can help make
+        /// it a little easier to identify anything that leaks while
+        /// debugging locally.
+        /// </summary>
+        public const string ResourcePrefix = "azs-net-";
 
-            /// <summary>
-            /// The name of the RP for Search Services.
-            /// </summary>
-            public const string ResourceProviderNamespace = "Microsoft.Search";
-
-            /// <summary>
-            /// The AD Tenant of our Service Principal.
-            /// </summary>
-            public static string TenantId { get; } = GetEnvVar("AZURE_TENANT_ID");
-
-            /// <summary>
-            /// The Client ID of our Service Principal.
-            /// </summary>
-            public static string ClientId { get; } = GetEnvVar("AZURE_CLIENT_ID");
-
-            /// <summary>
-            /// The Client Secret for our Service Principal.
-            /// </summary>
-            public static string ClientSecret { get; } = GetEnvVar("AZURE_CLIENT_SECRET");
-
-            /// <summary>
-            /// The Subscription ID to use when creating resources.
-            /// </summary>
-            public static string SubscriptionId { get; } = GetEnvVar("AZURE_SUBSCRIPTION_ID");
-
-            /// <summary>
-            /// The Resource Group to use for creating resources (so they can
-            /// be easily marked for cleanup in the event of a leak).
-            /// </summary>
-            public static string ResourceGroup { get; } = GetEnvVar("AZURE_RESOURCE_GROUP");
-
-            /// <summary>
-            /// The location to create our test resources.
-            /// </summary>
-            public static string Location { get; } = GetEnvVar("AZURE_LOCATION");
-
-            /// <summary>
-            /// The timeout for cancellation.
-            /// </summary>
-            public static TimeSpan Timeout => Debugger.IsAttached ?
-                System.Threading.Timeout.InfiniteTimeSpan :
-                TimeSpan.FromSeconds(60);
-
-            /// <summary>
-            /// Get the value of an environment variable and fail the test if
-            /// not found.
-            /// </summary>
-            /// <param name="name">
-            /// The name of the environment variable.
-            /// </param>
-            /// <returns>The value of the environment variable.</returns>
-            private static string GetEnvVar(string name)
-            {
-                string value = Environment.GetEnvironmentVariable(name);
-                if (string.IsNullOrEmpty(value))
-                {
-                    Assert.Inconclusive($"Could not find environment variable {name} required to run these tests live.");
-                }
-                return value;
-            }
-        }
+        /// <summary>
+        /// The timeout for cancellation.
+        /// </summary>
+        public static TimeSpan Timeout => Debugger.IsAttached ?
+            System.Threading.Timeout.InfiniteTimeSpan :
+            TimeSpan.FromSeconds(60);
 
         /// <summary>
         /// The name of the Search service.
@@ -127,17 +67,12 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The storage account name.
         /// </summary>
-        public string StorageAccountName => TestFixture.Recording.GetVariableFromEnvironment("AZURE_SEARCH_STORAGE_NAME");
+        public string StorageAccountName => TestFixture.TestEnvironment.SearchStorageName;
 
         /// <summary>
         /// The storage account key.
         /// </summary>
-        public string StorageAccountKey => TestFixture.Recording.GetVariableFromEnvironment(StorageAccountKeyVariableName);
-
-        /// <summary>
-        /// The name of the <see cref="StorageAccountKey"/> environment variable.
-        /// </summary>
-        internal const string StorageAccountKeyVariableName = "AZURE_SEARCH_STORAGE_KEY";
+        public string StorageAccountKey => TestFixture.TestEnvironment.SearchStorageKey;
 
         /// <summary>
         /// The storage account connection string.
@@ -360,15 +295,15 @@ namespace Azure.Search.Documents.Tests
         /// <returns>
         /// A client that can be used to create and delete Search Services.
         /// </returns>
-        private static SearchManagementClient GetManagementClient() =>
+        private SearchManagementClient GetManagementClient() =>
                 new SearchManagementClient(
                     new AzureCredentialsFactory().FromServicePrincipal(
-                        Settings.ClientId,
-                        Settings.ClientSecret,
-                        Settings.TenantId,
+                        TestFixture.TestEnvironment.ClientId,
+                        TestFixture.TestEnvironment.ClientSecret,
+                        TestFixture.TestEnvironment.TenantId,
                         AzureEnvironment.AzureGlobalCloud))
                 {
-                    SubscriptionId = Settings.SubscriptionId
+                    SubscriptionId = TestFixture.TestEnvironment.SubscriptionId
                 };
 
         /// <summary>
@@ -388,7 +323,7 @@ namespace Azure.Search.Documents.Tests
             if (RequiresCleanup)
             {
                 SearchManagementClient client = GetManagementClient();
-                await client.Services.DeleteAsync(Settings.ResourceGroup, SearchServiceName);
+                await client.Services.DeleteAsync(TestFixture.TestEnvironment.ResourceGroup, SearchServiceName);
                 RequiresCleanup = false;
             }
         }
@@ -432,15 +367,15 @@ namespace Azure.Search.Documents.Tests
 
                     // Use a new random name for the Search Service every time
                     // we try to create it
-                    SearchServiceName = Settings.ResourcePrefix + Settings.Random.GetName(8);
+                    SearchServiceName = ResourcePrefix + Random.GetName(8);
 
                     // Create a free Search Service
                     await client.Services.CreateOrUpdateAsync(
-                        Settings.ResourceGroup,
+                        TestFixture.TestEnvironment.ResourceGroup,
                         SearchServiceName,
                         new SearchService
                         {
-                            Location = Settings.Location,
+                            Location = TestFixture.TestEnvironment.Location,
                             Sku = new Microsoft.Azure.Management.Search.Models.Sku
                             {
                                 Name = Microsoft.Azure.Management.Search.Models.SkuName.Free
@@ -460,7 +395,7 @@ namespace Azure.Search.Documents.Tests
                     // delete it and try to create another one.  We need to
                     // delete it since there can be only a few free services
                     // per subscription.
-                    await client.Services.DeleteAsync(Settings.ResourceGroup, SearchServiceName);
+                    await client.Services.DeleteAsync(TestFixture.TestEnvironment.ResourceGroup, SearchServiceName);
                 }
 
                 // Make sure we delete this resource when we're finished
@@ -468,14 +403,14 @@ namespace Azure.Search.Documents.Tests
 
                 // Get the primary admin key
                 AdminKeyResult admin = await client.AdminKeys.GetAsync(
-                    Settings.ResourceGroup,
+                    TestFixture.TestEnvironment.ResourceGroup,
                     SearchServiceName);
                 Assert.NotNull(admin);
                 PrimaryApiKey = admin.PrimaryKey;
 
                 // Get a query key
                 IEnumerable<QueryKey> queryKeys = await client.QueryKeys.ListBySearchServiceAsync(
-                    Settings.ResourceGroup,
+                    TestFixture.TestEnvironment.ResourceGroup,
                     SearchServiceName);
                 Assert.NotNull(queryKeys);
                 QueryApiKey = queryKeys.First().Key;
@@ -497,7 +432,7 @@ namespace Azure.Search.Documents.Tests
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
                 // Generate a random Index Name
-                IndexName = Settings.Random.GetName(8);
+                IndexName = Random.GetName(8);
 
                 SearchServiceClient client = new SearchServiceClient(Endpoint, new AzureKeyCredential(PrimaryApiKey));
                 await client.CreateIndexAsync(GetHotelIndex(IndexName));
@@ -540,9 +475,9 @@ namespace Azure.Search.Documents.Tests
         {
             if (TestFixture.Mode != RecordedTestMode.Playback)
             {
-                BlobContainerName = Settings.Random.GetName(8);
+                BlobContainerName = Random.GetName(8);
 
-                using CancellationTokenSource cts = new CancellationTokenSource(Settings.Timeout);
+                using CancellationTokenSource cts = new CancellationTokenSource(Timeout);
 
                 BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
                 await client.CreateIfNotExistsAsync(cancellationToken: cts.Token);

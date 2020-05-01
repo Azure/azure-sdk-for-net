@@ -26,6 +26,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> Parameter values for the distance scoring function. </summary>
-        public DistanceScoringParameters Parameters { get; }
+        public DistanceScoringParameters Parameters { get; set; }
     }
 }

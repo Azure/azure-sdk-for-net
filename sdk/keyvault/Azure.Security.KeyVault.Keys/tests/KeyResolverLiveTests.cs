@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Security.KeyVault.Secrets;
@@ -20,6 +20,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public KeyResolverLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
             _serviceVersion = serviceVersion;
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         public KeyResolver Resolver { get { return GetResolver(); } }
@@ -29,14 +31,14 @@ namespace Azure.Security.KeyVault.Keys.Tests
             recording ??= Recording;
 
             CryptographyClientOptions options = recording.InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
-            return InstrumentClient(new KeyResolver(recording.GetCredential(new DefaultAzureCredential()), options));
+            return InstrumentClient(new KeyResolver(TestEnvironment.Credential, options));
         }
 
         public SecretClient GetSecretClient(TestRecording recording = null)
         {
             recording ??= Recording;
 
-            return InstrumentClient(new SecretClient(VaultUri, recording.GetCredential(new DefaultAzureCredential()), recording.InstrumentClientOptions(new SecretClientOptions())));
+            return InstrumentClient(new SecretClient(VaultUri, TestEnvironment.Credential, recording.InstrumentClientOptions(new SecretClientOptions())));
         }
 
         [Test]

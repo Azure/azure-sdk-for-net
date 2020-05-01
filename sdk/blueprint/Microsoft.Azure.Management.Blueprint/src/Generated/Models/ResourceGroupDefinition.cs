@@ -125,24 +125,6 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name != null)
-            {
-                if (Name.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Name", 90);
-                }
-                if (Name.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Name", 1);
-                }
-            }
-            if (Location != null)
-            {
-                if (Location.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Location", 90);
-                }
-            }
             if (DisplayName != null)
             {
                 if (DisplayName.Length > 256)

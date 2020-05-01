@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> A skill to translate text from one language to another. </summary>
-    public partial class TextTranslationSkill : Skill
+    public partial class TextTranslationSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of TextTranslationSkill. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The language code to translate documents into for documents that don&apos;t specify the to language explicitly. </summary>
-        public TextTranslationSkillLanguage DefaultToLanguageCode { get; }
+        public TextTranslationSkillLanguage DefaultToLanguageCode { get; set; }
         /// <summary> The language code to translate documents from for documents that don&apos;t specify the from language explicitly. </summary>
         public TextTranslationSkillLanguage? DefaultFromLanguageCode { get; set; }
         /// <summary> The language code to translate documents from when neither the fromLanguageCode input nor the defaultFromLanguageCode parameter are provided, and the automatic language detection is unsuccessful. Default is en. </summary>
