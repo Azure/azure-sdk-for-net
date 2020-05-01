@@ -37,21 +37,21 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        public void GetSearchIndexClient()
+        public void GetSearchClient()
         {
             var serviceName = "my-svc-name";
             var endpoint = new Uri($"https://{serviceName}.search.windows.net");
             var service = new SearchServiceClient(endpoint, new AzureKeyCredential("fake"));
 
             var indexName = "my-index-name";
-            var index = service.GetSearchIndexClient(indexName);
-            Assert.NotNull(index);
-            Assert.AreEqual(endpoint, index.Endpoint);
-            Assert.AreEqual(serviceName, index.ServiceName);
-            Assert.AreEqual(indexName, index.IndexName);
+            var client = service.GetSearchClient(indexName);
+            Assert.NotNull(client);
+            Assert.AreEqual(endpoint, client.Endpoint);
+            Assert.AreEqual(serviceName, client.ServiceName);
+            Assert.AreEqual(indexName, client.IndexName);
 
-            Assert.Throws<ArgumentNullException>(() => service.GetSearchIndexClient(null));
-            Assert.Throws<ArgumentException>(() => service.GetSearchIndexClient(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => service.GetSearchClient(null));
+            Assert.Throws<ArgumentException>(() => service.GetSearchClient(string.Empty));
         }
 
         private class TestPipelinePolicy : HttpPipelineSynchronousPolicy
@@ -70,10 +70,10 @@ namespace Azure.Search.Documents.Tests
 
             SearchClientOptions options = new SearchClientOptions(ServiceVersion);
             options.AddPolicy(custom, HttpPipelinePosition.PerCall);
-            SearchServiceClient client = resources.GetServiceClient(options);
+            SearchServiceClient serviceClient = resources.GetServiceClient(options);
 
-            SearchIndexClient index = client.GetSearchIndexClient(resources.IndexName);
-            _ = await index.GetDocumentCountAsync();
+            SearchClient client = serviceClient.GetSearchClient(resources.IndexName);
+            _ = await client.GetDocumentCountAsync();
 
             Assert.AreEqual(1, custom.RequestCount);
         }
@@ -328,10 +328,10 @@ namespace Azure.Search.Documents.Tests
             await WaitForIndexingAsync(serviceClient, actualIndexer.Name);
 
             // Query the index.
-            SearchIndexClient indexClient = serviceClient.GetSearchIndexClient(
+            SearchClient client = serviceClient.GetSearchClient(
                 resources.IndexName);
 
-            long count = await indexClient.GetDocumentCountAsync(
+            long count = await client.GetDocumentCountAsync(
                 GetOptions());
 
             Assert.AreEqual(SearchResources.TestDocuments.Length, count);

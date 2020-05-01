@@ -16,7 +16,7 @@ namespace Azure.Search.Documents
     /// Azure Cognitive Search client that can be used to query an index and
     /// upload, merge, or delete documents.
     /// </summary>
-    public class SearchIndexClient
+    public class SearchClient
     {
         /// <summary>
         /// Gets the URI endpoint of the Search Service.  This is likely
@@ -70,13 +70,13 @@ namespace Azure.Search.Documents
 
         #region ctors
         /// <summary>
-        /// Initializes a new instance of the SearchIndexClient class for
+        /// Initializes a new instance of the SearchClient class for
         /// mocking.
         /// </summary>
-        protected SearchIndexClient() { }
+        protected SearchClient() { }
 
         /// <summary>
-        /// Initializes a new instance of the SearchIndexClient class for
+        /// Initializes a new instance of the SearchClient class for
         /// querying an index and uploading, merging, or deleting documents.
         /// </summary>
         /// <param name="endpoint">
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents
         /// Thrown when the <paramref name="endpoint"/> is not using HTTPS or
         /// the <paramref name="indexName"/> is empty.
         /// </exception>
-        public SearchIndexClient(
+        public SearchClient(
             Uri endpoint,
             string indexName,
             AzureKeyCredential credential) :
@@ -112,7 +112,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Initializes a new instance of the SearchIndexClient class for
+        /// Initializes a new instance of the SearchClient class for
         /// querying an index and uploading, merging, or deleting documents.
         /// </summary>
         /// <param name="endpoint">
@@ -143,7 +143,7 @@ namespace Azure.Search.Documents
         /// Thrown when the <paramref name="endpoint"/> is not using HTTPS or
         /// the <paramref name="indexName"/> is empty.
         /// </exception>
-        public SearchIndexClient(
+        public SearchClient(
             Uri endpoint,
             string indexName,
             AzureKeyCredential credential,
@@ -170,7 +170,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Initializes a new instance of the SearchIndexClient class from a
+        /// Initializes a new instance of the SearchClient class from a
         /// <see cref="SearchServiceClient"/>.
         /// </summary>
         /// <param name="endpoint">
@@ -193,7 +193,7 @@ namespace Azure.Search.Documents
         /// The REST API version of the Search Service to use when making
         /// requests.
         /// </param>
-        internal SearchIndexClient(
+        internal SearchClient(
             Uri endpoint,
             string indexName,
             HttpPipeline pipeline,
@@ -654,7 +654,7 @@ namespace Azure.Search.Documents
             CancellationToken cancellationToken)
         {
             if (key == null) { throw new ArgumentNullException(nameof(key)); }
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetDocument)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocument)}");
             scope.Start();
             try
             {
@@ -922,7 +922,7 @@ namespace Azure.Search.Documents
             }
             return await SearchInternal<T>(
                 options,
-                $"{nameof(SearchIndexClient)}.{nameof(Search)}",
+                $"{nameof(SearchClient)}.{nameof(Search)}",
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1203,7 +1203,7 @@ namespace Azure.Search.Documents
             options.SearchText = searchText;
             options.SuggesterName = suggesterName;
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(Suggest)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(Suggest)}");
             scope.Start();
             try
             {
@@ -1546,7 +1546,7 @@ namespace Azure.Search.Documents
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(IndexDocuments)}");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(IndexDocuments)}");
             scope.Start();
             try
             {

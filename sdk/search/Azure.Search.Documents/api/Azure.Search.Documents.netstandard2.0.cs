@@ -22,31 +22,11 @@ namespace Azure.Search.Documents
         public IndexDocumentsOptions() { }
         public bool ThrowOnAnyError { get { throw null; } set { } }
     }
-    public partial class SearchClientOptions : Azure.Core.ClientOptions
+    public partial class SearchClient
     {
-        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2019_05_06_Preview) { }
-        public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
-        public enum ServiceVersion
-        {
-            V2019_05_06_Preview = 1,
-        }
-    }
-    public partial class SearchConditionalOptions : Azure.Search.Documents.SearchRequestOptions
-    {
-        public SearchConditionalOptions() { }
-        public Azure.ETag? IfMatch { get { throw null; } set { } }
-        public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
-    }
-    public static partial class SearchFilter
-    {
-        public static string Create(System.FormattableString filter) { throw null; }
-        public static string Create(System.FormattableString filter, System.IFormatProvider formatProvider) { throw null; }
-    }
-    public partial class SearchIndexClient
-    {
-        protected SearchIndexClient() { }
-        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential) { }
-        public SearchIndexClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
+        protected SearchClient() { }
+        public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential) { }
+        public SearchClient(System.Uri endpoint, string indexName, Azure.AzureKeyCredential credential, Azure.Search.Documents.SearchClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual string IndexName { get { throw null; } }
         public virtual string ServiceName { get { throw null; } }
@@ -70,6 +50,26 @@ namespace Azure.Search.Documents
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SuggestResults<Azure.Search.Documents.Models.SearchDocument>>> SuggestAsync(string searchText, string suggesterName, Azure.Search.Documents.SuggestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SuggestResults<T>>> SuggestAsync<T>(string searchText, string suggesterName, Azure.Search.Documents.SuggestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SuggestResults<T>> Suggest<T>(string searchText, string suggesterName, Azure.Search.Documents.SuggestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SearchClientOptions : Azure.Core.ClientOptions
+    {
+        public SearchClientOptions(Azure.Search.Documents.SearchClientOptions.ServiceVersion version = Azure.Search.Documents.SearchClientOptions.ServiceVersion.V2019_05_06_Preview) { }
+        public Azure.Search.Documents.SearchClientOptions.ServiceVersion Version { get { throw null; } }
+        public enum ServiceVersion
+        {
+            V2019_05_06_Preview = 1,
+        }
+    }
+    public partial class SearchConditionalOptions : Azure.Search.Documents.SearchRequestOptions
+    {
+        public SearchConditionalOptions() { }
+        public Azure.ETag? IfMatch { get { throw null; } set { } }
+        public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
+    }
+    public static partial class SearchFilter
+    {
+        public static string Create(System.FormattableString filter) { throw null; }
+        public static string Create(System.FormattableString filter, System.IFormatProvider formatProvider) { throw null; }
     }
     public partial class SearchOptions : Azure.Search.Documents.SearchRequestOptions
     {
@@ -152,7 +152,7 @@ namespace Azure.Search.Documents
         public virtual Azure.AsyncPageable<Azure.Search.Documents.Models.SearchIndex> GetIndexesAsync(System.Collections.Generic.IEnumerable<string> selectProperties = null, Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SearchIndexStatistics> GetIndexStatistics(string indexName, Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchIndexStatistics>> GetIndexStatisticsAsync(string indexName, Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Search.Documents.SearchIndexClient GetSearchIndexClient(string indexName) { throw null; }
+        public virtual Azure.Search.Documents.SearchClient GetSearchClient(string indexName) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SearchServiceStatistics> GetServiceStatistics(Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchServiceStatistics>> GetServiceStatisticsAsync(Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SearchIndexerSkillset> GetSkillset(string skillsetName, Azure.Search.Documents.SearchRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
