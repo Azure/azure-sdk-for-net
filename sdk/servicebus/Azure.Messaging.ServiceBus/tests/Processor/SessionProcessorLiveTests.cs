@@ -811,13 +811,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await sender.SendAsync(GetMessage(sessionId2));
                 sessions.TryAdd(sessionId2, true);
 
-                TaskCompletionSource<bool>[] closeEventCompletionSources = Enumerable
-                .Range(0, specifiedSessionCount)
-                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
-                .ToArray();
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                var completionSourceIndex = -1;
                 int messageCt = 0;
                 int sessionCloseEventCt = 0;
 
@@ -840,8 +835,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 async Task SessionCloseHandler(ProcessSessionEventArgs args)
                 {
                     Interlocked.Increment(ref sessionCloseEventCt);
-                    var setIndex = Interlocked.Increment(ref completionSourceIndex);
-                    closeEventCompletionSources[setIndex].SetResult(true);
                     await args.GetSessionStateAsync();
                     Assert.IsTrue(sessionIds.Contains(args.SessionId));
                 }
@@ -871,7 +864,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await tcs.Task;
                 await processor.StopProcessingAsync();
-                await Task.WhenAll(closeEventCompletionSources.Select(source => source.Task));
 
                 Assert.AreEqual(specifiedSessionCount, messageCt);
 
