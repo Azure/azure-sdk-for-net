@@ -112,17 +112,24 @@ namespace Azure.AI.FormRecognizer.Samples
         }
 
         [Test]
-        [Ignore("Need to revisit how to pass the modelId. Issue https://github.com/Azure/azure-sdk-for-net/issues/11493")]
         public async Task RecognizeCustomFormsFromFile()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+
+            // Firstly, create a trained model we can use to recognize the custom form.
+
+            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+
+            // Proceed with the custom form recognition.
 
             var credential = new AzureKeyCredential(apiKey);
             var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("Form_1.jpg");
-            string modelId = "<your model id>";
+            string modelId = model.ModelId;
 
             #region Snippet:FormRecognizerRecognizeCustomFormsFromFile
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
@@ -133,6 +140,9 @@ namespace Azure.AI.FormRecognizer.Samples
                  */
             }
             #endregion
+
+            // Delete the model on completion to clean environment.
+            trainingClient.DeleteModel(model.ModelId);
         }
     }
 }
