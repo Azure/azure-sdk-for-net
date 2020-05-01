@@ -316,7 +316,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             // If _segments is empty, refill it
-            // TODO pull this out into private method
             else if (_segments.Count == 0 && _years.Count > 0)
             {
                 string yearPath = _years.Dequeue();

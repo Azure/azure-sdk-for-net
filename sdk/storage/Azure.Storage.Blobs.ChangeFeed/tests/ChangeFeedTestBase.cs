@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         public ChangeFeedTestBase(bool async) : this(async, null) { }
 
         public ChangeFeedTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, mode)
         {
         }
 

@@ -14,11 +14,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
     public class BlobChangeFeedPagableTests : ChangeFeedTestBase
     {
         public BlobChangeFeedPagableTests(bool async)
-            : base(async, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [Test]
+        [Ignore("")]
         public void Test()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
