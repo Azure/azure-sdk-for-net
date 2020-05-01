@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Azure.Identity
@@ -20,6 +21,20 @@ namespace Azure.Identity
         public static readonly TimeSpan SharedTokenCacheAccessRetryDelay = TimeSpan.FromMilliseconds(600);
 
         public static readonly string DefaultMsalTokenCacheDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), ".IdentityService");
+
+        public const string DefaultMsalTokenCacheKeychainService = "Microsoft.Developer.IdentityService";
+
+        public const string DefaultMsalTokenCacheKeychainAccount = "MSALCache";
+
+        public const string DefaultMsalTokenCacheKeyringLabel = "MSALCache";
+
+        public const string DefaultMsalTokenCacheKeyringSchema = "msal.cache";
+
+        public const string DefaultMsalTokenCacheKeyringCollection = "default";
+
+        public static readonly KeyValuePair<string, string> DefaultMsaltokenCacheKeyringAttribute1 = new KeyValuePair<string, string>("MsalClientID", null);
+
+        public static readonly KeyValuePair<string, string> DefaultMsaltokenCacheKeyringAttribute2 = new KeyValuePair<string, string>("Microsoft.Developer.IdentityService", null);
 
         public const string DefaultMsalTokenCacheName = "msal.cache";
     }
