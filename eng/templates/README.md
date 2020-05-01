@@ -16,7 +16,7 @@ Following parameter is available
 | ---- | ---- | ---- |
 | -p, --provider | Yes | The Azure provider name. ie. Microsoft.Network or Microsoft.Compute. Note this is also used for diagnostic attribute in AssemblyInfo.cs. The second part of the provider name `Compute` is also used in  `src\autorest.md` to point to REST Api spec `specifications\Compute\resource-manager\readme.md`. If they mismatch, manual adjustment is needed in `autorest.md`. |
 | -t, --tagVersion | No | Specifies the package tag in the README.MD. If empty, CodeGen will rely on the default tag in the README.MD is used. If default tag is not present, CodeGen may fail. |
-| -in, --includeCI | No | Specifies whether `ci.yml` and `test-resources.json` will be created in the parent folder. All token replacement has been performed on `ci.yml` based on current project name. |
+| -in, --includeCI | No | Specifies whether `ci.yml` and `test-resources.json` will be created in the parent folder. Token replacements have been performed on `ci.yml` based on current project name. *Note*, for now, you still need to change `sdk/template/` to `sdk/RP` and serviceDirectory: to RP folder name. This would be fixed in the future. |
 
 ---
 
@@ -24,8 +24,8 @@ Following parameter is available
 ### To create a new management SDK project:
 * Create folder `Azure.Management.Rp` under corresponding service folder, ie under network\Azure.Management.Network 
 * Change to the `Azure.Management.Rp` folder 
-* dotnet new azuremgmt --provider `ResourceProviderName`
-* dotnet new azuremgmt --provider `ResourceProviderName` --tagVersion `Optional tag in README.MD`
+* dotnet new azuremgmt --provider `ResourceProviderName`  **OR**
+* dotnet new azuremgmt --provider `ResourceProviderName` --tagVersion `Optional tag in README.MD`  **OR**
 * dotnet new azuremgmt --provider `ResourceProviderName` --includeCI true
 * 
 > Note: Please use proper casing for the directory name as well as resource provider name. `Azure.Management.Rp`, `Microsoft.Compute` or `Microsoft.KeyVault`. The resource provider name without `Microsoft.` will be used in autorest.md file pointing to the  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/`resource name`/resource-manager/readme.md
