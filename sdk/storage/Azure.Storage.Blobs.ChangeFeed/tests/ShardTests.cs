@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Shard shard = new Shard(chunk.Object, chunkIndex);
 
             // Act
-            BlobChangeFeedShardCursor cursor = shard.GetCursor();
+            ShardCursor cursor = shard.GetCursor();
 
             // Assert
             Assert.AreEqual(chunkIndex, cursor.ChunkIndex);
@@ -149,7 +149,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             // Act
             BlobChangeFeedEvent changeFeedEvent = await shard.Next(IsAsync);
-            BlobChangeFeedShardCursor cursor = shard.GetCursor();
+            ShardCursor cursor = shard.GetCursor();
 
             // Assert
             Assert.AreEqual(eventId, changeFeedEvent.Id);

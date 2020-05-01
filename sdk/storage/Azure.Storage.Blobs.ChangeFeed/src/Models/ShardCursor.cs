@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Models
 {
-    internal class BlobChangeFeedShardCursor
+    internal class ShardCursor
     {
         /// <summary>
         /// Index of the current Chunk.
@@ -26,7 +26,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// </summary>
         public long EventIndex { get; set; }
 
-        internal BlobChangeFeedShardCursor(
+        internal ShardCursor(
             long chunkIndex,
             long blockOffset,
             long eventIndex)
@@ -39,6 +39,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// <summary>
         ///
         /// </summary>
-        public BlobChangeFeedShardCursor() { }
+        public ShardCursor() { }
     }
 }

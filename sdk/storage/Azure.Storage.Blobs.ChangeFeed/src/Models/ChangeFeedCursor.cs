@@ -10,7 +10,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
     /// <summary>
     /// BlobChangeFeedCursor.
     /// </summary>
-    internal class BlobChangeFeedCursor
+    internal class ChangeFeedCursor
     {
         /// <summary>
         /// CursorVersion.
@@ -30,12 +30,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// <summary>
         /// The Segment Cursor for the current segment.
         /// </summary>
-        public BlobChangeFeedSegmentCursor CurrentSegmentCursor { get; set; }
+        public SegmentCursor CurrentSegmentCursor { get; set; }
 
-        internal BlobChangeFeedCursor(
+        internal ChangeFeedCursor(
             long urlHash,
             DateTimeOffset? endDateTime,
-            BlobChangeFeedSegmentCursor currentSegmentCursor)
+            SegmentCursor currentSegmentCursor)
         {
             CursorVersion = 1;
             UrlHash = urlHash;
@@ -43,6 +43,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
             CurrentSegmentCursor = currentSegmentCursor;
         }
 
-        public BlobChangeFeedCursor() { }
+        public ChangeFeedCursor() { }
     }
 }

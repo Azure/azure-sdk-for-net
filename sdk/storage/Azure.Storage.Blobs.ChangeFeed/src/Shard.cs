@@ -58,7 +58,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public Shard(
             BlobContainerClient containerClient,
             string shardPath,
-            BlobChangeFeedShardCursor shardCursor = default)
+            ShardCursor shardCursor = default)
         {
             _containerClient = containerClient;
             _shardPath = shardPath;
@@ -115,13 +115,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _isInitialized = true;
         }
 
-        public BlobChangeFeedShardCursor GetCursor()
-            => new BlobChangeFeedShardCursor(
+        public virtual ShardCursor GetCursor()
+            => new ShardCursor(
                 _chunkIndex,
                 _currentChunk.BlockOffset,
                 _currentChunk.EventIndex);
 
-        public bool HasNext()
+        public virtual bool HasNext()
         {
             if (!_isInitialized)
             {
@@ -131,7 +131,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return _chunks.Count > 0 || _currentChunk.HasNext();
         }
 
-        public async Task<BlobChangeFeedEvent> Next(bool async)
+        public virtual async Task<BlobChangeFeedEvent> Next(bool async)
         {
             if (!_isInitialized)
             {
@@ -175,5 +175,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _chunks = chunks;
             _containerClient = containerClient;
         }
+
+        /// <summary>
+        /// Constructor for mocking.  Do not use.
+        /// </summary>
+        internal Shard() { }
     }
 }

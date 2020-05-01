@@ -10,12 +10,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
     /// <summary>
     /// Segment Cursor.
     /// </summary>
-    internal class BlobChangeFeedSegmentCursor
+    internal class SegmentCursor
     {
         /// <summary>
         /// Shard Cursors.
         /// </summary>
-        public List<BlobChangeFeedShardCursor> ShardCursors { get; set; }
+        public List<ShardCursor> ShardCursors { get; set; }
 
         /// <summary>
         /// Index of the current Shard.
@@ -27,9 +27,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
         /// </summary>
         public DateTimeOffset SegmentTime { get; set; }
 
-        internal BlobChangeFeedSegmentCursor(
+        internal SegmentCursor(
             DateTimeOffset segmentDateTime,
-            List<BlobChangeFeedShardCursor> shardCursors,
+            List<ShardCursor> shardCursors,
             int shardIndex)
         {
             SegmentTime = segmentDateTime;
@@ -37,6 +37,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Models
             ShardIndex = shardIndex;
         }
 
-        public BlobChangeFeedSegmentCursor() { }
+        public SegmentCursor() { }
     }
 }

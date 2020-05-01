@@ -50,12 +50,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private bool _isInitalized;
 
-        private BlobChangeFeedSegmentCursor _cursor;
+        private SegmentCursor _cursor;
 
         public Segment(
             BlobContainerClient containerClient,
             string manifestPath,
-            BlobChangeFeedSegmentCursor cursor = default)
+            SegmentCursor cursor = default)
         {
             _containerClient = containerClient;
             _manifestPath = manifestPath;
@@ -108,14 +108,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _isInitalized = true;
         }
 
-        public BlobChangeFeedSegmentCursor GetCursor()
+        public SegmentCursor GetCursor()
         {
-            List<BlobChangeFeedShardCursor> shardCursors = new List<BlobChangeFeedShardCursor>();
+            List<ShardCursor> shardCursors = new List<ShardCursor>();
             foreach (Shard shard in _shards)
             {
                 shardCursors.Add(shard.GetCursor());
             }
-            return new BlobChangeFeedSegmentCursor(
+            return new SegmentCursor(
                 segmentDateTime: DateTime,
                 shardCursors: shardCursors,
                 shardIndex: _shardIndex);
@@ -173,6 +173,21 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
 
             return _shards.Count > 0;
+        }
+
+        /// <summary>
+        /// Constructor for testing.  Do not use.
+        /// </summary>
+        internal Segment(
+            bool isInitalized = default,
+            List<Shard> shards = default,
+            int shardIndex = default,
+            DateTimeOffset dateTime = default)
+        {
+            _isInitalized = isInitalized;
+            _shards = shards;
+            _shardIndex = shardIndex;
+            DateTime = dateTime;
         }
     }
 }

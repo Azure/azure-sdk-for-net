@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private Segment _currentSegment;
 
-        private readonly BlobChangeFeedSegmentCursor _currentSegmentCursor;
+        private readonly SegmentCursor _currentSegmentCursor;
 
         /// <summary>
         /// The latest time the Change Feed can safely be read from.
@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             string continutation)
         {
             _containerClient = blobServiceClient.GetBlobContainerClient(Constants.ChangeFeed.ChangeFeedContainerName);
-            BlobChangeFeedCursor cursor = JsonSerializer.Deserialize<BlobChangeFeedCursor>(continutation);
+            ChangeFeedCursor cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continutation);
             ValidateCursor(_containerClient, cursor);
             _years = new Queue<string>();
             _segments = new Queue<string>();
@@ -222,7 +222,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 await AdvanceSegmentIfNecessary(async).ConfigureAwait(false);
             }
 
-            return new BlobChangeFeedEventPage(blobChangeFeedEvents, JsonSerializer.Serialize<BlobChangeFeedCursor>(GetCursor()));
+            return new BlobChangeFeedEventPage(blobChangeFeedEvents, JsonSerializer.Serialize<ChangeFeedCursor>(GetCursor()));
         }
 
 
@@ -251,8 +251,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
             return _lastConsumable;
         }
 
-        internal BlobChangeFeedCursor GetCursor()
-            => new BlobChangeFeedCursor(
+        internal ChangeFeedCursor GetCursor()
+            => new ChangeFeedCursor(
                 urlHash: _containerClient.Uri.ToString().GetHashCode(),
                 endDateTime: _endTime,
                 currentSegmentCursor: _currentSegment.GetCursor());
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         private static void ValidateCursor(
             BlobContainerClient containerClient,
-            BlobChangeFeedCursor cursor)
+            ChangeFeedCursor cursor)
         {
             if (containerClient.Uri.ToString().GetHashCode() != cursor.UrlHash)
             {
