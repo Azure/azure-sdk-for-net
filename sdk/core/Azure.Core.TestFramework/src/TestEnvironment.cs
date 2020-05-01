@@ -238,7 +238,7 @@ namespace Azure.Core.TestFramework
 
             if (_recording == null)
             {
-                throw new InvalidOperationException("Recorded value should not be retrieved outside the test method invocation");
+                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
             }
 
             _recording?.SetVariable(name, value);
