@@ -94,9 +94,7 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("InteractiveBrowserCredential.GetToken", requestContext);
-
-            scope.Start();
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("AuthorizationCodeCredential.GetToken", requestContext);
 
             try
             {
@@ -117,7 +115,7 @@ namespace Azure.Identity
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
 
-                return token;
+                return scope.Succeeded(token);
             }
             catch (OperationCanceledException e)
             {
