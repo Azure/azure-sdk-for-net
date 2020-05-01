@@ -40,6 +40,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual TableResponse Create(CancellationToken cancellationToken = default) =>
             _tableOperations.RestClient.Create(new TableProperties(_table), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
 
@@ -48,6 +49,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual async Task<TableResponse> CreateAsync(CancellationToken cancellationToken = default) =>
             await _tableOperations.CreateAsync(new TableProperties(_table), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -57,6 +59,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyDictionary<string, object>>> InsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
             await _tableOperations.InsertEntityAsync(_table,
                                                      tableEntityProperties: entity,
@@ -69,6 +72,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to insert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The inserted Table entity.</returns>
+        [ForwardsClientCalls]
         public virtual Response<IReadOnlyDictionary<string, object>> Insert(IDictionary<string, object> entity, CancellationToken cancellationToken = default) =>
             _tableOperations.InsertEntity(_table,
                                           tableEntityProperties: entity,
@@ -81,6 +85,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response> UpsertAsync(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             //TODO: Create Resource strings
@@ -108,6 +113,7 @@ namespace Azure.Data.Tables
         /// <param name="entity">The entity to upsert.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
         public virtual Response Upsert(IDictionary<string, object> entity, CancellationToken cancellationToken = default)
         {
             //TODO: Create Resource strings
@@ -136,6 +142,7 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response> UpdateAsync(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
@@ -166,6 +173,7 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
         public virtual Response Update(IDictionary<string, object> entity, string eTag, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(eTag, nameof(eTag));
@@ -196,6 +204,7 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response> MergeAsync(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
         {
             //TODO: Create Resource strings
@@ -224,6 +233,7 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
         public virtual Response Merge(IDictionary<string, object> entity, string eTag = null, CancellationToken cancellationToken = default)
         {
             //TODO: Create Resource strings
@@ -253,6 +263,7 @@ namespace Azure.Data.Tables
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<IDictionary<string, object>> QueryAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
@@ -287,6 +298,8 @@ namespace Azure.Data.Tables
         /// <param name="filter">Returns only tables or entities that satisfy the specified filter.</param>
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+
+        [ForwardsClientCalls]
         public virtual Pageable<IDictionary<string, object>> Query(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(_ =>
@@ -321,6 +334,7 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteAsync(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
@@ -341,6 +355,7 @@ namespace Azure.Data.Tables
         /// <param name="eTag">The ETag value to be used for optimistic concurrency. The default is to delete unconditionally.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [ForwardsClientCalls]
         public virtual Response Delete(string partitionKey, string rowKey, string eTag = "*", CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));

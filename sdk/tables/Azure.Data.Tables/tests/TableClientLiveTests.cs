@@ -58,7 +58,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
-                TableClient client = service.GetTableClient(tableName);
+                TableClient client = InstrumentClient(service.GetTableClient(tableName));
                 List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(partitionKeyValue, 20);
 
                 // Insert the new entities.
@@ -99,7 +99,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
-                TableClient client = service.GetTableClient(tableName);
+                TableClient client = InstrumentClient(service.GetTableClient(tableName));
                 List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(partitionKeyValue, 20);
 
                 // Insert the new entities.
@@ -142,7 +142,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
-                TableClient client = service.GetTableClient(tableName);
+                TableClient client = InstrumentClient(service.GetTableClient(tableName));
                 var entity = new Dictionary<string, object>
                 {
                     {"PartitionKey", partitionKeyValue},
@@ -195,7 +195,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
-                TableClient client = service.GetTableClient(tableName);
+                TableClient client = InstrumentClient(service.GetTableClient(tableName));
                 var entity = new Dictionary<string, object>
                 {
                     {"PartitionKey", partitionKeyValue},
@@ -268,7 +268,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
-                TableClient client = service.GetTableClient(tableName);
+                TableClient client = InstrumentClient(service.GetTableClient(tableName));
                 var entity = new Dictionary<string, object>
                 {
                     {"PartitionKey", partitionKeyValue},
@@ -342,7 +342,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
-                TableClient client = service.GetTableClient(tableName);
+                TableClient client = InstrumentClient(service.GetTableClient(tableName));
                 var entity = new Dictionary<string, object>
                 {
                     {"PartitionKey", partitionKeyValue},
@@ -423,7 +423,7 @@ namespace Azure.Data.Tables.Tests
             try
             {
                 var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
-                TableClient client = service.GetTableClient(tableName);
+                TableClient client = InstrumentClient(service.GetTableClient(tableName));
                 var entity = new Dictionary<string, object>
                 {
                     {"PartitionKey", partitionKeyValue},
@@ -499,8 +499,8 @@ namespace Azure.Data.Tables.Tests
                         //{"SomeGuidProperty", Guid.NewGuid()},
                         {"SomeBinaryProperty", new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         //{"SomeInt64Property", long.Parse(number)},
-                        {"SomeDoubleProperty0", double.Parse(number)},
-                        {"SomeDoubleProperty1", double.Parse(number) + 0.1},
+                        {"SomeDoubleProperty0", (double)n},
+                        {"SomeDoubleProperty1", n + 0.1},
                         {"SomeIntProperty", int.Parse(number)},
                     };
             }).ToList();
