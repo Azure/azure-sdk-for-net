@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\TableClientLiveTests\" />
   </ItemGroup>
 
 </Project>
