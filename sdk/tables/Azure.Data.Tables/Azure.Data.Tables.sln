@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.Tables", "src\Az
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.Tables.Tests", "tests\Azure.Data.Tables.Tests.csproj", "{DE6D1CE8-3B67-4651-B401-A868A72398D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{70C6A56F-209B-470E-8E39-05AE3B4CE5F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DE6D1CE8-3B67-4651-B401-A868A72398D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6D1CE8-3B67-4651-B401-A868A72398D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE6D1CE8-3B67-4651-B401-A868A72398D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C6A56F-209B-470E-8E39-05AE3B4CE5F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C6A56F-209B-470E-8E39-05AE3B4CE5F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C6A56F-209B-470E-8E39-05AE3B4CE5F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C6A56F-209B-470E-8E39-05AE3B4CE5F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
