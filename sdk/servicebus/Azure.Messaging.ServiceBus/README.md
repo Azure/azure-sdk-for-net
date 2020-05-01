@@ -77,7 +77,7 @@ To interact with these resources, one should be familiar with the following SDK 
 
 - A [Service Bus session receiver](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebussessionreceiver?view=azure-dotnet-preview) is scoped to a particular session-enabled queue or subscription, and is created using the Service Bus client. The session receiver is almost identical to the standard receiver, with the difference being that session management operations are exposed which only apply to session-enabled entities. These operations include getting and setting session state, as well as renewing session locks.
 
-- A [Service Bus processor](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebusprocessor?view=azure-dotnet-preview) is scoped to a particular queue or subscription, and is created using the Service Bus client. The processor allows you to configure an event handler to run for every message that is received. It also allows for specifying an exception handler that will run any time an exception is thrown while a message is being received and processed by the processor. The event handler args will provide the ability to settle a received message.
+- A [Service Bus processor](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebusprocessor?view=azure-dotnet-preview) is scoped to a particular queue or subscription, and is created using the Service Bus client. The `ServiceBusProcessor` can be thought of as an abstraction around a set of receivers. It uses a callback model to allow code to be specified when a message is received and when an exception occurs. It offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers. Because of its feature set, it should be the go to tool for writing applications that receive from Service Bus entities. The ServiceBusReceiver is recommended for more complex scenarios in which the processor is not able to provide the fine-grained control that one can expect when using the ServiceBusReceiver directly. 
 
 - A [Service Bus session processor](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.servicebus.servicebussessionprocessor?view=azure-dotnet-preview) is scoped to a particular session-enabled queue or subscription, and is created using the Service Bus client. The session processor is almost identical to the standard processor, with the difference being that session management operations are exposed which only apply to session-enabled entities.
 
@@ -128,7 +128,7 @@ Console.WriteLine(body);
 
 ### Send and receive a batch of messages
 
-We can send several messages at once. There are two ways of doing this. The first way uses the `SendAsync`
+There are two ways of sending several messages at once. The first way uses the `SendAsync`
 overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of
 the supplied messages in a single message batch that we will send to the service. If the messages are too large
 to fit in a single batch, the operation will throw an exception.
@@ -154,6 +154,8 @@ await sender.SendAsync(messageBatch);
 ```
 
 ### Complete a message
+
+In order to remove a message from the our queue or subscription, we can call the `CompleteAsync` method.
 
 ```C# Snippet:ServiceBusCompleteMessage
 string connectionString = "<connection_string>";
@@ -181,11 +183,11 @@ await receiver.CompleteAsync(receivedMessage);
 ```
 
 ### Abandon a message
+Abandoning a message releases our receiver's lock, which allows the message to be received by this or other receivers.
 
 ```C# Snippet:ServiceBusAbandonMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
-// abandon the message, thereby releasing the lock and allowing it to be received again by this or other receivers
 await receiver.AbandonAsync(receivedMessage);
 ```
 
@@ -204,6 +206,9 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 ```
 
 ### Dead letter a message
+Dead lettering a message is similar to defering with one main difference being that messages will be automatically dead lettered
+by the service after they have been received a certain number of times. Applications can choose to manually dead letter messages based on
+their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue.
 
 ```C# Snippet:ServiceBusDeadLetterMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
@@ -218,7 +223,11 @@ ServiceBusReceivedMessage dlqMessage = await dlqReceiver.ReceiveAsync();
 
 ### Using the Processor
 
-The `ServiceBusProcessor` offers automatic completion of processed messages, automatic message lock renewal, and concurrent execution of user specified event handlers.
+The `ServiceBusProcessor` can be thought of as an abstraction around a set of receivers. It uses a callback model to allow code to be specified
+when a message is received and when an exception occurs. It offers automatic completion of processed messages, automatic message lock renewal, 
+and concurrent execution of user specified event handlers. Because of its feature set, it should be the go to tool for writing applications that receive
+from Service Bus entities. The ServiceBusReceiver is recommended for more complex scenarios in which the processor is not able to provide the fine-grained control 
+that one can expect when using the ServiceBusReceiver directly. 
 
 ```C# Snippet:ServiceBusProcessMessages
 string connectionString = "<connection_string>";

@@ -35,7 +35,7 @@ Console.WriteLine(body);
 
 ### Send and receive a batch of messages
 
-We can send several messages at once. There are two ways of doing this. The first way uses the `SendAsync`
+There are two ways of sending several messages at once. The first way uses the `SendAsync`
 overload that accepts an IEnumerable of `ServiceBusMessage`. With this method, we will attempt to fit all of
 the supplied messages in a single message batch that we will send to the service. If the messages are too large
 to fit in a single batch, the operation will throw an exception.
