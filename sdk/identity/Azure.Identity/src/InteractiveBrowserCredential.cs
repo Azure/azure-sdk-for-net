@@ -21,7 +21,7 @@ namespace Azure.Identity
         private AuthenticationRecord _record = null;
         private bool _disableAutomaticAuthentication = false;
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to interactively authenticate.";
-        private const string NoDefaultScopeMessage = "Authenticating in this environment requires the specifying a TokenRequestContext.";
+        private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
 
         /// <summary>
         /// Creates a new <see cref="InteractiveBrowserCredential"/> with the specified options, which will authenticate users.
@@ -153,13 +153,11 @@ namespace Azure.Identity
 
         private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("InteractiveBrowserCredential.Authenticate", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(Authenticate)}", requestContext);
 
             try
             {
-                AuthenticationResult result = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false);
-
-                scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
 
                 return _record;
             }
@@ -177,10 +175,12 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("InteractiveBrowserCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(InteractiveBrowserCredential)}.{nameof(GetToken)}", requestContext);
 
             try
             {
+                Exception inner = null;
+
                 if (_record != null)
                 {
                     try
@@ -191,27 +191,16 @@ namespace Azure.Identity
                     }
                     catch (MsalUiRequiredException e)
                     {
-                        if (_disableAutomaticAuthentication)
-                        {
-                            throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, e);
-                        }
-
-                        AuthenticationResult result = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false);
-
-                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                        inner = e;
                     }
                 }
-                else
+
+                if (_disableAutomaticAuthentication)
                 {
-                    if (_disableAutomaticAuthentication)
-                    {
-                        throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext);
-                    }
-
-                    AuthenticationResult result = await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false);
-
-                    return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                    throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
+
+                return scope.Succeeded(await GetTokenViaBrowserLoginAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
             }
             catch (OperationCanceledException e)
             {
@@ -221,17 +210,17 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-               throw scope.FailAndWrap(e);
+                throw scope.FailAndWrap(e);
             }
         }
 
-        private async Task<AuthenticationResult> GetTokenViaBrowserLoginAsync(string[] scopes, bool async, CancellationToken cancellationToken)
+        private async Task<AccessToken> GetTokenViaBrowserLoginAsync(string[] scopes, bool async, CancellationToken cancellationToken)
         {
             AuthenticationResult result = await _client.AcquireTokenInteractiveAsync(scopes, Prompt.SelectAccount, async, cancellationToken).ConfigureAwait(false);
 
             _record = new AuthenticationRecord(result);
 
-            return result;
+            return new AccessToken(result.AccessToken, result.ExpiresOn);
         }
     }
 }

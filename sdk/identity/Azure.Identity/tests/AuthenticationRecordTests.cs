@@ -12,6 +12,8 @@ namespace Azure.Identity.Tests
 {
     public class AuthenticationRecordTests
     {
+        private const int TestBufferSize = 256;
+
         [Test]
         public void SerializeDeserializeInputChecks()
         {
@@ -28,18 +30,13 @@ namespace Azure.Identity.Tests
         {
             var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
-            byte[] buff = new byte[256];
+            byte[] buff = new byte[TestBufferSize];
 
             var stream = new MemoryStream(buff);
 
             await expRecord.SerializeAsync(stream);
 
-            // decode to string and re-encode to strip extra bytes
-            var buffStr = Encoding.UTF8.GetString(buff).Trim('\0');
-
-            buff = Encoding.UTF8.GetBytes(buffStr);
-
-            stream = new MemoryStream(buff);
+            stream = new MemoryStream(buff, 0, (int)stream.Position);
 
             var actRecord = await AuthenticationRecord.DeserializeAsync(stream);
 
@@ -54,18 +51,13 @@ namespace Azure.Identity.Tests
         {
             var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
-            byte[] buff = new byte[256];
+            byte[] buff = new byte[TestBufferSize];
 
             var stream = new MemoryStream(buff);
 
             expRecord.Serialize(stream);
 
-            // decode to string and re-encode to strip extra bytes
-            var buffStr = Encoding.UTF8.GetString(buff).Trim('\0');
-
-            buff = Encoding.UTF8.GetBytes(buffStr);
-
-            stream = new MemoryStream(buff);
+            stream = new MemoryStream(buff, 0, (int)stream.Position);
 
             var actRecord = AuthenticationRecord.Deserialize(stream);
 
@@ -84,7 +76,7 @@ namespace Azure.Identity.Tests
 
             var expRecord = new AuthenticationRecord(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString());
 
-            var stream = new MemoryStream(new byte[256]);
+            var stream = new MemoryStream(TestBufferSize);
 
             Assert.CatchAsync<OperationCanceledException>(async () => await expRecord.SerializeAsync(stream, cts.Token));
         }
@@ -96,7 +88,7 @@ namespace Azure.Identity.Tests
 
             cts.Cancel();
 
-            var stream = new MemoryStream(new byte[256]);
+            var stream = new MemoryStream(TestBufferSize);
 
             Assert.CatchAsync<OperationCanceledException>(async () => await AuthenticationRecord.DeserializeAsync(stream, cts.Token));
         }

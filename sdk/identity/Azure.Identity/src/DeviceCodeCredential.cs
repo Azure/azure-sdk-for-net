@@ -23,7 +23,7 @@ namespace Azure.Identity
         private readonly Func<DeviceCodeInfo, CancellationToken, Task> _deviceCodeCallback;
         private bool _disableAutomaticAuthentication = false;
         private const string AuthenticationRequiredMessage = "Interactive authentication is needed to acquire token. Call Authenticate to initiate the device code authentication.";
-        private const string NoDefaultScopeMessage = "Authenticating in this environment requires the specifying a TokenRequestContext.";
+        private const string NoDefaultScopeMessage = "Authenticating in this environment requires specifying a TokenRequestContext.";
 
         /// <summary>
         /// Protected constructor for mocking
@@ -157,7 +157,7 @@ namespace Azure.Identity
 
         private async Task<AuthenticationRecord> AuthenticateImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("InteractiveBrowserCredential.Authenticate", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(DeviceCodeCredential)}.{nameof(Authenticate)}", requestContext);
 
             try
             {
@@ -181,10 +181,12 @@ namespace Azure.Identity
 
         private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DeviceCodeCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(DeviceCodeCredential)}.{nameof(GetToken)}", requestContext);
 
             try
             {
+                Exception inner = null;
+
                 if (_record != null)
                 {
                     try
@@ -195,23 +197,16 @@ namespace Azure.Identity
                     }
                     catch (MsalUiRequiredException e)
                     {
-                        if (_disableAutomaticAuthentication)
-                        {
-                            throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, e);
-                        }
-
-                        return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                        inner = e;
                     }
                 }
-                else
+
+                if (_disableAutomaticAuthentication)
                 {
-                    if (_disableAutomaticAuthentication)
-                    {
-                        throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext);
-                    }
-
-                    return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
+                    throw new AuthenticationRequiredException(AuthenticationRequiredMessage, requestContext, inner);
                 }
+
+                return scope.Succeeded(await GetTokenViaDeviceCodeAsync(requestContext.Scopes, async, cancellationToken).ConfigureAwait(false));
             }
             catch (OperationCanceledException e)
             {

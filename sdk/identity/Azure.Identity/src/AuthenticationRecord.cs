@@ -12,8 +12,6 @@ using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
-
-
     /// <summary>
     /// Account information relating to an authentication request.
     /// </summary>
@@ -80,7 +78,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public void Serialize(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             SerializeAsync(stream, false, cancellationToken).EnsureCompleted();
         }
@@ -92,7 +90,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public async Task SerializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
@@ -105,7 +103,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public static AuthenticationRecord Deserialize(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             return DeserializeAsync(stream, false, cancellationToken).EnsureCompleted();
         }
@@ -117,7 +115,7 @@ namespace Azure.Identity
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public static async Task<AuthenticationRecord> DeserializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             return await DeserializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }

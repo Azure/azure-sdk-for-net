@@ -17,12 +17,12 @@ namespace Azure.Identity
         public bool DisableAutomaticAuthentication { get; set; }
 
         /// <summary>
-        /// The tenant id the user will be authenticated to. If not specified the user will be authenticated to the home tenant.
+        /// The tenant ID the user will be authenticated to. If not specified the user will be authenticated to the home tenant.
         /// </summary>
         public string TenantId { get; set; }
 
         /// <summary>
-        /// The client id of the application used to authenticate the user. If not specified the user will be authenticated with an azure development application.
+        /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.
         /// </summary>
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
