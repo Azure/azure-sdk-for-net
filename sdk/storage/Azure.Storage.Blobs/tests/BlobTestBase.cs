@@ -13,7 +13,6 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
-//using ResourceGroups.Tests;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -47,8 +46,6 @@ namespace Azure.Storage.Test.Shared
         public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
         public string GetNewBlobName() => $"test-blob-{Recording.Random.NewGuid()}";
         public string GetNewBlockName() => $"test-block-{Recording.Random.NewGuid()}";
-
-        //public RecordedDelegatingHandler handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
         public BlobClientOptions GetOptions(bool parallelRange = false)
         {
@@ -175,12 +172,6 @@ namespace Azure.Storage.Test.Shared
 
         public BlobServiceClient GetServiceClient_SoftDelete() =>
             GetServiceClientFromSharedKeyConfig(TestConfigSoftDelete);
-
-        public BlobServiceClient GetServiceClient_OrSource() =>
-            GetServiceClientFromSharedKeyConfig(TestConfigObjectReplicationSource);
-
-        public BlobServiceClient GetServiceClient_OrDestination() =>
-            GetServiceClientFromSharedKeyConfig(TestConfigObjectReplicationDestination);
 
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
@@ -546,17 +537,7 @@ namespace Azure.Storage.Test.Shared
                 { "tagKey0", "tagValue0" },
                 { "tagKey1", "tagValue1" }
             };
-        /*
-        public async Task SetupContainerReplicationPolicy(string storageAccount, BlobContainerClient container, string policyId)
-        {
-            StorageManagementClient storageManagementClient = new StorageManagementClient(handler);
-        }
 
-        public async Task SetupContainerReplicationRule(BlobContainerClient container, string ruleId)
-        {
-
-        }
-        */
         public class DisposingContainer : IAsyncDisposable
         {
             public BlobContainerClient Container;

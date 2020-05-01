@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +20,6 @@ using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -480,12 +478,14 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task DownloadAsync_ObjectReplication()
         {
-            BlobServiceClient sourceServiceClient = GetServiceClient_OrSource();
-            BlobServiceClient destinationServiceClient = GetServiceClient_OrDestination();
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR headers
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+            BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
 
             // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
-            var sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
-            var destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
+            BlobContainerClient sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));
+            BlobContainerClient destinationContainer = InstrumentClient(destinationServiceClient.GetBlobContainerClient("test2"));
 
             // Arrange
             string blob_name = "netgetpropertiesors2blobapitestgetpropertiesors";
@@ -2381,8 +2381,10 @@ namespace Azure.Storage.Blobs.Test
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task GetPropertiesAsync_ObjectReplication()
         {
-            BlobServiceClient sourceServiceClient = GetServiceClient_OrSource();
-            BlobServiceClient destinationServiceClient = GetServiceClient_OrDestination();
+            // TODO: The tests will temporarily use designated account, containers and blobs to check the
+            // existence of OR headers
+            BlobServiceClient sourceServiceClient = GetServiceClient_SharedKey();
+            BlobServiceClient destinationServiceClient = GetServiceClient_SecondaryAccount_SharedKey();
 
             // This is a recorded ONLY test with a special container we previously setup, as we can't auto setup policies yet
             var sourceContainer = InstrumentClient(sourceServiceClient.GetBlobContainerClient("test1"));

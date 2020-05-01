@@ -57,7 +57,7 @@ namespace Azure.Storage.Blobs.Models
         /// Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or
         /// non-fatal copy operation failure. This header does not appear if this blob has never been the destination
         /// in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using
-        /// Set Blob Properties, Put Blob, or Put Block List.
+        /// Set Blob Properties, Put Blob, or Put Block List
         /// </summary>
         public string CopyStatusDescription { get; internal set; }
 
