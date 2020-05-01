@@ -21,7 +21,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 
 To recognize form fields and other content from your custom forms from a given file at a URI, use the `StartRecognizeCustomFormsFromUri` method. The returned value is a collection of `RecognizedForm` objects -- one for each page in the submitted document.
 
-```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+```C# Snippet:FormRecognizerSample4RecognizeCustomFormsFromUri
 Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms.Value)
 {
@@ -57,8 +57,8 @@ using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
 
 To see the full example source files, see:
 
-* [Recognize custom forms from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample3_RecognizeCustomFormsFromUri.cs)
-* [Recognize custom forms from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample3_RecognizeCustomFormsFromFile.cs)
+* [Recognize custom forms from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample4_RecognizeCustomFormsFromUri.cs)
+* [Recognize custom forms from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample4_RecognizeCustomFormsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
-[train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_TrainModel.md
+[train_a_model]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample3_TrainModel.md

@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
-            #region Snippet:FormRecognizerSample4TrainModelWithForms
+            #region Snippet:FormRecognizerSample3TrainModelWithForms
             // For instructions on setting up forms for training in an Azure Storage Blob Container, see
             // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
 
