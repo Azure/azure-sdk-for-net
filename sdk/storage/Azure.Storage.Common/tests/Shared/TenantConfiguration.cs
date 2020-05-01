@@ -40,7 +40,6 @@ namespace Azure.Storage.Test
         public string ConnectionString { get; private set; }
         public string EncryptionScope { get; private set; }
 
-
         /// <summary>
         /// Build a connection string for any tenant configuration that didn't
         /// provide one.
