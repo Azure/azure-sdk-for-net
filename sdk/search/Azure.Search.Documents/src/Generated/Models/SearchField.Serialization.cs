@@ -94,16 +94,16 @@ namespace Azure.Search.Documents.Models
         internal static SearchField DeserializeSearchField(JsonElement element)
         {
             string name = default;
-            DataType type = default;
+            SearchFieldDataType type = default;
             bool? key = default;
             bool? retrievable = default;
             bool? searchable = default;
             bool? filterable = default;
             bool? sortable = default;
             bool? facetable = default;
-            AnalyzerName? analyzer = default;
-            AnalyzerName? searchAnalyzer = default;
-            AnalyzerName? indexAnalyzer = default;
+            LexicalAnalyzerName? analyzer = default;
+            LexicalAnalyzerName? searchAnalyzer = default;
+            LexicalAnalyzerName? indexAnalyzer = default;
             IList<string> synonymMaps = default;
             IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.Search.Documents.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new DataType(property.Value.GetString());
+                    type = new SearchFieldDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("key"))
@@ -182,7 +182,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    analyzer = new AnalyzerName(property.Value.GetString());
+                    analyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("searchAnalyzer"))
@@ -191,7 +191,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchAnalyzer = new AnalyzerName(property.Value.GetString());
+                    searchAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("indexAnalyzer"))
@@ -200,7 +200,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    indexAnalyzer = new AnalyzerName(property.Value.GetString());
+                    indexAnalyzer = new LexicalAnalyzerName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("synonymMaps"))

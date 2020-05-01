@@ -20,6 +20,7 @@
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- References required for test resource creation -->
@@ -37,7 +38,4 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-
-  <!-- Pull in the Azure.Core Test Framework -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\tests\TestFramework.props" />
 </Project>

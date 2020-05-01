@@ -3,7 +3,7 @@
 
 using System;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.Tests
 {

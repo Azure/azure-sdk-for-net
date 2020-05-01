@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Models
                     string[] values = value.Split('|');
                     for (int i = 0; i < values.Length; ++i)
                     {
-                        Flags.Add(new RegexFlags(values[i]));
+                        Flags.Add(new RegexFlag(values[i]));
                     }
                 }
             }
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Gets regular expression flags for <see cref="Pattern"/>.
         /// </summary>
-        public IList<RegexFlags> Flags { get; } = new List<RegexFlags>();
+        public IList<RegexFlag> Flags { get; } = new List<RegexFlag>();
 
         /// <summary>
         /// Gets a list of stopwords.

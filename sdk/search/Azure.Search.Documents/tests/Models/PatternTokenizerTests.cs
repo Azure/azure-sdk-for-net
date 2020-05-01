@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests.Models
             }
 
             using JsonDocument doc = JsonDocument.Parse(stream.ToArray());
-            PatternTokenizer actual = Tokenizer.DeserializeTokenizer(doc.RootElement) as PatternTokenizer;
+            PatternTokenizer actual = LexicalTokenizer.DeserializeLexicalTokenizer(doc.RootElement) as PatternTokenizer;
 
             CollectionAssert.AreEqual(expected.Flags, actual?.Flags);
         }
@@ -36,15 +36,15 @@ namespace Azure.Search.Documents.Tests.Models
                 {
                     Flags =
                     {
-                        RegexFlags.CaseInsensitive,
+                        RegexFlag.CaseInsensitive,
                     }
                 };
                 yield return new PatternTokenizer("test")
                 {
                     Flags =
                     {
-                        RegexFlags.CaseInsensitive,
-                        RegexFlags.Literal
+                        RegexFlag.CaseInsensitive,
+                        RegexFlag.Literal
                     }
                 };
             }

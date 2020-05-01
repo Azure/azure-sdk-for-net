@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Response from a List SynonymMaps request. If successful, it includes the full definitions of all synonym maps. </summary>
-    public partial class ListSynonymMapsResult
+    internal partial class ListSynonymMapsResult
     {
         /// <summary> Initializes a new instance of ListSynonymMapsResult. </summary>
         /// <param name="synonymMaps"> The synonym maps in the Search service. </param>

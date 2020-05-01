@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Create or update a data source.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that will contain the datasource
+        /// The name of the workspace.
         /// </param>
         /// <param name='dataSourceName'>
         /// The name of the datasource resource.
@@ -112,6 +112,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 63);
+                }
+                if (workspaceName.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 4);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
+                }
+            }
             if (dataSourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataSourceName");
@@ -128,9 +143,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -311,10 +340,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Deletes a data source instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contains the datasource.
+        /// The name of the workspace.
         /// </param>
         /// <param name='dataSourceName'>
         /// Name of the datasource.
@@ -362,6 +391,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 63);
+                }
+                if (workspaceName.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 4);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
+                }
+            }
             if (dataSourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataSourceName");
@@ -370,9 +414,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -510,10 +568,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Gets a datasource instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// Name of the Log Analytics Workspace that contains the datasource.
+        /// The name of the workspace.
         /// </param>
         /// <param name='dataSourceName'>
         /// Name of the datasource
@@ -564,6 +622,21 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 63);
+                }
+                if (workspaceName.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 4);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
+                }
+            }
             if (dataSourceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dataSourceName");
@@ -572,9 +645,23 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -734,10 +821,10 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group to get. The name is case insensitive.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='workspaceName'>
-        /// The workspace that contains the data sources.
+        /// The name of the workspace.
         /// </param>
         /// <param name='skiptoken'>
         /// Starting point of the collection of data source instances.
@@ -792,13 +879,42 @@ namespace Microsoft.Azure.Management.OperationalInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "workspaceName");
             }
+            if (workspaceName != null)
+            {
+                if (workspaceName.Length > 63)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "workspaceName", 63);
+                }
+                if (workspaceName.Length < 4)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "workspaceName", 4);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(workspaceName, "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "workspaceName", "^[A-Za-z0-9][A-Za-z0-9-]+[A-Za-z0-9]$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (Client.SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
