@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class StandardTokenizerV2 : IUtf8JsonSerializable
+    public partial class LuceneStandardTokenizerV2 : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndObject();
         }
 
-        internal static StandardTokenizerV2 DeserializeStandardTokenizerV2(JsonElement element)
+        internal static LuceneStandardTokenizerV2 DeserializeLuceneStandardTokenizerV2(JsonElement element)
         {
             int? maxTokenLength = default;
             string odataType = default;
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new StandardTokenizerV2(odataType, name, maxTokenLength);
+            return new LuceneStandardTokenizerV2(odataType, name, maxTokenLength);
         }
     }
 }

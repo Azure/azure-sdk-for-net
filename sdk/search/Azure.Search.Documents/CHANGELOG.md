@@ -35,6 +35,7 @@
 - Renamed `Skillset` to `SearchIndexerSkillset`.
 - Renamed `StandardAnalyzer` to `LuceneStandardAnalyzer`.
 - Renamed `StandardTokenizer` to `LuceneStandardTokenizer`.
+- Renamed `StandardTokenizerV2` to `LuceneStandardTokenizerV2`.
 - Renamed `TokenInfo` to `AnalyzedTokenInfo`.
 - Renamed `Tokenizer` to `LexicalTokenizer`.
 - Renamed `TokenizerName` to `LexicalTokenizerName`.
