@@ -9,7 +9,7 @@ namespace Azure.Identity
     /// <summary>
     /// An exception indicating that interactive authentication is required.
     /// </summary>
-    public class AuthenticationRequiredException : AuthenticationFailedException
+    public class AuthenticationRequiredException : CredentialUnavailableException
     {
         /// <summary>
         /// Creates a new <see cref="AuthenticationRequiredException"/> with the specified message and context.

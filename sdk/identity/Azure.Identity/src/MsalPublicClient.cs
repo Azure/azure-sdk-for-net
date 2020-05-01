@@ -38,10 +38,6 @@ namespace Azure.Identity
 
             _client = pubAppBuilder.Build();
 
-            int i = 0;
-
-            _client.UserTokenCache.SetBeforeAccessAsync(async args => { if (++i > 1) { throw new InvalidOperationException(); } await Task.CompletedTask.ConfigureAwait(false);  });
-
             _clientId = clientId;
 
             _ensureInitAsync = new Lazy<Task>(InitializeAsync);

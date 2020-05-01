@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
@@ -22,27 +23,32 @@ namespace Azure.Identity
         private const string AuthorityPropertyName = "authority";
         private const string HomeAccountIdPropertyName = "homeAccountId";
         private const string TenantIdPropertyName = "tenantId";
-        private const string AdditionalDataPropertyName = "additionalData";
 
         private static readonly JsonEncodedText s_usernamePropertyNameBytes = JsonEncodedText.Encode(UsernamePropertyName);
         private static readonly JsonEncodedText s_authorityPropertyNameBytes = JsonEncodedText.Encode(AuthorityPropertyName);
         private static readonly JsonEncodedText s_homeAccountIdPropertyNameBytes = JsonEncodedText.Encode(HomeAccountIdPropertyName);
         private static readonly JsonEncodedText s_tenantIdPropertyNameBytes = JsonEncodedText.Encode(TenantIdPropertyName);
-        private static readonly JsonEncodedText s_additionalDataPropertyNameBytes = JsonEncodedText.Encode(AdditionalDataPropertyName);
-
-        private Lazy<Dictionary<string, string>> _additionalData = new Lazy<Dictionary<string, string>>();
 
         internal AuthenticationRecord()
         {
 
         }
 
-        internal AuthenticationRecord(Microsoft.Identity.Client.AuthenticationResult authResult)
+        internal AuthenticationRecord(AuthenticationResult authResult)
         {
             Username = authResult.Account.Username;
             Authority = authResult.Account.Environment;
             AccountId = authResult.Account.HomeAccountId;
             TenantId = authResult.TenantId;
+        }
+
+        internal AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId)
+        {
+
+            Username = username;
+            Authority = authority;
+            AccountId = new AccountId(homeAccountId);
+            TenantId = tenantId;
         }
 
         /// <summary>
@@ -65,33 +71,30 @@ namespace Azure.Identity
         /// </summary>
         public string TenantId { get; private set; }
 
-        /// <summary>
-        /// Additional data to be stored in the <see cref="AuthenticationRecord"/>.
-        /// </summary>
-        public Dictionary<string, string> AdditionalData => _additionalData.Value;
-
         internal AccountId AccountId { get; private set; }
 
         /// <summary>
         /// Serializes the <see cref="AuthenticationRecord"/> to the specified <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> which the serialized <see cref="AuthenticationRecord"/> will be written to.</param>
-        public void Serialize(Stream stream)
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public void Serialize(Stream stream, CancellationToken cancellationToken = default)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
-            SerializeAsync(stream, false).EnsureCompleted();
+            SerializeAsync(stream, false, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
         /// Serializes the <see cref="AuthenticationRecord"/> to the specified <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to which the serialized <see cref="AuthenticationRecord"/> will be written.</param>
-        public async Task SerializeAsync(Stream stream)
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public async Task SerializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
-            await SerializeAsync(stream, true).ConfigureAwait(false);
+            await SerializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
 
 
@@ -99,25 +102,27 @@ namespace Azure.Identity
         /// Deserializes the <see cref="AuthenticationRecord"/> from the specified <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="AuthenticationRecord"/> will be read.</param>
-        public static AuthenticationRecord Deserialize(Stream stream)
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public static AuthenticationRecord Deserialize(Stream stream, CancellationToken cancellationToken = default)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
-            return DeserializeAsync(stream, false).EnsureCompleted();
+            return DeserializeAsync(stream, false, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
         /// Deserializes the <see cref="AuthenticationRecord"/> from the specified <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> from which the serialized <see cref="AuthenticationRecord"/> will be read.</param>
-        public static async Task<AuthenticationRecord> DeserializeAsync(Stream stream)
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public static async Task<AuthenticationRecord> DeserializeAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
-            return await DeserializeAsync(stream, true).ConfigureAwait(false);
+            return await DeserializeAsync(stream, true, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task SerializeAsync(Stream stream, bool async)
+        private async Task SerializeAsync(Stream stream, bool async, CancellationToken cancellationToken)
         {
             using (var json = new Utf8JsonWriter(stream))
             {
@@ -132,23 +137,11 @@ namespace Azure.Identity
 
                 json.WriteString(s_tenantIdPropertyNameBytes, TenantId);
 
-                json.WriteStartObject(s_additionalDataPropertyNameBytes);
-
-                if (_additionalData.IsValueCreated)
-                {
-                    foreach (var kvp in AdditionalData)
-                    {
-                        json.WriteString(kvp.Key, kvp.Value);
-                    }
-                }
-
-                json.WriteEndObject();
-
                 json.WriteEndObject();
 
                 if (async)
                 {
-                    await json.FlushAsync().ConfigureAwait(false);
+                    await json.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
@@ -157,11 +150,11 @@ namespace Azure.Identity
             }
         }
 
-        private static async Task<AuthenticationRecord> DeserializeAsync(Stream stream, bool async)
+        private static async Task<AuthenticationRecord> DeserializeAsync(Stream stream, bool async, CancellationToken cancellationToken)
         {
             var authProfile = new AuthenticationRecord();
 
-            using JsonDocument doc = async ? await JsonDocument.ParseAsync(stream).ConfigureAwait(false) : JsonDocument.Parse(stream);
+            using JsonDocument doc = async ? await JsonDocument.ParseAsync(stream, cancellationToken: cancellationToken).ConfigureAwait(false) : JsonDocument.Parse(stream);
 
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
@@ -178,12 +171,6 @@ namespace Azure.Identity
                         break;
                     case TenantIdPropertyName:
                         authProfile.TenantId = prop.Value.GetString();
-                        break;
-                    case AdditionalDataPropertyName:
-                        foreach (JsonProperty addProp in prop.Value.EnumerateObject())
-                        {
-                            authProfile.AdditionalData.Add(addProp.Name, addProp.Value.GetString());
-                        }
                         break;
                 }
             }
