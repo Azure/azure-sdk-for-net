@@ -1,6 +1,8 @@
 # Release History
 
 ## 1.2.0-preview.3 (Unreleased)
+
+### New Features
 - First preview of new API for authenticating users with `DeviceCodeCredential` and `InteractiveBrowserCredential`
   - Added method `Authenticate` which pro-actively interacts with the user to authenticate if necessary and returns a serializable `AuthenticationRecord`
   - Added Options classes `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions` which support the following new options
@@ -11,6 +13,8 @@
     By default the cache is per credential and in memory only.
 
 ## 1.2.0-preview.2
+
+### New Features
 - Updates `DefaultAzureCredential` to enable authenticating through Visual Studio
 - Updates `DefaultAzureCredential` to enable authentication through Visual Studio Code
 
