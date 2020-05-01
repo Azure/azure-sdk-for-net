@@ -13,17 +13,17 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Add SessionInitializingAsync/SessionClosingAsync events in ServiceBusSessionProcessor
 - Do not attempt to autocomplete messages with the processor if the user settled the message in their callback
 - Add SendAsync overload accepting an IEnumerable of ServiceBusMessage
-- Various performance improvements
+- Various performance improvements  
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-- Improve the way exception stack traces are captured.
+- Improve the way exception stack traces are captured  
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-
+  
 ### Breaking Changes
 - Change from using a static factory method for creating a sendable message from a received message to instead
-  using a constructor.
+  using a constructor  
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 - CreateSessionProcessor method signature changed to accept a params array of session Ids instead of a single string.
-- Remove cancellation token from CreateProcessor and CreateSessionProcessor
+- Remove cancellation token from CreateProcessor and CreateSessionProcessor  
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 - Rename SendBatchAsync to SendAsync
 - Add SenderOptions parameter to CreateSender method.
