@@ -490,14 +490,12 @@ namespace Azure.Data.Tables.Tests
             return Enumerable.Range(1, count).Select(n =>
             {
                 string number = n.ToString();
-                var dt = new DateTime(2020, 1, 1).AddMinutes(n);
-                DateTime.SpecifyKind(dt, DateTimeKind.Utc);
                 return new Dictionary<string, object>
                     {
                         {"PartitionKey", partitionKeyValue},
                         {"RowKey", n.ToString("D2")},
                         {"SomeStringProperty", $"This is table entity number {n:D2}"},
-                        {"SomeDateProperty", dt },
+                        {"SomeDateProperty", new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc ).AddMinutes(n) },
                         {"SomeGuidProperty", new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}")},
                         {"SomeBinaryProperty", new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {"SomeInt64Property", long.Parse(number)},
