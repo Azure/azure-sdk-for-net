@@ -6,11 +6,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
@@ -779,5 +777,310 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             }
         }
 
+        [Test]
+        [TestCase(1, 1, false)]
+        [TestCase(1, 2, false)]
+        [TestCase(5, 3, true)]
+        [TestCase(10, 10, false)]
+        [TestCase(20, 10, false)]
+        [TestCase(20, 40, true)]
+        public async Task ProcessMessagesFromMultipleNamedSessions(int numThreads, int specifiedSessionCount, bool autoComplete)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                var sessionIds = new List<string>();
+                for (int i = 0; i < specifiedSessionCount; i++)
+                {
+                    var sessionId = Guid.NewGuid().ToString();
+                    sessionIds.Add(sessionId);
+                    await sender.SendAsync(GetMessage(sessionId));
+                    sessions.TryAdd(sessionId, true);
+                }
+
+                // sending 2 more messages and not specifying these sessionIds when creating a processor,
+                // to make sure that these messages will not be received.
+                var sessionId1 = Guid.NewGuid().ToString();
+                await sender.SendAsync(GetMessage(sessionId1));
+                sessions.TryAdd(sessionId1, true);
+
+                var sessionId2 = Guid.NewGuid().ToString();
+                await sender.SendAsync(GetMessage(sessionId2));
+                sessions.TryAdd(sessionId2, true);
+
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                int messageCt = 0;
+                int sessionCloseEventCt = 0;
+
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoComplete = autoComplete,
+                };
+
+                var processor = client.CreateSessionProcessor(
+                    scope.QueueName,
+                    options,
+                    sessionIds.ToArray());
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ExceptionHandler;
+                processor.SessionClosingAsync += SessionCloseHandler;
+                await processor.StartProcessingAsync();
+
+                async Task SessionCloseHandler(ProcessSessionEventArgs args)
+                {
+                    Interlocked.Increment(ref sessionCloseEventCt);
+                    await args.GetSessionStateAsync();
+                    Assert.IsTrue(sessionIds.Contains(args.SessionId));
+                }
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    try
+                    {
+                        var message = args.Message;
+                        if (!autoComplete)
+                        {
+                            await args.CompleteAsync(message);
+                        }
+                        sessions.TryRemove(message.SessionId, out bool _);
+                        Assert.IsTrue(sessionIds.Contains(message.SessionId));
+                        Assert.IsTrue(sessionIds.Contains(args.SessionId));
+                        Assert.IsNotNull(args.SessionLockedUntil);
+                    }
+                    finally
+                    {
+                        var ct = Interlocked.Increment(ref messageCt);
+                        if (ct == specifiedSessionCount)
+                        {
+                            tcs.SetResult(true);
+                        }
+                    }
+                }
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+
+                Assert.AreEqual(specifiedSessionCount, messageCt);
+
+                // We should have received messages from only the specified sessions
+                Assert.AreEqual(2, sessions.Count);
+
+                // Close event handler should be called on each receiver close
+                Assert.AreEqual(specifiedSessionCount, sessionCloseEventCt);
+            }
+        }
+
+        [Test]
+        public async Task SessionLockLostWhenProcessSessionMessages()
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true,
+                lockDuration: lockDuration))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                var sessionIds = new List<string>();
+                int sendMessagesCount = 3;
+                int specifiedSessionCount = 2;
+                for (int i = 0; i < specifiedSessionCount; i++)
+                {
+                    var sessionId = Guid.NewGuid().ToString();
+                    sessionIds.Add(sessionId);
+                    // sending 3 messages per session
+                    var messages = GetMessages(sendMessagesCount, sessionId);
+                    await sender.SendAsync(messages);
+                    sessions.TryAdd(sessionId, true);
+                }
+
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                int messageCt = 0;
+                int sessionErrorEventCt = 0;
+                ConcurrentDictionary<string, int> receivedMessagesBeforeLockLost = new ConcurrentDictionary<string, int>();
+                ConcurrentDictionary<string, int> receivedMessagesAfterLockLost = new ConcurrentDictionary<string, int>();
+
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 4,
+                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(1),
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete
+                };
+
+                var processor = client.CreateSessionProcessor(
+                    scope.QueueName,
+                    options,
+                    sessionIds.ToArray());
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+                await processor.StartProcessingAsync();
+
+                Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
+                {
+                    var exception = (ServiceBusException)eventArgs.Exception;
+                    if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
+                    {
+                        Interlocked.Increment(ref sessionErrorEventCt);
+                    }
+                    else
+                    {
+                        Assert.Fail(eventArgs.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                }
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    try
+                    {
+                        var message = args.Message;
+                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(5)));
+
+                        sessions.TryRemove(message.SessionId, out bool _);
+                        Assert.IsTrue(sessionIds.Contains(message.SessionId));
+                        Assert.IsTrue(sessionIds.Contains(args.SessionId));
+                        Assert.IsNotNull(args.SessionLockedUntil);
+
+                        if (sessionErrorEventCt == 0)
+                        {
+                            receivedMessagesBeforeLockLost.AddOrUpdate(
+                                args.SessionId,
+                                1,
+                                (key, oldValue) => oldValue + 1);
+                        }
+                        else
+                        {
+                            receivedMessagesAfterLockLost.AddOrUpdate(args.SessionId,
+                                1,
+                                (key, oldValue) => oldValue + 1);
+                        }
+                    }
+                    finally
+                    {
+                        var ct = Interlocked.Increment(ref messageCt);
+                        if (ct == specifiedSessionCount * 3)
+                        {
+                            tcs.SetResult(true);
+                        }
+                    }
+                }
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+
+                foreach (var sessionId in sessionIds)
+                {
+                    Assert.True(receivedMessagesAfterLockLost.ContainsKey(sessionId));
+
+                    // asserting that we're recieving all remaining messages from this session after the lock lost
+                    Assert.AreEqual(receivedMessagesAfterLockLost[sessionId], sendMessagesCount - receivedMessagesBeforeLockLost[sessionId]);
+                }
+
+                Assert.AreEqual(specifiedSessionCount * 3, messageCt);
+
+                // We should have received messages from only the specified sessions
+                Assert.AreEqual(0, sessions.Count);
+            }
+        }
+
+        [Test]
+        public async Task UserErrorHandlerInvokeOnceIfSessionLockLost()
+        {
+            var lockDuration = TimeSpan.FromSeconds(10);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true,
+                lockDuration: lockDuration))
+            {
+                await using var client = GetClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
+                int sendMessagesCount = 2;
+
+                var sessionId = Guid.NewGuid().ToString();
+                // sending 2 messages per session
+                var messages = GetMessages(sendMessagesCount, sessionId);
+                await sender.SendAsync(messages);
+                sessions.TryAdd(sessionId, true);
+
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                int messageCt = 0;
+                int sessionErrorEventCt = 0;
+
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 1,
+                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(10),
+                };
+
+                var processor = client.CreateSessionProcessor(
+                    scope.QueueName,
+                    options,
+                    sessionId);
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+                await processor.StartProcessingAsync();
+
+                Task SessionErrorHandler(ProcessErrorEventArgs eventArgs)
+                {
+                    var exception = (ServiceBusException)eventArgs.Exception;
+                    if (ServiceBusException.FailureReason.SessionLockLost == exception.Reason)
+                    {
+                        Interlocked.Increment(ref sessionErrorEventCt);
+                    }
+                    else
+                    {
+                        Assert.Fail(eventArgs.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                }
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    try
+                    {
+                        var message = args.Message;
+                        await args.CompleteAsync(message);
+                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(10)));
+
+                        sessions.TryRemove(message.SessionId, out bool _);
+                        Assert.IsTrue(sessionId.Contains(message.SessionId));
+                        Assert.IsTrue(sessionId.Contains(args.SessionId));
+                        Assert.IsNotNull(args.SessionLockedUntil);
+
+                    }
+                    finally
+                    {
+                        var ct = Interlocked.Increment(ref messageCt);
+                        if (ct == sendMessagesCount)
+                        {
+                            tcs.SetResult(true);
+                        }
+                    }
+                }
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+
+                Assert.AreEqual(sendMessagesCount, messageCt);
+
+                // making sure that session error handler is hitting only once.
+                Assert.AreEqual(1, sessionErrorEventCt);
+
+                // We should have received messages from only the specified sessions
+                Assert.AreEqual(0, sessions.Count);
+            }
+        }
     }
 }
