@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Models
         public IList<string> SynonymMaps { get; } = new List<string>();
 
         /// <inheritdoc/>
-        protected override void Save(SearchField field)
+        private protected override void Save(SearchField field)
         {
             base.Save(field);
 
