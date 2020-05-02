@@ -112,7 +112,7 @@ jobs:
       matrix:
         Linux:
           OSName: "Linux"
-          OSVmImage: "ubuntu-16.04"
+          OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
         Windows_NetCoreApp:
           OSName: "Windows"

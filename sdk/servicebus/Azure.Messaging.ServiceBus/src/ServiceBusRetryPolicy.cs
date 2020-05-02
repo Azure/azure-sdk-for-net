@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
@@ -154,7 +155,8 @@ namespace Azure.Messaging.ServiceBus
                         }
                         else
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx)
+                                .Throw();
                         }
                     }
                 }

@@ -4456,23 +4456,28 @@
         "values": [
           {
             "value": "azuresql",
-            "name": "AzureSql"
+            "name": "AzureSql",
+            "description": "Indicates an Azure SQL datasource."
           },
           {
             "value": "cosmosdb",
-            "name": "CosmosDb"
+            "name": "CosmosDb",
+            "description": "Indicates a CosmosDB datasource."
           },
           {
             "value": "azureblob",
-            "name": "AzureBlob"
+            "name": "AzureBlob",
+            "description": "Indicates a Azure Blob datasource."
           },
           {
             "value": "azuretable",
-            "name": "AzureTable"
+            "name": "AzureTable",
+            "description": "Indicates a Azure Table datasource."
           },
           {
             "value": "mysql",
-            "name": "MySql"
+            "name": "MySql",
+            "description": "Indicates a MySql datasource."
           }
         ]
       },
@@ -4886,7 +4891,29 @@
       ],
       "x-ms-enum": {
         "name": "IndexerExecutionStatus",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "transientFailure",
+            "name": "TransientFailure",
+            "description": "An indexer invocation has failed, but the failure may be transient. Indexer invocations will continue per schedule."
+          },
+          {
+            "value": "success",
+            "name": "Success",
+            "description": "Indexer execution completed successfully."
+          },
+          {
+            "value": "inProgress",
+            "name": "InProgress",
+            "description": "Indexer execution is in progress."
+          },
+          {
+            "value": "reset",
+            "name": "Reset",
+            "description": "Indexer has been reset."
+          }
+        ]
       },
       "x-nullable": false,
       "description": "Represents the status of an individual indexer execution."
@@ -4933,7 +4960,24 @@
       ],
       "x-ms-enum": {
         "name": "IndexerStatus",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "unknown",
+            "name": "Unknown",
+            "description": "Indicates that the indexer is in an unknown state."
+          },
+          {
+            "value": "error",
+            "name": "Error",
+            "description": "Indicates that the indexer experienced an error that cannot be corrected without human intervention."
+          },
+          {
+            "value": "running",
+            "name": "Running",
+            "description": "Indicates that the indexer is running normally."
+          }
+        ]
       },
       "x-nullable": false,
       "description": "Represents the overall indexer status."
@@ -6022,7 +6066,19 @@
       ],
       "x-ms-enum": {
         "name": "TextExtractionAlgorithm",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "printed",
+            "name": "Printed",
+            "description": "An algorithm suitable for printed text."
+          },
+          {
+            "value": "handwritten",
+            "name": "Handwritten",
+            "description": "An algorithm suitable for handwritten text."
+          }
+        ]
       },
       "description": "A value indicating which algorithm to use. Default is printed."
     },
@@ -6034,7 +6090,19 @@
       ],
       "x-ms-enum": {
         "name": "TextSplitMode",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "pages",
+            "name": "Pages",
+            "description": "Split the text into individual pages."
+          },
+          {
+            "value": "sentences",
+            "name": "Sentences",
+            "description": "Split the text into individual sentences."
+          }
+        ]
       },
       "description": "A value indicating which split mode to perform."
     },
@@ -6051,7 +6119,44 @@
       ],
       "x-ms-enum": {
         "name": "VisualFeature",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "adult",
+            "name": "Adult",
+            "description": "Visual features recognized as adult persons."
+          },
+          {
+            "value": "brands",
+            "name": "Brands",
+            "description": "Visual features recognized as commercial brands."
+          },
+          {
+            "value": "categories",
+            "name": "Categories",
+            "description": "Categories."
+          },
+          {
+            "value": "description",
+            "name": "Description",
+            "description": "Description."
+          },
+          {
+            "value": "faces",
+            "name": "Faces",
+            "description": "Visual features recognized as people faces."
+          },
+          {
+            "value": "objects",
+            "name": "Objects",
+            "description": "Visual features recognized as objects."
+          },
+          {
+            "value": "tags",
+            "name": "Tags",
+            "description": "Tags."
+          }
+        ]
       },
       "description": "The strings indicating what visual feature types to return."
     },
@@ -6063,7 +6168,19 @@
       ],
       "x-ms-enum": {
         "name": "ImageDetail",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "celebrities",
+            "name": "Celebrities",
+            "description": "Details recognized as celebrities."
+          },
+          {
+            "value": "landmarks",
+            "name": "Landmarks",
+            "description": "Details recognized as landmarks."
+          }
+        ]
       },
       "description": "A string indicating which domain-specific details to return."
     },
@@ -6080,7 +6197,44 @@
       ],
       "x-ms-enum": {
         "name": "EntityCategory",
-        "modelAsString": false
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "location",
+            "name": "Location",
+            "description": "Entities describing a physical location."
+          },
+          {
+            "value": "organization",
+            "name": "Organization",
+            "description": "Entities describing an organization."
+          },
+          {
+            "value": "person",
+            "name": "Person",
+            "description": "Entities describing a person."
+          },
+          {
+            "value": "quantity",
+            "name": "Quantity",
+            "description": "Entities describing a quantity."
+          },
+          {
+            "value": "datetime",
+            "name": "Datetime",
+            "description": "Entities describing a date and time."
+          },
+          {
+            "value": "url",
+            "name": "Url",
+            "description": "Entities describing a URL."
+          },
+          {
+            "value": "email",
+            "name": "Email",
+            "description": "Entities describing an email address."
+          }
+        ]
       },
       "description": "A string indicating what entity categories to return."
     },

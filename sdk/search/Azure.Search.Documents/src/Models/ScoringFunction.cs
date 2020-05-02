@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         /// <param name="fieldName">The name of the field used as input to the scoring function.</param>
         /// <param name="boost">A multiplier for the raw score. Must be a positive number not equal to 1.0.</param>
-        public ScoringFunction(string fieldName, double boost)
+        private protected ScoringFunction(string fieldName, double boost)
         {
             Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
 

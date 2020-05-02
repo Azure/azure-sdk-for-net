@@ -18,7 +18,7 @@ jobs:
       matrix:
         Linux:
           OSName: "Linux"
-          OSVmImage: "ubuntu-16.04"
+          OSVmImage: "ubuntu-18.04"
           TestTargetFramework: netcoreapp2.1
           CloudType: AzureCloud
         Windows_NetCoreApp:
@@ -46,6 +46,8 @@ jobs:
       vmImage: "$(OSVmImage)"
 
     steps:
+      - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
+      
       - ${{ parameters.PreSteps }}
 
       - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools

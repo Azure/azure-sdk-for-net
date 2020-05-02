@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 default:
                     return instance;
-            };
+            }
         }
     }
 }
