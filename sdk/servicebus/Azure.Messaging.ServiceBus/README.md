@@ -84,6 +84,7 @@ To interact with these resources, one should be familiar with the following SDK 
 For more concepts and deeper discussion, see: [Service Bus Advanced Features](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview#advanced-features).
 
 ## Examples
+
 * [Send and receive a message](#sending-and-receive-a-message)
 * [Send and receive a batch of messages](#send-and-receive-a-batch-of-messages)
 * [Complete a message](#complete-a-message)
@@ -140,9 +141,9 @@ messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 // send the messages
 await sender.SendAsync(messages);
 ```
-The second way of doing this is using safe-batching. With safe-batching, you can create a ServiceBusMessageBatch object,
-which will allow you to attempt to messages one at a time to the batch using TryAdd. If the message cannot fit in the batch,
-TryAdd will return false.
+The second way of doing this is using safe-batching. With safe-batching, you can create a 
+`ServiceBusMessageBatch` object, which will allow you to attempt to add messages one at a time to the 
+batch using the `TryAdd` method. If the message cannot fit in the batch, `TryAdd` will return false.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
 ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
@@ -155,7 +156,7 @@ await sender.SendAsync(messageBatch);
 
 ### Complete a message
 
-In order to remove a message from the our queue or subscription, we can call the `CompleteAsync` method.
+In order to remove a message from a queue or subscription, we can call the `CompleteAsync` method.
 
 ```C# Snippet:ServiceBusCompleteMessage
 string connectionString = "<connection_string>";
@@ -183,6 +184,7 @@ await receiver.CompleteAsync(receivedMessage);
 ```
 
 ### Abandon a message
+
 Abandoning a message releases our receiver's lock, which allows the message to be received by this or other receivers.
 
 ```C# Snippet:ServiceBusAbandonMessage
@@ -207,6 +209,7 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 ```
 
 ### Dead letter a message
+
 Dead lettering a message is similar to defering with one main difference being that messages will be automatically dead lettered
 by the service after they have been received a certain number of times. Applications can choose to manually dead letter messages based on
 their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue.
