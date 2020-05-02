@@ -530,7 +530,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="queueName">The queue to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusProcessorOptions"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
-        /// <param name="sessionIds">An optional string[] containing the session IDs to scope the <see cref="ServiceBusSessionProcessor"/> to.
+        /// <param name="sessionIds">Optional session IDs to scope the <see cref="ServiceBusSessionProcessor"/> to.
         /// If left blank, the next available session returned from the service will be used.</param>
         /// <returns>A <see cref="ServiceBusSessionProcessor"/> scoped to the specified queue.</returns>
         public ServiceBusSessionProcessor CreateSessionProcessor(
@@ -557,7 +557,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="subscriptionName">The subcription to create a <see cref="ServiceBusSessionProcessor"/> for.</param>
         /// <param name="options">The set of <see cref="ServiceBusSessionProcessor"/> to use for configuring the
         /// <see cref="ServiceBusSessionProcessor"/>.</param>
-        /// <param name="sessionIds">An optional string[] containing the session IDs to scope the <see cref="ServiceBusSessionProcessor"/> to.
+        /// <param name="sessionIds">Optional session IDs to scope the <see cref="ServiceBusSessionProcessor"/> to.
         /// If left blank, the next available session returned from the service will be used.</param>
         ///
         /// <returns>A <see cref="ServiceBusProcessor"/> scoped to the specified topic and subscription.</returns>
