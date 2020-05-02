@@ -709,7 +709,7 @@ namespace Azure.Messaging.ServiceBus
                             {
                                 if (!sessionIdsReceiverMap.ContainsKey(sessionId))
                                 {
-                                    receiver = await CreateAndInitializeSessionReceiver(
+                                    receiver = await GetOrCreateSessionReceiver(
                                         sessionId,
                                         receiverOptions,
                                         cancellationToken).ConfigureAwait(false);
@@ -721,7 +721,7 @@ namespace Azure.Messaging.ServiceBus
                             }
                             else
                             {
-                                receiver = await CreateReceiver(receiverOptions, cancellationToken).ConfigureAwait(false);
+                                receiver = await CreateAndInitializeSessionReceiver(receiverOptions, cancellationToken).ConfigureAwait(false);
                             }
                         }
                         catch (ServiceBusException ex)
@@ -856,7 +856,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private async Task<ServiceBusReceiver> CreateAndInitializeSessionReceiver(
+        private async Task<ServiceBusReceiver> GetOrCreateSessionReceiver(
             string sessionId,
             ServiceBusReceiverOptions receiverOptions,
             CancellationToken cancellationToken)
@@ -874,7 +874,7 @@ namespace Azure.Messaging.ServiceBus
 
                 if (!sessionIdsReceiverMap.ContainsKey(sessionId))
                 {
-                    receiver = await CreateReceiver(receiverOptions, cancellationToken, sessionId).ConfigureAwait(false);
+                    receiver = await CreateAndInitializeSessionReceiver(receiverOptions, cancellationToken, sessionId).ConfigureAwait(false);
                 }
                 else
                 {
@@ -897,7 +897,7 @@ namespace Azure.Messaging.ServiceBus
             return receiver;
         }
 
-        private async Task<ServiceBusSessionReceiver> CreateReceiver(
+        private async Task<ServiceBusSessionReceiver> CreateAndInitializeSessionReceiver(
             ServiceBusReceiverOptions receiverOptions,
             CancellationToken cancellationToken,
             string sessionId = default)
