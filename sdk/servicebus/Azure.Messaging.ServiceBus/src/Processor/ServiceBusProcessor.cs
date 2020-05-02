@@ -707,11 +707,7 @@ namespace Azure.Messaging.ServiceBus
                         {
                             if (sessionId != null)
                             {
-                                // Adding double-checked locking, which checks whether sessionIdsReceiverMap contains sessionId or not.
-                                // This is efficient because it avoids creating a receiver for the same session Ids for multiple threads.
-                                // Otherwise, we will get session lock lost error whenever multiple threads will try to create a receiver for
-                                // the same session id.
-                                if (sessionId != null)
+                                if (!sessionIdsReceiverMap.ContainsKey(sessionId))
                                 {
                                     receiver = await CreateAndInitializeSessionReceiver(
                                         sessionId,
@@ -869,6 +865,10 @@ namespace Azure.Messaging.ServiceBus
             bool releaseSemaphore = false;
             try
             {
+                // Adding double-checked locking, which checks whether sessionIdsReceiverMap contains sessionId or not.
+                // This is efficient because it avoids creating a receiver for the same session Ids for multiple threads.
+                // Otherwise, we will get session lock lost error whenever multiple threads will try to create a receiver for
+                // the same session id.
                 await receiverCreationLockMap[sessionId].WaitAsync(cancellationToken).ConfigureAwait(false);
                 releaseSemaphore = true;
 
