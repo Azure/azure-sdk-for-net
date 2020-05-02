@@ -63,14 +63,23 @@ namespace Azure.Core
                 case float f:
                     writer.WriteNumberValue(f);
                     break;
+                case long l:
+                    writer.WriteNumberValue(l);
+                    break;
                 case string s:
                     writer.WriteStringValue(s);
                     break;
                 case bool b:
                     writer.WriteBooleanValue(b);
                     break;
+                case Guid g:
+                    writer.WriteStringValue(g);
+                    break;
                 case DateTimeOffset dateTimeOffset:
                     writer.WriteStringValue(dateTimeOffset,"S");
+                    break;
+                case DateTime dateTime:
+                    writer.WriteStringValue(dateTime, "S");
                     break;
                 case IEnumerable<KeyValuePair<string, object>> enumerable:
                     writer.WriteStartObject();

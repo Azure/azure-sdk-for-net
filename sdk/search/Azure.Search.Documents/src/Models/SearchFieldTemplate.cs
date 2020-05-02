@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="type">The data type of the field.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        public SearchFieldTemplate(string name, SearchFieldDataType type)
+        private protected SearchFieldTemplate(string name, SearchFieldDataType type)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 

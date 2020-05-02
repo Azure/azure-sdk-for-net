@@ -20,7 +20,8 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\TableServiceClientLiveTests\" />
+    <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\TableClientLiveTests\" />
   </ItemGroup>
 
 </Project>

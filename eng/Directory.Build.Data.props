@@ -35,6 +35,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Management.'))">true</IsMgmtClientLibrary>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="$(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
     <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
@@ -46,6 +47,15 @@
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableApiCompat Condition="'$(EnableApiCompat)' == '' and '$(IsShippingClientLibrary)' == 'true'">true</EnableApiCompat>
+  </PropertyGroup>
+
+  <!-- TODO. REVIEW -->
+  <PropertyGroup Condition="'$(IsMgmtClientLibrary)' == 'true'">
+    <NoWarn>
+      ($NoWarn);
+      CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
+      AZC0012; <!-- Single word class names -->
+    </NoWarn>
   </PropertyGroup>
 
   <!-- CodeAnalysis RuleSet -->
@@ -133,4 +143,10 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
+
+  <!-- Management Client Library Specific Overrides -->
+  <PropertyGroup Condition="'$(IsMgmtClientLibrary)' == 'true'">
+    <EnableApiCompat>false</EnableApiCompat>
+  </PropertyGroup>
+
 </Project>

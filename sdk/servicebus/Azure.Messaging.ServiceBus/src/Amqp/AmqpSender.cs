@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -269,11 +270,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     link?.GetTrackingId(),
                     null,
-                    link?.IsClosing() ?? false);
+                    link?.IsClosing() ?? false))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -448,11 +452,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     sendLink?.GetTrackingId(),
                     null,
-                    sendLink?.IsClosing() ?? false);
+                    sendLink?.IsClosing() ?? false))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -520,11 +527,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception exception)
             {
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     sendLink?.GetTrackingId(),
                     null,
-                    sendLink?.IsClosing() ?? false);
+                    sendLink?.IsClosing() ?? false))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 

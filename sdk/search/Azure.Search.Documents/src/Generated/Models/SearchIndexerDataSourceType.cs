@@ -27,15 +27,15 @@ namespace Azure.Search.Documents.Models
         private const string AzureTableValue = "azuretable";
         private const string MySqlValue = "mysql";
 
-        /// <summary> azuresql. </summary>
+        /// <summary> Indicates an Azure SQL datasource. </summary>
         public static SearchIndexerDataSourceType AzureSql { get; } = new SearchIndexerDataSourceType(AzureSqlValue);
-        /// <summary> cosmosdb. </summary>
+        /// <summary> Indicates a CosmosDB datasource. </summary>
         public static SearchIndexerDataSourceType CosmosDb { get; } = new SearchIndexerDataSourceType(CosmosDbValue);
-        /// <summary> azureblob. </summary>
+        /// <summary> Indicates a Azure Blob datasource. </summary>
         public static SearchIndexerDataSourceType AzureBlob { get; } = new SearchIndexerDataSourceType(AzureBlobValue);
-        /// <summary> azuretable. </summary>
+        /// <summary> Indicates a Azure Table datasource. </summary>
         public static SearchIndexerDataSourceType AzureTable { get; } = new SearchIndexerDataSourceType(AzureTableValue);
-        /// <summary> mysql. </summary>
+        /// <summary> Indicates a MySql datasource. </summary>
         public static SearchIndexerDataSourceType MySql { get; } = new SearchIndexerDataSourceType(MySqlValue);
         /// <summary> Determines if two <see cref="SearchIndexerDataSourceType"/> values are the same. </summary>
         public static bool operator ==(SearchIndexerDataSourceType left, SearchIndexerDataSourceType right) => left.Equals(right);

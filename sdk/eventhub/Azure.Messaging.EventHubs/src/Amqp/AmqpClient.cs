@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Runtime.ExceptionServices;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -242,7 +243,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         }
                         else if (ex is AmqpException)
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx).Throw();
                         }
                         else
                         {
@@ -342,7 +343,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         }
                         else if (ex is AmqpException)
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx).Throw();
                         }
                         else
                         {

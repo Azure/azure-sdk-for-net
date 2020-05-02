@@ -2,6 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.IO;
+using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,15 +16,58 @@ namespace Azure.Core.TestFramework
     ///   Represents the ambient environment in which the test suite is
     ///   being run.
     /// </summary>
-    public partial class TestEnvironment
+    public abstract class TestEnvironment
     {
-        private TokenCredential _credential;
+        private static readonly string RepositoryRoot;
         private readonly string _prefix;
 
-        public TestEnvironment(string serviceName)
+        private TokenCredential _credential;
+        private TestRecording _recording;
+
+        private readonly Dictionary<string, string> _environmentFile = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        protected TestEnvironment(string serviceName)
         {
             _prefix = serviceName.ToUpperInvariant() + "_";
+            if (RepositoryRoot == null)
+            {
+                throw new InvalidOperationException("Unexpected error, repository root not found");
+            }
+
+            var testEnvironmentFile = Path.Combine(RepositoryRoot, "sdk", serviceName, "test-resources.json.env");
+            if (File.Exists(testEnvironmentFile))
+            {
+                var json = JsonDocument.Parse(
+                    ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
+                );
+
+                foreach (var property in json.RootElement.EnumerateObject())
+                {
+                    _environmentFile[property.Name] = property.Value.GetString();
+                }
+            }
         }
+
+        static TestEnvironment()
+        {
+            // Traverse parent directories until we find an "artifacts" directory
+            // parent of that would become a repo root for test environment resolution purposes
+            var directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
+
+            while (directoryInfo.Name != "artifacts")
+            {
+                if (directoryInfo.Parent == null)
+                {
+                    return;
+                }
+
+                directoryInfo = directoryInfo.Parent;
+            }
+
+            RepositoryRoot = directoryInfo?.Parent?.FullName;
+        }
+
+        internal RecordedTestMode? Mode { get; set; }
 
         /// <summary>
         ///   The name of the Azure subscription containing the resource group to be used for Live tests. Recorded.
@@ -56,7 +104,6 @@ namespace Azure.Core.TestFramework
         /// </summary>
         public string ClientSecret => GetVariable("CLIENT_SECRET");
 
-
         public TokenCredential Credential
         {
             get
@@ -66,10 +113,7 @@ namespace Azure.Core.TestFramework
                     return _credential;
                 }
 
-                var playback = false;
-                GetIsPlayback(ref playback);
-
-                if (playback)
+                if (Mode == RecordedTestMode.Playback)
                 {
                     _credential = new TestCredential();
                 }
@@ -99,20 +143,12 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected string GetRecordedOptionalVariable(string name)
         {
-            var prefixedName = _prefix + name;
-
-            string value = null;
-            bool isPlayback = false;
-
-            GetIsPlayback(ref isPlayback);
-            if (isPlayback)
+            if (Mode == RecordedTestMode.Playback)
             {
-                GetRecordedValue(name, ref value);
-                return value;
+                return GetRecordedValue(name);
             }
 
-            value = Environment.GetEnvironmentVariable(prefixedName) ??
-                   Environment.GetEnvironmentVariable(name);
+            string value = GetOptionalVariable(name);
 
             SetRecordedValue(name, value);
 
@@ -138,8 +174,19 @@ namespace Azure.Core.TestFramework
         {
             var prefixedName = _prefix + name;
 
+            // Environment variables override the environment file
             var value = Environment.GetEnvironmentVariable(prefixedName) ??
                         Environment.GetEnvironmentVariable(name);
+
+            if (value == null)
+            {
+                _environmentFile.TryGetValue(prefixedName, out value);
+            }
+
+            if (value == null)
+            {
+                _environmentFile.TryGetValue(name, out value);
+            }
 
             return value;
         }
@@ -166,9 +213,36 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        partial void GetRecordedValue(string name, ref string value);
-        partial void GetIsPlayback(ref bool isPlayback);
-        partial void SetRecordedValue(string name, string value);
+        public void SetRecording(TestRecording recording)
+        {
+            _credential = null;
+            _recording = recording;
+        }
+
+        private string GetRecordedValue(string name)
+        {
+            if (_recording == null)
+            {
+                throw new InvalidOperationException("Recorded value should not be retrieved outside the test method invocation");
+            }
+
+            return _recording.GetVariable(name, null);
+        }
+
+        private void SetRecordedValue(string name, string value)
+        {
+            if (!Mode.HasValue)
+            {
+                return;
+            }
+
+            if (_recording == null)
+            {
+                throw new InvalidOperationException("Recorded value should not be set outside the test method invocation");
+            }
+
+            _recording?.SetVariable(name, value);
+        }
 
         private class TestCredential : TokenCredential
         {

@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Filters
     /// <summary>
     /// Represents a description of a rule.
     /// </summary>
-    public sealed class RuleDescription : IEquatable<RuleDescription>
+    internal sealed class RuleDescription : IEquatable<RuleDescription>
     {
         /// <summary>
         /// Gets the name of the default rule on the subscription.
