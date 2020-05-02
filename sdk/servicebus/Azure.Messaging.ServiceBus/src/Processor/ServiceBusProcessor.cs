@@ -797,18 +797,18 @@ namespace Azure.Messaging.ServiceBus
             {
                 if ((ex as ServiceBusException)?.Reason == ServiceBusException.FailureReason.SessionLockLost)
                 {
-                    ServiceBusSessionReceiver serviceBusSessionReceiver = (ServiceBusSessionReceiver)receiver;
-                    if (sessionIdsReceiverMap.ContainsKey(serviceBusSessionReceiver.SessionId))
+                    ServiceBusSessionReceiver sessionReceiver = (ServiceBusSessionReceiver)receiver;
+                    if (sessionId != null)
                     {
-                        sessionIdsReceiverMap.TryRemove(serviceBusSessionReceiver.SessionId, out var sessionReceiver);
+                        sessionIdsReceiverMap.TryRemove(sessionReceiver.SessionId, out var _);
                     }
                     await CancelTask(
                                renewSessionLockCancellationSource,
                                renewSessionLock).ConfigureAwait(false);
-                    if (receiver != null)
+                    if (sessionReceiver != null)
                     {
                         await OnSessionClosingAsync(
-                            (ServiceBusSessionReceiver)receiver,
+                            sessionReceiver,
                             cancellationToken)
                             .ConfigureAwait(false);
                         await receiver.DisposeAsync().ConfigureAwait(false);
