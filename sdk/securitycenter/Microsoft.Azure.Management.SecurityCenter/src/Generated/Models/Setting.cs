@@ -10,11 +10,15 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Represents a security setting in Azure Security Center.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("Setting")]
     public partial class Setting : SettingResource
     {
         /// <summary>
@@ -28,14 +32,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the Setting class.
         /// </summary>
-        /// <param name="kind">the kind of the settings string
-        /// (DataExportSetting). Possible values include: 'DataExportSetting',
-        /// 'AlertSuppressionSetting'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public Setting(string kind, string id = default(string), string name = default(string), string type = default(string))
-            : base(kind, id, name, type)
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
+        public Setting(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+            : base(id, name, type, additionalProperties)
         {
             CustomInit();
         }
@@ -45,15 +48,5 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         partial void CustomInit();
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
