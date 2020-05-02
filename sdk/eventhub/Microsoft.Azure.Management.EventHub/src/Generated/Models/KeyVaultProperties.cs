@@ -14,28 +14,27 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using System.Linq;
 
     /// <summary>
-    /// The response from the List namespace operation.
+    /// Properties to configure keyVault Properties
     /// </summary>
-    public partial class NWRuleSetIpRules
+    public partial class KeyVaultProperties
     {
         /// <summary>
-        /// Initializes a new instance of the NWRuleSetIpRules class.
+        /// Initializes a new instance of the KeyVaultProperties class.
         /// </summary>
-        public NWRuleSetIpRules()
+        public KeyVaultProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NWRuleSetIpRules class.
+        /// Initializes a new instance of the KeyVaultProperties class.
         /// </summary>
-        /// <param name="ipMask">IP Mask</param>
-        /// <param name="action">The IP Filter Action. Possible values include:
-        /// 'Allow'</param>
-        public NWRuleSetIpRules(string ipMask = default(string), string action = default(string))
+        /// <param name="keyName">Name of the Key from KeyVault</param>
+        /// <param name="keyVaultUri">Uri of KeyVault</param>
+        public KeyVaultProperties(string keyName = default(string), string keyVaultUri = default(string))
         {
-            IpMask = ipMask;
-            Action = action;
+            KeyName = keyName;
+            KeyVaultUri = keyVaultUri;
             CustomInit();
         }
 
@@ -45,16 +44,16 @@ namespace Microsoft.Azure.Management.EventHub.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets IP Mask
+        /// Gets or sets name of the Key from KeyVault
         /// </summary>
-        [JsonProperty(PropertyName = "ipMask")]
-        public string IpMask { get; set; }
+        [JsonProperty(PropertyName = "keyName")]
+        public string KeyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the IP Filter Action. Possible values include: 'Allow'
+        /// Gets or sets uri of KeyVault
         /// </summary>
-        [JsonProperty(PropertyName = "action")]
-        public string Action { get; set; }
+        [JsonProperty(PropertyName = "keyVaultUri")]
+        public string KeyVaultUri { get; set; }
 
     }
 }
