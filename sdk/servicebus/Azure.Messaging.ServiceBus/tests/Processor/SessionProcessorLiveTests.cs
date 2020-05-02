@@ -778,10 +778,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        [TestCase(1, 1, false)]
         [TestCase(1, 2, false)]
         [TestCase(5, 3, true)]
         [TestCase(10, 10, false)]
         [TestCase(20, 10, false)]
+        [TestCase(20, 40, true)]
         public async Task ProcessMessagesFromMultipleNamedSessions(int numThreads, int specifiedSessionCount, bool autoComplete)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(
@@ -876,10 +878,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
-        [TestCase(1, 1)]
-        [TestCase(2, 5)]
-        [TestCase(5, 5)]
-        public async Task SessionLockLostWhenProcessSessionMessages(int numThreads, int specifiedSessionCount)
+        public async Task SessionLockLostWhenProcessSessionMessages()
         {
             var lockDuration = TimeSpan.FromSeconds(10);
             await using (var scope = await ServiceBusScope.CreateWithQueue(
@@ -892,13 +891,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 ConcurrentDictionary<string, bool> sessions = new ConcurrentDictionary<string, bool>();
                 var sessionIds = new List<string>();
+                int sendMessagesCount = 3;
+                int specifiedSessionCount = 2;
                 for (int i = 0; i < specifiedSessionCount; i++)
                 {
                     var sessionId = Guid.NewGuid().ToString();
                     sessionIds.Add(sessionId);
-                    // sending 2 messages per session
-                    await sender.SendAsync(GetMessage(sessionId));
-                    await sender.SendAsync(GetMessage(sessionId));
+                    // sending 3 messages per session
+                    var messages = GetMessages(sendMessagesCount, sessionId);
+                    await sender.SendAsync(messages);
                     sessions.TryAdd(sessionId, true);
                 }
 
@@ -906,11 +907,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 int messageCt = 0;
                 int sessionErrorEventCt = 0;
+                ConcurrentDictionary<string, int> receivedMessagesBeforeLockLost = new ConcurrentDictionary<string, int>();
+                ConcurrentDictionary<string, int> receivedMessagesAfterLockLost = new ConcurrentDictionary<string, int>();
 
                 var options = new ServiceBusProcessorOptions
                 {
-                    MaxConcurrentCalls = numThreads,
-                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(1)
+                    MaxConcurrentCalls = 4,
+                    MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(1),
+                    ReceiveMode = ReceiveMode.ReceiveAndDelete
                 };
 
                 var processor = client.CreateSessionProcessor(
@@ -937,16 +941,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     try
                     {
                         var message = args.Message;
-                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(1)));
+                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(5)));
+
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.IsTrue(sessionIds.Contains(message.SessionId));
                         Assert.IsTrue(sessionIds.Contains(args.SessionId));
                         Assert.IsNotNull(args.SessionLockedUntil);
+
+                        if (sessionErrorEventCt == 0)
+                        {
+                            receivedMessagesBeforeLockLost.AddOrUpdate(
+                                args.SessionId,
+                                1,
+                                (key, oldValue) => oldValue + 1);
+                        }
+                        else
+                        {
+                            receivedMessagesAfterLockLost.AddOrUpdate(args.SessionId,
+                                1,
+                                (key, oldValue) => oldValue + 1);
+                        }
                     }
                     finally
                     {
                         var ct = Interlocked.Increment(ref messageCt);
-                        if (ct == specifiedSessionCount * 2)
+                        if (ct == specifiedSessionCount * 3)
                         {
                             tcs.SetResult(true);
                         }
@@ -955,9 +974,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.StopProcessingAsync();
 
-                Assert.AreEqual(specifiedSessionCount * 2, messageCt);
+                foreach (var sessionId in sessionIds)
+                {
+                    Assert.True(receivedMessagesAfterLockLost.ContainsKey(sessionId));
 
-                Assert.True(sessionErrorEventCt > 1);
+                    // asserting that we're recieving all remaining messages from this session after the lock lost
+                    Assert.AreEqual(receivedMessagesAfterLockLost[sessionId], sendMessagesCount - receivedMessagesBeforeLockLost[sessionId]);
+                }
+
+                Assert.AreEqual(specifiedSessionCount * 3, messageCt);
 
                 // We should have received messages from only the specified sessions
                 Assert.AreEqual(0, sessions.Count);

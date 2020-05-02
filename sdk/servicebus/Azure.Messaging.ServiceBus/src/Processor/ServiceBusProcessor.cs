@@ -711,9 +711,9 @@ namespace Azure.Messaging.ServiceBus
                                 // This is efficient because it avoids creating a receiver for the same session Ids for multiple threads.
                                 // Otherwise, we will get session lock lost error whenever multiple threads will try to create a receiver for
                                 // the same session id.
-                                if (!sessionIdsReceiverMap.ContainsKey(sessionId))
+                                if (sessionId != null)
                                 {
-                                    receiver = await CreateReceiverIfNotExist(
+                                    receiver = await CreateAndInitializeSessionReceiver(
                                         sessionId,
                                         receiverOptions,
                                         cancellationToken).ConfigureAwait(false);
@@ -797,10 +797,10 @@ namespace Azure.Messaging.ServiceBus
             {
                 if ((ex as ServiceBusException)?.Reason == ServiceBusException.FailureReason.SessionLockLost)
                 {
-                    ServiceBusSessionReceiver sessionReceiver = (ServiceBusSessionReceiver)receiver;
-                    if (sessionIdsReceiverMap.ContainsKey(sessionReceiver.SessionId))
+                    ServiceBusSessionReceiver serviceBusSessionReceiver = (ServiceBusSessionReceiver)receiver;
+                    if (sessionIdsReceiverMap.ContainsKey(serviceBusSessionReceiver.SessionId))
                     {
-                        sessionIdsReceiverMap.TryRemove(sessionReceiver.SessionId, out var _);
+                        sessionIdsReceiverMap.TryRemove(serviceBusSessionReceiver.SessionId, out var sessionReceiver);
                     }
                     await CancelTask(
                                renewSessionLockCancellationSource,
@@ -860,15 +860,18 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        private async Task<ServiceBusReceiver> CreateReceiverIfNotExist(
+        private async Task<ServiceBusReceiver> CreateAndInitializeSessionReceiver(
             string sessionId,
             ServiceBusReceiverOptions receiverOptions,
             CancellationToken cancellationToken)
         {
             ServiceBusReceiver receiver = null;
-            await receiverCreationLockMap[sessionId].WaitAsync(cancellationToken).ConfigureAwait(false);
+            bool releaseSemaphore = false;
             try
             {
+                await receiverCreationLockMap[sessionId].WaitAsync(cancellationToken).ConfigureAwait(false);
+                releaseSemaphore = true;
+
                 if (!sessionIdsReceiverMap.ContainsKey(sessionId))
                 {
                     receiver = await CreateReceiver(receiverOptions, cancellationToken, sessionId).ConfigureAwait(false);
@@ -878,21 +881,28 @@ namespace Azure.Messaging.ServiceBus
                     receiver = sessionIdsReceiverMap[sessionId];
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // propagate as TCE so it will be handled by the outer catch block
+                throw new TaskCanceledException();
+            }
             finally
             {
-                receiverCreationLockMap[sessionId].Release();
+                if (releaseSemaphore)
+                {
+                    receiverCreationLockMap[sessionId].Release();
+                }
             }
 
             return receiver;
         }
 
-        private async Task<ServiceBusReceiver> CreateReceiver(
+        private async Task<ServiceBusSessionReceiver> CreateReceiver(
             ServiceBusReceiverOptions receiverOptions,
             CancellationToken cancellationToken,
             string sessionId = default)
         {
-            ServiceBusReceiver receiver;
-            receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
+            ServiceBusSessionReceiver receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                 entityPath: EntityPath,
                 connection: _connection,
                 sessionId: sessionId,
@@ -905,7 +915,7 @@ namespace Azure.Messaging.ServiceBus
             }
 
             await OnSessionInitializingAsync(
-                (ServiceBusSessionReceiver)receiver,
+                receiver,
                 cancellationToken).
                 ConfigureAwait(false);
 
@@ -1004,6 +1014,8 @@ namespace Azure.Messaging.ServiceBus
                     await receiver.AbandonAsync(message.LockToken).ConfigureAwait(false);
                 }
 
+                // we need to propagate this in order to dispose the session receiver
+                // in the same place where we are creating them.
                 if ((ex as ServiceBusException)?.Reason == ServiceBusException.FailureReason.SessionLockLost)
                 {
                     throw ex;
