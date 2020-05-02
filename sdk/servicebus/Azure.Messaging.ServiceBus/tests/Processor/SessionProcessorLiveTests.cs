@@ -933,6 +933,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         Interlocked.Increment(ref sessionErrorEventCt);
                     }
+                    else
+                    {
+                        Assert.Fail(eventArgs.Exception.ToString());
+                    }
                     return Task.CompletedTask;
                 }
 
@@ -1036,6 +1040,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         Interlocked.Increment(ref sessionErrorEventCt);
                     }
+                    else
+                    {
+                        Assert.Fail(eventArgs.Exception.ToString());
+                    }
                     return Task.CompletedTask;
                 }
 
@@ -1045,7 +1053,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         var message = args.Message;
                         await args.CompleteAsync(message);
-                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(5)));
+                        await Task.Delay(lockDuration.Add(TimeSpan.FromSeconds(10)));
 
                         sessions.TryRemove(message.SessionId, out bool _);
                         Assert.IsTrue(sessionId.Contains(message.SessionId));
