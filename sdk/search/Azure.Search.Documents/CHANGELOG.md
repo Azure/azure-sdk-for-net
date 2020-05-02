@@ -4,6 +4,7 @@
 
 ### Breaking Changes
 
+- Renamed `SearchIndexClient` to `SearchClient`.
 - Removed constructor from `SynonymMap` with `IEnumerable<string>` parameter.
 - `SearchServiceClient.GetIndexes` and `SearchServiceClient.GetIndexesAsync` now return `Pageable<SearchIndex>` and `AsyncPageable<SearchIndex>` respectively.
 - Replaced `MatchConditions` parameters with `bool onlyIfUnchanged` parameters that require a model with an `ETag` property.
@@ -35,6 +36,7 @@
 - Renamed `Skillset` to `SearchIndexerSkillset`.
 - Renamed `StandardAnalyzer` to `LuceneStandardAnalyzer`.
 - Renamed `StandardTokenizer` to `LuceneStandardTokenizer`.
+- Renamed `StandardTokenizerV2` to `LuceneStandardTokenizerV2`.
 - Renamed `TokenInfo` to `AnalyzedTokenInfo`.
 - Renamed `Tokenizer` to `LexicalTokenizer`.
 - Renamed `TokenizerName` to `LexicalTokenizerName`.

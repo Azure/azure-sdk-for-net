@@ -84,13 +84,13 @@ namespace Azure.Search.Documents.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
-            // Create an invalid SearchIndexClientClient
+            // Create an invalid SearchClient
             string fakeIndexName = "doesnotexist";
-            SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
-            /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
+            SearchClient client = new SearchClient(endpoint, fakeIndexName, credential);
+            /*@@*/ client = InstrumentClient(new SearchClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
             try
             {
-                index.GetDocumentCount();
+                client.GetDocumentCount();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -112,13 +112,13 @@ namespace Azure.Search.Documents.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
-            // Create an invalid SearchIndexClientClient
+            // Create an invalid SearchClient
             string fakeIndexName = "doesnotexist";
-            SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
-            /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
+            SearchClient client = new SearchClient(endpoint, fakeIndexName, credential);
+            /*@@*/ client = InstrumentClient(new SearchClient(endpoint, fakeIndexName, credential, GetSearchClientOptions()));
             try
             {
-                await index.GetDocumentCountAsync();
+                await client.GetDocumentCountAsync();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -157,16 +157,16 @@ namespace Azure.Search.Documents.Tests.Samples
             Environment.SetEnvironmentVariable("SEARCH_INDEX", resources.IndexName);
 
             #region Snippet:Azure_Search_Tests_Samples_GetCountAsync
-            // Create a SearchIndexClient
+            // Create a SearchClient
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             AzureKeyCredential credential = new AzureKeyCredential(
                 Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
             string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
-            SearchIndexClient index = new SearchIndexClient(endpoint, indexName, credential);
-            /*@@*/ index = InstrumentClient(new SearchIndexClient(endpoint, indexName, credential, GetSearchClientOptions()));
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
+            /*@@*/ client = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
 
             // Get and report the number of documents in the index
-            Response<long> count = await index.GetDocumentCountAsync();
+            Response<long> count = await client.GetDocumentCountAsync();
             Console.WriteLine($"Search index {indexName} has {count.Value} documents.");
             #endregion Snippet:Azure_Search_Tests_Samples_GetCountAsync
         }

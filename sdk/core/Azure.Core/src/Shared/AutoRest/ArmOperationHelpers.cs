@@ -239,7 +239,9 @@ namespace Azure.Core
                                      _headerFrom == HeaderFrom.AzureAsyncOperation) &&
                                     property.NameEquals("status"))
                                 {
+#pragma warning disable CA1308 // Normalize strings to uppercase
                                     state = property.Value.GetString().ToLowerInvariant();
+#pragma warning restore CA1308 // Normalize strings to uppercase
                                     return s_terminalStates.Contains(state);
                                 }
 
@@ -249,7 +251,9 @@ namespace Azure.Core
                                     {
                                         if (innerProperty.NameEquals("provisioningState"))
                                         {
+#pragma warning disable CA1308 // Normalize strings to uppercase
                                             state = innerProperty.Value.GetString().ToLowerInvariant();
+#pragma warning restore CA1308 // Normalize strings to uppercase
                                             return s_terminalStates.Contains(state);
                                         }
                                     }

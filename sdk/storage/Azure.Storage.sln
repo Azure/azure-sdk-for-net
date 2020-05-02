@@ -125,7 +125,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.ChangeF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.ChangeFeed.Samples.Tests", "Azure.Storage.Blobs.ChangeFeed\samples\Azure.Storage.Blobs.ChangeFeed.Samples.Tests.csproj", "{5F7C7873-0E11-468C-8045-5163B068FC16}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{7C568D98-EAF6-4AB2-87AE-F5EFBFE51231}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -229,7 +229,6 @@ Global
 		{A7FEC0AC-9A90-4F12-A260-B0B63E57D9DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7FEC0AC-9A90-4F12-A260-B0B63E57D9DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7FEC0AC-9A90-4F12-A260-B0B63E57D9DA}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{5EA89BEF-6367-41DD-A10F-246E0D3FDA55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5EA89BEF-6367-41DD-A10F-246E0D3FDA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EA89BEF-6367-41DD-A10F-246E0D3FDA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -242,12 +241,10 @@ Global
 		{5F7C7873-0E11-468C-8045-5163B068FC16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F7C7873-0E11-468C-8045-5163B068FC16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F7C7873-0E11-468C-8045-5163B068FC16}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
-		{7C568D98-EAF6-4AB2-87AE-F5EFBFE51231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C568D98-EAF6-4AB2-87AE-F5EFBFE51231}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C568D98-EAF6-4AB2-87AE-F5EFBFE51231}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C568D98-EAF6-4AB2-87AE-F5EFBFE51231}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> feature/storage/stg73base
+		{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B3D5C8-3160-4BD6-8B25-0D33C98ABE70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
