@@ -1,94 +1,57 @@
 ## Working with transactions
 
-This sample demonstrates how to use the session processor. The session processor offers automatic completion of processed session messages, automatic session lock renewal, and concurrent execution of user specified event handlers.
+This sample demonstrates how to use [transactions](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-transactions) with Service Bus. Transactions allow you to group operations together so that either all of them complete or none of them do. If any part of the transaction fails, the service will rollback the parts that succeeded on your behalf. You also can use familiar .NET semantics to complete or rollback the transaction using [TransactionScope](https://docs.microsoft.com/en-us/dotnet/api/system.transactions.transactionscope?view=netcore-3.1).
 
-### Processing messages from a session-enabled queue
+### Sending and completing a message in a transaction on the same entity
 
-Processing session messages is performed with a `ServiceBusSessionProcessor`. This type
-derives from `ServiceBusProcessor` and exposes session-related functionality.
-
-```C# Snippet:ServiceBusProcessSessionMessages
+```C# Snippet:ServiceBusTransactionalSend
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
 await using var client = new ServiceBusClient(connectionString);
-
-// create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
 
-// create a message batch that we can send
-ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
-messageBatch.TryAdd(
-    new ServiceBusMessage(Encoding.UTF8.GetBytes("First"))
-    {
-        SessionId = "Session1"
-    });
-messageBatch.TryAdd(
-    new ServiceBusMessage(Encoding.UTF8.GetBytes("Second"))
-    {
-        SessionId = "Session2"
-    });
-
-// send the message batch
-await sender.SendAsync(messageBatch);
-
-// get the options to use for configuring the processor
-var options = new ServiceBusProcessorOptions
+await sender.SendAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+ServiceBusReceivedMessage firstMessage = await receiver.ReceiveAsync();
+using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 {
-    // By default after the message handler returns, the processor will complete the message
-    // If I want more fine-grained control over settlement, I can set this to false.
-    AutoComplete = false,
-
-    // I can also allow for multi-threading
-    MaxConcurrentCalls = 2
-};
-
-// create a session processor that we can use to process the messages
-ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
-
-// since the message handler will run in a background thread, in order to prevent
-// this sample from terminating immediately, we can use a task completion source that
-// we complete from within the message handler.
-TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-processor.ProcessMessageAsync += MessageHandler;
-processor.ProcessErrorAsync += ErrorHandler;
-
-async Task MessageHandler(ProcessSessionMessageEventArgs args)
-{
-    string body = Encoding.Default.GetString(args.Message.Body.ToArray());
-    Console.WriteLine(body);
-
-    // we can evaluate application logic and use that to determine how to settle the message.
-    await args.CompleteAsync(args.Message);
-
-    // we can also set arbitrary session state using this receiver
-    // the state is specific to the session, and not any particular message
-    await args.SetSessionStateAsync(Encoding.Default.GetBytes("some state"));
-    tcs.SetResult(true);
+    await sender.SendAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+    await receiver.CompleteAsync(firstMessage);
+    ts.Complete();
 }
+```
 
-Task ErrorHandler(ProcessErrorEventArgs args)
+### Sending and completing a message in a transaction across two entities
+There may be cases where you want to involve multiple entities in a single transaction. Service Bus offers support for this if your transaction involves sending to one entity and settling on a different entity. In order to accomplish this, you would use the send-via feature to route your message through the entity that you wish to settle a message on. The transaction will occur on that entity, and then Service Bus will forward the message onto its final destination.
+
+```C# Snippet:ServiceBusTransactionalSendVia
+string connectionString = "<connection_string>";
+string queueA = "<queue_name>";
+string queueB = "<other_queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+ServiceBusSender senderA = client.CreateSender(queueA);
+await senderA.SendAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+
+ServiceBusSender senderBViaA = client.CreateSender(queueB, new ServiceBusSenderOptions
 {
-    // the error source tells me at what point in the processing an error occurred
-    Console.WriteLine(args.ErrorSource);
-    // the fully qualified namespace is available
-    Console.WriteLine(args.FullyQualifiedNamespace);
-    // as well as the entity path
-    Console.WriteLine(args.EntityPath);
-    Console.WriteLine(args.Exception.ToString());
-    return Task.CompletedTask;
+    ViaQueueOrTopicName = queueA
+});
+
+ServiceBusReceiver receiverA = client.CreateReceiver(queueA);
+ServiceBusReceivedMessage firstMessage = await receiverA.ReceiveAsync();
+using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+{
+    await receiverA.CompleteAsync(firstMessage);
+    await senderBViaA.SendAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+    ts.Complete();
 }
-await processor.StartProcessingAsync();
-
-// await our task completion source task so that the message handler will be invoked at least once.
-await tcs.Task;
-
-// stop processing once the task completion source was completed.
-await processor.StopProcessingAsync();
 ```
 
 ## Source
 
 To see the full example source, see:
 
-* [Sample05_SessionProcessor.cs](../tests/Samples/Sample05_SessionProcessor.cs)
+* [Sample06_Transactions.cs](../tests/Samples/Sample06_Transactions.cs)

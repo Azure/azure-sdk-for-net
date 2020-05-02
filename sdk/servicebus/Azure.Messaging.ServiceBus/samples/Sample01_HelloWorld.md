@@ -17,7 +17,7 @@ await using var client = new ServiceBusClient(connectionString);
 ServiceBusSender sender = client.CreateSender(queueName);
 
 // create a message that we can send
-ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
 // send the message
 await sender.SendAsync(message);
@@ -29,7 +29,7 @@ ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
 // get the message body as a string
-string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
 Console.WriteLine(body);
 ```
 
@@ -41,12 +41,23 @@ the supplied messages in a single message batch that we will send to the service
 to fit in a single batch, the operation will throw an exception.
 
 ```C# Snippet:ServiceBusSendAndReceiveBatch
+IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
+messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+// send the messages
+await sender.SendAsync(messages);
 ```
 The second way of doing this is using safe-batching. With safe-batching, you can create a `ServiceBusMessageBatch` object,
 which will allow you to attempt to messages one at a time to the batch using TryAdd. If the message cannot fit in the batch,
 TryAdd will return false.
 
 ```C# Snippet:ServiceBusSendAndReceiveSafeBatch
+ServiceBusMessageBatch messageBatch = await sender.CreateBatchAsync();
+messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
+messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
+
+// send the message batch
+await sender.SendAsync(messageBatch);
 ```
 
 ## Peeking a message

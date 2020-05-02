@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
                 // send the message
                 await sender.SendAsync(message);
@@ -41,10 +41,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
                 // get the message body as a string
-                string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+                string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
                 Console.WriteLine(body);
                 #endregion
-                Assert.AreEqual(Encoding.Default.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
                 // send the message
                 await sender.SendAsync(message);
@@ -74,8 +74,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
 
                 // get the message body as a string
-                string body = Encoding.Default.GetString(peekedMessage.Body.ToArray());
-                Assert.AreEqual(Encoding.Default.GetBytes("Hello world!"), peekedMessage.Body.ToArray());
+                string body = Encoding.UTF8.GetString(peekedMessage.Body.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), peekedMessage.Body.ToArray());
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     // get the message body as a string
-                    string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+                    string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
                     Console.WriteLine(body);
                 }
 
@@ -158,7 +158,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
                 {
                     // get the message body as a string
-                    string body = Encoding.Default.GetString(receivedMessage.Body.ToArray());
+                    string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
                     Console.WriteLine(body);
                 }
                 var sentMessagesEnum = messageBatch.AsEnumerable<ServiceBusMessage>().GetEnumerator();
@@ -184,7 +184,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 // create a message that we can send
-                ServiceBusMessage message = new ServiceBusMessage(Encoding.Default.GetBytes("Hello world!"));
+                ServiceBusMessage message = new ServiceBusMessage(Encoding.UTF8.GetBytes("Hello world!"));
 
                 #region Snippet:ServiceBusSchedule
                 long seq = await sender.ScheduleMessageAsync(
