@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the AllowlistCustomAlertRule class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
-        /// <param name="ruleType">The type of the custom alert rule.</param>
         /// <param name="allowlistValues">The values to allow. The format of
         /// the values depends on the rule type.</param>
         /// <param name="displayName">The display name of the custom
@@ -43,8 +42,8 @@ namespace Microsoft.Azure.Management.Security.Models
         /// alert.</param>
         /// <param name="valueType">The value type of the items in the list.
         /// Possible values include: 'IpCidr', 'String'</param>
-        public AllowlistCustomAlertRule(bool isEnabled, string ruleType, IList<string> allowlistValues, string displayName = default(string), string description = default(string), string valueType = default(string))
-            : base(isEnabled, ruleType, displayName, description, valueType)
+        public AllowlistCustomAlertRule(bool isEnabled, IList<string> allowlistValues, string displayName = default(string), string description = default(string), string valueType = default(string))
+            : base(isEnabled, displayName, description, valueType)
         {
             AllowlistValues = allowlistValues;
             CustomInit();

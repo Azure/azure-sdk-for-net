@@ -10,38 +10,39 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A custom alert rule that checks if a value (depends on the custom alert
-    /// type) is within the given range.
+    /// Login by a local user that isn't allowed. Allow list consists of login
+    /// names to allow.
     /// </summary>
-    public partial class ThresholdCustomAlertRule : CustomAlertRule
+    public partial class LocalUserNotAllowed : AllowlistCustomAlertRule
     {
         /// <summary>
-        /// Initializes a new instance of the ThresholdCustomAlertRule class.
+        /// Initializes a new instance of the LocalUserNotAllowed class.
         /// </summary>
-        public ThresholdCustomAlertRule()
+        public LocalUserNotAllowed()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ThresholdCustomAlertRule class.
+        /// Initializes a new instance of the LocalUserNotAllowed class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
-        /// <param name="minThreshold">The minimum threshold.</param>
-        /// <param name="maxThreshold">The maximum threshold.</param>
+        /// <param name="allowlistValues">The values to allow. The format of
+        /// the values depends on the rule type.</param>
         /// <param name="displayName">The display name of the custom
         /// alert.</param>
         /// <param name="description">The description of the custom
         /// alert.</param>
-        public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, string displayName = default(string), string description = default(string))
-            : base(isEnabled, displayName, description)
+        /// <param name="valueType">The value type of the items in the list.
+        /// Possible values include: 'IpCidr', 'String'</param>
+        public LocalUserNotAllowed(bool isEnabled, IList<string> allowlistValues, string displayName = default(string), string description = default(string), string valueType = default(string))
+            : base(isEnabled, allowlistValues, displayName, description, valueType)
         {
-            MinThreshold = minThreshold;
-            MaxThreshold = maxThreshold;
             CustomInit();
         }
 
@@ -49,18 +50,6 @@ namespace Microsoft.Azure.Management.Security.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the minimum threshold.
-        /// </summary>
-        [JsonProperty(PropertyName = "minThreshold")]
-        public int MinThreshold { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum threshold.
-        /// </summary>
-        [JsonProperty(PropertyName = "maxThreshold")]
-        public int MaxThreshold { get; set; }
 
         /// <summary>
         /// Validate the object.
