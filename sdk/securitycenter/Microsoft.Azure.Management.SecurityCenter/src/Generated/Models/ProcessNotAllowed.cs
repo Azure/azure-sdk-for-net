@@ -10,43 +10,41 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A custom alert rule that checks if a value (depends on the custom alert
-    /// type) is denied.
+    /// Execution of a process that isn't allowed. Allow list consists of
+    /// process names to allow.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("DenylistCustomAlertRule")]
-    public partial class DenylistCustomAlertRule : ListCustomAlertRule
+    [Newtonsoft.Json.JsonObject("ProcessNotAllowed")]
+    public partial class ProcessNotAllowed : AllowlistCustomAlertRule
     {
         /// <summary>
-        /// Initializes a new instance of the DenylistCustomAlertRule class.
+        /// Initializes a new instance of the ProcessNotAllowed class.
         /// </summary>
-        public DenylistCustomAlertRule()
+        public ProcessNotAllowed()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DenylistCustomAlertRule class.
+        /// Initializes a new instance of the ProcessNotAllowed class.
         /// </summary>
         /// <param name="isEnabled">Status of the custom alert.</param>
-        /// <param name="denylistValues">The values to deny. The format of the
-        /// values depends on the rule type.</param>
+        /// <param name="allowlistValues">The values to allow. The format of
+        /// the values depends on the rule type.</param>
         /// <param name="displayName">The display name of the custom
         /// alert.</param>
         /// <param name="description">The description of the custom
         /// alert.</param>
         /// <param name="valueType">The value type of the items in the list.
         /// Possible values include: 'IpCidr', 'String'</param>
-        public DenylistCustomAlertRule(bool isEnabled, IList<string> denylistValues, string displayName = default(string), string description = default(string), string valueType = default(string))
-            : base(isEnabled, displayName, description, valueType)
+        public ProcessNotAllowed(bool isEnabled, IList<string> allowlistValues, string displayName = default(string), string description = default(string), string valueType = default(string))
+            : base(isEnabled, allowlistValues, displayName, description, valueType)
         {
-            DenylistValues = denylistValues;
             CustomInit();
         }
 
@@ -56,25 +54,14 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the values to deny. The format of the values depends
-        /// on the rule type.
-        /// </summary>
-        [JsonProperty(PropertyName = "denylistValues")]
-        public IList<string> DenylistValues { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
-            if (DenylistValues == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DenylistValues");
-            }
         }
     }
 }

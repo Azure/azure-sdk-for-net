@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Security.Models
 {
 
     /// <summary>
-    /// Defines values for SettingKind.
+    /// Defines values for Direction.
     /// </summary>
-    public static class SettingKind
+    public static class Direction
     {
-        public const string DataExportSetting = "DataExportSetting";
-        public const string AlertSuppressionSetting = "AlertSuppressionSetting";
+        public const string Inbound = "Inbound";
+        public const string Outbound = "Outbound";
     }
 }
