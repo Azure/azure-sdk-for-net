@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Sas
         internal static new SasQueryParameters Create(
             string version,
             AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
+            TableAccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startsOn,
             DateTimeOffset expiresOn,

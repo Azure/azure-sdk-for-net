@@ -22,7 +22,7 @@ namespace Azure.Data.Tables.Tests
     public class TableClientLiveTests : TableServiceLiveTestsBase
     {
 
-        public TableClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
+        public TableClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live /* To record tests, add this argument, RecordedTestMode.Record */)
         { }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Azure.Data.Tables.Tests
         public async Task InsertedEntitiesCanBeQueriedWithAndWithoutPagination(int? pageCount)
         {
             List<IDictionary<string, object>> entityResults = new List<IDictionary<string, object>>();
-            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(partitionKeyValue, 20);
+            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 20);
 
             // Insert the new entities.
 
@@ -92,7 +92,7 @@ namespace Azure.Data.Tables.Tests
         public async Task InsertedEntitiesCanBeQueriedWithFilters()
         {
             List<IDictionary<string, object>> entityResults = new List<IDictionary<string, object>>();
-            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(partitionKeyValue, 20);
+            List<Dictionary<string, object>> entitiesToInsert = CreateTableEntities(PartitionKeyValue, 20);
 
             // Insert the new entities.
 
@@ -103,7 +103,7 @@ namespace Azure.Data.Tables.Tests
 
             // Query the entities with a filter specifying that to RowKey value must be greater than or equal to '10'.
 
-            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
+            entityResults = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey gt '10'").ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
             Assert.That(entityResults.Count, Is.EqualTo(10), "The entity result count should be 10");
         }
@@ -123,7 +123,7 @@ namespace Azure.Data.Tables.Tests
 
             var entity = new Dictionary<string, object>
                 {
-                    {"PartitionKey", partitionKeyValue},
+                    {"PartitionKey", PartitionKeyValue},
                     {"RowKey", rowKeyValue},
                     {propertyName, originalValue}
                 };
@@ -134,14 +134,14 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var entityToUpdate = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var entityToUpdate = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             entityToUpdate[propertyName] = updatedValue;
             await client.UpsertAsync(entityToUpdate).ConfigureAwait(false);
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue), $"The property value should be {updatedValue}");
         }
@@ -161,7 +161,7 @@ namespace Azure.Data.Tables.Tests
             const string updatedValue2 = "This changed due to a matching Etag";
             var entity = new Dictionary<string, object>
                 {
-                    {"PartitionKey", partitionKeyValue},
+                    {"PartitionKey", PartitionKeyValue},
                     {"RowKey", rowKeyValue},
                     {propertyName, originalValue}
                 };
@@ -172,7 +172,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
             originalEntity[propertyName] = updatedValue;
 
             // Use a wildcard ETag to update unconditionally.
@@ -181,7 +181,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue), $"The property value should be {updatedValue}");
 
@@ -197,7 +197,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the newly updated entity from the service.
 
-            updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue2), $"The property value should be {updatedValue2}");
         }
@@ -217,7 +217,7 @@ namespace Azure.Data.Tables.Tests
             const string updatedValue2 = "This changed due to a matching Etag";
             var entity = new Dictionary<string, object>
                 {
-                    {"PartitionKey", partitionKeyValue},
+                    {"PartitionKey", PartitionKeyValue},
                     {"RowKey", rowKeyValue},
                     {propertyName, originalValue}
                 };
@@ -228,7 +228,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
             originalEntity[propertyName] = updatedValue;
 
             // Use a wildcard ETag to update unconditionally.
@@ -237,7 +237,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue), $"The property value should be {updatedValue}");
 
@@ -253,7 +253,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the newly updated entity from the service.
 
-            updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            updatedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue2), $"The property value should be {updatedValue2}");
         }
@@ -274,13 +274,13 @@ namespace Azure.Data.Tables.Tests
             const string mergeUpdatedValue = "merged value was updated!";
             var entity = new Dictionary<string, object>
                 {
-                    {"PartitionKey", partitionKeyValue},
+                    {"PartitionKey", PartitionKeyValue},
                     {"RowKey", rowKeyValue},
                     {propertyName, originalValue}
                 };
             var partialEntity = new Dictionary<string, object>
                 {
-                    {"PartitionKey", partitionKeyValue},
+                    {"PartitionKey", PartitionKeyValue},
                     {"RowKey", rowKeyValue},
                     {mergepropertyName, mergeValue}
                 };
@@ -292,7 +292,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             // Verify that the merge property does not yet exist yet and that the original property does exist.
 
@@ -305,7 +305,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            var mergedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var mergedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             // Verify that the merge property does not yet exist yet and that the original property does exist.
 
@@ -319,7 +319,7 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the updated entity from the service.
 
-            mergedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            mergedEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             // Verify that the merge property does not yet exist yet and that the original property does exist.
 
@@ -340,7 +340,7 @@ namespace Azure.Data.Tables.Tests
             const string originalValue = "This is the original";
             var entity = new Dictionary<string, object>
                 {
-                    {"PartitionKey", partitionKeyValue},
+                    {"PartitionKey", PartitionKeyValue},
                     {"RowKey", rowKeyValue},
                     {propertyName, originalValue}
                 };
@@ -351,16 +351,16 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            var originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
             var staleEtag = originalEntity[TableConstants.PropertyNames.Etag] as string;
 
             // Use a wildcard ETag to delete unconditionally.
 
-            await client.DeleteAsync(partitionKeyValue, rowKeyValue).ConfigureAwait(false);
+            await client.DeleteAsync(PartitionKeyValue, rowKeyValue).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
-            var emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
+            var emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
 
@@ -370,19 +370,19 @@ namespace Azure.Data.Tables.Tests
 
             // Fetch the created entity from the service.
 
-            originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
+            originalEntity = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false)).Single();
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.DeleteAsync(partitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            Assert.That(async () => await client.DeleteAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
 
             // Use a matching ETag.
 
-            await client.DeleteAsync(partitionKeyValue, rowKeyValue, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
+            await client.DeleteAsync(PartitionKeyValue, rowKeyValue, originalEntity[TableConstants.PropertyNames.Etag] as string).ConfigureAwait(false);
 
             // Validate that the entity is deleted.
 
-            emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{partitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
+            emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
         }

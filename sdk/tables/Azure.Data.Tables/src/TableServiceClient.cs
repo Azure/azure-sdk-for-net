@@ -17,23 +17,32 @@ namespace Azure.Data.Tables
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
 
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
-        : this(endpoint, default, options) { }
+        : this(endpoint, default(TablesSharedKeyPipelinePolicy), options) { }
 
         public TableServiceClient(Uri endpoint, TablesSharedKeyCredential credential, TableClientOptions options = null)
+            :this(endpoint, new TablesSharedKeyPipelinePolicy(credential), options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        internal TableServiceClient(Uri endpoint, TablesSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-
+            if (endpoint.Scheme != "https")
+            {
+                throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
+            }
             options ??= new TableClientOptions();
             var endpointString = endpoint.ToString();
             HttpPipeline pipeline;
 
-            if (credential == default)
+            if (policy == default)
             {
                 pipeline = HttpPipelineBuilder.Build(options);
             }
             else
             {
-                pipeline = HttpPipelineBuilder.Build(options, new TablesSharedKeyPipelinePolicy(credential));
+                pipeline = HttpPipelineBuilder.Build(options, policy);
             }
 
             var diagnostics = new ClientDiagnostics(options);
@@ -114,7 +123,7 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual TableResponse CreateTable(string tableName, CancellationToken cancellationToken = default) =>
-            _tableOperations.RestClient.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+            _tableOperations.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Creates a table in the storage account.
@@ -124,7 +133,7 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual async Task<TableResponse> CreateTableAsync(string tableName, CancellationToken cancellationToken = default) =>
-            await _tableOperations.RestClient.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _tableOperations.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a table in the storage account.
@@ -153,7 +162,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
-            await _tableOperations.RestClient.GetAccessPolicyAsync(table, timeout, requestId, cancellationToken).ConfigureAwait(false);
+            await _tableOperations.GetAccessPolicyAsync(table, timeout, requestId, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Retrieves details about any stored access policies specified on the table that may be used wit Shared Access Signatures. </summary>
         /// <param name="table"> The name of the table. </param>
@@ -162,7 +171,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
-            _tableOperations.RestClient.GetAccessPolicy(table, timeout, requestId, cancellationToken);
+            _tableOperations.GetAccessPolicy(table, timeout, requestId, cancellationToken);
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="table"> The name of the table. </param>
@@ -172,7 +181,7 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response> SetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default) =>
-            (await _tableOperations.RestClient.SetAccessPolicyAsync(table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false)).GetRawResponse();
+            await _tableOperations.SetAccessPolicyAsync(table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false);
 
         /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
         /// <param name="table"> The name of the table. </param>
@@ -182,6 +191,6 @@ namespace Azure.Data.Tables
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response SetAccessPolicy(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default) =>
-            _tableOperations.RestClient.SetAccessPolicy(table, timeout, requestId, tableAcl, cancellationToken).GetRawResponse();
+            _tableOperations.SetAccessPolicy(table, timeout, requestId, tableAcl, cancellationToken);
     }
 }

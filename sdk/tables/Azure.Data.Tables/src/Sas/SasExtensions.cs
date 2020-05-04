@@ -15,7 +15,7 @@ namespace Azure.Data.Tables.Sas
     {
         /// <summary>
         /// Creates a string representing which resource types are allowed
-        /// for <see cref="AccountSasBuilder.ResourceTypes"/>.
+        /// for <see cref="TableAccountSasBuilder.ResourceTypes"/>.
         /// </summary>
         /// <returns>
         /// A string representing which resource types are allowed.
@@ -23,18 +23,18 @@ namespace Azure.Data.Tables.Sas
         /// <remarks>
         /// The order here matches the order used by the portal when generating SAS signatures.
         /// </remarks>
-        internal static string ToPermissionsString(this AccountSasResourceTypes resourceTypes)
+        internal static string ToPermissionsString(this TableAccountSasResourceTypes resourceTypes)
         {
             var sb = new StringBuilder();
-            if ((resourceTypes & AccountSasResourceTypes.Service) == AccountSasResourceTypes.Service)
+            if ((resourceTypes & TableAccountSasResourceTypes.Service) == TableAccountSasResourceTypes.Service)
             {
                 sb.Append(TableConstants.Sas.AccountResources.Service);
             }
-            if ((resourceTypes & AccountSasResourceTypes.Container) == AccountSasResourceTypes.Container)
+            if ((resourceTypes & TableAccountSasResourceTypes.Container) == TableAccountSasResourceTypes.Container)
             {
                 sb.Append(TableConstants.Sas.AccountResources.Container);
             }
-            if ((resourceTypes & AccountSasResourceTypes.Object) == AccountSasResourceTypes.Object)
+            if ((resourceTypes & TableAccountSasResourceTypes.Object) == TableAccountSasResourceTypes.Object)
             {
                 sb.Append(TableConstants.Sas.AccountResources.Object);
             }
@@ -49,21 +49,21 @@ namespace Azure.Data.Tables.Sas
         /// A string representing which resource types are accessible.
         /// </param>
         /// <returns>
-        /// An <see cref="AccountSasResourceTypes"/> instance.
+        /// An <see cref="TableAccountSasResourceTypes"/> instance.
         /// </returns>
         /// <remarks>
         /// The order here matches the order used by the portal when generating SAS signatures.
         /// </remarks>
-        internal static AccountSasResourceTypes ParseResourceTypes(string s)
+        internal static TableAccountSasResourceTypes ParseResourceTypes(string s)
         {
-            AccountSasResourceTypes types = default;
+            TableAccountSasResourceTypes types = default;
             foreach (var ch in s)
             {
                 types |= ch switch
                 {
-                    TableConstants.Sas.AccountResources.Service => AccountSasResourceTypes.Service,
-                    TableConstants.Sas.AccountResources.Container => AccountSasResourceTypes.Container,
-                    TableConstants.Sas.AccountResources.Object => AccountSasResourceTypes.Object,
+                    TableConstants.Sas.AccountResources.Service => TableAccountSasResourceTypes.Service,
+                    TableConstants.Sas.AccountResources.Container => TableAccountSasResourceTypes.Container,
+                    TableConstants.Sas.AccountResources.Object => TableAccountSasResourceTypes.Object,
                     _ => throw Errors.InvalidResourceType(ch),
                 };
             }

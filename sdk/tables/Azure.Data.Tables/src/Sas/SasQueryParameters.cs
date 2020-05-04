@@ -32,7 +32,7 @@ namespace Azure.Data.Tables.Sas
         private AccountSasServices? _services;
 
         // srt
-        private AccountSasResourceTypes? _resourceTypes;
+        private TableAccountSasResourceTypes? _resourceTypes;
 
         // spr
         private SasProtocol _protocol;
@@ -89,7 +89,7 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
         /// </summary>
-        public AccountSasResourceTypes? ResourceTypes => _resourceTypes;
+        public TableAccountSasResourceTypes? ResourceTypes => _resourceTypes;
 
         /// <summary>
         /// Optional. Specifies the protocol permitted for a request made with
@@ -271,7 +271,7 @@ namespace Azure.Data.Tables.Sas
         protected SasQueryParameters(
             string version,
             AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
+            TableAccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startsOn,
             DateTimeOffset expiresOn,
@@ -320,7 +320,7 @@ namespace Azure.Data.Tables.Sas
         protected static SasQueryParameters Create(
             string version,
             AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
+            TableAccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startsOn,
             DateTimeOffset expiresOn,

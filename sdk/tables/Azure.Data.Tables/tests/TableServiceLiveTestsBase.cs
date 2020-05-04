@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -31,10 +30,10 @@ namespace Azure.Data.Tables.Tests
             Sanitizer = new TablesRecordedTestSanitizer();
         }
 
-        protected TableServiceClient service;
-        protected TableClient client;
-        protected string tableName;
-        protected const string partitionKeyValue = "somPartition";
+        protected TableServiceClient service { get; private set; }
+        protected TableClient client { get; private set; }
+        protected string tableName { get; private set; }
+        protected const string PartitionKeyValue = "somPartition";
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment

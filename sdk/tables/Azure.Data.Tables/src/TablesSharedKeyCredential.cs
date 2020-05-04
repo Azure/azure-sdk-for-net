@@ -72,7 +72,7 @@ namespace Azure.Data.Tables
         /// <param name="credential">The credential.</param>
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
-        protected static string ComputeSasSignature(TablesSharedKeyCredential credential, string message) =>
+        internal static string ComputeSasSignature(TablesSharedKeyCredential credential, string message) =>
             credential.ComputeHMACSHA256(message);
     }
 }

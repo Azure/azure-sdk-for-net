@@ -11,7 +11,7 @@ namespace Azure.Data.Tables.Sas
     /// access signature.
     /// </summary>
     [Flags]
-    public enum AccountSasResourceTypes
+    public enum TableAccountSasResourceTypes
     {
         /// <summary>
         /// Indicates whether service-level APIs are accessible

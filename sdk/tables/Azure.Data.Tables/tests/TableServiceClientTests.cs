@@ -27,7 +27,9 @@ namespace Azure.Tables.Tests
         {
             Assert.That(() => new TableServiceClient(null, new TablesSharedKeyCredential(_accountName, string.Empty)), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
-            Assert.That(() => new TableServiceClient(_url, null), Throws.Nothing, "The constructor should accept a null credential");
+            Assert.That(() => new TableServiceClient(_url, credential: null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the TablesSharedKeyCredential.");
+
+            Assert.That(() => new TableServiceClient(_url), Throws.Nothing, "The constructor should accept a null credential");
 
             Assert.That(() => new TableServiceClient(_url, new TablesSharedKeyCredential(_accountName, string.Empty)), Throws.Nothing, "The constructor should validate the url.");
         }

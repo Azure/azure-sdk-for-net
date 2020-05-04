@@ -8,13 +8,13 @@ using Azure.Data.Tables.Sas;
 namespace Azure.Data.Tables.Sas
 {
     /// <summary>
-    /// <see cref="AccountSasPermissions"/> contains the list of
+    /// <see cref="TableAccountSasPermissions"/> contains the list of
     /// permissions that can be set for a blob's access policy.  Use
-    /// <see cref="AccountSasBuilder.SetPermissions(AccountSasPermissions)"/>
-    /// to set the permissions on the <see cref="AccountSasBuilder"/>.
+    /// <see cref="TableAccountSasBuilder.SetPermissions(TableAccountSasPermissions)"/>
+    /// to set the permissions on the <see cref="TableAccountSasBuilder"/>.
     /// </summary>
     [Flags]
-    public enum AccountSasPermissions
+    public enum TableAccountSasPermissions
     {
         /// <summary>
         /// Indicates that Read is permitted.
@@ -63,41 +63,41 @@ namespace Azure.Data.Tables
     /// <summary>
     /// Blob enum extensions.
     /// </summary>
-    internal static partial class AccountExtensions
+    internal static partial class TableAccountExtensions
     {
         /// <summary>
         /// Create a permissions string to provide
-        /// <see cref="AccountSasBuilder.Permissions"/>.
+        /// <see cref="TableAccountSasBuilder.Permissions"/>.
         /// </summary>
         /// <returns>A permissions string.</returns>
-        internal static string ToPermissionsString(this AccountSasPermissions permissions)
+        internal static string ToPermissionsString(this TableAccountSasPermissions permissions)
         {
             var sb = new StringBuilder();
-            if ((permissions & AccountSasPermissions.Read) == AccountSasPermissions.Read)
+            if ((permissions & TableAccountSasPermissions.Read) == TableAccountSasPermissions.Read)
             {
                 sb.Append(TableConstants.Sas.Permissions.Read);
             }
-            if ((permissions & AccountSasPermissions.Write) == AccountSasPermissions.Write)
+            if ((permissions & TableAccountSasPermissions.Write) == TableAccountSasPermissions.Write)
             {
                 sb.Append(TableConstants.Sas.Permissions.Write);
             }
-            if ((permissions & AccountSasPermissions.Delete) == AccountSasPermissions.Delete)
+            if ((permissions & TableAccountSasPermissions.Delete) == TableAccountSasPermissions.Delete)
             {
                 sb.Append(TableConstants.Sas.Permissions.Delete);
             }
-            if ((permissions & AccountSasPermissions.List) == AccountSasPermissions.List)
+            if ((permissions & TableAccountSasPermissions.List) == TableAccountSasPermissions.List)
             {
                 sb.Append(TableConstants.Sas.Permissions.List);
             }
-            if ((permissions & AccountSasPermissions.Add) == AccountSasPermissions.Add)
+            if ((permissions & TableAccountSasPermissions.Add) == TableAccountSasPermissions.Add)
             {
                 sb.Append(TableConstants.Sas.Permissions.Add);
             }
-            if ((permissions & AccountSasPermissions.Create) == AccountSasPermissions.Create)
+            if ((permissions & TableAccountSasPermissions.Create) == TableAccountSasPermissions.Create)
             {
                 sb.Append(TableConstants.Sas.Permissions.Create);
             }
-            if ((permissions & AccountSasPermissions.Update) == AccountSasPermissions.Update)
+            if ((permissions & TableAccountSasPermissions.Update) == TableAccountSasPermissions.Update)
             {
                 sb.Append(TableConstants.Sas.Permissions.Update);
             }

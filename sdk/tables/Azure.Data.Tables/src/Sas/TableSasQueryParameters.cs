@@ -33,7 +33,7 @@ namespace Azure.Data.Tables.Sas
             string version,
             string tableName,
             AccountSasServices? services,
-            AccountSasResourceTypes? resourceTypes,
+            TableAccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
             DateTimeOffset startsOn,
             DateTimeOffset expiresOn,

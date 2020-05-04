@@ -7,12 +7,12 @@ using System.ComponentModel;
 namespace Azure.Data.Tables.Sas
 {
     /// <summary>
-    /// <see cref="AccountSasBuilder"/> is used to generate an account level
+    /// <see cref="TableAccountSasBuilder"/> is used to generate an account level
     /// Shared Access Signature (SAS) for Azure Storage services.
     /// For more information, see
     /// <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas" />.
     /// </summary>
-    public class AccountSasBuilder
+    public class TableAccountSasBuilder
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -48,7 +48,7 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// The permissions associated with the shared access signature. The
         /// user is restricted to operations allowed by the permissions. The
-        /// <see cref="AccountSasPermissions"/> type can be used to create the
+        /// <see cref="TableAccountSasPermissions"/> type can be used to create the
         /// permissions string.
         /// </summary>
         public string Permissions { get; private set; }
@@ -73,15 +73,15 @@ namespace Azure.Data.Tables.Sas
         /// The resource types associated with the shared access signature. The
         /// user is restricted to operations on the specified resources.
         /// </summary>
-        public AccountSasResourceTypes ResourceTypes { get; set; }
+        public TableAccountSasResourceTypes ResourceTypes { get; set; }
 
         /// <summary>
         /// Sets the permissions for an account SAS.
         /// </summary>
         /// <param name="permissions">
-        /// <see cref="AccountSasPermissions"/> containing the allowed permissions.
+        /// <see cref="TableAccountSasPermissions"/> containing the allowed permissions.
         /// </param>
-        public void SetPermissions(AccountSasPermissions permissions)
+        public void SetPermissions(TableAccountSasPermissions permissions)
         {
             Permissions = permissions.ToPermissionsString();
         }
@@ -160,7 +160,7 @@ namespace Azure.Data.Tables.Sas
         public override string ToString() => base.ToString();
 
         /// <summary>
-        /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
+        /// Check if two <see cref="TableAccountSasBuilder"/> instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
@@ -168,9 +168,9 @@ namespace Azure.Data.Tables.Sas
         public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the <see cref="AccountSasBuilder"/>.
+        /// Get a hash code for the <see cref="TableAccountSasBuilder"/>.
         /// </summary>
-        /// <returns>Hash code for the <see cref="AccountSasBuilder"/>.</returns>
+        /// <returns>Hash code for the <see cref="TableAccountSasBuilder"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
     }
