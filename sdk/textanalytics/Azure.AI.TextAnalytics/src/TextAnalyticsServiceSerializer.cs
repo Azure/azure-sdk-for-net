@@ -181,7 +181,7 @@ namespace Azure.AI.TextAnalytics
             }
 
             // Return the innermost error, which should be only one level down.
-            return innerError.Code == default ? new TextAnalyticsError(errorCode, message, target) : innerError;
+            return innerError.ErrorCode == default ? new TextAnalyticsError(errorCode, message, target) : innerError;
         }
 
         private static string ReadModelVersion(JsonElement documentElement)
@@ -265,27 +265,26 @@ namespace Azure.AI.TextAnalytics
             List<DetectedLanguage> languages = new List<DetectedLanguage>();
             List<TextAnalyticsWarning> warnings = default;
 
-            if (documentElement.TryGetProperty("detectedLanguages", out JsonElement detectedLanguagesValue))
-            {
-                foreach (JsonElement languageElement in detectedLanguagesValue.EnumerateArray())
-                {
-                    languages.Add(ReadDetectedLanguage(languageElement));
-                }
-            }
-
             if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
             {
                 warnings = ReadDocumentWarnings(warningsValue);
             }
 
+            if (documentElement.TryGetProperty("detectedLanguages", out JsonElement detectedLanguagesValue))
+            {
+                foreach (JsonElement languageElement in detectedLanguagesValue.EnumerateArray())
+                {
+                    languages.Add(ReadDetectedLanguage(languageElement, warnings));
+                }
+            }
+
             return new DetectLanguageResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                warnings,
                 languages.OrderBy(l => l.Score).FirstOrDefault());
         }
 
-        private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement)
+        private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement, List<TextAnalyticsWarning> warnings)
         {
             string name = null;
             string iso6391Name = null;
@@ -298,7 +297,7 @@ namespace Azure.AI.TextAnalytics
             if (languageElement.TryGetProperty("score", out JsonElement scoreValue))
                 scoreValue.TryGetDouble(out score);
 
-            return new DetectedLanguage(name, iso6391Name, score);
+            return new DetectedLanguage(name, iso6391Name, score, warnings);
         }
 
         #endregion Detect Languages
@@ -366,11 +365,12 @@ namespace Azure.AI.TextAnalytics
                 warnings = ReadDocumentWarnings(warningsValue);
             }
 
+            CategorizedEntityCollection entityCollection = new CategorizedEntityCollection(entities, warnings);
+
             return new RecognizeEntitiesResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                warnings,
-                entities);
+                entityCollection);
         }
 
         private static CategorizedEntity ReadCategorizedEntity(JsonElement entityElement)
@@ -442,22 +442,21 @@ namespace Azure.AI.TextAnalytics
 
         private static AnalyzeSentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
         {
-            var documentSentiment = ReadDocumentSentiment(documentElement, "documentScores");
-
             List<TextAnalyticsWarning> warnings = default;
             if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
             {
                 warnings = ReadDocumentWarnings(warningsValue);
             }
 
+            var documentSentiment = ReadDocumentSentiment(documentElement, "documentScores", warnings);
+
             return new AnalyzeSentimentResult(
                     ReadDocumentId(documentElement),
                     ReadDocumentStatistics(documentElement),
-                    warnings,
                     documentSentiment);
         }
 
-        private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName)
+        private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName, IList<TextAnalyticsWarning> warnings)
         {
             TextSentiment sentiment = default;
             double positiveScore = default;
@@ -490,7 +489,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments);
+            return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments, warnings);
         }
 
         private static SentenceSentiment ReadSentenceSentiment(JsonElement documentElement, string scoresElementName)
@@ -588,11 +587,12 @@ namespace Azure.AI.TextAnalytics
                 warnings = ReadDocumentWarnings(warningsValue);
             }
 
+            KeyPhraseCollection keyPhraseCollection = new KeyPhraseCollection(keyPhrases, warnings);
+
             return new ExtractKeyPhrasesResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                warnings,
-                keyPhrases);
+                keyPhraseCollection);
         }
 
         #endregion Extract Key Phrases
@@ -655,11 +655,12 @@ namespace Azure.AI.TextAnalytics
                 warnings = ReadDocumentWarnings(warningsValue);
             }
 
+            LinkedEntityCollection linkedEntityCollection = new LinkedEntityCollection(entities, warnings);
+
             return new RecognizeLinkedEntitiesResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                warnings,
-                entities);
+                linkedEntityCollection);
         }
 
         private static LinkedEntity ReadLinkedEntity(JsonElement entityElement)

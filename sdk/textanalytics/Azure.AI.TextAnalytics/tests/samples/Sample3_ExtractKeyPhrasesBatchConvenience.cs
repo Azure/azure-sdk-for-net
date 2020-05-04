@@ -60,12 +60,9 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 Debug.WriteLine($"For document: \"{longDocumentResults[i++]}\",");
 
-                if (result.HasWarnings)
+                foreach (TextAnalyticsWarning warning in result.KeyPhrases.Warnings)
                 {
-                    foreach (TextAnalyticsWarning warning in result.Warnings)
-                    {
-                        Debug.WriteLine($"    Warning: Code: {warning.Code}, Message: {warning.Message}");
-                    }
+                    Debug.WriteLine($"    Warning: Code: {warning.WarningCode}, Message: {warning.Message}");
                 }
 
                 Debug.WriteLine($"the following {result.KeyPhrases.Count()} key phrases were found: ");

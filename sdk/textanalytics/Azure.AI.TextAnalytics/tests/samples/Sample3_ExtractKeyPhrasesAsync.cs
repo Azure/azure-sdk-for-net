@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             string document = "My cat might need to see a veterinarian.";
 
-            Response<IReadOnlyCollection<string>> keyPhrases = await client.ExtractKeyPhrasesAsync(document);
+            Response<KeyPhraseCollection> keyPhrases = await client.ExtractKeyPhrasesAsync(document);
 
             Console.WriteLine($"Extracted {keyPhrases.Value.Count} key phrases:");
             foreach (string keyPhrase in keyPhrases.Value)

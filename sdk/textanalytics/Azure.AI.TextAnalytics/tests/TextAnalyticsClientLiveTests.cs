@@ -401,7 +401,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "My cat might need to see a veterinarian.";
 
-            Response<IReadOnlyCollection<string>> response = await client.ExtractKeyPhrasesAsync(document);
+            Response<KeyPhraseCollection> response = await client.ExtractKeyPhrasesAsync(document);
             IReadOnlyCollection<string> keyPhrases = response.Value;
 
             Assert.AreEqual(2, keyPhrases.Count);
@@ -415,7 +415,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Mi perro está en el veterinario";
 
-            Response<IReadOnlyCollection<string>> response = await client.ExtractKeyPhrasesAsync(document, "es");
+            Response<KeyPhraseCollection> response = await client.ExtractKeyPhrasesAsync(document, "es");
             IReadOnlyCollection<string> keyPhrases = response.Value;
 
             Assert.AreEqual(2, keyPhrases.Count);
@@ -543,7 +543,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document);
+            Response<CategorizedEntityCollection> response = await client.RecognizeEntitiesAsync(document);
             IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
             Assert.AreEqual(3, entities.Count);
@@ -565,7 +565,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document, "es");
+            Response<CategorizedEntityCollection> response = await client.RecognizeEntitiesAsync(document, "es");
             IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
             Assert.AreEqual(3, entities.Count);
@@ -577,7 +577,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "I had a wonderful trip to Seattle last week.";
 
-            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document);
+            Response<CategorizedEntityCollection> response = await client.RecognizeEntitiesAsync(document);
             IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
             Assert.AreEqual(2, entities.Count);
@@ -711,7 +711,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            Response<IReadOnlyCollection<LinkedEntity>> response = await client.RecognizeLinkedEntitiesAsync(document);
+            Response<LinkedEntityCollection> response = await client.RecognizeLinkedEntitiesAsync(document);
             IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
 
             Assert.AreEqual(3, linkedEntities.Count);
@@ -738,7 +738,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-            Response<IReadOnlyCollection<LinkedEntity>> response = await client.RecognizeLinkedEntitiesAsync(document, "es");
+            Response<LinkedEntityCollection> response = await client.RecognizeLinkedEntitiesAsync(document, "es");
             IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
 
             Assert.AreEqual(3, linkedEntities.Count);
@@ -867,7 +867,7 @@ namespace Azure.AI.TextAnalytics.Tests
             const string document = "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | €30 | 11m | 22 °C |" +
                 "Software Engineer | Wedding | Microsoft Surface laptop | Coding | 127.0.0.1 | https://github.com/azure/azure-sdk-for-net";
 
-            Response <IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(document);
+            Response <CategorizedEntityCollection> response = await client.RecognizeEntitiesAsync(document);
             List<CategorizedEntity> entities = response.Value.ToList();
 
             Assert.AreEqual(21, entities.Count);

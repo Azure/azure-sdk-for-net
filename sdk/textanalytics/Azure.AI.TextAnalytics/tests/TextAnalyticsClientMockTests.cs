@@ -38,16 +38,27 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var mockResults = new List<RecognizeEntitiesResult>()
             {
-                new RecognizeEntitiesResult("1", new TextDocumentStatistics(), new List<TextAnalyticsWarning>(), new List<CategorizedEntity>()
-                {
-                    new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
-                    new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
-                }),
-                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<TextAnalyticsWarning>(), new List<CategorizedEntity>()
-                {
-                    new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
-                    new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
-                }),
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("1", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
+                        {
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
+
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("2", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
+                        {
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
             };
             var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
                 new TextDocumentBatchStatistics(2, 2, 0, 2),
@@ -77,16 +88,26 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var mockResults = new List<RecognizeEntitiesResult>()
             {
-                new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<TextAnalyticsWarning>(), new List<CategorizedEntity>()
-                {
-                    new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
-                    new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
-                }),
-                new RecognizeEntitiesResult("3", new TextDocumentStatistics(), new List<TextAnalyticsWarning>(), new List<CategorizedEntity>()
-                {
-                    new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
-                    new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
-                }),
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("2", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
+                        {
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
+                TextAnalyticsModelFactory.RecognizeEntitiesResult("3", new TextDocumentStatistics(),
+                    new CategorizedEntityCollection
+                    (
+                        new List<CategorizedEntity>
+                        {
+                            new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
+                            new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
+                        },
+                        new List<TextAnalyticsWarning>()
+                    )),
                 new RecognizeEntitiesResult("4", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
                 new RecognizeEntitiesResult("5", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
             };

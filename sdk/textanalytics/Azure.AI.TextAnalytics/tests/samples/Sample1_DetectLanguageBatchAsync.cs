@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.HasError)
                 {
-                    Console.WriteLine($"    Document error code: {result.Error.Code}.");
+                    Console.WriteLine($"    Document error code: {result.Error.ErrorCode}.");
                     Console.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else

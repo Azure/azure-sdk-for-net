@@ -10,14 +10,14 @@ namespace Azure.AI.TextAnalytics
     {
         internal TextAnalyticsWarning(string code, string message)
         {
-            Code = code;
+            WarningCode = code;
             Message = message;
         }
 
         /// <summary>
         /// Code indicating the type of the warning.
         /// </summary>
-        public string Code { get; }
+        public string WarningCode { get; }
 
         /// <summary>
         /// Message that contains more information about the reason of the error.

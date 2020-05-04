@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Error);
-            Assert.AreEqual(result.Error.Code, "InvalidDocument");
+            Assert.AreEqual(result.Error.ErrorCode, "InvalidDocument");
             Assert.AreEqual(result.Error.Message, "Document text is empty.");
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             string document = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            Response<IReadOnlyCollection<LinkedEntity>> linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
+            Response<LinkedEntityCollection> linkedEntities = await client.RecognizeLinkedEntitiesAsync(document);
 
             Console.WriteLine($"Extracted {linkedEntities.Value.Count} linked entit{(linkedEntities.Value.Count > 1 ? "ies" : "y")}:");
             foreach (LinkedEntity linkedEntity in linkedEntities.Value)
