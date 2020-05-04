@@ -194,11 +194,6 @@ namespace Azure.Data.Tables.Models
 }
 namespace Azure.Data.Tables.Sas
 {
-    [System.FlagsAttribute]
-    public enum AccountSasServices
-    {
-        Tables = 8,
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SasIPRange : System.IEquatable<Azure.Data.Tables.Sas.SasIPRange>
     {
