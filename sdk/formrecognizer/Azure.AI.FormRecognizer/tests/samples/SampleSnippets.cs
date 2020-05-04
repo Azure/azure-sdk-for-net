@@ -134,6 +134,8 @@ namespace Azure.AI.FormRecognizer.Samples
             #region Snippet:FormRecognizerRecognizeCustomFormsFromFile
             using (FileStream stream = new FileStream(formFilePath, FileMode.Open))
             {
+                //@@ string modelId = "<modelId>";
+
                 Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomForms(modelId, stream).WaitForCompletionAsync();
                 /*
                  *

@@ -22,7 +22,10 @@ namespace Azure.AI.FormRecognizer.Samples
             string apiKey = TestEnvironment.ApiKey;
             string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
 
-            // Firstly, create a trained model we can use to recognize the custom form.
+            // Firstly, create a trained model we can use to recognize the custom form. Please note that
+            // models can also be trained using a graphical user interface such as the Form Recognizer
+            // Labeling Tool found here:
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
 
             FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
