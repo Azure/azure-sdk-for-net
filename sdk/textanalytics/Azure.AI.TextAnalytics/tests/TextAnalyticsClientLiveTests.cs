@@ -865,6 +865,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore("Tracked by issue: https://github.com/Azure/azure-sdk-for-net/issues/11571")]
         public async Task RecognizeEntitiesCategories()
         {
             TextAnalyticsClient client = GetClient();
