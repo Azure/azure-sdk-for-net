@@ -29,12 +29,12 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 AzureKeyCredential credential = new AzureKeyCredential(
     Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
 
-// Create an invalid SearchIndexClientClient
+// Create an invalid SearchClient
 string fakeIndexName = "doesnotexist";
-SearchIndexClient index = new SearchIndexClient(endpoint, fakeIndexName, credential);
+SearchClient client = new SearchClient(endpoint, fakeIndexName, credential);
 try
 {
-    index.GetDocumentCount();
+    client.GetDocumentCount();
 }
 catch (RequestFailedException ex) when (ex.Status == 404)
 {

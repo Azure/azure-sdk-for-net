@@ -6,7 +6,7 @@ using System;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.IndexDocumentsAsync(Models.IndexDocumentsBatch{Models.SearchDocument}, IndexDocumentsOptions, System.Threading.CancellationToken)"/>.
+    /// Options for <see cref="SearchClient.IndexDocumentsAsync(Models.IndexDocumentsBatch{Models.SearchDocument}, IndexDocumentsOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public class IndexDocumentsOptions : SearchRequestOptions
     {

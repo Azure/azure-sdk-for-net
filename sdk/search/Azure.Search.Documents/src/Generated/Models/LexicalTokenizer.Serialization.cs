@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
                     case "#Microsoft.Azure.Search.PathHierarchyTokenizerV2": return PathHierarchyTokenizerV2.DeserializePathHierarchyTokenizerV2(element);
                     case "#Microsoft.Azure.Search.PatternTokenizer": return PatternTokenizer.DeserializePatternTokenizer(element);
                     case "#Microsoft.Azure.Search.StandardTokenizer": return LuceneStandardTokenizer.DeserializeLuceneStandardTokenizer(element);
-                    case "#Microsoft.Azure.Search.StandardTokenizerV2": return StandardTokenizerV2.DeserializeStandardTokenizerV2(element);
+                    case "#Microsoft.Azure.Search.StandardTokenizerV2": return LuceneStandardTokenizerV2.DeserializeLuceneStandardTokenizerV2(element);
                     case "#Microsoft.Azure.Search.UaxUrlEmailTokenizer": return UaxUrlEmailTokenizer.DeserializeUaxUrlEmailTokenizer(element);
                 }
             }

@@ -53,7 +53,8 @@
     <PackageReference Update="Microsoft.CodeAnalysis" Version="2.3.0" />
     <PackageReference Update="Microsoft.DotNet.ApiCompat" Version="5.0.0-beta.19552.1" />
     <PackageReference Update="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.1.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.10.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.8.0-preview" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Update="Microsoft.NETCore.Platforms" Version="2.2.1" />
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" />

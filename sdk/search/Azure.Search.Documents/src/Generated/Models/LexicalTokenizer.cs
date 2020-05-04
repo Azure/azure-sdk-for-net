@@ -12,18 +12,6 @@ namespace Azure.Search.Documents.Models
     /// <summary> Base type for tokenizers. </summary>
     public partial class LexicalTokenizer
     {
-        /// <summary> Initializes a new instance of LexicalTokenizer. </summary>
-        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        public LexicalTokenizer(string name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            Name = name;
-            ODataType = null;
-        }
 
         /// <summary> Initializes a new instance of LexicalTokenizer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>

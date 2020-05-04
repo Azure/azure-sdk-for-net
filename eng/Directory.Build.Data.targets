@@ -16,14 +16,15 @@
     <PropertyGroup>
       <PackageRootPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))</PackageRootPath>
       <DirectoryPartofPath>$(PackageRootPath.Replace($(RepoRoot), ''))</DirectoryPartofPath>
-      <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
-      <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
-      <PackageReleaseNotes Condition="'@(ExtractedReleaseNotes)' != ''">@(ExtractedReleaseNotes->'%(Identity)', '%0a')%0a%0a$(PackageReleaseNotes)</PackageReleaseNotes>
+      <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
+      <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
     </PropertyGroup>
   </Target>
 
-  <!--Extract release notes for the current version being built -->
-  <Target Name="GetCurrentReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingDataPlaneLibrary)' == 'true'" >
+  <!-- Validates that there is a release note entry for the current package version -->
+  <Target Name="ValidateReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingDataPlaneLibrary)' == 'true'" >
     <PropertyGroup>
       <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">"%ProgramFiles%\PowerShell\6\pwsh.exe"</PowerShellExe>
       <PowerShellExe Condition="!Exists('$(PowerShellExe)')">pwsh</PowerShellExe>
@@ -60,7 +61,7 @@
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
-  <ItemGroup>
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
     <None Include="$(RepoEngPath)/images/pkgicon.png" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
@@ -134,6 +135,34 @@
     <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
   </ItemGroup>
 
+  <!-- *********** Management Client Library Override section ************* -->
+  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\src\Azure.Core.props" Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'"/>
+  <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
+    <PackageReference Include="System.Text.Json" />
+
+    <!-- TODO: Review these file references-->
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Management Client TEST Project Specific Overrides -->
+  <Import Project="$(RepoRoot)\sdk\core\Azure.Core\tests\TestFramework.props" Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' == 'true'"/>  
+  <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' == 'true'">
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+  <!-- *********** END OF Management Client Library Override section ************* -->
+    
   <!-- Added layer of checks to make sure we correctly switched to project references -->
   <Target Name="VerifyProjectReferencesReferences" AfterTargets="Build">
     <ItemGroup>

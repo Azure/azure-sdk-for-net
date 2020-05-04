@@ -8,13 +8,13 @@ namespace Azure.Core.TestFramework
         protected RecordedTestBase(bool isAsync) : base(isAsync)
         {
             TestEnvironment = new TEnvironment();
-            TestEnvironment.SetMode(Mode);
+            TestEnvironment.Mode = Mode;
         }
 
         protected RecordedTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             TestEnvironment = new TEnvironment();
-            TestEnvironment.SetMode(Mode);
+            TestEnvironment.Mode = Mode;
         }
 
         public override void StartTestRecording()

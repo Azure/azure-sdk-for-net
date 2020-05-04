@@ -264,7 +264,7 @@ namespace Azure.Search.Documents.Tests
 
             Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
-            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+            SearchClient indexClient = Data.GetSearchClient(index.Name);
 
             var tolkien = new Author() { FirstName = "J.R.R.", LastName = "Tolkien" };
             var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = tolkien };
@@ -282,7 +282,7 @@ namespace Azure.Search.Documents.Tests
 
         protected void TestCanSuggestWithCustomContractResolver()
         {
-            SearchIndexClient client = GetClientForQuery();
+            SearchClient client = GetClientForQuery();
             client.DeserializationSettings.ContractResolver = new MyCustomContractResolver();
 
             var parameters = new SuggestParameters() { Select = new[] { "*" } };
@@ -299,7 +299,7 @@ namespace Azure.Search.Documents.Tests
 
         protected void TestCanSuggestWithCustomConverterViaSettings()
         {
-            void CustomizeSettings(SearchIndexClient client)
+            void CustomizeSettings(SearchClient client)
             {
                 var bookConverter = new CustomBookConverter<CustomBook, CustomAuthor>();
                 bookConverter.Install(client);
@@ -311,7 +311,7 @@ namespace Azure.Search.Documents.Tests
             TestCanSuggestWithCustomConverter<CustomBook, CustomAuthor>(CustomizeSettings);
         }
 
-        private void TestCanSuggestWithCustomConverter<TBook, TAuthor>(Action<SearchIndexClient> customizeSettings = null)
+        private void TestCanSuggestWithCustomConverter<TBook, TAuthor>(Action<SearchClient> customizeSettings = null)
             where TBook : CustomBookBase<TAuthor>, new()
             where TAuthor : CustomAuthor, new()
         {
@@ -320,7 +320,7 @@ namespace Azure.Search.Documents.Tests
 
             Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
-            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+            SearchClient indexClient = Data.GetSearchClient(index.Name);
             customizeSettings(indexClient);
 
             var doc = new TBook()

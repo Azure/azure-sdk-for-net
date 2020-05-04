@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -512,11 +513,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -629,11 +633,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 
@@ -754,11 +761,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // the associated link as well.
 
                 session?.Abort();
-                throw AmqpExceptionHelper.TranslateException(
+                ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
                     exception,
                     null,
                     session.GetInnerException(),
-                    connection.IsClosing());
+                    connection.IsClosing()))
+                .Throw();
+
+                throw; // will never be reached
             }
         }
 

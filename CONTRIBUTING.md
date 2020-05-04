@@ -71,6 +71,12 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 Build tools are now downloaded as part of a nuget package under `root\restoredPackages\microsoft.internal.netsdkbuild.mgmt.tools`
 If for any reason there is an update to the build tools, you will then need to first delete directory `root\restoredPackages\microsoft.internal.netsdkbuild.mgmt.tools` and re-execute your build command. This will simply get the latest version of build tools.
 
+## TO CREATE NEW LIBRARY USING TEMPLATE
+
+We have created a dotnet template to make creating new management SDK library easier than ever.
+
+See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/master/eng/templates/README.md)].
+
 # Client Libraries
 
 ## TO BUILD:

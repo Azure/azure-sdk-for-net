@@ -43,7 +43,7 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (DetectLanguageResult result in results)
             {
                 Debug.WriteLine($"On document {documents[i++]}:");
-                Debug.WriteLine($"Detected language: {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score}.");
+                Debug.WriteLine($"Detected language: {result.PrimaryLanguage.Name}, with confidence score {result.PrimaryLanguage.ConfidenceScore}.");
             }
         }
     }
