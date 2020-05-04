@@ -177,6 +177,8 @@ foreach (FormPage page in formPages.Value)
 Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
 
 ```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+string modelId = "<modelId>";
+
 Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
 foreach (RecognizedForm form in forms.Value)
 {
