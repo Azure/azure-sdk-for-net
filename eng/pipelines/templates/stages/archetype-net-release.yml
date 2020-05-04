@@ -75,7 +75,7 @@ stages:
 
           - ${{if ne(artifact.options.skipPublishPackage, 'true')}}:
             - deployment: PublishPackage
-              displayName: Publish package to Nuget.org
+              displayName: Publish package to Nuget.org and DevOps Feed
               condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
               environment: nuget
               dependsOn: TagRepository
@@ -100,6 +100,13 @@ stages:
                           packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
                           nuGetFeedType: external
                           publishFeedCredentials: Nuget.org
+                      - task: NuGetCommand@2
+                        condition: and(succeeded(), ne(variables['DevOpsFeedID'], ''))
+                        displayName: 'Publish to DevOps Feed'
+                        inputs:
+                          command: push
+                          packagesToPush: '$(Pipeline.Workspace)/staging/**/*.nupkg;!$(Pipeline.Workspace)/staging/**/*.symbols.nupkg'
+                          publishVstsFeed: $(DevOpsFeedID)
 
           - ${{if ne(artifact.options.skipSymbolsUpload, 'true')}}:
             - deployment: UploadSymbols
@@ -204,6 +211,13 @@ stages:
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
       - download: current
         artifact: ${{parameters.ArtifactName}}-signed
+      - task: NuGetCommand@2
+        condition: and(succeeded(), ne(variables['DevOpsFeedID'], ''))
+        displayName: 'Publish to DevOps Feed'
+        inputs:
+          command: push
+          packagesToPush: '$(Pipeline.Workspace)/packages-signed/**/*.nupkg;!$(Pipeline.Workspace)/packages-signed/**/*.symbols.nupkg'
+          publishVstsFeed: $(DevOpsFeedID)
       - task: MSBuild@1
         displayName: 'Publish to blobfeed'
         inputs:
