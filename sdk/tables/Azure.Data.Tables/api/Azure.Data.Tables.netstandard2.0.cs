@@ -29,14 +29,19 @@ namespace Azure.Data.Tables
     public partial class TableServiceClient
     {
         protected TableServiceClient() { }
+        public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TablesSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public virtual Azure.Data.Tables.Models.TableResponse CreateTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Data.Tables.Models.TableResponse> CreateTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTableAsync(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.SignedIdentifier>> GetAccessPolicy(string table, int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Data.Tables.Models.SignedIdentifier>>> GetAccessPolicyAsync(string table, int? timeout = default(int?), string requestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Data.Tables.TableClient GetTableClient(string tableName) { throw null; }
         public virtual Azure.Pageable<Azure.Data.Tables.Models.TableResponseProperties> GetTables(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Data.Tables.Models.TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetAccessPolicy(string table, int? timeout = default(int?), string requestId = null, System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetAccessPolicyAsync(string table, int? timeout = default(int?), string requestId = null, System.Collections.Generic.IEnumerable<Azure.Data.Tables.Models.SignedIdentifier> tableAcl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TablesSharedKeyCredential
     {
@@ -184,5 +189,145 @@ namespace Azure.Data.Tables.Models
         public string OdataId { get { throw null; } }
         public string OdataType { get { throw null; } }
         public string TableName { get { throw null; } }
+    }
+}
+namespace Azure.Data.Tables.Sas
+{
+    public partial class AccountSasBuilder
+    {
+        public AccountSasBuilder() { }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public Azure.Data.Tables.Sas.SasIPRange IPRange { get { throw null; } set { } }
+        public string Permissions { get { throw null; } }
+        public Azure.Data.Tables.Sas.SasProtocol Protocol { get { throw null; } set { } }
+        public Azure.Data.Tables.Sas.AccountSasResourceTypes ResourceTypes { get { throw null; } set { } }
+        public Azure.Data.Tables.Sas.AccountSasServices Services { get { throw null; } set { } }
+        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public void SetPermissions(Azure.Data.Tables.Sas.AccountSasPermissions permissions) { }
+        public void SetPermissions(string rawPermissions) { }
+        public Azure.Data.Tables.Sas.SasQueryParameters ToSasQueryParameters(Azure.Data.Tables.TablesSharedKeyCredential sharedKeyCredential) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
+    [System.FlagsAttribute]
+    public enum AccountSasPermissions
+    {
+        All = -1,
+        Read = 1,
+        Write = 2,
+        Delete = 4,
+        List = 8,
+        Add = 16,
+        Create = 32,
+        Update = 64,
+    }
+    [System.FlagsAttribute]
+    public enum AccountSasResourceTypes
+    {
+        All = -1,
+        Service = 1,
+        Container = 2,
+        Object = 4,
+    }
+    [System.FlagsAttribute]
+    public enum AccountSasServices
+    {
+        Tables = 8,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SasIPRange : System.IEquatable<Azure.Data.Tables.Sas.SasIPRange>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SasIPRange(System.Net.IPAddress start, System.Net.IPAddress end = null) { throw null; }
+        public System.Net.IPAddress End { get { throw null; } }
+        public System.Net.IPAddress Start { get { throw null; } }
+        public bool Equals(Azure.Data.Tables.Sas.SasIPRange other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.Tables.Sas.SasIPRange left, Azure.Data.Tables.Sas.SasIPRange right) { throw null; }
+        public static bool operator !=(Azure.Data.Tables.Sas.SasIPRange left, Azure.Data.Tables.Sas.SasIPRange right) { throw null; }
+        public static Azure.Data.Tables.Sas.SasIPRange Parse(string s) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public enum SasProtocol
+    {
+        None = 0,
+        HttpsAndHttp = 1,
+        Https = 2,
+    }
+    public partial class SasQueryParameters
+    {
+        public const string DefaultSasVersion = "2019-07-07";
+        protected SasQueryParameters() { }
+        protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
+        protected SasQueryParameters(string version, Azure.Data.Tables.Sas.AccountSasServices? services, Azure.Data.Tables.Sas.AccountSasResourceTypes? resourceTypes, Azure.Data.Tables.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Data.Tables.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null) { }
+        public string CacheControl { get { throw null; } }
+        public string ContentDisposition { get { throw null; } }
+        public string ContentEncoding { get { throw null; } }
+        public string ContentLanguage { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public static Azure.Data.Tables.Sas.SasQueryParameters Empty { get { throw null; } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public string Identifier { get { throw null; } }
+        public Azure.Data.Tables.Sas.SasIPRange IPRange { get { throw null; } }
+        public string Permissions { get { throw null; } }
+        public Azure.Data.Tables.Sas.SasProtocol Protocol { get { throw null; } }
+        public string Resource { get { throw null; } }
+        public Azure.Data.Tables.Sas.AccountSasResourceTypes? ResourceTypes { get { throw null; } }
+        public Azure.Data.Tables.Sas.AccountSasServices? Services { get { throw null; } }
+        public string Signature { get { throw null; } }
+        public System.DateTimeOffset StartsOn { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected static Azure.Data.Tables.Sas.SasQueryParameters Create(System.Collections.Generic.IDictionary<string, string> values) { throw null; }
+        protected static Azure.Data.Tables.Sas.SasQueryParameters Create(string version, Azure.Data.Tables.Sas.AccountSasServices? services, Azure.Data.Tables.Sas.AccountSasResourceTypes? resourceTypes, Azure.Data.Tables.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Data.Tables.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TableSasBuilder
+    {
+        public TableSasBuilder(string tableName) { }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public string Identifier { get { throw null; } set { } }
+        public Azure.Data.Tables.Sas.SasIPRange IPRange { get { throw null; } set { } }
+        public string PartitionKeyEnd { get { throw null; } set { } }
+        public string PartitionKeyStart { get { throw null; } set { } }
+        public string Permissions { get { throw null; } }
+        public Azure.Data.Tables.Sas.SasProtocol Protocol { get { throw null; } set { } }
+        public string RowKeyEnd { get { throw null; } set { } }
+        public string RowKeyStart { get { throw null; } set { } }
+        public System.DateTimeOffset StartsOn { get { throw null; } set { } }
+        public string TableName { get { throw null; } }
+        public string Version { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public void SetPermissions(Azure.Data.Tables.Sas.TableSasPermissions permissions) { }
+        public void SetPermissions(string rawPermissions) { }
+        public Azure.Data.Tables.Sas.TableSasQueryParameters ToSasQueryParameters(Azure.Data.Tables.TablesSharedKeyCredential sharedKeyCredential) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+    }
+    [System.FlagsAttribute]
+    public enum TableSasPermissions
+    {
+        All = -1,
+        Read = 1,
+        Add = 2,
+        Update = 4,
+        Delete = 8,
+    }
+    public sealed partial class TableSasQueryParameters : Azure.Data.Tables.Sas.SasQueryParameters
+    {
+        internal TableSasQueryParameters() { }
+        public static new Azure.Data.Tables.Sas.TableSasQueryParameters Empty { get { throw null; } }
+        public override string ToString() { throw null; }
     }
 }
