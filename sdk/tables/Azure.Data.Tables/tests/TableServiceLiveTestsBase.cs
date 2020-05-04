@@ -43,10 +43,8 @@ namespace Azure.Data.Tables.Tests
         public async Task TablesTestSetup()
         {
             service = InstrumentClient(new TableServiceClient(new Uri(TestEnvironment.StorageUri),
-                                                               new TableSharedKeyCredential(
-                                                                   TestEnvironment.AccountName,
-                                                                   TestEnvironment.PrimaryStorageAccountKey
-                                                               ), Recording.InstrumentClientOptions(new TableClientOptions())));
+                                                              new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey),
+                                                              Recording.InstrumentClientOptions(new TableClientOptions())));
             tableName = Recording.GenerateId("testtable", 15);
             await service.CreateTableAsync(tableName).ConfigureAwait(false);
             client = InstrumentClient(service.GetTableClient(tableName));

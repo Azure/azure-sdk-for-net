@@ -14,6 +14,6 @@ namespace Azure.Data.Tables.Models
         public string NextRowKey { get; set; }
         /// <summary> The If-Match header value for an Entity request .</summary>
         // TODO: Change to ETag type after https://github.com/Azure/azure-sdk-for-net/issues/9501
-        public string ETag { get; set; }
+        public string IfMatch { get; set; }
     }
 }

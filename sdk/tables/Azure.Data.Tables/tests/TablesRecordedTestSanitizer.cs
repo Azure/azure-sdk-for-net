@@ -21,6 +21,11 @@ namespace Azure.Data.Tables.Tests
 
         public override string SanitizeUri(string uri)
         {
+            return SanitizeQueryParameters(uri);
+        }
+
+        public string SanitizeQueryParameters(string uri)
+        {
             var builder = new UriBuilder(base.SanitizeUri(uri));
             var query = new UriQueryParamsCollection(builder.Query);
             if (query.ContainsKey(SignatureQueryName))
@@ -29,16 +34,6 @@ namespace Azure.Data.Tables.Tests
                 builder.Query = query.ToString();
             }
             return builder.Uri.ToString();
-        }
-
-        public string SanitizeQueryParameters(string queryParameters)
-        {
-            var query = new UriQueryParamsCollection(queryParameters);
-            if (query.ContainsKey(SignatureQueryName))
-            {
-                query[SignatureQueryName] = SanitizeValue;
-            }
-            return query.ToString();
         }
     }
 }

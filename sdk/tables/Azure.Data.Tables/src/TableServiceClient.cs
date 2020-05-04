@@ -17,12 +17,12 @@ namespace Azure.Data.Tables
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
 
         public TableServiceClient(Uri endpoint)
-                : this(endpoint, default(TableSharedKeyPipelinePolicy), null) { }
+                : this(endpoint, options: null) { }
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
-        : this(endpoint, default(TableSharedKeyPipelinePolicy), options) { }
+            : this(endpoint, default(TableSharedKeyPipelinePolicy), options) { }
 
         public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
-                    : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
+            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
         }
