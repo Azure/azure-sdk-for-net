@@ -558,51 +558,6 @@ namespace Azure.Data.Tables
             }
         }
 
-        internal HttpMessage CreateUpdateEntityRequest(string table, string partitionKey, string rowKey, int? timeout, string requestId, IDictionary<string, object> tableEntityProperties, QueryOptions queryOptions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(table, true);
-            uri.AppendPath("(PartitionKey='", false);
-            uri.AppendPath(partitionKey, true);
-            uri.AppendPath("',RowKey='", false);
-            uri.AppendPath(rowKey, true);
-            uri.AppendPath("')", false);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (queryOptions?.Format != null)
-            {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            if (requestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", requestId);
-            }
-            request.Headers.Add("DataServiceVersion", "3.0");
-            request.Headers.Add("Content-Type", "application/json;odata=nometadata");
-            if (tableEntityProperties != null)
-            {
-                using var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartObject();
-                foreach (var item in tableEntityProperties)
-                {
-                    content.JsonWriter.WritePropertyName(item.Key);
-                    content.JsonWriter.WriteObjectValue(item.Value);
-                }
-                content.JsonWriter.WriteEndObject();
-                request.Content = content;
-            }
-            return message;
-        }
-
         /// <summary> Update entity in a table. </summary>
         /// <param name="table"> The name of the table. </param>
         /// <param name="partitionKey"> The partition key of the entity. </param>
@@ -693,38 +648,6 @@ namespace Azure.Data.Tables
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateDeleteEntityRequest(string table, string partitionKey, string rowKey, int? timeout, string requestId, QueryOptions queryOptions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(table, true);
-            uri.AppendPath("(PartitionKey='", false);
-            uri.AppendPath(partitionKey, true);
-            uri.AppendPath("',RowKey='", false);
-            uri.AppendPath(rowKey, true);
-            uri.AppendPath("')", false);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            if (queryOptions?.Format != null)
-            {
-                uri.AppendQuery("$format", queryOptions.Format.Value.ToString(), true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", version);
-            if (requestId != null)
-            {
-                request.Headers.Add("x-ms-client-request-id", requestId);
-            }
-            request.Headers.Add("DataServiceVersion", "3.0");
-            return message;
         }
 
         /// <summary> Deletes the specified entity in a table. </summary>

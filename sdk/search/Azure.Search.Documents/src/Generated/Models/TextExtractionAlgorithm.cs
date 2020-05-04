@@ -10,9 +10,9 @@ namespace Azure.Search.Documents.Models
     /// <summary> A value indicating which algorithm to use. Default is printed. </summary>
     public enum TextExtractionAlgorithm
     {
-        /// <summary> printed. </summary>
+        /// <summary> An algorithm suitable for printed text. </summary>
         Printed,
-        /// <summary> handwritten. </summary>
+        /// <summary> An algorithm suitable for handwritten text. </summary>
         Handwritten
     }
 }

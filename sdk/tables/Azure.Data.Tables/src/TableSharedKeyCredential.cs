@@ -9,10 +9,10 @@ using System.Threading;
 namespace Azure.Data.Tables
 {
     /// <summary>
-    /// A <see cref="TablesSharedKeyCredential"/> is a credential backed by
+    /// A <see cref="TableSharedKeyCredential"/> is a credential backed by
     /// a Storage Account's name and one of its access keys.
     /// </summary>
-    public class TablesSharedKeyCredential
+    public class TableSharedKeyCredential
     {
         /// <summary>
         /// Gets the name of the Storage Account.
@@ -35,11 +35,11 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Initializes a new instance of the
-        /// <see cref="TablesSharedKeyCredential"/> class.
+        /// <see cref="TableSharedKeyCredential"/> class.
         /// </summary>
         /// <param name="accountName">The name of the Storage Account.</param>
         /// <param name="accountKey">A Storage Account access key.</param>
-        public TablesSharedKeyCredential(
+        public TableSharedKeyCredential(
             string accountName,
             string accountKey)
         {
@@ -72,7 +72,7 @@ namespace Azure.Data.Tables
         /// <param name="credential">The credential.</param>
         /// <param name="message">The message to sign.</param>
         /// <returns>The signed message.</returns>
-        protected static string ComputeSasSignature(TablesSharedKeyCredential credential, string message) =>
+        internal static string ComputeSasSignature(TableSharedKeyCredential credential, string message) =>
             credential.ComputeHMACSHA256(message);
     }
 }

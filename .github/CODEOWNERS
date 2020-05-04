@@ -17,7 +17,7 @@
 # Service teams
 /sdk/appconfiguration/                          @annelo-msft @AlexanderSher
 
-/sdk/batch/                                     @matthchr 
+/sdk/batch/                                     @bgklein @xingwu1 
 
 /sdk/cognitiveservices/language.textanalytics/  @assafi 
 /sdk/cognitiveservices/vision.computervision/   @toothache

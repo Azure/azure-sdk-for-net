@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="type">The data type of the field.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        public SearchFieldTemplate(string name, SearchFieldDataType type)
+        private protected SearchFieldTemplate(string name, SearchFieldDataType type)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Models
         /// Persists class-specific properties into the given <see cref="SearchField"/>.
         /// </summary>
         /// <param name="field">The <see cref="SearchField"/> into which properties are persisted.</param>
-        protected abstract void Save(SearchField field);
+        private protected abstract void Save(SearchField field);
 
         /// <summary>
         /// Casts a <see cref="SearchFieldTemplate"/> or derivative to a <see cref="SearchField"/>.

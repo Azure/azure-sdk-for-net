@@ -83,15 +83,16 @@ namespace Azure.AI.TextAnalytics
         /// Initializes a new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.
         /// </summary>
         /// <param name="sentiment">Sets the <see cref="SentenceSentiment.Sentiment"/> property.</param>
+        /// <param name="text">Sets the <see cref="SentenceSentiment.Text"/> property.</param>
         /// <param name="positiveScore">Sets the <see cref="SentimentConfidenceScores.Positive"/> property.</param>
         /// <param name="neutralScore">Sets the <see cref="SentimentConfidenceScores.Neutral"/> property.</param>
         /// <param name="negativeScore">Sets the <see cref="SentimentConfidenceScores.Negative"/> property.</param>
         /// <param name="offset">Sets the <see cref="SentenceSentiment.GraphemeOffset"/> property.</param>
         /// <param name="length">Sets the <see cref="SentenceSentiment.GraphemeLength"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.SentenceSentiment"/> for mocking purposes.</returns>
-        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        public static SentenceSentiment SentenceSentiment(TextSentiment sentiment, string text, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
-            return new SentenceSentiment(sentiment, positiveScore, neutralScore, negativeScore, offset, length);
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length);
         }
 
         /// <summary>
@@ -137,11 +138,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="name">Sets the <see cref="DetectedLanguage.Name"/> property.</param>
         /// <param name="iso6391Name">Sets the <see cref="DetectedLanguage.Iso6391Name"/> property.</param>
-        /// <param name="score">Sets the <see cref="DetectedLanguage.Score"/> property.</param>
+        /// <param name="confidenceScore">Sets the <see cref="DetectedLanguage.ConfidenceScore"/> property.</param>
         /// <returns>A new instance of <see cref="TextAnalytics.DetectedLanguage"/> for mocking purposes.</returns>
-        public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double score)
+        public static DetectedLanguage DetectedLanguage(string name, string iso6391Name, double confidenceScore)
         {
-            return new DetectedLanguage(name, iso6391Name, score);
+            return new DetectedLanguage(name, iso6391Name, confidenceScore);
         }
 
         /// <summary>

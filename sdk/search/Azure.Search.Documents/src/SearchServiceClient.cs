@@ -172,20 +172,20 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Get a <see cref="SearchIndexClient"/> for the given <paramref name="indexName"/> to use for document operations like querying or adding documents to a Search Index.
+        /// Get a <see cref="SearchClient"/> for the given <paramref name="indexName"/> to use for document operations like querying or adding documents to a Search Index.
         /// </summary>
         /// <param name="indexName">The name of the desired Search Index.</param>
-        /// <returns>A SearchIndexClient for the desired Search Index.</returns>
+        /// <returns>A SearchClient for the desired Search Index.</returns>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="indexName"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="indexName"/> is empty.</exception>
         /// <remarks>
         /// The same request <see cref="HttpPipeline"/> (including authentication and any other configuration) will be used for the
-        /// <see cref="SearchIndexClient"/>.
+        /// <see cref="SearchClient"/>.
         /// </remarks>
-        public virtual SearchIndexClient GetSearchIndexClient(string indexName)
+        public virtual SearchClient GetSearchClient(string indexName)
         {
             Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-            return new SearchIndexClient(
+            return new SearchClient(
                 Endpoint,
                 indexName,
                 Pipeline,

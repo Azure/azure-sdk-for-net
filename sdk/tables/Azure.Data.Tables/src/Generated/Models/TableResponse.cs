@@ -8,7 +8,7 @@
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The response for a single table. </summary>
-    public partial class TableResponse : TableResponseProperties
+    public partial class TableResponse : TableItem
     {
         /// <summary> Initializes a new instance of TableResponse. </summary>
         internal TableResponse()

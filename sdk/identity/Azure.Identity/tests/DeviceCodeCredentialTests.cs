@@ -157,6 +157,20 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
         }
 
+        [Test]
+        public void DisableAutomaticAuthenticationException()
+        {
+            var expectedCode = Guid.NewGuid().ToString();
+
+            var cred = InstrumentClient(new DeviceCodeCredential((code, cancelToken) => VerifyDeviceCode(code, expectedCode), new DeviceCodeCredentialOptions { DisableAutomaticAuthentication = true }));
+
+            var expTokenRequestContext = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }, Guid.NewGuid().ToString());
+
+            var ex = Assert.ThrowsAsync<AuthenticationRequiredException>(async () => await cred.GetTokenAsync(expTokenRequestContext));
+
+            Assert.AreEqual(expTokenRequestContext, ex.TokenRequestContext);
+        }
+
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)
         {
             string requestUrl = mockRequest.Uri.ToUri().AbsoluteUri;
@@ -171,12 +185,12 @@ namespace Azure.Identity.Tests
                 return OpenIdConfigurationResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/devicecode"))
+            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/oauth2/v2.0/devicecode"))
             {
                 return CreateDeviceCodeResponse(code);
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/oauth2/v2.0/token"))
+            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/oauth2/v2.0/token"))
             {
                 return CreateTokenResponse(code, token);
 

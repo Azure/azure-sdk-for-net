@@ -46,50 +46,51 @@ namespace Azure.AI.TextAnalytics.Samples
             #endregion
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
-            Debug.WriteLine("");
+            Console.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
+            Console.WriteLine("");
 
             foreach (AnalyzeSentimentResult result in results)
             {
                 TextDocumentInput document = documents[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
                 if (result.HasError)
                 {
-                    Debug.WriteLine($"    Document error: {result.Error.Code}.");
-                    Debug.WriteLine($"    Message: {result.Error.Message}.");
+                    Console.WriteLine($"    Document error: {result.Error.Code}.");
+                    Console.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
-                    Debug.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
-                    Debug.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
-                    Debug.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
+                    Console.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with confidence scores: ");
+                    Console.WriteLine($"    Positive confidence score: {result.DocumentSentiment.ConfidenceScores.Positive}.");
+                    Console.WriteLine($"    Neutral confidence score: {result.DocumentSentiment.ConfidenceScores.Neutral}.");
+                    Console.WriteLine($"    Negative confidence score: {result.DocumentSentiment.ConfidenceScores.Negative}.");
 
-                    Debug.WriteLine($"    Sentence sentiment results:");
+                    Console.WriteLine($"    Sentence sentiment results:");
 
                     foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
-                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
-                        Debug.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive}.");
-                        Debug.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral}.");
-                        Debug.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative}.");
+                        Console.WriteLine($"    For sentence: \"{sentenceSentiment.Text}\"");
+                        Console.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with confidence scores: ");
+                        Console.WriteLine($"        Positive confidence score: {sentenceSentiment.ConfidenceScores.Positive}.");
+                        Console.WriteLine($"        Neutral confidence score: {sentenceSentiment.ConfidenceScores.Neutral}.");
+                        Console.WriteLine($"        Negative confidence score: {sentenceSentiment.ConfidenceScores.Negative}.");
                     }
 
-                    Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                    Debug.WriteLine("");
+                    Console.WriteLine($"    Document statistics:");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
+                    Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Console.WriteLine("");
                 }
             }
 
-            Debug.WriteLine($"Batch operation statistics:");
-            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
-            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
-            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
-            Debug.WriteLine("");
+            Console.WriteLine($"Batch operation statistics:");
+            Console.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Console.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Console.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
+            Console.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
+            Console.WriteLine("");
         }
     }
 }

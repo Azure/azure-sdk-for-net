@@ -10,19 +10,19 @@ namespace Azure.Search.Documents.Models
     /// <summary> The strings indicating what visual feature types to return. </summary>
     public enum VisualFeature
     {
-        /// <summary> adult. </summary>
+        /// <summary> Visual features recognized as adult persons. </summary>
         Adult,
-        /// <summary> brands. </summary>
+        /// <summary> Visual features recognized as commercial brands. </summary>
         Brands,
-        /// <summary> categories. </summary>
+        /// <summary> Categories. </summary>
         Categories,
-        /// <summary> description. </summary>
+        /// <summary> Description. </summary>
         Description,
-        /// <summary> faces. </summary>
+        /// <summary> Visual features recognized as people faces. </summary>
         Faces,
-        /// <summary> objects. </summary>
+        /// <summary> Visual features recognized as objects. </summary>
         Objects,
-        /// <summary> tags. </summary>
+        /// <summary> Tags. </summary>
         Tags
     }
 }

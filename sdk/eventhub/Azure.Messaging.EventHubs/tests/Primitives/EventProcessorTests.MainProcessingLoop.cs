@@ -562,7 +562,8 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Timeout(300_000)] // TEMP:  Using 5 minutes as an arbitrary timeout while troubleshooting a suspected test hang.
+        [Ignore("Intermittently hanging during CI runs. Tracked by #11731")]
+        [Timeout(300_000)] // TEMP:  Using 5 minutes as an arbitrary safety timeout while troubleshooting a suspected test hang.
         public async Task BackgroundProcessingStopsProcessingAllPartitionsWhenShutdown()
         {
             using var cancellationSource = new CancellationTokenSource();

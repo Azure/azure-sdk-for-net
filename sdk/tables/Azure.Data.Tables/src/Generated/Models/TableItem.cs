@@ -8,19 +8,19 @@
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The properties for the table response. </summary>
-    public partial class TableResponseProperties
+    public partial class TableItem
     {
-        /// <summary> Initializes a new instance of TableResponseProperties. </summary>
-        internal TableResponseProperties()
+        /// <summary> Initializes a new instance of TableItem. </summary>
+        internal TableItem()
         {
         }
 
-        /// <summary> Initializes a new instance of TableResponseProperties. </summary>
+        /// <summary> Initializes a new instance of TableItem. </summary>
         /// <param name="tableName"> The name of the table. </param>
         /// <param name="odataType"> The odata type of the table. </param>
         /// <param name="odataId"> The id of the table. </param>
         /// <param name="odataEditLink"> The edit link of the table. </param>
-        internal TableResponseProperties(string tableName, string odataType, string odataId, string odataEditLink)
+        internal TableItem(string tableName, string odataType, string odataId, string odataEditLink)
         {
             TableName = tableName;
             OdataType = odataType;

@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 async Task MessageHandler(ProcessMessageEventArgs args)
                 {
-                    string body = Encoding.Default.GetString(args.Message.Body.ToArray());
+                    string body = Encoding.UTF8.GetString(args.Message.Body.ToArray());
                     Console.WriteLine(body);
 
                     // we can evaluate application logic and use that to determine how to settle the message.

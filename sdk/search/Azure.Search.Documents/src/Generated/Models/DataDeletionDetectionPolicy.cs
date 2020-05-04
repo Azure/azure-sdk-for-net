@@ -10,11 +10,6 @@ namespace Azure.Search.Documents.Models
     /// <summary> Base type for data deletion detection policies. </summary>
     public partial class DataDeletionDetectionPolicy
     {
-        /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>
-        public DataDeletionDetectionPolicy()
-        {
-            ODataType = null;
-        }
 
         /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>

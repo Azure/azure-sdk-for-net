@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -12,7 +13,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// The <see cref="ServiceBusSessionProcessor"/> provides an abstraction around a set of <see cref="ServiceBusSessionReceiver"/> that
     /// allows using an event based model for processing received <see cref="ServiceBusReceivedMessage" />.
-    /// It is constructed by calling <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusProcessorOptions, string)"/>.
+    /// It is constructed by calling <see cref="ServiceBusClient.CreateSessionProcessor(string, ServiceBusProcessorOptions, string[])"/>.
     /// The event handler is specified with the <see cref="ProcessMessageAsync"/>
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
@@ -94,14 +95,14 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusConnection connection,
             string entityPath,
             ServiceBusProcessorOptions options,
-            string sessionId = default)
+            params string[] sessionIds)
         {
             _innerProcessor = new ServiceBusProcessor(
                 connection,
                 entityPath,
                 true,
                 options,
-                sessionId);
+                sessionIds);
         }
 
         /// <summary>

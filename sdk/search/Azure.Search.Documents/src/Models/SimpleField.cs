@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Models
         public bool IsSortable { get; set; }
 
         /// <inheritdoc/>
-        protected override void Save(SearchField field)
+        private protected override void Save(SearchField field)
         {
             field.IsKey = IsKey;
             field.IsHidden = IsHidden;

@@ -238,7 +238,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         }
                         else if (ex is AmqpException)
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx).Throw();
                         }
                         else
                         {
@@ -395,7 +395,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         }
                         else if (ex is AmqpException)
                         {
-                            throw activeEx;
+                            ExceptionDispatchInfo.Capture(activeEx).Throw();
                         }
                         else
                         {

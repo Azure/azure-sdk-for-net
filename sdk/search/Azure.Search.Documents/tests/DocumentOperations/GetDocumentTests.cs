@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Tests
             GetDocumentOptions options = null)
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
-            await resources.GetIndexClient().IndexDocumentsAsync<T>(
+            await resources.GetSearchClient().IndexDocumentsAsync<T>(
                 IndexDocumentsBatch.Upload<T>(new[] { document }));
             await resources.WaitForIndexingAsync();
             Response<T> response = await resources.GetQueryClient().GetDocumentAsync<T>(getKey(document), options);
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
             Response<SearchDocument> response = await client.GetDocumentAsync("3");
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("3", response.Value["hotelId"]);
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
             Response<SearchDocument> response = await client.GetDocumentAsync("3");
             dynamic hotel = response.Value;
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -116,7 +116,7 @@ namespace Azure.Search.Documents.Tests
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
             Response<Hotel> response = await client.GetDocumentAsync<Hotel>("3");
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual("3", response.Value.HotelId);
@@ -128,7 +128,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
             Hotel document = SearchResources.TestDocuments[0];
 
-            await resources.GetIndexClient().IndexDocumentsAsync(
+            await resources.GetSearchClient().IndexDocumentsAsync(
                 IndexDocumentsBatch.Upload(new[] { document }));
             await resources.WaitForIndexingAsync();
 
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.CreateWithEmptyHotelsIndexAsync(this);
             Hotel document = SearchResources.TestDocuments[0];
 
-            await resources.GetIndexClient().IndexDocumentsAsync(
+            await resources.GetSearchClient().IndexDocumentsAsync(
                 IndexDocumentsBatch.Upload(new[] { document.AsDocument() }));
             await resources.WaitForIndexingAsync();
 
@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.Tests
                     }
                 };
 
-            await resources.GetIndexClient().IndexDocumentsAsync(
+            await resources.GetSearchClient().IndexDocumentsAsync(
                 IndexDocumentsBatch.Upload(new[] { document }));
             await resources.WaitForIndexingAsync();
 
@@ -359,11 +359,11 @@ namespace Azure.Search.Documents.Tests
                 HotelName = "Value Inn"
             };
 
-            await resources.GetIndexClient().IndexDocumentsAsync(
+            await resources.GetSearchClient().IndexDocumentsAsync(
                 IndexDocumentsBatch.Upload(new[] { document }));
             await resources.WaitForIndexingAsync();
 
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
             Response<SimpleStructHotel> response = await client.GetDocumentAsync<SimpleStructHotel>(document.HotelId);
             Assert.AreEqual(document, response.Value);
         }
@@ -440,7 +440,7 @@ namespace Azure.Search.Documents.Tests
 
             await serviceClient.CreateIndexAsync(Book.CreateIndex());
 
-            SearchIndexClient indexClient = serviceClient.GetSearchIndexClient(index.Name);
+            SearchClient indexClient = serviceClient.GetSearchClient(index.Name);
             await resources.GetIndexClient().IndexDocumentsAsync(
                 IndexDocumentsBatch.Upload(new[] { document }));
             await resources.WaitForIndexingAsync();
@@ -522,7 +522,7 @@ namespace Azure.Search.Documents.Tests
         public async Task ThrowsWhenNotFound()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                 async () => await client.GetDocumentAsync("ThisDocumentDoesNotExist"));
             Assert.AreEqual(404, ex.Status);
@@ -532,7 +532,7 @@ namespace Azure.Search.Documents.Tests
         public async Task ThrowsWhenMalformed()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
-            SearchIndexClient client = resources.GetQueryClient();
+            SearchClient client = resources.GetQueryClient();
             RequestFailedException ex = await CatchAsync<RequestFailedException>(
                 async () => await client.GetDocumentAsync(
                     "3",
@@ -552,7 +552,7 @@ namespace Azure.Search.Documents.Tests
                 Index index = ModelWithPrimitiveCollections.CreateIndex();
                 serviceClient.Indexes.Create(index);
 
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+                SearchClient indexClient = Data.GetSearchClient(index.Name);
 
                 var expectedDoc =
                     new ModelWithPrimitiveCollections()
@@ -598,7 +598,7 @@ namespace Azure.Search.Documents.Tests
                 Index index = ModelWithPrimitiveCollections.CreateIndex();
                 serviceClient.Indexes.Create(index);
 
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+                SearchClient indexClient = Data.GetSearchClient(index.Name);
 
                 var indexedDoc = new Document()
                 {
@@ -667,7 +667,7 @@ namespace Azure.Search.Documents.Tests
                 Index index = ModelWithPrimitiveCollections.CreateIndex();
                 serviceClient.Indexes.Create(index);
 
-                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+                SearchClient indexClient = Data.GetSearchClient(index.Name);
 
                 var indexedDoc = new Document()
                 {

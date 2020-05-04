@@ -21,7 +21,7 @@ string document = "Este documento está en español.";
 
 DetectedLanguage language = client.DetectLanguage(document);
 
-Console.WriteLine($"Detected language {language.Name} with confidence {language.Score}.");
+Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
 ```
 
 ## Detecting the language of multiple documents

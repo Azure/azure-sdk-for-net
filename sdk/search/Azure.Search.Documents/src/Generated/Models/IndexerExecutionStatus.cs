@@ -10,13 +10,13 @@ namespace Azure.Search.Documents.Models
     /// <summary> Represents the status of an individual indexer execution. </summary>
     public enum IndexerExecutionStatus
     {
-        /// <summary> transientFailure. </summary>
+        /// <summary> An indexer invocation has failed, but the failure may be transient. Indexer invocations will continue per schedule. </summary>
         TransientFailure,
-        /// <summary> success. </summary>
+        /// <summary> Indexer execution completed successfully. </summary>
         Success,
-        /// <summary> inProgress. </summary>
+        /// <summary> Indexer execution is in progress. </summary>
         InProgress,
-        /// <summary> reset. </summary>
+        /// <summary> Indexer has been reset. </summary>
         Reset
     }
 }
