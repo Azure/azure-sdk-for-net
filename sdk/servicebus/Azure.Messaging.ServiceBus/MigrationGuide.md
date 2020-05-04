@@ -200,7 +200,15 @@ await receiver.CloseAsync();
 ```
 
 In v7:
+```C# Snippet:ServiceBusInitializeSend
+string connectionString = "<connection_string>";
+string queueName = "<queue_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
 
+// create the sender
+ServiceBusSender sender = client.CreateSender(queueName);
+```
 ```C# Snippet:ServiceBusSendAndReceiveBatch
 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
@@ -218,6 +226,22 @@ messageBatch.TryAdd(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
 
 // send the message batch
 await sender.SendAsync(messageBatch);
+```
+
+And to receive a batch:
+```C# Snippet:ServiceBusReceiveBatch
+// create a receiver that we can use to receive the messages
+ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+IList<ServiceBusReceivedMessage> receivedMessages = await receiver.ReceiveBatchAsync(maxMessages: 2);
+
+foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
+{
+    // get the message body as a string
+    string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
+    Console.WriteLine(body);
+}
 ```
 
 ## Additional samples

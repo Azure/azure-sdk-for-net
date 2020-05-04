@@ -22,7 +22,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Change from using a static factory method for creating a sendable message from a received message to instead
   using a constructor  
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
-- CreateSessionProcessor method signature changed to accept a params array of session Ids instead of a single string.
+- CreateSessionProcessor parameter sessionId renamed to sessionIds (also changed from string to params string array). 
 - Remove cancellation token from CreateProcessor and CreateSessionProcessor  
   _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
 - Rename SendBatchAsync to SendAsync

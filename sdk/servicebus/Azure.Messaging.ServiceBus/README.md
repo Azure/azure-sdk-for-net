@@ -85,14 +85,14 @@ For more concepts and deeper discussion, see: [Service Bus Advanced Features](ht
 
 ## Examples
 
-* [Send and receive a message](#sending-and-receive-a-message)
+* [Send and receive a message](#send-and-receive-a-message)
 * [Send and receive a batch of messages](#send-and-receive-a-batch-of-messages)
 * [Complete a message](#complete-a-message)
 * [Abandon a message](#abandon-a-message)
 * [Defer a message](#defer-a-message)
 * [Dead letter a message](#dead-letter-a-message)
 * [Using the processor](#using-the-processor)
-* [Authenticating with Azure.Identity](#authenticating-with-azure.identity)
+* [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
 * [Working with sessions](#working-with-sessions)
 * [More samples](./samples/README.md)
 
@@ -196,6 +196,10 @@ await receiver.AbandonAsync(receivedMessage);
 
 ### Defer a message
 
+Deferring a message will prevent it from being received again using the `ReceiveAsync` or `ReceiveBatchAsync` methods.
+Instead, there are separate methods, `ReceiveDeferredMessageAsync` and `ReceiveDeferredMessageBatchAsync` 
+for receiving deferred messages.
+
 ```C# Snippet:ServiceBusDeferMessage
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveAsync();
 
@@ -210,7 +214,7 @@ ServiceBusReceivedMessage deferredMessage = await receiver.ReceiveDeferredMessag
 
 ### Dead letter a message
 
-Dead lettering a message is similar to defering with one main difference being that messages will be automatically dead lettered
+Dead lettering a message is similar to deferring with one main difference being that messages will be automatically dead lettered
 by the service after they have been received a certain number of times. Applications can choose to manually dead letter messages based on
 their requirements. When a message is dead lettered it is actually moved to a subqueue of the original queue.
 

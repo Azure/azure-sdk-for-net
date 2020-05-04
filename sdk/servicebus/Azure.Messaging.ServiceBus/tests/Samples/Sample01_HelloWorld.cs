@@ -87,6 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
 
+                #region Snippet:ServiceBusInitializeSend
                 //@@ string connectionString = "<connection_string>";
                 //@@ string queueName = "<queue_name>";
                 // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
@@ -94,6 +95,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
+                #endregion
+
                 #region Snippet:ServiceBusSendAndReceiveBatch
                 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
                 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
@@ -101,6 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // send the messages
                 await sender.SendAsync(messages);
                 #endregion
+                #region Snippet:ServiceBusReceiveBatch
                 // create a receiver that we can use to receive the messages
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -113,6 +117,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     string body = Encoding.UTF8.GetString(receivedMessage.Body.ToArray());
                     Console.WriteLine(body);
                 }
+                #endregion
 
                 var sentMessagesEnum = messages.GetEnumerator();
                 foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
