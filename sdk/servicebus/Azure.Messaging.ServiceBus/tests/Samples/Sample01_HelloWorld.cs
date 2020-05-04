@@ -95,14 +95,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // create the sender
                 ServiceBusSender sender = client.CreateSender(queueName);
-                #endregion
-
                 #region Snippet:ServiceBusSendAndReceiveBatch
                 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
                 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
                 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
                 // send the messages
                 await sender.SendAsync(messages);
+                #endregion
                 #endregion
                 #region Snippet:ServiceBusReceiveBatch
                 // create a receiver that we can use to receive the messages

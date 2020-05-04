@@ -219,8 +219,6 @@ await using var client = new ServiceBusClient(connectionString);
 
 // create the sender
 ServiceBusSender sender = client.CreateSender(queueName);
-```
-```C# Snippet:ServiceBusSendAndReceiveBatch
 IList<ServiceBusMessage> messages = new List<ServiceBusMessage>();
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
 messages.Add(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
