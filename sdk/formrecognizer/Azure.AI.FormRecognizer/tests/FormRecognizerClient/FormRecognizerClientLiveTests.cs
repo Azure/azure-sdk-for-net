@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -21,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class FormRecognizerClientLiveTests : RecordedTestBase<FormRecognizerTestEnvironment>
+    public class FormRecognizerClientLiveTests : FormRecognizerLiveTestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FormRecognizerClientLiveTests"/> class.
@@ -29,8 +28,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public FormRecognizerClientLiveTests(bool isAsync) : base(isAsync)
         {
-            Sanitizer = new FormRecognizerRecordedTestSanitizer();
-            Matcher = new FormRecognizerRecordMatcher();
         }
 
         /// <summary>
@@ -45,22 +42,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
             var client = new FormRecognizerClient(endpoint, credential, options);
-
-            return InstrumentClient(client);
-        }
-
-        /// <summary>
-        /// Creates a <see cref="FormTrainingClient" /> with the endpoint and API key provided via environment
-        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
-        /// </summary>
-        /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
-        private FormTrainingClient CreateInstrumentedFormTrainingClient()
-        {
-            var endpoint = new Uri(TestEnvironment.Endpoint);
-            var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-
-            var options = Recording.InstrumentClientOptions(new FormRecognizerClientOptions());
-            var client = new FormTrainingClient(endpoint, credential, options);
 
             return InstrumentClient(client);
         }

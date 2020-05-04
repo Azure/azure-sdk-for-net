@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
+using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -14,18 +15,29 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
-        [Ignore("Need to revisit how to pass the modelId. Issue https://github.com/Azure/azure-sdk-for-net/issues/11493")]
         public async Task RecognizeCustomFormsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
+            string trainingFileUrl = TestEnvironment.BlobContainerSasUrl;
+
+            // Firstly, create a trained model we can use to recognize the custom form. Please note that
+            // models can also be trained using a graphical user interface such as the Form Recognizer
+            // Labeling Tool found here:
+            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/label-tool
+
+            FormTrainingClient trainingClient = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            CustomFormModel model = await trainingClient.StartTraining(new Uri(trainingFileUrl)).WaitForCompletionAsync();
+
+            // Proceed with the custom form recognition.
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             string formUri = FormRecognizerTestEnvironment.CreateUri("Form_1.jpg");
-            string modelId = "<your model id>";
+            string modelId = model.ModelId;
 
             #region Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+            //@@ string modelId = "<modelId>";
 
             Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
             foreach (RecognizedForm form in forms.Value)
@@ -45,6 +57,9 @@ namespace Azure.AI.FormRecognizer.Samples
                 }
             }
             #endregion
+
+            // Delete the model on completion to clean environment.
+            trainingClient.DeleteModel(model.ModelId);
         }
     }
 }
