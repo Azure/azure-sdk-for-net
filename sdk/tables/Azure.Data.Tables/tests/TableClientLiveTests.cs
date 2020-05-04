@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 
@@ -37,7 +38,7 @@ namespace Azure.Data.Tables.Tests
             sas.SetPermissions(TableSasPermissions.Read);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
-            var credential = new TablesSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+            var credential = new TableSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
 
             // Build a SAS URI
             UriBuilder sasUri = new UriBuilder(TestEnvironment.StorageUri)
@@ -385,6 +386,30 @@ namespace Azure.Data.Tables.Tests
             emptyresult = (await client.QueryAsync(filter: $"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'").ToEnumerableAsync().ConfigureAwait(false));
 
             Assert.That(emptyresult, Is.Empty, $"The query should have returned no results.");
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableServiceClient.
+        /// </summary>
+        [Test]
+        [Ignore("requires https://github.com/Azure/azure-sdk-for-net/issues/11764")]
+        public async Task GetAccessPoliciesReturnsPolicies()
+        {
+            // Cratae some policies.
+
+            var policyToCreate = new List<SignedIdentifier>
+            {
+                new SignedIdentifier("MyPolicy", new AccessPolicy(new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc), new DateTime(2021, 1,1,1,1,0,DateTimeKind.Utc), "r"))
+            };
+
+            await client.SetAccessPolicyAsync(tableAcl: policyToCreate);
+
+
+            // Get the created policy.
+
+            var policies = await client.GetAccessPolicyAsync();
+
+            Assert.That(policies.Value, Is.EquivalentTo(policyToCreate));
         }
     }
 }

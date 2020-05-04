@@ -95,29 +95,5 @@ namespace Azure.Data.Tables.Tests
                 }
             }
         }
-
-        /// <summary>
-        /// Validates the functionality of the TableServiceClient.
-        /// </summary>
-        [Test]
-        [Ignore("requires https://github.com/Azure/azure-sdk-for-net/issues/11764")]
-        public async Task GetAccessPoliciesReturnsPolicies()
-        {
-            // Cratae some policies.
-
-            var policyToCreate = new List<SignedIdentifier>
-            {
-                new SignedIdentifier("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI=", new AccessPolicy(new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc), new DateTime(2021, 1,1,1,1,0,DateTimeKind.Utc), "r"))
-            };
-
-            await service.SetAccessPolicyAsync(tableName, tableAcl: policyToCreate);
-
-
-            // Get the created policy.
-
-            var policies = await service.GetAccessPolicyAsync(tableName);
-
-            Assert.That(policies.Value, Is.EquivalentTo(policyToCreate));
-        }
     }
 }

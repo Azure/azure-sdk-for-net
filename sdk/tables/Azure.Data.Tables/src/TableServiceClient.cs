@@ -16,16 +16,24 @@ namespace Azure.Data.Tables
         private readonly TableInternalClient _tableOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
 
+        public TableServiceClient(Uri endpoint)
+                : this(endpoint, default(TableSharedKeyPipelinePolicy), null) { }
         public TableServiceClient(Uri endpoint, TableClientOptions options = null)
-        : this(endpoint, default(TablesSharedKeyPipelinePolicy), options) { }
+        : this(endpoint, default(TableSharedKeyPipelinePolicy), options) { }
 
-        public TableServiceClient(Uri endpoint, TablesSharedKeyCredential credential, TableClientOptions options = null)
-            :this(endpoint, new TablesSharedKeyPipelinePolicy(credential), options)
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
+                    : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
         }
 
-        internal TableServiceClient(Uri endpoint, TablesSharedKeyPipelinePolicy policy, TableClientOptions options)
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
+            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             if (endpoint.Scheme != "https")
@@ -69,7 +77,7 @@ namespace Azure.Data.Tables
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
@@ -96,7 +104,7 @@ namespace Azure.Data.Tables
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<TableResponseProperties> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(_ =>
             {
@@ -154,43 +162,5 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default) =>
             await _tableOperations.DeleteAsync(tableName, null, cancellationToken: cancellationToken).ConfigureAwait(false);
-
-        /// <summary> Retrieves details about any stored access policies specified on the table that may be used wit Shared Access Signatures. </summary>
-        /// <param name="table"> The name of the table. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
-            await _tableOperations.GetAccessPolicyAsync(table, timeout, requestId, cancellationToken).ConfigureAwait(false);
-
-        /// <summary> Retrieves details about any stored access policies specified on the table that may be used wit Shared Access Signatures. </summary>
-        /// <param name="table"> The name of the table. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(string table, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
-            _tableOperations.GetAccessPolicy(table, timeout, requestId, cancellationToken);
-
-        /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
-        /// <param name="table"> The name of the table. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
-        /// <param name="tableAcl"> the access policies for the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response> SetAccessPolicyAsync(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default) =>
-            await _tableOperations.SetAccessPolicyAsync(table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false);
-
-        /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
-        /// <param name="table"> The name of the table. </param>
-        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
-        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
-        /// <param name="tableAcl"> the access policies for the table. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response SetAccessPolicy(string table, int? timeout = null, string requestId = null, IEnumerable<SignedIdentifier> tableAcl = null, CancellationToken cancellationToken = default) =>
-            _tableOperations.SetAccessPolicy(table, timeout, requestId, tableAcl, cancellationToken);
     }
 }

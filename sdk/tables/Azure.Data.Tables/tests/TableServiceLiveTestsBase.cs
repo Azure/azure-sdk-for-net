@@ -43,7 +43,7 @@ namespace Azure.Data.Tables.Tests
         public async Task TablesTestSetup()
         {
             service = InstrumentClient(new TableServiceClient(new Uri(TestEnvironment.StorageUri),
-                                                               new TablesSharedKeyCredential(
+                                                               new TableSharedKeyCredential(
                                                                    TestEnvironment.AccountName,
                                                                    TestEnvironment.PrimaryStorageAccountKey
                                                                ), Recording.InstrumentClientOptions(new TableClientOptions())));

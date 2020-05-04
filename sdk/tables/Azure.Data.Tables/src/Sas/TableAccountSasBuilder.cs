@@ -96,18 +96,18 @@ namespace Azure.Data.Tables.Sas
         }
 
         /// <summary>
-        /// Use an account's <see cref="TablesSharedKeyCredential"/> to sign this
+        /// Use an account's <see cref="TableSharedKeyCredential"/> to sign this
         /// shared access signature values to produce the proper SAS query
         /// parameters for authenticating requests.
         /// </summary>
         /// <param name="sharedKeyCredential">
-        /// The storage account's <see cref="TablesSharedKeyCredential"/>.
+        /// The storage account's <see cref="TableSharedKeyCredential"/>.
         /// </param>
         /// <returns>
         /// The <see cref="SasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
-        public SasQueryParameters ToSasQueryParameters(TablesSharedKeyCredential sharedKeyCredential)
+        public SasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/Constructing-an-Account-SAS
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));

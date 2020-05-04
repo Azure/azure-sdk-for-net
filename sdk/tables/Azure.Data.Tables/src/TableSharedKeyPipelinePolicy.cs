@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -17,16 +16,16 @@ namespace Azure.Data.Tables
     /// <summary>
     /// HttpPipelinePolicy to sign requests using an Azure Storage shared key.
     /// </summary>
-    internal sealed class TablesSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
+    internal sealed class TableSharedKeyPipelinePolicy : HttpPipelineSynchronousPolicy
     {
-        private class InternalStorageCredential: TablesSharedKeyCredential
+        private class InternalStorageCredential: TableSharedKeyCredential
         {
             public static InternalStorageCredential Instance = new InternalStorageCredential();
             public InternalStorageCredential(): base(string.Empty, string.Empty)
             {
             }
 
-            public static string GetSas(TablesSharedKeyCredential credential, string message)
+            public static string GetSas(TableSharedKeyCredential credential, string message)
             {
                 return ComputeSasSignature(credential, message);
             }
@@ -34,13 +33,13 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Shared key credentials used to sign requests
         /// </summary>
-        private readonly TablesSharedKeyCredential _credentials;
+        private readonly TableSharedKeyCredential _credentials;
 
         /// <summary>
         /// Create a new SharedKeyPipelinePolicy
         /// </summary>
         /// <param name="credentials">SharedKeyCredentials to authenticate requests.</param>
-        public TablesSharedKeyPipelinePolicy(TablesSharedKeyCredential credentials)
+        public TableSharedKeyPipelinePolicy(TableSharedKeyCredential credentials)
             => _credentials = credentials;
 
         /// <summary>
