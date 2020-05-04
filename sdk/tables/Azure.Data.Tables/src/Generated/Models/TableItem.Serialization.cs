@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableResponseProperties
+    public partial class TableItem
     {
-        internal static TableResponseProperties DeserializeTableResponseProperties(JsonElement element)
+        internal static TableItem DeserializeTableItem(JsonElement element)
         {
             string tableName = default;
             string odataType = default;
@@ -57,7 +57,7 @@ namespace Azure.Data.Tables.Models
                     continue;
                 }
             }
-            return new TableResponseProperties(tableName, odataType, odataId, odataEditLink);
+            return new TableItem(tableName, odataType, odataId, odataEditLink);
         }
     }
 }

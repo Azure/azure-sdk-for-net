@@ -153,9 +153,9 @@ namespace Azure.Data.Tables
             }
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
-            if (queryOptions?.ETag != null)
+            if (queryOptions?.IfMatch != null)
             {
-                request.Headers.Add(TableConstants.HeaderNames.IfMatch, queryOptions.ETag);
+                request.Headers.Add(TableConstants.HeaderNames.IfMatch, queryOptions.IfMatch);
             }
             if (tableEntityProperties != null)
             {
@@ -203,9 +203,9 @@ namespace Azure.Data.Tables
             }
             request.Headers.Add("DataServiceVersion", "3.0");
             request.Headers.Add("Content-Type", "application/json;odata=nometadata");
-            if (queryOptions?.ETag != null)
+            if (queryOptions?.IfMatch != null)
             {
-                request.Headers.Add(TableConstants.HeaderNames.IfMatch, queryOptions.ETag);
+                request.Headers.Add(TableConstants.HeaderNames.IfMatch, queryOptions.IfMatch);
             }
             if (tableEntityProperties != null)
             {
@@ -343,9 +343,9 @@ namespace Azure.Data.Tables
                 request.Headers.Add("x-ms-client-request-id", requestId);
             }
             request.Headers.Add("DataServiceVersion", "3.0");
-            if (queryOptions?.ETag != null)
+            if (queryOptions?.IfMatch != null)
             {
-                request.Headers.Add(TableConstants.HeaderNames.IfMatch, queryOptions.ETag);
+                request.Headers.Add(TableConstants.HeaderNames.IfMatch, queryOptions.IfMatch);
             }
             return message;
         }

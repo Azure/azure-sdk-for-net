@@ -162,7 +162,7 @@ namespace Azure.Data.Tables
                                                      partitionKey as string,
                                                      rowKey as string,
                                                      tableEntityProperties: entity,
-                                                     queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                                     queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Data.Tables
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity,
-                                          queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                          queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                           cancellationToken: cancellationToken);
         }
 
@@ -222,7 +222,7 @@ namespace Azure.Data.Tables
                                                      partitionKey as string,
                                                      rowKey as string,
                                                      tableEntityProperties: entity,
-                                                     queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                                     queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false)).GetRawResponse();
         }
 
@@ -251,7 +251,7 @@ namespace Azure.Data.Tables
                                           partitionKey as string,
                                           rowKey as string,
                                           tableEntityProperties: entity,
-                                          queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                          queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                           cancellationToken: cancellationToken).GetRawResponse();
         }
 
@@ -341,9 +341,9 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(rowKey, nameof(rowKey));
 
             return await _tableOperations.DeleteEntityAsync(_table,
-                                                     partitionKey as string,
-                                                     rowKey as string,
-                                                     queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                                     partitionKey,
+                                                     rowKey,
+                                                     queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -362,11 +362,45 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(rowKey, nameof(rowKey));
 
             return _tableOperations.DeleteEntity(_table,
-                                          partitionKey as string,
-                                          rowKey as string,
-                                          queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
+                                          partitionKey,
+                                          rowKey,
+                                          queryOptions: new QueryOptions() { Format = _format, IfMatch = eTag },
                                           cancellationToken: cancellationToken);
         }
+
+        /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IReadOnlyList<SignedIdentifier>>> GetAccessPolicyAsync(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
+            await _tableOperations.GetAccessPolicyAsync(_table, timeout, requestId, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Retrieves details about any stored access policies specified on the table that may be used with Shared Access Signatures. </summary>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<IReadOnlyList<SignedIdentifier>> GetAccessPolicy(int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
+            _tableOperations.GetAccessPolicy(_table, timeout, requestId, cancellationToken);
+
+        /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
+        /// <param name="tableAcl"> the access policies for the table. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response> SetAccessPolicyAsync(IEnumerable<SignedIdentifier> tableAcl = null, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
+            await _tableOperations.SetAccessPolicyAsync(_table, timeout, requestId, tableAcl, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> sets stored access policies for the table that may be used with Shared Access Signatures. </summary>
+        /// <param name="tableAcl"> the access policies for the table. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations">Setting Timeouts for Queue Service Operations.</a>. </param>
+        /// <param name="requestId"> Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response SetAccessPolicy(IEnumerable<SignedIdentifier> tableAcl, int? timeout = null, string requestId = null, CancellationToken cancellationToken = default) =>
+            _tableOperations.SetAccessPolicy(_table, timeout, requestId, tableAcl, cancellationToken);
 
         private static string CreateContinuationTokenFromHeaders(TableInternalQueryEntitiesHeaders headers)
         {

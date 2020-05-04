@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,15 +16,43 @@ namespace Azure.Data.Tables
         private readonly TableInternalClient _tableOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataFullmetadata;
 
-        public TableServiceClient(Uri endpoint, TablesSharedKeyCredential credential, TableClientOptions options = null)
+        public TableServiceClient(Uri endpoint)
+                : this(endpoint, options: null) { }
+        public TableServiceClient(Uri endpoint, TableClientOptions options = null)
+            : this(endpoint, default(TableSharedKeyPipelinePolicy), options) { }
+
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential)
+            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), null)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        public TableServiceClient(Uri endpoint, TableSharedKeyCredential credential, TableClientOptions options = null)
+            : this(endpoint, new TableSharedKeyPipelinePolicy(credential), options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+        }
+
+        internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
+            if (endpoint.Scheme != "https")
+            {
+                throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
+            }
             options ??= new TableClientOptions();
-
             var endpointString = endpoint.ToString();
-            var pipeline = HttpPipelineBuilder.Build(options, new TablesSharedKeyPipelinePolicy(credential));
+            HttpPipeline pipeline;
+
+            if (policy == default)
+            {
+                pipeline = HttpPipelineBuilder.Build(options);
+            }
+            else
+            {
+                pipeline = HttpPipelineBuilder.Build(options, policy);
+            }
+
             var diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableInternalClient(diagnostics, pipeline, endpointString);
         }
@@ -48,7 +77,7 @@ namespace Azure.Data.Tables
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual AsyncPageable<TableResponseProperties> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TableItem> GetTablesAsync(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateAsyncEnumerable(async _ =>
             {
@@ -75,7 +104,7 @@ namespace Azure.Data.Tables
         /// <param name="top">Returns only the top n tables or entities from the set.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns></returns>
-        public virtual Pageable<TableResponseProperties> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TableItem> GetTables(string select = null, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             return PageableHelpers.CreateEnumerable(_ =>
             {
@@ -102,7 +131,7 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual TableResponse CreateTable(string tableName, CancellationToken cancellationToken = default) =>
-            _tableOperations.RestClient.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
+            _tableOperations.Create(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Creates a table in the storage account.
@@ -112,7 +141,7 @@ namespace Azure.Data.Tables
         /// <returns></returns>
         [ForwardsClientCalls]
         public virtual async Task<TableResponse> CreateTableAsync(string tableName, CancellationToken cancellationToken = default) =>
-            await _tableOperations.RestClient.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            await _tableOperations.CreateAsync(new TableProperties(tableName), null, new QueryOptions { Format = _format }, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes a table in the storage account.
@@ -133,6 +162,5 @@ namespace Azure.Data.Tables
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteTableAsync(string tableName, CancellationToken cancellationToken = default) =>
             await _tableOperations.DeleteAsync(tableName, null, cancellationToken: cancellationToken).ConfigureAwait(false);
-
     }
 }
