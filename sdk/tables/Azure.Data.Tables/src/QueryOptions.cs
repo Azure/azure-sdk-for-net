@@ -12,7 +12,7 @@ namespace Azure.Data.Tables.Models
         public string NextPartitionKey { get; set; }
         /// <summary> The row key continuation token for an Entity request. </summary>
         public string NextRowKey { get; set; }
-        /// <summary> The If-Match header value for an Entity request. </summary>
+        /// <summary> The If-Match header value for an Entity request. Change to ETag type after https://github.com/Azure/azure-sdk-for-net/issues/9501 .</summary>
         public string ETag { get; set; }
     }
 }

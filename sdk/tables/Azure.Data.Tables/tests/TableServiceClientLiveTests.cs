@@ -18,27 +18,11 @@ namespace Azure.Data.Tables.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class TableServiceClientLiveTests : RecordedTestBase<TablesTestEnvironment>
+    public class TableServiceClientLiveTests : TableServiceLiveTestsBase
     {
 
         public TableServiceClientLiveTests(bool isAsync) : base(isAsync /* To record tests, add this argument, RecordedTestMode.Record */)
-        {
-            Sanitizer = new TablesRecordedTestSanitizer();
-        }
-
-        /// <summary>
-        /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
-        /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
-        /// </summary>
-        /// <returns>The instrumented <see cref="TableServiceClient" />.</returns>
-        private TableServiceClient CreateTableServiceClient()
-        {
-            return InstrumentClient(new TableServiceClient(new Uri(TestEnvironment.StorageUri),
-                                                               new TablesSharedKeyCredential(
-                                                                   TestEnvironment.AccountName,
-                                                                   TestEnvironment.PrimaryStorageAccountKey
-                                                               ), Recording.InstrumentClientOptions(new TableClientOptions())));
-        }
+        { }
 
         /// <summary>
         /// Validates the functionality of the TableServiceClient.
@@ -48,15 +32,20 @@ namespace Azure.Data.Tables.Tests
         [TestCase(5)]
         public async Task GetTablesReturnsTablesWithAndWithoutPagination(int? pageCount)
         {
-            string tableName = $"testtable{Recording.GenerateId()}";
-            bool doCleanup = false;
-            TableServiceClient service = CreateTableServiceClient();
+            var createdTables = new List<string>();
+
             try
             {
-                var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
+                // Create some extra tables.
 
-                Assert.That(() => createdTable.TableName, Is.EqualTo(tableName), $"Created table should be '{tableName}'");
-                doCleanup = true;
+                for (int i = 0; i < 10; i++)
+                {
+                    var table = Recording.GenerateId("testtable", 15);
+                    await service.CreateTableAsync(table).ConfigureAwait(false);
+                    createdTables.Add(table);
+                }
+
+                // Get the table list.
 
                 var tableResponses = (await service.GetTablesAsync(top: pageCount).ToEnumerableAsync().ConfigureAwait(false)).ToList();
 
@@ -65,9 +54,9 @@ namespace Azure.Data.Tables.Tests
             }
             finally
             {
-                if (doCleanup)
+                foreach (var table in createdTables)
                 {
-                    await service.DeleteTableAsync(tableName);
+                    await service.DeleteTableAsync(table);
                 }
             }
         }
@@ -78,15 +67,18 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public async Task GetTablesReturnsTablesWithFilter()
         {
-            string tableName = $"testtable{Recording.GenerateId()}";
-            bool doCleanup = false;
-            TableServiceClient service = CreateTableServiceClient();
+            var createdTables = new List<string>();
+
             try
             {
-                var createdTable = await service.CreateTableAsync(tableName).ConfigureAwait(false);
+                // Create some extra tables.
 
-                Assert.That(() => createdTable.TableName, Is.EqualTo(tableName), $"Created table should be '{tableName}'");
-                doCleanup = true;
+                for (int i = 0; i < 10; i++)
+                {
+                    var table = Recording.GenerateId("testtable", 15);
+                    await service.CreateTableAsync(table).ConfigureAwait(false);
+                    createdTables.Add(table);
+                }
 
                 // Query with a filter.
 
@@ -97,11 +89,35 @@ namespace Azure.Data.Tables.Tests
             }
             finally
             {
-                if (doCleanup)
+                foreach (var table in createdTables)
                 {
-                    await service.DeleteTableAsync(tableName);
+                    await service.DeleteTableAsync(table);
                 }
             }
+        }
+
+        /// <summary>
+        /// Validates the functionality of the TableServiceClient.
+        /// </summary>
+        [Test]
+        [Ignore("requires https://github.com/Azure/azure-sdk-for-net/issues/11764")]
+        public async Task GetAccessPoliciesReturnsPolicies()
+        {
+            // Cratae some policies.
+
+            var policyToCreate = new List<SignedIdentifier>
+            {
+                new SignedIdentifier("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI=", new AccessPolicy(new DateTime(2020, 1,1,1,1,0,DateTimeKind.Utc), new DateTime(2021, 1,1,1,1,0,DateTimeKind.Utc), "r"))
+            };
+
+            await service.SetAccessPolicyAsync(tableName, tableAcl: policyToCreate);
+
+
+            // Get the created policy.
+
+            var policies = await service.GetAccessPolicyAsync(tableName);
+
+            Assert.That(policies.Value, Is.EquivalentTo(policyToCreate));
         }
     }
 }

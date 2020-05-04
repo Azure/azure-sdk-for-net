@@ -341,8 +341,8 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(rowKey, nameof(rowKey));
 
             return await _tableOperations.DeleteEntityAsync(_table,
-                                                     partitionKey as string,
-                                                     rowKey as string,
+                                                     partitionKey,
+                                                     rowKey,
                                                      queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
                                                      cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -362,8 +362,8 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(rowKey, nameof(rowKey));
 
             return _tableOperations.DeleteEntity(_table,
-                                          partitionKey as string,
-                                          rowKey as string,
+                                          partitionKey,
+                                          rowKey,
                                           queryOptions: new QueryOptions() { Format = _format, ETag = eTag },
                                           cancellationToken: cancellationToken);
         }

@@ -349,5 +349,41 @@ namespace Azure.Data.Tables
             }
             return message;
         }
+
+        internal HttpMessage CreateSetAccessPolicyRequest(string table, int? timeout, string requestId, IEnumerable<SignedIdentifier> tableAcl)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(table, true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            uri.AppendQuery("comp", "acl", true);
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            if (requestId != null)
+            {
+                request.Headers.Add("x-ms-client-request-id", requestId);
+            }
+            request.Headers.Add("Content-Type", "application/xml");
+            if (tableAcl != null)
+            {
+                using var content = new XmlWriterContent();
+                content.XmlWriter.WriteStartDocument();
+                content.XmlWriter.WriteStartElement("SignedIdentifiers");
+                foreach (var item in tableAcl)
+                {
+                    content.XmlWriter.WriteObjectValue(item, "SignedIdentifier");
+                }
+                content.XmlWriter.WriteEndElement();
+                request.Content = content;
+            }
+            return message;
+        }
     }
 }

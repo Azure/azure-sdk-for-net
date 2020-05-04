@@ -98,7 +98,7 @@ namespace Azure.Data.Tables
                     if (name == "comp")
                     {
 #pragma warning disable CA1308 // Normalize strings to uppercase
-                        cr.Append('\n').Append(name.ToLowerInvariant()).Append(':').Append(parameters[name]);
+                        cr.Append('?').Append(name.ToLowerInvariant()).Append('=').Append(parameters[name]);
 #pragma warning restore CA1308 // Normalize strings to uppercase
                     }
                 }
