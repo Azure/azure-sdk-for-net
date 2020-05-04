@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     }
 
                     Console.WriteLine($"    Document statistics:");
-                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.GraphemeCount}");
+                    Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
                     Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
                     Console.WriteLine("");
                 }

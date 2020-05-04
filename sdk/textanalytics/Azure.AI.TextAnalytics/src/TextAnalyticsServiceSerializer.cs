@@ -334,8 +334,6 @@ namespace Azure.AI.TextAnalytics
             string text = default;
             string category = default;
             string subcategory = default;
-            int offset = default;
-            int length = default;
             double confidenceScore = default;
 
             if (entityElement.TryGetProperty("text", out JsonElement textValue))
@@ -344,14 +342,10 @@ namespace Azure.AI.TextAnalytics
                 category = typeValue.ToString();
             if (entityElement.TryGetProperty("subcategory", out JsonElement subTypeValue))
                 subcategory = subTypeValue.ToString();
-            if (entityElement.TryGetProperty("offset", out JsonElement offsetValue))
-                offsetValue.TryGetInt32(out offset);
-            if (entityElement.TryGetProperty("length", out JsonElement lengthValue))
-                lengthValue.TryGetInt32(out length);
             if (entityElement.TryGetProperty("confidenceScore", out JsonElement scoreValue))
                 scoreValue.TryGetDouble(out confidenceScore);
 
-            return new CategorizedEntity(text, category, subcategory, offset, length, confidenceScore);
+            return new CategorizedEntity(text, category, subcategory, confidenceScore);
         }
 
         #endregion Recognize Entities
@@ -448,8 +442,6 @@ namespace Azure.AI.TextAnalytics
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
-            int offset = default;
-            int length = default;
 
             if (documentElement.TryGetProperty("text", out JsonElement textValue))
             {
@@ -473,13 +465,7 @@ namespace Azure.AI.TextAnalytics
                     negativeValue.TryGetDouble(out negativeScore);
             }
 
-            if (documentElement.TryGetProperty("offset", out JsonElement offsetValue))
-                offsetValue.TryGetInt32(out offset);
-
-            if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
-                lengthValue.TryGetInt32(out length);
-
-            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length);
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore);
         }
 
         #endregion
@@ -634,8 +620,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     string text = default;
                     double confidenceScore = default;
-                    int offset = default;
-                    int length = default;
 
                     if (matchElement.TryGetProperty("text", out JsonElement textValue))
                         text = textValue.ToString();
@@ -643,13 +627,7 @@ namespace Azure.AI.TextAnalytics
                     if (matchElement.TryGetProperty("confidenceScore", out JsonElement scoreValue))
                         scoreValue.TryGetDouble(out confidenceScore);
 
-                    if (matchElement.TryGetProperty("offset", out JsonElement offsetValue))
-                        offsetValue.TryGetInt32(out offset);
-
-                    if (matchElement.TryGetProperty("length", out JsonElement lengthValue))
-                        lengthValue.TryGetInt32(out length);
-
-                    matches.Add(new LinkedEntityMatch(text, confidenceScore, offset, length));
+                    matches.Add(new LinkedEntityMatch(text, confidenceScore));
                 }
 
                 return matches;
