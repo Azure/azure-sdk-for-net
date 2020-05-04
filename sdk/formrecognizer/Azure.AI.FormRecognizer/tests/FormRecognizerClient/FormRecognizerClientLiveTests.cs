@@ -65,7 +65,7 @@ namespace Azure.AI.FormRecognizer.Tests
             return InstrumentClient(client);
         }
 
-        private async Task<DisposableTrainedModel> CreateDisposableTrainedModel(bool useLabels)
+        private async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useLabels)
         {
             var trainingClient = CreateInstrumentedFormTrainingClient();
             var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
@@ -75,7 +75,7 @@ namespace Azure.AI.FormRecognizer.Tests
             // TODO: sanitize body and enable body recording here.
             using (Recording.DisableRequestBodyRecording())
             {
-                trainedModel = await DisposableTrainedModel.TrainModel(trainingClient, trainingFiles, useLabels);
+                trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFiles, useLabels);
             }
 
             return trainedModel;
@@ -303,7 +303,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModel(useLabels: true);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useLabels: true);
 
             if (useStream)
             {
@@ -353,7 +353,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedFormRecognizerClient();
             RecognizeCustomFormsOperation operation;
 
-            await using var trainedModel = await CreateDisposableTrainedModel(useLabels: false);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useLabels: false);
 
             if (useStream)
             {
@@ -408,7 +408,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedFormRecognizerClient();
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            await using var trainedModel = await CreateDisposableTrainedModel(useLabels);
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useLabels);
 
             var operation = await client.StartRecognizeCustomFormsFromUriAsync(trainedModel.ModelId, invalidUri);
             RequestFailedException capturedException = default;
