@@ -16,7 +16,7 @@ Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 dotnet add package Azure.AI.FormRecognizer --version 1.0.0-preview.2
 ``` 
 
-**Note:** This preview version targets Azure Form Recognizer service API version v2.0-preview.
+**Note:** This package version targets Azure Form Recognizer service API version v2.0-preview.
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
