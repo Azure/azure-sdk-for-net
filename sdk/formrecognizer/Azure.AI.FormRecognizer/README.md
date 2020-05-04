@@ -104,8 +104,8 @@ The following section provides several code snippets illustrating common pattern
 
 * [Recognize Receipts](#recognize-receipts)
 * [Recognize Content](#recognize-content)
-* [Train a Model](#train-a-model)
 * [Recognize Custom Forms](#recognize-custom-forms)
+* [Train a Model](#train-a-model)
 * [Manage Custom Models](#manage-custom-models)
 
 ### Recognize Receipts
@@ -173,10 +173,33 @@ foreach (FormPage page in formPages.Value)
 }
 ```
 
+### Recognize Custom Forms
+Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
+
+```C# Snippet:FormRecognizerSample3RecognizeCustomFormsFromUri
+Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
+foreach (RecognizedForm form in forms.Value)
+{
+    Console.WriteLine($"Form of type: {form.FormType}");
+    foreach (FormField field in form.Fields.Values)
+    {
+        Console.WriteLine($"Field '{field.Name}: ");
+
+        if (field.LabelText != null)
+        {
+            Console.WriteLine($"    Label: '{field.LabelText.Text}");
+        }
+
+        Console.WriteLine($"    Value: '{field.ValueText.Text}");
+        Console.WriteLine($"    Confidence: '{field.Confidence}");
+    }
+}
+```
+
 ### Train a Model
 Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
 
-```C# Snippet:FormRecognizerSample3TrainModelWithForms
+```C# Snippet:FormRecognizerSample4TrainModelWithForms
 // For instructions on setting up forms for training in an Azure Storage Blob Container, see
 // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/quickstarts/curl-train-extract#train-a-form-recognizer-model
 
@@ -204,33 +227,10 @@ foreach (CustomFormSubModel subModel in model.Models)
 }
 ```
 
-### Recognize Custom Forms
-Recognize and extract form fields and other content from your custom forms, using models you train with your own form types.
-
-```C# Snippet:FormRecognizerSample4RecognizeCustomFormsFromUri
-Response<IReadOnlyList<RecognizedForm>> forms = await client.StartRecognizeCustomFormsFromUri(modelId, new Uri(formUri)).WaitForCompletionAsync();
-foreach (RecognizedForm form in forms.Value)
-{
-    Console.WriteLine($"Form of type: {form.FormType}");
-    foreach (FormField field in form.Fields.Values)
-    {
-        Console.WriteLine($"Field '{field.Name}: ");
-
-        if (field.LabelText != null)
-        {
-            Console.WriteLine($"    Label: '{field.LabelText.Text}");
-        }
-
-        Console.WriteLine($"    Value: '{field.ValueText.Text}");
-        Console.WriteLine($"    Confidence: '{field.Confidence}");
-    }
-}
-```
-
 ### Manage Custom Models
 Manage the custom models stored in your account.
 
-```C# Snippet:FormRecognizerSample5ManageCustomModels
+```C# Snippet:FormRecognizerSample6ManageCustomModels
 FormTrainingClient client = new FormTrainingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Check number of models in the FormRecognizer account, and the maximum number of models that can be stored.
@@ -331,8 +331,8 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 
 - [Recognize form content][recognize_content]
 - [Recognize receipts][recognize_receipts]
-- [Train a model][train_a_model]
 - [Recognize custom forms][recognize_custom_forms]
+- [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
 
 ## Contributing
@@ -374,8 +374,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [recognize_content]: samples/Sample1_RecognizeFormContent.md
 [recognize_receipts]: samples/Sample2_RecognizeReceipts.md
-[train_a_model]: samples/Sample3_TrainModel.md
-[recognize_custom_forms]: samples/Sample4_RecognizeCustomForms.md
+[recognize_custom_forms]: samples/Sample3_RecognizeCustomForms.md
+[train_a_model]: samples/Sample4_TrainModel.md
 [manage_custom_models]: samples/Sample5_ManageCustomModels.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
