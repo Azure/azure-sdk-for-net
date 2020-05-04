@@ -165,6 +165,10 @@ namespace Azure.Data.Tables.Sas
             var p = new TableSasQueryParameters(
                 version: Version,
                 tableName: TableName,
+                partitionKeyStart: PartitionKeyStart,
+                partitionKeyEnd: PartitionKeyEnd,
+                rowKeyStart: RowKeyStart,
+                rowKeyEnd: RowKeyEnd,
                 services: default,
                 resourceTypes: default,
                 protocol: Protocol,

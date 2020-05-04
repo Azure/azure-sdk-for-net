@@ -19,6 +19,26 @@ namespace Azure.Data.Tables.Sas
     {
         internal string TableName { get; set; }
 
+        /// <summary>
+        /// The start of PartionKey range.
+        /// </summary>
+        public string StartPartitionKey { get; set; }
+
+        /// <summary>
+        /// The end of PartionKey range.
+        /// </summary>
+        public string StartRowKey { get; set; }
+
+        /// <summary>
+        /// The start of RowKey range.
+        /// </summary>
+        public string EndPartitionKey { get; set; }
+
+        /// <summary>
+        /// The end of RowKey range.
+        /// </summary>
+        public string EndRowKey { get; set; }
+
         public static new TableSasQueryParameters Empty => new TableSasQueryParameters();
 
         internal TableSasQueryParameters()
@@ -29,9 +49,13 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// Creates a new TableSasQueryParameters instance.
         /// </summary>
-        internal TableSasQueryParameters (
+        internal TableSasQueryParameters(
             string version,
             string tableName,
+            string partitionKeyStart,
+            string rowKeyStart,
+            string partitionKeyEnd,
+            string rowKeyEnd,
             AccountSasServices? services,
             TableAccountSasResourceTypes? resourceTypes,
             SasProtocol protocol,
@@ -66,6 +90,11 @@ namespace Azure.Data.Tables.Sas
                 contentType)
         {
             TableName = tableName;
+            StartPartitionKey = partitionKeyStart;
+            EndPartitionKey = partitionKeyEnd;
+            StartRowKey = rowKeyStart;
+            EndRowKey = rowKeyEnd;
+
         }
 
         /// <summary>
@@ -75,7 +104,7 @@ namespace Azure.Data.Tables.Sas
         /// <paramref name="values"/>.
         /// </summary>
         /// <param name="values">URI query parameters</param>
-        internal TableSasQueryParameters (
+        internal TableSasQueryParameters(
             IDictionary<string, string> values)
             : base(values)
         {
@@ -91,6 +120,22 @@ namespace Azure.Data.Tables.Sas
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendQueryParameter(TableConstants.Sas.Parameters.TableName, TableName);
+            if (!string.IsNullOrWhiteSpace(StartPartitionKey))
+            {
+                sb.AppendQueryParameter(TableConstants.Sas.Parameters.StartPartitionKey, StartPartitionKey);
+            }
+            if (!string.IsNullOrWhiteSpace(EndPartitionKey))
+            {
+                sb.AppendQueryParameter(TableConstants.Sas.Parameters.EndPartitionKey, EndPartitionKey);
+            }
+            if (!string.IsNullOrWhiteSpace(StartRowKey))
+            {
+                sb.AppendQueryParameter(TableConstants.Sas.Parameters.StartRowKey, StartRowKey);
+            }
+            if (!string.IsNullOrWhiteSpace(EndRowKey))
+            {
+                sb.AppendQueryParameter(TableConstants.Sas.Parameters.EndRowKey, EndRowKey);
+            }
             this.AppendProperties(sb);
             return sb.ToString();
         }
