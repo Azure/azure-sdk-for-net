@@ -3637,7 +3637,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Imports an application to LUIS, the application's structure is included in
         /// the request body.
         /// </summary>
-        /// <param name='luisApplu'>
+        /// <param name='luisAppLu'>
         /// A LUIS application structure.
         /// </param>
         /// <param name='appName'>
@@ -3666,15 +3666,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<System.Guid>> ImportLuFromatWithHttpMessagesAsync(string luisApplu, string appName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<System.Guid>> ImportLuFormatWithHttpMessagesAsync(string luisAppLu, string appName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (luisApplu == null)
+            if (luisAppLu == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "luisApplu");
+                throw new ValidationException(ValidationRules.CannotBeNull, "luisAppLu");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3684,9 +3684,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("appName", appName);
-                tracingParameters.Add("luisApplu", luisApplu);
+                tracingParameters.Add("luisAppLu", luisAppLu);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ImportLuFromat", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ImportLuFormat", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
@@ -3723,9 +3723,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
 
             // Serialize Request
             string _requestContent = null;
-            if(luisApplu != null)
+            if(luisAppLu != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(luisApplu, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(luisAppLu, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("text/plain");
             }

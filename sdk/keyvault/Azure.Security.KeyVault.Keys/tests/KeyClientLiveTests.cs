@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -17,6 +17,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
         {
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
+            Matcher = new RecordMatcher(compareBodies: false);
         }
 
         [SetUp]

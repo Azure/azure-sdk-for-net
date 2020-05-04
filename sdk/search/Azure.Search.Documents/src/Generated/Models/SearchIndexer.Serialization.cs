@@ -67,10 +67,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("disabled");
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (ETag != null)
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag");
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(_etag);
             }
             writer.WriteEndObject();
         }

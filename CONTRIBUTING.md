@@ -71,6 +71,12 @@ Now you can use the same command on non-windows as above for e.g. on Ubuntu you 
 Build tools are now downloaded as part of a nuget package under `root\restoredPackages\microsoft.internal.netsdkbuild.mgmt.tools`
 If for any reason there is an update to the build tools, you will then need to first delete directory `root\restoredPackages\microsoft.internal.netsdkbuild.mgmt.tools` and re-execute your build command. This will simply get the latest version of build tools.
 
+## TO CREATE NEW LIBRARY USING TEMPLATE
+
+We have created a dotnet template to make creating new management SDK library easier than ever.
+
+See (README file)[(https://github.com/Azure/azure-sdk-for-net/blob/master/eng/templates/README.md)].
+
 # Client Libraries
 
 ## TO BUILD:
@@ -137,7 +143,12 @@ In some cases, you might want to test against the latest versions of the client 
 
 ## Public API additions
 
-If you make a public API addition, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings.
+If you make public API changes or additions, the `eng\scripts\Export-API.ps1` script has to be run to update public API listings. This generates a file in the library's directory similar to the example found in `sdk\template\Azure.Template\api\Azure.Template.netstandard2.0.cs`.
+
+Running the script for a project in `sdk\tables` would look like this: 
+```
+eng\scripts\Export-API.ps1 tables
+```
 
 ## API Compatibility Verification
 
@@ -146,7 +157,7 @@ If you make a public API addition, the `eng\scripts\Export-API.ps1` script has t
 ### How it works
 We use a dummy project called [ApiCompat](https://github.com/Azure/azure-sdk-for-net/tree/master/eng/ApiCompat/ApiCompat.csproj) to enforce API compatibility between the GA'ed libraries and the most recent version available on Nuget. This project includes package references to all GA'ed libraries and to Microsoft.DotNet.ApiCompat.
 Each listed library package is restored from Nuget via the package references listed in the `ApiCompat.csproj` file, in combination with the version listed for that package in [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props).
-The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced in the [eng/Directory.Build.Data.targets](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.targets) which causes this target to be executed for each csproj that has the `EnableApiCompat` parameter set to true. The `EnableApiCompat` parameter defaults to the value of the `IsShippingClientLibrary` parameter, which is defined in [eng/Directory.Build.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.props).
+The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced in the [eng/Directory.Build.Data.targets](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.targets) which causes this target to be executed for each csproj that has the `EnableApiCompat` parameter set to true. The `EnableApiCompat` parameter defaults to the value of the `IsShippingClientLibrary` parameter, which is defined in [eng/Directory.Build.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Directory.Build.Data.props). For libraries that do not yet have a public package defined in `ApiCompat.csproj` for comparison, set `<EnableApiCompat>false</EnableApiCompat>` in the csproj.
 
 ### Adding a new GA'ed library
 To include add a new GA'ed library in the `ApiCompatVerification` target, add a package reference for the library to the `ApiCompat.csproj` file. You will also need to include the latest GA version of the library in [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props). 
@@ -255,7 +266,7 @@ input-file:
 require: https://github.com/Azure/azure-rest-api-specs/blob/49fc16354df7211f8392c56884a3437138317d1f/specification/azsadmin/resource-manager/storage/readme.md
 ```
 
-3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run Autorest and generate the code. (NOTE: this step requires Node 13).
+3. Run `dotnet msbuild /t:GenerateCode` in src directory of the project (e.g. `net\sdk\storage\Azure.Management.Storage\src`). This would run AutoRest and generate the code. (NOTE: this step requires Node 13).
 4. For management plan libraries add `azure-arm: true` setting to `autorest.md` client constructors and options would be auto-generated. For data-plane libraries follow the next two steps.
 4. Add a `*ClientOptions` type that inherits from `ClientOptions` and has a service version enum:
 

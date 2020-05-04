@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -26,12 +27,12 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("pattern");
                 writer.WriteStringValue(Pattern);
             }
-            if (Flags != null)
+            if (FlagsInternal != null)
             {
                 writer.WritePropertyName("flags");
-                writer.WriteStringValue(Flags.Value.ToString());
+                writer.WriteStringValue(FlagsInternal);
             }
-            if (Stopwords != null)
+            if (Stopwords != null && Stopwords.Any())
             {
                 writer.WritePropertyName("stopwords");
                 writer.WriteStartArray();
@@ -52,7 +53,7 @@ namespace Azure.Search.Documents.Models
         {
             bool? lowercase = default;
             string pattern = default;
-            RegexFlags? flags = default;
+            string flags = default;
             IList<string> stopwords = default;
             string odataType = default;
             string name = default;
@@ -82,7 +83,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    flags = new RegexFlags(property.Value.GetString());
+                    flags = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("stopwords"))

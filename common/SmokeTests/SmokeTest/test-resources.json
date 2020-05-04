@@ -30,6 +30,7 @@
     },
     "variables": {
         "keyVaultName": "[format('kv-smk-{0}', parameters('baseName'))]",
+        "iotHubName": "[format('iot-smoke-{0}', parameters('baseName'))]",
         "eventHubNamespaceName": "[format('eh-smoke-{0}', parameters('baseName'))]",
         "eventHubName": "myeventhub",
         "eventHubAuthorizationRuleName": "RootManageSharedAccessKey",
@@ -51,6 +52,22 @@
                 "isAutoInflateEnabled": false,
                 "maximumThroughputUnits": 0,
                 "kafkaEnabled": false
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "name": "sample-IotHubConnectionString",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri":"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/samples/iothub-connect-to-eventhubs/sample-resources.json",
+                    "contentVersion":"1.0.0.0"
+                },
+                "parameters": {
+                    "hubname": {"value": "[variables('iotHubName')]" },
+                    "location": {"value": "[parameters('location')]" }
+                }
             }
         },
         {
@@ -264,6 +281,10 @@
         "BLOB_CONNECTION_STRING": {
             "type": "string",
             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
+        },
+        "IOTHUB_CONNECTION_STRING": {
+            "type": "string",
+            "value": "[reference('sample-IotHubConnectionString').outputs.IoTHubConnectionString.value]"
         }
     }
 }

@@ -14,6 +14,7 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
+    /// <summary> The DataSources service client. </summary>
     internal partial class DataSourcesClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -38,7 +39,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataSource>> CreateOrUpdateAsync(string dataSourceName, DataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexerDataSource>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.CreateOrUpdateAsync(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
@@ -50,7 +51,7 @@ namespace Azure.Search.Documents
         /// <param name="ifMatch"> Defines the If-Match condition. The operation will be performed only if the ETag on the server matches this value. </param>
         /// <param name="ifNoneMatch"> Defines the If-None-Match condition. The operation will be performed only if the ETag on the server does not match this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataSource> CreateOrUpdate(string dataSourceName, DataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexerDataSource> CreateOrUpdate(string dataSourceName, SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             return RestClient.CreateOrUpdate(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
         }
@@ -81,7 +82,7 @@ namespace Azure.Search.Documents
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataSource>> GetAsync(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexerDataSource>> GetAsync(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetAsync(dataSourceName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -90,7 +91,7 @@ namespace Azure.Search.Documents
         /// <param name="dataSourceName"> The name of the datasource to retrieve. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataSource> Get(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexerDataSource> Get(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Get(dataSourceName, xMsClientRequestId, cancellationToken);
         }
@@ -117,7 +118,7 @@ namespace Azure.Search.Documents
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataSource>> CreateAsync(DataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexerDataSource>> CreateAsync(SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.CreateAsync(dataSource, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -126,7 +127,7 @@ namespace Azure.Search.Documents
         /// <param name="dataSource"> The definition of the datasource to create. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataSource> Create(DataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexerDataSource> Create(SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.Create(dataSource, xMsClientRequestId, cancellationToken);
         }

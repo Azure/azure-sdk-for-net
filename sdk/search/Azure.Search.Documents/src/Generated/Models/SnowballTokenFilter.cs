@@ -37,6 +37,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The language to use. </summary>
-        public SnowballTokenFilterLanguage Language { get; }
+        public SnowballTokenFilterLanguage Language { get; set; }
     }
 }

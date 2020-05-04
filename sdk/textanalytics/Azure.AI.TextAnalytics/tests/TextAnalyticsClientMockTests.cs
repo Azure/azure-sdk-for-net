@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -134,11 +134,11 @@ namespace Azure.AI.TextAnalytics.Tests
                         {
                             json.WriteStartObject();
                             json.WriteString("text", entity.Text);
-                            json.WriteString("type", JsonSerializer.Serialize(entity.Category));
-                            json.WriteString("subtype", JsonSerializer.Serialize(entity.SubCategory));
+                            json.WriteString("category", JsonSerializer.Serialize(entity.Category));
+                            json.WriteString("subcategory", JsonSerializer.Serialize(entity.SubCategory));
                             json.WriteNumber("offset", entity.GraphemeOffset);
                             json.WriteNumber("length", entity.GraphemeLength);
-                            json.WriteNumber("score", entity.ConfidenceScore);
+                            json.WriteNumber("confidenceScore", entity.ConfidenceScore);
                             json.WriteEndObject();
                         }
                         json.WriteEndArray();

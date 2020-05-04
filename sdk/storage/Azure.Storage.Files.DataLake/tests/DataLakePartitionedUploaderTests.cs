@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Moq;
 using NUnit.Framework;
@@ -34,6 +34,12 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             LeaseId = "MyImportantLease"
         };
+        private static readonly Dictionary<string, string> s_metadata = new Dictionary<string, string>
+        {
+            { "key", "value" }
+        };
+        private static readonly string s_permissions = "permissions";
+        private static readonly string s_umask = "umask";
         private static readonly Progress<long> s_progress = new Progress<long>();
         private static readonly Response<PathInfo> s_response = Response.FromValue(
             new PathInfo(),
@@ -212,11 +218,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             if (_async)
             {
-                return await uploader.UploadAsync(content, s_pathHttpHeaders, s_conditions, s_progress, s_cancellationToken);
+                return await uploader.UploadAsync(content, s_pathHttpHeaders, s_metadata, s_permissions, s_umask, s_conditions, s_progress, s_cancellationToken);
             }
             else
             {
-                return uploader.Upload(content, s_pathHttpHeaders, s_conditions, s_progress, s_cancellationToken);
+                return uploader.Upload(content, s_pathHttpHeaders, s_metadata, s_permissions, s_umask, s_conditions, s_progress, s_cancellationToken);
             }
         }
 
@@ -227,9 +233,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 clientMock.Setup(
                     c => c.CreateAsync(
                         s_pathHttpHeaders,
-                        default,
-                        default,
-                        default,
+                        s_metadata,
+                        s_permissions,
+                        s_umask,
                         s_conditions,
                         s_cancellationToken
                     )).Returns<PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, CancellationToken>(sink.CreateAsync);
@@ -259,9 +265,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 clientMock.Setup(
                     c => c.Create(
                         s_pathHttpHeaders,
-                        default,
-                        default,
-                        default,
+                        s_metadata,
+                        s_permissions,
+                        s_umask,
                         s_conditions,
                         s_cancellationToken
                     )).Returns<PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, CancellationToken>(sink.Create);

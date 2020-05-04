@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Testing;
+using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 
@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
     //   "AADSTS50034: The user account {EmailHidden} does not exist in the
     //   <tenantId> directory."
     //
-    public class UsernamePasswordCredentialLiveTests : RecordedTestBase
+    public class UsernamePasswordCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
     {
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 
@@ -57,6 +57,7 @@ namespace Azure.Identity.Tests
         public void ClearDiscoveryCache()
         {
             StaticCachesUtilities.ClearStaticMetadataProviderCache();
+            StaticCachesUtilities.ClearAuthorityEndpointResolutionManagerCache();
         }
 
         // !!!!!! WARNING !!!!!
@@ -70,9 +71,9 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateUsernamePasswordLive()
         {
-            var tenantId = Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_TENANTID");
-            var username = Recording.GetVariableFromEnvironment("AZURE_IDENTITY_TEST_USERNAME");
-            var password = Environment.GetEnvironmentVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
+            var tenantId = TestEnvironment.IdentityTenantId;
+            var username = TestEnvironment.Username;
+            var password = TestEnvironment.TestPassword;
 
             var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 

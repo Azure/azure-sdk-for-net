@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -98,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             try
             {
-                var prefix = string.Format(OwnershipPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
+                var prefix = string.Format(CultureInfo.InvariantCulture, OwnershipPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
 
                 Func<CancellationToken, Task<List<EventProcessorPartitionOwnership>>> listOwnershipAsync = async listOwnershipToken =>
                 {
@@ -167,7 +168,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 var blobRequestConditions = new BlobRequestConditions();
 
-                var blobName = string.Format(OwnershipPrefix + ownership.PartitionId, ownership.FullyQualifiedNamespace.ToLowerInvariant(), ownership.EventHubName.ToLowerInvariant(), ownership.ConsumerGroup.ToLowerInvariant());
+                var blobName = string.Format(CultureInfo.InvariantCulture, OwnershipPrefix + ownership.PartitionId, ownership.FullyQualifiedNamespace.ToLowerInvariant(), ownership.EventHubName.ToLowerInvariant(), ownership.ConsumerGroup.ToLowerInvariant());
                 var blobClient = ContainerClient.GetBlobClient(blobName);
 
                 try
@@ -276,7 +277,7 @@ namespace Azure.Messaging.EventHubs.Processor
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ListCheckpointsStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
 
-            var prefix = string.Format(CheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
+            var prefix = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var checkpointCount = 0;
 
             Func<CancellationToken, Task<IEnumerable<EventProcessorCheckpoint>>> listCheckpointsAsync = async listCheckpointsToken =>
@@ -288,11 +289,11 @@ namespace Azure.Messaging.EventHubs.Processor
                     var partitionId = blob.Name.Substring(prefix.Length);
                     var startingPosition = default(EventPosition?);
 
-                    if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, out var result))
+                    if (blob.Metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
                     {
                         startingPosition = EventPosition.FromOffset(result, false);
                     }
-                    else if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, out result))
+                    else if (blob.Metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
                     {
                         startingPosition = EventPosition.FromSequenceNumber(result, false);
                     }
@@ -358,13 +359,13 @@ namespace Azure.Messaging.EventHubs.Processor
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup);
 
-            var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLowerInvariant(), checkpoint.EventHubName.ToLowerInvariant(), checkpoint.ConsumerGroup.ToLowerInvariant());
+            var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLowerInvariant(), checkpoint.EventHubName.ToLowerInvariant(), checkpoint.ConsumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
 
             var metadata = new Dictionary<string, string>()
             {
-                { BlobMetadataKey.Offset, eventData.Offset.ToString() },
-                { BlobMetadataKey.SequenceNumber, eventData.SequenceNumber.ToString() }
+                { BlobMetadataKey.Offset, eventData.Offset.ToString(CultureInfo.InvariantCulture) },
+                { BlobMetadataKey.SequenceNumber, eventData.SequenceNumber.ToString(CultureInfo.InvariantCulture) }
             };
 
             Func<CancellationToken, Task> updateCheckpointAsync = async updateCheckpointToken =>

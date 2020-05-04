@@ -14,6 +14,7 @@ using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
+    /// <summary> The Indexers service client. </summary>
     internal partial class IndexersClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -171,7 +172,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IndexerExecutionInfo>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchIndexerStatus>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return await RestClient.GetStatusAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
         }
@@ -180,7 +181,7 @@ namespace Azure.Search.Documents
         /// <param name="indexerName"> The name of the indexer for which to retrieve status. </param>
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IndexerExecutionInfo> GetStatus(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<SearchIndexerStatus> GetStatus(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
             return RestClient.GetStatus(indexerName, xMsClientRequestId, cancellationToken);
         }

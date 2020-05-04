@@ -1,7 +1,16 @@
 # Release History
 
-## 5.1.0-preview.2 (Unreleased)
+## 5.1.0
 
+### Changes
+
+#### General availability of preview features
+
+- The set of features from v5.1.0-preview.1 are now generally available.  This includes the `EventProcessor<TPartition>` and `PartitionReceiver` types which focus on advanced application scenarios which require greater low-level control. 
+
+#### Bug fixes and foundation
+
+- Minor enhancements to reduce allocations and improve efficiency
 
 ## 5.1.0-preview.1
 

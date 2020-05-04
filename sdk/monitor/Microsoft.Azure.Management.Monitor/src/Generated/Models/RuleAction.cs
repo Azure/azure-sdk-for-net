@@ -10,12 +10,14 @@
 
 namespace Microsoft.Azure.Management.Monitor.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// The action that is performed when the alert rule becomes active, and
     /// when an alert condition is resolved.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("RuleAction")]
     public partial class RuleAction
     {
         /// <summary>

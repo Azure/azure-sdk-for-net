@@ -10,15 +10,57 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ManagedServiceIdentityType.
     /// </summary>
-    public static class ManagedServiceIdentityType
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ManagedServiceIdentityType
     {
-        public const string SystemAssigned = "SystemAssigned";
-        public const string UserAssigned = "UserAssigned";
-        public const string SystemAssignedUserAssigned = "SystemAssigned, UserAssigned";
-        public const string None = "None";
+        [EnumMember(Value = "None")]
+        None,
+        [EnumMember(Value = "SystemAssigned")]
+        SystemAssigned,
+        [EnumMember(Value = "UserAssigned")]
+        UserAssigned
+    }
+    internal static class ManagedServiceIdentityTypeEnumExtension
+    {
+        internal static string ToSerializedValue(this ManagedServiceIdentityType? value)
+        {
+            return value == null ? null : ((ManagedServiceIdentityType)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this ManagedServiceIdentityType value)
+        {
+            switch( value )
+            {
+                case ManagedServiceIdentityType.None:
+                    return "None";
+                case ManagedServiceIdentityType.SystemAssigned:
+                    return "SystemAssigned";
+                case ManagedServiceIdentityType.UserAssigned:
+                    return "UserAssigned";
+            }
+            return null;
+        }
+
+        internal static ManagedServiceIdentityType? ParseManagedServiceIdentityType(this string value)
+        {
+            switch( value )
+            {
+                case "None":
+                    return ManagedServiceIdentityType.None;
+                case "SystemAssigned":
+                    return ManagedServiceIdentityType.SystemAssigned;
+                case "UserAssigned":
+                    return ManagedServiceIdentityType.UserAssigned;
+            }
+            return null;
+        }
     }
 }

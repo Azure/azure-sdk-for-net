@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchIndexClient.GetDocumentAsync"/>.
+    /// Options for <see cref="SearchClient.GetDocumentAsync"/>.
     /// </summary>
     public class GetDocumentOptions : SearchRequestOptions
     {

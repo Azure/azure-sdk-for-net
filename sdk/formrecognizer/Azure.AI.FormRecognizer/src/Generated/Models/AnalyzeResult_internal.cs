@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -16,20 +15,14 @@ namespace Azure.AI.FormRecognizer.Models
     {
         /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
         /// <param name="version"> Version of schema used for this result. </param>
-        /// <param name="readResults"> Text extracted from the input. </param>
-        internal AnalyzeResult_internal(string version, IEnumerable<ReadResult_internal> readResults)
+        internal AnalyzeResult_internal(string version)
         {
             if (version == null)
             {
                 throw new ArgumentNullException(nameof(version));
             }
-            if (readResults == null)
-            {
-                throw new ArgumentNullException(nameof(readResults));
-            }
 
             Version = version;
-            ReadResults = readResults.ToArray();
         }
 
         /// <summary> Initializes a new instance of AnalyzeResult_internal. </summary>
