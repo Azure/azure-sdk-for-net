@@ -43,18 +43,6 @@ namespace Azure.Data.Tables
             /// </summary>
             public const string DefaultSasVersion = "2019-07-07";
 
-            internal static class AccountServices
-            {
-                public const string Table = "t";
-            }
-
-            internal static class AccountResources
-            {
-                public const char Service = 's';
-                public const char Container = 'c';
-                public const char Object = 'o';
-            }
-
             internal static class Permissions
             {
                 public const char Read = 'r';
@@ -63,7 +51,6 @@ namespace Azure.Data.Tables
                 public const char List = 'l';
                 public const char Add = 'a';
                 public const char Update = 'u';
-                public const char Process = 'p';
                 public const char Create = 'c';
             }
 
@@ -97,28 +84,6 @@ namespace Azure.Data.Tables
                 public const string PermissionsUpper = "SP";
                 public const string Signature = "sig";
                 public const string SignatureUpper = "SIG";
-                public const string KeyObjectId = "skoid";
-                public const string KeyObjectIdUpper = "SKOID";
-                public const string KeyTenantId = "sktid";
-                public const string KeyTenantIdUpper = "SKTID";
-                public const string KeyStart = "skt";
-                public const string KeyStartUpper = "SKT";
-                public const string KeyExpiry = "ske";
-                public const string KeyExpiryUpper = "SKE";
-                public const string KeyService = "sks";
-                public const string KeyServiceUpper = "SKS";
-                public const string KeyVersion = "skv";
-                public const string KeyVersionUpper = "SKV";
-                public const string CacheControl = "rscc";
-                public const string CacheControlUpper = "RSCC";
-                public const string ContentDisposition = "rscd";
-                public const string ContentDispositionUpper = "RSCD";
-                public const string ContentEncoding = "rsce";
-                public const string ContentEncodingUpper = "RSCE";
-                public const string ContentLanguage = "rscl";
-                public const string ContentLanguageUpper = "RSCL";
-                public const string ContentType = "rsct";
-                public const string ContentTypeUpper = "RSCT";
             }
         }
     }

@@ -13,63 +13,6 @@ namespace Azure.Data.Tables.Sas
     /// </summary>
     internal static partial class SasExtensions
     {
-        /// <summary>
-        /// Creates a string representing which resource types are allowed
-        /// for <see cref="TableAccountSasBuilder.ResourceTypes"/>.
-        /// </summary>
-        /// <returns>
-        /// A string representing which resource types are allowed.
-        /// </returns>
-        /// <remarks>
-        /// The order here matches the order used by the portal when generating SAS signatures.
-        /// </remarks>
-        internal static string ToPermissionsString(this TableAccountSasResourceTypes resourceTypes)
-        {
-            var sb = new StringBuilder();
-            if ((resourceTypes & TableAccountSasResourceTypes.Service) == TableAccountSasResourceTypes.Service)
-            {
-                sb.Append(TableConstants.Sas.AccountResources.Service);
-            }
-            if ((resourceTypes & TableAccountSasResourceTypes.Container) == TableAccountSasResourceTypes.Container)
-            {
-                sb.Append(TableConstants.Sas.AccountResources.Container);
-            }
-            if ((resourceTypes & TableAccountSasResourceTypes.Object) == TableAccountSasResourceTypes.Object)
-            {
-                sb.Append(TableConstants.Sas.AccountResources.Object);
-            }
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Parse a string representing which resource types are accessible
-        /// from a shared access signature.
-        /// </summary>
-        /// <param name="s">
-        /// A string representing which resource types are accessible.
-        /// </param>
-        /// <returns>
-        /// An <see cref="TableAccountSasResourceTypes"/> instance.
-        /// </returns>
-        /// <remarks>
-        /// The order here matches the order used by the portal when generating SAS signatures.
-        /// </remarks>
-        internal static TableAccountSasResourceTypes ParseResourceTypes(string s)
-        {
-            TableAccountSasResourceTypes types = default;
-            foreach (var ch in s)
-            {
-                types |= ch switch
-                {
-                    TableConstants.Sas.AccountResources.Service => TableAccountSasResourceTypes.Service,
-                    TableConstants.Sas.AccountResources.Container => TableAccountSasResourceTypes.Container,
-                    TableConstants.Sas.AccountResources.Object => TableAccountSasResourceTypes.Object,
-                    _ => throw Errors.InvalidResourceType(ch),
-                };
-            }
-            return types;
-        }
-
         private const string NoneName = null;
         private const string HttpsName = "https";
         private const string HttpsAndHttpName = "https,http";
@@ -143,21 +86,11 @@ namespace Azure.Data.Tables.Sas
         /// <param name="stringBuilder">
         /// StringBuilder instance to add the query params to
         /// </param>
-        internal static void AppendProperties(this SasQueryParameters parameters, StringBuilder stringBuilder)
+        internal static void AppendProperties(this TableSasQueryParameters parameters, StringBuilder stringBuilder)
         {
             if (!string.IsNullOrWhiteSpace(parameters.Version))
             {
                 stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Version, parameters.Version);
-            }
-
-            if (parameters.Services != null)
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Services, TableConstants.Sas.AccountServices.Table);
-            }
-
-            if (parameters.ResourceTypes != null)
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ResourceTypes, parameters.ResourceTypes.Value.ToPermissionsString());
             }
 
             if (parameters.Protocol != default)
@@ -194,31 +127,6 @@ namespace Azure.Data.Tables.Sas
             if (!string.IsNullOrWhiteSpace(parameters.Permissions))
             {
                 stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.Permissions, parameters.Permissions);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.CacheControl))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.CacheControl, WebUtility.UrlEncode(parameters.CacheControl));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentDisposition))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ContentDisposition, WebUtility.UrlEncode(parameters.ContentDisposition));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentEncoding))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ContentEncoding, WebUtility.UrlEncode(parameters.ContentEncoding));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentLanguage))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ContentLanguage, WebUtility.UrlEncode(parameters.ContentLanguage));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentType))
-            {
-                stringBuilder.AppendQueryParameter(TableConstants.Sas.Parameters.ContentType, WebUtility.UrlEncode(parameters.ContentType));
             }
 
             if (!string.IsNullOrWhiteSpace(parameters.Signature))

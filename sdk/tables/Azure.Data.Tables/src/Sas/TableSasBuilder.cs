@@ -135,7 +135,7 @@ namespace Azure.Data.Tables.Sas
         /// The storage account's <see cref="TableSharedKeyCredential"/>.
         /// </param>
         /// <returns>
-        /// The <see cref="SasQueryParameters"/> used for authenticating
+        /// The <see cref="TableSasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
         public TableSasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
@@ -169,8 +169,6 @@ namespace Azure.Data.Tables.Sas
                 partitionKeyEnd: PartitionKeyEnd,
                 rowKeyStart: RowKeyStart,
                 rowKeyEnd: RowKeyEnd,
-                services: default,
-                resourceTypes: default,
                 protocol: Protocol,
                 startsOn: StartsOn,
                 expiresOn: ExpiresOn,
@@ -240,7 +238,7 @@ namespace Azure.Data.Tables.Sas
 
             if (string.IsNullOrEmpty(Version))
             {
-                Version = SasQueryParameters.DefaultSasVersion;
+                Version = TableSasQueryParameters.DefaultSasVersion;
             }
         }
     }
