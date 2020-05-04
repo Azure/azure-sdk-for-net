@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics
         {
             Name = name;
             Iso6391Name = iso6391Name;
-            Score = score;
+            ConfidenceScore = score;
         }
 
         /// <summary>
@@ -31,6 +31,6 @@ namespace Azure.AI.TextAnalytics
         /// Gets a confidence score between 0 and 1. Scores close to 1
         /// indicate high certainty that the identified language is correct.
         /// </summary>
-        public double Score { get; }
+        public double ConfidenceScore { get; }
     }
 }
