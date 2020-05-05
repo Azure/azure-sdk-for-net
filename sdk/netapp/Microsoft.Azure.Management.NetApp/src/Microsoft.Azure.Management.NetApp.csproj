@@ -13,8 +13,8 @@
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        Version 1.5.0 relates to NetApp Files (ANF) RP R8 GA.
-          - added operation to revert volume to snapshot 
+        Version 1.5.1 relates to NetApp Files (ANF) 2019-11-01.
+          - Fix MountTarget property in Volume
 
         Azure NetApp Files:
           Provides the capability to create multiple file system volumes through Microsoft Azure.
