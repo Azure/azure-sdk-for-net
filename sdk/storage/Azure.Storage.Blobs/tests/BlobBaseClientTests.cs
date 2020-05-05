@@ -253,6 +253,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(256 * Constants.KB, 255 * Constants.KB)]
         [TestCase(257 * Constants.KB, 256 * Constants.KB)]
         [TestCase(1 * Constants.MB, 1 * Constants.KB)]
+        [LiveOnly] // Stream copy uses ArrayPool under the hood. Which brings undeterministic behavior for larger content.
         public async Task DownloadAsync_WithUnreliableConnection(int dataSize, int faultPoint)
         {
             // Arrange
