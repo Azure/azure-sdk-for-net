@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="roundTripTimeMs">The maximum round-trip time in
         /// milliseconds permitted for a test to evaluate as
         /// successful.</param>
-        public ConnectionMonitorSuccessThreshold(int? checksFailedPercent = default(int?), int? roundTripTimeMs = default(int?))
+        public ConnectionMonitorSuccessThreshold(int? checksFailedPercent = default(int?), double? roundTripTimeMs = default(double?))
         {
             ChecksFailedPercent = checksFailedPercent;
             RoundTripTimeMs = roundTripTimeMs;
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// for a test to evaluate as successful.
         /// </summary>
         [JsonProperty(PropertyName = "roundTripTimeMs")]
-        public int? RoundTripTimeMs { get; set; }
+        public double? RoundTripTimeMs { get; set; }
 
     }
 }
