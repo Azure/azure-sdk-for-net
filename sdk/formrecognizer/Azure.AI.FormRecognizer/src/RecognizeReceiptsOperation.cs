@@ -70,13 +70,6 @@ namespace Azure.AI.FormRecognizer.Models
             Id = operationLocation.Split('/').Last();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RecognizeReceiptsOperation"/> class.
-        /// </summary>
-        protected RecognizeReceiptsOperation()
-        {
-        }
-
         /// <inheritdoc/>
         public override ValueTask<Response<IReadOnlyList<RecognizedReceipt>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(cancellationToken);

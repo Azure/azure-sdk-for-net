@@ -175,7 +175,6 @@ namespace Azure.AI.FormRecognizer.Models
     }
     public partial class RecognizeContentOperation : Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.FormPage>>
     {
-        protected RecognizeContentOperation() { }
         public RecognizeContentOperation(string operationId, Azure.AI.FormRecognizer.FormRecognizerClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -189,7 +188,6 @@ namespace Azure.AI.FormRecognizer.Models
     }
     public partial class RecognizeCustomFormsOperation : Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RecognizedForm>>
     {
-        protected RecognizeCustomFormsOperation() { }
         public RecognizeCustomFormsOperation(string operationId, Azure.AI.FormRecognizer.FormRecognizerClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -223,7 +221,6 @@ namespace Azure.AI.FormRecognizer.Models
     }
     public partial class RecognizeReceiptsOperation : Azure.Operation<System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.Models.RecognizedReceipt>>
     {
-        protected RecognizeReceiptsOperation() { }
         public RecognizeReceiptsOperation(string operationId, Azure.AI.FormRecognizer.FormRecognizerClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -279,7 +276,6 @@ namespace Azure.AI.FormRecognizer.Training
     }
     public partial class CopyModelOperation : Azure.Operation<Azure.AI.FormRecognizer.Training.CustomFormModelInfo>
     {
-        protected CopyModelOperation() { }
         public CopyModelOperation(string operationId, Azure.AI.FormRecognizer.FormRecognizerClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
@@ -365,7 +361,6 @@ namespace Azure.AI.FormRecognizer.Training
     }
     public partial class TrainingOperation : Azure.Operation<Azure.AI.FormRecognizer.Training.CustomFormModel>
     {
-        protected TrainingOperation() { }
         public TrainingOperation(string operationId, Azure.AI.FormRecognizer.Training.FormTrainingClient client) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }

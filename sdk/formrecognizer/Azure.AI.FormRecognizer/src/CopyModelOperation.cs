@@ -55,13 +55,6 @@ namespace Azure.AI.FormRecognizer.Training
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
-        /// </summary>
-        protected CopyModelOperation()
-        {
-        }
-
         /// <inheritdoc/>
         public override Response GetRawResponse() => _response;
 
