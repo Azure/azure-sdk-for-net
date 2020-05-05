@@ -746,7 +746,7 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The ID of the device whose device twin is to be retrieved",
               "required": true,
               "type": "string"
             },
@@ -777,14 +777,14 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The ID of the device whose device twin is to be replaced",
               "required": true,
               "type": "string"
             },
             {
               "name": "deviceTwinInfo",
               "in": "body",
-              "description": "Device twin info",
+              "description": "The twin object that will replace the current device twin",
               "required": true,
               "schema": {
                 "$ref": "#/definitions/Twin"
@@ -793,6 +793,7 @@
             {
               "name": "If-Match",
               "in": "header",
+              "description": "The Etag to be used to determine if the replace operation should be carried out",
               "required": false,
               "type": "string"
             },
@@ -802,7 +803,7 @@
           ],
           "responses": {
             "200": {
-              "description": "Returns the device twin object",
+              "description": "Returns the updated device twin object",
               "schema": {
                 "$ref": "#/definitions/Twin"
               }
@@ -823,14 +824,14 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The ID of the device whose device twin is to be updated",
               "required": true,
               "type": "string"
             },
             {
               "name": "deviceTwinInfo",
               "in": "body",
-              "description": "Device twin info",
+              "description": "The twin object containing the tags and desired properties to be updated",
               "required": true,
               "schema": {
                 "$ref": "#/definitions/Twin"
@@ -839,6 +840,7 @@
             {
               "name": "If-Match",
               "in": "header",
+              "description": "The Etag to be used to determine if the update operation should be carried out",
               "required": false,
               "type": "string"
             },
@@ -848,7 +850,7 @@
           ],
           "responses": {
             "200": {
-              "description": "Returns the device twin object",
+              "description": "Returns the updated device twin object",
               "schema": {
                 "$ref": "#/definitions/Twin"
               }
@@ -869,14 +871,14 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The ID of the device whose module twin is to be retrieved",
               "required": true,
               "type": "string"
             },
             {
               "name": "mid",
               "in": "path",
-              "description": "Module ID.",
+              "description": "The ID of the module whose module twin is to be retrieved",
               "required": true,
               "type": "string"
             },
@@ -886,7 +888,7 @@
           ],
           "responses": {
             "200": {
-              "description": "Returns the device twin object",
+              "description": "Returns the module twin object",
               "schema": {
                 "$ref": "#/definitions/Twin"
               }
@@ -907,21 +909,21 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The ID of the device whose module twin is to be replaced",
               "required": true,
               "type": "string"
             },
             {
               "name": "mid",
               "in": "path",
-              "description": "Module ID.",
+              "description": "The ID of the module whose module twin is to be replaced",
               "required": true,
               "type": "string"
             },
             {
               "name": "deviceTwinInfo",
               "in": "body",
-              "description": "Device twin info",
+              "description": "The twin object that will replace the current module twin",
               "required": true,
               "schema": {
                 "$ref": "#/definitions/Twin"
@@ -930,6 +932,7 @@
             {
               "name": "If-Match",
               "in": "header",
+              "description": "The Etag to be used to determine if the replace operation should be carried out",
               "required": false,
               "type": "string"
             },
@@ -939,7 +942,7 @@
           ],
           "responses": {
             "200": {
-              "description": "Returns the device twin object",
+              "description": "Returns the updated module twin object",
               "schema": {
                 "$ref": "#/definitions/Twin"
               }
@@ -960,21 +963,21 @@
             {
               "name": "id",
               "in": "path",
-              "description": "Device ID.",
+              "description": "The ID of the device whose module twin is to be updated",
               "required": true,
               "type": "string"
             },
             {
               "name": "mid",
               "in": "path",
-              "description": "Module ID.",
+              "description": "The ID of the module whose module twin is to be updated",
               "required": true,
               "type": "string"
             },
             {
               "name": "deviceTwinInfo",
               "in": "body",
-              "description": "Device twin information",
+              "description": "The twin object containing the tags and desired properties to be updated",
               "required": true,
               "schema": {
                 "$ref": "#/definitions/Twin"
@@ -983,6 +986,7 @@
             {
               "name": "If-Match",
               "in": "header",
+              "description": "The Etag to be used to determine if the update operation should be carried out",
               "required": false,
               "type": "string"
             },
@@ -992,7 +996,7 @@
           ],
           "responses": {
             "200": {
-              "description": "Returns the device twin object",
+              "description": "Returns the updated module twin object",
               "schema": {
                 "$ref": "#/definitions/Twin"
               }
@@ -1613,12 +1617,14 @@
             {
               "name": "deviceId",
               "in": "path",
+              "description": "The ID of the device on which the direct method is to be invoked",
               "required": true,
               "type": "string"
             },
             {
               "name": "directMethodRequest",
               "in": "body",
+              "description": "Parameters to execute a direct method on the device",
               "required": true,
               "schema": {
                 "$ref": "#/definitions/CloudToDeviceMethod"
@@ -1653,18 +1659,21 @@
             {
               "name": "deviceId",
               "in": "path",
+              "description": "The ID of the device on which the direct method is to be invoked",
               "required": true,
               "type": "string"
             },
             {
               "name": "moduleId",
               "in": "path",
+              "description": "The ID of the module on which the direct method is to be invoked",
               "required": true,
               "type": "string"
             },
             {
               "name": "directMethodRequest",
               "in": "body",
+              "description": "Parameters to execute a direct method on the module",
               "required": true,
               "schema": {
                 "$ref": "#/definitions/CloudToDeviceMethod"
@@ -2013,6 +2022,7 @@
         "type": "object",
         "properties": {
           "iotEdge": {
+            "description": "Gets and sets the IoT Edge capability.",
             "type": "boolean"
           }
         }
@@ -2032,9 +2042,11 @@
         "type": "object",
         "properties": {
           "primaryThumbprint": {
+            "description": "Gets and sets the X509 client certificate primary thumbprint",
             "type": "string"
           },
           "secondaryThumbprint": {
+            "description": "Gets and sets the X509 client certificate secondary thumbprint",
             "type": "string"
           }
         }
@@ -2514,9 +2526,11 @@
             "$ref": "#/definitions/DeviceCapabilities"
           },
           "deviceScope": {
+            "description": "Scope to which this device instance belongs to",
             "type": "string"
           },
           "parentScopes": {
+            "description": "TODO: new property added - need explanation",
             "type": "array",
             "items": {
               "type": "string"
@@ -2832,10 +2846,12 @@
             "type": "object"
           },
           "responseTimeoutInSeconds": {
+            "description": "Timeout for the method invocation to return a response",
             "format": "int32",
             "type": "integer"
           },
           "connectTimeoutInSeconds": {
+            "description": "Timeout for the device to come online",
             "format": "int32",
             "type": "integer"
           }
