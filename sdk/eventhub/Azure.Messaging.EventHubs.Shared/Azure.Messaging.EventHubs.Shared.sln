@@ -7,7 +7,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Messaging.EventHubs.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.EventHubs.Shared.Tests", "tests\Azure.Messaging.EventHubs.Shared.Tests.csproj", "{2A9A566C-C7AC-453A-B21A-90DD6F941DEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{1AC14D43-837B-412F-BE15-F506B351CE72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{1AC14D43-837B-412F-BE15-F506B351CE72}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{10D9CACA-DDF6-4A56-8633-8595F9805837}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +48,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1AC14D43-837B-412F-BE15-F506B351CE72} = {10D9CACA-DDF6-4A56-8633-8595F9805837}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5A1E14E-F9E2-4A0C-9EB0-F91C44298DC8}
