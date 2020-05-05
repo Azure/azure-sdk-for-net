@@ -45,7 +45,7 @@ namespace Azure.Storage.Blobs
         /// The size of each staged block.  If null, we'll change between 4MB
         /// and 8MB depending on the size of the content.
         /// </summary>
-        private readonly int? _blockSize;
+        private readonly long? _blockSize;
 
         /// <summary>
         /// The name of the calling operaiton.
@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs
             if (transferOptions.InitialTransferLength.HasValue
                 && transferOptions.InitialTransferLength.Value > 0)
             {
-                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
+                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferSize.Value, Constants.Blob.Block.MaxUploadBytes);
             }
             else
             {
@@ -84,12 +84,12 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _blockSize
-            if (transferOptions.MaximumTransferLength.HasValue
-                && transferOptions.MaximumTransferLength > 0)
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize > 0)
             {
                 _blockSize = Math.Min(
                     Constants.Blob.Block.MaxStageBytes,
-                    transferOptions.MaximumTransferLength.Value);
+                    transferOptions.MaximumTransferSize.Value);
             }
 
             _operationName = operationName;
@@ -126,7 +126,7 @@ namespace Azure.Storage.Blobs
             // If the caller provided an explicit block size, we'll use it.
             // Otherwise we'll adjust dynamically based on the size of the
             // content.
-            int blockSize =
+            long blockSize =
                 _blockSize != null ? _blockSize.Value :
                 length < Constants.LargeUploadThreshold ?
                     Constants.DefaultBufferSize :
@@ -176,7 +176,7 @@ namespace Azure.Storage.Blobs
             // If the caller provided an explicit block size, we'll use it.
             // Otherwise we'll adjust dynamically based on the size of the
             // content.
-            int blockSize =
+            long blockSize =
                 _blockSize != null ? _blockSize.Value :
                 length < Constants.LargeUploadThreshold ?
                     Constants.DefaultBufferSize :
@@ -199,7 +199,7 @@ namespace Azure.Storage.Blobs
 
         private Response<BlobContentInfo> UploadInSequence(
             Stream content,
-            int blockSize,
+            long blockSize,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             Tags tags,
@@ -227,7 +227,7 @@ namespace Azure.Storage.Blobs
                 List<string> blockIds = new List<string>();
 
                 // Partition the stream into individual blocks and stage them
-                foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
                         content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
                     // Dispose the block after the loop iterates and return its memory to our ArrayPool
@@ -237,7 +237,7 @@ namespace Azure.Storage.Blobs
                         string blockId = GenerateBlockId(block.AbsolutePosition);
                         _client.StageBlock(
                             blockId,
-                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            block,
                             conditions: conditions,
                             progressHandler: progressHandler,
                             cancellationToken: cancellationToken);
@@ -273,7 +273,7 @@ namespace Azure.Storage.Blobs
 
         private async Task<Response<BlobContentInfo>> UploadInParallelAsync(
             Stream content,
-            int blockSize,
+            long blockSize,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             Tags tags,
@@ -305,7 +305,7 @@ namespace Azure.Storage.Blobs
                 List<Task> runningTasks = new List<Task>();
 
                 // Partition the stream into individual blocks
-                await foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                await foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
                     content,
                     blockSize,
                     async: true,
@@ -375,7 +375,7 @@ namespace Azure.Storage.Blobs
         }
 
         private async Task StageBlockAsync(
-            ChunkedStream block,
+            PooledMemoryStream block,
             string blockId,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
@@ -385,7 +385,7 @@ namespace Azure.Storage.Blobs
             {
                 await _client.StageBlockAsync(
                     blockId,
-                    new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                    block,
                     conditions: conditions,
                     progressHandler: progressHandler,
                     cancellationToken: cancellationToken)

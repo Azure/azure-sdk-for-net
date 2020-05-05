@@ -247,7 +247,7 @@ namespace Azure.Storage.Files.DataLake
                 // calculate offsets for the next appends, and the final
                 // position to flush
                 long appendedBytes = 0;
-                foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
                     content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
                 {
                     // Dispose the block after the loop iterates and return its memory to our ArrayPool
@@ -255,7 +255,7 @@ namespace Azure.Storage.Files.DataLake
                     {
                         // Append the next block
                         _client.Append(
-                            new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                            block,
                             offset: appendedBytes,
                             leaseId: conditions?.LeaseId,
                             progressHandler: progressHandler,
@@ -319,7 +319,7 @@ namespace Azure.Storage.Files.DataLake
                 long appendedBytes = 0;
 
                 // Partition the stream into individual blocks
-                await foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
+                await foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
                     content, blockSize, async: true, _arrayPool, cancellationToken).ConfigureAwait(false))
                 {
                     // Start appending the next block (but don't await the Task!)
@@ -379,7 +379,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         private async Task AppendBlockAsync(
-            ChunkedStream block,
+            PooledMemoryStream block,
             long offset,
             string leaseId,
             IProgress<long> progressHandler,
@@ -388,7 +388,7 @@ namespace Azure.Storage.Files.DataLake
             try
             {
                 await _client.AppendAsync(
-                    new MemoryStream(block.Bytes, 0, block.Length, writable: false),
+                    block,
                     offset: offset,
                     leaseId: leaseId,
                     progressHandler: progressHandler,

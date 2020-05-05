@@ -85,15 +85,41 @@ namespace Azure.Storage.Blobs.Specialized
     {
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>. Supported value is now larger
+        /// than <see cref="int.MaxValue"/>; please use
+        /// <see cref="BlockBlobMaxUploadBlobLongBytes"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual int BlockBlobMaxUploadBlobBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
+            : int.MaxValue; // value is larger than can be represented by an int
+
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync(Stream, UploadBlobOptions, CancellationToken)"/>.
         /// </summary>
-        public virtual int BlockBlobMaxUploadBlobBytes => Constants.Blob.Block.MaxUploadBytes;
+        public virtual long BlockBlobMaxUploadBlobLongBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
+            : Constants.Blob.Block.MaxUploadBytes;
+
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="StageBlockAsync"/>. Supported value is now larger
+        /// than <see cref="int.MaxValue"/>; please use
+        /// <see cref="BlockBlobMaxStageBlockLongBytes"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual int BlockBlobMaxStageBlockBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxStageBytes
+            : int.MaxValue; // value is larger than can be represented by an int
 
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public virtual int BlockBlobMaxStageBlockBytes => Constants.Blob.Block.MaxStageBytes;
+        public virtual long BlockBlobMaxStageBlockLongBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+            ? Constants.Blob.Block.Pre_2019_12_12_MaxStageBytes
+            : Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Gets the maximum number of blocks allowed in a block blob.
@@ -895,7 +921,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlockInfo>> StageBlockInternal(
+        internal virtual async Task<Response<BlockInfo>> StageBlockInternal(
             string base64BlockId,
             Stream content,
             byte[] transactionalContentHash,
