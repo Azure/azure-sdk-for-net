@@ -51,13 +51,15 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        [Ignore("Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded, so we can't pass connection string validation")]
+        // "Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation"
+        [LiveOnly]
         public async Task Ctor_ConnectionStringEscapePath()
         {
             // Arrange
             await using DisposingShare test = await GetTestShareAsync();
-            string directoryName = "!#@&=;";
-            string fileName = "#$=;!";
+            string directoryName = "!#@&=;äÄ";
+            string fileName = "#$=;!öÖ";
             ShareDirectoryClient directory = InstrumentClient(test.Share.GetDirectoryClient(directoryName));
             await directory.CreateAsync();
             ShareFileClient initalFile = InstrumentClient(directory.GetFileClient(fileName));
