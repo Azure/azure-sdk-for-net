@@ -4,7 +4,6 @@
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
-using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -12,16 +11,25 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public async Task ExtractKeyPhrasesAsync()
+        public void ExtractKeyPhrasesWithWarnins()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string document = "My cat might need to see a veterinarian.";
+            string document = "Anthony runs his own personal training business so thisisaverylongtokenwhichwillbetruncatedtoshowushowwarningsareemittedintheapi";
 
-            KeyPhraseCollection keyPhrases = await client.ExtractKeyPhrasesAsync(document);
+            KeyPhraseCollection keyPhrases = client.ExtractKeyPhrases(document);
+
+            if (keyPhrases.Warnings.Count > 0)
+            {
+                Console.WriteLine("**Warnings:**");
+                foreach (TextAnalyticsWarning warning in keyPhrases.Warnings)
+                {
+                    Console.WriteLine($"    Warning: Code: {warning.WarningCode}, Message: {warning.Message}");
+                }
+            }
 
             Console.WriteLine($"Extracted {keyPhrases.Count} key phrases:");
             foreach (string keyPhrase in keyPhrases)

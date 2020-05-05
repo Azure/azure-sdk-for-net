@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -8,11 +11,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct DetectedLanguage
     {
-        internal DetectedLanguage(string name, string iso6391Name, double score)
+        internal DetectedLanguage(string name, string iso6391Name, double score, IList<TextAnalyticsWarning> warnings)
         {
             Name = name;
             Iso6391Name = iso6391Name;
             ConfidenceScore = score;
+            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
         }
 
         /// <summary>
@@ -32,5 +36,10 @@ namespace Azure.AI.TextAnalytics
         /// indicate high certainty that the identified language is correct.
         /// </summary>
         public double ConfidenceScore { get; }
+
+        /// <summary>
+        /// Gets the warnings encountered while processing the document.
+        /// </summary>
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
     }
 }
