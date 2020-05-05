@@ -6,7 +6,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary>
     /// Represents a page interval from the input document. Page numbers are 1-based.
     /// </summary>
-    public class FormPageRange
+    public struct FormPageRange
     {
         internal FormPageRange(int first, int last)
         {
