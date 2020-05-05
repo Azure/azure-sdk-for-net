@@ -10,6 +10,7 @@ This document outlines the APIs for the Azure Iot Hub Service SDK
 
 <details><summary><b>Configurations</b></summary>
 APIs for managing configurations for devices and modules
+
 ```csharp
 
 ```
@@ -17,6 +18,7 @@ APIs for managing configurations for devices and modules
 
 <details><summary><b>Statistics</b></summary>
 APIs for getting statistics about devices and modules, as well as service statistics
+
 ```csharp
 
 ```
@@ -24,6 +26,7 @@ APIs for getting statistics about devices and modules, as well as service statis
 
 <details><summary><b>Registry</b></summary>
 APIs for managing device and module identities
+
 ```csharp
 
 ```
@@ -31,6 +34,7 @@ APIs for managing device and module identities
 
 <details><summary><b>Jobs</b></summary>
 APIs for using IotHub jobs
+
 ```csharp
 
 ```
@@ -46,6 +50,7 @@ APIs for using IotHub jobs
 
 <details><summary><b>Twin</b></summary>
 Device and module twin operations
+
 ```csharp
 
 ```
@@ -53,13 +58,15 @@ Device and module twin operations
 
 <details><summary><b>Methods</b></summary>
 Device and module direct methods
+
 ```csharp
 
 ```
 </details>
 
 <details><summary><b>Cloud to Device Messaging</b></summary>
-No sign of this in the swagger    
+No sign of this in the swagger
+
 ```csharp
 
 ```
@@ -67,6 +74,7 @@ No sign of this in the swagger
 
 <details><summary><b>Feedback Message</b></summary>
 APIs for getting feedback messages
+
 ```csharp
 
 ```
@@ -74,6 +82,7 @@ APIs for getting feedback messages
 
 <details><summary><b>File Upload Notifications</b></summary>
 No sign of this in the swagger
+
 ```csharp
 
 ```
@@ -81,6 +90,7 @@ No sign of this in the swagger
 
 <details><summary><b>Query</b></summary>
 APIs for querying on device or module identities
+
 ```csharp
 
 ```
