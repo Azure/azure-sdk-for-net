@@ -55,10 +55,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _rangeSize
-            if (transferOptions.MaximumTransferLongLength.HasValue
-                && transferOptions.MaximumTransferLongLength.Value > 0)
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize.Value > 0)
             {
-                _rangeSize = Math.Min(transferOptions.MaximumTransferLongLength.Value, Constants.Blob.Block.MaxDownloadBytes);
+                _rangeSize = Math.Min(transferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
             }
             else
             {
@@ -66,10 +66,10 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _initialRangeSize
-            if (transferOptions.InitialTransferLongLength.HasValue
-                && transferOptions.InitialTransferLongLength.Value > 0)
+            if (transferOptions.InitialTransferSize.HasValue
+                && transferOptions.InitialTransferSize.Value > 0)
             {
-                _initialRangeSize = transferOptions.MaximumTransferLongLength.Value;
+                _initialRangeSize = transferOptions.MaximumTransferSize.Value;
             }
             else
             {

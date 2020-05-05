@@ -76,7 +76,7 @@ namespace Azure.Storage.Blobs
             if (transferOptions.InitialTransferLength.HasValue
                 && transferOptions.InitialTransferLength.Value > 0)
             {
-                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferLongLength.Value, Constants.Blob.Block.MaxUploadBytes);
+                _singleUploadThreshold = Math.Min(transferOptions.InitialTransferSize.Value, Constants.Blob.Block.MaxUploadBytes);
             }
             else
             {
@@ -84,12 +84,12 @@ namespace Azure.Storage.Blobs
             }
 
             // Set _blockSize
-            if (transferOptions.MaximumTransferLongLength.HasValue
-                && transferOptions.MaximumTransferLongLength > 0)
+            if (transferOptions.MaximumTransferSize.HasValue
+                && transferOptions.MaximumTransferSize > 0)
             {
                 _blockSize = Math.Min(
                     Constants.Blob.Block.MaxStageBytes,
-                    transferOptions.MaximumTransferLongLength.Value);
+                    transferOptions.MaximumTransferSize.Value);
             }
 
             _operationName = operationName;
