@@ -19,28 +19,25 @@ namespace Microsoft.Azure.Management.Security.Models
     /// Represents a data export setting
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DataExportSetting : Setting
+    public partial class DataExportSettings : Setting
     {
         /// <summary>
-        /// Initializes a new instance of the DataExportSetting class.
+        /// Initializes a new instance of the DataExportSettings class.
         /// </summary>
-        public DataExportSetting()
+        public DataExportSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataExportSetting class.
+        /// Initializes a new instance of the DataExportSettings class.
         /// </summary>
-        /// <param name="kind">the kind of the settings string
-        /// (DataExportSetting). Possible values include: 'DataExportSetting',
-        /// 'AlertSuppressionSetting'</param>
         /// <param name="enabled">Is the data export setting is enabled</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public DataExportSetting(string kind, bool enabled, string id = default(string), string name = default(string), string type = default(string))
-            : base(kind, id, name, type)
+        public DataExportSettings(bool enabled, string id = default(string), string name = default(string), string type = default(string))
+            : base(id, name, type)
         {
             Enabled = enabled;
             CustomInit();
@@ -63,9 +60,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            //Nothing to validate
         }
     }
 }
