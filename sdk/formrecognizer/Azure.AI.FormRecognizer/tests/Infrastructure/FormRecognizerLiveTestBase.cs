@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
 
@@ -29,6 +30,28 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = new FormTrainingClient(endpoint, credential, options);
 
             return InstrumentClient(client);
+        }
+
+        /// <summary>
+        /// Trains a model and returns the associated <see cref="DisposableTrainedModel"/> instance, from which
+        /// the model ID can be obtained. Upon disposal, the model will be deleted.
+        /// </summary>
+        /// <param name="useLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
+        /// <returns>A <see cref="DisposableTrainedModel"/> instance from which the trained model ID can be obtained.</returns>
+        protected async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useLabels)
+        {
+            var trainingClient = CreateInstrumentedFormTrainingClient();
+            var trainingFiles = new Uri(TestEnvironment.BlobContainerSasUrl);
+
+            DisposableTrainedModel trainedModel;
+
+            // TODO: sanitize body and enable body recording here.
+            using (Recording.DisableRequestBodyRecording())
+            {
+                trainedModel = await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFiles, useLabels);
+            }
+
+            return trainedModel;
         }
     }
 }

@@ -12,8 +12,8 @@ namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary>
     /// The client to use to connect with the Form Recognizer Azure Cognitive Service to train models from
-    /// custom forms.  It also supports listing and deleting
-    /// trained models, as well as accessing account properties.
+    /// custom forms.  It also supports listing and deleting trained models, as well as accessing account
+    /// properties.
     /// </summary>
     public class FormTrainingClient
     {
