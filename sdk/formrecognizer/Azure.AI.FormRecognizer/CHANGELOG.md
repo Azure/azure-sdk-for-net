@@ -2,13 +2,10 @@
 
 ## 1.0.0-preview.2 (05-06-2020)
 
-### Changes
+### Fixes
 
-#### Bug fixes
-
-- The full set of `FormRecognizerClientOptions` used when creating a `FormRecognizerClient` are now passed to the
-    client returned by `FormRecognizerClient.GetFormTrainingClient`. Previously, only the `Version` option was
-    being passed.
+- All of `FormRecognizerClient`'s `FormRecognizerClientOptions` are now passed to the client returned by
+    `FormRecognizerClient.GetFormTrainingClient`.
 
 ## 1.0.0-preview.1 (04-23-2020)
 This is the first preview Azure Form Recognizer client library that follows the [.NET Azure SDK Design Guidelines][guidelines].
