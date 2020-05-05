@@ -13,20 +13,20 @@ namespace Azure.Storage
     {
         /// <summary>
         /// The maximum length of an transfer in bytes. This property is a backwards-compatible
-        /// facade for <see cref="MaximumTransferSize"/>, which supports long values. Use
-        /// <see cref="MaximumTransferSize"/> for full access of supported values.
+        /// facade for <see cref="MaximumTransferLongLength"/>, which supports long values. Use
+        /// <see cref="MaximumTransferLongLength"/> for full access of supported values.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? MaximumTransferLength
         {
-            get => (int?)MaximumTransferSize;
-            set => MaximumTransferSize = value;
+            get => (int?)MaximumTransferLongLength;
+            set => MaximumTransferLongLength = value;
         }
 
         /// <summary>
         /// The maximum length of an transfer in bytes.
         /// </summary>
-        public long? MaximumTransferSize { get; set; }
+        public long? MaximumTransferLongLength { get; set; }
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.
@@ -36,23 +36,23 @@ namespace Azure.Storage
         /// <summary>
         /// The size of the first range request in bytes. Blobs smaller than this limit will
         /// be downloaded in a single request. Blobs larger than this limit will continue being
-        /// downloaded in chunks of size <see cref="MaximumTransferSize"/>. This property is a
-        /// backwards-compatible facade for <see cref="MaximumTransferSize"/>, which supports
-        /// long values. Use <see cref="InitialTransferSize"/> for full access of supported values.
+        /// downloaded in chunks of size <see cref="MaximumTransferLongLength"/>. This property is a
+        /// backwards-compatible facade for <see cref="MaximumTransferLongLength"/>, which supports
+        /// long values. Use <see cref="InitialTransferLongLength"/> for full access of supported values.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? InitialTransferLength
         {
-            get => (int?)InitialTransferSize;
-            set => InitialTransferSize = value;
+            get => (int?)InitialTransferLongLength;
+            set => InitialTransferLongLength = value;
         }
 
         /// <summary>
         /// The size of the first range request in bytes. Blobs smaller than this limit will
         /// be downloaded in a single request. Blobs larger than this limit will continue being
-        /// downloaded in chunks of size <see cref="MaximumTransferSize"/>.
+        /// downloaded in chunks of size <see cref="MaximumTransferLongLength"/>.
         /// </summary>
-        public long? InitialTransferSize { get; set; }
+        public long? InitialTransferLongLength { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -71,9 +71,9 @@ namespace Azure.Storage
         /// <returns>Hash code for the ParallelTransferOptions.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
-            => MaximumTransferSize.GetHashCode()
+            => MaximumTransferLongLength.GetHashCode()
             ^ MaximumConcurrency.GetHashCode()
-            ^ InitialTransferSize.GetHashCode()
+            ^ InitialTransferLongLength.GetHashCode()
             ;
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace Azure.Storage
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(StorageTransferOptions obj)
-            => MaximumTransferSize == obj.MaximumTransferSize
+            => MaximumTransferLongLength == obj.MaximumTransferLongLength
             && MaximumConcurrency == obj.MaximumConcurrency
-            && InitialTransferSize == obj.InitialTransferSize
+            && InitialTransferLongLength == obj.InitialTransferLongLength
             ;
     }
 }

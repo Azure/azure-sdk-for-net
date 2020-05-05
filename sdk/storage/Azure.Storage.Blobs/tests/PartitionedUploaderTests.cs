@@ -263,8 +263,8 @@ namespace Azure.Storage.Blobs.Test
                 clientMock.Object,
                 new StorageTransferOptions
                 {
-                    InitialTransferSize = 1, // forces buffered upload
-                    MaximumTransferSize = blockSize,
+                    InitialTransferLongLength = 1, // forces buffered upload
+                    MaximumTransferLongLength = blockSize,
                     MaximumConcurrency = 2
                 },
                 arrayPool: testPool);
