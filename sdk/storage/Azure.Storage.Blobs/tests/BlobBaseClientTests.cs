@@ -62,6 +62,30 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        // Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
+        // so we can't pass connection string validation"
+        [LiveOnly]
+        public async Task Ctor_ConnectionStringEscapeBlobName()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            string blobName = "!*'();[]:@&%=+$,/?#äÄöÖüÜß";
+
+            BlockBlobClient initalBlob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+            Response<BlobContentInfo> uploadResponse = await initalBlob.UploadAsync(stream);
+
+            // Act
+            BlobBaseClient blob = new BlobBaseClient(TestConfigDefault.ConnectionString, test.Container.Name, blobName, GetOptions());
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(uploadResponse.Value.ETag, propertiesResponse.Value.ETag);
+        }
+
+        [Test]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
