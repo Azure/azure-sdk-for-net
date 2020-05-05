@@ -44,9 +44,7 @@ namespace Azure.Data.Tables
         /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
         public virtual TableSasBuilder GetSasBuilder(TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
-            var builder = new TableSasBuilder(_table, expiresOn);
-            builder.SetPermissions(permissions);
-            return builder;
+            return new TableSasBuilder(_table, permissions, expiresOn) { Version = _tableOperations.version };
         }
         /// <summary>
         /// Creates the table in the storage account.

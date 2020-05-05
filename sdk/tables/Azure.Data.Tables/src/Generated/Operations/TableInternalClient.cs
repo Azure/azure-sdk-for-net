@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
 
@@ -20,6 +19,7 @@ namespace Azure.Data.Tables
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal TableInternalRestClient RestClient { get; }
+        internal string version { get; }
         /// <summary> Initializes a new instance of TableInternalClient for mocking. </summary>
         protected TableInternalClient()
         {
@@ -30,6 +30,7 @@ namespace Azure.Data.Tables
             RestClient = new TableInternalRestClient(clientDiagnostics, pipeline, url, version);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+            this.version = version;
         }
 
         /// <summary> Queries tables under the given account. </summary>

@@ -14,19 +14,26 @@ namespace Azure.Data.Tables.Sas
     /// </summary>
     public class TableSasBuilder
     {
-
-        public TableSasBuilder(string tableName, DateTimeOffset expiry)
+        /// <summary>
+        /// Initializes an instance of a <see cref="TableSasBuilder"/>.
+        /// </summary>
+        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
+        /// <param name="permissions">The permissions associated with the shared access signature.</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        public TableSasBuilder(string tableName, TableSasPermissions permissions, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             TableName = tableName;
-            ExpiresOn = expiry;
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
         }
         /// <summary>
         /// The storage service version to use to authenticate requests made
         /// with this shared access signature, and the service version to use
         /// when handling requests made with this shared access signature.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string Version { get; set; }
 
         /// <summary>
