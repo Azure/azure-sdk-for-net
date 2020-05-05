@@ -16,9 +16,9 @@ namespace Azure
     /// <example>
     /// Example of enumerating an AsyncPageable using the <c> async foreach </c> loop:
     /// <code snippet="Snippet:AsyncPageable">
-    /// // call a service method, which returns AsyncPageable<T>
-    /// AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
-    /// 
+    /// // call a service method, which returns AsyncPageable&lt;T&gt;
+    /// AsyncPageable&lt;SecretProperties&gt; allSecretProperties = client.GetPropertiesOfSecretsAsync();
+    ///
     /// await foreach (SecretProperties secretProperties in allSecretProperties)
     /// {
     ///     Console.WriteLine(secretProperties.Name);
@@ -26,10 +26,10 @@ namespace Azure
     /// </code>
     /// or using a while loop:
     /// <code snippet="Snippet:AsyncPageableLoop">
-    /// // call a service method, which returns AsyncPageable<T>
-    /// AsyncPageable<SecretProperties> allSecretProperties = client.GetPropertiesOfSecretsAsync();
-    /// 
-    /// IAsyncEnumerator<SecretProperties> enumerator = allSecretProperties.GetAsyncEnumerator();
+    /// // call a service method, which returns AsyncPageable&lt;T&gt;
+    /// AsyncPageable&lt;SecretProperties&gt; allSecretProperties = client.GetPropertiesOfSecretsAsync();
+    ///
+    /// IAsyncEnumerator&lt;SecretProperties&gt; enumerator = allSecretProperties.GetAsyncEnumerator();
     /// try
     /// {
     ///     while (await enumerator.MoveNextAsync())
