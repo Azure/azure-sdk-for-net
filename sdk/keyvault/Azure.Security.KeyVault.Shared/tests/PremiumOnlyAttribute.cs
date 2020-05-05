@@ -11,10 +11,11 @@ namespace Azure.Security.KeyVault.Tests
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class PremiumOnlyAttribute : NUnitAttribute, IApplyToTest
     {
+        private static readonly KeyVaultTestEnvironment s_environment = new KeyVaultTestEnvironment();
+
         public void ApplyToTest(Test test)
         {
-            // Test preparation was previously successfully creating premium SKUs (not available in every cloud), so assume premium.
-            string sku = Environment.GetEnvironmentVariable("KEYVAULT_SKU") ?? "premium";
+            string sku = s_environment.Sku;
             if (!string.Equals(sku, "premium", StringComparison.OrdinalIgnoreCase))
             {
                 test.RunState = RunState.Ignored;
