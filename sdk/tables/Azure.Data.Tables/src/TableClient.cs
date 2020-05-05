@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
+using Azure.Data.Tables.Sas;
 
 namespace Azure.Data.Tables
 {
@@ -35,6 +36,18 @@ namespace Azure.Data.Tables
         protected TableClient()
         { }
 
+        /// <summary>
+        /// Gets a <see cref="TableSasBuilder"/> instance scoped to the current table.
+        /// </summary>
+        /// <param name="permissions"><see cref="TableSasPermissions"/> containing the allowed permissions.</param>
+        /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
+        /// <returns>An instance of <see cref="TableSasBuilder"/>.</returns>
+        public virtual TableSasBuilder GetSasBuilder(TableSasPermissions permissions, DateTimeOffset expiresOn)
+        {
+            var builder = new TableSasBuilder(_table, expiresOn);
+            builder.SetPermissions(permissions);
+            return builder;
+        }
         /// <summary>
         /// Creates the table in the storage account.
         /// </summary>
