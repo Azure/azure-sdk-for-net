@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -1719,7 +1720,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response> AppendInternal(
+        internal virtual async Task<Response> AppendInternal(
             Stream content,
             long? offset,
             byte[] contentHash,
@@ -1983,7 +1984,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> FlushInternal(
+        internal virtual async Task<Response<PathInfo>> FlushInternal(
             long position,
             bool? retainUncommittedData,
             bool? close,
@@ -3104,30 +3105,21 @@ namespace Azure.Storage.Files.DataLake
         {
             DataLakeFileClient client = new DataLakeFileClient(Uri, Pipeline, Version, ClientDiagnostics);
 
-            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
-                client,
+            var uploader = GetPartitionedUploader(
                 transferOptions,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
-            if (async)
-            {
-                return await uploader.UploadAsync(
-                    content,
-                    httpHeaders,
-                    conditions,
-                    progressHandler,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            else
-            {
-                return uploader.Upload(
-                    content,
-                    httpHeaders,
-                    conditions,
-                    progressHandler,
-                    cancellationToken);
-            }
+            return await uploader.UploadInternal(
+                content,
+                new UploadFileOptions()
+                {
+                    Conditions = conditions,
+                    HttpHeaders = httpHeaders
+                },
+                progressHandler,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3282,5 +3274,15 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion ScheduleDeletion
+
+        internal PartitionedUploader<UploadFileOptions, PathInfo> GetPartitionedUploader(
+            StorageTransferOptions transferOptions,
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
+            => new PartitionedUploader<UploadFileOptions, PathInfo>(
+                new PartitionedUploaderDataLakeFileClient(this),
+                transferOptions,
+                arrayPool,
+                operationName);
     }
 }

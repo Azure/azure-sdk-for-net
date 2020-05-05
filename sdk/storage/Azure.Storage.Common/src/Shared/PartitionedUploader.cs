@@ -1,29 +1,32 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Shared;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Tags = System.Collections.Generic.IDictionary<string, string>;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage
 {
-    internal class PartitionedUploader
+    internal class PartitionedUploader<ServiceSpecificArgs, CompleteUploadReturn>
     {
+        public interface IClient
+        {
+            Task InitializeDestinationInternal(ServiceSpecificArgs args, bool async, CancellationToken cancellationToken);
+            Task<Response<CompleteUploadReturn>> FullUploadInternal(Stream contentStream, ServiceSpecificArgs args, IProgress<long> progressHandler, string operationName, bool async, CancellationToken cancellationToken);
+            Task StageUploadPartitionInternal(Stream contentStream, long offset, ServiceSpecificArgs args, IProgress<long> progressHandler, bool async, CancellationToken cancellationToken);
+            Task<Response<CompleteUploadReturn>> CommitPartitionedUploadInternal(List<(long Offset, long Size)> partitions, ServiceSpecificArgs args, bool async, CancellationToken cancellationToken);
+            DiagnosticScope CreateScope(string operationName);
+        }
+
         /// <summary>
         /// The client we use to do the actual uploading.
         /// </summary>
-        private readonly BlockBlobClient _client;
+        private readonly IClient _client;
 
         /// <summary>
         /// The maximum number of simultaneous workers.
@@ -36,8 +39,8 @@ namespace Azure.Storage.Blobs
         private readonly ArrayPool<byte> _arrayPool;
 
         /// <summary>
-        /// The size we use to determine whether to upload as a single PUT BLOB
-        /// request or stage as multiple blocks.
+        /// The size we use to determine whether to upload as a one-off request or
+        /// a partitioned/committed upload
         /// </summary>
         private readonly long _singleUploadThreshold;
 
@@ -53,7 +56,7 @@ namespace Azure.Storage.Blobs
         private readonly string _operationName;
 
         public PartitionedUploader(
-            BlockBlobClient client,
+            IClient client,
             StorageTransferOptions transferOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
@@ -95,30 +98,25 @@ namespace Azure.Storage.Blobs
             _operationName = operationName;
         }
 
-        public async Task<Response<BlobContentInfo>> UploadAsync(
+        public async Task<Response<CompleteUploadReturn>> UploadInternal(
             Stream content,
-            BlobHttpHeaders blobHttpHeaders,
-            Metadata metadata,
-            Tags tags,
-            BlobRequestConditions conditions,
+            ServiceSpecificArgs args,
             IProgress<long> progressHandler,
-            AccessTier? accessTier = default,
+            bool async,
             CancellationToken cancellationToken = default)
         {
+            await _client.InitializeDestinationInternal(args, async, cancellationToken).ConfigureAwait(false);
+
             // If we can compute the size and it's small enough
             if (PartitionedUploadExtensions.TryGetLength(content, out long length) && length < _singleUploadThreshold)
             {
                 // Upload it in a single request
-                return await _client.UploadInternal(
+                return await _client.FullUploadInternal(
                     content,
-                    blobHttpHeaders,
-                    metadata,
-                    tags,
-                    conditions,
-                    accessTier,
+                    args,
                     progressHandler,
                     _operationName,
-                    async: true,
+                    async,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -132,86 +130,41 @@ namespace Azure.Storage.Blobs
                     Constants.DefaultBufferSize :
                     Constants.LargeBufferSize;
 
-            // Otherwise stage individual blocks in parallel
-            return await UploadInParallelAsync(
-                content,
-                blockSize,
-                blobHttpHeaders,
-                metadata,
-                tags,
-                conditions,
-                progressHandler,
-                accessTier,
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        public Response<BlobContentInfo> Upload(
-            Stream content,
-            BlobHttpHeaders blobHttpHeaders,
-            Metadata metadata,
-            Tags tags,
-            BlobRequestConditions conditions,
-            IProgress<long> progressHandler,
-            AccessTier? accessTier = default,
-            CancellationToken cancellationToken = default)
-        {
-            // If we can compute the size and it's small enough
-            if (PartitionedUploadExtensions.TryGetLength(content, out long length) && length < _singleUploadThreshold)
+            // Otherwise stage individual blocks
+            // TODO UploadInParallelAsync is a buffered upload. Introduce optimizations to avoid this buffer strategy when not needed.
+            if (async)
             {
-                // Upload it in a single request
-                return _client.UploadInternal(
+                return await UploadInParallelAsync(
                     content,
-                    blobHttpHeaders,
-                    metadata,
-                    tags,
-                    conditions,
-                    accessTier,
+                    blockSize,
+                    args,
                     progressHandler,
-                    _operationName,
-                    false,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                return UploadInSequenceInternal(
+                    content,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    async: false,
                     cancellationToken).EnsureCompleted();
             }
-
-            // If the caller provided an explicit block size, we'll use it.
-            // Otherwise we'll adjust dynamically based on the size of the
-            // content.
-            long blockSize =
-                _blockSize != null ? _blockSize.Value :
-                length < Constants.LargeUploadThreshold ?
-                    Constants.DefaultBufferSize :
-                    Constants.LargeBufferSize;
-
-            // Otherwise stage individual blocks one at a time.  It's not as
-            // fast as a parallel upload, but you get the benefit of the retry
-            // policy working on a single block instead of the entire stream.
-            return UploadInSequence(
-                content,
-                blockSize,
-                blobHttpHeaders,
-                metadata,
-                tags,
-                conditions,
-                progressHandler,
-                accessTier,
-                cancellationToken);
         }
 
-        private Response<BlobContentInfo> UploadInSequence(
+        private async Task<Response<CompleteUploadReturn>> UploadInSequenceInternal(
             Stream content,
             long blockSize,
-            BlobHttpHeaders blobHttpHeaders,
-            Metadata metadata,
-            Tags tags,
-            BlobRequestConditions conditions,
+            ServiceSpecificArgs args,
             IProgress<long> progressHandler,
-            AccessTier? accessTier,
+            bool async,
             CancellationToken cancellationToken)
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(
-                _operationName ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
+            DiagnosticScope scope = _client.CreateScope(_operationName);
             try
             {
                 scope.Start();
@@ -224,41 +177,49 @@ namespace Azure.Storage.Blobs
                 }
 
                 // The list tracking blocks IDs we're going to commit
-                List<string> blockIds = new List<string>();
+                List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
                 // Partition the stream into individual blocks and stage them
-                foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
-                        content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
+                if (async)
                 {
-                    // Dispose the block after the loop iterates and return its memory to our ArrayPool
-                    using (block)
+                    await foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
+                            content, blockSize, async: true, _arrayPool, cancellationToken).ConfigureAwait(false))
                     {
-                        // Stage the next block
-                        string blockId = GenerateBlockId(block.AbsolutePosition);
-                        _client.StageBlock(
-                            blockId,
+                        await StagePartitionAndDisposeInternal(
                             block,
-                            conditions: conditions,
-                            progressHandler: progressHandler,
-                            cancellationToken: cancellationToken);
+                            block.AbsolutePosition,
+                            args,
+                            progressHandler,
+                            async: true,
+                            cancellationToken).ConfigureAwait(false);
 
-                        blockIds.Add(blockId);
+                        partitions.Add((block.AbsolutePosition, block.Length));
+                    }
+                }
+                else
+                {
+                    foreach (PooledMemoryStream block in PartitionedUploadExtensions.GetBufferedBlocksAsync(
+                            content, blockSize, async: false, _arrayPool, cancellationToken).EnsureSyncEnumerable())
+                    {
+                        StagePartitionAndDisposeInternal(
+                            block,
+                            block.AbsolutePosition,
+                            args,
+                            progressHandler,
+                            async: false,
+                            cancellationToken).EnsureCompleted();
+
+                        partitions.Add((block.AbsolutePosition, block.Length));
                     }
                 }
 
                 // Commit the block list after everything has been staged to
                 // complete the upload
-                // Calling internal method for easier mocking in PartitionedUploaderTests
-                return _client.CommitBlockListInternal(
-                    blockIds,
-                    blobHttpHeaders,
-                    metadata,
-                    tags,
-                    conditions,
-                    accessTier,
-                    async: false,
-                    cancellationToken)
-                    .EnsureCompleted();
+                return await _client.CommitPartitionedUploadInternal(
+                    partitions,
+                    args,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -271,21 +232,16 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task<Response<BlobContentInfo>> UploadInParallelAsync(
+        private async Task<Response<CompleteUploadReturn>> UploadInParallelAsync(
             Stream content,
             long blockSize,
-            BlobHttpHeaders blobHttpHeaders,
-            Metadata metadata,
-            Tags tags,
-            BlobRequestConditions conditions,
+            ServiceSpecificArgs args,
             IProgress<long> progressHandler,
-            AccessTier? accessTier,
             CancellationToken cancellationToken)
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(
-                _operationName ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
+            DiagnosticScope scope = _client.CreateScope(_operationName);
             try
             {
                 scope.Start();
@@ -298,7 +254,7 @@ namespace Azure.Storage.Blobs
                 }
 
                 // The list tracking blocks IDs we're going to commit
-                List<string> blockIds = new List<string>();
+                List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
                 // A list of tasks that are currently executing which will
                 // always be smaller than _maxWorkerCount
@@ -313,17 +269,17 @@ namespace Azure.Storage.Blobs
                     cancellationToken).ConfigureAwait(false))
                 {
                     // Start staging the next block (but don't await the Task!)
-                    string blockId = GenerateBlockId(block.AbsolutePosition);
-                    Task task = StageBlockAsync(
+                    Task task = StagePartitionAndDisposeInternal(
                         block,
-                        blockId,
-                        conditions,
+                        block.AbsolutePosition,
+                        args,
                         progressHandler,
+                        async: true,
                         cancellationToken);
 
                     // Add the block to our task and commit lists
                     runningTasks.Add(task);
-                    blockIds.Add(blockId);
+                    partitions.Add((block.AbsolutePosition, block.Length));
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)
@@ -352,13 +308,9 @@ namespace Azure.Storage.Blobs
                 await Task.WhenAll(runningTasks).ConfigureAwait(false);
 
                 // Calling internal method for easier mocking in PartitionedUploaderTests
-                return await _client.CommitBlockListInternal(
-                    blockIds,
-                    blobHttpHeaders,
-                    metadata,
-                    tags,
-                    conditions,
-                    accessTier,
+                return await _client.CommitPartitionedUploadInternal(
+                    partitions,
+                    args,
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -374,41 +326,34 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task StageBlockAsync(
-            PooledMemoryStream block,
-            string blockId,
-            BlobRequestConditions conditions,
+        /// <summary>
+        /// Wraps both the async method and dispose call in one task.
+        /// </summary>
+        private async Task StagePartitionAndDisposeInternal(
+            PooledMemoryStream partition,
+            long offset,
+            ServiceSpecificArgs args,
             IProgress<long> progressHandler,
+            bool async,
             CancellationToken cancellationToken)
         {
             try
             {
-                await _client.StageBlockAsync(
-                    blockId,
-                    block,
-                    conditions: conditions,
-                    progressHandler: progressHandler,
-                    cancellationToken: cancellationToken)
+                await _client.StageUploadPartitionInternal(
+                    partition,
+                    offset,
+                    args,
+                    progressHandler,
+                    async,
+                    cancellationToken)
                     .ConfigureAwait(false);
             }
             finally
             {
                 // Return the memory used by the block to our ArrayPool as soon
                 // as we've staged it
-                block.Dispose();
+                partition.Dispose();
             }
-        }
-
-        // Block IDs must be 64 byte Base64 encoded strings
-        private static string GenerateBlockId(long offset)
-        {
-            // TODO #8162 - Add in a random GUID so multiple simultaneous
-            // uploads won't stomp on each other and the first to commit wins.
-            // This will require some changes to our test framework's
-            // RecordedClientRequestIdPolicy.
-            byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
-            BitConverter.GetBytes(offset).CopyTo(id, 0);
-            return Convert.ToBase64String(id);
         }
     }
 }

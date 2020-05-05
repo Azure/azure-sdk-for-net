@@ -663,7 +663,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<PathInfo>> CreateInternal(
+        internal virtual async Task<Response<PathInfo>> CreateInternal(
             PathResourceType resourceType,
             PathHttpHeaders httpHeaders,
             Metadata metadata,

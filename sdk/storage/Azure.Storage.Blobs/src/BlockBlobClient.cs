@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -402,20 +403,16 @@ namespace Azure.Storage.Blobs.Specialized
             UploadBlobOptions options,
             CancellationToken cancellationToken = default)
         {
-            PartitionedUploader uploader = new PartitionedUploader(
-                client: this,
+            var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
-            return uploader.Upload(
+            return uploader.UploadInternal(
                 content,
-                options?.HttpHeaders,
-                options?.Metadata,
-                options?.Tags,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.AccessTier,
-                cancellationToken);
+                options,
+                options.ProgressHandler,
+                async: false,
+                cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -454,19 +451,15 @@ namespace Azure.Storage.Blobs.Specialized
             UploadBlobOptions options,
             CancellationToken cancellationToken = default)
         {
-            PartitionedUploader uploader = new PartitionedUploader(
-                client: this,
+            var uploader = GetPartitionedUploader(
                 transferOptions: options?.TransferOptions ?? default,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
-            return await uploader.UploadAsync(
+            return await uploader.UploadInternal(
                 content,
-                options?.HttpHeaders,
-                options?.Metadata,
-                options?.Tags,
-                options?.Conditions,
-                options?.ProgressHandler,
-                options?.AccessTier,
+                options,
+                options.ProgressHandler,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
         }
@@ -527,22 +520,17 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-        {
-            PartitionedUploader uploader = new PartitionedUploader(
-                client: this,
-                transferOptions: default,
-                operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
-
-            return uploader.Upload(
+            => Upload(
                 content,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                progressHandler,
-                accessTier,
+                new UploadBlobOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    Conditions = conditions,
+                    AccessTier = accessTier,
+                    ProgressHandler = progressHandler,
+                },
                 cancellationToken);
-        }
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
@@ -600,22 +588,17 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-        {
-            PartitionedUploader uploader = new PartitionedUploader(
-                client: this,
-                transferOptions: default,
-                operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
-
-            return await uploader.UploadAsync(
+            => await UploadAsync(
                 content,
-                httpHeaders,
-                metadata,
-                default,
-                conditions,
-                progressHandler,
-                accessTier,
+                new UploadBlobOptions
+                {
+                    HttpHeaders = httpHeaders,
+                    Metadata = metadata,
+                    Conditions = conditions,
+                    AccessTier = accessTier,
+                    ProgressHandler = progressHandler,
+                },
                 cancellationToken).ConfigureAwait(false);
-            }
 
         /// <summary>
         /// The <see cref="UploadInternal"/> operation creates a new block blob,
@@ -1946,6 +1929,16 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion ScheduleDeletion
+
+        internal PartitionedUploader<UploadBlobOptions, BlobContentInfo> GetPartitionedUploader(
+            StorageTransferOptions transferOptions,
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
+            => new PartitionedUploader<UploadBlobOptions, BlobContentInfo>(
+                new PartitionedUploaderBlockBlobClient(this),
+                transferOptions,
+                arrayPool,
+                operationName);
     }
 
     /// <summary>
