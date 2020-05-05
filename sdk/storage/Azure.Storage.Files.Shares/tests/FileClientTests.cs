@@ -1986,9 +1986,15 @@ namespace Azure.Storage.Files.Shares.Test
             var data = GetRandomBuffer(dataSize);
             var progressList = new List<long>();
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
+            var timesFaulted = 0;
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
+            using (var stream = new FaultyStream(
+                new MemoryStream(data),
+                256 * Constants.KB,
+                1,
+                new IOException("Simulated stream fault"),
+                () => timesFaulted++))
             {
                 Response<ShareFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
                     range: new HttpRange(offset, dataSize),
@@ -2011,6 +2017,7 @@ namespace Azure.Storage.Files.Shares.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            Assert.AreNotEqual(0, timesFaulted);
         }
 
         [Test]
