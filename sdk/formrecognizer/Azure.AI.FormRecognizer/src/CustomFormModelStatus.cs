@@ -27,6 +27,10 @@ namespace Azure.AI.FormRecognizer.Training
         /// The model is being trained. Its status will be updated once it finishes.
         /// </summary>
         [CodeGenMember("creating")]
-        Training
+        Training,
+
+        /// <summary>
+        /// </summary>
+        Copying,
     }
 }

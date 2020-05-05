@@ -236,5 +236,35 @@ namespace Azure.AI.FormRecognizer.Training
         }
 
         #endregion
+
+
+        #region Copy Model
+
+        /// <summary>
+        /// </summary>
+        /// <param name="sourceModelId"></param>
+        /// <param name="targetEndpoint"></param>
+        /// <param name="targetCredential"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual CopyModelOperation StartCopyModel(string sourceModelId, Uri targetEndpoint, AzureKeyCredential targetCredential, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="sourceModelId"></param>
+        /// <param name="targetEndpoint"></param>
+        /// <param name="targetCredential"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<CopyModelOperation> StartCopyModelAsync(string sourceModelId, Uri targetEndpoint, AzureKeyCredential targetCredential, CancellationToken cancellationToken = default)
+        {
+            await Task.Run(() => { }).ConfigureAwait(false);
+            throw new NotImplementedException();
+        }
+        #endregion
+
     }
 }

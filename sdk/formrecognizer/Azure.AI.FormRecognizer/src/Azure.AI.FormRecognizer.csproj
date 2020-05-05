@@ -6,7 +6,15 @@
     <PackageTags>Microsoft Azure Form Recognizer</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
-    <GenerateAPIListing>false</GenerateAPIListing>
+    <GenerateAPIListing>true</GenerateAPIListing>
+      <NoWarn>	
+      $(NoWarn);	
+      CS0169;
+      CA1823;
+      CS0649;
+      CA1801;
+      CA1822;
+    </NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
