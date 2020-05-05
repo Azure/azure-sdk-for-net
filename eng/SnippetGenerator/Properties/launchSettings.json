@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SnippetGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "-b d:\\github\\azure\\net\\sdk\\core\\"
+    }
+  }
+}
