@@ -111,12 +111,12 @@ namespace Azure.AI.TextAnalytics.Samples
 
             //language1
             Assert.AreEqual(languages[0].Id, results[0].Id);
-            Assert.AreEqual(languages[0].Statistics.GraphemeCount, results[0].Statistics.GraphemeCount);
+            Assert.AreEqual(languages[0].Statistics.CharacterCount, results[0].Statistics.CharacterCount);
             Assert.AreEqual(languages[0].Statistics.TransactionCount, results[0].Statistics.TransactionCount);
 
             //language2
             Assert.AreEqual(languages[1].Id, results[1].Id);
-            Assert.AreEqual(languages[1].Statistics.GraphemeCount, results[1].Statistics.GraphemeCount);
+            Assert.AreEqual(languages[1].Statistics.CharacterCount, results[1].Statistics.CharacterCount);
             Assert.AreEqual(languages[1].Statistics.TransactionCount, results[1].Statistics.TransactionCount);
 
             //Transaction Stats
