@@ -184,7 +184,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(41, testPool.TotalRents);
             AssertAppended(sink, content);
 
-            foreach (byte[] bytes in sink.Appended.Values)
+            foreach ((byte[] bytes, _) in sink.Appended.Values)
             {
                 Assert.LessOrEqual(bytes.Length, 100);
                 Assert.GreaterOrEqual(bytes.Length, 50);
@@ -215,14 +215,47 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Assert.AreEqual(2, sink.Appended.Count);
             // First two should be merged
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Appended[0]);
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Appended[0].Data);
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(3, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
         }
 
-        private async Task<Response<PathInfo>> InvokeUploadAsync(PartitionedUploader<UploadFileOptions, PathInfo> uploader, TestStream content)
+        [Test]
+        [Explicit]
+        public async Task CanHandleLongAppendBufferedUpload()
+        {
+            const long blockSize = int.MaxValue + 1024L;
+            const int numBlocks = 2;
+            Stream content = new Storage.Tests.Shared.PredictableStream(numBlocks * blockSize);
+            TrackingArrayPool testPool = new TrackingArrayPool();
+            AppendSink sink = new AppendSink(false); // sink can't hold long blocks, and we don't need to look at their data anyway.
+
+            Mock<DataLakeFileClient> clientMock = new Mock<DataLakeFileClient>(MockBehavior.Strict, new Uri("http://mock"), new DataLakeClientOptions());
+            clientMock.SetupGet(c => c.ClientDiagnostics).CallBase();
+            clientMock.SetupGet(c => c.Version).CallBase();
+            SetupInternalStaging(clientMock, sink);
+
+            var uploader = new PartitionedUploader<UploadFileOptions, PathInfo>(
+                new PartitionedUploaderDataLakeFileClient(clientMock.Object),
+                new StorageTransferOptions
+                {
+                    InitialTransferSize = 1, // forces buffered upload
+                    MaximumTransferSize = blockSize,
+                    MaximumConcurrency = 2
+                },
+                arrayPool: testPool);
+            Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
+
+            Assert.AreEqual(s_response, info);
+            foreach (var block in sink.Appended.Values)
+            {
+                Assert.AreEqual(blockSize, block.Length);
+            }
+        }
+
+        private async Task<Response<PathInfo>> InvokeUploadAsync(PartitionedUploader<UploadFileOptions, PathInfo> uploader, Stream content)
             => await uploader.UploadInternal(
                 content,
                 new UploadFileOptions
@@ -274,18 +307,22 @@ namespace Azure.Storage.Files.DataLake.Tests
         private static void AssertAppended(AppendSink sink, TestStream stream)
         {
             Assert.AreEqual(sink.Appended.Count, sink.Appended.Count);
+
             CollectionAssert.AreEqual(
                 stream.AllBytes,
-                sink.Appended.OrderBy(kv => kv.Key).SelectMany(kv => kv.Value));
+                sink.Appended.OrderBy(kv => kv.Key).SelectMany(kv => kv.Value.Data));
         }
 
         private class AppendSink
         {
-            public Dictionary<long, byte[]> Appended { get; }
+            private readonly bool _saveBytes;
 
-            public AppendSink()
+            public Dictionary<long, (byte[] Data, long? Length)> Appended { get; }
+
+            public AppendSink(bool saveBytes = true)
             {
-                Appended = new Dictionary<long, byte[]>();
+                _saveBytes = saveBytes;
+                Appended = new Dictionary<long, (byte[] Data, long? Length)>();
             }
 
             public async Task<Response<PathInfo>> CreateInternal(
@@ -335,12 +372,18 @@ namespace Azure.Storage.Files.DataLake.Tests
                     await Task.Delay(25);
                 }
                 progress.Report(stream.Length);
-                var memoryStream = new MemoryStream();
-                stream.CopyTo(memoryStream);
-                memoryStream.Position = 0;
+
+                byte[] data = default;
+                if (_saveBytes)
+                {
+                    var memoryStream = new MemoryStream();
+                    stream.CopyTo(memoryStream);
+                    memoryStream.Position = 0;
+                    data = memoryStream.ToArray();
+                }
                 lock (Appended)
                 {
-                    Appended.Add(offset, memoryStream.ToArray());
+                    Appended.Add(offset, (data, stream.Length));
                 }
                 return new MockResponse(200);
             }
