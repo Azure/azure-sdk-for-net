@@ -65,7 +65,7 @@ namespace Azure.Core
         {
             "D" => element.GetDateTimeOffset(),
             "U" => DateTimeOffset.FromUnixTimeSeconds(element.GetInt64()),
-            _ => TypeFormatters.ParseDateTimeOffset(element.GetString(), format)
+            _ => TypeFormatters.ParseDateTimeOffset(element.GetString())
         };
 
         public static TimeSpan GetTimeSpan(in this JsonElement element, string format) =>

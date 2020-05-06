@@ -21,7 +21,7 @@ namespace Azure.Core
         public static DateTimeOffset GetDateTimeOffsetValue(this XElement element, string format) => format switch
         {
             "U" => DateTimeOffset.FromUnixTimeSeconds((long)element),
-            _ => TypeFormatters.ParseDateTimeOffset(element.Value, format)
+            _ => TypeFormatters.ParseDateTimeOffset(element.Value)
         };
 
         public static TimeSpan GetTimeSpanValue(this XElement element, string format) => TypeFormatters.ParseTimeSpan(element.Value, format);

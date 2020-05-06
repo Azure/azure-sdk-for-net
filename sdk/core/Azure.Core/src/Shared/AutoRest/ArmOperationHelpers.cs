@@ -146,8 +146,10 @@ namespace Azure.Core
 
         public Response UpdateStatus(CancellationToken cancellationToken = default) => UpdateStatusAsync(async: false, cancellationToken).EnsureCompleted();
 
+#pragma warning disable CA1822
         //TODO: This is currently unused.
         public string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         public T Value
         {
