@@ -41,7 +41,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexerSkillset>> CreateOrUpdateAsync(string skillsetName, SearchIndexerSkillset skillset, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateAsync(skillsetName, skillset, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateAsync(skillsetName, skillset, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new skillset in a search service or updates the skillset if it already exists. </summary>
@@ -53,7 +63,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexerSkillset> CreateOrUpdate(string skillsetName, SearchIndexerSkillset skillset, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdate(skillsetName, skillset, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdate(skillsetName, skillset, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a skillset in a search service. </summary>
@@ -64,7 +84,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string skillsetName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.DeleteAsync(skillsetName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.Delete");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteAsync(skillsetName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a skillset in a search service. </summary>
@@ -75,7 +105,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string skillsetName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Delete(skillsetName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.Delete");
+            scope.Start();
+            try
+            {
+                return RestClient.Delete(skillsetName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a skillset in a search service. </summary>
@@ -84,7 +124,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexerSkillset>> GetAsync(string skillsetName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetAsync(skillsetName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(skillsetName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a skillset in a search service. </summary>
@@ -93,7 +143,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexerSkillset> Get(string skillsetName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Get(skillsetName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(skillsetName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List all skillsets in a search service. </summary>
@@ -102,7 +162,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ListSkillsetsResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.List");
+            scope.Start();
+            try
+            {
+                return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List all skillsets in a search service. </summary>
@@ -111,7 +181,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ListSkillsetsResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.List");
+            scope.Start();
+            try
+            {
+                return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new skillset in a search service. </summary>
@@ -120,7 +200,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexerSkillset>> CreateAsync(SearchIndexerSkillset skillset, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(skillset, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.Create");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateAsync(skillset, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new skillset in a search service. </summary>
@@ -129,7 +219,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexerSkillset> Create(SearchIndexerSkillset skillset, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(skillset, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("SkillsetsClient.Create");
+            scope.Start();
+            try
+            {
+                return RestClient.Create(skillset, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

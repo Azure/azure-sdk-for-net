@@ -64,18 +64,12 @@ namespace Azure.Core
         public static DateTimeOffset GetDateTimeOffset(in this JsonElement element, string format) => format switch
         {
             "D" => element.GetDateTimeOffset(),
-            "S" => DateTimeOffset.Parse(element.GetString(), CultureInfo.InvariantCulture),
-            "R" => DateTimeOffset.Parse(element.GetString(), CultureInfo.InvariantCulture),
             "U" => DateTimeOffset.FromUnixTimeSeconds(element.GetInt64()),
-            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
+            _ => TypeFormatters.ParseDateTimeOffset(element.GetString(), format)
         };
 
-        public static TimeSpan GetTimeSpan(in this JsonElement element, string format) => format switch
-        {
-            "P" => XmlConvert.ToTimeSpan(element.GetString()),
-            "T" => TimeSpan.ParseExact(element.GetString(), "T", CultureInfo.InvariantCulture),
-            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
-        };
+        public static TimeSpan GetTimeSpan(in this JsonElement element, string format) =>
+            TypeFormatters.ParseTimeSpan(element.GetString(), format);
 
         public static char GetChar(this in JsonElement element)
         {

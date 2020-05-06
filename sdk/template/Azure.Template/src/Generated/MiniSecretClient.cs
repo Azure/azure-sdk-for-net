@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -36,7 +37,17 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecretBundle>> GetSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetSecretAsync(secretName, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("MiniSecretClient.GetSecret");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetSecretAsync(secretName, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> The GET operation is applicable to any secret stored in Azure Key Vault. This operation requires the secrets/get permission. </summary>
@@ -44,7 +55,17 @@ namespace Azure.Template
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecretBundle> GetSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetSecret(secretName, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("MiniSecretClient.GetSecret");
+            scope.Start();
+            try
+            {
+                return RestClient.GetSecret(secretName, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

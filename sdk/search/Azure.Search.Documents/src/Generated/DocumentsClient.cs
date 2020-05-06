@@ -38,7 +38,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<long>> CountAsync(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CountAsync(xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Count");
+            scope.Start();
+            try
+            {
+                return await RestClient.CountAsync(xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Queries the number of documents in the index. </summary>
@@ -46,7 +56,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<long> Count(Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Count(xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Count");
+            scope.Start();
+            try
+            {
+                return RestClient.Count(xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Searches for documents in the index. </summary>
@@ -55,7 +75,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchDocumentsResult>> SearchPostAsync(SearchOptions searchRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.SearchPostAsync(searchRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
+            scope.Start();
+            try
+            {
+                return await RestClient.SearchPostAsync(searchRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Searches for documents in the index. </summary>
@@ -64,7 +94,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchDocumentsResult> SearchPost(SearchOptions searchRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.SearchPost(searchRequest, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SearchPost");
+            scope.Start();
+            try
+            {
+                return RestClient.SearchPost(searchRequest, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a document from the index. </summary>
@@ -74,7 +114,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IReadOnlyDictionary<string, object>>> GetAsync(string key, IEnumerable<string> selectedFields = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetAsync(key, selectedFields, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(key, selectedFields, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a document from the index. </summary>
@@ -84,7 +134,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IReadOnlyDictionary<string, object>> Get(string key, IEnumerable<string> selectedFields = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Get(key, selectedFields, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(key, selectedFields, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
@@ -93,7 +153,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(SuggestOptions suggestRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.SuggestPostAsync(suggestRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
+            scope.Start();
+            try
+            {
+                return await RestClient.SuggestPostAsync(suggestRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Suggests documents in the index that match the given partial query text. </summary>
@@ -102,7 +172,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SuggestDocumentsResult> SuggestPost(SuggestOptions suggestRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.SuggestPost(suggestRequest, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.SuggestPost");
+            scope.Start();
+            try
+            {
+                return RestClient.SuggestPost(suggestRequest, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
@@ -111,7 +191,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IndexDocumentsResult>> IndexAsync(IndexBatch batch, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.IndexAsync(batch, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Index");
+            scope.Start();
+            try
+            {
+                return await RestClient.IndexAsync(batch, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Sends a batch of document write actions to the index. </summary>
@@ -120,7 +210,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IndexDocumentsResult> Index(IndexBatch batch, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Index(batch, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.Index");
+            scope.Start();
+            try
+            {
+                return RestClient.Index(batch, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
@@ -129,7 +229,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AutocompleteResults>> AutocompletePostAsync(AutocompleteOptions autocompleteRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.AutocompletePostAsync(autocompleteRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
+            scope.Start();
+            try
+            {
+                return await RestClient.AutocompletePostAsync(autocompleteRequest, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
@@ -138,7 +248,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AutocompleteResults> AutocompletePost(AutocompleteOptions autocompleteRequest, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.AutocompletePost(autocompleteRequest, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DocumentsClient.AutocompletePost");
+            scope.Start();
+            try
+            {
+                return RestClient.AutocompletePost(autocompleteRequest, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

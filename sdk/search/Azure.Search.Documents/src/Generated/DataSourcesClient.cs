@@ -41,7 +41,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexerDataSource>> CreateOrUpdateAsync(string dataSourceName, SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateAsync(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateAsync(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new datasource or updates a datasource if it already exists. </summary>
@@ -53,7 +63,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexerDataSource> CreateOrUpdate(string dataSourceName, SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdate(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdate(dataSourceName, dataSource, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a datasource. </summary>
@@ -64,7 +84,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string dataSourceName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.DeleteAsync(dataSourceName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Delete");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteAsync(dataSourceName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a datasource. </summary>
@@ -75,7 +105,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string dataSourceName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Delete(dataSourceName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Delete");
+            scope.Start();
+            try
+            {
+                return RestClient.Delete(dataSourceName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a datasource definition. </summary>
@@ -84,7 +124,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexerDataSource>> GetAsync(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetAsync(dataSourceName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(dataSourceName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves a datasource definition. </summary>
@@ -93,7 +143,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexerDataSource> Get(string dataSourceName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Get(dataSourceName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(dataSourceName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
@@ -102,7 +162,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ListDataSourcesResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.List");
+            scope.Start();
+            try
+            {
+                return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
@@ -111,7 +181,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ListDataSourcesResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.List");
+            scope.Start();
+            try
+            {
+                return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new datasource. </summary>
@@ -120,7 +200,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexerDataSource>> CreateAsync(SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(dataSource, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Create");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateAsync(dataSource, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new datasource. </summary>
@@ -129,7 +219,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexerDataSource> Create(SearchIndexerDataSource dataSource, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(dataSource, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("DataSourcesClient.Create");
+            scope.Start();
+            try
+            {
+                return RestClient.Create(dataSource, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

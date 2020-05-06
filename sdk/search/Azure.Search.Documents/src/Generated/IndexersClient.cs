@@ -38,7 +38,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ResetAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ResetAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Reset");
+            scope.Start();
+            try
+            {
+                return await RestClient.ResetAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Resets the change tracking state associated with an indexer. </summary>
@@ -47,7 +57,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Reset(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Reset(indexerName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Reset");
+            scope.Start();
+            try
+            {
+                return RestClient.Reset(indexerName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Runs an indexer on-demand. </summary>
@@ -56,7 +76,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RunAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.RunAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Run");
+            scope.Start();
+            try
+            {
+                return await RestClient.RunAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Runs an indexer on-demand. </summary>
@@ -65,7 +95,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Run(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Run(indexerName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Run");
+            scope.Start();
+            try
+            {
+                return RestClient.Run(indexerName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
@@ -77,7 +117,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateAsync(string indexerName, SearchIndexer indexer, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateAsync(indexerName, indexer, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateAsync(indexerName, indexer, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new indexer or updates an indexer if it already exists. </summary>
@@ -89,7 +139,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexer> CreateOrUpdate(string indexerName, SearchIndexer indexer, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdate(indexerName, indexer, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdate(indexerName, indexer, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes an indexer. </summary>
@@ -100,7 +160,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string indexerName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.DeleteAsync(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Delete");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteAsync(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes an indexer. </summary>
@@ -111,7 +181,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string indexerName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Delete(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Delete");
+            scope.Start();
+            try
+            {
+                return RestClient.Delete(indexerName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves an indexer definition. </summary>
@@ -120,7 +200,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexer>> GetAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves an indexer definition. </summary>
@@ -129,7 +219,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexer> Get(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Get(indexerName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(indexerName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
@@ -138,7 +238,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ListIndexersResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.List");
+            scope.Start();
+            try
+            {
+                return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
@@ -147,7 +257,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ListIndexersResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.List");
+            scope.Start();
+            try
+            {
+                return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new indexer. </summary>
@@ -156,7 +276,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexer>> CreateAsync(SearchIndexer indexer, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(indexer, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Create");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateAsync(indexer, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new indexer. </summary>
@@ -165,7 +295,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexer> Create(SearchIndexer indexer, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(indexer, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.Create");
+            scope.Start();
+            try
+            {
+                return RestClient.Create(indexer, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
@@ -174,7 +314,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexerStatus>> GetStatusAsync(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetStatusAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.GetStatus");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetStatusAsync(indexerName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns the current status and execution history of an indexer. </summary>
@@ -183,7 +333,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexerStatus> GetStatus(string indexerName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetStatus(indexerName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexersClient.GetStatus");
+            scope.Start();
+            try
+            {
+                return RestClient.GetStatus(indexerName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

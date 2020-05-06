@@ -38,7 +38,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndex>> CreateAsync(SearchIndex index, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateAsync(index, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.Create");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateAsync(index, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new search index. </summary>
@@ -47,7 +57,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndex> Create(SearchIndex index, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Create(index, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.Create");
+            scope.Start();
+            try
+            {
+                return RestClient.Create(index, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
@@ -56,7 +76,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ListIndexesResult>> ListAsync(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.List");
+            scope.Start();
+            try
+            {
+                return await RestClient.ListAsync(select, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
@@ -65,7 +95,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ListIndexesResult> List(string select = null, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.List");
+            scope.Start();
+            try
+            {
+                return RestClient.List(select, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new search index or updates an index if it already exists. </summary>
@@ -78,7 +118,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndex>> CreateOrUpdateAsync(string indexName, SearchIndex index, bool? allowIndexDowntime = null, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.CreateOrUpdateAsync(indexName, index, allowIndexDowntime, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return await RestClient.CreateOrUpdateAsync(indexName, index, allowIndexDowntime, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Creates a new search index or updates an index if it already exists. </summary>
@@ -91,7 +141,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndex> CreateOrUpdate(string indexName, SearchIndex index, bool? allowIndexDowntime = null, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.CreateOrUpdate(indexName, index, allowIndexDowntime, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                return RestClient.CreateOrUpdate(indexName, index, allowIndexDowntime, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a search index and all the documents it contains. </summary>
@@ -102,7 +162,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(string indexName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.DeleteAsync(indexName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.Delete");
+            scope.Start();
+            try
+            {
+                return await RestClient.DeleteAsync(indexName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Deletes a search index and all the documents it contains. </summary>
@@ -113,7 +183,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(string indexName, Guid? xMsClientRequestId = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Delete(indexName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.Delete");
+            scope.Start();
+            try
+            {
+                return RestClient.Delete(indexName, xMsClientRequestId, ifMatch, ifNoneMatch, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves an index definition. </summary>
@@ -122,7 +202,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndex>> GetAsync(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetAsync(indexName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.Get");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetAsync(indexName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves an index definition. </summary>
@@ -131,7 +221,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndex> Get(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Get(indexName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.Get");
+            scope.Start();
+            try
+            {
+                return RestClient.Get(indexName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
@@ -140,7 +240,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SearchIndexStatistics>> GetStatisticsAsync(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.GetStatisticsAsync(indexName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.GetStatistics");
+            scope.Start();
+            try
+            {
+                return await RestClient.GetStatisticsAsync(indexName, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
@@ -149,7 +259,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SearchIndexStatistics> GetStatistics(string indexName, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.GetStatistics(indexName, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.GetStatistics");
+            scope.Start();
+            try
+            {
+                return RestClient.GetStatistics(indexName, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Shows how an analyzer breaks text into tokens. </summary>
@@ -159,7 +279,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AnalyzeResult>> AnalyzeAsync(string indexName, AnalyzeRequest request, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return await RestClient.AnalyzeAsync(indexName, request, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.Analyze");
+            scope.Start();
+            try
+            {
+                return await RestClient.AnalyzeAsync(indexName, request, xMsClientRequestId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Shows how an analyzer breaks text into tokens. </summary>
@@ -169,7 +299,17 @@ namespace Azure.Search.Documents
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AnalyzeResult> Analyze(string indexName, AnalyzeRequest request, Guid? xMsClientRequestId = null, CancellationToken cancellationToken = default)
         {
-            return RestClient.Analyze(indexName, request, xMsClientRequestId, cancellationToken);
+            using var scope = _clientDiagnostics.CreateScope("IndexesClient.Analyze");
+            scope.Start();
+            try
+            {
+                return RestClient.Analyze(indexName, request, xMsClientRequestId, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
