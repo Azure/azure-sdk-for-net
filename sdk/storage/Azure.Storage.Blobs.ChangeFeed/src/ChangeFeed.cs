@@ -62,6 +62,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private bool _isInitalized;
 
+        private readonly SegmentFactory _segmentFactory;
+
         // Start time will be rounded down to the nearest hour.
         public ChangeFeed(
             BlobServiceClient blobServiceClient,
@@ -74,6 +76,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _isInitalized = false;
             _startTime = startTime.RoundDownToNearestHour();
             _endTime = endTime.RoundUpToNearestHour();
+            _segmentFactory = new SegmentFactory(new ShardFactory(new ChunkFactory(new LazyLoadingBlobStreamFactory(), new AvroReaderFactory())));
         }
 
         public ChangeFeed(
@@ -89,6 +92,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _startTime = cursor.CurrentSegmentCursor.SegmentTime;
             _endTime = cursor.EndTime;
             _currentSegmentCursor = cursor.CurrentSegmentCursor;
+            _segmentFactory = new SegmentFactory(new ShardFactory(new ChunkFactory(new LazyLoadingBlobStreamFactory(), new AvroReaderFactory())));
         }
 
         /// <summary>
@@ -174,10 +178,12 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 endTime: MinDateTime(_lastConsumable, _endTime))
                 .ConfigureAwait(false);
 
-            _currentSegment = new Segment(
+            _currentSegment = await _segmentFactory.BuildSegment(
+                async,
                 _containerClient,
                 _segments.Dequeue(),
-                _currentSegmentCursor);
+                _currentSegmentCursor)
+                .ConfigureAwait(false);
             _isInitalized = true;
         }
 
@@ -312,7 +318,10 @@ namespace Azure.Storage.Blobs.ChangeFeed
             // If the current segment is completed, remove it
             if (!_currentSegment.HasNext() && _segments.Count > 0)
             {
-                _currentSegment = new Segment(_containerClient, _segments.Dequeue());
+                _currentSegment = await _segmentFactory.BuildSegment(
+                    async,
+                    _containerClient,
+                    _segments.Dequeue()).ConfigureAwait(false);
             }
 
             // If _segments is empty, refill it
@@ -330,7 +339,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
                 if (_segments.Count > 0)
                 {
-                    _currentSegment = new Segment(_containerClient, _segments.Dequeue());
+                    _currentSegment = await _segmentFactory.BuildSegment(
+                        async,
+                        _containerClient,
+                        _segments.Dequeue())
+                        .ConfigureAwait(false);
                 }
             }
         }

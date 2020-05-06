@@ -20,8 +20,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
             _chunkFactory = chunkFactory;
         }
 
+        /// <summary>
+        /// Constructor for mocking.
+        /// </summary>
+        public ShardFactory() { }
+
 #pragma warning disable CA1822 // Does not acces instance data can be marked static.
-        public async Task<Shard> BuildShard(
+        public virtual async Task<Shard> BuildShard(
 #pragma warning restore CA1822 // Can't mock static methods in MOQ.
             bool async,
             BlobContainerClient containerClient,

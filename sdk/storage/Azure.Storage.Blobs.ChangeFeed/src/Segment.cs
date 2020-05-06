@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
-using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.ChangeFeed.Models;
 using Azure.Storage.Blobs.Models;
 
@@ -32,11 +29,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
         private readonly BlobContainerClient _containerClient;
 
         /// <summary>
-        /// The path to the manifest for this Segment.
-        /// </summary>
-        private readonly string _manifestPath;
-
-        /// <summary>
         /// The Shards associated with this Segment.
         /// </summary>
         private readonly List<Shard> _shards;
@@ -46,73 +38,18 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private int _shardIndex;
 
-        /// <summary>
-        /// If this Segement has been initalized.
-        /// </summary>
-        private bool _isInitalized;
-
-        private SegmentCursor _cursor;
-
         public Segment(
             BlobContainerClient containerClient,
-            string manifestPath,
-            SegmentCursor cursor = default)
+            List<Shard> shards,
+            int shardIndex,
+            DateTimeOffset dateTime,
+            bool finalized)
         {
             _containerClient = containerClient;
-            _manifestPath = manifestPath;
-            DateTime = manifestPath.ToDateTimeOffset().Value;
-            _shards = new List<Shard>();
-            _cursor = cursor;
-            _shardIndex = cursor?.ShardIndex ?? 0;
-        }
-
-        private async Task Initalize(bool async)
-        {
-            // Download segment manifest
-            BlobClient blobClient = _containerClient.GetBlobClient(_manifestPath);
-            BlobDownloadInfo blobDownloadInfo;
-
-            if (async)
-            {
-                blobDownloadInfo = await blobClient.DownloadAsync().ConfigureAwait(false);
-            }
-            else
-            {
-                blobDownloadInfo = blobClient.Download();
-            }
-
-            // Parse segment manifest
-            JsonDocument jsonManifest;
-
-            if (async)
-            {
-                jsonManifest = await JsonDocument.ParseAsync(blobDownloadInfo.Content).ConfigureAwait(false);
-            }
-            else
-            {
-                jsonManifest = JsonDocument.Parse(blobDownloadInfo.Content);
-            }
-
-            // Initalized Finalized field
-            string statusString = jsonManifest.RootElement.GetProperty("status").GetString();
-            Finalized = statusString == "Finalized";
-
-            int i = 0;
-            foreach (JsonElement shardJsonElement in jsonManifest.RootElement.GetProperty("chunkFilePaths").EnumerateArray())
-            {
-                //TODO cleanup this line
-                string shardPath = shardJsonElement.ToString().Substring("$blobchangefeed/".Length);
-                ShardFactory shardFactory = new ShardFactory(new ChunkFactory(new LazyLoadingBlobStreamFactory(), new AvroReaderFactory()));
-                Shard shard = await shardFactory.BuildShard(
-                    async,
-                    _containerClient,
-                    shardPath,
-                    _cursor?.ShardCursors?[i])
-                    .ConfigureAwait(false);
-                _shards.Add(shard);
-                i++;
-            }
-            _isInitalized = true;
+            _shards = shards;
+            _shardIndex = shardIndex;
+            DateTime = dateTime;
+            Finalized = finalized;
         }
 
         public SegmentCursor GetCursor()
@@ -134,11 +71,6 @@ namespace Azure.Storage.Blobs.ChangeFeed
             CancellationToken cancellationToken = default)
         {
             List<BlobChangeFeedEvent> changeFeedEventList = new List<BlobChangeFeedEvent>();
-
-            if (!_isInitalized)
-            {
-                await Initalize(async).ConfigureAwait(false);
-            }
 
             if (!HasNext())
             {
@@ -174,28 +106,11 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
         //TODO figure out if this is right.
         public bool HasNext()
-        {
-            if (!_isInitalized)
-            {
-                return true;
-            }
-
-            return _shards.Count > 0;
-        }
+            =>  _shards.Count > 0;
 
         /// <summary>
-        /// Constructor for testing.  Do not use.
+        /// Constructor for mocking.
         /// </summary>
-        internal Segment(
-            bool isInitalized = default,
-            List<Shard> shards = default,
-            int shardIndex = default,
-            DateTimeOffset dateTime = default)
-        {
-            _isInitalized = isInitalized;
-            _shards = shards;
-            _shardIndex = shardIndex;
-            DateTime = dateTime;
-        }
+        public Segment() { }
     }
 }
