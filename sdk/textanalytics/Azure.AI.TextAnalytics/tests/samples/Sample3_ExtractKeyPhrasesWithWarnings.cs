@@ -11,7 +11,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractKeyPhrasesWithWarnins()
+        public void ExtractKeyPhrasesWithWarnings()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
