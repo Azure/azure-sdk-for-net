@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal class AmqpProducer : TransportProducer
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private volatile bool _closed = false;
 
         /// <summary>The count of send operations performed by this instance; this is used to tag deliveries for the AMQP link.</summary>
         private int _deliveryCount = 0;
@@ -467,7 +467,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     MaximumMessageSize = (long)link.Settings.MaxMessageSize;
                 }
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
             }

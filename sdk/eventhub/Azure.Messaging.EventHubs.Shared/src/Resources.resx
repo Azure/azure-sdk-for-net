@@ -288,7 +288,4 @@
   <data name="AggregateEventProcessingExceptionMessage" xml:space="preserve">
     <value>One or more exceptions occured during event processing.  Please see the inner exceptions for more detail.</value>
   </data>
-  <data name="TestAbortTimeoutMask" xml:space="preserve">
-    <value>The test `{0}` has been aborted because it exceeded the maximum execution time limit of {1}.</value>
-  </data>
 </root>

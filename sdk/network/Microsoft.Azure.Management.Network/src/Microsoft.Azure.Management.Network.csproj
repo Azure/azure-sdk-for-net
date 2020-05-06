@@ -7,15 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.Network</PackageId>
 		<Description>Provides management capabilities for Network services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>19.20.0-preview</Version>
+		<Version>19.21.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Added support for IpAllocation
-            - Added support for PrivateDnsZoneGroup
-            - Added support for SecurityPartnerProvider
-            - Added support for ForceFirewallPolicyAssociation in ApplicationGateway
-            - Added support for IntrusionSystemMode in FirewallPolicy
+            - Added support for HubRouteTables
+            - Added support for BackendAddressPools in LoadBalancer
+            - Added support for ThreatIntelWhitelist in FirewallPolicy
+            - Fixed type of RoundTripTimeMs property in ConnectionMonitorSuccessThreshold
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

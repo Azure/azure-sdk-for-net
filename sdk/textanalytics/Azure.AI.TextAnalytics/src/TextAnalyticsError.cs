@@ -4,7 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Text Analitics Error.
+    /// Text Analytics Error.
     /// </summary>
     public struct TextAnalyticsError
     {

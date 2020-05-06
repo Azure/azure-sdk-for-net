@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -14,12 +12,12 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class RecognizeLinkedEntitiesResult : TextAnalyticsResult
     {
-        private readonly IReadOnlyCollection<LinkedEntity> _linkedEntities;
+        private readonly LinkedEntityCollection _linkedEntities;
 
-        internal RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, IList<LinkedEntity> linkedEntities)
+        internal RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, LinkedEntityCollection linkedEntities)
             : base(id, statistics)
         {
-            _linkedEntities = new ReadOnlyCollection<LinkedEntity>(linkedEntities);
+            _linkedEntities = linkedEntities;
         }
 
         internal RecognizeLinkedEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
@@ -27,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the collection of linked entities identified in the document.
         /// </summary>
-        public IReadOnlyCollection<LinkedEntity> Entities
+        public LinkedEntityCollection Entities
         {
             get
             {

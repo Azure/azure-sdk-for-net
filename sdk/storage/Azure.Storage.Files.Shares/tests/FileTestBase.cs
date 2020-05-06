@@ -84,11 +84,12 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public ShareClientOptions GetFaultyFileConnectionOptions(
             int raiseAt = default,
-            Exception raise = default)
+            Exception raise = default,
+            Action onFault = default)
         {
             raise = raise ?? new IOException("Simulated connection fault");
             ShareClientOptions options = GetOptions();
-            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise), HttpPipelinePosition.PerCall);
+            options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
             return options;
         }
 

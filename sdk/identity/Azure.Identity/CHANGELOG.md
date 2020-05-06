@@ -1,6 +1,9 @@
 # Release History
 
-## 1.2.0-preview.3 (Unreleased)
+## 1.2.0-preview.4 (Unreleased)
+
+
+## 1.2.0-preview.3
 
 ### New Features
 - First preview of new API for authenticating users with `DeviceCodeCredential` and `InteractiveBrowserCredential`

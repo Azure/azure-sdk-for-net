@@ -1,6 +1,9 @@
 # Release History
 
-## 1.0.0-preview.3 (Unreleased)
+## 1.0.0-preview.4 (Unreleased)
+
+
+## 1.0.0-preview.3 (2020-05-05)
 
 ### Breaking Changes
 

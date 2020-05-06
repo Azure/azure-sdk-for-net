@@ -18,7 +18,7 @@ param (
   [switch]$forceCreate = $false
 )
 
-Write-Host  $MyInvocation.Line
+Write-Host "> $PSCommandPath $args"
 
 $VERSION_REGEX = "(?<major>\d+)(\.(?<minor>\d+))?(\.(?<patch>\d+))?((?<pre>[^0-9][^\s]+))?"
 $SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$VERSION_REGEX$)"

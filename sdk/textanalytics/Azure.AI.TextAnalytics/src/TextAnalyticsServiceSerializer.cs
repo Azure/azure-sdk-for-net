@@ -159,6 +159,31 @@ namespace Azure.AI.TextAnalytics
             return innerError.Code == default ? new TextAnalyticsError(errorCode, message, target) : innerError;
         }
 
+        private static List<TextAnalyticsWarning> ReadDocumentWarnings(JsonElement documentElement)
+        {
+            List<TextAnalyticsWarning> warnings = new List<TextAnalyticsWarning>();
+
+            foreach (JsonElement warningElement in documentElement.EnumerateArray())
+            {
+                string code = default;
+                string message = default;
+
+                if (warningElement.TryGetProperty("code", out JsonElement codeValue))
+                {
+                    code = codeValue.ToString();
+                }
+
+                if (warningElement.TryGetProperty("message", out JsonElement messageValue))
+                {
+                    message = messageValue.ToString();
+                }
+
+                warnings.Add(new TextAnalyticsWarning(code, message));
+            }
+
+            return warnings;
+        }
+
         private static string ReadModelVersion(JsonElement documentElement)
         {
             if (documentElement.TryGetProperty("modelVersion", out JsonElement modelVersionValue))
@@ -238,9 +263,16 @@ namespace Azure.AI.TextAnalytics
         private static DetectLanguageResult ReadDetectedLanguageResult(JsonElement documentElement)
         {
             DetectedLanguage language = default;
+            List<TextAnalyticsWarning> warnings = default;
+
+            if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
+            {
+                warnings = ReadDocumentWarnings(warningsValue);
+            }
+
             if (documentElement.TryGetProperty("detectedLanguage", out JsonElement detectedLanguageValue))
             {
-                language = (ReadDetectedLanguage(detectedLanguageValue));
+                language = (ReadDetectedLanguage(detectedLanguageValue, warnings));
             }
 
             return new DetectLanguageResult(
@@ -249,7 +281,7 @@ namespace Azure.AI.TextAnalytics
                 language);
         }
 
-        private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement)
+        private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement, List<TextAnalyticsWarning> warnings)
         {
             string name = null;
             string iso6391Name = null;
@@ -262,7 +294,7 @@ namespace Azure.AI.TextAnalytics
             if (languageElement.TryGetProperty("confidenceScore", out JsonElement scoreValue))
                 scoreValue.TryGetDouble(out confidenceScore);
 
-            return new DetectedLanguage(name, iso6391Name, confidenceScore);
+            return new DetectedLanguage(name, iso6391Name, confidenceScore, warnings);
         }
 
         #endregion Detect Languages
@@ -315,6 +347,8 @@ namespace Azure.AI.TextAnalytics
         private static RecognizeEntitiesResult ReadRecognizeEntityResult(JsonElement documentElement)
         {
             List<CategorizedEntity> entities = new List<CategorizedEntity>();
+            List<TextAnalyticsWarning> warnings = default;
+
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
                 foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
@@ -323,10 +357,15 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
+            {
+                warnings = ReadDocumentWarnings(warningsValue);
+            }
+
             return new RecognizeEntitiesResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                entities);
+                new CategorizedEntityCollection(entities, warnings));
         }
 
         private static CategorizedEntity ReadCategorizedEntity(JsonElement entityElement)
@@ -334,8 +373,6 @@ namespace Azure.AI.TextAnalytics
             string text = default;
             string category = default;
             string subcategory = default;
-            int offset = default;
-            int length = default;
             double confidenceScore = default;
 
             if (entityElement.TryGetProperty("text", out JsonElement textValue))
@@ -344,14 +381,10 @@ namespace Azure.AI.TextAnalytics
                 category = typeValue.ToString();
             if (entityElement.TryGetProperty("subcategory", out JsonElement subTypeValue))
                 subcategory = subTypeValue.ToString();
-            if (entityElement.TryGetProperty("offset", out JsonElement offsetValue))
-                offsetValue.TryGetInt32(out offset);
-            if (entityElement.TryGetProperty("length", out JsonElement lengthValue))
-                lengthValue.TryGetInt32(out length);
             if (entityElement.TryGetProperty("confidenceScore", out JsonElement scoreValue))
                 scoreValue.TryGetDouble(out confidenceScore);
 
-            return new CategorizedEntity(text, category, subcategory, offset, length, confidenceScore);
+            return new CategorizedEntity(text, category, subcategory, confidenceScore);
         }
 
         #endregion Recognize Entities
@@ -398,14 +431,21 @@ namespace Azure.AI.TextAnalytics
 
         private static AnalyzeSentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
         {
-            var documentSentiment = ReadDocumentSentiment(documentElement, "confidenceScores");
+            List<TextAnalyticsWarning> warnings = default;
+            if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
+            {
+                warnings = ReadDocumentWarnings(warningsValue);
+            }
+
+            var documentSentiment = ReadDocumentSentiment(documentElement, "documentScores", warnings);
+
             return new AnalyzeSentimentResult(
                     ReadDocumentId(documentElement),
                     ReadDocumentStatistics(documentElement),
                     documentSentiment);
         }
 
-        private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName)
+        private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName, IList<TextAnalyticsWarning> warnings)
         {
             TextSentiment sentiment = default;
             double positiveScore = default;
@@ -438,7 +478,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments);
+            return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments, warnings);
         }
 
         private static SentenceSentiment ReadSentenceSentiment(JsonElement documentElement, string scoresElementName)
@@ -448,8 +488,6 @@ namespace Azure.AI.TextAnalytics
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
-            int offset = default;
-            int length = default;
 
             if (documentElement.TryGetProperty("text", out JsonElement textValue))
             {
@@ -473,13 +511,7 @@ namespace Azure.AI.TextAnalytics
                     negativeValue.TryGetDouble(out negativeScore);
             }
 
-            if (documentElement.TryGetProperty("offset", out JsonElement offsetValue))
-                offsetValue.TryGetInt32(out offset);
-
-            if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
-                lengthValue.TryGetInt32(out length);
-
-            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore, offset, length);
+            return new SentenceSentiment(sentiment, text, positiveScore, neutralScore, negativeScore);
         }
 
         #endregion
@@ -527,6 +559,8 @@ namespace Azure.AI.TextAnalytics
         private static ExtractKeyPhrasesResult ReadKeyPhraseResult(JsonElement documentElement)
         {
             List<string> keyPhrases = new List<string>();
+            List<TextAnalyticsWarning> warnings = default;
+
             if (documentElement.TryGetProperty("keyPhrases", out JsonElement keyPhrasesValue))
             {
                 foreach (JsonElement keyPhraseElement in keyPhrasesValue.EnumerateArray())
@@ -535,10 +569,15 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
+            {
+                warnings = ReadDocumentWarnings(warningsValue);
+            }
+
             return new ExtractKeyPhrasesResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                keyPhrases);
+                new KeyPhraseCollection(keyPhrases, warnings));
         }
 
         #endregion Extract Key Phrases
@@ -586,6 +625,8 @@ namespace Azure.AI.TextAnalytics
         private static RecognizeLinkedEntitiesResult ReadLinkedEntityResult(JsonElement documentElement)
         {
             List<LinkedEntity> entities = new List<LinkedEntity>();
+            List<TextAnalyticsWarning> warnings = default;
+
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
                 foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
@@ -594,10 +635,15 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
+            if (documentElement.TryGetProperty("warnings", out JsonElement warningsValue))
+            {
+                warnings = ReadDocumentWarnings(warningsValue);
+            }
+
             return new RecognizeLinkedEntitiesResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                entities);
+                new LinkedEntityCollection(entities, warnings));
         }
 
         private static LinkedEntity ReadLinkedEntity(JsonElement entityElement)
@@ -634,8 +680,6 @@ namespace Azure.AI.TextAnalytics
                 {
                     string text = default;
                     double confidenceScore = default;
-                    int offset = default;
-                    int length = default;
 
                     if (matchElement.TryGetProperty("text", out JsonElement textValue))
                         text = textValue.ToString();
@@ -643,13 +687,7 @@ namespace Azure.AI.TextAnalytics
                     if (matchElement.TryGetProperty("confidenceScore", out JsonElement scoreValue))
                         scoreValue.TryGetDouble(out confidenceScore);
 
-                    if (matchElement.TryGetProperty("offset", out JsonElement offsetValue))
-                        offsetValue.TryGetInt32(out offset);
-
-                    if (matchElement.TryGetProperty("length", out JsonElement lengthValue))
-                        lengthValue.TryGetInt32(out length);
-
-                    matches.Add(new LinkedEntityMatch(text, confidenceScore, offset, length));
+                    matches.Add(new LinkedEntityMatch(text, confidenceScore));
                 }
 
                 return matches;
